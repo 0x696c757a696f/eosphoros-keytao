@@ -39,6 +39,40 @@
 
 部署失败或更新后仍显示旧候选时，请先确认文件放在正确的用户目录，再从输入法菜单执行一次“重新部署”。
 
+### 各平台皮肤与样式
+
+皮肤由输入法前端绘制，并不是 Rime 方案本身的通用能力；因此同一套配色文件不能直接跨平台复用：
+
+| 平台与前端 | 本仓库状态 | 配置方式 |
+| --- | --- | --- |
+| Windows 小狼毫 | 内置统一的 `CatLight` / `CatDark` 明暗配色 | `weasel.yaml` 与 `weasel.custom.yaml` |
+| macOS 鼠须管 | 内置同名 `CatLight` / `CatDark` 配色，使用鼠须管 1.x 的新布局字段 | `squirrel.yaml` 与 `squirrel.custom.yaml` |
+| Linux Fcitx5 | 已生成 95 套小狼毫／鼠须管桌面配色的 Classic UI 复刻主题 | 下载 `fcitx5-linux-xmjd6-themes.zip`，解压到 `~/.local/share/fcitx5/themes/` 后在经典用户界面中选择 |
+| macOS Fcitx5 | 已生成同一组可直接导入的 `.conf`；另有自动明暗主题 | 下载 `fcitx5-macos-xmjd6-themes.zip`，在“主题编辑器 → 基础 → 选择／导入主题”中导入 |
+| iOS 元书输入法 | 支持独立的 `.cskin` 键盘皮肤；当前仓库只提供方案同步配置，没有附带元书皮肤包 | 皮肤使用 YAML/Jsonnet 描述并由元书单独导入，参见 [元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
+
+`Hamster.yaml` 只负责元书/仓输入法中的自造词文件同步规则，不是键盘皮肤。元书的 `.cskin` 与旧版仓输入法的 `.hskin` 互不兼容，不能把现有仓皮肤直接改名使用。
+
+#### 小企鹅主题安装
+
+主题颜色由 `weasel.yaml` 与 `squirrel.yaml` 自动生成，不是手工近似。转换程序会把 Rime 的 BGR／AABBGGRR 色值转换成 Fcitx 使用的 RGBA，并分别映射普通候选、首选、序号、注释、预编辑、背景和边框。两份桌面配置同名时采用鼠须管的当前定义，小狼毫独有的配色也会全部保留。
+
+**Linux 小企鹅**
+
+1. 从 Release 下载 `fcitx5-linux-xmjd6-themes.zip`。
+2. 将压缩包直接解压到 `~/.local/share/fcitx5/themes/`；解压后应看到 `xmjd6-CatLight/theme.conf` 等目录，不要再多套一层目录。
+3. 打开 `fcitx5-configtool`，进入“附加组件 → 经典用户界面”。亮色主题选择 `xmjd6-CatLight`，暗色主题选择 `xmjd6-CatDark`；也可以选择压缩包内其他桌面配色。
+4. 应用设置后重启 Fcitx5。主题只使用官方支持的纯色字段，不依赖 SVG，避免不同 Wayland/GTK 渲染器加载 SVG 时出现兼容问题。格式参见 [Fcitx5 官方主题文档](https://fcitx-im.org/wiki/Fcitx_5_Theme)。
+
+**macOS 小企鹅**
+
+1. 从 Release 下载并解压 `fcitx5-macos-xmjd6-themes.zip`。
+2. 打开“主题编辑器 → 基础 → 选择／导入主题”。推荐导入 `xmjd6-auto.conf`：浅色使用 `CatLight`，深色使用 `CatDark`，可跟随系统外观。
+3. 需要其他桌面主题时，导入对应的 `xmjd6-主题名.conf`；单主题文件会在系统明暗模式下保持同一套颜色。
+4. macOS 26 启用液态玻璃时，系统可能根据候选窗下方内容调整外观，这是小企鹅的系统级行为，不是主题颜色丢失。导入规则参见 [Fcitx5 macOS 官方文档](https://fcitx-contrib.github.io/docs/theme/import.html)。
+
+维护者修改桌面配色后，运行 `python tools/build_fcitx5_themes.py` 即可重新生成两端主题；CI 会用 `--check` 阻止过期主题进入 Release。
+
 ### 东风破（plum）安装与更新
 
 仓库根目录提供了 `recipe.yaml`，可由东风破直接安装或更新。Linux、macOS 以及带 Bash 的环境可执行：
@@ -53,7 +87,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 0x696c757a696f/xmjd6-0x69
 ```
 
-也可以在已经安装东风破的命令行中运行 `rime-install 0x696c757a696f/xmjd6-0x69`。安装完成后仍需重新部署。配方只复制 Rime 运行所需的 YAML、`lua/xmjd6/`、`opencc/xmjd6/` 和必要的自造词部件表；它通过东风破补丁把 `xmjd6` 安全加入现有方案列表，不直接覆盖用户的 `*.custom.yaml`。仓库测试、构建脚本、EXE、`xmjd6_user.txt`、`*.userdb` 和自造词运行记录都不会被安装或覆盖。
+也可以在已经安装东风破的命令行中运行 `rime-install 0x696c757a696f/xmjd6-0x69`。安装完成后仍需重新部署。配方只复制 Rime 运行所需的 YAML、`xmjd6.ico`、`lua/xmjd6/`、`opencc/xmjd6/` 和必要的自造词部件表；它通过东风破补丁把 `xmjd6` 安全加入现有方案列表，并把图标引用合并到 `xmjd6.custom.yaml`，不整份覆盖用户的 `*.custom.yaml`。仓库测试、构建脚本、EXE、`xmjd6_user.txt`、`*.userdb` 和自造词运行记录都不会被安装或覆盖。
 
 ### 中州韵助手（rimetool）兼容性
 
@@ -63,10 +97,12 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 不过，本仓库为了让宗派词库及大型词库仍可人工审阅，在部分码表正文保留了分类注释；中州韵助手的兼容约定不建议正文注释，因此不建议在其中对这些大型码表执行“全库重写”。正常浏览、Rime 编译和输入不受影响。`custom_phrase` 是雾凇方案专用的节点，本方案不添加无效的同名占位配置。
 
-### 便携发行包
+### 便携与主题发行包
 
 - Windows 小小输入法：[yong-xmjd6-full.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6-full.zip)
 - 玉兔毫：[Rabbit-xmjd6.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/Rabbit-xmjd6.zip)
+- Linux 小企鹅主题：[fcitx5-linux-xmjd6-themes.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/fcitx5-linux-xmjd6-themes.zip)
+- macOS 小企鹅主题：[fcitx5-macos-xmjd6-themes.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/fcitx5-macos-xmjd6-themes.zip)
 
 玉兔毫便携版建议解压到不含空格的路径。小小输入法版默认使用 `Ctrl + Space` 激活。
 
@@ -383,14 +419,14 @@ python .\zzc\Windows_词库合并.py
 
 ## 词库组成
 
-以下为 2026-08-04 版本的内置记录数；自造词和个人用户词库不计入统计。
+以下为 2026-08-09 版本的内置记录数；自造词和个人用户词库不计入统计。
 
 | 词库 | 记录数 | 用途 |
 | --- | ---: | --- |
 | `xmjd6.danzi.dict.yaml` | 36,214 | 上游键道单字表 |
 | `xmjd6.cizu.dict.yaml` | 191,398 | 本地基础词组 |
 | `xmjd6.catholicism.dict.yaml` | 3,514 | Catholicism、礼仪、神学与东方礼词汇 |
-| `xmjd6.protestantism.dict.yaml` | 219 | 新教信条、宗派神学及《和合本》词汇 |
+| `xmjd6.protestantism.dict.yaml` | 289 | 新教信条、循道卫理宗传统及《和合本》词汇 |
 | `xmjd6.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
 | `xmjd6.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
 | `xmjd6.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
@@ -400,7 +436,7 @@ python .\zzc\Windows_词库合并.py
 | `xmjd6.en.dict.yaml` | 23,610 | Rime-Ice 英文词库 |
 | **合计** | **1,144,038** | 不含动态自造词和个人词库 |
 
-四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，不靠“祷告”“教会”“基督徒”等泛用词凑量。`xmjd6.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
+四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，不靠“祷告”“教会”“基督徒”等泛用词凑量。`xmjd6.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；循道卫理宗部分覆盖恩典与圣洁神学、班会与联结制度、议会体系、立约礼拜、亚德门传统、近代在华会名和代表人物。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
 
 这些专题词由 [`tools/christian_traditions_2026.txt`](tools/christian_traditions_2026.txt) 审核，生成器依次尝试键道六码的基础码和首笔辅助码。固定本地词典没有空闲合法码时通常不收录；专题词确定后再重建低优先级 `xmjd6.ice`，让 ICE 词移到更长的合法码或按既有重码预算淘汰。唯一例外是“哥林多后书”“帖撒罗尼迦后书”“雅各书”三卷《和合本》正式书名：前两组的前书与后书在标准规则下拥有完全相同的全部候选，后一卷的全部候选已被固定旧词占用，因此人工审核后使用最终六码并保持专题词优先。除此三项外，四个专题词库没有新增异词同码。
 
@@ -424,6 +460,12 @@ user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy 
 | `xmjd6.custom.yaml` | 用户推荐修改的开关、候选数和流式输入配置 |
 | `xmjd6.extended.dict.yaml` | 词库导入顺序与开关 |
 | `default.custom.yaml` | 默认方案列表及全局选项 |
+| `weasel.yaml` / `weasel.custom.yaml` | Windows 小狼毫候选窗样式与明暗配色 |
+| `squirrel.yaml` / `squirrel.custom.yaml` | macOS 鼠须管候选窗样式与明暗配色 |
+| `fcitx5/linux/themes/` | Linux Fcitx5 Classic UI 桌面配色复刻主题 |
+| `fcitx5/macos/themes/` | macOS Fcitx5 可导入主题；`xmjd6-auto.conf` 自动切换 Cat 明暗配色 |
+| `fcitx5/themes.yaml` | 小企鹅主题来源清单，由生成脚本维护 |
+| `Hamster.yaml` | iOS 客户端自造词文件同步规则，不是元书键盘皮肤 |
 | `xmjd6.symbols.yaml` | 标点与符号 |
 | `xmjd6.core.dict.yaml` | 630、快符和核心码表 |
 | `xmjd6.user.dict.yaml` | 个人高优先级补充词库 |

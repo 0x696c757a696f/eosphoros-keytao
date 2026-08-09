@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import fnmatch
 import importlib.util
+import configparser
 import shutil
 import subprocess
 import sys
@@ -10,6 +11,8 @@ import unittest
 import zipfile
 from pathlib import Path
 from unittest.mock import patch
+
+import yaml
 
 
 class FetchOpenCCTests(unittest.TestCase):
@@ -49,6 +52,105 @@ class FetchOpenCCTests(unittest.TestCase):
 
 
 class RepositoryValidationTests(unittest.TestCase):
+    def test_fcitx5_theme_collections_match_desktop_sources(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        result = subprocess.run(
+            [sys.executable, "tools/build_fcitx5_themes.py", "--check"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+        manifest = yaml.safe_load(
+            (root / "fcitx5" / "themes.yaml").read_text(encoding="utf-8")
+        )
+        theme_ids = {item["id"] for item in manifest["themes"]}
+        self.assertIn("CatLight", theme_ids)
+        self.assertIn("CatDark", theme_ids)
+        self.assertGreater(len(theme_ids), 50)
+
+        linux_root = root / "fcitx5" / "linux" / "themes"
+        macos_root = root / "fcitx5" / "macos" / "themes"
+        self.assertEqual(
+            {path.name.removeprefix("xmjd6-") for path in linux_root.iterdir()},
+            theme_ids,
+        )
+        self.assertEqual(
+            {
+                path.stem.removeprefix("xmjd6-")
+                for path in macos_root.glob("xmjd6-*.conf")
+                if path.stem != "xmjd6-auto"
+            },
+            theme_ids,
+        )
+
+        for path in linux_root.glob("*/theme.conf"):
+            parser = configparser.ConfigParser(interpolation=None)
+            parser.optionxform = str
+            parser.read(path, encoding="utf-8")
+            self.assertIn("Metadata", parser, path)
+            self.assertIn("InputPanel", parser, path)
+            self.assertIn("InputPanel/Background", parser, path)
+            self.assertIn("InputPanel/Highlight", parser, path)
+            self.assertRegex(parser["InputPanel"]["NormalColor"], r"^#[0-9A-F]{8}$")
+
+        auto_theme = configparser.ConfigParser(interpolation=None)
+        auto_theme.optionxform = str
+        auto_theme.read(macos_root / "xmjd6-auto.conf", encoding="utf-8")
+        self.assertEqual(auto_theme["LightMode"]["OverrideDefault"], "True")
+        self.assertEqual(auto_theme["DarkMode"]["OverrideDefault"], "True")
+        self.assertEqual(auto_theme["DarkMode"]["SameWithLightMode"], "False")
+        self.assertEqual(auto_theme["LightMode"]["HighlightColor"], "#1F57FFFF")
+        self.assertEqual(auto_theme["DarkMode"]["HighlightColor"], "#0A3AFAFF")
+        self.assertEqual(auto_theme["DarkMode"]["TextColor"], "#FFFFFF99")
+        self.assertEqual(auto_theme["Typography"]["WritingMode"], "Horizontal top-bottom")
+
+        mac_color_fields = {
+            "HighlightColor",
+            "HighlightHoverColor",
+            "HighlightTextColor",
+            "HighlightTextPressColor",
+            "HighlightLabelColor",
+            "HighlightCommentColor",
+            "HighlightMarkColor",
+            "PanelColor",
+            "TextColor",
+            "LabelColor",
+            "CommentColor",
+            "PagingButtonColor",
+            "DisabledPagingButtonColor",
+            "AuxColor",
+            "PreeditColorPreCaret",
+            "PreeditColorCaret",
+            "PreeditColorPostCaret",
+            "BorderColor",
+            "DividerColor",
+        }
+        for path in macos_root.glob("*.conf"):
+            parser = configparser.ConfigParser(interpolation=None)
+            parser.optionxform = str
+            parser.read(path, encoding="utf-8")
+            for section in ("LightMode", "DarkMode"):
+                self.assertTrue(mac_color_fields <= set(parser[section]), path)
+                for field in mac_color_fields:
+                    self.assertRegex(parser[section][field], r"^#[0-9A-F]{8}$")
+
+    def test_release_publishes_fcitx5_theme_archives(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        release_workflow = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+        package_workflow = (root / ".github/workflows/package-master.yml").read_text(
+            encoding="utf-8"
+        )
+        for platform in ("linux", "macos"):
+            artifact = f"fcitx5-{platform}-xmjd6-themes"
+            self.assertIn(f"{artifact}.zip", release_workflow)
+            self.assertIn(f"name: {artifact}", package_workflow)
+
     def test_generated_xmjd6_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]
 
@@ -101,6 +203,98 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("patch_files:", recipe)
         self.assertIn("default.custom.yaml:", recipe)
         self.assertIn("- schema: xmjd6", recipe)
+
+    def test_plum_install_keeps_the_xmjd6_scheme_icon(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        recipe = (root / "recipe.yaml").read_text(encoding="utf-8")
+        install_block = recipe.split("install_files: >-", 1)[1].split(
+            "patch_files:", 1
+        )[0]
+        patterns = install_block.split()
+        schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
+
+        self.assertTrue(
+            any(fnmatch.fnmatchcase("xmjd6.ico", pattern) for pattern in patterns)
+        )
+        self.assertIn('  icon: ""', schema)
+        self.assertIn("xmjd6.custom.yaml:", recipe)
+        self.assertIn("schema/icon: xmjd6.ico", recipe)
+
+    def test_desktop_style_files_use_current_consistent_defaults(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        weasel = yaml.safe_load((root / "weasel.yaml").read_text(encoding="utf-8-sig"))
+        squirrel = yaml.safe_load(
+            (root / "squirrel.yaml").read_text(encoding="utf-8-sig")
+        )
+        weasel_custom = yaml.safe_load(
+            (root / "weasel.custom.yaml").read_text(encoding="utf-8-sig")
+        )["patch"]
+        squirrel_custom = yaml.safe_load(
+            (root / "squirrel.custom.yaml").read_text(encoding="utf-8-sig")
+        )["patch"]
+
+        for config, custom in (
+            (weasel, weasel_custom),
+            (squirrel, squirrel_custom),
+        ):
+            schemes = config["preset_color_schemes"]
+            self.assertIn("CatLight", schemes)
+            self.assertIn("CatDark", schemes)
+            self.assertEqual(config["style"]["color_scheme"], "CatLight")
+            self.assertEqual(config["style"]["color_scheme_dark"], "CatDark")
+            self.assertEqual(config["style"]["candidate_list_layout"], "stacked")
+            self.assertEqual(custom["style/color_scheme"], "CatLight")
+            self.assertEqual(custom["style/color_scheme_dark"], "CatDark")
+            self.assertEqual(custom["style/candidate_list_layout"], "stacked")
+
+        squirrel_style = squirrel["style"]
+        self.assertIn("memorize_size", squirrel_style)
+        self.assertNotIn("remember_size", squirrel_style)
+        self.assertIn("mutual_exclusive", squirrel_style)
+        self.assertIn("translucency", squirrel_style)
+        self.assertEqual(
+            squirrel_style["candidate_format"],
+            "[label]. [candidate] [comment]",
+        )
+        for scheme in squirrel["preset_color_schemes"].values():
+            if isinstance(scheme, dict):
+                self.assertNotIn("horizontal", scheme)
+                candidate_format = str(scheme.get("candidate_format", ""))
+                self.assertNotIn("%c", candidate_format)
+                self.assertNotIn("%@", candidate_format)
+
+    def test_desktop_style_yaml_has_no_duplicate_keys(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+
+        def duplicate_keys(path: Path) -> list[str]:
+            document = yaml.compose(path.read_text(encoding="utf-8-sig"))
+            duplicates: list[str] = []
+
+            def visit(node: yaml.Node, prefix: str = "") -> None:
+                if isinstance(node, yaml.MappingNode):
+                    seen: set[str] = set()
+                    for key_node, value_node in node.value:
+                        key = str(key_node.value)
+                        if key in seen:
+                            duplicates.append(f"{prefix}/{key}")
+                        seen.add(key)
+                        visit(value_node, f"{prefix}/{key}")
+                elif isinstance(node, yaml.SequenceNode):
+                    for index, value_node in enumerate(node.value):
+                        visit(value_node, f"{prefix}/{index}")
+
+            if document is not None:
+                visit(document)
+            return duplicates
+
+        for filename in (
+            "weasel.yaml",
+            "squirrel.yaml",
+            "weasel.custom.yaml",
+            "squirrel.custom.yaml",
+            "Hamster.yaml",
+        ):
+            self.assertEqual(duplicate_keys(root / filename), [], filename)
 
     def test_main_schema_exposes_explicit_switch_defaults_for_rimetool(self) -> None:
         root = Path(__file__).resolve().parents[1]

@@ -3,7 +3,7 @@
 # 单字读音来源：https://yuhao.forfudan.com/ 宇浩输入法
 ---
 name: xmjd6.cx
-version: "2026-08-04"
+version: "2026-08-09"
 sort: original
 import_tables:
   - xmjd6.danzi

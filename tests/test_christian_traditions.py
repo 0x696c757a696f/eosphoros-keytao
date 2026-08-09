@@ -103,6 +103,64 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         }
         self.assertTrue({"马丁·路德", "约翰·加尔文"} <= protestant_words)
         self.assertTrue({"马丁路德", "约翰加尔文"}.isdisjoint(protestant_words))
+        self.assertTrue(
+            {
+                "法兰西斯·亚斯理",
+                "苏珊娜·卫斯理",
+                "苏撒拿·卫斯理",
+                "托马斯·科克",
+                "乔治·怀特腓",
+                "约翰·弗莱彻",
+            }
+            <= protestant_words
+        )
+        self.assertTrue(
+            {
+                "法兰西斯亚斯理",
+                "苏珊娜卫斯理",
+                "苏撒拿卫斯理",
+                "托马斯科克",
+                "乔治怀特腓",
+                "约翰弗莱彻",
+            }.isdisjoint(protestant_words)
+        )
+
+    def test_methodist_vocabulary_covers_names_theology_practice_and_history(self) -> None:
+        protestant_words = {
+            word
+            for word, _ in iter_dictionary_rows(ROOT / "xmjd6.protestantism.dict.yaml")
+        }
+        self.assertTrue(
+            {
+                "循道卫理宗",
+                "循道卫理运动",
+                "联合卫理公会",
+                "美以美会",
+                "监理会",
+                "美普会",
+                "预设恩典",
+                "完全的爱",
+                "内在圣洁",
+                "外在圣洁",
+                "卫斯理社会圣洁",
+                "恩典途径",
+                "循道会社",
+                "班会制度",
+                "联结制度",
+                "年议会",
+                "立约礼拜",
+                "立约主日",
+                "卫斯理更新主日",
+                "艾德门主日",
+                "亚德门经验",
+                "圣洁社团",
+                "巡回传道人",
+                "法兰西斯·亚斯理",
+                "苏珊娜·卫斯理",
+                "苏撒拿·卫斯理",
+            }
+            <= protestant_words
+        )
 
     def test_fixed_dictionary_conflicts_are_skipped(self) -> None:
         result = build_entries(ROOT)

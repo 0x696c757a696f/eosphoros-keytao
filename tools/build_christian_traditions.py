@@ -24,7 +24,7 @@ from tools.xmjd6_codes import (
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_NAME = "tools/christian_traditions_2026.txt"
-VERSION = "2026-08-04"
+VERSION = "2026-08-09"
 TARGET_SPECS = (
     (
         "新教：",
@@ -80,6 +80,7 @@ PREFERRED_PREFIXES = {
     "调": "dc",  # diào（八调经）
     "谷": "gj",  # gǔ（哈巴谷）
     "重": "wy",  # chóng（四重）
+    "艾": "xh",  # ài（艾德门）
 }
 
 # These three canonical Chinese Union Version book names cannot be represented

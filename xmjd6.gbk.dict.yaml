@@ -3,7 +3,7 @@
 # 该文件以UTF-8编码保存
 ---
 name: xmjd6.gbk
-version: "2026-08-04"
+version: "2026-08-09"
 sort: original
 import_tables:
   - xmjd6.cx

@@ -1,0 +1,540 @@
+generated: '2026-08-09'
+desktop_precedence:
+- squirrel
+- weasel
+themes:
+- id: CatLight
+  name: Cat光明/CatLight
+  author: ProudCat
+  sources:
+  - squirrel
+  - weasel
+- id: CatDark
+  name: Cat暗黑/CatDark
+  author: ProudCat
+  sources:
+  - squirrel
+  - weasel
+- id: mint_light_blue
+  name: 蓝水鸭／Mint Light Blue
+  author: Mintimate <"Mintimate's Blog">
+  sources:
+  - squirrel
+  - weasel
+- id: mint_dark_blue
+  name: 黑水鸭／Mint Dark Blue
+  author: Mintimate <"Mintimate's Blog">
+  sources:
+  - squirrel
+  - weasel
+- id: mac_light
+  name: Mac浅色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: mac_dark
+  name: Mac深色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: mac_green
+  name: Mac绿
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: mac_orange
+  name: Mac橙
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: mac_blue
+  name: Mac浅蓝
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win10
+  name: win10
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+- id: appsored
+  name: AppSo 红
+  author: Astrian Zheng
+  sources:
+  - squirrel
+  - weasel
+- id: dracula
+  name: dracula
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: dracula_light
+  name: dracula_light
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: ifanrblack
+  name: 爱范儿黑
+  author: Astrian Zheng
+  sources:
+  - squirrel
+  - weasel
+- id: macos12_dark
+  name: 高仿暗色 macOS
+  author: Lufs X <i@isteed.cc>
+  sources:
+  - squirrel
+  - weasel
+- id: macos12_light
+  name: 高仿亮色 macOS
+  author: Lufs X <i@isteed.cc>
+  sources:
+  - squirrel
+  - weasel
+- id: metro
+  name: metro
+  author: flypy.com
+  sources:
+  - squirrel
+- id: milan
+  name: 米兰
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: nord_dark
+  name: 北方深色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: nord_light
+  name: 北方浅色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: purity
+  name: 纯洁
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: MacRoseo
+  name: 玫红 / MacRoseo
+  author: KyleBing
+  sources:
+  - squirrel
+  - weasel
+- id: MacRoseoAlt
+  name: MacRoseo
+  author: KyleBing
+  sources:
+  - squirrel
+  - weasel
+- id: WhiteAqua
+  name: WhiteAqua
+  author: KyleBing
+  sources:
+  - squirrel
+  - weasel
+- id: wechat_dark
+  name: 微信键盘深色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: wechat_light
+  name: 微信键盘浅色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: white
+  name: 白色/white
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win10_MDL_ayaya
+  name: Windows10 文文／Ayaya
+  author: Lufs X <i@isteed.cc>
+  sources:
+  - squirrel
+  - weasel
+- id: win10_MDL_blue
+  name: Windows 10 Blue
+  author: fbewivpjsbsby
+  sources:
+  - squirrel
+  - weasel
+- id: win10_MDL_darkblue
+  name: Windows 10 Dark Blue
+  author: fbewivpjsbsby
+  sources:
+  - squirrel
+  - weasel
+- id: win10_MDL_deepgrey
+  name: Windows10 Deepgrey
+  author: fbewivpjsbsby
+  sources:
+  - squirrel
+  - weasel
+- id: win10_MDL_preset
+  name: win10_MDL_preset
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win10_preset
+  name: win10_preset
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win10_weasel
+  name: win10_weasel
+  author: luminosa
+  sources:
+  - squirrel
+  - weasel
+- id: win11_preset
+  name: win11_preset
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win11_weasel
+  name: win11_weasel
+  author: luminosa
+  sources:
+  - squirrel
+  - weasel
+- id: easy_dark
+  name: 蓝黑
+  author: 木易
+  sources:
+  - squirrel
+  - weasel
+- id: eucalyptus
+  name: 尤加利
+  author: ID;Peace B
+  sources:
+  - squirrel
+  - weasel
+- id: gruvbox_light
+  name: Gruvbox Light
+  author: Q
+  sources:
+  - squirrel
+  - weasel
+- id: pornhub
+  name: Pornhub
+  author: swwrww
+  sources:
+  - squirrel
+  - weasel
+- id: qishu
+  name: 祈澍
+  author: qishu
+  sources:
+  - squirrel
+  - weasel
+- id: rose_red
+  name: 玫红
+  author: 木易
+  sources:
+  - squirrel
+  - weasel
+- id: so_young_qmod_01
+  name: 致青春·Q改
+  author: Q
+  sources:
+  - squirrel
+  - weasel
+- id: win10black
+  name: Win10Black
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win10blue
+  name: Win10Blue
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win10gray
+  name: Win10Gray
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win11dark
+  name: Win11Dark
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: win11light
+  name: Win11Light
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+  - weasel
+- id: xingye
+  name: 星夜
+  author: lxetm
+  sources:
+  - squirrel
+  - weasel
+- id: 青橙
+  name: 青橙
+  author: lxetm
+  sources:
+  - squirrel
+  - weasel
+- id: native
+  name: 系統配色
+  author: xmjd6 desktop theme collection
+  sources:
+  - squirrel
+- id: aqua
+  name: 碧水／Aqua
+  author: 佛振 <chen.sst@gmail.com>
+  sources:
+  - squirrel
+  - weasel
+- id: azure
+  name: 青天／Azure
+  author: 佛振 <chen.sst@gmail.com>
+  sources:
+  - squirrel
+  - weasel
+- id: luna
+  name: 明月／Luna
+  author: 佛振 <chen.sst@gmail.com>
+  sources:
+  - squirrel
+  - weasel
+- id: ink
+  name: 墨池／Ink
+  author: 佛振 <chen.sst@gmail.com>
+  sources:
+  - squirrel
+  - weasel
+- id: lost_temple
+  name: 孤寺／Lost Temple
+  author: 佛振 <chen.sst@gmail.com>, based on ir_black
+  sources:
+  - squirrel
+  - weasel
+- id: dark_temple
+  name: 暗堂／Dark Temple
+  author: 佛振 <chen.sst@gmail.com>, based on ir_black
+  sources:
+  - squirrel
+  - weasel
+- id: psionics
+  name: 幽能／Psionics
+  author: 雨過之後、佛振
+  sources:
+  - squirrel
+  - weasel
+- id: purity_of_form
+  name: 純粹的形式／Purity of Form
+  author: 雨過之後、佛振
+  sources:
+  - squirrel
+- id: purity_of_essence
+  name: 純粹的本質／Purity of Essence
+  author: 佛振
+  sources:
+  - squirrel
+- id: starcraft
+  name: 星際我爭霸／StarCraft
+  author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
+  sources:
+  - squirrel
+  - weasel
+- id: google
+  name: 谷歌／Google
+  author: skoj <skoj@qq.com>
+  sources:
+  - squirrel
+  - weasel
+- id: solarized_rock
+  name: 曬經石／Solarized Rock
+  author: Aben <tntaben@gmail.com>, based on Ethan Schoonover's Solarized color scheme
+  sources:
+  - squirrel
+  - weasel
+- id: clean_white
+  name: 简约白／Clean White
+  author: Chongyu Zhu <lembacon@gmail.com>, based on 搜狗「简约白」
+  sources:
+  - squirrel
+- id: apathy
+  name: 冷漠／Apathy
+  author: LIANG Hai
+  sources:
+  - squirrel
+  - weasel
+- id: dust
+  name: 浮尘／Dust
+  author: Superoutman <asticosmo@gmail.com>
+  sources:
+  - squirrel
+- id: mojave_dark
+  name: 沙漠夜／Mojave Dark
+  author: xiehuc <xiehuc@gmail.com>
+  sources:
+  - squirrel
+- id: solarized_light
+  name: 曬經・日／Solarized Light
+  author: 雪齋 <lyc20041@gmail.com>
+  sources:
+  - squirrel
+- id: solarized_dark
+  name: 曬經・月／Solarized Dark
+  author: 雪齋 <lyc20041@gmail.com>
+  sources:
+  - squirrel
+  - weasel
+- id: tintin
+  name: 丁丁／ Tintin
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: dota_2
+  name: DOTA 2
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: brasil
+  name: 笆悉／Brasil
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: doraemon
+  name: 銅鑼衛門／Doraemon
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: espagna
+  name: 埃斯巴尼亞／España
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: gholabok
+  name: 胡蘿菔／Gholabok
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: kuma_shuzboz
+  name: 熊出沒／Kuma Shuzboz
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: kuon
+  name: 琨／Kuon
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: macau
+  name: 澳門／Macau
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: nba
+  name: NBA
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: ps4
+  name: 遊驛四／PS4
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: skype
+  name: 斯蓋普／Skype
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: xbox_silver
+  name: 銀色叉盒／Xbox Silver
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: youtube
+  name: YouTube
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: so_young
+  name: 致青春／So Young
+  author: 五磅兔 <zcunlin@foxmail.com>
+  sources:
+  - weasel
+- id: smurfs
+  name: 藍精靈／Smurfs
+  author: skoj <skoj@qq.com>
+  sources:
+  - weasel
+- id: wii
+  name: Wii
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: android
+  name: 安卓／Android
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: cool_breeze
+  name: 清風／Cool Breeze
+  author: skoj <skoj@qq.com>
+  sources:
+  - weasel
+- id: google_plus
+  name: Google+
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: modern_warfare
+  name: 現代戰爭／Modern Warfare
+  author: P1461
+  sources:
+  - weasel
+- id: brisk
+  name: 輕盈／Brisk
+  author: skoj <skoj@qq.com>
+  sources:
+  - weasel
+- id: starcraft_ii
+  name: 星際爭霸Ⅱ／StarCraft Ⅱ
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: steam
+  name: Steam
+  author: Patricivs <ipatrickmac@me.com>
+  sources:
+  - weasel
+- id: flypy
+  name: 小鹤飞扬／flypy
+  author: Pal.lxk <Pal.lxk@gmail.com>
+  sources:
+  - weasel
+- id: metroblue
+  name: 现代蓝／Metro Blue
+  author: Prcuvu <prcuvu@gmail.com>
+  sources:
+  - weasel

@@ -5,7 +5,7 @@
 # 收录经审核的传统专有词；新教词库另含《和合本》标准译语。
 ---
 name: xmjd6.protestantism
-version: "2026-08-04"
+version: "2026-08-09"
 sort: original
 use_preset_vocabulary: false
 columns:
@@ -142,6 +142,78 @@ columns:
 托马斯·克兰麦	tmsm
 雅各布·阿民念	ygbnv
 门诺·西门斯	mnxsoo
+
+# -------------------- 新教：循道卫理宗传统、制度与人物 --------------------
+循道卫理宗	xdwzu
+循道卫理运动	xdwdu
+循道运动	xdydu
+卫理运动	wlydav
+循道公会	xdgh
+卫理公会	wlgha
+联合卫理公会	lhwhv
+英国循道公会	ygxhii
+中华基督教卫理公会	fhjh
+香港基督教循道卫理联合教会	xgjhu
+世界循道卫理宗华人教会联会	ejxhvi
+美以美会	mymh
+监理会	jlhivi
+美普会	mpho
+预设恩典	yexdao
+预行恩典	yxxd
+完全的爱	wqdx
+内在圣洁	nzeji
+外在圣洁	wzeju
+心灵与生活的圣洁	xlyjo
+个人圣洁	greji
+卫斯理社会圣洁	wsljav
+恩典途径	xdtjii
+蒙恩途径	mxtj
+卫斯理救恩观	wslgav
+循道卫理实践神学	xdwxu
+循道卫理圣洁观	xdwgu
+卫斯理阿民念主义	wslyav
+信仰确据	xyqji
+成圣之路	jeflv
+循道会社	xdheuo
+班会制度	bhfdvi
+班长制度	bqfdv
+小团制度	xtfdii
+联结制度	ljfdva
+联结主义	ljqyv
+年议会	nyhuo
+圣诞节议会	edjhao
+总议会	zyhooi
+卫理会督制	wlhfav
+巡回制度	xhfda
+巡回布道	xhbda
+巡回传道人	xhwra
+户外布道	hwbd
+爱筵	xhyfuu
+立约礼拜	lylbo
+立约主日	lyqroa
+卫斯理更新主日	wslra
+艾德门主日	xdmri
+亚德门经验	ydmyv
+亚德门街经验	ydmyvu
+内心火热经验	nxhy
+圣洁社团	ejet
+牛津圣洁社团	njet
+循道徒	xdtuo
+卫理门徒	wlmt
+卫理信仰要道	wlxdav
+卫理社会信条	wleta
+卫理法规汇编	wlfba
+二十五条信仰要道	xewdv
+卫斯理标准讲章	wslqav
+卫斯理圣诗	wsleav
+查理·卫斯理圣诗	flwev
+赞美诗和神圣诗歌	zmeg
+法兰西斯·亚斯理	flxla
+苏珊娜·卫斯理	senli
+苏撒拿·卫斯理	ssnli
+托马斯·科克	tmskia
+乔治·怀特腓	qfhfu
+约翰·弗莱彻	yhfjau
 
 # -------------------- 新教：《和合本》书卷名与正典分卷 --------------------
 国语和合本	gyhbio

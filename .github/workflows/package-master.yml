@@ -77,6 +77,21 @@ jobs:
           --sha256 "$OPENCC_TONGGUI_SHA256" \
           --destination opencc/xmjd6
 
+    - name: Validate Fcitx5 themes
+      run: python tools/build_fcitx5_themes.py --check
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: fcitx5-linux-xmjd6-themes
+        path: fcitx5/linux/themes/**/*
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: fcitx5-macos-xmjd6-themes
+        path: fcitx5/macos/themes/*.conf
+        if-no-files-found: error
+
     - uses: actions/upload-artifact@v7
       with:
         name: xmjd6
@@ -85,6 +100,7 @@ jobs:
           !.git/**
           !.github/**
           !.git*
+          !fcitx5/**
           !yong*.*
           !tests/**
           !tools/**

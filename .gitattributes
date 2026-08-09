@@ -12,6 +12,7 @@
 *.md   text eol=lf
 *.txt  text eol=lf
 *.ini  text eol=lf
+*.conf text eol=lf
 VERSION text eol=lf
 
 # Native Windows scripts conventionally require CRLF.
@@ -41,3 +42,4 @@ xmjd6.orthodoxy.dict.yaml     linguist-generated=true
 xmjd6.oriental.dict.yaml      linguist-generated=true
 xmjd6.assyrian.dict.yaml      linguist-generated=true
 opencc/xmjd6/*.lua            linguist-generated=true
+fcitx5/**                       linguist-generated=true

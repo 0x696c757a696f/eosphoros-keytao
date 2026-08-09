@@ -11,6 +11,7 @@ install_files: >-
   pinyin_simp*.yaml
   squirrel.yaml
   weasel.yaml
+  xmjd6.ico
   xmjd6.*.dict.yaml
   xmjd6.*.schema.yaml
   xmjd6.schema.yaml
@@ -27,3 +28,6 @@ patch_files:
     - patch/+:
         schema_list/+/+:
           - schema: xmjd6
+  xmjd6.custom.yaml:
+    - patch/+:
+        schema/icon: xmjd6.ico

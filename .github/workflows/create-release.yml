@@ -95,12 +95,18 @@ jobs:
 
     - name: Zip master branch files excluding .git and .github
       # 此时 opencc/xmjd6 里的文件已经存在，会被包含在下面的 xmjd6.zip 中（因为没有被 -x 排除）
-      run: zip -r xmjd6.zip . -x "*.git*" -x "*.github*" -x "yong*" -x "mb*" -x "Rime*" -x "tests/*" -x "tools/*" -x "VERSION" -x "requirements-dev.txt"
+      run: zip -r xmjd6.zip . -x "*.git*" -x "*.github*" -x "fcitx5/*" -x "yong*" -x "mb*" -x "Rime*" -x "tests/*" -x "tools/*" -x "VERSION" -x "requirements-dev.txt"
+
+    - name: Package Fcitx5 themes
+      run: |
+        python tools/build_fcitx5_themes.py --check
+        (cd fcitx5/linux/themes && zip -r ../../../fcitx5-linux-xmjd6-themes.zip .)
+        (cd fcitx5/macos/themes && zip -r ../../../fcitx5-macos-xmjd6-themes.zip .)
 
     - name: Prepare Rime directory for Rabbit
       run: |
         mkdir -p Rime/
-        rsync -avm --exclude='.git*' --exclude='*.github*' --exclude='squirrel*' --exclude='weasel*' --exclude='hamster*' --exclude='*.txt' --exclude='xmjd6.zip' --exclude='yong*' --exclude='mb*' --exclude='Rime*' --exclude='/tests/' --exclude='/tools/' --exclude='/VERSION' --exclude='/requirements-dev.txt' . Rime/
+        rsync -avm --exclude='.git*' --exclude='*.github*' --exclude='/fcitx5/' --exclude='squirrel*' --exclude='weasel*' --exclude='hamster*' --exclude='*.txt' --exclude='xmjd6.zip' --exclude='yong*' --exclude='mb*' --exclude='Rime*' --exclude='/tests/' --exclude='/tools/' --exclude='/VERSION' --exclude='/requirements-dev.txt' . Rime/
         ls -al Rime/
         pwd
 
@@ -332,6 +338,26 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./xmjd6.zip
         asset_name: xmjd6.zip
+        asset_content_type: application/zip
+
+    - name: Upload Fcitx5 Linux themes to Release
+      uses: shogo82148/actions-upload-release-asset@v1.10.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./fcitx5-linux-xmjd6-themes.zip
+        asset_name: fcitx5-linux-xmjd6-themes.zip
+        asset_content_type: application/zip
+
+    - name: Upload Fcitx5 macOS themes to Release
+      uses: shogo82148/actions-upload-release-asset@v1.10.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./fcitx5-macos-xmjd6-themes.zip
+        asset_name: fcitx5-macos-xmjd6-themes.zip
         asset_content_type: application/zip
 
     - name: Upload dazhu.txt to Release

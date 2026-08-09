@@ -10,7 +10,7 @@
 
 # 要比共享目录的同名文件的 config_version 大才可以生效
 
-config_version: "2026-08-04"
+config_version: "2026-08-09"
 
 # 选项: last | default | _custom_
 # last: 上次使用的拉丁键盘布局
@@ -24,17 +24,19 @@ chord_duration: 0.1  # seconds
 # options: always | never | appropriate
 show_notifications_when: appropriate
 
+# 菜单栏状态图标；方案会使用 ascii_mode 的中英文状态标签。
+status_icon:
+  show: true
+
 style:
   # 选择皮肤，亮色与暗色主题
-  color_scheme: wechat_light
-  color_scheme_dark: wechat_dark
+  color_scheme: CatLight
+  color_scheme_dark: CatDark
 
   # 预设选项。如果皮肤没写，则使用这些属性；如果皮肤写了，使用皮肤的。
   
-  # 自 0.36(Squirrel 0.15) 起已弃用。覆写为横向，建议使用 candidate_list_layout
-  # horizontal: false # 已弃用
-  # # stacked | linear | tabled 候选项排列方向(如果希望水平，设置linear)
-  candidate_list_layout: stacked  # stacked | linear | tabled
+  # 鼠须管 1.0.1 起不再支持 horizontal/vertical，请使用以下两个字段。
+  candidate_list_layout: stacked  # stacked | linear
   
   text_orientation: horizontal  # horizontal | vertical
   # 内嵌预编辑
@@ -44,8 +46,11 @@ style:
   # 展示分页
   show_paging : false
   
-  # 记住面板大小后,它朝向屏幕中心扩展,而不是远离屏幕中心。
-  remember_size: false
+  # 让候选面板贴近屏幕边缘时保持尺寸稳定。
+  memorize_size: true
+  # 半透明颜色是否互相叠加；背景透明时是否启用系统半透明效果。
+  mutual_exclusive: false
+  translucency: false
 
   # 外边框 圆角半径
   corner_radius: 10
@@ -66,8 +71,8 @@ style:
   # 预编辑和候选词的行长度(如果值>0则固定,否则为灵活/自动调整)。
   line_length: 0
 
-  # 候选词格式
-  # candidate_format: '%c. %@'
+  # 鼠须管 1.0 起推荐的候选格式；旧式 %c / %@ 仅保留兼容解析。
+  candidate_format: "[label]. [candidate] [comment]"
 
   # 全局字体及大小
   font_face: "霞鹜新晰黑, PingFang SC, TH-Tshyn-P1:30000:3134A, TH-Tshyn-P1:31350:323AF, TH-Tshyn-P1:2EBF0:2EE5D, Segoe UI, Segoe UI Emoji:30:39, Segoe UI Emoji:23:23, Segoe UI Emoji:2a:2a, Segoe UI Emoji:fe0f:fe0f, Segoe UI Emoji:20e3:20e3, Noto Color Emoji SVG:80"
@@ -106,6 +111,48 @@ app_options:
     ascii_mode: true
 
 preset_color_schemes:
+  CatLight:
+    name: "Cat光明/CatLight"
+    author: ProudCat
+    text_color: 0x000000
+    back_color: 0xf3f3f3
+    shadow_color: 0x00000000
+    border_color: 0x00e0e0e0
+    hilited_text_color: 0x000000
+    hilited_back_color: 0x00d4d4d4
+    hilited_shadow_color: 0x00000000
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0xff571f
+    hilited_candidate_shadow_color: 0x00000000
+    candidate_text_color: 0x4b4b4b
+    candidate_back_color: 0xf3f3f3
+    candidate_shadow_color: 0x00000000
+    comment_text_color: 0x4b4b4b
+    hilited_comment_text_color: 0xc5c5c5
+    label_color: 0x4b4b4b
+    hilited_label_color: 0xc5c5c5
+
+  CatDark:
+    name: "Cat暗黑/CatDark"
+    author: ProudCat
+    text_color: 0xe5ffffff
+    back_color: 0x242424
+    shadow_color: 0x00000000
+    border_color: 0x00e0e0e0
+    hilited_text_color: 0xe5ffffff
+    hilited_back_color: 0x00d4d4d4
+    hilited_shadow_color: 0x00000000
+    hilited_candidate_text_color: 0xe5ffffff
+    hilited_candidate_back_color: 0xfa3a0a
+    hilited_candidate_shadow_color: 0x00000000
+    candidate_text_color: 0x99ffffff
+    candidate_back_color: 0x242424
+    candidate_shadow_color: 0x00000000
+    comment_text_color: 0x55ffffff
+    hilited_comment_text_color: 0xc5c5c5
+    label_color: 0x85ffffff
+    hilited_label_color: 0xe5ffffff
+
   mint_light_blue:
     name: "蓝水鸭／Mint Light Blue"
     author: Mintimate <"Mintimate's Blog">
@@ -147,51 +194,10 @@ preset_color_schemes:
     hilited_comment_text_color: 0xffffff    # 选中注颜色
     text_color: 0x6495ed                    # 拼音颜色 （inline_preedit: false）
     hilited_text_color: 0xc6c01a            # 选中拼音颜色 （inline_preedit: false）
-    CatDark: {author: ProudCat, back_color: 0x242424, border_color: 0x00e0e0e0, candidate_back_color: 0x242424, candidate_shadow_color: 0x00000000, candidate_text_color: 0x99ffffff, comment_text_color: 0x55ffffff, hilited_back_color: 0x00d4d4d4, hilited_candidate_back_color: 0xfa3a0a, hilited_candidate_shadow_color: 0x00000000, hilited_candidate_text_color: 0xe5ffffff, hilited_comment_text_color: 0xc5c5c5, hilited_label_color: 0xe5ffffff, hilited_shadow_color: 0x00000000, hilited_text_color: 0xe5ffffff, label_color: 0x85ffffff, name: "Cat暗黑/CatDark", shadow_color: 0x00000000, text_color: 0xe5ffffff}
-    CatLight: {author: ProudCat, back_color: 0xf3f3f3, border_color: 0x00e0e0e0, candidate_back_color: 0xf3f3f3, candidate_shadow_color: 0x00000000, candidate_text_color: 0x4b4b4b, comment_text_color: 0x4b4b4b, hilited_back_color: 0x00d4d4d4, hilited_candidate_back_color: 0xff571f, hilited_candidate_shadow_color: 0x00000000, hilited_candidate_text_color: 0xffffff, hilited_comment_text_color: 0xc5c5c5, hilited_label_color: 0xc5c5c5, hilited_shadow_color: 0x00000000, hilited_text_color: 0x000000, label_color: 0x4b4b4b, name: "Cat光明/CatLight", shadow_color: 0x00000000, text_color: 0x000000}
-
-  wechat_light:
-    name: 微信键盘浅色
-    horizontal: true                          # true横排，false竖排
-    back_color: 0xFFFFFF                      # 候选条背景色
-    border_height: 0                          # 窗口上下高度，大于圆角半径才生效
-    border_width: 8                           # 窗口左右宽度，大于圆角半径才生效
-    candidate_format: "%c %@ "                # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
-    comment_text_color: 0x999999              # 拼音等提示文字颜色
-    corner_radius: 5                          # 窗口圆角
-    hilited_corner_radius: 5                  # 高亮圆角
-    font_face: PingFangSC                     # 候选词字体
-    font_point: 16                            # 候选字大小
-    hilited_candidate_back_color: 0x75B100    # 第一候选项背景色
-    hilited_candidate_text_color: 0xFFFFFF    # 第一候选项文字颜色
-    label_font_point: 12                      # 候选编号大小
-    text_color: 0x424242                      # 拼音行文字颜色
-    inline_preedit: true                      # 拼音位于： 候选框 false | 行内 true
-
-  wechat_dark:
-    name: 微信键盘深色
-    horizontal: true                          # true横排，false竖排
-    back_color: 0x2e2925                      # 候选条背景色
-    border_height: 0                          # 窗口上下高度，大于圆角半径才生效
-    border_width: 8                           # 窗口左右宽度，大于圆角半径才生效
-    candidate_format: "%c %@ "                # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
-    comment_text_color: 0x999999              # 拼音等提示文字颜色
-    corner_radius: 5                          # 窗口圆角
-    hilited_corner_radius: 5                  # 高亮圆角
-    font_face: PingFangSC                     # 候选词字体
-    font_point: 16                            # 候选字大小
-    hilited_candidate_back_color: 0x75B100    # 第一候选项背景色
-    hilited_candidate_text_color: 0xFFFFFF    # 第一候选项文字颜色
-    label_font_point: 12                      # 候选编号大小
-    text_color: 0x424242                      # 拼音行文字颜色
-    label_color: 0x999999                     # 预选栏编号颜色
-    candidate_text_color: 0xe9e9ea            # 预选项文字颜色
-    inline_preedit: true                      # 拼音位于： 候选框 false | 行内 true
-
   mac_light:
     name: Mac浅色
-    horizontal: true             # true横排，false竖排
-    candidate_format: "%c %@ "   # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
+    candidate_list_layout: linear             # linear 横排，stacked 竖排
+    candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
     hilited_corner_radius: 5                     # 高亮圆角
     line_spacing: 10                             # 行间距(适用于竖排)
@@ -214,8 +220,8 @@ preset_color_schemes:
 
   mac_dark:
     name: Mac深色
-    horizontal: true             # true横排，false竖排
-    candidate_format: "%c %@ "   # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
+    candidate_list_layout: linear             # linear 横排，stacked 竖排
+    candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
     hilited_corner_radius: 5                     # 高亮圆角
     line_spacing: 10                              # 行间距(适用于竖排)
@@ -238,8 +244,8 @@ preset_color_schemes:
 
   mac_green:
     name: Mac绿
-    horizontal: true             # true横排，false竖排
-    candidate_format: "%c %@ "   # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
+    candidate_list_layout: linear             # linear 横排，stacked 竖排
+    candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
     hilited_corner_radius: 5                     # 高亮圆角
     line_spacing: 10                              # 行间距(适用于竖排)
@@ -262,8 +268,8 @@ preset_color_schemes:
 
   mac_orange:
     name: Mac橙
-    horizontal: true             # true横排，false竖排
-    candidate_format: "%c %@ "   # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
+    candidate_list_layout: linear             # linear 横排，stacked 竖排
+    candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
     hilited_corner_radius: 5                     # 高亮圆角
     line_spacing: 10                              # 行间距(适用于竖排)
@@ -286,8 +292,8 @@ preset_color_schemes:
 
   mac_blue:
     name: Mac浅蓝
-    horizontal: false              # true横排，false竖排
-    candidate_format: "%c %@ "    # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
+    candidate_list_layout: stacked              # linear 横排，stacked 竖排
+    candidate_format: "[label] [candidate] [comment] "    # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
     font_face: "PingFangSC"                      # 候选词字体
     font_point: 16                               # 候选字大小
@@ -305,29 +311,9 @@ preset_color_schemes:
     hilited_candidate_label_color: 0xFFFFFF # 第一候选项编号颜色
     hilited_comment_text_color: 0x999999    # 注解文字高亮
 
-  psionics:
-    name: 幽能
-    horizontal: true              # true横排，false竖排
-    candidate_format: "%c %@ "    # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间
-    corner_radius: 5                             # 窗口圆角 
-    font_point: 16                               # 候选文字大小
-    label_font_point: 14                         # 候选编号大小
-    line_spacing: 10                              # 行间距(适用于竖排)
-    font_face: "PingFangSC-Regular,HanaMinB"     # 候选词字体  
-    text_color: 0xc2c2c2                     # 拼音行文字颜色
-    back_color: 0x444444                     # 候选条背景色，24位色值，16进制，BGR顺序
-    candidate_text_color: 0xeeeeee           # 预选项文字颜色
-    hilited_candidate_back_color: 0xd4bc00   # 候选文字背景色
-    comment_text_color: 0x808080             # 拼音等提示文字颜色
-    hilited_text_color: 0xeeeeee             # 高亮拼音 (需要开启内嵌编码)
-    hilited_back_color: 0x444444             # 第一候选项背景背景色
-    hilited_candidate_label_color: 0xfafafa  # 第一候选项编号颜色
-    hilited_candidate_text_color: 0xfafafa   # 第一候选项文字颜色
-    hilited_comment_text_color: 0x444444     # 注解文字高亮
-
   win10:
-    horizontal: true                  # true横排，false竖排
-    candidate_format: "%c %@  "       # 如果是竖排建议改为 "%c\u2005%@"
+    candidate_list_layout: linear                  # linear 横排，stacked 竖排
+    candidate_format: "[label] [candidate] [comment]  "       # 如果是竖排建议改为 "[label]\u2005[candidate] [comment]"
     font_point: 17              # 候选文字大小
     label_font_point: 16        # 候选编号大小
     corner_radius: 0            # 候选条圆角
@@ -353,20 +339,10 @@ preset_color_schemes:
     hilited_label_color: 0xffffff           # 已选字的数字的颜色
     label_color: 0x888888                   # 预选栏编号颜色    
 
-  apathy:
-    back_color: 0xFFFFFF
-    candidate_format: "%c %@ "
-    comment_text_color: 0x999999
-    hilited_candidate_back_color: 0xFFF0E4
-    hilited_candidate_text_color: 0xEE6E00
-    inline_preedit: true
-    name: "冷漠"
-    text_color: 0x424242
-
   appsored:
     author: "Astrian Zheng"
     back_color: 0x2824C8
-    candidate_format: "%c. %@ "
+    candidate_format: "[label]. [candidate] [comment] "
     candidate_text_color: 0xC5C3F2
     comment_text_color: 0xFFFFFF
     hilited_candidate_back_color: 0x2824C8
@@ -380,7 +356,7 @@ preset_color_schemes:
   dracula:
     back_color: 0x362A28
     border_color: 0x362A28
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xF993BD
     comment_text_color: 0xFDE98B
     corner_radius: 5
@@ -391,7 +367,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xF2F8F8
     hilited_comment_text_color: 0x362b00
     hilited_text_color: 0x5A4744
-    horizontal: true
+    candidate_list_layout: linear
     inline_preedit: true
     label_font_point: 14
     line_spacing: 10
@@ -401,7 +377,7 @@ preset_color_schemes:
   dracula_light:
     back_color: 0xF2F8F8
     border_color: 0xF2F8F8
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0x362A28
     comment_text_color: 0x5A4744
     corner_radius: 5
@@ -412,7 +388,7 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xF2F8F8
     hilited_comment_text_color: 0x362b00
     hilited_text_color: 0x362A28
-    horizontal: true
+    candidate_list_layout: linear
     inline_preedit: true
     label_font_point: 14
     line_spacing: 10
@@ -422,7 +398,7 @@ preset_color_schemes:
   ifanrblack:
     author: "Astrian Zheng"
     back_color: 0x000000
-    candidate_format: "%c. %@ "
+    candidate_format: "[label]. [candidate] [comment] "
     candidate_text_color: 0x2824C8
     comment_text_color: 0xFFFFFF
     hilited_candidate_back_color: 0x000000
@@ -479,7 +455,7 @@ preset_color_schemes:
 
   milan:
     back_color: 0xFFFFFF
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     comment_text_color: 0x999999
     hilited_candidate_back_color: 0xF5803B
     hilited_candidate_text_color: 0xFFFFFF
@@ -489,7 +465,7 @@ preset_color_schemes:
   nord_dark:
     back_color: 0x473A33
     border_color: 0x473A33
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xF5D887
     comment_text_color: 0xE6B687
     hilited_back_color: 0x473A33
@@ -502,7 +478,7 @@ preset_color_schemes:
   nord_light:
     back_color: 0xF4EFEC
     border_color: 0xF4EFEC
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xC1A181
     comment_text_color: 0xD0C088
     hilited_back_color: 0xF0E9E5
@@ -514,7 +490,7 @@ preset_color_schemes:
 
   purity:
     back_color: 0x444444
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xeeeeee
     comment_text_color: 0x808080
     hilited_back_color: 0x444444
@@ -580,7 +556,7 @@ preset_color_schemes:
 
   wechat_dark:
     back_color: 0x2e2925
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xe9e9ea
     comment_text_color: 0x999999
     hilited_candidate_back_color: 0x75B100
@@ -595,7 +571,7 @@ preset_color_schemes:
     back_color: 0xFFFFFF
     border_height: 0
     border_width: 8
-    candidate_format: "%c %@ "
+    candidate_format: "[label] [candidate] [comment] "
     comment_text_color: 0x999999
     hilited_candidate_back_color: 0x75B100
     hilited_candidate_text_color: 0xFFFFFF
@@ -1160,8 +1136,8 @@ preset_color_schemes:
   clean_white:
     name: 简约白／Clean White
     author: Chongyu Zhu <lembacon@gmail.com>, based on 搜狗「简约白」
-    horizontal: true
-    candidate_format: '%c %@'
+    candidate_list_layout: linear
+    candidate_format: '[label] [candidate] [comment]'
     corner_radius: 6
     border_height: 6
     border_width: 6
@@ -1180,9 +1156,9 @@ preset_color_schemes:
   apathy:
     name: 冷漠／Apathy
     author: LIANG Hai
-    horizontal: true                           # 水平排列
+    candidate_list_layout: linear                           # 水平排列
     inline_preedit: true                       # 单行显示，false双行显示
-    candidate_format: "%c\u2005%@\u2005"       # 编号 %c 和候选词 %@ 前后的空间
+    candidate_format: "[label]\u2005[candidate] [comment]\u2005"       # 编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                           # 候选条圆角
     border_height: 0
     border_width: 0
@@ -1199,9 +1175,9 @@ preset_color_schemes:
   dust:
     name: 浮尘／Dust
     author: Superoutman <asticosmo@gmail.com>
-    horizontal: true                                 # 水平排列
+    candidate_list_layout: linear                                 # 水平排列
     inline_preedit: true                             # 单行显示，false双行显示
-    candidate_format: "%c\u2005%@\u2005"             # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间。
+    candidate_format: "[label]\u2005[candidate] [comment]\u2005"             # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间。
     corner_radius: 2                                 # 候选条圆角
     border_height: 3                                 # 窗口边界高度，大于圆角半径才生效
     border_width: 8                                  # 窗口边界宽度，大于圆角半径才生效
@@ -1224,9 +1200,9 @@ preset_color_schemes:
   mojave_dark:
     name: 沙漠夜／Mojave Dark
     author: xiehuc <xiehuc@gmail.com>
-    horizontal: true                        # 水平排列
+    candidate_list_layout: linear                        # 水平排列
     inline_preedit: true                    # 单行显示，false双行显示
-    candidate_format: "%c\u2005%@"          # 用 1/6 em 空格 U+2005 来控制编号 %c 和候选词 %@ 前后的空间。
+    candidate_format: "[label]\u2005[candidate] [comment]"          # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间。
     corner_radius: 5                        # 候选条圆角
     hilited_corner_radius: 3                # 高亮圆角
     border_height: 6                        # 窗口边界高度，大于圆角半径才生效

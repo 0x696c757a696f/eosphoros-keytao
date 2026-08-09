@@ -7,7 +7,7 @@
 # Header/concatenation behavior follows scripts/make_dicts.sh.
 ---
 name: xmjd6.danzi
-version: "2026-08-04"
+version: "2026-08-09"
 sort: original
 ...
 

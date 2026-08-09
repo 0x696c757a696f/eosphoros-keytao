@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-08-04",
+  "generated_on": "2026-08-09",
   "sources": {
     "rime_jiandao": {
       "repository": "amorphobia/rime-jiandao",
@@ -28,34 +28,34 @@
   },
   "generated": {
     "xmjd6.danzi.dict.yaml": {
-      "sha256": "9799d00085c65ca5bd99c2ab9affb520aa2e732c286557ca24924eaa713e3ef3",
+      "sha256": "3a0b042514f2329069e0d8884c2901f58567ee58fc06a1c9aa42c02e44172963",
       "rows": 36214
     },
     "xmjd6.ice.dict.yaml": {
-      "sha256": "ee70fcf438f907cf5b8f7d877e4d497650b71317c2c5d152f7df381d4665fcf3",
-      "rows": 373902
+      "sha256": "57e85d0f3b33d3c6eb993f589f89b7c81c43006635a0d8bc983318c1a04d44df",
+      "rows": 373886
     },
     "xmjd6.en.dict.yaml": {
-      "sha256": "6668fcb95193b977465ff8c7b500be4a525320cdab980152aad5128b1e14e3e7",
+      "sha256": "9ebf32c1318223bef9de3f6b1d2fa47f8cca033425fd02163cd073ab21b30608",
       "rows": 23610
     },
     "opencc/xmjd6/xmjd6_emoji_extra_chars.lua": {
-      "sha256": "8f88433aebdfb70133700e74860cf8b4dac9fe9f8705fd4f64c7e2fad57130aa",
+      "sha256": "8e1700cca01b78d97981b157a8bb9a3f2ba7a0d2abf2969b9a4195c1949c02e2",
       "rows": 34
     },
     "opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua": {
-      "sha256": "8de5454a8ea53c3fbf68fcb51fe97fb39a666f97fd0551b01af719dffed0a6e6",
+      "sha256": "ba3d1a09a62fca3660b17ad4aedddd6d4e24b5daf1372a4a926d4bc411c1ad98",
       "rows": 886
     },
     "opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua": {
-      "sha256": "b1efdfa11ef9aa9fe539c87b05b12535fe836d71057ce367cf2e39c168453c23",
+      "sha256": "04a08c96db979eb2dce772858751bf8e2d3fb399fbfc5062779db86ec7749152",
       "rows": 2482
     }
   },
   "statistics": {
-    "combined_collision_rows": 56046,
-    "combined_rows": 1083747,
-    "deduplicated_local": 273281,
+    "combined_collision_rows": 56043,
+    "combined_rows": 1083801,
+    "deduplicated_local": 273283,
     "deduplicated_upstream": 2578,
     "emoji_deduplicated_local": 2341,
     "emoji_extra_char_rows": 34,
@@ -67,24 +67,24 @@
     "english_generated_rows": 23610,
     "english_skipped_local_code_collision": 2,
     "english_source_rows": 23861,
-    "generated_before_collision_pruning": 500391,
+    "generated_before_collision_pruning": 500379,
     "generated_medicine_names": 3597,
-    "generated_rows": 373902,
-    "ice_collision_rows": 3279,
+    "generated_rows": 373886,
+    "ice_collision_rows": 3281,
     "local_collision_rows": 36710,
-    "local_rows": 709845,
+    "local_rows": 709915,
     "recognized_medicine_names": 3640,
     "skipped_candidate_cap": 42,
-    "skipped_collision_budget": 126447,
+    "skipped_collision_budget": 126451,
     "skipped_low_value_long_ext": 5884,
     "skipped_low_value_numeric_template": 18153,
     "skipped_low_value_overlong": 2190,
     "skipped_low_value_rare_base": 78572,
-    "skipped_protected_local_collision": 91,
+    "skipped_protected_local_collision": 101,
     "skipped_rejected": 328,
     "skipped_unaligned": 676,
     "skipped_unencodable": 674,
     "source_rows": 882818,
-    "unavoidable_code_collisions": 137208
+    "unavoidable_code_collisions": 137211
   }
 }

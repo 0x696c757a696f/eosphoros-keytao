@@ -1,6 +1,6 @@
 # 基督宗派专题词库来源与取词原则
 
-更新日期：2026-08-04
+更新日期：2026-08-09
 
 本文件记录 `christian_traditions_2026.txt` 的核对来源。词库只采用词目，
 不复制词典释义或受版权保护的正文。
@@ -23,6 +23,19 @@
   https://www.opc.org/GA/republication.html
   https://www.anglicancommunion.org/media/100850/ridley_cambridge_covenant_english.pdf
   https://www.umc.org/en/content/distinctive-wesleyan-emphases
+
+循道卫理宗扩充部分另以中华基督教卫理公会、香港基督教循道卫理联合教会
+和 United Methodist Communications 的公开资料核对中文会名、班会与联结
+制度、议会体系、立约礼拜、亚德门经验、圣洁与恩典进程及历史人物；只摘取
+词目，不复制文章正文：
+
+- https://methodist.org.tw/john-wesley/
+- https://methodist.org.tw/2024/01/18/question-1/
+- https://methodist.org.tw/2024/01/11/%E9%99%84%E9%8C%84-%E6%88%90%E8%81%96/
+- https://methodist.org.tw/dogma/
+- https://www.methodist.org.hk/publications/monthlynews/?p=3
+- https://www.umc.org/en/who-we-are/what-we-believe/our-wesleyan-heritage
+- https://www.umc.org/en/content/organization-church-as-connection
 
 《和合本》是 `xmjd6.protestantism` 的圣经中文基准；不用《思高本》或俄国
 正教会汉译本替换其人名、地名和书卷名。书卷、人地名若已在本地基础词典中，
