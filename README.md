@@ -632,6 +632,8 @@ python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 与 [`licenses/`](licenses/)。
 
+Release 工作流会在每月 1 日和 15 日的 04:17 UTC 自动检查。只有最新 Release 之后出现新提交时，才会继续验证、编译 Windows EXE、构建各平台压缩包并发布；没有新提交时会直接结束，不生成空 Release。手动运行 `Create Release with Zipped Branch Assets and Date` 仍可强制重新发布。
+
 ## 🛠️ 维护与验证
 
 本项目的 Python 工具需要 Python 3.11 或更新版本。可以使用系统 Python、虚拟环境或 Pixi。

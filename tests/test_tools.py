@@ -1022,6 +1022,22 @@ print("撤回完成", file=sys.stderr)
         self.assertIn("if (error.status !== 404) throw error", workflow)
         self.assertIn("Previous release tag is unavailable", workflow)
 
+    def test_release_runs_twice_monthly_and_skips_unchanged_schedules(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        workflow = (root / ".github" / "workflows" / "create-release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn('cron: "17 4 1,15 * *"', workflow)
+        self.assertIn("check_release_needed:", workflow)
+        self.assertIn("context.eventName === 'workflow_dispatch'", workflow)
+        self.assertIn("compare.data.ahead_by > 0", workflow)
+        self.assertIn("needs: check_release_needed", workflow)
+        self.assertIn(
+            "if: needs.check_release_needed.outputs.should_release == 'true'",
+            workflow,
+        )
+
     def test_falls_back_to_lupa_when_luac_cannot_execute(self) -> None:
         from tools import validate_repo
 

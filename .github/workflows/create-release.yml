@@ -1,6 +1,8 @@
 ﻿name: Create Release with Zipped Branch Assets and Date
 
 on:
+  schedule:
+    - cron: "17 4 1,15 * *"
   workflow_dispatch:
 
 env:
@@ -17,7 +19,54 @@ env:
   RABBIT_SHA256: 33a66a9a87845ea0eb78d552a8002c4a49902575f62422327032b29c4115a6ad
 
 jobs:
+  check_release_needed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_release: ${{ steps.gate.outputs.should_release }}
+
+    steps:
+    - name: Check for commits since the latest Release
+      id: gate
+      uses: actions/github-script@v9
+      with:
+        script: |
+          if (context.eventName === 'workflow_dispatch') {
+            core.info('Manual run requested; Release creation is forced.');
+            core.setOutput('should_release', 'true');
+            return;
+          }
+
+          let shouldRelease = true;
+          try {
+            const latest = await github.rest.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const compare = await github.rest.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: latest.data.tag_name,
+              head: context.sha
+            });
+            shouldRelease = compare.data.ahead_by > 0;
+            core.info(`Commits since ${latest.data.tag_name}: ${compare.data.ahead_by}`);
+          } catch (error) {
+            if (error.status !== 404) throw error;
+            core.warning('No comparable previous Release was found; a Release will be created.');
+          }
+          core.setOutput('should_release', shouldRelease ? 'true' : 'false');
+          if (!shouldRelease) {
+            await core.summary
+              .addHeading('Release skipped')
+              .addRaw('No commits were added after the latest Release.')
+              .write();
+          }
+
   build-windows-executables:
+    needs: check_release_needed
+    if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: windows-latest
 
     steps:
@@ -53,7 +102,10 @@ jobs:
         retention-days: 1
 
   release:
-    needs: build-windows-executables
+    needs:
+      - check_release_needed
+      - build-windows-executables
+    if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
