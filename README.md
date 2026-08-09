@@ -80,10 +80,25 @@
 | macOS 鼠须管 | 内置同名 `CatLight` / `CatDark` 配色，使用鼠须管 1.x 的新布局字段 | `squirrel.yaml` 与 `squirrel.custom.yaml` |
 | macOS Fcitx5 | 已生成同一组可直接导入的 `.conf`；另有自动明暗主题 | 下载 `fcitx5-macos-xmjd6-themes.zip`，在“主题编辑器 → 基础 → 选择／导入主题”中导入 |
 | iOS 元书输入法 | 支持独立的 `.cskin` 键盘皮肤；当前仓库只提供方案同步配置，没有附带元书皮肤包 | 皮肤使用 YAML/Jsonnet 描述并由元书单独导入，参见 [元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
+| iOS 仓输入法 | 支持独立的 `.hskin` 键盘皮肤；当前仓库不附带仓皮肤包 | 下载后通过系统共享菜单选择仓输入法导入，参见 [仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
+| Android 同文输入法 | 支持 `*.trime.yaml` 或 `*.trime.custom.yaml` 主题；当前仓库不附带同文皮肤 | 把主题配置放入同文用户目录，选择主题后重新部署；以 [Trime 最新版](https://github.com/osfans/trime/releases/latest)的说明为准 |
 | Linux Fcitx5 | 已生成 95 套小狼毫／鼠须管桌面配色的 Classic UI 复刻主题 | 下载 `fcitx5-linux-xmjd6-themes.zip`，解压到 `~/.local/share/fcitx5/themes/` 后在经典用户界面中选择 |
 
 > [!NOTE]
-> `Hamster.yaml` 只负责元书/仓输入法中的自造词文件同步规则，不是键盘皮肤。元书的 `.cskin` 与旧版仓输入法的 `.hskin` 互不兼容，不能把现有仓皮肤直接改名使用。
+> `Hamster.yaml` 只负责元书/仓输入法中的自造词文件同步规则，不是键盘皮肤。元书的 `.cskin`、仓的 `.hskin` 与同文的 Trime YAML 主题互不兼容，不能通过改文件名或扩展名混用。
+
+#### 📱 移动端外部皮肤资源
+
+本仓库只提供下面的引用地址，不复制、修改或打包第三方皮肤，Release 也不会包含这些文件。这样可以让皮肤作者自行维护版本，同时避免皮肤资源显著增大方案体积。
+
+| 客户端 | 外部资源 | 使用建议 |
+| --- | --- | --- |
+| 元书输入法 | [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)（综合资源）、[空山素影](https://github.com/luozikuan/kongshan-suying)（独立维护的元书皮肤） | 优先下载明确标注支持当前元书版本的 `.cskin`，或按项目说明在元书中导入并编译 Jsonnet；导入方法和结构以[元书官方文档](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/)为准。ResourceforHamster 中“仓”的旧皮肤已停止维护，不要当作最新版元书皮肤使用。 |
+| 仓输入法 | [仓／元书皮肤交流频道](https://t.me/s/hamster_skins)（第三方社区资源） | 只选择扩展名为 `.hskin` 且作者明确标注兼容当前仓版本的文件，通过系统共享菜单导入；格式及操作以[仓官方皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/)为准。社区文件未经本仓库审核，请自行确认来源、版本和授权。 |
+| 同文输入法 Trime | [rime-pure 的同文主题](https://github.com/SivanLaai/rime-pure)、[Trime 官方仓库](https://github.com/osfans/trime) | rime-pure 是完整方案资源，不要整体覆盖星猫键道6；只取需要的 `*.trime.yaml`／`*.trime.custom.yaml` 主题，检查主题引用的字体、图片和配色文件是否齐全，然后在同文中选择并重新部署。 |
+
+> [!WARNING]
+> 导入前请备份客户端现有皮肤和配置。第三方资源可能随客户端升级改变格式；下载时应查看其最新 Release、README 和许可证。若皮肤要求替换方案词典、`xmjd6.schema.yaml`、`lua/xmjd6/` 或 `opencc/xmjd6/`，不要直接覆盖，以免破坏星猫键道6的编码、Emoji 或 Lua 功能。
 
 #### 小企鹅主题安装
 
@@ -123,7 +138,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 ### 中州韵助手（rimetool）兼容性
 
-本方案已补齐中州韵助手用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `xmjd6`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；各词典也都有明确的 `text`、`code` 等列和实际编码。
+本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `xmjd6`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；各词典也都有明确的 `text`、`code` 等列和实际编码。
 
 可在 rimetool 选择“薄荷解析模板”。模板要求的 `transcription`、`emoji`、`ascii_punct` 和 `melt_eng` 都已提供：`transcription` 与原有 `jffh` 都会触发简繁转换，`emoji` 与原有 `emoji_cn` 都会触发表情候选，`melt_eng/prefix` 实际参与 `i` 英文入口的识别，`ascii_punct` 与 `full_shape` 则使用 Rime 原生开关。
 
@@ -195,7 +210,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 **小小输入法便携版**
 
-1. 下载 [`yong-xmjd6-full.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6-full.zip)。
+1. 输入法本体由[小小输入法 Yong](https://yong.dgod.net/)提供；本仓库的星猫键道6整合包可下载 [`yong-xmjd6-full.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6-full.zip)。
 2. 解压后运行包内的小小输入法，不需要另外导入 Rime 方案。
 3. 默认使用 `Ctrl + Space` 激活输入法。
 4. `yong-xmjd6.zip` 只包含配置和码表，适合已经安装小小输入法的用户；`yong-xmjd6-full.zip` 才包含完整便携程序。
@@ -655,24 +670,66 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 ## 🙏 致谢与授权
 
-本方案的演进关系为“星空键道6.2 → 星猫键道6 → xmjd6-0x69”。感谢吅吅大山、Proud丶Cat、热热、浮生、千年蟲等方案和词库维护者，以及下列项目的作者与贡献者：
+本方案的演进关系为“星空键道6.2 → 星猫键道6 → xmjd6-0x69”。首先感谢吅吅大山、Proud丶Cat、热热、浮生、千年蟲等历代方案和词库维护者。没有他们长期整理编码、词库与使用经验，就没有今天的星猫键道6。
 
-| 项目 | 本仓库中的用途或参考范围 |
+### 核心引擎与方案传承
+
+| 项目或贡献者 | 本仓库中的作用 |
 | --- | --- |
-| [Rime](https://github.com/rime/librime)、[小狼毫](https://github.com/rime/weasel)、[鼠须管](https://github.com/rime/squirrel) | 输入法引擎及 Windows、macOS 官方前端 |
-| [东风破 plum](https://github.com/rime/plum) | `recipe.yaml` 安装与更新机制 |
+| [librime（Rime 核心引擎）](https://github.com/rime/librime)、[librime-lua](https://github.com/hchunhui/librime-lua) | 提供 Rime 输入法核心及本方案处理器、翻译器和过滤器所需的 Lua 扩展能力 |
+| [OpenCC](https://github.com/BYVoid/OpenCC) | 简繁转换与地区用字转换的基础设施 |
 | [xkinput/Rime_JD](https://github.com/xkinput/Rime_JD) | 键道 Rime 方案结构与历史实现参考 |
-| [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | 当前方案的直接上游、历史配置及小小输入法打包素材来源 |
+| [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | 本方案的直接上游、历史配置及小小输入法打包素材来源 |
+| [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx) | 模块化 Lua、Emoji 查询优化、自造词操作链、合并脚本及测试思路参考 |
+
+### 词典、数据与核对资料
+
+| 项目或资料 | 本仓库中的作用 |
+| --- | --- |
 | [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | 单字表和 `make_dicts.sh` 生成规则来源 |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | 中文补充词库、英文词库及 Emoji 上游数据 |
-| [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx) | 模块化 Lua、Emoji 查询优化、自造词操作链及合并脚本参考 |
-| [amorphobia/opencc-tonggui](https://github.com/amorphobia/opencc-tonggui) | Release 中补充下载的 OpenCC 数据 |
-| [rimeinn/rabbit](https://github.com/rimeinn/rabbit)、[amorphobia/rabbit](https://github.com/amorphobia/rabbit) | 玉兔毫运行环境、便携包及相关实现 |
+| [amorphobia/opencc-tonggui](https://github.com/amorphobia/opencc-tonggui) | Release 构建时下载并校验的 OpenCC 补充数据 |
+| [SCIM Tables](https://github.com/scim-im/scim-tables)与 LiangFen 作者 TianHeng | `liangfen` 两分反查的历史数据来源 |
+| [AOSP PinyinIME](https://android.googlesource.com/platform/packages/inputmethods/PinyinIME.git) | `pinyin_simp` 拼音反查的历史数据来源 |
+| [CrossWire SWORD `ChiUns`](https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=ChiUns)、[Digital Bible Society](https://bibles.dbs.org/CMNUNVS/pdf/CMNUNVS.pdf)及[各教会官方资料](tools/christian_traditions_sources.md) | 《和合本》书卷、人名、地名及基督宗派专题术语的人工核对来源；不转载词典释义或受版权保护的正文 |
+
+<details>
+<summary><strong>客户端、部署工具、皮肤资源与构建工具</strong></summary>
+
+| 项目 | 本仓库中的作用 |
+| --- | --- |
+| [小狼毫](https://github.com/rime/weasel)、[鼠须管](https://github.com/rime/squirrel) | Windows、macOS 官方 Rime 前端及桌面配色格式 |
 | [Techince/weasel](https://github.com/Techince/weasel) | Windows 水龙月 Fork 客户端 |
 | [Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)、[Fcitx5](https://github.com/fcitx/fcitx5) | macOS、Android、Linux 的小企鹅前端、安装说明与主题格式 |
 | [同文输入法 Trime](https://github.com/osfans/trime) | Android Rime 前端 |
-| [Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime) | Android DocumentsUI 数据目录操作说明参考 |
+| [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701)及其[官方文档](https://ihsiao.com/apps/hamster/) | iOS Rime 前端、方案导入、自造词同步和键盘皮肤格式支持 |
+| [小小输入法 Yong](https://yong.dgod.net/)（[dgod/yong 源码](https://github.com/dgod/yong)） | Windows 轻量输入法平台；Release 便携包在其程序基础上整合星猫键道6配置和码表 |
+| [rimeinn/rabbit](https://github.com/rimeinn/rabbit)、[amorphobia/rabbit](https://github.com/amorphobia/rabbit) | 玉兔毫运行环境、便携包及相关实现 |
+| [东风破 plum](https://github.com/rime/plum) | `recipe.yaml` 安装与更新机制 |
+| [中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)及其[使用文档](https://github.com/yanhuacuo/rimetool/wiki) | Rime 方案管理工具及“薄荷解析模板”兼容结构参考 |
+| [薄荷输入法（Mintimate/oh-my-rime）](https://github.com/Mintimate/oh-my-rime) | 薄荷解析模板的方案结构与开关命名，以及 Android DocumentsUI 操作说明参考 |
+| [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)、[空山素影](https://github.com/luozikuan/kongshan-suying) | 元书外部皮肤与相关资源入口；本仓库仅提供链接，不再分发 |
+| [rime-pure](https://github.com/SivanLaai/rime-pure) | 同文输入法外部主题参考；本仓库仅提供链接，不复制其方案文件 |
+| [仓／元书皮肤交流频道](https://t.me/s/hamster_skins) | 仓输入法第三方皮肤发现入口；内容与兼容性由发布者负责 |
+| [Python](https://www.python.org/)、[PyInstaller](https://github.com/pyinstaller/pyinstaller)、[PyYAML](https://github.com/yaml/pyyaml) | 词典同步、质量检查、主题生成和 Windows 词库工具的构建环境 |
 
-上述列举表示来源或技术参考，不代表相关上游为本方案提供官方支持。仓库只分发经过适配和审核的内容：Rime-Jiandao 单字数据使用 AGPL-3.0-or-later，Rime-Ice 词库使用 GPL-3.0，rime-txjx 参考实现使用 MIT；《和合本》专有词审核来源、固定 commit、生成文件校验值和许可证副本见 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json)、[`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)及[`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
+</details>
+
+### 授权与再分发边界
+
+> [!IMPORTANT]
+> 致谢表示来源、依赖或技术参考，不代表相关作者和项目为 xmjd6-0x69 提供官方支持，也不改变任何上游许可证。引用链接不等于取得皮肤、词典、软件或文章的再分发授权。
+
+| 内容 | 本仓库的处理方式 | 许可证或边界 |
+| --- | --- | --- |
+| Rime-Jiandao 单字数据 | 锁定上游 commit，按本方案格式确定性生成 | AGPL-3.0-or-later |
+| Rime-Ice 中文、英文与 Emoji 数据 | 去重、转换编码并锁定生成文件校验值 | GPL-3.0 |
+| rime-txjx 参考实现 | 经人工审查后适配到 `lua/xmjd6/` 与 `opencc/xmjd6/` 命名空间 | MIT |
+| CrossWire `ChiUns`《和合本》 | 仅选取并人工复核书卷名、人名、地名和固定译语 | 上游标注 Public Domain |
+| 在线神学、教会与圣经资料 | 只用于人工核对词目，不批量抓取释义或正文 | 权利归各资料提供者；来源与取词原则单独记录 |
+| 移动端第三方皮肤 | README 只提供外部入口，不复制、不修改、不放入仓库或 Release | 下载、导入和再分发须遵守皮肤作者的说明与许可证 |
+| 小小输入法、玉兔毫等便携包 | 在相应上游程序或发行包基础上整合 xmjd6 配置，并在 CI 中校验来源与文件哈希 | 客户端程序的权利与许可仍归各自上游；xmjd6 不改变其许可条件 |
+
+第三方来源、固定 commit、生成文件 SHA-256 和许可证副本集中记录在 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`licenses/`](licenses/)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json)及[`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。宗派词库的在线核对来源与取词边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。除上述明确标注的第三方内容外，不应仅凭本节致谢推定其他文件采用相同许可证；复用或再分发前请先核对相应文件及仓库的授权声明。
 
 <p align="right"><a href="#top">⬆️ 返回顶部</a></p>
