@@ -7,13 +7,13 @@
 - Windows 免 Python 入口：双击现有 `Win_词库合并.exe` / `Win_撤回合并.exe`
 - macOS 合并：运行 `Mac_词库合并`
 - macOS 撤回合并：运行 `Mac_撤回合并`
-- Linux 合并：运行 `python3 zzc/Linux_词库合并.py`
-- Linux 撤回合并：运行 `python3 zzc/Linux_撤回合并.py`
+- 通用 Python 合并：运行 `python3 zzc/xmjd6_词库合并.py`
+- 通用 Python 撤回：运行 `python3 zzc/xmjd6_撤回合并.py`
 - Fcitx5 Linux：运行 `python3 zzc/Fcitx5_Linux_词库合并.py`；撤回时运行同目录的 `Fcitx5_Linux_撤回合并.py`
 - Fcitx5 macOS：运行 `python3 zzc/Fcitx5_macOS_词库合并.py`；撤回时运行同目录的 `Fcitx5_macOS_撤回合并.py`
 - iOS 合并：免费方案用 a-Shell 运行 `iOS_词库合并.py`，Pythonista 也可运行同一脚本
 
-Windows 与 Fcitx5 Python 入口都是薄包装，和 Linux 共用同一份可审查核心；两个 Windows `.exe` 也直接从相同的 `Linux_*` 共享核心构建，不使用另一套算法或不透明的上游二进制。macOS 传统入口继续保留无扩展脚本，Fcitx5 macOS 另有文件名明确的 `.py` 入口。
+Windows 与 Fcitx5 Python 入口都是薄包装，共用平台中性的 `xmjd6_*` 可审查核心；两个 Windows `.exe` 也直接从相同核心构建，不使用另一套算法或不透明的上游二进制。macOS 传统入口继续保留无扩展脚本，Fcitx5 macOS 另有文件名明确的 `.py` 入口。Release 和东风破配方只组合“公共核心 + 当前平台入口”，不会夹带其他操作系统的脚本。
 
 旧的 `apply_zzc.py`、`gen_char_parts.py`、`.cmd`、`.bat` 入口已经废弃，不要恢复。
 
@@ -40,7 +40,7 @@ Linux/macOS 合并脚本按 Python 3.7+ 兼容写法维护，避免依赖 Python
 pixi exec --spec "python=3.14.6" --spec "pyinstaller=6.21.0" python tools/build_zzc_windows_exe.py
 ```
 
-生成器会直接冻结 `Linux_词库合并.py` 和 `Linux_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.09` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
+生成器会直接冻结平台中性的 `xmjd6_词库合并.py` 和 `xmjd6_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.09` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
 
 不安装 PyInstaller也可以检查已提交 EXE 是否匹配当前源码：
 
@@ -48,7 +48,7 @@ pixi exec --spec "python=3.14.6" --spec "pyinstaller=6.21.0" python tools/build_
 python tools/build_zzc_windows_exe.py --check
 ```
 
-校验会检查构建器与核心源码哈希、EXE 哈希和大小、PE 签名及 AMD64 架构。`package-main` 和正式 Release 会在 `windows-latest` 上使用相同的 Python 3.14.6 + PyInstaller 6.21.0 重新构建，再实际执行一次隔离的合并与撤回；通过测试的 CI 产物会覆盖工作流检出的 EXE 后进入最终压缩包。任何构建失败、二进制损坏或行为不符都会阻止打包。
+校验会检查构建器与核心源码哈希、EXE 哈希和大小、PE 签名及 AMD64 架构。正式 Release 会在 `windows-latest` 上使用相同的 Python 3.14.6 + PyInstaller 6.21.0 重新构建，再实际执行一次隔离的合并与撤回；通过测试的 CI 产物会覆盖工作流检出的 EXE 后进入最终压缩包。任何构建失败、二进制损坏或行为不符都会阻止打包。
 
 ## 当前 zzc 状态文件
 
@@ -137,8 +137,8 @@ session 创建时不再作为主要写入点，只做上述补偿清理。运行
 - `Fcitx5_macOS_撤回合并.py`
 - `Mac_词库合并`
 - `Mac_撤回合并`
-- `Linux_词库合并.py`
-- `Linux_撤回合并.py`
+- `xmjd6_词库合并.py`
+- `xmjd6_撤回合并.py`
 - `../zzc_state/char_parts.tsv`
 - `../zzc_state/runtime_exact.tsv`
 - `../zzc_state/runtime_ops_appended.tsv`

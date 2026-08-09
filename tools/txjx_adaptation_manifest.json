@@ -38,8 +38,8 @@
     {"source": "lua/zzc/txjx_zzc_processor.lua", "target": "lua/xmjd6/zzc/xmjd6_zzc_processor.lua", "transform": "lua_namespace"},
     {"source": "lua/zzc/txjx_zzc_state.lua", "target": "lua/xmjd6/zzc/xmjd6_zzc_state.lua", "transform": "lua_namespace"},
     {"source": "lua/zzc/txjx_zzc_store.lua", "target": "lua/xmjd6/zzc/xmjd6_zzc_store.lua", "transform": "lua_namespace"},
-    {"source": "zzc/Linux_词库合并.py", "target": "zzc/Linux_词库合并.py", "transform": "project_namespace", "rebuild_windows_exe": true},
-    {"source": "zzc/Linux_撤回合并.py", "target": "zzc/Linux_撤回合并.py", "transform": "project_namespace", "rebuild_windows_exe": true},
+    {"source": "zzc/Linux_词库合并.py", "target": "zzc/xmjd6_词库合并.py", "transform": "project_namespace", "rebuild_windows_exe": true},
+    {"source": "zzc/Linux_撤回合并.py", "target": "zzc/xmjd6_撤回合并.py", "transform": "project_namespace", "rebuild_windows_exe": true},
     {"source": "zzc/Mac_词库合并", "target": "zzc/Mac_词库合并", "transform": "project_namespace"},
     {"source": "zzc/Mac_撤回合并", "target": "zzc/Mac_撤回合并", "transform": "project_namespace"},
     {"source": "zzc/iOS_词库合并.py", "target": "zzc/iOS_词库合并.py", "transform": "project_namespace"}

@@ -17,6 +17,15 @@ install_files: >-
   lua/xmjd6/*/*.lua
   opencc/xmjd6/*.lua
   zzc_state/char_parts.tsv
+  zzc/README.md
+  zzc/自造词使用教程.md
+  zzc/自造词使用教程.png
+  zzc/xmjd6_词库合并.py
+  zzc/xmjd6_撤回合并.py
+  zzc/Win_词库合并.exe
+  zzc/Win_撤回合并.exe
+  zzc/Windows_词库合并.py
+  zzc/Windows_撤回合并.py
   weasel.yaml
   xmjd6.ico
 patch_files:

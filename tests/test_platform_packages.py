@@ -46,14 +46,48 @@ class PlatformPackageTests(unittest.TestCase):
             "zzc/README.md",
             "zzc/自造词使用教程.md",
             "zzc/自造词使用教程.png",
-            "zzc/Linux_词库合并.py",
-            "zzc/Linux_撤回合并.py",
+            "zzc/xmjd6_词库合并.py",
+            "zzc/xmjd6_撤回合并.py",
             "licenses/rime-ice-GPL-3.0.txt",
         }
         for name, files in members.items():
             self.assertTrue(common <= files, name)
             self.assertNotIn("zzc_state/runtime_ops.tsv", files, name)
             self.assertNotIn("tools/build_platform_packages.py", files, name)
+
+        shared_zzc = {path for path in common if path.startswith("zzc/")}
+        expected_platform_zzc = {
+            "xmjd6.zip": set(),
+            "xmjd6-weasel.zip": {
+                "zzc/Win_词库合并.exe",
+                "zzc/Win_撤回合并.exe",
+                "zzc/Windows_词库合并.py",
+                "zzc/Windows_撤回合并.py",
+            },
+            "xmjd6-squirrel.zip": {
+                "zzc/Mac_词库合并",
+                "zzc/Mac_撤回合并",
+            },
+            "xmjd6-fcitx5-macos.zip": {
+                "zzc/Fcitx5_macOS_词库合并.py",
+                "zzc/Fcitx5_macOS_撤回合并.py",
+            },
+            "xmjd6-fcitx5-linux.zip": {
+                "zzc/Fcitx5_Linux_词库合并.py",
+                "zzc/Fcitx5_Linux_撤回合并.py",
+            },
+            "xmjd6-mobile.zip": {
+                "zzc/iOS_词库合并.py",
+                "zzc/iOS快捷指令合并说明.md",
+                "zzc/a-Shell快捷指令合并说明.md",
+            },
+        }
+        for name, files in members.items():
+            self.assertEqual(
+                {path for path in files if path.startswith("zzc/")},
+                shared_zzc | expected_platform_zzc[name],
+                name,
+            )
 
         core = members["xmjd6.zip"]
         for frontend_file in (
@@ -82,7 +116,6 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("Hamster.yaml", squirrel)
 
         fcitx5_macos = members["xmjd6-fcitx5-macos.zip"]
-        self.assertIn("zzc/Mac_词库合并", fcitx5_macos)
         self.assertIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_macos)
         self.assertIn("zzc/Fcitx5_macOS_撤回合并.py", fcitx5_macos)
         self.assertIn("fcitx5/macos/themes/xmjd6-auto.conf", fcitx5_macos)
@@ -94,7 +127,7 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("Hamster.yaml", fcitx5_macos)
 
         fcitx5_linux = members["xmjd6-fcitx5-linux.zip"]
-        self.assertIn("zzc/Linux_词库合并.py", fcitx5_linux)
+        self.assertIn("zzc/xmjd6_词库合并.py", fcitx5_linux)
         self.assertIn("zzc/Fcitx5_Linux_词库合并.py", fcitx5_linux)
         self.assertIn("zzc/Fcitx5_Linux_撤回合并.py", fcitx5_linux)
         self.assertIn(

@@ -9,21 +9,21 @@
   },
   "builder": {
     "path": "tools/build_zzc_windows_exe.py",
-    "sha256": "dd79e04274ba052c8baf4543ebd5d9ccec8246284b2888bdec02a22c209578dd"
+    "sha256": "cd72d4230f2dddd604a07d1e4e86b32a1d70cf44fd25ae95bbf7aaedb0fd60a8"
   },
   "executables": {
     "zzc/Win_词库合并.exe": {
-      "source": "zzc/Linux_词库合并.py",
-      "source_sha256": "6dea77e82300ca15b0c5f48a2413f54e7af254c8585139f21975222ec111f0eb",
-      "sha256": "b298377dd7d23d63e7e970d03c4c8fa014be60f7c92e4e8050cf4ad42f767e14",
-      "size": 10152067,
+      "source": "zzc/xmjd6_词库合并.py",
+      "source_sha256": "17c4c3d20268df816dd8af78074bae1de945c7a220470bf598810b3e410746b4",
+      "sha256": "57554ac6993b1ab83ce8ce66431a524ae5ffb82bd9805d5d63da32d091a0059b",
+      "size": 10152413,
       "machine": "0x8664"
     },
     "zzc/Win_撤回合并.exe": {
-      "source": "zzc/Linux_撤回合并.py",
-      "source_sha256": "f12e1b2d108e6cdb1d2bf3d55ce46970509baf43cba20d5fde83296318126140",
-      "sha256": "69681679af49ca6e772ff545568f6d7cdd9f1b1cf7710f7ab3dd76b38a7610b1",
-      "size": 10131892,
+      "source": "zzc/xmjd6_撤回合并.py",
+      "source_sha256": "5c83f772afd2db916b9597a36a215cbd92cb19214bdf3d72d78a3121f09318e6",
+      "sha256": "5f69f9164ed2624645737b267d97005c62d11bcc87340b09f89f74bc00cdd22e",
+      "size": 10133141,
       "machine": "0x8664"
     }
   }

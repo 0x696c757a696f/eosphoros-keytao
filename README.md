@@ -155,7 +155,7 @@ rime-install 0x696c757a696f/xmjd6-0x69:fcitx5-linux
 rime-install 0x696c757a696f/xmjd6-0x69:mobile
 ```
 
-不带后缀的 `rime-install 0x696c757a696f/xmjd6-0x69` 安装通用核心。安装完成后仍需重新部署。配方只复制对应前端运行所需的 YAML、`lua/xmjd6/`、`opencc/xmjd6/` 和必要的自造词部件表；所有配方都会安装仓库提供的 `xmjd6.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `xmjd6` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、构建脚本、EXE、`xmjd6_user.txt`、`*.userdb` 和自造词运行记录也不会被安装或覆盖。Fcitx5 桌面主题仍使用单独的主题压缩包安装。
+不带后缀的 `rime-install 0x696c757a696f/xmjd6-0x69` 安装通用核心。安装完成后仍需重新部署。配方会复制对应前端运行所需的 YAML、`lua/xmjd6/`、`opencc/xmjd6/`，并安装 ZZZC 公共 Python 核心、说明和教程；Weasel 额外安装 Windows EXE 与 Python 入口，Squirrel、Fcitx5 和移动端则只安装各自适用的入口。所有配方都会安装仓库提供的 `xmjd6.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `xmjd6` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、`xmjd6_user.txt`、`*.userdb` 和 ZZZC 运行记录也不会被安装或覆盖。`zzc_state/` 中只有静态拆分索引 `char_parts.tsv` 随配方和 Release 分发；`runtime_ops.tsv`、`effective_state.tsv`、撤回/重置状态及打字统计均由本机运行时创建，更新包不会用空文件清除用户数据。Fcitx5 桌面主题仍使用单独的主题压缩包安装。
 
 ### 中州韵助手（rimetool）兼容性
 

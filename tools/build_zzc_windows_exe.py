@@ -46,12 +46,12 @@ class ExecutableTarget:
 
 TARGETS = (
     ExecutableTarget(
-        ROOT / "zzc" / "Linux_词库合并.py",
+        ROOT / "zzc" / "xmjd6_词库合并.py",
         ROOT / "zzc" / "Win_词库合并.exe",
         "xmjd6 ZZZC dictionary merge",
     ),
     ExecutableTarget(
-        ROOT / "zzc" / "Linux_撤回合并.py",
+        ROOT / "zzc" / "xmjd6_撤回合并.py",
         ROOT / "zzc" / "Win_撤回合并.exe",
         "xmjd6 ZZZC merge rollback",
     ),
@@ -85,8 +85,8 @@ def version_resource(target: ExecutableTarget) -> str:
     original_name = target.output.name
     return f"""VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(2026, 8, 4, 0),
-    prodvers=(2026, 8, 4, 0),
+    filevers=(2026, 8, 9, 0),
+    prodvers=(2026, 8, 9, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -100,11 +100,11 @@ def version_resource(target: ExecutableTarget) -> str:
         '040904B0',
         [StringStruct('CompanyName', 'xmjd6'),
          StringStruct('FileDescription', '{target.description}'),
-         StringStruct('FileVersion', '2026.08.04'),
+         StringStruct('FileVersion', '2026.08.09'),
          StringStruct('InternalName', '{target.output.stem}'),
          StringStruct('OriginalFilename', '{original_name}'),
          StringStruct('ProductName', 'xmjd6 ZZZC tools'),
-         StringStruct('ProductVersion', '2026.08.04')])
+         StringStruct('ProductVersion', '2026.08.09')])
     ]),
     VarFileInfo([VarStruct('Translation', [1033, 1200])])
   ]

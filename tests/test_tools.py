@@ -264,6 +264,19 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertIn("- schema: xmjd6", recipe)
         for name, recipe_patterns in patterns.items():
             self.assertIn("xmjd6.custom.yaml", recipe_patterns, name)
+            self.assertEqual(
+                [item for item in recipe_patterns if item.startswith("zzc_state/")],
+                ["zzc_state/char_parts.tsv"],
+                name,
+            )
+            for shared_zzc in (
+                "zzc/README.md",
+                "zzc/自造词使用教程.md",
+                "zzc/自造词使用教程.png",
+                "zzc/xmjd6_词库合并.py",
+                "zzc/xmjd6_撤回合并.py",
+            ):
+                self.assertIn(shared_zzc, recipe_patterns, name)
 
         self.assertFalse(any("weasel" in item for item in patterns["core"]))
         self.assertFalse(any("squirrel" in item for item in patterns["core"]))
@@ -271,12 +284,63 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertTrue(any("weasel" in item for item in patterns["weasel"]))
         self.assertTrue(any("squirrel" in item for item in patterns["squirrel"]))
         self.assertTrue(any("Hamster" in item for item in patterns["mobile"]))
+        for weasel_zzc in (
+            "zzc/Win_词库合并.exe",
+            "zzc/Win_撤回合并.exe",
+            "zzc/Windows_词库合并.py",
+            "zzc/Windows_撤回合并.py",
+        ):
+            self.assertIn(weasel_zzc, patterns["weasel"])
+        for squirrel_zzc in ("zzc/Mac_词库合并", "zzc/Mac_撤回合并"):
+            self.assertIn(squirrel_zzc, patterns["squirrel"])
+        for mobile_zzc in (
+            "zzc/iOS_词库合并.py",
+            "zzc/iOS快捷指令合并说明.md",
+            "zzc/a-Shell快捷指令合并说明.md",
+        ):
+            self.assertIn(mobile_zzc, patterns["mobile"])
+        shared_zzc = {
+            "zzc/README.md",
+            "zzc/自造词使用教程.md",
+            "zzc/自造词使用教程.png",
+            "zzc/xmjd6_词库合并.py",
+            "zzc/xmjd6_撤回合并.py",
+        }
+        platform_zzc = {
+            "core": set(),
+            "weasel": {
+                "zzc/Win_词库合并.exe",
+                "zzc/Win_撤回合并.exe",
+                "zzc/Windows_词库合并.py",
+                "zzc/Windows_撤回合并.py",
+            },
+            "squirrel": {"zzc/Mac_词库合并", "zzc/Mac_撤回合并"},
+            "fcitx5-macos": {
+                "zzc/Fcitx5_macOS_词库合并.py",
+                "zzc/Fcitx5_macOS_撤回合并.py",
+            },
+            "fcitx5-linux": {
+                "zzc/Fcitx5_Linux_词库合并.py",
+                "zzc/Fcitx5_Linux_撤回合并.py",
+            },
+            "mobile": {
+                "zzc/iOS_词库合并.py",
+                "zzc/iOS快捷指令合并说明.md",
+                "zzc/a-Shell快捷指令合并说明.md",
+            },
+        }
+        for name, recipe_patterns in patterns.items():
+            self.assertEqual(
+                {item for item in recipe_patterns if item.startswith("zzc/")},
+                shared_zzc | platform_zzc[name],
+                name,
+            )
         for name in ("fcitx5-macos", "fcitx5-linux"):
             self.assertFalse(any("weasel" in item for item in patterns[name]))
             self.assertFalse(any("squirrel" in item for item in patterns[name]))
             self.assertFalse(any("Hamster" in item for item in patterns[name]))
-            self.assertIn("zzc/Linux_词库合并.py", patterns[name])
-            self.assertIn("zzc/Linux_撤回合并.py", patterns[name])
+            self.assertIn("zzc/xmjd6_词库合并.py", patterns[name])
+            self.assertIn("zzc/xmjd6_撤回合并.py", patterns[name])
         self.assertIn(
             "zzc/Fcitx5_macOS_词库合并.py", patterns["fcitx5-macos"]
         )
@@ -486,7 +550,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_zzc_merge_targets_the_xmjd6_cizu_dictionary(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        script = root / "zzc" / "Linux_词库合并.py"
+        script = root / "zzc" / "xmjd6_词库合并.py"
         spec = importlib.util.spec_from_file_location("xmjd6_zzc_merge_test", script)
         self.assertIsNotNone(spec)
         self.assertIsNotNone(spec.loader if spec else None)
@@ -528,7 +592,7 @@ columns:
             root = Path(temp_dir)
             zzc_dir = root / "zzc"
             zzc_dir.mkdir()
-            shutil.copy2(repository / "zzc" / "Linux_词库合并.py", zzc_dir)
+            shutil.copy2(repository / "zzc" / "xmjd6_词库合并.py", zzc_dir)
             (root / "xmjd6.cizu.dict.yaml").write_text(
                 dictionary_header.format(name="xmjd6.cizu"), encoding="utf-8"
             )
@@ -544,7 +608,7 @@ columns:
             (state_dir / "runtime_ops.tsv").write_text("", encoding="utf-8")
 
             result = subprocess.run(
-                [sys.executable, str(zzc_dir / "Linux_词库合并.py")],
+                [sys.executable, str(zzc_dir / "xmjd6_词库合并.py")],
                 cwd=root,
                 capture_output=True,
                 text=True,
@@ -613,7 +677,7 @@ columns:
                 root = Path(temp_dir)
                 zzc_dir = root / "zzc"
                 zzc_dir.mkdir()
-                shutil.copy2(repository / "zzc" / "Linux_词库合并.py", zzc_dir)
+                shutil.copy2(repository / "zzc" / "xmjd6_词库合并.py", zzc_dir)
                 shutil.copy2(repository / "zzc" / entry_name, zzc_dir)
                 for name in ("xmjd6.cizu", "xmjd6.fjcy"):
                     (root / f"{name}.dict.yaml").write_text(
@@ -914,8 +978,8 @@ print("Win_撤回合并.exe", file=sys.stderr)
     def test_bundled_zzc_sources_reconfigure_stdio_to_utf8(self) -> None:
         root = Path(__file__).resolve().parents[1]
         scripts = (
-            root / "zzc" / "Linux_词库合并.py",
-            root / "zzc" / "Linux_撤回合并.py",
+            root / "zzc" / "xmjd6_词库合并.py",
+            root / "zzc" / "xmjd6_撤回合并.py",
         )
         code = """
 import importlib.util
