@@ -1,14 +1,13 @@
 # encoding: utf-8
 ---
 recipe:
-  Rx: all
+  Rx: fcitx5-linux
   description: >-
-    安装或更新星猫键道6通用核心；保留用户自定义配置、用户数据库和自造词运行状态。
+    为 Linux Fcitx5 Rime 安装或更新星猫键道6核心；Fcitx5 主题需另行安装。
 install_files: >-
   default.yaml
   liangfen*.yaml
   pinyin_simp*.yaml
-  xmjd6.ico
   xmjd6.*.dict.yaml
   xmjd6.*.schema.yaml
   xmjd6.schema.yaml

@@ -47,9 +47,9 @@
 
 ## 📦 快速安装
 
-### 标准 Rime 安装
+### 选择适合前端的方案包
 
-1. 下载最新版 [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip)。
+1. 按下表下载适合当前输入法前端的压缩包；不确定时使用通用核心包 [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip)。
 2. 解压到 Rime 用户文件夹；保留压缩包内的目录结构。
 3. 重新部署 Rime。
 4. 在方案选单中选择“星猫键道”。
@@ -58,6 +58,17 @@
 
 > [!IMPORTANT]
 > 请完整保留压缩包中的 `lua/xmjd6/` 与 `opencc/xmjd6/` 目录。只复制根目录 YAML 会导致顶功、自造词、英文、Emoji 或简繁转换不完整。
+
+| Release 文件 | 适用前端 | 额外内容 |
+| --- | --- | --- |
+| [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip) | 通用 Rime / 其他前端 | 最小运行核心，保留旧下载地址兼容性 |
+| [`xmjd6-weasel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-weasel.zip) | Windows 小狼毫 | 小狼毫样式、方案图标和 Windows 自造词工具 |
+| [`xmjd6-squirrel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-squirrel.zip) | macOS 鼠须管 | 鼠须管样式和 macOS 自造词工具 |
+| [`xmjd6-fcitx5-macos.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-macos.zip) | macOS Fcitx5 | 通用核心和 macOS 自造词工具；主题另行下载 |
+| [`xmjd6-fcitx5-linux.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-linux.zip) | Linux Fcitx5 | 通用核心和 Linux 自造词工具；主题另行下载 |
+| [`xmjd6-mobile.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip) | Android / iOS Rime 前端 | 通用核心、移动端同步配置和 iOS 自造词辅助文件 |
+
+各包都包含完整方案运行核心；平台包只额外加入该前端需要的配置和工具，不会把所有桌面、移动端文件一股脑混在一起。
 
 | 平台 | 常见前端 | 默认用户目录 |
 | --- | --- | --- |
@@ -122,7 +133,7 @@
 
 ### 东风破（plum）安装与更新
 
-仓库根目录提供了 `recipe.yaml`，可由东风破直接安装或更新。macOS、Linux 以及其他带 Bash 的环境可执行：
+仓库根目录提供通用配方和各前端配方，可由东风破直接安装或更新。macOS、Linux 以及其他带 Bash 的环境可执行：
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bash -s -- 0x696c757a696f/xmjd6-0x69
@@ -131,10 +142,20 @@ curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bas
 Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案”，输入：
 
 ```text
-0x696c757a696f/xmjd6-0x69
+0x696c757a696f/xmjd6-0x69:weasel
 ```
 
-也可以在已经安装东风破的命令行中运行 `rime-install 0x696c757a696f/xmjd6-0x69`。安装完成后仍需重新部署。配方只复制 Rime 运行所需的 YAML、`xmjd6.ico`、`lua/xmjd6/`、`opencc/xmjd6/` 和必要的自造词部件表；它通过东风破补丁把 `xmjd6` 安全加入现有方案列表，并把图标引用合并到 `xmjd6.custom.yaml`，不整份覆盖用户的 `*.custom.yaml`。仓库测试、构建脚本、EXE、`xmjd6_user.txt`、`*.userdb` 和自造词运行记录都不会被安装或覆盖。
+也可以在已经安装东风破的命令行中按前端选择：
+
+```bash
+rime-install 0x696c757a696f/xmjd6-0x69:weasel
+rime-install 0x696c757a696f/xmjd6-0x69:squirrel
+rime-install 0x696c757a696f/xmjd6-0x69:fcitx5-macos
+rime-install 0x696c757a696f/xmjd6-0x69:fcitx5-linux
+rime-install 0x696c757a696f/xmjd6-0x69:mobile
+```
+
+不带后缀的 `rime-install 0x696c757a696f/xmjd6-0x69` 安装通用核心。安装完成后仍需重新部署。配方只复制对应前端运行所需的 YAML、`lua/xmjd6/`、`opencc/xmjd6/` 和必要的自造词部件表；所有配方都会安装仓库提供的 `xmjd6.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `xmjd6` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、构建脚本、EXE、`xmjd6_user.txt`、`*.userdb` 和自造词运行记录也不会被安装或覆盖。Fcitx5 桌面主题仍使用单独的主题压缩包安装。
 
 ### 中州韵助手（rimetool）兼容性
 
@@ -147,7 +168,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 ### 便携与主题发行包
 
-- Windows 小小输入法：[yong-xmjd6-full.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6-full.zip)
+- Windows 小小输入法完整便携版：[yong-xmjd6.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6.zip)
 - 玉兔毫：[Rabbit-xmjd6.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/Rabbit-xmjd6.zip)
 - macOS 小企鹅主题：[fcitx5-macos-xmjd6-themes.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/fcitx5-macos-xmjd6-themes.zip)
 - Linux 小企鹅主题：[fcitx5-linux-xmjd6-themes.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/fcitx5-linux-xmjd6-themes.zip)
@@ -186,7 +207,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 ### 各客户端安装、导入与更新
 
-所有标准 Rime 客户端都使用同一份 [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip)。区别只在用户文件夹位置和客户端的导入方式：
+方案运行核心在各压缩包中一致；建议按前端下载对应包，以免携带无关平台配置：
 
 | 平台 | 推荐客户端 | 安装方式 | 更新后必须做的操作 |
 | --- | --- | --- | --- |
@@ -203,17 +224,17 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 **小狼毫 Weasel**
 
 1. 安装[小狼毫正式版](https://github.com/rime/weasel/releases/latest)或[小狼毫测试版](https://github.com/rime/weasel/releases/tag/latest)。也可使用[水龙月 Fork 版](https://github.com/Techince/weasel/releases/latest)；从原版切换到 Fork 版时，建议先卸载原版并重启系统。
-2. 从 Release 下载 `xmjd6.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
+2. 从 Release 下载 `xmjd6-weasel.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
 3. 在小狼毫菜单中执行“重新部署”。
 4. 打开方案选单，选择“星猫键道”。
 5. 更新方案时覆盖同名方案文件即可；个人词汇应放在 `xmjd6.user.dict.yaml`，个人配置写在 `*.custom.yaml`，然后重新部署。
 
 **小小输入法便携版**
 
-1. 输入法本体由[小小输入法 Yong](https://yong.dgod.net/)提供；本仓库的星猫键道6整合包可下载 [`yong-xmjd6-full.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6-full.zip)。
+1. 输入法本体由[小小输入法 Yong](https://yong.dgod.net/)提供；本仓库的完整星猫键道6便携版可下载 [`yong-xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6.zip)。
 2. 解压后运行包内的小小输入法，不需要另外导入 Rime 方案。
 3. 默认使用 `Ctrl + Space` 激活输入法。
-4. `yong-xmjd6.zip` 只包含配置和码表，适合已经安装小小输入法的用户；`yong-xmjd6-full.zip` 才包含完整便携程序。
+4. `yong-xmjd6.zip` 已包含小小输入法程序、配置和码表；Release 不再提供配置-only 包，也不再使用额外的 `-full` 文件名。
 
 **玉兔毫 Rabbit**
 
@@ -226,13 +247,13 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 **鼠须管 Squirrel**
 
 1. 安装[鼠须管正式版](https://github.com/rime/squirrel/releases/latest)或[测试版](https://github.com/rime/squirrel/releases/tag/latest)。
-2. 下载并解压 `xmjd6.zip`，把全部内容复制到 `~/Library/Rime`。
+2. 下载并解压 `xmjd6-squirrel.zip`，把全部内容复制到 `~/Library/Rime`。
 3. 从鼠须管菜单执行“重新部署”，再在方案选单中选择“星猫键道”。
 
 **Fcitx5 macOS**
 
 1. 安装[小企鹅输入法 macOS 版（中州韵版）](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)。
-2. 把方案完整复制到 `~/.local/share/fcitx5/rime/`。
+2. 下载 `xmjd6-fcitx5-macos.zip`，把方案完整复制到 `~/.local/share/fcitx5/rime/`。
 3. 重启 Fcitx5 或重新部署 Rime。
 
 #### 🤖 Android
@@ -241,14 +262,14 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 1. 安装[同文输入法](https://github.com/osfans/trime/releases/latest)。
 2. 在应用设置中打开“配置管理 → 用户文件夹”。
-3. 先选择或初始化默认用户文件夹，再把 `xmjd6.zip` 的完整内容导入 `/storage/emulated/0/rime/`。
+3. 先选择或初始化默认用户文件夹，再把 `xmjd6-mobile.zip` 的完整内容导入 `/storage/emulated/0/rime/`。
 4. 返回配置管理执行部署，然后选择星猫键道。
 
 **Fcitx5 for Android**
 
 1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)及 Rime 插件；需要测试构建时可使用[主程序构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/)、[Rime 插件构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)和[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
 2. 在小企鹅输入法中添加中州韵后，Rime 数据目录通常为 `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`。
-3. 推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
+3. 下载并解压 `xmjd6-mobile.zip`。推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
 4. 返回应用重新部署 Rime。
 
 #### 📱 iOS
@@ -258,8 +279,8 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 1. 在“输入方案”中选择“下载方案”。
 2. 使用以下任一地址：
 
-   - 原始地址：<https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip>
-   - 国内网络可用代理地址：<https://gh-proxy.com/https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip>
+   - 原始地址：<https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip>
+   - 国内网络可用代理地址：<https://gh-proxy.com/https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip>
 
 3. 下载完成后进入“方案目录切换”，在 `RimeUserData` 中选择刚导入的方案目录，点击右上角“打开”。
 4. 后续更新时重新下载方案，再回到“方案目录切换”选择更新后的目录并重新部署。
@@ -268,7 +289,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 **仓输入法**
 
 1. 安装[仓输入法](https://apps.apple.com/app/id6446617683)。
-2. 使用应用内在线方案下载功能导入星猫键道。
+2. 使用应用内在线方案下载功能导入 `xmjd6-mobile.zip`，地址与上方元书输入法相同。
 3. 导入或更新后重新部署，并在应用中切换到对应方案。
 
 #### 🐧 Linux：Fcitx5 + Rime
@@ -288,7 +309,7 @@ RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RH
 
 安装方案：
 
-1. 将 `xmjd6.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
+1. 将 `xmjd6-fcitx5-linux.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
 2. Flatpak 版通常使用 `~/.var/app/org.fcitx.Fcitx5/data/fcitx5/rime/`。
 3. 打开 Fcitx5 配置工具，添加“中州韵”或 Rime 输入法。
 4. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
@@ -465,7 +486,7 @@ Windows 用户可以在仓库根目录运行：
 python .\zzc\Windows_词库合并.py
 ```
 
-没有 Python 时可以直接双击 `zzc/Win_词库合并.exe`，需要撤回最近一次合并时双击 `zzc/Win_撤回合并.exe`。两个 EXE 均由当前 xmjd6 共享 Python 核心构建；`package-main` 和正式 Release 会先在 Windows Runner 上使用 Python 3.14.6 + PyInstaller 6.21.0 重新构建并实际执行合并、撤回测试，再把通过测试的 CI 产物交给最终打包，避免发布旧版或损坏的可执行文件。构建和校验方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
+没有 Python 时可以直接双击 `zzc/Win_词库合并.exe`，需要撤回最近一次合并时双击 `zzc/Win_撤回合并.exe`。两个 EXE 均由当前 xmjd6 共享 Python 核心构建；正式 Release 会在 Windows Runner 上使用 Python 3.14.6 + PyInstaller 6.21.0 重新构建并实际执行合并、撤回测试，再把通过测试的 CI 产物交给最终发布。普通推送和 PR 的 `package-main` 只验证源码、词库与已提交文件，不重复编译 EXE。构建和校验方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
 
 ## 🔤 英文输入
 
@@ -616,6 +637,7 @@ python .\tools\validate_repo.py
 python .\tools\clean_dictionary_quality.py --check
 python .\tools\sync_upstream_dictionaries.py --check
 python .\tools\check_txjx_upstream.py
+python .\tools\build_platform_packages.py --check
 git diff --check
 ```
 
@@ -655,6 +677,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 │  ├─ input/                         模块化按键、顶功、标点和快符处理
 │  └─ zzc/                           自造词运行时、候选和操作链
 ├─ opencc/xmjd6/                     OpenCC 命名空间数据
+├─ *.recipe.yaml                     各桌面前端与移动端东风破配方
 ├─ tools/                             生成、同步、清理和验证工具
 ├─ tests/                             Python 与 Lua 回归测试
 ├─ licenses/                          第三方许可证副本

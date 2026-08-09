@@ -1,14 +1,13 @@
 # encoding: utf-8
 ---
 recipe:
-  Rx: all
+  Rx: squirrel
   description: >-
-    安装或更新星猫键道6通用核心；保留用户自定义配置、用户数据库和自造词运行状态。
+    为 macOS 鼠须管安装或更新星猫键道6，并安装鼠须管样式。
 install_files: >-
   default.yaml
   liangfen*.yaml
   pinyin_simp*.yaml
-  xmjd6.ico
   xmjd6.*.dict.yaml
   xmjd6.*.schema.yaml
   xmjd6.schema.yaml
@@ -18,6 +17,7 @@ install_files: >-
   lua/xmjd6/*/*.lua
   opencc/xmjd6/*.lua
   zzc_state/char_parts.tsv
+  squirrel.yaml
 patch_files:
   default.custom.yaml:
     - patch/+:

@@ -151,6 +151,40 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertIn(f"{artifact}.zip", release_workflow)
             self.assertIn(f"name: {artifact}", package_workflow)
 
+    def test_release_publishes_platform_packages(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        release = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+        package = (root / ".github/workflows/package-master.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("python tools/build_platform_packages.py", release)
+        self.assertIn("python tools/build_platform_packages.py --check", package)
+        for archive in (
+            "xmjd6.zip",
+            "xmjd6-weasel.zip",
+            "xmjd6-squirrel.zip",
+            "xmjd6-fcitx5-macos.zip",
+            "xmjd6-fcitx5-linux.zip",
+            "xmjd6-mobile.zip",
+        ):
+            self.assertIn(f"asset_path: ./{archive}", release)
+            self.assertIn(f"asset_name: {archive}", release)
+
+    def test_release_yong_archive_is_the_full_portable_build(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        release = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+        readme = (root / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn("zip -r ../yong-xmjd6.zip yong", release)
+        self.assertNotIn("zip -r yong-xmjd6.zip .yong", release)
+        self.assertNotIn("yong-xmjd6-full.zip", release)
+        self.assertNotIn("yong-xmjd6-full.zip", readme)
+
     def test_generated_xmjd6_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]
 
@@ -162,13 +196,26 @@ class RepositoryValidationTests(unittest.TestCase):
         )
         self.assertEqual(ignored.returncode, 0)
 
-    def test_plum_recipe_installs_every_rime_runtime_file(self) -> None:
+    def test_plum_recipes_install_frontend_specific_runtime_files(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        recipe = (root / "recipe.yaml").read_text(encoding="utf-8")
-        install_block = recipe.split("install_files: >-", 1)[1].split(
-            "patch_files:", 1
-        )[0]
-        patterns = install_block.split()
+        recipe_files = {
+            "core": root / "recipe.yaml",
+            "weasel": root / "weasel.recipe.yaml",
+            "squirrel": root / "squirrel.recipe.yaml",
+            "fcitx5-macos": root / "fcitx5-macos.recipe.yaml",
+            "fcitx5-linux": root / "fcitx5-linux.recipe.yaml",
+            "mobile": root / "mobile.recipe.yaml",
+        }
+        recipes = {
+            name: path.read_text(encoding="utf-8")
+            for name, path in recipe_files.items()
+        }
+        patterns = {
+            name: recipe.split("install_files: >-", 1)[1]
+            .split("patch_files:", 1)[0]
+            .split()
+            for name, recipe in recipes.items()
+        }
 
         runtime_files = [
             *root.glob("*.yaml"),
@@ -178,47 +225,83 @@ class RepositoryValidationTests(unittest.TestCase):
         runtime_names = {
             path.relative_to(root).as_posix()
             for path in runtime_files
-            if path.name != "recipe.yaml" and not path.name.endswith(".custom.yaml")
+            if not path.name.endswith("recipe.yaml")
+            and not path.name.endswith(".custom.yaml")
         }
         installed_names = {
             name
             for name in runtime_names
-            if any(fnmatch.fnmatchcase(name, pattern) for pattern in patterns)
+            if any(
+                fnmatch.fnmatchcase(name, pattern)
+                for recipe_patterns in patterns.values()
+                for pattern in recipe_patterns
+            )
         }
 
         self.assertEqual(installed_names, runtime_names)
-        self.assertFalse(
-            any(fnmatch.fnmatchcase("recipe.yaml", pattern) for pattern in patterns)
-        )
+        for recipe_patterns in patterns.values():
+            self.assertFalse(
+                any(fnmatch.fnmatchcase("recipe.yaml", pattern) for pattern in recipe_patterns)
+            )
         for custom_name in (
             "default.custom.yaml",
             "squirrel.custom.yaml",
             "weasel.custom.yaml",
-            "xmjd6.custom.yaml",
         ):
-            self.assertFalse(
-                any(fnmatch.fnmatchcase(custom_name, pattern) for pattern in patterns),
-                custom_name,
-            )
-        self.assertIn("patch_files:", recipe)
-        self.assertIn("default.custom.yaml:", recipe)
-        self.assertIn("- schema: xmjd6", recipe)
+            for name, recipe_patterns in patterns.items():
+                self.assertFalse(
+                    any(
+                        fnmatch.fnmatchcase(custom_name, pattern)
+                        for pattern in recipe_patterns
+                    ),
+                    f"{name}: {custom_name}",
+                )
+
+        for recipe in recipes.values():
+            self.assertIn("patch_files:", recipe)
+            self.assertIn("default.custom.yaml:", recipe)
+            self.assertIn("- schema: xmjd6", recipe)
+        for name, recipe_patterns in patterns.items():
+            self.assertIn("xmjd6.custom.yaml", recipe_patterns, name)
+
+        self.assertFalse(any("weasel" in item for item in patterns["core"]))
+        self.assertFalse(any("squirrel" in item for item in patterns["core"]))
+        self.assertFalse(any("Hamster" in item for item in patterns["core"]))
+        self.assertTrue(any("weasel" in item for item in patterns["weasel"]))
+        self.assertTrue(any("squirrel" in item for item in patterns["squirrel"]))
+        self.assertTrue(any("Hamster" in item for item in patterns["mobile"]))
+        for name in ("fcitx5-macos", "fcitx5-linux"):
+            self.assertFalse(any("weasel" in item for item in patterns[name]))
+            self.assertFalse(any("squirrel" in item for item in patterns[name]))
+            self.assertFalse(any("Hamster" in item for item in patterns[name]))
 
     def test_plum_install_keeps_the_xmjd6_scheme_icon(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        recipe = (root / "recipe.yaml").read_text(encoding="utf-8")
-        install_block = recipe.split("install_files: >-", 1)[1].split(
-            "patch_files:", 1
-        )[0]
-        patterns = install_block.split()
         schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
+        custom = (root / "xmjd6.custom.yaml").read_text(encoding="utf-8")
 
-        self.assertTrue(
-            any(fnmatch.fnmatchcase("xmjd6.ico", pattern) for pattern in patterns)
-        )
+        for name in (
+            "recipe.yaml",
+            "weasel.recipe.yaml",
+            "squirrel.recipe.yaml",
+            "fcitx5-macos.recipe.yaml",
+            "fcitx5-linux.recipe.yaml",
+            "mobile.recipe.yaml",
+        ):
+            recipe = (root / name).read_text(encoding="utf-8")
+            install_block = recipe.split("install_files: >-", 1)[1].split(
+                "patch_files:", 1
+            )[0]
+            patterns = install_block.split()
+            self.assertTrue(
+                any(
+                    fnmatch.fnmatchcase("xmjd6.custom.yaml", pattern)
+                    for pattern in patterns
+                ),
+                name,
+            )
         self.assertIn('  icon: ""', schema)
-        self.assertIn("xmjd6.custom.yaml:", recipe)
-        self.assertIn("schema/icon: xmjd6.ico", recipe)
+        self.assertIn('schema/icon: "xmjd6.ico"', custom)
 
     def test_desktop_style_files_use_current_consistent_defaults(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -613,28 +696,29 @@ columns:
 
         self.assertRegex(attributes, r"(?m)^\*\.exe\s+binary\s*$")
 
-    def test_package_and_release_run_windows_executable_checks(self) -> None:
+    def test_only_release_rebuilds_windows_executables(self) -> None:
         root = Path(__file__).resolve().parents[1]
         workflows = root / ".github" / "workflows"
-        for name in ("package-master.yml", "create-release.yml"):
-            workflow = (workflows / name).read_text(encoding="utf-8")
-            next_job = "build" if name == "package-master.yml" else "release"
-            windows_job = workflow.split("  build-windows-executables:\n", 1)[1].split(
-                f"\n  {next_job}:\n", 1
-            )[0]
-            self.assertIn("windows-latest", workflow, name)
-            self.assertIn("test_windows_merge_executable_runs_current_xmjd6_behavior", workflow, name)
-            self.assertIn("test_windows_rollback_executable_restores_latest_merge", workflow, name)
-            self.assertIn("test_committed_windows_executables_match_sources_and_lock", workflow, name)
-            self.assertIn("python-version: '3.14.6'", workflow, name)
-            self.assertIn("pyinstaller==6.21.0", workflow, name)
-            self.assertIn("python -m pip install -r requirements-dev.txt", windows_job, name)
-            self.assertIn("sys.flags.utf8_mode == 1", windows_job, name)
-            self.assertIn("Win_词库合并.exe", windows_job, name)
-            self.assertIn("python tools/build_zzc_windows_exe.py", workflow, name)
-            self.assertIn("actions/upload-artifact@v7", workflow, name)
-            self.assertIn("actions/download-artifact@v7", workflow, name)
-            self.assertIn("name: zzc-windows-executables", workflow, name)
+        package = (workflows / "package-master.yml").read_text(encoding="utf-8")
+        release = (workflows / "create-release.yml").read_text(encoding="utf-8")
+
+        for release_only in (
+            "build-windows-executables:",
+            "windows-latest",
+            "python-version: '3.14.6'",
+            "pyinstaller==6.21.0",
+            "python tools/build_zzc_windows_exe.py",
+            "name: zzc-windows-executables",
+        ):
+            self.assertNotIn(release_only, package)
+            self.assertIn(release_only, release)
+
+        for executable_check in (
+            "test_windows_merge_executable_runs_current_xmjd6_behavior",
+            "test_windows_rollback_executable_restores_latest_merge",
+            "test_committed_windows_executables_match_sources_and_lock",
+        ):
+            self.assertIn(executable_check, release)
 
     def test_every_python_workflow_forces_utf8_io(self) -> None:
         root = Path(__file__).resolve().parents[1]
