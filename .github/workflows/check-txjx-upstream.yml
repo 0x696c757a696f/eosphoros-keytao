@@ -1,64 +1,147 @@
-name: Check rime-txjx implementation upstream
+name: Adapt rime-txjx implementation upstream
 
 on:
   schedule:
     - cron: "47 4 * * 1"
   workflow_dispatch:
 
+concurrency:
+  group: adapt-rime-txjx-upstream
+  cancel-in-progress: false
+
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
   issues: write
 
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
+  BASE_BRANCH: ${{ github.event.repository.default_branch }}
 
 jobs:
-  check:
+  adapt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-python@v6
+      - name: Checkout default branch
+        uses: actions/checkout@v6
         with:
-          python-version: "3.12"
+          fetch-depth: 0
 
-      - name: Compare locked implementation commit
-        run: python tools/check_txjx_upstream.py --json > txjx-upstream-report.json
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14.6"
+
+      - name: Prepare conflict-safe xmjd6 adaptation
+        id: adapt
+        shell: pwsh
+        run: |
+          python tools/adapt_txjx_upstream.py --write --update-lock --json > txjx-adaptation-report.json
+          $Status = $LASTEXITCODE
+          if ($Status -ne 0 -and $Status -ne 20) {
+            exit $Status
+          }
+          $Report = Get-Content txjx-adaptation-report.json -Raw -Encoding utf8 | ConvertFrom-Json
+          "status=$Status" >> $env:GITHUB_OUTPUT
+          "blocked=$($Report.blocked.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "changed=$(($Report.lock_updated -or $Report.written).ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+
+      - name: Install validation dependencies
+        if: steps.adapt.outputs.changed == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4
+          python -m pip install -r requirements-dev.txt
+
+      - name: Validate adapted sources
+        if: steps.adapt.outputs.changed == 'true'
+        run: |
+          python tools/validate_repo.py
+          lua5.4 tests/run.lua
+          python -m unittest discover -s tests -p "test_*.py" -v
+          python tools/build_platform_packages.py --check
+          python tools/build_fcitx5_themes.py --check
+          git diff --check
 
       - name: Publish job summary
+        if: always()
+        shell: pwsh
         run: |
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
+          if (-not (Test-Path txjx-adaptation-report.json)) { exit 0 }
+          $Report = Get-Content txjx-adaptation-report.json -Raw -Encoding utf8 | ConvertFrom-Json
+          @"
+          ## rime-txjx controlled adaptation
 
-          report = json.loads(Path("txjx-upstream-report.json").read_text())
-          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as out:
-              out.write("## rime-txjx upstream check\n\n")
-              out.write(f"- Integrated: `{report['integrated_commit']}`\n")
-              out.write(f"- Current: `{report['current_commit']}`\n")
-              out.write(f"- Update available: `{report['update_available']}`\n")
-          PY
+          - Integrated: ``$($Report.base_commit)``
+          - Current: ``$($Report.target_commit)``
+          - Adapted files: ``$($Report.adapted_targets.Count)``
+          - Conflicts: ``$($Report.conflicts.Count)``
+          - Critical unmapped files: ``$($Report.critical_unmapped_paths.Count)``
+          - Requires Release-only Windows EXE rebuild: ``$($Report.windows_exe_rebuild_required)``
+          "@ | Out-File $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
 
-      - name: Open or update review issue
+      - name: Commit and open adaptation pull request
+        if: steps.adapt.outputs.changed == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $Report = Get-Content txjx-adaptation-report.json -Raw -Encoding utf8 | ConvertFrom-Json
+          $Short = $Report.target_commit.Substring(0, 7)
+          $Branch = "automation/rime-txjx-upstream"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          $RemoteBranch = git ls-remote --heads origin "refs/heads/$Branch"
+          if ($RemoteBranch) {
+            git fetch origin "+refs/heads/${Branch}:refs/remotes/origin/${Branch}"
+          }
+          git switch -c $Branch
+          git add -- lua/xmjd6 zzc THIRD_PARTY.md tools/upstream_code.lock.json tools/zzc_windows_executables.lock.json
+          git commit -m "chore: adapt rime-txjx upstream $Short"
+          git push --force-with-lease origin "HEAD:refs/heads/$Branch"
+          $Compare = "https://github.com/wzxmer/rime-txjx/compare/$($Report.base_commit)...$($Report.target_commit)"
+          $Body = @"
+          Controlled three-way adaptation of rime-txjx into the xmjd6 namespace.
+
+          - Upstream: ``$($Report.base_commit)`` → ``$($Report.target_commit)``
+          - Adapted local files: ``$($Report.adapted_targets.Count)``
+          - Informational unmapped files: ``$($Report.unmapped_paths.Count)``
+          - Requires Release-only Windows EXE rebuild: ``$($Report.windows_exe_rebuild_required)``
+          - [Review upstream commits]($Compare)
+
+          The adapter preserved local xmjd6 names and behavior through a three-way merge. Full repository CI must pass before this PR is merged.
+          "@
+          $Existing = gh pr list --base $env:BASE_BRANCH --head $Branch --state open --json url --jq '.[0].url'
+          if ($Existing) {
+            gh pr edit $Existing --title "chore: adapt rime-txjx upstream $Short" --body $Body
+          } else {
+            gh pr create --base $env:BASE_BRANCH --head $Branch --title "chore: adapt rime-txjx upstream $Short" --body $Body
+          }
+
+      - name: Open or update manual-review issue
+        if: steps.adapt.outputs.blocked == 'true'
         uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
-            const report = JSON.parse(fs.readFileSync('txjx-upstream-report.json', 'utf8'));
-            if (!report.update_available) return;
-
-            const title = 'rime-txjx 上游实现有新提交待审查';
-            const compare = `https://github.com/wzxmer/rime-txjx/compare/${report.integrated_commit}...${report.current_commit}`;
+            const report = JSON.parse(fs.readFileSync('txjx-adaptation-report.json', 'utf8'));
+            const title = 'rime-txjx 上游适配需要人工处理';
+            const compare = `https://github.com/wzxmer/rime-txjx/compare/${report.base_commit}...${report.target_commit}`;
+            const details = [
+              ...report.conflicts.map(item => `- 冲突：\`${item.source}\` → \`${item.target}\`（${item.reason}）`),
+              ...report.critical_unmapped_paths.map(path => `- 未登记的新源码：\`${path}\``),
+            ];
             const body = [
-              '自动检查发现已锁定的 rime-txjx 实现上游发生变化。',
+              '受控适配器已停止，没有覆盖本地文件，也没有更新锁。',
               '',
-              `- 已整合：\`${report.integrated_commit}\``,
-              `- 当前上游：\`${report.current_commit}\``,
-              `- [查看差异](${compare})`,
+              `- 已整合：\`${report.base_commit}\``,
+              `- 当前上游：\`${report.target_commit}\``,
+              `- [查看上游差异](${compare})`,
               '',
-              '请重点审查锁文件列出的 source_paths，并继续保留 xmjd6 的模块命名空间、`i` 英文入口、OpenCC 目录和本地键道六顶功差异。不要直接覆盖本地文件。',
+              ...details,
+              '',
+              '请人工决定冲突行为或为新文件添加明确的 xmjd6 映射；不要直接复制 txjx 文件。',
             ].join('\n');
             const open = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
@@ -68,7 +151,7 @@ jobs:
             });
             const existing = open.data.find(issue => issue.title === title);
             if (existing) {
-              await github.rest.issues.createComment({
+              await github.rest.issues.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: existing.number,

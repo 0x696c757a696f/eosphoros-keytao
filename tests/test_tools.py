@@ -3,6 +3,7 @@ from __future__ import annotations
 import fnmatch
 import importlib.util
 import configparser
+import os
 import shutil
 import subprocess
 import sys
@@ -274,6 +275,20 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertFalse(any("weasel" in item for item in patterns[name]))
             self.assertFalse(any("squirrel" in item for item in patterns[name]))
             self.assertFalse(any("Hamster" in item for item in patterns[name]))
+            self.assertIn("zzc/Linux_词库合并.py", patterns[name])
+            self.assertIn("zzc/Linux_撤回合并.py", patterns[name])
+        self.assertIn(
+            "zzc/Fcitx5_macOS_词库合并.py", patterns["fcitx5-macos"]
+        )
+        self.assertIn(
+            "zzc/Fcitx5_macOS_撤回合并.py", patterns["fcitx5-macos"]
+        )
+        self.assertIn(
+            "zzc/Fcitx5_Linux_词库合并.py", patterns["fcitx5-linux"]
+        )
+        self.assertIn(
+            "zzc/Fcitx5_Linux_撤回合并.py", patterns["fcitx5-linux"]
+        )
 
     def test_plum_install_keeps_the_xmjd6_scheme_icon(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -493,7 +508,7 @@ class RepositoryValidationTests(unittest.TestCase):
         dictionary_header = """# Rime dictionary
 ---
 name: {name}
-version: "2026-08-04"
+version: "2026-08-09"
 sort: by_weight
 ...
 """
@@ -501,7 +516,7 @@ sort: by_weight
 # encoding: utf-8
 ---
 name: xmjd6.zzc
-version: "2026-08-04"
+version: "2026-08-09"
 sort: by_weight
 use_preset_vocabulary: false
 columns:
@@ -524,6 +539,9 @@ columns:
                 operation_header + "100\tadd\t测试自造词\tcszc\t+\n",
                 encoding="utf-8",
             )
+            state_dir = root / "zzc_state"
+            state_dir.mkdir()
+            (state_dir / "runtime_ops.tsv").write_text("", encoding="utf-8")
 
             result = subprocess.run(
                 [sys.executable, str(zzc_dir / "Linux_词库合并.py")],
@@ -546,6 +564,112 @@ columns:
             self.assertEqual(
                 (root / "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
                 operation_header,
+            )
+            for state_name in (
+                "runtime_ops.tsv",
+                "runtime_exact.tsv",
+                "effective_state.tsv",
+            ):
+                self.assertEqual(
+                    (root / "zzc_state" / state_name).read_bytes(),
+                    b"\n",
+                    state_name,
+                )
+
+    def test_zzc_lua_keeps_logically_empty_state_files_icloud_safe(self) -> None:
+        repository = Path(__file__).resolve().parents[1]
+        lua = shutil.which("lua5.4") or shutil.which("lua") or shutil.which("luajit")
+        if not lua:
+            self.skipTest("Lua runtime is unavailable")
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            state_dir = Path(temp_dir) / "zzc_state"
+            state_dir.mkdir()
+            env = os.environ.copy()
+            env["ZZC_TEST_DATA_DIR"] = temp_dir
+            result = subprocess.run(
+                [lua, "tests/zzc_icloud_state_test.lua"],
+                cwd=repository,
+                env=env,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            self.assertEqual(
+                result.returncode,
+                0,
+                (result.stdout or "") + (result.stderr or ""),
+            )
+
+    def test_fcitx5_python_merge_entries_run_the_shared_xmjd6_core(self) -> None:
+        repository = Path(__file__).resolve().parents[1]
+        for entry_name in (
+            "Fcitx5_Linux_词库合并.py",
+            "Fcitx5_macOS_词库合并.py",
+        ):
+            with self.subTest(entry=entry_name), tempfile.TemporaryDirectory() as temp_dir:
+                root = Path(temp_dir)
+                zzc_dir = root / "zzc"
+                zzc_dir.mkdir()
+                shutil.copy2(repository / "zzc" / "Linux_词库合并.py", zzc_dir)
+                shutil.copy2(repository / "zzc" / entry_name, zzc_dir)
+                for name in ("xmjd6.cizu", "xmjd6.fjcy"):
+                    (root / f"{name}.dict.yaml").write_text(
+                        "# Rime dictionary\n---\n"
+                        f'name: {name}\nversion: "2026-08-09"\n'
+                        "sort: by_weight\n...\n",
+                        encoding="utf-8",
+                    )
+                (root / "xmjd6.zzc.dict.yaml").write_text(
+                    "# Rime dictionary\n---\nname: xmjd6.zzc\n"
+                    'version: "2026-08-09"\nsort: by_weight\n'
+                    "columns:\n  - text\n  - code\n...\n"
+                    "100\tadd\tFcitx5入口\tfcitx\t+\n",
+                    encoding="utf-8",
+                )
+                result = subprocess.run(
+                    [sys.executable, str(zzc_dir / entry_name)],
+                    cwd=root,
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    check=False,
+                )
+                self.assertEqual(
+                    result.returncode,
+                    0,
+                    (result.stdout or "") + (result.stderr or ""),
+                )
+                merged = (root / "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+                self.assertIn("Fcitx5入口\tfcitx", merged)
+
+    def test_typing_stats_migrates_to_namespaced_zzc_state(self) -> None:
+        repository = Path(__file__).resolve().parents[1]
+        lua = shutil.which("lua5.4") or shutil.which("lua") or shutil.which("luajit")
+        if not lua:
+            self.skipTest("Lua runtime is unavailable")
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            (Path(temp_dir) / "zzc_state").mkdir()
+            env = os.environ.copy()
+            env["TYPING_STATS_TEST_DATA_DIR"] = temp_dir
+            result = subprocess.run(
+                [lua, "tests/typing_stats_state_test.lua"],
+                cwd=repository,
+                env=env,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+            self.assertEqual(
+                result.returncode,
+                0,
+                (result.stdout or "") + (result.stderr or ""),
             )
 
     @unittest.skipUnless(sys.platform == "win32", "committed EXE is Windows-only")
@@ -846,7 +970,14 @@ print("撤回完成", file=sys.stderr)
             encoding="utf-8"
         )
 
-        self.assertIn("tools/check_txjx_upstream.py", workflow)
+        self.assertIn(
+            "tools/adapt_txjx_upstream.py --write --update-lock --json", workflow
+        )
+        self.assertIn("gh pr create", workflow)
+        self.assertIn("steps.adapt.outputs.blocked == 'true'", workflow)
+        self.assertIn("python tools/validate_repo.py", workflow)
+        self.assertIn("lua5.4 tests/run.lua", workflow)
+        self.assertNotIn("build_zzc_windows_exe.py", workflow)
         self.assertNotIn("D:\\", workflow)
         self.assertNotIn("D:/", workflow)
 

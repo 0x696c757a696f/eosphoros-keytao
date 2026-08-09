@@ -61,14 +61,14 @@
 
 | Release 文件 | 适用前端 | 额外内容 |
 | --- | --- | --- |
-| [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip) | 通用 Rime / 其他前端 | 最小运行核心，保留旧下载地址兼容性 |
-| [`xmjd6-weasel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-weasel.zip) | Windows 小狼毫 | 小狼毫样式、方案图标和 Windows 自造词工具 |
-| [`xmjd6-squirrel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-squirrel.zip) | macOS 鼠须管 | 鼠须管样式和 macOS 自造词工具 |
-| [`xmjd6-fcitx5-macos.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-macos.zip) | macOS Fcitx5 | 通用核心和 macOS 自造词工具；主题另行下载 |
-| [`xmjd6-fcitx5-linux.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-linux.zip) | Linux Fcitx5 | 通用核心和 Linux 自造词工具；主题另行下载 |
+| [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip) | 通用 Rime / 其他前端 | 最小运行核心和跨平台 Python 自造词工具，保留旧下载地址兼容性 |
+| [`xmjd6-weasel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-weasel.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
+| [`xmjd6-squirrel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-squirrel.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
+| [`xmjd6-fcitx5-macos.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
+| [`xmjd6-fcitx5-linux.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
 | [`xmjd6-mobile.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip) | Android / iOS Rime 前端 | 通用核心、移动端同步配置和 iOS 自造词辅助文件 |
 
-各包都包含完整方案运行核心；平台包只额外加入该前端需要的配置和工具，不会把所有桌面、移动端文件一股脑混在一起。
+各包都包含完整方案运行核心、Python 合并/撤回核心和图文教程；平台包只额外加入该前端需要的入口、配置和主题，不会把 Windows EXE 或其他前端样式一股脑混在一起。
 
 | 平台 | 常见前端 | 默认用户目录 |
 | --- | --- | --- |
@@ -117,14 +117,14 @@
 
 **macOS 小企鹅**
 
-1. 从 Release 下载并解压 `fcitx5-macos-xmjd6-themes.zip`。
+1. 主题可直接取自 `xmjd6-fcitx5-macos.zip` 内的 `fcitx5/macos/themes/`，也可单独下载并解压 `fcitx5-macos-xmjd6-themes.zip`。
 2. 打开“主题编辑器 → 基础 → 选择／导入主题”。推荐导入 `xmjd6-auto.conf`：浅色使用 `CatLight`，深色使用 `CatDark`，可跟随系统外观。
 3. 需要其他桌面主题时，导入对应的 `xmjd6-主题名.conf`；单主题文件会在系统明暗模式下保持同一套颜色。
 4. macOS 26 启用液态玻璃时，系统可能根据候选窗下方内容调整外观，这是小企鹅的系统级行为，不是主题颜色丢失。导入规则参见 [Fcitx5 macOS 官方文档](https://fcitx-contrib.github.io/docs/theme/import.html)。
 
 **Linux 小企鹅**
 
-1. 从 Release 下载 `fcitx5-linux-xmjd6-themes.zip`。
+1. 主题可直接取自 `xmjd6-fcitx5-linux.zip` 内的 `fcitx5/linux/themes/`，也可单独下载 `fcitx5-linux-xmjd6-themes.zip`。
 2. 将压缩包直接解压到 `~/.local/share/fcitx5/themes/`；解压后应看到 `xmjd6-CatLight/theme.conf` 等目录，不要再多套一层目录。
 3. 打开 `fcitx5-configtool`，进入“附加组件 → 经典用户界面”。亮色主题选择 `xmjd6-CatLight`，暗色主题选择 `xmjd6-CatDark`；也可以选择压缩包内其他桌面配色。
 4. 应用设置后重启 Fcitx5。主题只使用官方支持的纯色字段，不依赖 SVG，避免不同 Wayland/GTK 渲染器加载 SVG 时出现兼容问题。格式参见 [Fcitx5 官方主题文档](https://fcitx-im.org/wiki/Fcitx_5_Theme)。
@@ -253,8 +253,9 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 **Fcitx5 macOS**
 
 1. 安装[小企鹅输入法 macOS 版（中州韵版）](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)。
-2. 下载 `xmjd6-fcitx5-macos.zip`，把方案完整复制到 `~/.local/share/fcitx5/rime/`。
-3. 重启 Fcitx5 或重新部署 Rime。
+2. 下载 `xmjd6-fcitx5-macos.zip`，把方案文件完整复制到 `~/.local/share/fcitx5/rime/`。
+3. 包内 `fcitx5/macos/themes/` 是 macOS 专用主题，可在“主题编辑器 → 基础 → 选择／导入主题”中导入；不要使用同包中的路径作为 Rime 方案目录。
+4. 重启 Fcitx5 或重新部署 Rime。
 
 #### 🤖 Android
 
@@ -311,9 +312,10 @@ RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RH
 
 1. 将 `xmjd6-fcitx5-linux.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
 2. Flatpak 版通常使用 `~/.var/app/org.fcitx.Fcitx5/data/fcitx5/rime/`。
-3. 打开 Fcitx5 配置工具，添加“中州韵”或 Rime 输入法。
-4. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
-5. 若仍不能输入，先运行 `fcitx5-diagnose`，确认当前桌面会话、Fcitx5 自启动、Rime 插件和输入法环境变量是否被识别。
+3. 将包内 `fcitx5/linux/themes/` 下的主题目录复制到 `~/.local/share/fcitx5/themes/`；方案文件与主题文件不能混用安装目录。
+4. 打开 Fcitx5 配置工具，添加“中州韵”或 Rime 输入法。
+5. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
+6. 若仍不能输入，先运行 `fcitx5-diagnose`，确认当前桌面会话、Fcitx5 自启动、Rime 插件和输入法环境变量是否被识别。
 
 <details>
 <summary><strong>🧰 展开 Linux 桌面环境与应用兼容设置</strong></summary>
@@ -430,6 +432,8 @@ export SDL_IM_MODULE=fcitx
 | 使用自造词 | <kbd>\</kbd> 进入指令模式 | 详见[自造词使用教程](zzc/自造词使用教程.md) |
 
 `u`、`v`、`o` 是反查专用入口，不参与 Emoji 转换；普通中文编码才会在开启 Emoji 后附加表情候选。`i` 只有位于输入开头时才是英文入口，在中文编码的第 2～6 位仍按“竖”笔画码处理。
+
+打字统计现在按 xmjd6 命名保存在 `zzc_state/xmjd6_typing_stats.tsv`。首次运行会兼容读取旧的根目录 `typing_stats.txt`，随后写入新文件；旧文件暂不自动删除，便于确认迁移结果或手工备份。移动端规则只把本机统计回传到应用目录，不用 iCloud 统计覆盖另一台设备。
 
 ### 候选、翻页和方案切换
 
@@ -612,13 +616,19 @@ python .\tools\sync_upstream_dictionaries.py --refresh --write
 
 `.github/workflows/sync-upstream-dictionaries.yml` 每周一 04:17 UTC 自动检查，有变化时运行测试并创建 PR。首次启用自动 PR 前，需要在仓库的 **Settings → Actions → General → Workflow permissions** 中允许 GitHub Actions 创建 Pull Request。
 
-Lua 与自造词实现参考 [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx)，已整合的 commit、审查目录和明确排除项记录在 [`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。这部分不能像纯词库一样无损自动重建，因为必须保留 xmjd6 的命名空间、英文 `i` 入口和顶功差异；因此每周检查只会创建待审查 Issue，不会盲目覆盖本地代码：
+Lua 与自造词实现参考 [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx)，已整合的 commit、完整 `lua/`、`zzc/`、`zzc_state/` 审查范围和明确排除项记录在 [`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。当前审查点为 `377001a70e73727b4e3d8cb7b6de9ee401ab3a98`：已适配打字统计的 `zzc_state` 命名空间、iCloud 安全的逻辑空状态、计算器等号防按键重复，以及 Fcitx5 Linux/macOS Python 入口；保留 xmjd6 的命名空间、英文 `i` 入口、键道6顶功规则和防重复追加状态。
+
+[`tools/adapt_txjx_upstream.py`](tools/adapt_txjx_upstream.py) 会先读取 [`tools/txjx_adaptation_manifest.json`](tools/txjx_adaptation_manifest.json) 中逐文件登记的“上游路径 → 本地路径”，把 `txjx` 模块名和方案名转换为 `xmjd6`，再以锁定 commit 为共同祖先进行三方合并。因此上游文件与本地文件可以继续使用不同名字，本地独有修改也不会被整文件覆盖：
 
 ```powershell
-python .\tools\check_txjx_upstream.py
+# 只预览上游差异、映射结果和冲突
+python .\tools\adapt_txjx_upstream.py --json
+
+# 仅在全部映射都可安全合并时写入，并推进 commit 锁
+python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 ```
 
-对应工作流是 `.github/workflows/check-txjx-upstream.yml`，不包含任何本机绝对仓库路径，在 GitHub Actions 的 checkout 目录中运行。
+对应工作流 `.github/workflows/check-txjx-upstream.yml` 每周执行：已登记且无冲突的修改会进入固定的自动化分支并创建或更新 PR；若同一区域被本地和上游同时修改、上游新增未登记源码、删除已映射文件，或变更会要求重建 Windows EXE，则不改本地文件、不推进锁，只创建或更新人工审查 Issue。Windows EXE 仍只在 Release 工作流编译。工作流不包含任何本机绝对仓库路径，在 GitHub Actions 的 checkout 目录中运行。
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 与 [`licenses/`](licenses/)。
 
@@ -637,6 +647,7 @@ python .\tools\validate_repo.py
 python .\tools\clean_dictionary_quality.py --check
 python .\tools\sync_upstream_dictionaries.py --check
 python .\tools\check_txjx_upstream.py
+python .\tools\adapt_txjx_upstream.py --json
 python .\tools\build_platform_packages.py --check
 git diff --check
 ```
@@ -645,7 +656,7 @@ git diff --check
 
 ```powershell
 # 将 VERSION 和 YAML version 更新到指定日期
-python .\tools\update_versions.py 2026-08-04
+python .\tools\update_versions.py 2026-08-09
 
 # 清理完全相同的词典记录
 python .\tools\dedupe_dictionaries.py

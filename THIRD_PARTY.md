@@ -76,7 +76,7 @@ mappings. No locally invented Emoji combinations are added.
 ## Lua input and ZZZC implementation
 
 - Upstream: <https://github.com/wzxmer/rime-txjx>
-- Integrated commit: `da5635358e68d337f9858202b3fe5f7f14fc94d0`
+- Integrated commit: `377001a70e73727b4e3d8cb7b6de9ee401ab3a98`
 - Sources: modular input processor, ZZZC operation-chain implementation,
   completion/reverse-hint optimizations, OpenCC lookup optimizations, newline
   filter, merge scripts, documentation, and regression-test design

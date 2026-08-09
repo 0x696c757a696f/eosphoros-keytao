@@ -43,6 +43,11 @@ class PlatformPackageTests(unittest.TestCase):
             "README.md",
             "THIRD_PARTY.md",
             "VERSION",
+            "zzc/README.md",
+            "zzc/自造词使用教程.md",
+            "zzc/自造词使用教程.png",
+            "zzc/Linux_词库合并.py",
+            "zzc/Linux_撤回合并.py",
             "licenses/rime-ice-GPL-3.0.txt",
         }
         for name, files in members.items():
@@ -64,9 +69,10 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertIn("weasel.custom.yaml", weasel)
         self.assertIn("xmjd6.ico", weasel)
         self.assertIn("zzc/Win_词库合并.exe", weasel)
+        self.assertIn("zzc/Windows_词库合并.py", weasel)
+        self.assertIn("zzc/Windows_撤回合并.py", weasel)
         self.assertNotIn("squirrel.yaml", weasel)
         self.assertNotIn("Hamster.yaml", weasel)
-        self.assertNotIn("zzc/Linux_词库合并.py", weasel)
 
         squirrel = members["xmjd6-squirrel.zip"]
         self.assertIn("squirrel.yaml", squirrel)
@@ -77,12 +83,25 @@ class PlatformPackageTests(unittest.TestCase):
 
         fcitx5_macos = members["xmjd6-fcitx5-macos.zip"]
         self.assertIn("zzc/Mac_词库合并", fcitx5_macos)
+        self.assertIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_macos)
+        self.assertIn("zzc/Fcitx5_macOS_撤回合并.py", fcitx5_macos)
+        self.assertIn("fcitx5/macos/themes/xmjd6-auto.conf", fcitx5_macos)
+        self.assertNotIn(
+            "fcitx5/linux/themes/xmjd6-CatLight/theme.conf", fcitx5_macos
+        )
         self.assertNotIn("weasel.yaml", fcitx5_macos)
         self.assertNotIn("squirrel.yaml", fcitx5_macos)
         self.assertNotIn("Hamster.yaml", fcitx5_macos)
 
         fcitx5_linux = members["xmjd6-fcitx5-linux.zip"]
         self.assertIn("zzc/Linux_词库合并.py", fcitx5_linux)
+        self.assertIn("zzc/Fcitx5_Linux_词库合并.py", fcitx5_linux)
+        self.assertIn("zzc/Fcitx5_Linux_撤回合并.py", fcitx5_linux)
+        self.assertIn(
+            "fcitx5/linux/themes/xmjd6-CatLight/theme.conf", fcitx5_linux
+        )
+        self.assertNotIn("fcitx5/macos/themes/xmjd6-auto.conf", fcitx5_linux)
+        self.assertNotIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_linux)
         self.assertNotIn("weasel.yaml", fcitx5_linux)
         self.assertNotIn("squirrel.yaml", fcitx5_linux)
         self.assertNotIn("Hamster.yaml", fcitx5_linux)
@@ -95,6 +114,16 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("weasel.yaml", mobile)
         self.assertNotIn("squirrel.yaml", mobile)
         self.assertNotIn("zzc/Win_词库合并.exe", mobile)
+
+        for name in (
+            "xmjd6.zip",
+            "xmjd6-weasel.zip",
+            "xmjd6-squirrel.zip",
+            "xmjd6-mobile.zip",
+        ):
+            self.assertFalse(
+                any(path.startswith("fcitx5/") for path in members[name]), name
+            )
 
 
 if __name__ == "__main__":

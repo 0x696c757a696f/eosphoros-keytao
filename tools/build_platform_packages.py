@@ -18,8 +18,6 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "weasel.yaml",
         "weasel.custom.yaml",
         "xmjd6.ico",
-        "zzc/README.md",
-        "zzc/自造词使用教程.md",
         "zzc/请根据自己的电脑选择运行合并脚本.txt",
         "zzc/Win_词库合并.exe",
         "zzc/Win_撤回合并.exe",
@@ -29,30 +27,26 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
     "xmjd6-squirrel.zip": (
         "squirrel.yaml",
         "squirrel.custom.yaml",
-        "zzc/README.md",
-        "zzc/自造词使用教程.md",
         "zzc/Mac_词库合并",
         "zzc/Mac_撤回合并",
     ),
     "xmjd6-fcitx5-macos.zip": (
-        "zzc/README.md",
-        "zzc/自造词使用教程.md",
+        "fcitx5/macos/themes",
+        "zzc/Fcitx5_macOS_词库合并.py",
+        "zzc/Fcitx5_macOS_撤回合并.py",
         "zzc/Mac_词库合并",
         "zzc/Mac_撤回合并",
     ),
     "xmjd6-fcitx5-linux.zip": (
-        "zzc/README.md",
-        "zzc/自造词使用教程.md",
-        "zzc/Linux_词库合并.py",
-        "zzc/Linux_撤回合并.py",
+        "fcitx5/linux/themes",
+        "zzc/Fcitx5_Linux_词库合并.py",
+        "zzc/Fcitx5_Linux_撤回合并.py",
     ),
     "xmjd6-mobile.zip": (
         "Hamster.yaml",
         "exclude_iCloud_rime_files.txt",
         "include_iCloud_rime_files.txt",
         "include_keyboard_rime_files.txt",
-        "zzc/README.md",
-        "zzc/自造词使用教程.md",
         "zzc/iOS_词库合并.py",
         "zzc/iOS快捷指令合并说明.md",
         "zzc/a-Shell快捷指令合并说明.md",
@@ -79,6 +73,11 @@ def common_runtime_files(root: Path) -> list[Path]:
         root / "README.md",
         root / "THIRD_PARTY.md",
         root / "VERSION",
+        root / "zzc" / "README.md",
+        root / "zzc" / "自造词使用教程.md",
+        root / "zzc" / "自造词使用教程.png",
+        root / "zzc" / "Linux_词库合并.py",
+        root / "zzc" / "Linux_撤回合并.py",
     ]
     files.extend(sorted(root.glob("xmjd6*.yaml")))
     files.extend(_files_below(root, "lua/xmjd6"))
@@ -98,7 +97,14 @@ def package_files(root: Path) -> dict[str, list[Path]]:
     common = common_runtime_files(root)
     packages: dict[str, list[Path]] = {}
     for archive_name, extras in PACKAGE_EXTRAS.items():
-        files = common + [root / relative for relative in extras]
+        extra_files: list[Path] = []
+        for relative in extras:
+            path = root / relative
+            if path.is_dir():
+                extra_files.extend(_files_below(root, relative))
+            else:
+                extra_files.append(path)
+        files = common + extra_files
         packages[archive_name] = _validate_files(root, files)
     return packages
 

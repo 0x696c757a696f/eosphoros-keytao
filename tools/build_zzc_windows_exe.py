@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_ROOT = ROOT / "build" / "zzc-windows-exe"
 LOCK_PATH = ROOT / "tools" / "zzc_windows_executables.lock.json"
-BUILD_DATE = "2026-08-04"
+BUILD_DATE = "2026-08-09"
 PYTHON_SERIES = (3, 14)
 PYINSTALLER_VERSION = "6.21.0"
 PE_AMD64 = 0x8664

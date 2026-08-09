@@ -163,7 +163,7 @@ def write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
     with tmp.open("w", encoding="utf-8", newline="\n") as f:
-        f.write(text)
+        f.write(text if text else "\n")
     tmp.replace(path)
 
 
@@ -234,7 +234,7 @@ def ops_header() -> str:
             "# encoding: utf-8",
             "---",
             f"name: {SCHEMA}.zzc",
-            'version: "2026-08-04"',
+            'version: "2026-08-09"',
             "sort: by_weight",
             "use_preset_vocabulary: false",
             "columns:",

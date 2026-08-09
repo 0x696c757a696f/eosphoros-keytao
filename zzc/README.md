@@ -9,9 +9,11 @@
 - macOS 撤回合并：运行 `Mac_撤回合并`
 - Linux 合并：运行 `python3 zzc/Linux_词库合并.py`
 - Linux 撤回合并：运行 `python3 zzc/Linux_撤回合并.py`
+- Fcitx5 Linux：运行 `python3 zzc/Fcitx5_Linux_词库合并.py`；撤回时运行同目录的 `Fcitx5_Linux_撤回合并.py`
+- Fcitx5 macOS：运行 `python3 zzc/Fcitx5_macOS_词库合并.py`；撤回时运行同目录的 `Fcitx5_macOS_撤回合并.py`
 - iOS 合并：免费方案用 a-Shell 运行 `iOS_词库合并.py`，Pythonista 也可运行同一脚本
 
-Windows Python 入口只是薄包装，和 Linux 共用同一份可审查核心；两个 `.exe` 也直接从相同的 `Linux_*` 共享核心构建，不使用另一套算法或不透明的上游二进制。macOS 保留无扩展入口，Linux 保留 `.py` 脚本。
+Windows 与 Fcitx5 Python 入口都是薄包装，和 Linux 共用同一份可审查核心；两个 Windows `.exe` 也直接从相同的 `Linux_*` 共享核心构建，不使用另一套算法或不透明的上游二进制。macOS 传统入口继续保留无扩展脚本，Fcitx5 macOS 另有文件名明确的 `.py` 入口。
 
 旧的 `apply_zzc.py`、`gen_char_parts.py`、`.cmd`、`.bat` 入口已经废弃，不要恢复。
 
@@ -38,7 +40,7 @@ Linux/macOS 合并脚本按 Python 3.7+ 兼容写法维护，避免依赖 Python
 pixi exec --spec "python=3.14.6" --spec "pyinstaller=6.21.0" python tools/build_zzc_windows_exe.py
 ```
 
-生成器会直接冻结 `Linux_词库合并.py` 和 `Linux_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.04` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
+生成器会直接冻结 `Linux_词库合并.py` 和 `Linux_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.09` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
 
 不安装 PyInstaller也可以检查已提交 EXE 是否匹配当前源码：
 
@@ -56,6 +58,7 @@ python tools/build_zzc_windows_exe.py --check
 - `../zzc_state/runtime_ops.tsv`：实时运行时操作记录；每次自造词、替换、删除、置顶、前移、append、restore 都先写这里。
 - `../zzc_state/effective_state.tsv`：运行时实际生效快照，普通显示、自造词 collect、删除、置顶、前移、append、restore、completion 都读这里。
 - `../zzc_state/runtime_exact.tsv`：兼容缓存占位，不是当前主要显示来源。
+- `../zzc_state/index.tsv`：旧版索引兼容占位；当前逻辑不依赖其中内容。
 - `../zzc_state/cache_version.tsv`：运行时缓存失效标记，用于通知 Lua VM 刷新；Lua 兼容读取旧 `zzc/cache_version.txt`，新写入只使用 `zzc_state`。
 - `../zzc_state/runtime_ops_appended.tsv`：记录已追加到 `*.zzc.dict.yaml` 的运行时操作签名，避免清理失败后重复追加。
 - `../zzc_state/zzc_reset.tsv`：合并脚本覆盖写入的远端清理标记，通知手机/其他端强制清空本地旧 zzc 状态。
@@ -69,7 +72,7 @@ python tools/build_zzc_windows_exe.py --check
 
 Lua 运行中只实时写 `runtime_ops.tsv`，并更新 `effective_state.tsv` 给当前会话显示使用，不立即改写 `*.zzc.dict.yaml`。
 
-键盘收起或 Rime session 结束时，Lua 会把 `zzc_state/runtime_ops.tsv` 追加写入 `*.zzc.dict.yaml`，再清空 `runtime_ops.tsv`、`runtime_exact.tsv` 和 `effective_state.tsv`，并刷新 `cache_version.tsv`。追加成功后会记录 `runtime_ops_appended.tsv` 签名；如果清空运行时文件失败，下次 session 创建时只重试清理，不重复追加同一批操作。
+键盘收起或 Rime session 结束时，Lua 会把 `zzc_state/runtime_ops.tsv` 追加写入 `*.zzc.dict.yaml`，再清空 `runtime_ops.tsv`、`runtime_exact.tsv` 和 `effective_state.tsv`，并刷新 `cache_version.tsv`。逻辑空状态使用单个换行存储，读取时仍视为空表，避免 Windows iCloud Drive 排除首次创建的 0 字节文件。追加成功后会记录 `runtime_ops_appended.tsv` 签名；如果清空运行时文件失败，下次 session 创建时只重试清理，不重复追加同一批操作。
 
 session 创建时不再作为主要写入点，只做上述补偿清理。运行中和 session 结束时都不压缩操作链，以保留完整操作记录；手动合并脚本负责 compact。自造词后如果要让重新部署读取到 `*.zzc.dict.yaml`，先收起键盘结束当前 session，再重新部署。
 
@@ -128,19 +131,26 @@ session 创建时不再作为主要写入点，只做上述补偿清理。运行
 - `Win_撤回合并.exe`
 - `Windows_词库合并.py`
 - `Windows_撤回合并.py`
+- `Fcitx5_Linux_词库合并.py`
+- `Fcitx5_Linux_撤回合并.py`
+- `Fcitx5_macOS_词库合并.py`
+- `Fcitx5_macOS_撤回合并.py`
 - `Mac_词库合并`
 - `Mac_撤回合并`
 - `Linux_词库合并.py`
 - `Linux_撤回合并.py`
 - `../zzc_state/char_parts.tsv`
 - `../zzc_state/runtime_exact.tsv`
+- `../zzc_state/runtime_ops_appended.tsv`
 - `../zzc_state/zzc_reset.tsv`
 - `../zzc_state/zzc_reset_seen.tsv`
 - 生成后的 `../zzc_state/cache_version.tsv`
 - 生成后的 `../zzc_state/runtime_ops.tsv`
 - 生成后的 `../zzc_state/effective_state.tsv`
-- `指令列表.md`
-- `指令列表.png`
+- `自造词使用教程.md`
+- `自造词使用教程.png`
+- `iOS快捷指令合并说明.md`
+- `a-Shell快捷指令合并说明.md`
 - `请根据自己的电脑选择运行合并脚本.txt`
 
 不要恢复：

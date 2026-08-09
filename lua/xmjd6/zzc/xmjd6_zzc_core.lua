@@ -1,6 +1,6 @@
 -- 天行键 自造词核心模块
 -- 作者：@浮生 https://github.com/wzxmer/rime-xmjd6
--- 更新：2026-08-04
+-- 更新：2026-08-09
 
 local M = {}
 local codec = require("xmjd6.zzc.xmjd6_zzc_codec")
@@ -665,7 +665,7 @@ local function ops_header()
         "# encoding: utf-8",
         "---",
         "name: xmjd6.zzc",
-        "version: \"2026-08-04\"",
+        "version: \"2026-08-09\"",
         "sort: by_weight",
         "use_preset_vocabulary: false",
         "columns:",
@@ -695,6 +695,7 @@ local function ensure_runtime_ops_file()
     end
     f = io.open(runtime_ops_file(), "w")
     if not f then return end
+    f:write("\n")
     f:close()
 end
 
@@ -1316,7 +1317,11 @@ write_file_atomic = function(file_path, lines)
     if not f then
         return nil, "open_failed:" .. file_path
     end
-    for _, line in ipairs(lines) do f:write(line, "\n") end
+    if not lines or not lines[1] then
+        f:write("\n")
+    else
+        for _, line in ipairs(lines) do f:write(line, "\n") end
+    end
     f:close()
     local renamed = os.rename(tmp, file_path)
     if renamed then return true end

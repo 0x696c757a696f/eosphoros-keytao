@@ -19,6 +19,16 @@ Linux:
 - Linux_撤回合并.py
 - 需要电脑已安装 Python 3。
 
+Fcitx5 Linux:
+- Fcitx5_Linux_词库合并.py
+- Fcitx5_Linux_撤回合并.py
+- 两个入口调用同目录的 Linux_* 共享核心。
+
+Fcitx5 macOS:
+- Fcitx5_macOS_词库合并.py
+- Fcitx5_macOS_撤回合并.py
+- 使用 python3 运行；两个入口调用同目录的 Linux_* 共享核心。
+
 iOS:
 - iOS_词库合并.py
 - 免费方案使用 a-Shell，Pythonista 也可以运行。

@@ -309,6 +309,39 @@ test("ZZC operation chain recursively fills a deleted short-code gap", function(
     assert_equal(records[4].code, "abcda", "recursive compact target")
 end)
 
+test("calculator equal key ignores auto-repeat until key release", function()
+    unload("xmjd6.input.xmjd6_punctuation")
+    local punctuation = require("xmjd6.input.xmjd6_punctuation")
+    local context = {
+        input = "=",
+        push_input = function(self, text) self.input = self.input .. text end,
+    }
+    local env = { engine = { context = context } }
+    local function equal_event(is_release)
+        return {
+            keycode = 61,
+            release = function() return is_release end,
+            ctrl = function() return false end,
+            alt = function() return false end,
+            super = function() return false end,
+            repr = function() return "=" end,
+        }
+    end
+    local opts = { jisuanqi = true, direct_symbols = false, smarttwo = false }
+
+    punctuation.process(equal_event(true), env, "equal", false, "=", opts)
+    assert_equal(
+        punctuation.process(equal_event(false), env, "equal", false, "=", opts),
+        1,
+        "second equal press"
+    )
+    punctuation.process(equal_event(false), env, "equal", false, "=", opts)
+    assert_equal(context.input, "==", "auto-repeat must not append another equal")
+    punctuation.process(equal_event(true), env, "equal", false, "=", opts)
+    punctuation.process(equal_event(false), env, "equal", false, "=", opts)
+    assert_equal(context.input, "===", "new press after release may append equal")
+end)
+
 local failed = 0
 for _, item in ipairs(tests) do
     local ok, err = xpcall(item.fn, debug.traceback)

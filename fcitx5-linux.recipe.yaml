@@ -17,6 +17,12 @@ install_files: >-
   lua/xmjd6/*/*.lua
   opencc/xmjd6/*.lua
   zzc_state/char_parts.tsv
+  zzc/README.md
+  zzc/自造词使用教程.md
+  zzc/Linux_词库合并.py
+  zzc/Linux_撤回合并.py
+  zzc/Fcitx5_Linux_词库合并.py
+  zzc/Fcitx5_Linux_撤回合并.py
 patch_files:
   default.custom.yaml:
     - patch/+:

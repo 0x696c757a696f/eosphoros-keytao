@@ -1,6 +1,6 @@
 -- 天行键按键处理器运行状态管理
 -- 作者：@浮生 https://github.com/wzxmer/rime-xmjd6
--- 更新：2026-08-04
+-- 更新：2026-08-09
 
 local M = {}
 
@@ -18,12 +18,12 @@ function M.init(env)
     env._caps_lock_on = nil
     env._shift_release_guard = nil
     env._shift_inline_ascii = nil
-    env._calc_equal_allow_next = nil
+    env._calc_equal_down = nil
 end
 
 function M.reset(env)
     M.clear_space_guard(env)
-    env._calc_equal_allow_next = nil
+    env._calc_equal_down = nil
     env._caps_lock_on = nil
     env._shift_inline_ascii = nil
 end
@@ -41,7 +41,7 @@ function M.fini(env)
     env._caps_lock_on = nil
     env._shift_release_guard = nil
     env._shift_inline_ascii = nil
-    env._calc_equal_allow_next = nil
+    env._calc_equal_down = nil
 end
 
 return M

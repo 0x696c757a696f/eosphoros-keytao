@@ -1,13 +1,14 @@
 -- 打字统计：按天记录汉字数、击键数、上屏次数、退格数和活跃打字时长。
 -- 输入 =tj 查看今日、近 7 天和累计统计。
--- 数据保存在 user_data_dir/typing_stats.txt，每天一行，最多保留两年。
+-- 数据保存在 user_data_dir/zzc_state/xmjd6_typing_stats.tsv；兼容读取旧 typing_stats.txt。
 
 local cache_registry = require("xmjd6.common.xmjd6_cache_registry")
 
 local M = {}
 
 local kNoop = 2
-local STATS_FILE = "typing_stats.txt"
+local STATS_FILE = "xmjd6_typing_stats.tsv"
+local LEGACY_STATS_FILE = "typing_stats.txt"
 local MAX_DAYS = 730
 local FLUSH_EVERY = 20
 local FLUSH_IDLE = 60
@@ -29,8 +30,22 @@ local function state()
     return _G.__typing_stats
 end
 
+local function user_data_dir()
+    local api = rime_api
+    if not api or not api.get_user_data_dir then return nil end
+    local ok, path = pcall(api.get_user_data_dir)
+    if ok and type(path) == "string" and path ~= "" then return path end
+    return nil
+end
+
 local function stats_path()
-    return rime_api.get_user_data_dir() .. "/" .. STATS_FILE
+    local base = user_data_dir()
+    return base and (base .. "/zzc_state/" .. STATS_FILE) or nil
+end
+
+local function legacy_stats_path()
+    local base = user_data_dir()
+    return base and (base .. "/" .. LEGACY_STATS_FILE) or nil
 end
 
 local function today_str()
@@ -57,7 +72,10 @@ local function load(st)
     st.history = {}
     st.today = nil
     local today = today_str()
-    local file = io.open(stats_path(), "r")
+    local current_path = stats_path()
+    local legacy_path = legacy_stats_path()
+    local file = current_path and io.open(current_path, "r") or nil
+    if not file and legacy_path then file = io.open(legacy_path, "r") end
     if file then
         for line in file:lines() do
             local day, chars, keys, commits, backspaces, sent_chars, active_secs, timed_chars =
@@ -96,7 +114,8 @@ local function flush(st)
         table.remove(st.history, 1)
     end
 
-    local file = io.open(stats_path(), "w")
+    local path = stats_path()
+    local file = path and io.open(path, "w") or nil
     if not file then return end
 
     local function write_row(row)
