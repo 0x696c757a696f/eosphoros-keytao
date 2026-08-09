@@ -14,20 +14,20 @@ Mac:
 - Mac_撤回合并
 - 交给有 Mac 环境的人打包成无扩展可执行文件后使用。
 
-Linux:
-- Linux_词库合并.py
-- Linux_撤回合并.py
+Linux / 通用 Python:
+- xmjd6_词库合并.py
+- xmjd6_撤回合并.py
 - 需要电脑已安装 Python 3。
 
 Fcitx5 Linux:
 - Fcitx5_Linux_词库合并.py
 - Fcitx5_Linux_撤回合并.py
-- 两个入口调用同目录的 Linux_* 共享核心。
+- 两个入口调用同目录的 xmjd6_* 平台中性共享核心。
 
 Fcitx5 macOS:
 - Fcitx5_macOS_词库合并.py
 - Fcitx5_macOS_撤回合并.py
-- 使用 python3 运行；两个入口调用同目录的 Linux_* 共享核心。
+- 使用 python3 运行；两个入口调用同目录的 xmjd6_* 平台中性共享核心。
 
 iOS:
 - iOS_词库合并.py
