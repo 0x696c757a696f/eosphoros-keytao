@@ -789,6 +789,24 @@ print("撤回完成", file=sys.stderr)
         ):
             self.assertIn(native_node24, workflows)
 
+    def test_release_changelog_compares_against_triggering_commit(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        workflow = (root / ".github" / "workflows" / "create-release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("head: context.sha", workflow)
+        self.assertNotIn("head: 'main'", workflow)
+
+    def test_release_changelog_survives_missing_previous_tag(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        workflow = (root / ".github" / "workflows" / "create-release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("if (error.status !== 404) throw error", workflow)
+        self.assertIn("Previous release tag is unavailable", workflow)
+
     def test_falls_back_to_lupa_when_luac_cannot_execute(self) -> None:
         from tools import validate_repo
 

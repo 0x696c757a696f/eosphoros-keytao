@@ -121,22 +121,34 @@ jobs:
       uses: actions/github-script@v9
       with:
         script: |
-          const lastRelease = await github.rest.repos.getLatestRelease({
-            owner: context.repo.owner,
-            repo: context.repo.repo
-          });
-          const compare = await github.rest.repos.compareCommits({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            base: lastRelease.data.tag_name,
-            head: 'main'
-          });
           let changelog = '';
-          compare.data.commits.forEach(commit => {
+          const renderCommit = commit => {
             const message = commit.commit.message.split('\n').join(' ');
             const commitLink = `[${commit.sha.substring(0, 7)}](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commit.sha})`;
-            changelog += `- ${commitLink} ${message} \n`;
-          });
+            return `- ${commitLink} ${message} \n`;
+          };
+          try {
+            const lastRelease = await github.rest.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const compare = await github.rest.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: lastRelease.data.tag_name,
+              head: context.sha
+            });
+            changelog = compare.data.commits.map(renderCommit).join('');
+          } catch (error) {
+            if (error.status !== 404) throw error;
+            core.warning('Previous release tag is unavailable; changelog will contain the current commit only.');
+            const current = await github.rest.repos.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha
+            });
+            changelog = renderCommit(current.data);
+          }
           core.setOutput('changelog', changelog);
 
     - name: Download verified Rabbit release asset
