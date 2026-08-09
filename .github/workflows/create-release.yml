@@ -27,8 +27,14 @@ jobs:
       with:
         python-version: '3.14.6'
 
-    - name: Install pinned executable builder
-      run: python -m pip install pyinstaller==6.21.0
+    - name: Verify UTF-8 runtime and Chinese paths
+      run: >-
+        python -c "import sys; assert sys.flags.utf8_mode == 1; assert sys.stdout.encoding.lower().replace('-', '') == 'utf8'; assert sys.stderr.encoding.lower().replace('-', '') == 'utf8'; print('UTF-8 中文路径检查：Win_词库合并.exe')"
+
+    - name: Install test dependencies and pinned executable builder
+      run: |
+        python -m pip install -r requirements-dev.txt
+        python -m pip install pyinstaller==6.21.0
 
     - name: Build Windows executables from current Python sources
       run: python tools/build_zzc_windows_exe.py

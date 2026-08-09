@@ -618,12 +618,19 @@ columns:
         workflows = root / ".github" / "workflows"
         for name in ("package-master.yml", "create-release.yml"):
             workflow = (workflows / name).read_text(encoding="utf-8")
+            next_job = "build" if name == "package-master.yml" else "release"
+            windows_job = workflow.split("  build-windows-executables:\n", 1)[1].split(
+                f"\n  {next_job}:\n", 1
+            )[0]
             self.assertIn("windows-latest", workflow, name)
             self.assertIn("test_windows_merge_executable_runs_current_xmjd6_behavior", workflow, name)
             self.assertIn("test_windows_rollback_executable_restores_latest_merge", workflow, name)
             self.assertIn("test_committed_windows_executables_match_sources_and_lock", workflow, name)
             self.assertIn("python-version: '3.14.6'", workflow, name)
             self.assertIn("pyinstaller==6.21.0", workflow, name)
+            self.assertIn("python -m pip install -r requirements-dev.txt", windows_job, name)
+            self.assertIn("sys.flags.utf8_mode == 1", windows_job, name)
+            self.assertIn("Win_词库合并.exe", windows_job, name)
             self.assertIn("python tools/build_zzc_windows_exe.py", workflow, name)
             self.assertIn("actions/upload-artifact@v7", workflow, name)
             self.assertIn("actions/download-artifact@v7", workflow, name)
@@ -639,6 +646,39 @@ columns:
                 continue
             self.assertIn('PYTHONUTF8: "1"', workflow, path.name)
             self.assertIn('PYTHONIOENCODING: "utf-8"', workflow, path.name)
+
+    def test_tracked_text_assets_are_valid_utf8(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        text_extensions = {
+            ".conf",
+            ".ini",
+            ".json",
+            ".lua",
+            ".md",
+            ".ps1",
+            ".py",
+            ".sh",
+            ".txt",
+            ".yaml",
+            ".yml",
+        }
+        tracked = subprocess.run(
+            ["git", "-c", "core.quotepath=false", "ls-files", "-z"],
+            cwd=root,
+            capture_output=True,
+            check=True,
+        ).stdout.decode("utf-8")
+
+        for relative in tracked.split("\0"):
+            if not relative:
+                continue
+            path = root / relative
+            if path.suffix.lower() not in text_extensions and path.name != "VERSION":
+                continue
+            try:
+                path.read_text(encoding="utf-8-sig")
+            except UnicodeDecodeError as exc:
+                self.fail(f"{relative} is not valid UTF-8: {exc}")
 
     def test_windows_executable_builder_reconfigures_stdio_to_utf8(self) -> None:
         root = Path(__file__).resolve().parents[1]

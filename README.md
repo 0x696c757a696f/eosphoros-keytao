@@ -17,6 +17,8 @@
 - Lua 文件集中在 `lua/xmjd6/`，OpenCC 数据集中在 `opencc/xmjd6/`，避免污染用户目录的公共命名空间。
 - 上游词库使用 Git commit 锁定，可增量检测、确定性重建、定期验证并自动提交更新 PR。
 
+第一次安装请直接阅读[“如何使用”](#如何使用)。其中保留了 Windows、macOS、Linux、Android、iOS 各客户端的用户目录、导入步骤和重新部署方法；Linux 另按桌面环境列出 Wayland、X11、平铺窗口管理器及 Electron 应用的特殊设置。
+
 ## 快速安装
 
 ### 标准 Rime 安装
@@ -138,11 +140,11 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 | 平台 | 推荐客户端 | 安装方式 | 更新后必须做的操作 |
 | --- | --- | --- | --- |
-| Windows | 小狼毫、玉兔毫、小小输入法 | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
-| macOS | 鼠须管、Fcitx5 macOS | 解压到对应 Rime 用户目录 | 重新部署 |
-| Linux | Fcitx5 + Rime + librime-lua | 安装组件后解压到 Fcitx5 Rime 目录 | 重启 Fcitx5 并重新部署 |
-| Android | 同文、Fcitx5 for Android | 通过应用配置管理或系统文件选择器导入 | 在应用内重新部署 |
-| iOS | 元书、仓输入法 | 使用应用内下载方案或在线方案导入 | 切换到新方案目录并重新部署 |
+| Windows | [小狼毫](https://github.com/rime/weasel/releases/latest)、[水龙月 Fork](https://github.com/Techince/weasel/releases/latest)、玉兔毫、小小输入法 | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
+| macOS | [鼠须管](https://github.com/rime/squirrel/releases/latest)、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 解压到对应 Rime 用户目录 | 重新部署 |
+| Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + Rime + librime-lua | 安装组件后解压到 Fcitx5 Rime 目录 | 重启 Fcitx5 并重新部署 |
+| Android | [同文](https://github.com/osfans/trime/releases/latest)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 通过应用配置管理或系统文件选择器导入 | 在应用内重新部署 |
+| iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 使用应用内下载方案或在线方案导入 | 切换到新方案目录并重新部署 |
 
 无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`lua/xmjd6/` 和 `opencc/xmjd6/` 也必须保持原目录结构一起导入，否则顶功、自造词、英文、Emoji 和简繁转换可能不完整。
 
@@ -165,7 +167,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 **玉兔毫 Rabbit**
 
-1. 下载 [`Rabbit-xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/Rabbit-xmjd6.zip)。
+1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`Rabbit-xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/Rabbit-xmjd6.zip)。
 2. 解压到路径中不含空格的目录。
 3. 运行玉兔毫并选择星猫键道；该包已经带入方案文件，不需要再复制 `xmjd6.zip`。
 
@@ -185,7 +187,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 #### Linux：Fcitx5 + Rime
 
-需要同时安装 Fcitx5、Rime 插件和 Lua 支持。不同发行版的软件包名称可能略有差异，下面是常见安装命令：
+需要同时安装 Fcitx5、Rime 插件和 Lua 支持。不同发行版的软件包名称、拆包方式和仓库版本可能不同；如果命令提示找不到 `librime-lua`，请先查询本发行版是否已把 Lua 支持合并进 `librime`/`fcitx5-rime`，或按照该发行版的软件包说明安装对应组件。
 
 | 发行版 | 安装命令或说明 |
 | --- | --- |
@@ -196,70 +198,70 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 | Deepin / UOS | 如仍使用 Fcitx4，先卸载旧组件，再安装 `fcitx5 fcitx5-rime librime-lua` |
 | Flatpak | `flatpak install org.fcitx.Fcitx5 org.fcitx.Fcitx5.Addon.Rime` |
 
+RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RHEL/Rocky 9 再运行 `sudo /usr/bin/crb enable` 后安装 Fcitx5。Deepin/UOS 如存在旧版 Fcitx4，可先运行 `sudo apt remove fcitx fcitx-bin fcitx-table-all`，再安装 Fcitx5 组件。
+
 安装方案：
 
 1. 将 `xmjd6.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
 2. Flatpak 版通常使用 `~/.var/app/org.fcitx.Fcitx5/data/fcitx5/rime/`。
 3. 打开 Fcitx5 配置工具，添加“中州韵”或 Rime 输入法。
 4. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
+5. 若仍不能输入，先运行 `fcitx5-diagnose`，确认当前桌面会话、Fcitx5 自启动、Rime 插件和输入法环境变量是否被识别。
 
-桌面环境配置需要按实际会话选择：
+桌面环境配置必须按实际会话选择，不要把下面几套变量全部叠加。Fcitx5 官方也明确说明不存在适合所有 X11/Wayland 环境的一套全局配置；完整背景可参考[设置 Fcitx5](https://fcitx-im.org/wiki/Setup_Fcitx_5)和[在 Wayland 上使用 Fcitx5](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland)。
 
 **KDE Plasma / Wayland**
 
 1. 打开“系统设置 → 虚拟键盘”，选择 Fcitx 5。
-2. 可在 `/etc/environment` 中补充：
+2. 为兼容 XWayland 程序，只需在 `/etc/environment` 或 `~/.config/environment.d/im.conf` 中设置：
 
    ```text
    XMODIFIERS=@im=fcitx
-   GLFW_IM_MODULE=fcitx
-   CLUTTER_IM_MODULE=fcitx
-   ECORE_IMF_MODULE=fcitx
-   QT_IM_MODULES="wayland;fcitx;ibus"
    ```
 
-3. Wayland 会话下不建议通过任务栏菜单反复“重启”输入法；修改环境变量后注销并重新登录更可靠。
+3. Plasma 5.27 及更新版本通常不要全局设置 `GTK_IM_MODULE`、`QT_IM_MODULE`、`SDL_IM_MODULE`，否则候选窗可能闪烁；仅在某个旧 X11 应用不能输入时，给那个应用单独设置。
+4. 由 KWin“虚拟键盘”启动的 Fcitx5 不要从托盘菜单执行“重启”，因为 KWin 传入的 Wayland socket 不能被新进程复用。修改设置后应注销并重新登录。
 
-**GNOME / Budgie / Debian 系桌面**
+**GNOME / Budgie**
 
-1. 运行 `im-config -n fcitx5`。
-2. GNOME/Budgie 如未正确使用 Fcitx5，可运行：
+1. Debian、Ubuntu、Linux Mint 等系统登录图形界面后运行 `im-config`，在向导中选择 `fcitx5`；也可直接运行 `im-config -n fcitx5`。Fedora 可运行 `im-chooser`，选择 Fcitx5 后注销并重新登录。
+2. Wayland 下建议至少为 XWayland 程序设置 `XMODIFIERS=@im=fcitx`；Qt 5 程序可按需设置 `QT_IM_MODULE=fcitx`。Qt 6.8.2 及更新版本需要回退顺序时可使用 `QT_IM_MODULES="wayland;fcitx"`。
+3. Chrome/Chromium 走 XWayland 时可为该应用设置 `GTK_IM_MODULE=fcitx`。GNOME Shell 内部界面无法正常定位候选窗时，可考虑 Fcitx5 官方文档提到的 Kimpanel 扩展。
+4. 只有旧版 GNOME/Budgie 的 GTK 输入模块没有被桌面配置正确写入时，才尝试下面的兼容命令；它不是所有 GNOME 系统都必须执行的步骤：
 
    ```bash
    gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gtk/IMModule':<'fcitx'>}"
    ```
 
-3. 必要时在 `/etc/environment` 中加入：
+**Deepin / UOS（DDE）**
 
-   ```text
-   GTK_IM_MODULE=fcitx
-   QT_IM_MODULE=fcitx
-   XMODIFIERS=@im=fcitx
-   SDL_IM_MODULE=fcitx
-   GLFW_IM_MODULE=fcitx
-   CLUTTER_IM_MODULE=fcitx
-   ECORE_IMF_MODULE=fcitx
-   QT_IM_MODULES="wayland;fcitx;ibus"
-   ```
+1. 运行 `im-config -n fcitx5`，然后注销并重新登录。
+2. 若 DDE 仍启动旧输入法，检查会话自启动项中是否同时存在 Fcitx4 与 Fcitx5，只保留 Fcitx5。
+3. 只有 X11 应用不能输入时才补充 `GTK_IM_MODULE=fcitx`、`QT_IM_MODULE=fcitx` 和 `XMODIFIERS=@im=fcitx`；不要在 Wayland 会话中无条件套用 X11 的全量变量。
 
 **Xfce / LXQt / LXDE / MATE 等 X11 桌面**
 
 1. 确认 Fcitx5 随桌面会话自动启动；LXQt 可在“会话设置 → 自动启动”中添加，其他桌面可在“会话和启动”中添加 `fcitx5`。
-2. 在 `/etc/environment` 或用户级 `~/.xprofile` 中设置上面的输入法环境变量。
+2. 可在用户级 `~/.xprofile`（仅适合 X11）或系统支持的登录环境配置中加入：
+
+   ```bash
+   export XMODIFIERS=@im=fcitx
+   export GTK_IM_MODULE=fcitx
+   export QT_IM_MODULE=fcitx
+   export SDL_IM_MODULE=fcitx
+   ```
+
+   写进 shell 文件时四项都应带 `export`；写进 `/etc/environment` 或 `environment.d` 时不要写 `export`。`~/.xprofile` 不适用于原生 Wayland 会话。
 
 **i3wm / awesome / bspwm 等平铺窗口管理器**
 
-在 `~/.xprofile` 中加入：
+X11 平铺窗口管理器可在 `~/.xprofile` 中加入：
 
 ```bash
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
-export GLFW_IM_MODULE=fcitx
-export CLUTTER_IM_MODULE=fcitx
-export ECORE_IMF_MODULE=fcitx
-export QT_IM_MODULES="wayland;fcitx;ibus"
 ```
 
 然后为窗口管理器添加自动启动：
@@ -270,16 +272,22 @@ export QT_IM_MODULES="wayland;fcitx;ibus"
 | awesome | 在 `~/.config/awesome/rc.lua` 加入 `awful.spawn.with_shell("fcitx5 -d")` |
 | bspwm | 在 `~/.config/bspwm/bspwmrc` 加入 `fcitx5 -d &` |
 
+**Sway / Hyprland 等 wlroots Wayland 合成器**
+
+- Sway 1.10 及更新版本可使用 text-input-v3；为 XWayland 程序设置 `XMODIFIERS=@im=fcitx`，Qt 5 可按需设置 `QT_IM_MODULE=fcitx`，新 Qt 6 可使用 `QT_IM_MODULES="wayland;fcitx"`。
+- 自动启动方式写在合成器自身配置中，例如 Sway 使用 `exec_always --no-startup-id fcitx5 -d`。其他 wlroots 合成器对输入法协议的支持程度不同，应同时查阅对应合成器文档。
+- kitty 需要特殊变量时使用 `GLFW_IM_MODULE=ibus`，不是 `fcitx`。
+
 **Electron / Chrome / VS Code**
 
-- XWayland 模式通常最稳，不额外添加启动参数，让应用读取 `GTK_IM_MODULE` 或 `XMODIFIERS`。
+- XWayland 模式通常最稳：安装 GTK 输入模块并让应用读取 `GTK_IM_MODULE=fcitx` 或 `XMODIFIERS=@im=fcitx`。
 - 必须使用原生 Wayland 时，KDE/KWin 可尝试：
 
   ```text
   --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --wayland-text-input-version=1
   ```
 
-- GNOME 或其他桌面可尝试将最后一项改成 `--wayland-text-input-version=3`。
+- GNOME、Sway 1.10+ 或其他支持 text-input-v3 的环境可尝试将最后一项改成 `--wayland-text-input-version=3`。Chromium 和 Electron 对 Wayland 输入协议的行为会随版本变化，遇到候选窗错位或不能输入时优先退回 XWayland。
 
 #### Android
 
@@ -293,8 +301,8 @@ export QT_IM_MODULES="wayland;fcitx;ibus"
 **Fcitx5 for Android**
 
 1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)及 Rime 插件；需要测试构建时可使用[主程序构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/)、[Rime 插件构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)和[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
-2. 在小企鹅输入法中添加中州韵后，Rime 数据目录通常位于应用数据中的 `files/data/rime/`。
-3. 推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，进入其数据目录后复制完整方案，不需要 root 或 ADB。
+2. 在小企鹅输入法中添加中州韵后，Rime 数据目录通常为 `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`。
+3. 推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
 4. 返回应用重新部署 Rime。
 
 #### iOS
