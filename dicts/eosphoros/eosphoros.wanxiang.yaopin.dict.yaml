@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 11180
-# Generated rows in category: 9368
+# Generated rows in category: 9367
 ---
 name: eosphoros.wanxiang.yaopin
 version: "2026-08-10"
@@ -3221,7 +3221,7 @@ sort: original
 黄藤素注射液	htsyv
 茴天通络颗粒	httliv
 黄体酮注射液	httyvi
-化痰消咳片	htxp
+化痰消咳片	htxpi
 喉痛消炎丸	htxwo
 海天益肾胶囊	htyn
 汉桃叶软胶囊	htyna
@@ -3784,7 +3784,6 @@ sort: original
 精芪双参胶囊	jqenoi
 车前番泻颗粒	jqflv
 金朱止泻片	jqfpi
-金青感冒颗粒	jqgliv
 酒蒸黄连丸	jqhwa
 酒煮黄连丸	jqhwau
 金芪降糖颗粒	jqjli
@@ -6938,7 +6937,7 @@ sort: original
 天麻蜜环菌片	tmmpv
 天麻祛风补片	tmqpvo
 托姆斯颗粒层	tmsc
-通脉四逆散	tmss
+通脉四逆散	tmssa
 天麻素注射液	tmsyvo
 天麻头痛片	tmtpvo
 天麻醒脑胶囊	tmxnv

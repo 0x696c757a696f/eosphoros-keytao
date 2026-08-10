@@ -22,8 +22,8 @@ sort: original
 贝伯绍曼三氏病	bbebai
 背部伤口清创术	bbeei
 鼻部神经封闭术	bbeeuo
-鼻部分切除术	bbfeu
-鼻部肿物切除术	bbfeuo
+鼻部分切除术	bbfe
+鼻部肿物切除术	bbfeu
 豹斑状白癜风	bbff
 白斑黑皮病	bbhb
 鼻病害切除术	bbheu
@@ -2010,7 +2010,7 @@ sort: original
 书写痉挛症	exjqao
 湿邪浸渍证	exjqav
 肾虚精亏证	exjqi
-舌下静脉曲张	exjqu
+舌下静脉曲张	exjquv
 湿邪困脾证	exkqa
 舌下良性肿瘤	exllu
 肾性尿崩症	exnqi
@@ -2077,7 +2077,7 @@ sort: original
 少阳兼里实证	eyjqi
 少阳兼胃热证	eyjqia
 肾盂静脉曲张	eyjqiv
-双阴茎畸形	eyjxa
+双阴茎畸形	eyjx
 肾盂静脉炎	eyjy
 肾盂静脉造影	eyjyi
 肾阳亏虚证	eykq
@@ -4471,8 +4471,8 @@ sort: original
 患有高血压病	hygbi
 换药管置换术	hygei
 会阴肛门成形术	hygeia
-会厌谷恶性肿瘤	hygli
 会咽谷良性肿瘤	hyglio
+会厌谷恶性肿瘤	hygliv
 会阴后侧切开术	hyhei
 会阴成形术	hyjeia
 环咽肌切断术	hyjev
@@ -4889,7 +4889,7 @@ sort: original
 结核菌素皮试	jhjea
 胫后肌前植术	jhjeu
 胫后肌移植术	jhjeuu
-角化棘皮瘤	jhjlu
+角化棘皮瘤	jhjlui
 结核菌涂片检查	jhjwav
 结核菌素试验	jhjya
 产后甲状腺炎	jhjyo
@@ -5484,7 +5484,7 @@ sort: original
 茎突切除术	jtqeio
 畸胎真胚瘤	jtqliu
 睑退缩矫正术	jtsei
-晶体铁锈沉着症	jttq
+晶体铁锈沉着症	jttqo
 假体插入术	jtweii
 晶体性关节病	jtxbo
 茎突下颌韧带	jtxdi
@@ -10988,9 +10988,9 @@ sort: original
 血液透析术	xyte
 腺样体刮除术	xyteu
 腺样体切除术	xyteuv
-血瘀痰凝证	xytq
 眩晕头痛风痰证	xytqi
-血瘀痰滞证	xytqu
+血瘀痰凝证	xytqu
+血瘀痰滞证	xytquo
 悬雍垂成型术	xywei
 悬雍垂切除术	xyweio
 下咽重建术	xywev

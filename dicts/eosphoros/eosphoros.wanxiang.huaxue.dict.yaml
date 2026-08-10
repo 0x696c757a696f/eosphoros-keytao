@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17503
-# Generated rows in category: 10894
+# Generated rows in category: 10892
 ---
 name: eosphoros.wanxiang.huaxue
 version: "2026-08-10"
@@ -3323,10 +3323,9 @@ sort: original
 碱式醋酸铍	jecpv
 碱式醋酸铅	jecq
 碱式醋酸铝溶液	jecyv
-碱式滴定管	jedgv
+碱式滴定管	jedgvv
 碱式水杨酸铋	jeebv
 酒是故乡醇	jegja
-碱式甲酸钴	jejgvv
 碱式柳酸铋	jelbvv
 聚山梨醇酯	jelfv
 金属硫因兔肝	jelgia
@@ -4385,7 +4384,6 @@ sort: original
 联苯基	lbjviv
 邻苯甲酰	lbjxi
 邻苄基苯胺	lbjxii
-六苯基二锡	lbjxoi
 氯苯甲酰胺	lbjxu
 联苯甲酰	lbjxvi
 氯丙撑氧	lbjyu

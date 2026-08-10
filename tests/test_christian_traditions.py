@@ -163,6 +163,48 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
             <= protestant_words
         )
 
+    def test_historic_mainline_protestant_traditions_are_represented(self) -> None:
+        protestant_words = {
+            word
+            for word, _ in iter_dictionary_rows(DICT_DIR / "eosphoros.protestantism.dict.yaml")
+        }
+        self.assertTrue(
+            {
+                "世界信义宗联会",
+                "世界改革宗教会共融",
+                "剑桥纲领",
+                "圣公宗咨议会",
+                "浸信会世界联盟",
+                "门诺会世界大会",
+                "宗教朋友会",
+                "摩拉维亚弟兄会",
+                "普利茅斯弟兄会",
+                "救世军大将",
+            }
+            <= protestant_words
+        )
+        manifest_words = {
+            word
+            for _, word in load_manifest(ROOT / "tools/christian_traditions_2026.txt")
+        }
+        self.assertTrue(
+            {"耶和华见证人", "摩门教", "统一教"}.isdisjoint(manifest_words)
+        )
+
+    def test_source_guide_covers_catholicism_in_consistent_chinese(self) -> None:
+        sources = (ROOT / "tools/christian_traditions_sources.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("## 天主教与东方礼天主教会", sources)
+        self.assertNotIn("## Catholicism", sources)
+        for url in (
+            "https://www.vatican.va/chinese/ccc_zh.htm",
+            "https://baptistworld.org/beliefs/",
+            "https://www.goarch.org/-/a-dictionary-of-orthodox-terminology-part-1",
+            "https://syriaca.org/",
+        ):
+            self.assertIn(url, sources)
+
     def test_fixed_dictionary_conflicts_are_skipped(self) -> None:
         result = build_entries(ROOT)
         generated_names = {spec[1] for spec in TARGET_SPECS}
