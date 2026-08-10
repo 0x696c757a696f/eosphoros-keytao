@@ -19,10 +19,9 @@ from tools.build_platform_packages import common_runtime_files
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_BUILD_OUTPUTS = (
-    "default.yaml",
     "eosphoros.schema.yaml",
-    "eosphoros.prism.bin",
     "eosphoros.extended.table.bin",
+    "eosphoros.extended.prism.bin",
 )
 DEFAULT_SHARED_DATA_DIR = Path("/usr/share/rime-data")
 
@@ -85,7 +84,17 @@ def smoke_test(
             )
         missing = validate_outputs(user_dir)
         if missing:
-            raise RuntimeError("rime_deployer omitted: " + ", ".join(missing))
+            available = sorted(
+                path.relative_to(user_dir / "build").as_posix()
+                for path in (user_dir / "build").rglob("*")
+                if path.is_file()
+            )
+            raise RuntimeError(
+                "rime_deployer omitted: "
+                + ", ".join(missing)
+                + "; available: "
+                + ", ".join(available)
+            )
 
 
 def main() -> int:
