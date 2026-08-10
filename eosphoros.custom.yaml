@@ -4,7 +4,7 @@
 
 patch:
   # ==================== 基础配置 ====================
-  schema/name: 晨星键道             # 方案显示名称，与主方案保持一致
+  schema/name: 🌟晨星               # 空格键等位置显示的简短昵称
   schema/icon: "eosphoros.ico"          # 任务栏显示晨星键道图标，注释后恢复默认
   speller/auto_select: false         # 自动上屏开关，默认关闭
   hint_text: ''                      # 顶功提示符（在''中间添加符号，例如 '🔞'）
