@@ -9,21 +9,21 @@
   },
   "builder": {
     "path": "tools/build_zzc_windows_exe.py",
-    "sha256": "cd72d4230f2dddd604a07d1e4e86b32a1d70cf44fd25ae95bbf7aaedb0fd60a8"
+    "sha256": "27a705a2460ad9bca210abf01a5329527fc7e24f49c8bf30be8d211e682a09ce"
   },
   "executables": {
     "zzc/Win_词库合并.exe": {
-      "source": "zzc/xmjd6_词库合并.py",
-      "source_sha256": "36867dcb6e56408c58bceec30b3a4719f784e9a3be00dc1f0ded5811bf1de6b4",
-      "sha256": "cf13d9dcbc40d3eb23aa7228a7573605b2ca2da89803e6d386ffe0d352a6d0ef",
-      "size": 10152554,
+      "source": "zzc/eosphoros_词库合并.py",
+      "source_sha256": "6568fbb0bc9b39fc046ea81afe98b591679c3dc44cd872ae9a399f6ea42f4189",
+      "sha256": "efa8d5e026b68dbf6846083f439428a6e50adbd7baac28cc3c62132bdc22a045",
+      "size": 10151083,
       "machine": "0x8664"
     },
     "zzc/Win_撤回合并.exe": {
-      "source": "zzc/xmjd6_撤回合并.py",
-      "source_sha256": "5c83f772afd2db916b9597a36a215cbd92cb19214bdf3d72d78a3121f09318e6",
-      "sha256": "8e9b36e1708da3ffb00153b55db7156ed6a1d6126d9443eca044d8d40330ad06",
-      "size": 10132312,
+      "source": "zzc/eosphoros_撤回合并.py",
+      "source_sha256": "b248b2cbf4f0b5e05d5ee8122138c86cfc8ede2320e585493b64d4d95f008f60",
+      "sha256": "de789ff8e04f7318eefc275fa16698d19d1fe2bd113cf26c4934c345f7d3e481",
+      "size": 10129576,
       "machine": "0x8664"
     }
   }

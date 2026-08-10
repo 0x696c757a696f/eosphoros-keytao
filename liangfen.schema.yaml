@@ -53,7 +53,7 @@ speller:
     - abbrev/^([a-z]).+$/$1/
 
 translator:
-  dictionary: dicts/xmjd6/liangfen
+  dictionary: dicts/eosphoros/liangfen
   spelling_hints: 4
   preedit_format:
     - "xlit|v|ü|"
@@ -63,7 +63,7 @@ translator:
     - xform/iü/iv/
 
 reverse_lookup:
-  dictionary: dicts/xmjd6/pinyin_simp
+  dictionary: dicts/eosphoros/pinyin_simp
   prefix: "`"
   tips: 〔PinYin〕
   preedit_format:

@@ -1,0 +1,133 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 键道6 扩展词库控制
+---
+name: eosphoros.extended
+version: "2026-08-10"
+sort: original 
+use_preset_vocabulary: false
+columns:
+  - text
+  - code
+  - stem
+  - weight
+encoder:
+  rules:
+    - length_equal: 2
+      formula: "AaAbBaBb"
+    - length_equal: 3
+      formula: "AaBaCaAc"
+    - length_in_range: [4, 99]
+      formula: "AaBaCaZa"
+import_tables:
+# ---------------------------------------
+# 下列为扩展 可选码表内容：
+# 说明：内置词库在当前目录下
+# 若需要，请仅删除下列码表名前的“#”号，并重新部署
+# 示例码表状态：
+# #  - dicts/eosphoros/eosphoros.danzi #关闭（前面有一个#号）
+#    - dicts/eosphoros/eosphoros.danzi #开启（前面没有#号了）
+# =======================================
+### 内置词库@吅吅大山
+# ---------------------------------------
+# 扩展：单字
+# 个人词库优先，且作为 RimeTool 薄荷模板识别的首个 dicts/ 词库
+  - dicts/eosphoros/eosphoros.user
+  - dicts/eosphoros/eosphoros.zzc
+  - dicts/eosphoros/eosphoros.danzi
+# ---------------------------------------
+# 扩展：词组
+  - dicts/eosphoros/eosphoros.cizu
+# ---------------------------------------
+# 扩展：符号
+#  - eosphoros.fuhao
+# ---------------------------------------
+# 扩展：补充码表
+  - dicts/eosphoros/eosphoros.catholicism
+  - dicts/eosphoros/eosphoros.protestantism
+  - dicts/eosphoros/eosphoros.orthodoxy
+  - dicts/eosphoros/eosphoros.oriental
+  - dicts/eosphoros/eosphoros.assyrian
+# ---------------------------------------
+# 扩展：链接等
+#  - eosphoros.lianjie
+# ---------------------------------------
+# 扩展：英文词库
+#  - eosphoros.yingwen
+# ---------------------------------------
+# 扩展：超级字词
+  # - eosphoros.chaojizici
+# ---------------------------------------
+## 扩展：525声笔笔词组
+  - dicts/eosphoros/eosphoros.core
+# ---------------------------------------
+## 扩展：用户词库
+  # - dicts/eosphoros/eosphoros.user   #词频改到上面去了，所以临时注释了
+# ---------------------------------------
+## 扩展：附加词语----兰佬提供
+  - dicts/eosphoros/eosphoros.fjcy
+# ---------------------------------------
+## 扩展：雾凇拼音上游词库（自动转为键道6编码并与本地词库去重）
+  - dicts/eosphoros/eosphoros.ice
+# ---------------------------------------
+## 扩展：万象专业补充词库（严格筛选、键道6重新编码、无新增异词同码）
+  - dicts/eosphoros/eosphoros.wanxiang.yaopin
+  - dicts/eosphoros/eosphoros.wanxiang.yixue
+  - dicts/eosphoros/eosphoros.wanxiang.huaxue
+  - dicts/eosphoros/eosphoros.wanxiang.diming
+  - dicts/eosphoros/eosphoros.wanxiang.mingren
+  - dicts/eosphoros/eosphoros.wanxiang.taifeng
+  - dicts/eosphoros/eosphoros.wanxiang.jichu
+# ---------------------------------------
+## 扩展：雾凇英文词库（i 键引导，编码已加命名空间前缀）
+  - dicts/eosphoros/eosphoros.en
+#  - eosphoros.zidingyi
+# ---------------------------------------
+# =======================================
+
+## 自定义词库：自己做的词库，自己维护
+  # - eosphoros.richang
+  
+
+# =======================================
+### 外挂词库
+# 说明：需要放入扩展码表到当前目录，否则会失败
+# *：扩展码表皆在/Tools/Extended目录下获取
+# *：放入后重新部署即可
+# ---------------------------------------
+## 扩展：超级字词+外挂版本@吅吅大山
+#  - eosphoros.chaojizicijia
+# ~~~~~~~~~~~~~~~~~~
+# * u键引导
+# ---------------------------------------
+## 扩展：诗词词库+外挂版本@别打脸脸
+#  - eosphoros.iboot
+# ~~~~~~~~~~~~~~~~~~
+# * i键引导
+# ---------------------------------------
+## 扩展：声笔笔单字@msc802
+#  - eosphoros.wxwdanzi
+# ~~~~~~~~~~~~~~~~~~
+# * 开启，请禁用内置词库中：
+# * - eosphoros.wxw
+# ---------------------------------------
+## 扩展：繁体码表@岳飞丫飞
+#  - eosphoros_tc.danzi
+#  - eosphoros_tc.cizu
+#  - eosphoros_tc.wxw
+# ~~~~~~~~~~~~~~~~~~
+# * 开启，请禁用内置词库中：
+# *  - eosphoros.danzi
+# *  - eosphoros.cizu
+# *  - eosphoros.wxw
+# ---------------------------------------
+## 扩展：声韵声@塔里
+#  - eosphoros.sys
+# ---------------------------------------
+## 扩展：东方词库@DRGICEAKE
+#  - eosphoros.touhou
+# ~~~~~~~~~~~~~~~~~~
+# * o键引导
+# ---------------------------------------
+# =======================================

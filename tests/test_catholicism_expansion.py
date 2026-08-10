@@ -56,7 +56,7 @@ class CatholicismExpansionTests(unittest.TestCase):
         from tools.build_catholicism_expansion import expected_dictionary_text
 
         expected, _ = expected_dictionary_text(ROOT)
-        actual = (ROOT / "dicts" / "xmjd6" / "xmjd6.catholicism.dict.yaml").read_text(
+        actual = (ROOT / "dicts" / "eosphoros" / "eosphoros.catholicism.dict.yaml").read_text(
             encoding="utf-8-sig"
         ).replace("\r\n", "\n")
 

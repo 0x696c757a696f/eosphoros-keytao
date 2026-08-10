@@ -16,7 +16,7 @@ class TxjxAdapterTests(unittest.TestCase):
         upstream_text: str,
         mapping: dict[str, object] | None,
     ) -> tuple[Path, str, str]:
-        temp = tempfile.TemporaryDirectory(prefix="xmjd6-txjx-adapter-test-")
+        temp = tempfile.TemporaryDirectory(prefix="eosphoros-txjx-adapter-test-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
         subprocess.run(["git", "init", "-q", str(root)], check=True)
@@ -89,7 +89,7 @@ class TxjxAdapterTests(unittest.TestCase):
         for target in targets:
             self.assertTrue((root / target).is_file(), target)
 
-    def test_lua_namespace_transform_uses_xmjd6_modules(self) -> None:
+    def test_lua_namespace_transform_uses_eosphoros_modules(self) -> None:
         from tools.adapt_txjx_upstream import adapt_lua_text
 
         upstream = '''-- 天行键
@@ -100,14 +100,14 @@ return { core = core, config = config, ext = ext, id = "txjx" }
 '''
         adapted = adapt_lua_text(upstream)
 
-        self.assertIn('require("xmjd6.zzc.xmjd6_zzc_core")', adapted)
-        self.assertIn('require("xmjd6.common.xmjd6_config")', adapted)
-        self.assertIn('require("xmjd6.xmjd6_ext_core")', adapted)
-        self.assertIn('id = "xmjd6"', adapted)
-        self.assertIn("星猫键道", adapted)
+        self.assertIn('require("eosphoros.zzc.eosphoros_zzc_core")', adapted)
+        self.assertIn('require("eosphoros.common.eosphoros_config")', adapted)
+        self.assertIn('require("eosphoros.eosphoros_ext_core")', adapted)
+        self.assertIn('id = "eosphoros"', adapted)
+        self.assertIn("晨星键道", adapted)
         self.assertNotIn("txjx", adapted.lower())
 
-    def test_project_transform_preserves_local_xmjd6_naming(self) -> None:
+    def test_project_transform_preserves_local_eosphoros_naming(self) -> None:
         from tools.adapt_txjx_upstream import (
             adapt_project_text,
             has_upstream_namespace_residue,
@@ -120,7 +120,7 @@ return { core = core, config = config, ext = ext, id = "txjx" }
 
         self.assertEqual(
             adapted,
-            'SCHEMA = "xmjd6"\nPATH = "lua/xmjd6"\nTITLE = "星猫键道"\n'
+            'SCHEMA = "eosphoros"\nPATH = "lua/eosphoros"\nTITLE = "晨星键道"\n'
             '# source: wzxmer/rime-txjx\n',
         )
         self.assertFalse(has_upstream_namespace_residue(adapted))
@@ -134,20 +134,20 @@ return { core = core, config = config, ext = ext, id = "txjx" }
         upstream = f'local behavior = "fixed"\n{middle}\nreturn behavior\n'
         local = (
             f'local behavior = "old"\n{middle}\n'
-            "local xmjd6_only = true\nreturn behavior\n"
+            "local eosphoros_only = true\nreturn behavior\n"
         )
 
         result = merge_adapted_text(local, base, upstream)
 
         self.assertFalse(result.conflicted)
         self.assertIn('local behavior = "fixed"', result.text)
-        self.assertIn("local xmjd6_only = true", result.text)
+        self.assertIn("local eosphoros_only = true", result.text)
 
     def test_three_way_merge_stops_on_overlapping_changes(self) -> None:
         from tools.adapt_txjx_upstream import merge_adapted_text
 
         result = merge_adapted_text(
-            'local behavior = "xmjd6"\n',
+            'local behavior = "eosphoros"\n',
             'local behavior = "old"\n',
             'local behavior = "upstream"\n',
         )
@@ -164,14 +164,14 @@ return { core = core, config = config, ext = ext, id = "txjx" }
             upstream_text='local behavior = "fixed"\nlocal gap = true\nreturn behavior\n',
             mapping={
                 "source": "lua/txjx_core.lua",
-                "target": "lua/xmjd6/xmjd6_core.lua",
+                "target": "lua/eosphoros/eosphoros_core.lua",
                 "transform": "lua_namespace",
             },
         )
-        local = root / "lua" / "xmjd6" / "xmjd6_core.lua"
+        local = root / "lua" / "eosphoros" / "eosphoros_core.lua"
         local.parent.mkdir(parents=True)
         local.write_text(
-            'local behavior = "old"\nlocal gap = true\nlocal xmjd6_only = true\nreturn behavior\n',
+            'local behavior = "old"\nlocal gap = true\nlocal eosphoros_only = true\nreturn behavior\n',
             encoding="utf-8",
         )
 
@@ -181,7 +181,7 @@ return { core = core, config = config, ext = ext, id = "txjx" }
 
         self.assertFalse(report["blocked"])
         self.assertIn('local behavior = "fixed"', local.read_text(encoding="utf-8"))
-        self.assertIn("local xmjd6_only = true", local.read_text(encoding="utf-8"))
+        self.assertIn("local eosphoros_only = true", local.read_text(encoding="utf-8"))
         lock = json.loads(
             (root / "tools" / "upstream_code.lock.json").read_text(encoding="utf-8")
         )

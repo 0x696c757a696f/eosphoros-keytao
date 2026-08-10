@@ -48,13 +48,13 @@ def pick_directory(prompt: str) -> Path:
 
 
 def target_dict_name_options(prefix: str) -> list[list[str]]:
-    if prefix == "xmjd6":
-        return [["xmjd6.cizu.dict.yaml"], ["xmjd6.fjcy.dict.yaml"]]
-    raise ValueError(f"unsupported zzc schema (expected xmjd6): {prefix}")
+    if prefix == "eosphoros":
+        return [["eosphoros.cizu.dict.yaml"], ["eosphoros.fjcy.dict.yaml"]]
+    raise ValueError(f"unsupported zzc schema (expected eosphoros): {prefix}")
 
 
 def resolve_target_dicts(root: Path, prefix: str) -> list[Path]:
-    dictionary_root = root / "dicts" / "xmjd6"
+    dictionary_root = root / "dicts" / "eosphoros"
     out = []
     for options in target_dict_name_options(prefix):
         for name in options:
@@ -69,7 +69,7 @@ def resolve_target_dicts(root: Path, prefix: str) -> list[Path]:
 
 def find_ops_candidates(root: Path) -> list[Path]:
     op_candidates = sorted(root.glob("*.zzc.dict.yaml"))
-    dictionary_dir = root / "dicts" / "xmjd6"
+    dictionary_dir = root / "dicts" / "eosphoros"
     if dictionary_dir.exists():
         op_candidates += sorted(dictionary_dir.glob("*.zzc.dict.yaml"))
     zzc_dir = root / "zzc"
@@ -205,9 +205,9 @@ def find_core(script_dir: Path, root: Path) -> Path:
 
 
 def run_core(core_path: Path, root: Path, state_dir: Path) -> int:
-    os.environ["xmjd6_zzc_root"] = str(root)
-    os.environ["xmjd6_zzc_state_dir"] = str(state_dir)
-    loader = importlib.machinery.SourceFileLoader("xmjd6_ios_merge_core", str(core_path))
+    os.environ["eosphoros_zzc_root"] = str(root)
+    os.environ["eosphoros_zzc_state_dir"] = str(state_dir)
+    loader = importlib.machinery.SourceFileLoader("eosphoros_ios_merge_core", str(core_path))
     spec = importlib.util.spec_from_loader(loader.name, loader)
     if spec is None:
         raise RuntimeError(f"cannot load core: {core_path}")
@@ -217,7 +217,7 @@ def run_core(core_path: Path, root: Path, state_dir: Path) -> int:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="iOS shortcut wrapper for xmjd6 ZZZC merge")
+    parser = argparse.ArgumentParser(description="iOS shortcut wrapper for eosphoros ZZZC merge")
     parser.add_argument("--configure", action="store_true", help="重新选择目录并保存配置")
     parser.add_argument("--reset-config", action="store_true", help="删除旧配置后重新选择")
     parser.add_argument("--root", help="最终合并码表目录")

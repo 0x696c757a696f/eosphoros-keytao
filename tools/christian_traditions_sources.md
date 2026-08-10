@@ -37,7 +37,7 @@
 - https://www.umc.org/en/who-we-are/what-we-believe/our-wesleyan-heritage
 - https://www.umc.org/en/content/organization-church-as-connection
 
-《和合本》是 `xmjd6.protestantism` 的圣经中文基准；不用《思高本》或俄国
+《和合本》是 `eosphoros.protestantism` 的圣经中文基准；不用《思高本》或俄国
 正教会汉译本替换其人名、地名和书卷名。书卷、人地名若已在本地基础词典中，
 生成器只做去重，不在专题词库重复占码。
 

@@ -10,4 +10,4 @@
 .*[/]user[.]yaml$
 .*[/]AGENTS[.]md$
 .*[/]RTK[.]md$
-(^|.*[\\/])zzc_state[\\/]xmjd6_typing_stats[.]tsv$
+(^|.*[\\/])zzc_state[\\/]eosphoros_typing_stats[.]tsv$

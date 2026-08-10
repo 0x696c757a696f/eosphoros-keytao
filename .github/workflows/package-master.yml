@@ -39,7 +39,7 @@ jobs:
         python tools/fetch_opencc.py \
           --url "$OPENCC_TONGGUI_URL" \
           --sha256 "$OPENCC_TONGGUI_SHA256" \
-          --destination opencc/xmjd6
+          --destination opencc/eosphoros
 
     - name: Validate platform package manifests
       run: python tools/build_platform_packages.py --check
@@ -49,19 +49,19 @@ jobs:
 
     - uses: actions/upload-artifact@v7
       with:
-        name: fcitx5-linux-xmjd6-themes
+        name: fcitx5-linux-eosphoros-themes
         path: fcitx5/linux/themes/**/*
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v7
       with:
-        name: fcitx5-macos-xmjd6-themes
+        name: fcitx5-macos-eosphoros-themes
         path: fcitx5/macos/themes/*.conf
         if-no-files-found: error
 
     - uses: actions/upload-artifact@v7
       with:
-        name: xmjd6
+        name: eosphoros
         path: |
           **/*
           !.git/**

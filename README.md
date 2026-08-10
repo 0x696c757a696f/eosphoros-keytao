@@ -1,27 +1,42 @@
 <a id="top"></a>
 
-# 星猫键道6（xmjd6-0x69）
+# 晨星键道 · Eosphoros KeyTao
+
+> Repository: `eosphoros-keytao` · Rime schema ID: `eosphoros`
 
 <p align="center">
-  <a href="https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/0x696c757a696f/xmjd6-0x69?display_name=tag"></a>
-  <a href="https://github.com/0x696c757a696f/xmjd6-0x69/actions/workflows/package-master.yml"><img alt="Build and test" src="https://github.com/0x696c757a696f/xmjd6-0x69/actions/workflows/package-master.yml/badge.svg"></a>
+  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/0x696c757a696f/eosphoros-keytao?display_name=tag"></a>
+  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/actions/workflows/package-master.yml"><img alt="Build and test" src="https://github.com/0x696c757a696f/eosphoros-keytao/actions/workflows/package-master.yml/badge.svg"></a>
   <img alt="librime 1.9.0 or newer" src="https://img.shields.io/badge/librime-%E2%89%A5%201.9.0-476b9e">
   <img alt="UTF-8" src="https://img.shields.io/badge/encoding-UTF--8-2ea44f">
 </p>
 
 <p align="center">
-  <a href="https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip">⬇️ 下载方案</a> ·
+  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros.zip">⬇️ 下载方案</a> ·
   <a href="#如何使用">🚀 如何使用</a> ·
   <a href="#键道6编码概要">⌨️ 编码规则</a> ·
   <a href="#词库组成">📚 词库说明</a>
 </p>
 
-星猫键道6是基于星空键道6.2持续整理和扩展的 Rime 音形输入方案，兼顾常用词短码、单字精确定位、生僻字反查和可维护的大型词库。本方案已获得相关授权，适用于 Windows、macOS、Android、iOS 和 Linux 上支持 Rime/Lua 的输入法前端。
+晨星键道是一款为「键道」输入方案打造的中文输入法。
 
-- 当前维护仓库：[0x696c757a696f/xmjd6-0x69](https://github.com/0x696c757a696f/xmjd6-0x69)
-- 发行包：[Releases](https://github.com/0x696c757a696f/xmjd6-0x69/releases/)
+“晨星”取黎明将至、星光引路之意。文字从指间落下，如循微光而行；每一次击键，都让所思所想渐次成形。
+
+名字亦有一层来自《默示录》的含义。在《默示录》22:16 中，耶稣以“明亮的晨星”自称。因此，“晨星”既是自然的文学意象，也寄寓光明、指引与盼望。它并不改变键道作为高效中文输入方案的本质，只为这个名字留下更深的一层来处。
+
+“键道”则承自原有的输入方案名称。键为所用，道为所行。借由顶功、音形结合与简洁的编码规则，让文字沿着熟悉的按键自然流出。
+
+晨星未必照亮整片长夜，却足以指明将明的方向。
+
+循星而行，以键成文。
+
+晨星键道继承自星猫键道，并沿袭星空键道6.2以来的编码体系持续整理和扩展，兼顾常用词短码、单字精确定位、生僻字反查和可维护的大型词库。本方案已获得相关授权，适用于 Windows、macOS、Android、iOS 和 Linux 上支持 Rime/Lua 的输入法前端。方案 ID、文件名和本地命名空间统一使用 `eosphoros`，GitHub 仓库名使用 `eosphoros-keytao`。
+
+- 当前维护仓库：[0x696c757a696f/eosphoros-keytao](https://github.com/0x696c757a696f/eosphoros-keytao)
+- 发行包：[Releases](https://github.com/0x696c757a696f/eosphoros-keytao/releases/)
 - 上游方案：[hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere)
-- 使用笔记：[星猫键道6飞书笔记](https://hu0w1jn4xq.feishu.cn/docx/ZgQ8deGPlozhWCxOyeucBvHJnPe)
+- 历史使用资料：[星猫键道6飞书笔记](https://hu0w1jn4xq.feishu.cn/docx/ZgQ8deGPlozhWCxOyeucBvHJnPe)（由原方案维护者整理，并非本仓库文档）
+- 键道6练习：[直连网站](https://keytao.rea.ink/practice) · [Vercel 网站（需梯子）](https://keytao.vercel.app/practice)
 
 ## ✨ 主要特点
 
@@ -30,7 +45,7 @@
 - `i` 键直接进入英文输入，不需要切换到单独的英文方案。
 - `u`、`v`、`o` 分别提供全拼、二分和 GBK/生僻字入口。
 - 支持自造词、逐码补全、630 提示、计算器、日期时间、打字统计、Emoji、简繁和火星文转换。
-- 词条数据集中在 `dicts/xmjd6/`，Lua 文件集中在 `lua/xmjd6/`，OpenCC 数据集中在 `opencc/xmjd6/`，避免污染用户目录的公共命名空间。
+- 词条数据集中在 `dicts/eosphoros/`，Lua 文件集中在 `lua/eosphoros/`，OpenCC 数据集中在 `opencc/eosphoros/`，避免污染用户目录的公共命名空间。
 - 上游词库使用 Git commit 锁定，可增量检测、确定性重建、定期验证并自动提交更新 PR。
 
 第一次安装请直接阅读[“如何使用”](#如何使用)。其中保留了 Windows、macOS、Android、iOS 和 Linux 各客户端的用户目录、导入步骤和重新部署方法；较少使用的 Linux 内容统一放在各平台说明末尾，并按桌面环境列出 Wayland、X11、平铺窗口管理器及 Electron 应用的特殊设置。
@@ -49,24 +64,24 @@
 
 ### 选择适合前端的方案包
 
-1. 按下表下载适合当前输入法前端的压缩包；不确定时使用通用核心包 [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip)。
+1. 按下表下载适合当前输入法前端的压缩包；不确定时使用通用核心包 [`eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros.zip)。
 2. 解压到 Rime 用户文件夹；保留压缩包内的目录结构。
 3. 重新部署 Rime。
-4. 在方案选单中选择“星猫键道”。
+4. 在方案选单中选择“晨星键道”。
 
 本方案包含 Lua 处理器，所用 Rime 前端需要带有 `librime-lua` 支持。建议使用 librime 1.9.0 或更新版本。
 
 > [!IMPORTANT]
-> 请完整保留压缩包中的 `dicts/xmjd6/`、`lua/xmjd6/` 与 `opencc/xmjd6/` 目录。只复制根目录 YAML 会导致词库、顶功、自造词、英文、Emoji 或简繁转换不完整。
+> 请完整保留压缩包中的 `dicts/eosphoros/`、`lua/eosphoros/` 与 `opencc/eosphoros/` 目录。只复制根目录 YAML 会导致词库、顶功、自造词、英文、Emoji 或简繁转换不完整。
 
 | Release 文件 | 适用前端 | 额外内容 |
 | --- | --- | --- |
-| [`xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6.zip) | 通用 Rime / 其他前端 | 最小运行核心和跨平台 Python 自造词工具，保留旧下载地址兼容性 |
-| [`xmjd6-weasel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-weasel.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
-| [`xmjd6-squirrel.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-squirrel.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
-| [`xmjd6-fcitx5-macos.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
-| [`xmjd6-fcitx5-linux.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
-| [`xmjd6-mobile.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip) | Android / iOS Rime 前端 | 通用核心、移动端同步配置和 iOS 自造词辅助文件 |
+| [`eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros.zip) | 通用 Rime / 其他前端 | 最小运行核心和跨平台 Python 自造词工具，保留旧下载地址兼容性 |
+| [`eosphoros-weasel.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-weasel.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
+| [`eosphoros-squirrel.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
+| [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
+| [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
+| [`eosphoros-mobile.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-mobile.zip) | Android / iOS Rime 前端 | 通用核心、移动端同步配置和 iOS 自造词辅助文件 |
 
 各包都包含完整方案运行核心、Python 合并/撤回核心和图文教程；平台包只额外加入该前端需要的入口、配置和主题，不会把 Windows EXE 或其他前端样式一股脑混在一起。
 
@@ -89,11 +104,11 @@
 | --- | --- | --- |
 | Windows 小狼毫 | 内置统一的 `CatLight` / `CatDark` 明暗配色 | `weasel.yaml` 与 `weasel.custom.yaml` |
 | macOS 鼠须管 | 内置同名 `CatLight` / `CatDark` 配色，使用鼠须管 1.x 的新布局字段 | `squirrel.yaml` 与 `squirrel.custom.yaml` |
-| macOS Fcitx5 | 已生成同一组可直接导入的 `.conf`；另有自动明暗主题 | 下载 `fcitx5-macos-xmjd6-themes.zip`，在“主题编辑器 → 基础 → 选择／导入主题”中导入 |
+| macOS Fcitx5 | 已生成同一组可直接导入的 `.conf`；另有自动明暗主题 | 下载 `fcitx5-macos-eosphoros-themes.zip`，在“主题编辑器 → 基础 → 选择／导入主题”中导入 |
 | iOS 元书输入法 | 支持独立的 `.cskin` 键盘皮肤；当前仓库只提供方案同步配置，没有附带元书皮肤包 | 皮肤使用 YAML/Jsonnet 描述并由元书单独导入，参见 [元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
 | iOS 仓输入法 | 支持独立的 `.hskin` 键盘皮肤；当前仓库不附带仓皮肤包 | 下载后通过系统共享菜单选择仓输入法导入，参见 [仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
 | Android 同文输入法 | 支持 `*.trime.yaml` 或 `*.trime.custom.yaml` 主题；当前仓库不附带同文皮肤 | 把主题配置放入同文用户目录，选择主题后重新部署；以 [Trime 最新版](https://github.com/osfans/trime/releases/latest)的说明为准 |
-| Linux Fcitx5 | 已生成 95 套小狼毫／鼠须管桌面配色的 Classic UI 复刻主题 | 下载 `fcitx5-linux-xmjd6-themes.zip`，解压到 `~/.local/share/fcitx5/themes/` 后在经典用户界面中选择 |
+| Linux Fcitx5 | 已生成 95 套小狼毫／鼠须管桌面配色的 Classic UI 复刻主题 | 下载 `fcitx5-linux-eosphoros-themes.zip`，解压到 `~/.local/share/fcitx5/themes/` 后在经典用户界面中选择 |
 
 > [!NOTE]
 > `Hamster.yaml` 只负责元书/仓输入法中的自造词文件同步规则，不是键盘皮肤。元书的 `.cskin`、仓的 `.hskin` 与同文的 Trime YAML 主题互不兼容，不能通过改文件名或扩展名混用。
@@ -106,10 +121,10 @@
 | --- | --- | --- |
 | 元书输入法 | [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)（综合资源）、[空山素影](https://github.com/luozikuan/kongshan-suying)（独立维护的元书皮肤） | 优先下载明确标注支持当前元书版本的 `.cskin`，或按项目说明在元书中导入并编译 Jsonnet；导入方法和结构以[元书官方文档](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/)为准。ResourceforHamster 中“仓”的旧皮肤已停止维护，不要当作最新版元书皮肤使用。 |
 | 仓输入法 | [仓／元书皮肤交流频道](https://t.me/s/hamster_skins)（第三方社区资源） | 只选择扩展名为 `.hskin` 且作者明确标注兼容当前仓版本的文件，通过系统共享菜单导入；格式及操作以[仓官方皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/)为准。社区文件未经本仓库审核，请自行确认来源、版本和授权。 |
-| 同文输入法 Trime | [rime-pure 的同文主题](https://github.com/SivanLaai/rime-pure)、[Trime 官方仓库](https://github.com/osfans/trime) | rime-pure 是完整方案资源，不要整体覆盖星猫键道6；只取需要的 `*.trime.yaml`／`*.trime.custom.yaml` 主题，检查主题引用的字体、图片和配色文件是否齐全，然后在同文中选择并重新部署。 |
+| 同文输入法 Trime | [rime-pure 的同文主题](https://github.com/SivanLaai/rime-pure)、[Trime 官方仓库](https://github.com/osfans/trime) | rime-pure 是完整方案资源，不要整体覆盖晨星键道；只取需要的 `*.trime.yaml`／`*.trime.custom.yaml` 主题，检查主题引用的字体、图片和配色文件是否齐全，然后在同文中选择并重新部署。 |
 
 > [!WARNING]
-> 导入前请备份客户端现有皮肤和配置。第三方资源可能随客户端升级改变格式；下载时应查看其最新 Release、README 和许可证。若皮肤要求替换方案词典、`xmjd6.schema.yaml`、`lua/xmjd6/` 或 `opencc/xmjd6/`，不要直接覆盖，以免破坏星猫键道6的编码、Emoji 或 Lua 功能。
+> 导入前请备份客户端现有皮肤和配置。第三方资源可能随客户端升级改变格式；下载时应查看其最新 Release、README 和许可证。若皮肤要求替换方案词典、`eosphoros.schema.yaml`、`lua/eosphoros/` 或 `opencc/eosphoros/`，不要直接覆盖，以免破坏晨星键道的编码、Emoji 或 Lua 功能。
 
 #### 小企鹅主题安装
 
@@ -117,16 +132,16 @@
 
 **macOS 小企鹅**
 
-1. 主题可直接取自 `xmjd6-fcitx5-macos.zip` 内的 `fcitx5/macos/themes/`，也可单独下载并解压 `fcitx5-macos-xmjd6-themes.zip`。
-2. 打开“主题编辑器 → 基础 → 选择／导入主题”。推荐导入 `xmjd6-auto.conf`：浅色使用 `CatLight`，深色使用 `CatDark`，可跟随系统外观。
-3. 需要其他桌面主题时，导入对应的 `xmjd6-主题名.conf`；单主题文件会在系统明暗模式下保持同一套颜色。
+1. 主题可直接取自 `eosphoros-fcitx5-macos.zip` 内的 `fcitx5/macos/themes/`，也可单独下载并解压 `fcitx5-macos-eosphoros-themes.zip`。
+2. 打开“主题编辑器 → 基础 → 选择／导入主题”。推荐导入 `eosphoros-auto.conf`：浅色使用 `CatLight`，深色使用 `CatDark`，可跟随系统外观。
+3. 需要其他桌面主题时，导入对应的 `eosphoros-主题名.conf`；单主题文件会在系统明暗模式下保持同一套颜色。
 4. macOS 26 启用液态玻璃时，系统可能根据候选窗下方内容调整外观，这是小企鹅的系统级行为，不是主题颜色丢失。导入规则参见 [Fcitx5 macOS 官方文档](https://fcitx-contrib.github.io/docs/theme/import.html)。
 
 **Linux 小企鹅**
 
-1. 主题可直接取自 `xmjd6-fcitx5-linux.zip` 内的 `fcitx5/linux/themes/`，也可单独下载 `fcitx5-linux-xmjd6-themes.zip`。
-2. 将压缩包直接解压到 `~/.local/share/fcitx5/themes/`；解压后应看到 `xmjd6-CatLight/theme.conf` 等目录，不要再多套一层目录。
-3. 打开 `fcitx5-configtool`，进入“附加组件 → 经典用户界面”。亮色主题选择 `xmjd6-CatLight`，暗色主题选择 `xmjd6-CatDark`；也可以选择压缩包内其他桌面配色。
+1. 主题可直接取自 `eosphoros-fcitx5-linux.zip` 内的 `fcitx5/linux/themes/`，也可单独下载 `fcitx5-linux-eosphoros-themes.zip`。
+2. 将压缩包直接解压到 `~/.local/share/fcitx5/themes/`；解压后应看到 `eosphoros-CatLight/theme.conf` 等目录，不要再多套一层目录。
+3. 打开 `fcitx5-configtool`，进入“附加组件 → 经典用户界面”。亮色主题选择 `eosphoros-CatLight`，暗色主题选择 `eosphoros-CatDark`；也可以选择压缩包内其他桌面配色。
 4. 应用设置后重启 Fcitx5。主题只使用官方支持的纯色字段，不依赖 SVG，避免不同 Wayland/GTK 渲染器加载 SVG 时出现兼容问题。格式参见 [Fcitx5 官方主题文档](https://fcitx-im.org/wiki/Fcitx_5_Theme)。
 
 维护者修改桌面配色后，运行 `python tools/build_fcitx5_themes.py` 即可重新生成两端主题；CI 会用 `--check` 阻止过期主题进入 Release。
@@ -136,30 +151,30 @@
 仓库根目录提供通用配方和各前端配方，可由东风破直接安装或更新。macOS、Linux 以及其他带 Bash 的环境可执行：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bash -s -- 0x696c757a696f/xmjd6-0x69
+curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bash -s -- 0x696c757a696f/eosphoros-keytao
 ```
 
 Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案”，输入：
 
 ```text
-0x696c757a696f/xmjd6-0x69:weasel
+0x696c757a696f/eosphoros-keytao:weasel
 ```
 
 也可以在已经安装东风破的命令行中按前端选择：
 
 ```bash
-rime-install 0x696c757a696f/xmjd6-0x69:weasel
-rime-install 0x696c757a696f/xmjd6-0x69:squirrel
-rime-install 0x696c757a696f/xmjd6-0x69:fcitx5-macos
-rime-install 0x696c757a696f/xmjd6-0x69:fcitx5-linux
-rime-install 0x696c757a696f/xmjd6-0x69:mobile
+rime-install 0x696c757a696f/eosphoros-keytao:weasel
+rime-install 0x696c757a696f/eosphoros-keytao:squirrel
+rime-install 0x696c757a696f/eosphoros-keytao:fcitx5-macos
+rime-install 0x696c757a696f/eosphoros-keytao:fcitx5-linux
+rime-install 0x696c757a696f/eosphoros-keytao:mobile
 ```
 
-不带后缀的 `rime-install 0x696c757a696f/xmjd6-0x69` 安装通用核心。安装完成后仍需重新部署。配方会复制对应前端运行所需的 YAML、`lua/xmjd6/`、`opencc/xmjd6/`，并安装 ZZZC 公共 Python 核心、说明和教程；Weasel 额外安装 Windows EXE 与 Python 入口，Squirrel、Fcitx5 和移动端则只安装各自适用的入口。所有配方都会安装仓库提供的 `xmjd6.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `xmjd6` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、`xmjd6_user.txt`、`*.userdb` 和 ZZZC 运行记录也不会被安装或覆盖。`zzc_state/` 中只有静态拆分索引 `char_parts.tsv` 随配方和 Release 分发；`runtime_ops.tsv`、`effective_state.tsv`、撤回/重置状态及打字统计均由本机运行时创建，更新包不会用空文件清除用户数据。Fcitx5 桌面主题仍使用单独的主题压缩包安装。
+不带后缀的 `rime-install 0x696c757a696f/eosphoros-keytao` 安装通用核心。安装完成后仍需重新部署。配方会复制对应前端运行所需的 YAML、`lua/eosphoros/`、`opencc/eosphoros/`，并安装 ZZZC 公共 Python 核心、说明和教程；Weasel 额外安装 Windows EXE 与 Python 入口，Squirrel、Fcitx5 和移动端则只安装各自适用的入口。所有配方都会安装仓库提供的 `eosphoros.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `eosphoros` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、`eosphoros_user.txt`、`*.userdb` 和 ZZZC 运行记录也不会被安装或覆盖。`zzc_state/` 中只有静态拆分索引 `char_parts.tsv` 随配方和 Release 分发；`runtime_ops.tsv`、`effective_state.tsv`、撤回/重置状态及打字统计均由本机运行时创建，更新包不会用空文件清除用户数据。Fcitx5 桌面主题仍使用单独的主题压缩包安装。
 
 ### 中州韵助手（rimetool）兼容性
 
-本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `xmjd6`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；根目录保留 RimeTool 会按固定路径查找的 `xmjd6.extended.dict.yaml` 兼容索引，实际词条统一位于 `dicts/xmjd6/`。索引首项为 `dicts/xmjd6/xmjd6.user`，可供薄荷模板定位个人主词库。
+本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `eosphoros`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；根目录保留 RimeTool 会按固定路径查找的 `eosphoros.extended.dict.yaml` 兼容索引，实际词条统一位于 `dicts/eosphoros/`。索引首项为 `dicts/eosphoros/eosphoros.user`，可供薄荷模板定位个人主词库。
 
 可在 rimetool 选择“薄荷解析模板”。模板要求的 `transcription`、`emoji`、`ascii_punct` 和 `melt_eng` 都已提供：`transcription` 与原有 `jffh` 都会触发简繁转换，`emoji` 与原有 `emoji_cn` 都会触发表情候选，`melt_eng/prefix` 实际参与 `i` 英文入口的识别，`ascii_punct` 与 `full_shape` 则使用 Rime 原生开关。
 
@@ -168,10 +183,10 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 
 ### 便携与主题发行包
 
-- Windows 小小输入法完整便携版：[yong-xmjd6.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6.zip)
-- 玉兔毫：[Rabbit-xmjd6.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/Rabbit-xmjd6.zip)
-- macOS 小企鹅主题：[fcitx5-macos-xmjd6-themes.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/fcitx5-macos-xmjd6-themes.zip)
-- Linux 小企鹅主题：[fcitx5-linux-xmjd6-themes.zip](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/fcitx5-linux-xmjd6-themes.zip)
+- Windows 小小输入法完整便携版：[yong-eosphoros.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-eosphoros.zip)
+- 玉兔毫：[Rabbit-eosphoros.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/Rabbit-eosphoros.zip)
+- macOS 小企鹅主题：[fcitx5-macos-eosphoros-themes.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/fcitx5-macos-eosphoros-themes.zip)
+- Linux 小企鹅主题：[fcitx5-linux-eosphoros-themes.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/fcitx5-linux-eosphoros-themes.zip)
 
 玉兔毫便携版建议解压到不含空格的路径。小小输入法版默认使用 `Ctrl + Space` 激活。
 
@@ -217,43 +232,43 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 | iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 使用应用内下载方案或在线方案导入 | 切换到新方案目录并重新部署 |
 | Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + Rime + librime-lua | 安装组件后解压到 Fcitx5 Rime 目录 | 重启 Fcitx5 并重新部署 |
 
-无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`dicts/xmjd6/`、`lua/xmjd6/` 和 `opencc/xmjd6/` 都必须保持原目录结构一起导入，否则词库、顶功、自造词、英文、Emoji 和简繁转换可能不完整。
+无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`dicts/eosphoros/`、`lua/eosphoros/` 和 `opencc/eosphoros/` 都必须保持原目录结构一起导入，否则词库、顶功、自造词、英文、Emoji 和简繁转换可能不完整。
 
 #### 🪟 Windows
 
 **小狼毫 Weasel**
 
 1. 安装[小狼毫正式版](https://github.com/rime/weasel/releases/latest)或[小狼毫测试版](https://github.com/rime/weasel/releases/tag/latest)。也可使用[水龙月 Fork 版](https://github.com/Techince/weasel/releases/latest)；从原版切换到 Fork 版时，建议先卸载原版并重启系统。
-2. 从 Release 下载 `xmjd6-weasel.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
+2. 从 Release 下载 `eosphoros-weasel.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
 3. 在小狼毫菜单中执行“重新部署”。
-4. 打开方案选单，选择“星猫键道”。
-5. 更新方案时覆盖同名方案文件即可；个人词汇应放在 `dicts/xmjd6/xmjd6.user.dict.yaml`，个人配置写在 `*.custom.yaml`，然后重新部署。
+4. 打开方案选单，选择“晨星键道”。
+5. 更新方案时覆盖同名方案文件即可；个人词汇应放在 `dicts/eosphoros/eosphoros.user.dict.yaml`，个人配置写在 `*.custom.yaml`，然后重新部署。
 
 **小小输入法便携版**
 
-1. 输入法本体由[小小输入法 Yong](https://yong.dgod.net/)提供；本仓库的完整星猫键道6便携版可下载 [`yong-xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/yong-xmjd6.zip)。
+1. 输入法本体由[小小输入法 Yong](https://yong.dgod.net/)提供；本仓库的完整晨星键道便携版可下载 [`yong-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-eosphoros.zip)。
 2. 解压后运行包内的小小输入法，不需要另外导入 Rime 方案。
 3. 默认使用 `Ctrl + Space` 激活输入法。
-4. `yong-xmjd6.zip` 已包含小小输入法程序、配置和码表；Release 不再提供配置-only 包，也不再使用额外的 `-full` 文件名。
+4. `yong-eosphoros.zip` 已包含小小输入法程序、配置和码表；Release 不再提供配置-only 包，也不再使用额外的 `-full` 文件名。
 
 **玉兔毫 Rabbit**
 
-1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`Rabbit-xmjd6.zip`](https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/Rabbit-xmjd6.zip)。
+1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`Rabbit-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/Rabbit-eosphoros.zip)。
 2. 解压到路径中不含空格的目录。
-3. 运行玉兔毫并选择星猫键道；该包已经带入方案文件，不需要再复制 `xmjd6.zip`。
+3. 运行玉兔毫并选择晨星键道；该包已经带入方案文件，不需要再复制 `eosphoros.zip`。
 
 #### 🍎 macOS
 
 **鼠须管 Squirrel**
 
 1. 安装[鼠须管正式版](https://github.com/rime/squirrel/releases/latest)或[测试版](https://github.com/rime/squirrel/releases/tag/latest)。
-2. 下载并解压 `xmjd6-squirrel.zip`，把全部内容复制到 `~/Library/Rime`。
-3. 从鼠须管菜单执行“重新部署”，再在方案选单中选择“星猫键道”。
+2. 下载并解压 `eosphoros-squirrel.zip`，把全部内容复制到 `~/Library/Rime`。
+3. 从鼠须管菜单执行“重新部署”，再在方案选单中选择“晨星键道”。
 
 **Fcitx5 macOS**
 
 1. 安装[小企鹅输入法 macOS 版（中州韵版）](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)。
-2. 下载 `xmjd6-fcitx5-macos.zip`，把方案文件完整复制到 `~/.local/share/fcitx5/rime/`。
+2. 下载 `eosphoros-fcitx5-macos.zip`，把方案文件完整复制到 `~/.local/share/fcitx5/rime/`。
 3. 包内 `fcitx5/macos/themes/` 是 macOS 专用主题，可在“主题编辑器 → 基础 → 选择／导入主题”中导入；不要使用同包中的路径作为 Rime 方案目录。
 4. 重启 Fcitx5 或重新部署 Rime。
 
@@ -263,14 +278,14 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 
 1. 安装[同文输入法](https://github.com/osfans/trime/releases/latest)。
 2. 在应用设置中打开“配置管理 → 用户文件夹”。
-3. 先选择或初始化默认用户文件夹，再把 `xmjd6-mobile.zip` 的完整内容导入 `/storage/emulated/0/rime/`。
-4. 返回配置管理执行部署，然后选择星猫键道。
+3. 先选择或初始化默认用户文件夹，再把 `eosphoros-mobile.zip` 的完整内容导入 `/storage/emulated/0/rime/`。
+4. 返回配置管理执行部署，然后选择晨星键道。
 
 **Fcitx5 for Android**
 
 1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)及 Rime 插件；需要测试构建时可使用[主程序构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/)、[Rime 插件构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)和[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
 2. 在小企鹅输入法中添加中州韵后，Rime 数据目录通常为 `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`。
-3. 下载并解压 `xmjd6-mobile.zip`。推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
+3. 下载并解压 `eosphoros-mobile.zip`。推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
 4. 返回应用重新部署 Rime。
 
 #### 📱 iOS
@@ -280,8 +295,8 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 1. 在“输入方案”中选择“下载方案”。
 2. 使用以下任一地址：
 
-   - 原始地址：<https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip>
-   - 国内网络可用代理地址：<https://gh-proxy.com/https://github.com/0x696c757a696f/xmjd6-0x69/releases/latest/download/xmjd6-mobile.zip>
+   - 原始地址：<https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-mobile.zip>
+   - 国内网络可用代理地址：<https://gh-proxy.com/https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-mobile.zip>
 
 3. 下载完成后进入“方案目录切换”，在 `RimeUserData` 中选择刚导入的方案目录，点击右上角“打开”。
 4. 后续更新时重新下载方案，再回到“方案目录切换”选择更新后的目录并重新部署。
@@ -290,7 +305,7 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 **仓输入法**
 
 1. 安装[仓输入法](https://apps.apple.com/app/id6446617683)。
-2. 使用应用内在线方案下载功能导入 `xmjd6-mobile.zip`，地址与上方元书输入法相同。
+2. 使用应用内在线方案下载功能导入 `eosphoros-mobile.zip`，地址与上方元书输入法相同。
 3. 导入或更新后重新部署，并在应用中切换到对应方案。
 
 #### 🐧 Linux：Fcitx5 + Rime
@@ -310,7 +325,7 @@ RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RH
 
 安装方案：
 
-1. 将 `xmjd6-fcitx5-linux.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
+1. 将 `eosphoros-fcitx5-linux.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
 2. Flatpak 版通常使用 `~/.var/app/org.fcitx.Fcitx5/data/fcitx5/rime/`。
 3. 将包内 `fcitx5/linux/themes/` 下的主题目录复制到 `~/.local/share/fcitx5/themes/`；方案文件与主题文件不能混用安装目录。
 4. 打开 Fcitx5 配置工具，添加“中州韵”或 Rime 输入法。
@@ -410,11 +425,11 @@ export SDL_IM_MODULE=fcitx
 
 | 现象 | 优先检查 |
 | --- | --- |
-| 方案选单里没有星猫键道 | `xmjd6.schema.yaml` 是否位于当前客户端真正使用的 Rime 用户目录；是否执行重新部署 |
-| 中文能输入，但顶功、自造词或计算器失效 | `lua/xmjd6/` 是否完整，客户端是否带 `librime-lua` |
-| 没有 Emoji、简繁或火星文 | `opencc/xmjd6/` 是否完整，功能开关是否开启，是否重新部署 |
+| 方案选单里没有晨星键道 | `eosphoros.schema.yaml` 是否位于当前客户端真正使用的 Rime 用户目录；是否执行重新部署 |
+| 中文能输入，但顶功、自造词或计算器失效 | `lua/eosphoros/` 是否完整，客户端是否带 `librime-lua` |
+| 没有 Emoji、简繁或火星文 | `opencc/eosphoros/` 是否完整，功能开关是否开启，是否重新部署 |
 | 更新后仍出现旧候选 | 确认没有导入到另一个用户目录；重新部署，必要时退出并重启客户端 |
-| 个人词或设置被覆盖 | 个人内容应写入 `dicts/xmjd6/xmjd6.user.dict.yaml` 和 `*.custom.yaml`，不要直接改自动生成词典 |
+| 个人词或设置被覆盖 | 个人内容应写入 `dicts/eosphoros/eosphoros.user.dict.yaml` 和 `*.custom.yaml`，不要直接改自动生成词典 |
 
 ### 基础输入与反查入口
 
@@ -433,7 +448,7 @@ export SDL_IM_MODULE=fcitx
 
 `u`、`v`、`o` 是反查专用入口，不参与 Emoji 转换；普通中文编码才会在开启 Emoji 后附加表情候选。`i` 只有位于输入开头时才是英文入口，在中文编码的第 2～6 位仍按“竖”笔画码处理。
 
-打字统计现在按 xmjd6 命名保存在 `zzc_state/xmjd6_typing_stats.tsv`。首次运行会兼容读取旧的根目录 `typing_stats.txt`，随后写入新文件；旧文件暂不自动删除，便于确认迁移结果或手工备份。移动端规则只把本机统计回传到应用目录，不用 iCloud 统计覆盖另一台设备。
+打字统计现在按 eosphoros 命名保存在 `zzc_state/eosphoros_typing_stats.tsv`。首次运行会兼容读取旧的根目录 `typing_stats.txt`，随后写入新文件；旧文件暂不自动删除，便于确认迁移结果或手工备份。移动端规则只把本机统计回传到应用目录，不用 iCloud 统计覆盖另一台设备。
 
 ### 候选、翻页和方案切换
 
@@ -450,7 +465,7 @@ export SDL_IM_MODULE=fcitx
 
 ### 功能开关和默认状态
 
-重新部署后，方案选单中的开关状态由 [`xmjd6.custom.yaml`](xmjd6.custom.yaml) 控制：
+重新部署后，方案选单中的开关状态由 [`eosphoros.custom.yaml`](eosphoros.custom.yaml) 控制：
 
 | 开关 | 默认 | 作用 |
 | --- | :---: | --- |
@@ -466,7 +481,7 @@ export SDL_IM_MODULE=fcitx
 | 地球文/火星文 | 地球文 | 是否启用火星文转换 |
 | 半角/全角 | 半角 | 标点和字符宽度 |
 
-默认启用键道顶功、逐码补全、Emoji、快符、计算器和 630 提示，默认关闭流式整句输入。Emoji 使用 Lua 懒加载：保留原有 txjx 映射，并追加 2,516 个来自 Rime-Ice 的不重复关键词，涵盖更多情绪别名、手势、人物、动物、食物、交通、旗帜和新版 Emoji。若 Emoji 没出现，依次确认“表情展示”已开启、输入的是普通中文编码而不是 `u/v/o` 反查、文件已完整复制到 `opencc/xmjd6/`，然后重新部署。
+默认启用键道顶功、逐码补全、Emoji、快符、计算器和 630 提示，默认关闭流式整句输入。Emoji 使用 Lua 懒加载：保留原有 txjx 映射，并追加 2,516 个来自 Rime-Ice 的不重复关键词，涵盖更多情绪别名、手势、人物、动物、食物、交通、旗帜和新版 Emoji。若 Emoji 没出现，依次确认“表情展示”已开启、输入的是普通中文编码而不是 `u/v/o` 反查、文件已完整复制到 `opencc/eosphoros/`，然后重新部署。
 
 ### 自造词指令速查
 
@@ -482,7 +497,7 @@ export SDL_IM_MODULE=fcitx
 | `\--\` | 撤回最近一次尚未合并的自造词操作 |
 | `\!!!\` | 清空全部尚未合并的自造词操作 |
 
-输入法会在会话结束时把运行时操作安全追加到 `dicts/xmjd6/xmjd6.zzc.dict.yaml`；要永久整理进正式词库，再运行 `zzc/` 中对应平台的合并脚本。完整的保存、跨设备同步、合并和撤回流程见[自造词使用教程](zzc/自造词使用教程.md)和[合并脚本说明](zzc/README.md)。
+输入法会在会话结束时把运行时操作安全追加到 `dicts/eosphoros/eosphoros.zzc.dict.yaml`；要永久整理进正式词库，再运行 `zzc/` 中对应平台的合并脚本。完整的保存、跨设备同步、合并和撤回流程见[自造词使用教程](zzc/自造词使用教程.md)和[合并脚本说明](zzc/README.md)。
 
 Windows 用户可以在仓库根目录运行：
 
@@ -490,11 +505,11 @@ Windows 用户可以在仓库根目录运行：
 python .\zzc\Windows_词库合并.py
 ```
 
-没有 Python 时可以直接双击 `zzc/Win_词库合并.exe`，需要撤回最近一次合并时双击 `zzc/Win_撤回合并.exe`。两个 EXE 均由当前 xmjd6 共享 Python 核心构建；正式 Release 会在 Windows Runner 上使用 Python 3.14.6 + PyInstaller 6.21.0 重新构建并实际执行合并、撤回测试，再把通过测试的 CI 产物交给最终发布。普通推送和 PR 的 `package-main` 只验证源码、词库与已提交文件，不重复编译 EXE。构建和校验方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
+没有 Python 时可以直接双击 `zzc/Win_词库合并.exe`，需要撤回最近一次合并时双击 `zzc/Win_撤回合并.exe`。两个 EXE 均由当前 eosphoros 共享 Python 核心构建；正式 Release 会在 Windows Runner 上使用 Python 3.14.6 + PyInstaller 6.21.0 重新构建并实际执行合并、撤回测试，再把通过测试的 CI 产物交给最终发布。普通推送和 PR 的 `package-main` 只验证源码、词库与已提交文件，不重复编译 EXE。构建和校验方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
 
 ## 🔤 英文输入
 
-英文词典直接导入主词典，不需要 `xmjd6.en.schema.yaml`，也不需要切换方案。
+英文词典直接导入主词典，不需要 `eosphoros.en.schema.yaml`，也不需要切换方案。
 
 ```text
 实际输入：ihello
@@ -516,63 +531,63 @@ python .\zzc\Windows_词库合并.py
 
 | 词库 | 记录数 | 用途 |
 | --- | ---: | --- |
-| `dicts/xmjd6/xmjd6.danzi.dict.yaml` | 36,214 | 上游键道单字表 |
-| `dicts/xmjd6/xmjd6.cizu.dict.yaml` | 191,398 | 本地基础词组 |
-| `dicts/xmjd6/xmjd6.catholicism.dict.yaml` | 3,514 | Catholicism、礼仪、神学与东方礼词汇 |
-| `dicts/xmjd6/xmjd6.protestantism.dict.yaml` | 289 | 新教信条、循道卫理宗传统及《和合本》词汇 |
-| `dicts/xmjd6/xmjd6.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
-| `dicts/xmjd6/xmjd6.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
-| `dicts/xmjd6/xmjd6.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
-| `dicts/xmjd6/xmjd6.core.dict.yaml` | 921 | 630 规则、快符和核心候选 |
-| `dicts/xmjd6/xmjd6.fjcy.dict.yaml` | 514,033 | 附加扩展词组 |
-| `dicts/xmjd6/xmjd6.ice.dict.yaml` | 362,826 | Rime-Ice 中文精简补充词库 |
-| `dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml` | 40,564 | 七个万象分类补充词库 |
-| `dicts/xmjd6/xmjd6.en.dict.yaml` | 23,610 | Rime-Ice 英文词库 |
+| `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,214 | 上游键道单字表 |
+| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 191,398 | 本地基础词组 |
+| `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,514 | Catholicism、礼仪、神学与东方礼词汇 |
+| `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 289 | 新教信条、循道卫理宗传统及《和合本》词汇 |
+| `dicts/eosphoros/eosphoros.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
+| `dicts/eosphoros/eosphoros.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
+| `dicts/eosphoros/eosphoros.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
+| `dicts/eosphoros/eosphoros.core.dict.yaml` | 921 | 630 规则、快符和核心候选 |
+| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,033 | 附加扩展词组 |
+| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 362,826 | Rime-Ice 中文精简补充词库 |
+| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 40,564 | 七个万象分类补充词库 |
+| `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,610 | Rime-Ice 英文词库 |
 | **合计** | **1,173,526** | 不含动态自造词和个人词库 |
 
-四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，不靠“祷告”“教会”“基督徒”等泛用词凑量。`xmjd6.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；循道卫理宗部分覆盖恩典与圣洁神学、班会与联结制度、议会体系、立约礼拜、亚德门传统、近代在华会名和代表人物。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
+四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，不靠“祷告”“教会”“基督徒”等泛用词凑量。`eosphoros.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；循道卫理宗部分覆盖恩典与圣洁神学、班会与联结制度、议会体系、立约礼拜、亚德门传统、近代在华会名和代表人物。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
 
-这些专题词由 [`tools/christian_traditions_2026.txt`](tools/christian_traditions_2026.txt) 审核，生成器依次尝试键道六码的基础码和首笔辅助码。固定本地词典没有空闲合法码时通常不收录；专题词确定后再重建低优先级 `xmjd6.ice`，让 ICE 词移到更长的合法码或按既有重码预算淘汰。唯一例外是“哥林多后书”“帖撒罗尼迦后书”“雅各书”三卷《和合本》正式书名：前两组的前书与后书在标准规则下拥有完全相同的全部候选，后一卷的全部候选已被固定旧词占用，因此人工审核后使用最终六码并保持专题词优先。除此三项外，四个专题词库没有新增异词同码。
+这些专题词由 [`tools/christian_traditions_2026.txt`](tools/christian_traditions_2026.txt) 审核，生成器依次尝试键道六码的基础码和首笔辅助码。固定本地词典没有空闲合法码时通常不收录；专题词确定后再重建低优先级 `eosphoros.ice`，让 ICE 词移到更长的合法码或按既有重码预算淘汰。唯一例外是“哥林多后书”“帖撒罗尼迦后书”“雅各书”三卷《和合本》正式书名：前两组的前书与后书在标准规则下拥有完全相同的全部候选，后一卷的全部候选已被固定旧词占用，因此人工审核后使用最终六码并保持专题词优先。除此三项外，四个专题词库没有新增异词同码。
 
-`xmjd6.ice` 定位为本地词库之后的精简补充库。同步过滤器不会直接删除 2～3 字词；它会排除上游低权重长尾、批量数字/年份模板、8 字以上 `ext` 整句及 12 字以上超长词，当前比未精简版本减少 71,144 条。药品名称是例外：片、胶囊、颗粒、注射液、口服液、滴眼液、喷雾剂等剂型词不会因词频低或名称过长被过滤，并在重码预算中优先保留。编码时短词优先占用基础码，长词和低频同码词尽量追加笔画码；随后再按照 `base → ext → others` 和上游权重排序。低优先级重码词会被删减，合并后的中文重码率不会高于同步前的本地基准；新增词在同一码下最多保留 8 个候选。这些过滤规则写在同步器中，因此以后拉取上游时不会重新混入。
+`eosphoros.ice` 定位为本地词库之后的精简补充库。同步过滤器不会直接删除 2～3 字词；它会排除上游低权重长尾、批量数字/年份模板、8 字以上 `ext` 整句及 12 字以上超长词，当前比未精简版本减少 71,144 条。药品名称是例外：片、胶囊、颗粒、注射液、口服液、滴眼液、喷雾剂等剂型词不会因词频低或名称过长被过滤，并在重码预算中优先保留。编码时短词优先占用基础码，长词和低频同码词尽量追加笔画码；随后再按照 `base → ext → others` 和上游权重排序。低优先级重码词会被删减，合并后的中文重码率不会高于同步前的本地基准；新增词在同一码下最多保留 8 个候选。这些过滤规则写在同步器中，因此以后拉取上游时不会重新混入。
 
-`xmjd6.wanxiang` 不直接导入万象的拼音码和词频，只吸收药品 9,368 条、医学 12,441 条、化学 10,894 条、地名 5,281 条、名人 2,239 条、台风名 190 条和高频基础词 151 条。联想句、批量普通人名、错音/多音纠错、英文、单字和方言库均不导入。带声调拼音先规范化（保留 `ü → v`），再按键道6飞键和首笔规则重新编码；本地已有词先去重，所有合法码都冲突的条目直接跳过。通过筛选的码会先受保护，再重建低优先级 ICE，因此不会新增异词同码。
+`eosphoros.wanxiang` 不直接导入万象的拼音码和词频，只吸收药品 9,368 条、医学 12,441 条、化学 10,894 条、地名 5,281 条、名人 2,239 条、台风名 190 条和高频基础词 151 条。联想句、批量普通人名、错音/多音纠错、英文、单字和方言库均不导入。带声调拼音先规范化（保留 `ü → v`），再按键道6飞键和首笔规则重新编码；本地已有词先去重，所有合法码都冲突的条目直接跳过。通过筛选的码会先受保护，再重建低优先级 ICE，因此不会新增异词同码。
 
 ### 词库加载顺序
 
-[`xmjd6.extended.dict.yaml`](xmjd6.extended.dict.yaml) 控制词库导入。当前主要顺序为：
+[`eosphoros.extended.dict.yaml`](eosphoros.extended.dict.yaml) 控制词库导入。当前主要顺序为：
 
 ```text
 user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy → oriental → assyrian → core → fjcy → ice → wanxiang → en
 ```
 
-本地词库优先于自动生成的上游词库。`dicts/xmjd6/xmjd6.user.dict.yaml` 权限最高，适合保存个人常用词；加入大量通用词前应优先考虑对应的专题或基础词库。
+本地词库优先于自动生成的上游词库。`dicts/eosphoros/eosphoros.user.dict.yaml` 权限最高，适合保存个人常用词；加入大量通用词前应优先考虑对应的专题或基础词库。
 
 ## ⚙️ 配置文件
 
 | 文件 | 作用 |
 | --- | --- |
-| `xmjd6.schema.yaml` | 主方案、引擎、翻译器、反查和快捷键 |
-| `xmjd6.custom.yaml` | 用户推荐修改的开关、候选数和流式输入配置 |
-| `xmjd6.extended.dict.yaml` | 词库导入顺序与开关 |
+| `eosphoros.schema.yaml` | 主方案、引擎、翻译器、反查和快捷键 |
+| `eosphoros.custom.yaml` | 用户推荐修改的开关、候选数和流式输入配置 |
+| `eosphoros.extended.dict.yaml` | 词库导入顺序与开关 |
 | `default.custom.yaml` | 默认方案列表及全局选项 |
 | `weasel.yaml` / `weasel.custom.yaml` | Windows 小狼毫候选窗样式与明暗配色 |
 | `squirrel.yaml` / `squirrel.custom.yaml` | macOS 鼠须管候选窗样式与明暗配色 |
-| `fcitx5/macos/themes/` | macOS Fcitx5 可导入主题；`xmjd6-auto.conf` 自动切换 Cat 明暗配色 |
+| `fcitx5/macos/themes/` | macOS Fcitx5 可导入主题；`eosphoros-auto.conf` 自动切换 Cat 明暗配色 |
 | `fcitx5/linux/themes/` | Linux Fcitx5 Classic UI 桌面配色复刻主题 |
 | `fcitx5/themes.yaml` | 小企鹅主题来源清单，由生成脚本维护 |
 | `Hamster.yaml` | iOS 客户端自造词文件同步规则，不是元书键盘皮肤 |
-| `xmjd6.symbols.yaml` | 标点与符号 |
-| `dicts/xmjd6/xmjd6.core.dict.yaml` | 630、快符和核心码表 |
-| `dicts/xmjd6/xmjd6.user.dict.yaml` | 个人高优先级补充词库 |
-| `lua/xmjd6/` | 方案 Lua 模块 |
-| `opencc/xmjd6/` | 简繁、Emoji、火星文数据 |
+| `eosphoros.symbols.yaml` | 标点与符号 |
+| `dicts/eosphoros/eosphoros.core.dict.yaml` | 630、快符和核心码表 |
+| `dicts/eosphoros/eosphoros.user.dict.yaml` | 个人高优先级补充词库 |
+| `lua/eosphoros/` | 方案 Lua 模块 |
+| `opencc/eosphoros/` | 简繁、Emoji、火星文数据 |
 
-修改 YAML 后必须重新部署。升级仓库时，个人配置尽量写入 `*.custom.yaml` 或 `dicts/xmjd6/xmjd6.user.dict.yaml`，不要直接修改自动生成的 `xmjd6.danzi`、`xmjd6.ice`、`xmjd6.wanxiang.*` 和 `xmjd6.en`。
+修改 YAML 后必须重新部署。升级仓库时，个人配置尽量写入 `*.custom.yaml` 或 `dicts/eosphoros/eosphoros.user.dict.yaml`，不要直接修改自动生成的 `eosphoros.danzi`、`eosphoros.ice`、`eosphoros.wanxiang.*` 和 `eosphoros.en`。
 
 ### 流式输入
 
-默认使用键道顶功。需要整句流式输入时，可在 `xmjd6.custom.yaml` 中启用：
+默认使用键道顶功。需要整句流式输入时，可在 `eosphoros.custom.yaml` 中启用：
 
 ```yaml
 patch:
@@ -580,7 +595,7 @@ patch:
   translator/enable_user_dict: true
 ```
 
-启用 `enable_sentence` 后，中文顶功会自动停用，分号和单引号改作分隔符。详细说明和相关按键覆盖已写在 `xmjd6.custom.yaml` 的注释中。
+启用 `enable_sentence` 后，中文顶功会自动停用，分号和单引号改作分隔符。详细说明和相关按键覆盖已写在 `eosphoros.custom.yaml` 的注释中。
 
 <a id="上游来源与自动同步"></a>
 
@@ -590,11 +605,11 @@ patch:
 
 | 上游 | 源文件 | 生成文件 |
 | --- | --- | --- |
-| [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | `dicts/01.danzi.txt` | `dicts/xmjd6/xmjd6.danzi.dict.yaml` |
-| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `cn_dicts/base`、`ext`、`others` | `dicts/xmjd6/xmjd6.ice.dict.yaml` |
-| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `en_dicts/en`、`en_ext` | `dicts/xmjd6/xmjd6.en.dict.yaml` |
-| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `opencc/emoji.txt` | `opencc/xmjd6/xmjd6_emoji_extra_*` |
-| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`diming`、`mingren`、`taifeng`、`jichu` | `dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml` |
+| [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | `dicts/01.danzi.txt` | `dicts/eosphoros/eosphoros.danzi.dict.yaml` |
+| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `cn_dicts/base`、`ext`、`others` | `dicts/eosphoros/eosphoros.ice.dict.yaml` |
+| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `en_dicts/en`、`en_ext` | `dicts/eosphoros/eosphoros.en.dict.yaml` |
+| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `opencc/emoji.txt` | `opencc/eosphoros/eosphoros_emoji_extra_*` |
+| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`diming`、`mingren`、`taifeng`、`jichu` | `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` |
 
 同步器不会盲目追踪浮动的 `main`/`master` 内容。锁文件保存已经整合的 Git commit 和生成文件 SHA-256；更新器比较“上次 commit → 当前 HEAD”，只有目标源文件变化时才按最新完整快照重建，避免长期累积补丁造成漂移。
 
@@ -620,9 +635,9 @@ python .\tools\sync_upstream_dictionaries.py --refresh --write
 
 `.github/workflows/sync-upstream-dictionaries.yml` 每周一 04:17 UTC 自动检查，有变化时运行测试并创建 PR。首次启用自动 PR 前，需要在仓库的 **Settings → Actions → General → Workflow permissions** 中允许 GitHub Actions 创建 Pull Request。
 
-Lua 与自造词实现参考 [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx)，已整合的 commit、完整 `lua/`、`zzc/`、`zzc_state/` 审查范围和明确排除项记录在 [`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。当前审查点为 `377001a70e73727b4e3d8cb7b6de9ee401ab3a98`：已适配打字统计的 `zzc_state` 命名空间、iCloud 安全的逻辑空状态、计算器等号防按键重复，以及 Fcitx5 Linux/macOS Python 入口；保留 xmjd6 的命名空间、英文 `i` 入口、键道6顶功规则和防重复追加状态。
+Lua 与自造词实现参考 [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx)，已整合的 commit、完整 `lua/`、`zzc/`、`zzc_state/` 审查范围和明确排除项记录在 [`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。当前审查点为 `377001a70e73727b4e3d8cb7b6de9ee401ab3a98`：已适配打字统计的 `zzc_state` 命名空间、iCloud 安全的逻辑空状态、计算器等号防按键重复，以及 Fcitx5 Linux/macOS Python 入口；保留 eosphoros 的命名空间、英文 `i` 入口、键道6顶功规则和防重复追加状态。
 
-[`tools/adapt_txjx_upstream.py`](tools/adapt_txjx_upstream.py) 会先读取 [`tools/txjx_adaptation_manifest.json`](tools/txjx_adaptation_manifest.json) 中逐文件登记的“上游路径 → 本地路径”，把 `txjx` 模块名和方案名转换为 `xmjd6`，再以锁定 commit 为共同祖先进行三方合并。因此上游文件与本地文件可以继续使用不同名字，本地独有修改也不会被整文件覆盖：
+[`tools/adapt_txjx_upstream.py`](tools/adapt_txjx_upstream.py) 会先读取 [`tools/txjx_adaptation_manifest.json`](tools/txjx_adaptation_manifest.json) 中逐文件登记的“上游路径 → 本地路径”，把 `txjx` 模块名和方案名转换为 `eosphoros`，再以锁定 commit 为共同祖先进行三方合并。因此上游文件与本地文件可以继续使用不同名字，本地独有修改也不会被整文件覆盖：
 
 ```powershell
 # 只预览上游差异、映射结果和冲突
@@ -687,14 +702,14 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 ```text
 .
-├─ xmjd6.schema.yaml                 主方案
-├─ xmjd6.extended.dict.yaml          RimeTool 兼容词库索引（无词条正文）
-├─ dicts/xmjd6/                      本地、上游生成和个人词条数据
-│  └─ xmjd6.wanxiang.*.dict.yaml     万象七个分类词库
-├─ lua/xmjd6/                        Lua 处理器、翻译器和过滤器
+├─ eosphoros.schema.yaml                 主方案
+├─ eosphoros.extended.dict.yaml          RimeTool 兼容词库索引（无词条正文）
+├─ dicts/eosphoros/                      本地、上游生成和个人词条数据
+│  └─ eosphoros.wanxiang.*.dict.yaml     万象七个分类词库
+├─ lua/eosphoros/                        Lua 处理器、翻译器和过滤器
 │  ├─ input/                         模块化按键、顶功、标点和快符处理
 │  └─ zzc/                           自造词运行时、候选和操作链
-├─ opencc/xmjd6/                     OpenCC 命名空间数据
+├─ opencc/eosphoros/                     OpenCC 命名空间数据
 ├─ *.recipe.yaml                     各桌面前端与移动端东风破配方
 ├─ tools/                             生成、同步、清理和验证工具
 ├─ tests/                             Python 与 Lua 回归测试
@@ -711,7 +726,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 ## 🙏 致谢与授权
 
-本方案的演进关系为“星空键道6.2 → 星猫键道6 → xmjd6-0x69”。首先感谢吅吅大山、Proud丶Cat、热热、浮生、千年蟲等历代方案和词库维护者。没有他们长期整理编码、词库与使用经验，就没有今天的星猫键道6。
+本方案的演进关系为“星空键道6.2 → 星猫键道6 → 晨星键道”。首先感谢吅吅大山、Proud丶Cat、热热、浮生、千年蟲等历代方案和词库维护者。没有他们长期整理编码、词库与使用经验，就没有今天的晨星键道。
 
 ### 核心引擎与方案传承
 
@@ -744,7 +759,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)、[Fcitx5](https://github.com/fcitx/fcitx5) | macOS、Android、Linux 的小企鹅前端、安装说明与主题格式 |
 | [同文输入法 Trime](https://github.com/osfans/trime) | Android Rime 前端 |
 | [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701)及其[官方文档](https://ihsiao.com/apps/hamster/) | iOS Rime 前端、方案导入、自造词同步和键盘皮肤格式支持 |
-| [小小输入法 Yong](https://yong.dgod.net/)（[dgod/yong 源码](https://github.com/dgod/yong)） | Windows 轻量输入法平台；Release 便携包在其程序基础上整合星猫键道6配置和码表 |
+| [小小输入法 Yong](https://yong.dgod.net/)（[dgod/yong 源码](https://github.com/dgod/yong)） | Windows 轻量输入法平台；Release 便携包在其程序基础上整合晨星键道配置和码表 |
 | [rimeinn/rabbit](https://github.com/rimeinn/rabbit)、[amorphobia/rabbit](https://github.com/amorphobia/rabbit) | 玉兔毫运行环境、便携包及相关实现 |
 | [东风破 plum](https://github.com/rime/plum) | `recipe.yaml` 安装与更新机制 |
 | [中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)及其[使用文档](https://github.com/yanhuacuo/rimetool/wiki) | Rime 方案管理工具及“薄荷解析模板”兼容结构参考 |
@@ -759,17 +774,17 @@ python .\tools\sync_upstream_dictionaries.py --write
 ### 授权与再分发边界
 
 > [!IMPORTANT]
-> 致谢表示来源、依赖或技术参考，不代表相关作者和项目为 xmjd6-0x69 提供官方支持，也不改变任何上游许可证。引用链接不等于取得皮肤、词典、软件或文章的再分发授权。
+> 致谢表示来源、依赖或技术参考，不代表相关作者和项目为晨星键道（`eosphoros-keytao`）提供官方支持，也不改变任何上游许可证。引用链接不等于取得皮肤、词典、软件或文章的再分发授权。
 
 | 内容 | 本仓库的处理方式 | 许可证或边界 |
 | --- | --- | --- |
 | Rime-Jiandao 单字数据 | 锁定上游 commit，按本方案格式确定性生成 | AGPL-3.0-or-later |
 | Rime-Ice 中文、英文与 Emoji 数据 | 去重、转换编码并锁定生成文件校验值 | GPL-3.0 |
-| rime-txjx 参考实现 | 经人工审查后适配到 `lua/xmjd6/` 与 `opencc/xmjd6/` 命名空间 | MIT |
+| rime-txjx 参考实现 | 经人工审查后适配到 `lua/eosphoros/` 与 `opencc/eosphoros/` 命名空间 | MIT |
 | CrossWire `ChiUns`《和合本》 | 仅选取并人工复核书卷名、人名、地名和固定译语 | 上游标注 Public Domain |
 | 在线神学、教会与圣经资料 | 只用于人工核对词目，不批量抓取释义或正文 | 权利归各资料提供者；来源与取词原则单独记录 |
 | 移动端第三方皮肤 | README 只提供外部入口，不复制、不修改、不放入仓库或 Release | 下载、导入和再分发须遵守皮肤作者的说明与许可证 |
-| 小小输入法、玉兔毫等便携包 | 在相应上游程序或发行包基础上整合 xmjd6 配置，并在 CI 中校验来源与文件哈希 | 客户端程序的权利与许可仍归各自上游；xmjd6 不改变其许可条件 |
+| 小小输入法、玉兔毫等便携包 | 在相应上游程序或发行包基础上整合 eosphoros 配置，并在 CI 中校验来源与文件哈希 | 客户端程序的权利与许可仍归各自上游；eosphoros 不改变其许可条件 |
 
 第三方来源、固定 commit、生成文件 SHA-256 和许可证副本集中记录在 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`licenses/`](licenses/)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json)及[`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。宗派词库的在线核对来源与取词边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。除上述明确标注的第三方内容外，不应仅凭本节致谢推定其他文件采用相同许可证；复用或再分发前请先核对相应文件及仓库的授权声明。
 

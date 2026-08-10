@@ -25,7 +25,7 @@ def main() -> int:
     (ROOT / "VERSION").write_text(args.date + "\n", encoding="utf-8")
     changed = 0
     yaml_paths = list(ROOT.glob("*.yaml"))
-    yaml_paths.extend((ROOT / "dicts" / "xmjd6").glob("*.yaml"))
+    yaml_paths.extend((ROOT / "dicts" / "eosphoros").glob("*.yaml"))
     for path in sorted(yaml_paths):
         original = path.read_text(encoding="utf-8-sig")
         updated, count = VERSION_RE.subn(lambda match: f'{match.group(1)}"{args.date}"', original)

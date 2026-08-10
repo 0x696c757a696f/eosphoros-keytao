@@ -1,4 +1,4 @@
-xmjd6 zzc 目录说明
+eosphoros zzc 目录说明
 
 普通用户只需要按自己的电脑系统运行对应脚本。
 
@@ -15,19 +15,19 @@ Mac:
 - 交给有 Mac 环境的人打包成无扩展可执行文件后使用。
 
 Linux / 通用 Python:
-- xmjd6_词库合并.py
-- xmjd6_撤回合并.py
+- eosphoros_词库合并.py
+- eosphoros_撤回合并.py
 - 需要电脑已安装 Python 3。
 
 Fcitx5 Linux:
 - Fcitx5_Linux_词库合并.py
 - Fcitx5_Linux_撤回合并.py
-- 两个入口调用同目录的 xmjd6_* 平台中性共享核心。
+- 两个入口调用同目录的 eosphoros_* 平台中性共享核心。
 
 Fcitx5 macOS:
 - Fcitx5_macOS_词库合并.py
 - Fcitx5_macOS_撤回合并.py
-- 使用 python3 运行；两个入口调用同目录的 xmjd6_* 平台中性共享核心。
+- 使用 python3 运行；两个入口调用同目录的 eosphoros_* 平台中性共享核心。
 
 iOS:
 - iOS_词库合并.py
@@ -37,7 +37,7 @@ iOS:
 - 详细步骤见 a-Shell快捷指令合并说明.md 或 iOS快捷指令合并说明.md。
 
 重要文件:
-- ../dicts/xmjd6/xmjd6.zzc.dict.yaml
+- ../dicts/eosphoros/eosphoros.zzc.dict.yaml
   自造词操作记录，也是临时 zzc 码表。
 - ../zzc_state/zzc_reset.tsv
   电脑合并后写入的清理标记，用于手机识别并重置已合并的本地 zzc。

@@ -5,7 +5,7 @@ _G.rime_api = {
     get_user_data_dir = function() return data_dir end,
 }
 
-local core = require("xmjd6.zzc.xmjd6_zzc_core")
+local core = require("eosphoros.zzc.eosphoros_zzc_core")
 
 local function read_all(path)
     local file = assert(io.open(path, "rb"))

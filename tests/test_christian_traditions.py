@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DICT_DIR = ROOT / "dicts" / "xmjd6"
+DICT_DIR = ROOT / "dicts" / "eosphoros"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -20,7 +20,7 @@ from tools.build_christian_traditions import (
     expected_dictionary_texts,
     load_manifest,
 )
-from tools.xmjd6_codes import code_candidates, iter_dictionary_rows, load_character_codes
+from tools.eosphoros_codes import code_candidates, iter_dictionary_rows, load_character_codes
 
 
 class ChristianTraditionDictionaryTests(unittest.TestCase):
@@ -29,10 +29,10 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         self.assertEqual(
             {path.name for path in expected},
             {
-                "xmjd6.protestantism.dict.yaml",
-                "xmjd6.orthodoxy.dict.yaml",
-                "xmjd6.oriental.dict.yaml",
-                "xmjd6.assyrian.dict.yaml",
+                "eosphoros.protestantism.dict.yaml",
+                "eosphoros.orthodoxy.dict.yaml",
+                "eosphoros.oriental.dict.yaml",
+                "eosphoros.assyrian.dict.yaml",
             },
         )
         for path, text in expected.items():
@@ -43,14 +43,14 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
             filename: {word for word, _ in iter_dictionary_rows(DICT_DIR / filename)}
             for _, filename, _, _ in TARGET_SPECS
         }
-        self.assertTrue({"五个唯独", "奥格斯堡信纲"} <= rows["xmjd6.protestantism.dict.yaml"])
-        self.assertTrue({"金口若望礼仪", "圣像屏"} <= rows["xmjd6.orthodoxy.dict.yaml"])
+        self.assertTrue({"五个唯独", "奥格斯堡信纲"} <= rows["eosphoros.protestantism.dict.yaml"])
+        self.assertTrue({"金口若望礼仪", "圣像屏"} <= rows["eosphoros.orthodoxy.dict.yaml"])
         self.assertTrue(
-            {"东方正统教会", "台瓦西多"} <= rows["xmjd6.oriental.dict.yaml"]
+            {"东方正统教会", "台瓦西多"} <= rows["eosphoros.oriental.dict.yaml"]
         )
         self.assertTrue(
             {"东方亚述教会", "阿代和马里礼仪", "圣酵圣事"}
-            <= rows["xmjd6.assyrian.dict.yaml"]
+            <= rows["eosphoros.assyrian.dict.yaml"]
         )
 
     def test_generic_christian_words_and_inaccurate_label_are_excluded(self) -> None:
@@ -68,7 +68,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
 
     def test_every_generated_code_is_legal_and_has_only_reviewed_collisions(self) -> None:
         character_codes = load_character_codes(
-            DICT_DIR / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
+            DICT_DIR / "eosphoros.danzi.dict.yaml", PREFERRED_PREFIXES
         )
         all_words_by_code: dict[str, set[str]] = defaultdict(set)
         for path in DICT_DIR.glob("*.dict.yaml"):
@@ -94,13 +94,13 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         for word, code in FORCED_WORD_CODES.items():
             self.assertIn(
                 (word, code),
-                set(iter_dictionary_rows(DICT_DIR / "xmjd6.protestantism.dict.yaml")),
+                set(iter_dictionary_rows(DICT_DIR / "eosphoros.protestantism.dict.yaml")),
             )
 
     def test_multi_part_personal_names_use_a_middle_dot(self) -> None:
         protestant_words = {
             word
-            for word, _ in iter_dictionary_rows(DICT_DIR / "xmjd6.protestantism.dict.yaml")
+            for word, _ in iter_dictionary_rows(DICT_DIR / "eosphoros.protestantism.dict.yaml")
         }
         self.assertTrue({"马丁·路德", "约翰·加尔文"} <= protestant_words)
         self.assertTrue({"马丁路德", "约翰加尔文"}.isdisjoint(protestant_words))
@@ -129,7 +129,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
     def test_methodist_vocabulary_covers_names_theology_practice_and_history(self) -> None:
         protestant_words = {
             word
-            for word, _ in iter_dictionary_rows(DICT_DIR / "xmjd6.protestantism.dict.yaml")
+            for word, _ in iter_dictionary_rows(DICT_DIR / "eosphoros.protestantism.dict.yaml")
         }
         self.assertTrue(
             {
@@ -170,14 +170,14 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         for path in DICT_DIR.glob("*.dict.yaml"):
             if (
                 path.name in generated_names
-                or path.name == "xmjd6.ice.dict.yaml"
+                or path.name == "eosphoros.ice.dict.yaml"
                 or ".wanxiang." in path.name
             ):
                 continue
             for word, code in iter_dictionary_rows(path):
                 occupied[code].add(word)
         character_codes = load_character_codes(
-            DICT_DIR / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
+            DICT_DIR / "eosphoros.danzi.dict.yaml", PREFERRED_PREFIXES
         )
         for entry in result.entries:
             occupied[entry.code].add(entry.word)
@@ -218,12 +218,12 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         )
 
     def test_release_and_import_lists_include_all_four_dictionaries(self) -> None:
-        extended = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
+        extended = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
         release = (ROOT / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )
         for _, filename, dictionary_name, _ in TARGET_SPECS:
-            self.assertIn(f"  - dicts/xmjd6/{dictionary_name}", extended)
+            self.assertIn(f"  - dicts/eosphoros/{dictionary_name}", extended)
             self.assertIn(filename, release)
             self.assertIn(filename.removesuffix(".dict.yaml") + ".txt", release)
 

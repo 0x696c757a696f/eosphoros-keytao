@@ -40,10 +40,10 @@ jobs:
         shell: pwsh
         run: |
           $Changed = git status --porcelain -- `
-            dicts/xmjd6 `
-            opencc/xmjd6/xmjd6_emoji_extra_chars.lua `
-            opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua `
-            opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua `
+            dicts/eosphoros `
+            opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
+            opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
+            opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `
             tools/upstream_dictionaries.lock.json
           if ($Changed) {
             "changed=true" >> $env:GITHUB_OUTPUT
@@ -73,10 +73,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c $Branch
           git add -- `
-            dicts/xmjd6 `
-            opencc/xmjd6/xmjd6_emoji_extra_chars.lua `
-            opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua `
-            opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua `
+            dicts/eosphoros `
+            opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
+            opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
+            opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `
             tools/upstream_dictionaries.lock.json
           git commit -m "chore: update upstream dictionaries"
           git push origin "HEAD:refs/heads/$Branch"

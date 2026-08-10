@@ -95,7 +95,7 @@ def desktop_schemes() -> list[dict[str, Any]]:
         {
             "id": scheme_id,
             "name": str(scheme.get("name", scheme_id)),
-            "author": str(scheme.get("author", "xmjd6 desktop theme collection")),
+            "author": str(scheme.get("author", "eosphoros desktop theme collection")),
             "sources": origin[scheme_id],
             "colors": palette(scheme),
         }
@@ -110,7 +110,7 @@ def linux_theme(item: dict[str, Any]) -> str:
 Name={item['name']}
 Version=1
 Author={item['author']}
-Description=xmjd6 desktop palette replica ({sources})
+Description=eosphoros desktop palette replica ({sources})
 ScaleWithDPI=True
 
 [InputPanel]
@@ -240,15 +240,15 @@ def write_tree(destination: Path) -> None:
     macos_root.mkdir(parents=True, exist_ok=True)
 
     for item in schemes:
-        linux_dir = linux_root / f"xmjd6-{item['id']}"
+        linux_dir = linux_root / f"eosphoros-{item['id']}"
         linux_dir.mkdir()
         (linux_dir / "theme.conf").write_text(linux_theme(item), encoding="utf-8")
-        (macos_root / f"xmjd6-{item['id']}.conf").write_text(
+        (macos_root / f"eosphoros-{item['id']}.conf").write_text(
             macos_theme(item["colors"]), encoding="utf-8"
         )
 
     by_id = {item["id"]: item for item in schemes}
-    (macos_root / "xmjd6-auto.conf").write_text(
+    (macos_root / "eosphoros-auto.conf").write_text(
         macos_theme(by_id["CatLight"]["colors"], by_id["CatDark"]["colors"]),
         encoding="utf-8",
     )

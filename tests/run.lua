@@ -66,7 +66,7 @@ local function base_env(options)
         engine = {
             context = context,
             schema = {
-                schema_id = "xmjd6",
+                schema_id = "eosphoros",
                 config = config,
             },
         },
@@ -74,12 +74,12 @@ local function base_env(options)
 end
 
 test("lazy translator leaves English i input to the main table", function()
-    unload("xmjd6")
+    unload("eosphoros")
     _G.Candidate = candidate
     local yielded = {}
     _G.yield = function(cand) yielded[#yielded + 1] = cand end
 
-    local translator = require("xmjd6.xmjd6_core")
+    local translator = require("eosphoros.eosphoros_core")
     local env = base_env()
     local seg = { start = 0, _end = 4 }
 
@@ -94,11 +94,11 @@ test("lazy translator leaves English i input to the main table", function()
     translator.func("i", seg, env)
     assert_equal(#yielded, 0, "English prefix must not yield history candidates")
 
-    unload("xmjd6")
+    unload("eosphoros")
     local saved_debug = debug
     _G.debug = nil
     local ok, err = pcall(function()
-        local fallback = require("xmjd6.xmjd6_core")
+        local fallback = require("eosphoros.eosphoros_core")
         local fallback_env = base_env()
         fallback_env.engine.schema.schema_id = "custom_schema"
         fallback.func("rq", seg, fallback_env)
@@ -108,8 +108,8 @@ test("lazy translator leaves English i input to the main table", function()
 end)
 
 test("ZZC candidates stay ahead of ordinary multi-character candidates", function()
-    unload("xmjd6.xmjd6_completion")
-    package.loaded["xmjd6.zzc.xmjd6_zzc_core"] = {
+    unload("eosphoros.eosphoros_completion")
+    package.loaded["eosphoros.zzc.eosphoros_zzc_core"] = {
         zzc_cover_for_input = function() return nil end,
         zzc_completion_rows_for_prefix = function() return nil end,
     }
@@ -117,7 +117,7 @@ test("ZZC candidates stay ahead of ordinary multi-character candidates", functio
 
     local yielded = {}
     _G.yield = function(cand) yielded[#yielded + 1] = cand end
-    local completion = require("xmjd6.xmjd6_completion")
+    local completion = require("eosphoros.eosphoros_completion")
     local env = base_env({ input = "adfytoceek" })
     completion.init(env)
 
@@ -142,8 +142,8 @@ test("ZZC candidates stay ahead of ordinary multi-character candidates", functio
 end)
 
 test("ZZC state preserves an empty replacement buffer placeholder", function()
-    unload("xmjd6.zzc.xmjd6_zzc_state")
-    local state_module = require("xmjd6.zzc.xmjd6_zzc_state")
+    unload("eosphoros.zzc.eosphoros_zzc_state")
+    local state_module = require("eosphoros.zzc.eosphoros_zzc_state")
     local state = state_module.new()
     state.active = true
     state.stage = "collect"
@@ -179,10 +179,10 @@ test("ZZC state preserves an empty replacement buffer placeholder", function()
 end)
 
 test("typing statistics uses the shared cache registry", function()
-    unload("xmjd6.typing_stats")
-    unload("xmjd6.common.xmjd6_cache_registry")
-    local registry = require("xmjd6.common.xmjd6_cache_registry")
-    require("xmjd6.typing_stats")
+    unload("eosphoros.typing_stats")
+    unload("eosphoros.common.eosphoros_cache_registry")
+    local registry = require("eosphoros.common.eosphoros_cache_registry")
+    require("eosphoros.typing_stats")
     local found = false
     for _, name in ipairs(registry.names()) do
         if name == "typing_stats" then found = true end
@@ -190,32 +190,32 @@ test("typing statistics uses the shared cache registry", function()
     if not found then error("typing_stats cleaner was not registered") end
 end)
 
-test("modular input processor components load from the xmjd6 namespace", function()
+test("modular input processor components load from the eosphoros namespace", function()
     local modules = {
-        "xmjd6.input.xmjd6_key_event",
-        "xmjd6.input.xmjd6_processor_state",
-        "xmjd6.input.xmjd6_commit_guard",
-        "xmjd6.input.xmjd6_ascii_input",
-        "xmjd6.input.xmjd6_direct_symbols",
-        "xmjd6.input.xmjd6_punctuation",
-        "xmjd6.input.xmjd6_topup",
+        "eosphoros.input.eosphoros_key_event",
+        "eosphoros.input.eosphoros_processor_state",
+        "eosphoros.input.eosphoros_commit_guard",
+        "eosphoros.input.eosphoros_ascii_input",
+        "eosphoros.input.eosphoros_direct_symbols",
+        "eosphoros.input.eosphoros_punctuation",
+        "eosphoros.input.eosphoros_topup",
     }
     for _, name in ipairs(modules) do
         if type(require(name)) ~= "table" then
             error(name .. " did not return a module table")
         end
     end
-    local processor = require("xmjd6.xmjd6_processor")
+    local processor = require("eosphoros.eosphoros_processor")
     assert_equal(type(processor.init), "function", "processor init")
     assert_equal(type(processor.func), "function", "processor func")
     assert_equal(type(processor.fini), "function", "processor fini")
 end)
 
 test("Rime-Ice emoji overlay is available through the lazy Lua provider", function()
-    unload("xmjd6.xmjd6_opencc_data")
-    local data = require("xmjd6.xmjd6_opencc_data")
-    data.set_context("", "xmjd6")
-    local provider = data.create_provider("xmjd6_emoji_extra", "raw")
+    unload("eosphoros.eosphoros_opencc_data")
+    local data = require("eosphoros.eosphoros_opencc_data")
+    data.set_context("", "eosphoros")
+    local provider = data.create_provider("eosphoros_emoji_extra", "raw")
     assert_equal(provider:fetch("嗅"), "嗅 👃", "extra emoji char")
     assert_equal(provider:fetch("熬夜"), "熬夜 🫩", "extra emoji phrase")
     assert_equal(provider:fetch("指纹"), "指纹 🫆", "extra emoji alias")
@@ -223,11 +223,11 @@ test("Rime-Ice emoji overlay is available through the lazy Lua provider", functi
 end)
 
 test("new Rime-Ice emoji is appended to the actual candidate stream", function()
-    unload("xmjd6.xmjd6_opencc_filter")
-    unload("xmjd6.xmjd6_opencc_data")
-    local data = require("xmjd6.xmjd6_opencc_data")
-    local filter = require("xmjd6.xmjd6_opencc_filter")
-    data.set_context("", "xmjd6")
+    unload("eosphoros.eosphoros_opencc_filter")
+    unload("eosphoros.eosphoros_opencc_data")
+    local data = require("eosphoros.eosphoros_opencc_data")
+    local filter = require("eosphoros.eosphoros_opencc_filter")
+    data.set_context("", "eosphoros")
 
     local segment = {
         tag = "abc",
@@ -256,8 +256,8 @@ test("new Rime-Ice emoji is appended to the actual candidate stream", function()
         split_pattern = "([^|]+)",
         comment_format = "〔%s〕",
         rules = {
-            emoji_rule("xmjd6_emoji"),
-            emoji_rule("xmjd6_emoji_extra"),
+            emoji_rule("eosphoros_emoji"),
+            emoji_rule("eosphoros_emoji_extra"),
         },
         _reverse_tags = { "reverse_lookup" },
         _reverse_prefixes = {},
@@ -289,7 +289,7 @@ test("new Rime-Ice emoji is appended to the actual candidate stream", function()
 end)
 
 test("ZZC operation chain recursively fills a deleted short-code gap", function()
-    local chain = require("xmjd6.zzc.xmjd6_zzc_chain")
+    local chain = require("eosphoros.zzc.eosphoros_zzc_chain")
     local dictionary = {
         abcd = { "原四码词" },
         abcda = { "候补五码词" },
@@ -310,8 +310,8 @@ test("ZZC operation chain recursively fills a deleted short-code gap", function(
 end)
 
 test("calculator equal key ignores auto-repeat until key release", function()
-    unload("xmjd6.input.xmjd6_punctuation")
-    local punctuation = require("xmjd6.input.xmjd6_punctuation")
+    unload("eosphoros.input.eosphoros_punctuation")
+    local punctuation = require("eosphoros.input.eosphoros_punctuation")
     local context = {
         input = "=",
         push_input = function(self, text) self.input = self.input .. text end,

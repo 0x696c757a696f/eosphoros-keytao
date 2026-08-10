@@ -12,7 +12,7 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.xmjd6_codes import (
+from tools.eosphoros_codes import (
     code_candidates,
     choose_code,
     load_character_code_options,
@@ -21,8 +21,8 @@ from tools.xmjd6_codes import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DICT_DIR = ROOT / "dicts" / "xmjd6"
-TARGET_NAME = "xmjd6.catholicism.dict.yaml"
+DICT_DIR = ROOT / "dicts" / "eosphoros"
+TARGET_NAME = "eosphoros.catholicism.dict.yaml"
 MANIFEST_NAME = "tools/catholicism_expansion_2026.txt"
 START_MARKER = "# 2026-08-04 天主教词汇扩建 ==============================================="
 END_MARKER = "# ============================ 天主教词汇扩建结束 ============================"
@@ -163,15 +163,15 @@ def build_entries(root: Path = ROOT) -> BuildResult:
     # codes here would make the curated output unstable on every upstream sync.
     dictionary_paths = [
         path
-        for path in sorted((root / "dicts" / "xmjd6").glob("*.dict.yaml"))
-        if path.name != "xmjd6.ice.dict.yaml" and ".wanxiang." not in path.name
+        for path in sorted((root / "dicts" / "eosphoros").glob("*.dict.yaml"))
+        if path.name != "eosphoros.ice.dict.yaml" and ".wanxiang." not in path.name
     ]
-    target = root / "dicts" / "xmjd6" / TARGET_NAME
+    target = root / "dicts" / "eosphoros" / TARGET_NAME
     manifest_rows = load_manifest(root / MANIFEST_NAME)
-    code_options = load_character_code_options(root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml")
+    code_options = load_character_code_options(root / "dicts" / "eosphoros" / "eosphoros.danzi.dict.yaml")
     validate_phonetic_selections(manifest_rows, code_options)
     character_codes = load_character_codes(
-        root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml", PREFERRED_PHONETIC_PREFIXES
+        root / "dicts" / "eosphoros" / "eosphoros.danzi.dict.yaml", PREFERRED_PHONETIC_PREFIXES
     )
 
     occupied: dict[str, set[str]] = defaultdict(set)
@@ -244,7 +244,7 @@ def render_section(entries: tuple[Entry, ...]) -> str:
 
 
 def expected_dictionary_text(root: Path = ROOT) -> tuple[str, BuildResult]:
-    target = root / "dicts" / "xmjd6" / TARGET_NAME
+    target = root / "dicts" / "eosphoros" / TARGET_NAME
     base = strip_expansion_section(target.read_text(encoding="utf-8-sig")).rstrip()
     result = build_entries(root)
     return base + "\n\n" + render_section(result.entries), result
@@ -261,7 +261,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     expected, result = expected_dictionary_text(ROOT)
-    target = ROOT / "dicts" / "xmjd6" / TARGET_NAME
+    target = ROOT / "dicts" / "eosphoros" / TARGET_NAME
     if result.collisions:
         print(f"Refusing to write {len(result.collisions)} colliding entries.", file=sys.stderr)
         return 1

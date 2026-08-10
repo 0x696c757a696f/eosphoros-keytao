@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fcitx5 macOS entry point for the shared xmjd6 ZZZC rollback core."""
+"""Fcitx5 macOS entry point for the shared eosphoros ZZZC rollback core."""
 
 from __future__ import annotations
 
@@ -8,4 +8,4 @@ from pathlib import Path
 
 
 if __name__ == "__main__":
-    runpy.run_path(str(Path(__file__).with_name("xmjd6_撤回合并.py")), run_name="__main__")
+    runpy.run_path(str(Path(__file__).with_name("eosphoros_撤回合并.py")), run_name="__main__")

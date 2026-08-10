@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safely adapt reviewed rime-txjx changes onto the local xmjd6 namespace."""
+"""Safely adapt reviewed rime-txjx changes onto the local eosphoros namespace."""
 
 from __future__ import annotations
 
@@ -29,16 +29,16 @@ class MergeResult:
 
 
 def adapt_lua_text(text: str) -> str:
-    """Translate upstream Lua identifiers without changing xmjd6 behavior."""
+    """Translate upstream Lua identifiers without changing eosphoros behavior."""
     adapted = adapt_project_text(text)
     adapted = re.sub(
-        r'require\((["\'])common\.', r'require(\1xmjd6.common.', adapted
+        r'require\((["\'])common\.', r'require(\1eosphoros.common.', adapted
     )
     adapted = re.sub(
-        r'require\((["\'])input\.', r'require(\1xmjd6.input.', adapted
+        r'require\((["\'])input\.', r'require(\1eosphoros.input.', adapted
     )
     adapted = re.sub(
-        r'require\((["\'])zzc\.', r'require(\1xmjd6.zzc.', adapted
+        r'require\((["\'])zzc\.', r'require(\1eosphoros.zzc.', adapted
     )
     for module in (
         "typing_stats",
@@ -46,11 +46,11 @@ def adapt_lua_text(text: str) -> str:
         "typing_stats_translator",
     ):
         adapted = adapted.replace(
-            f'require("xmjd6_{module}")', f'require("xmjd6.{module}")'
-        ).replace(f"require('xmjd6_{module}')", f"require('xmjd6.{module}')")
+            f'require("eosphoros_{module}")', f'require("eosphoros.{module}")'
+        ).replace(f"require('eosphoros_{module}')", f"require('eosphoros.{module}')")
     adapted = re.sub(
-        r'require\((["\'])xmjd6_(?!typing_stats)',
-        r'require(\1xmjd6.xmjd6_',
+        r'require\((["\'])eosphoros_(?!typing_stats)',
+        r'require(\1eosphoros.eosphoros_',
         adapted,
     )
     return adapted
@@ -60,9 +60,9 @@ def adapt_project_text(text: str) -> str:
     """Translate upstream project names in non-Lua source files."""
     attribution_marker = "__UPSTREAM_PROJECT_ATTRIBUTION__"
     adapted = text.replace("rime-txjx", attribution_marker)
-    adapted = adapted.replace("天行键", "星猫键道")
-    adapted = adapted.replace("TXJX", "xmjd6").replace("Txjx", "xmjd6")
-    return adapted.replace("txjx", "xmjd6").replace(
+    adapted = adapted.replace("天行键", "晨星键道")
+    adapted = adapted.replace("TXJX", "eosphoros").replace("Txjx", "eosphoros")
+    return adapted.replace("txjx", "eosphoros").replace(
         attribution_marker, "rime-txjx"
     )
 
@@ -75,7 +75,7 @@ def has_upstream_namespace_residue(text: str) -> bool:
 
 def merge_adapted_text(local: str, base: str, upstream: str) -> MergeResult:
     """Three-way merge adapted text, reporting overlap instead of overwriting it."""
-    with tempfile.TemporaryDirectory(prefix="xmjd6-txjx-merge-") as temp_dir:
+    with tempfile.TemporaryDirectory(prefix="eosphoros-txjx-merge-") as temp_dir:
         root = Path(temp_dir)
         local_path = root / "local"
         base_path = root / "base"

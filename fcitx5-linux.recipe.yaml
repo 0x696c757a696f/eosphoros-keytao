@@ -3,30 +3,30 @@
 recipe:
   Rx: fcitx5-linux
   description: >-
-    为 Linux Fcitx5 Rime 安装或更新星猫键道6核心；Fcitx5 主题需另行安装。
+    为 Linux Fcitx5 Rime 安装或更新晨星键道核心；Fcitx5 主题需另行安装。
 install_files: >-
   default.yaml
   liangfen*.yaml
   pinyin_simp*.yaml
-  xmjd6.*.dict.yaml
-  dicts/xmjd6/*.dict.yaml
-  xmjd6.*.schema.yaml
-  xmjd6.schema.yaml
-  xmjd6.symbols.yaml
-  xmjd6.custom.yaml
-  lua/xmjd6/*.lua
-  lua/xmjd6/*/*.lua
-  opencc/xmjd6/*.lua
+  eosphoros.*.dict.yaml
+  dicts/eosphoros/*.dict.yaml
+  eosphoros.*.schema.yaml
+  eosphoros.schema.yaml
+  eosphoros.symbols.yaml
+  eosphoros.custom.yaml
+  lua/eosphoros/*.lua
+  lua/eosphoros/*/*.lua
+  opencc/eosphoros/*.lua
   zzc_state/char_parts.tsv
   zzc/README.md
   zzc/自造词使用教程.md
   zzc/自造词使用教程.png
-  zzc/xmjd6_词库合并.py
-  zzc/xmjd6_撤回合并.py
+  zzc/eosphoros_词库合并.py
+  zzc/eosphoros_撤回合并.py
   zzc/Fcitx5_Linux_词库合并.py
   zzc/Fcitx5_Linux_撤回合并.py
 patch_files:
   default.custom.yaml:
     - patch/+:
         schema_list/+/+:
-          - schema: xmjd6
+          - schema: eosphoros

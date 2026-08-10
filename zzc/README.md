@@ -1,4 +1,4 @@
-# xmjd6 自造词（ZZZC）脚本说明
+# eosphoros 自造词（ZZZC）脚本说明
 
 ## 平台入口
 
@@ -7,24 +7,24 @@
 - Windows 免 Python 入口：双击现有 `Win_词库合并.exe` / `Win_撤回合并.exe`
 - macOS 合并：运行 `Mac_词库合并`
 - macOS 撤回合并：运行 `Mac_撤回合并`
-- 通用 Python 合并：运行 `python3 zzc/xmjd6_词库合并.py`
-- 通用 Python 撤回：运行 `python3 zzc/xmjd6_撤回合并.py`
+- 通用 Python 合并：运行 `python3 zzc/eosphoros_词库合并.py`
+- 通用 Python 撤回：运行 `python3 zzc/eosphoros_撤回合并.py`
 - Fcitx5 Linux：运行 `python3 zzc/Fcitx5_Linux_词库合并.py`；撤回时运行同目录的 `Fcitx5_Linux_撤回合并.py`
 - Fcitx5 macOS：运行 `python3 zzc/Fcitx5_macOS_词库合并.py`；撤回时运行同目录的 `Fcitx5_macOS_撤回合并.py`
 - iOS 合并：免费方案用 a-Shell 运行 `iOS_词库合并.py`，Pythonista 也可运行同一脚本
 
-Windows 与 Fcitx5 Python 入口都是薄包装，共用平台中性的 `xmjd6_*` 可审查核心；两个 Windows `.exe` 也直接从相同核心构建，不使用另一套算法或不透明的上游二进制。macOS 传统入口继续保留无扩展脚本，Fcitx5 macOS 另有文件名明确的 `.py` 入口。Release 和东风破配方只组合“公共核心 + 当前平台入口”，不会夹带其他操作系统的脚本。
+Windows 与 Fcitx5 Python 入口都是薄包装，共用平台中性的 `eosphoros_*` 可审查核心；两个 Windows `.exe` 也直接从相同核心构建，不使用另一套算法或不透明的上游二进制。macOS 传统入口继续保留无扩展脚本，Fcitx5 macOS 另有文件名明确的 `.py` 入口。Release 和东风破配方只组合“公共核心 + 当前平台入口”，不会夹带其他操作系统的脚本。
 
 旧的 `apply_zzc.py`、`gen_char_parts.py`、`.cmd`、`.bat` 入口已经废弃，不要恢复。
 
-合并入口可以放在方案根目录，也可以放在 `zzc/` 目录。脚本会自动检查脚本所在目录和上级目录里的 `*.zzc.dict.yaml`。Python 合并入口还支持 `xmjd6_zzc_root` / `xmjd6_zzc_state_dir` 环境变量，供自动化或 iOS 包装脚本明确指定最终词库目录和 `zzc_state` 目录。
+合并入口可以放在方案根目录，也可以放在 `zzc/` 目录。脚本会自动检查脚本所在目录和上级目录里的 `*.zzc.dict.yaml`。Python 合并入口还支持 `eosphoros_zzc_root` / `eosphoros_zzc_state_dir` 环境变量，供自动化或 iOS 包装脚本明确指定最终词库目录和 `zzc_state` 目录。
 
 iOS 入口只负责路径配置和调用同一套合并核心，不另写合并算法。免费方案见 [`a-Shell快捷指令合并说明.md`](a-Shell快捷指令合并说明.md)，Pythonista 方案见 [`iOS快捷指令合并说明.md`](iOS快捷指令合并说明.md)。选择 `RimeUserData` 父目录时，脚本会向下查找一级；只有一个含 `*.zzc.dict.yaml` 的方案目录时自动使用它，多个方案时要求直接选择具体目录。`zzc_state` 默认跟随最终方案目录，避免正式词库和 reset/runtime 状态落在不同位置。
 
-合并脚本只接受 `dicts/xmjd6/xmjd6.zzc.dict.yaml` 及其带编号副本，并且只写入：
+合并脚本只接受 `dicts/eosphoros/eosphoros.zzc.dict.yaml` 及其带编号副本，并且只写入：
 
-- `dicts/xmjd6/xmjd6.cizu.dict.yaml`
-- `dicts/xmjd6/xmjd6.fjcy.dict.yaml`
+- `dicts/eosphoros/eosphoros.cizu.dict.yaml`
+- `dicts/eosphoros/eosphoros.fjcy.dict.yaml`
 
 发现其他方案的 ZZZC 文件或不受支持的前缀时会拒绝处理，避免把操作误合并到错误词库。
 
@@ -40,7 +40,7 @@ Linux/macOS 合并脚本按 Python 3.7+ 兼容写法维护，避免依赖 Python
 pixi exec --spec "python=3.14.6" --spec "pyinstaller=6.21.0" python tools/build_zzc_windows_exe.py
 ```
 
-生成器会直接冻结平台中性的 `xmjd6_词库合并.py` 和 `xmjd6_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.09` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
+生成器会直接冻结平台中性的 `eosphoros_词库合并.py` 和 `eosphoros_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.09` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
 
 不安装 PyInstaller也可以检查已提交 EXE 是否匹配当前源码：
 
@@ -54,7 +54,7 @@ python tools/build_zzc_windows_exe.py --check
 
 关键运行状态：
 
-- `../dicts/xmjd6/xmjd6.zzc.dict.yaml`：部署可读的持久层，不再是运行时唯一真源。
+- `../dicts/eosphoros/eosphoros.zzc.dict.yaml`：部署可读的持久层，不再是运行时唯一真源。
 - `../zzc_state/runtime_ops.tsv`：实时运行时操作记录；每次自造词、替换、删除、置顶、前移、append、restore 都先写这里。
 - `../zzc_state/effective_state.tsv`：运行时实际生效快照，普通显示、自造词 collect、删除、置顶、前移、append、restore、completion 都读这里。
 - `../zzc_state/runtime_exact.tsv`：兼容缓存占位，不是当前主要显示来源。
@@ -89,7 +89,7 @@ session 创建时不再作为主要写入点，只做上述补偿清理。运行
 5. 备份正式码表和 zzc 状态文件到 `zzc/撤回合并/`。
 6. 清理待合并操作文件和运行时缓存。
 
-每次运行合并脚本都会清理旧撤回备份，只保留最近 3 份；即使本次没有待合并操作，也会执行这项清理。浏览器或同步工具在 `dicts/xmjd6/` 产生的 `xmjd6.zzc.dict(1).yaml` 这类带编号副本也会按顺序合并、备份并删除；名称不符合编号格式的副本不会误处理。
+每次运行合并脚本都会清理旧撤回备份，只保留最近 3 份；即使本次没有待合并操作，也会执行这项清理。浏览器或同步工具在 `dicts/eosphoros/` 产生的 `eosphoros.zzc.dict(1).yaml` 这类带编号副本也会按顺序合并、备份并删除；名称不符合编号格式的副本不会误处理。
 
 `+r` / `restore` 行不会无条件重复写入正式码表；只有待处理操作链里存在对应运行时新增事实时，才会作为需要恢复的自造词写回。
 
@@ -137,8 +137,8 @@ session 创建时不再作为主要写入点，只做上述补偿清理。运行
 - `Fcitx5_macOS_撤回合并.py`
 - `Mac_词库合并`
 - `Mac_撤回合并`
-- `xmjd6_词库合并.py`
-- `xmjd6_撤回合并.py`
+- `eosphoros_词库合并.py`
+- `eosphoros_撤回合并.py`
 - `../zzc_state/char_parts.tsv`
 - `../zzc_state/runtime_exact.tsv`
 - `../zzc_state/runtime_ops_appended.tsv`

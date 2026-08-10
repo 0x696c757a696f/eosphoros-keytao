@@ -42,56 +42,56 @@
     }
   },
   "generated": {
-    "dicts/xmjd6/xmjd6.danzi.dict.yaml": {
-      "sha256": "0ff4a436ae38d43f12f956b5897f4fe2f5e8f4103f4eefb72b4c4664ee5f1b41",
+    "dicts/eosphoros/eosphoros.danzi.dict.yaml": {
+      "sha256": "0d5eae1c6d7efed5e390994b13367844599d50410d480b348e63e459be11679f",
       "rows": 36214
     },
-    "dicts/xmjd6/xmjd6.ice.dict.yaml": {
-      "sha256": "00f01c78c41d6075794eafced5a66851995af7110d49d4f6b1445ea50163aba6",
+    "dicts/eosphoros/eosphoros.ice.dict.yaml": {
+      "sha256": "41c7716c74b5c0e2eea10c347e113aa77a7ca0590ed353a75c3c96303105fb01",
       "rows": 362826
     },
-    "dicts/xmjd6/xmjd6.en.dict.yaml": {
-      "sha256": "273d74574fc8c106a55282d716ba27ad459ee5e63990d76056c83815ca6a7c0d",
+    "dicts/eosphoros/eosphoros.en.dict.yaml": {
+      "sha256": "1ff8991dc337c3654daa4727768953fb5309e1c9d3f061d478cd81a9549db4dc",
       "rows": 23610
     },
-    "opencc/xmjd6/xmjd6_emoji_extra_chars.lua": {
-      "sha256": "8e02d58336c8988908d8fee3879cbdbcb582ab12d78f85e6ac31b8baa5ec69fc",
+    "opencc/eosphoros/eosphoros_emoji_extra_chars.lua": {
+      "sha256": "4efab947bf619ba40eeb175a05e95a54df4b2d6011fec439be31e115ea3d76ae",
       "rows": 34
     },
-    "opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua": {
-      "sha256": "bad1a22752ec5b0590732962537e1f0f9be476077f5bbcb5b6392db848ba0214",
+    "opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua": {
+      "sha256": "5a1b85d26e151c3b268f1aa8bc309bdd7f38e4d5caf9c280512a0ef245c15da2",
       "rows": 886
     },
-    "opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua": {
-      "sha256": "103e9bd13941c5609c4577b98dc69e5f4d52be650d88beba1cee291887a3a1bc",
+    "opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua": {
+      "sha256": "ecc13cbd479c1f0803c8ae7204cfc140bd4fb0055110e4335a2f5c31d2af5a8f",
       "rows": 2482
     },
-    "dicts/xmjd6/xmjd6.wanxiang.yaopin.dict.yaml": {
-      "sha256": "fc5afb39f330a304ac54144ae9c423f87fbda0471f0703bd39c058b0fd6a280f",
+    "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml": {
+      "sha256": "7ce4fa84e681816c198f8b986b9d7aa0bc9629f5bb0d0ffeb043e4b41a021bd5",
       "rows": 9368
     },
-    "dicts/xmjd6/xmjd6.wanxiang.yixue.dict.yaml": {
-      "sha256": "ae442755781efd5579068bb413575b19af9526e4a6d2d566696f0b66d86ca249",
+    "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml": {
+      "sha256": "8d05d5b533383b1e4b720b3b8cbd0628b16b15db8ba1e5396f302e1e18494656",
       "rows": 12441
     },
-    "dicts/xmjd6/xmjd6.wanxiang.huaxue.dict.yaml": {
-      "sha256": "7ce301ee33571a11a55391f40b3f97e239b2c8f81793b92684e20dba3955fdbb",
+    "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml": {
+      "sha256": "c44e69750136bdff0cb21e9ae6ddd1543ed5b770dbd17d325cc56730b439b3b3",
       "rows": 10894
     },
-    "dicts/xmjd6/xmjd6.wanxiang.diming.dict.yaml": {
-      "sha256": "b6a46af31b46d63aeeec37632333c999dfecc5579a00ff610a60bfb999741429",
+    "dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml": {
+      "sha256": "137442ce6283b576eebd7d7abff496de5c3febb50622ac30c26baa3ccd66f9bd",
       "rows": 5281
     },
-    "dicts/xmjd6/xmjd6.wanxiang.mingren.dict.yaml": {
-      "sha256": "7d88d277257ed5046d17c85f6d680f808d6a085adbd6455a368fbcb310eed685",
+    "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml": {
+      "sha256": "7ce42d864ec8b6cc05477d802a821b2a346995cd52f71faee7164ff545924109",
       "rows": 2239
     },
-    "dicts/xmjd6/xmjd6.wanxiang.taifeng.dict.yaml": {
-      "sha256": "b54fbc1aa12d16cfd591dc763bdbebd598810dea98bf1c60c104f9865c1418df",
+    "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml": {
+      "sha256": "26988f158402119a772c5b3a9f127a5d37b46c9008ac63df5f262126f4e79c26",
       "rows": 190
     },
-    "dicts/xmjd6/xmjd6.wanxiang.jichu.dict.yaml": {
-      "sha256": "9a1e0d6d346407fea5e3d87ab0900ef1dccab5624db77ede1928d5bf5f341a4a",
+    "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml": {
+      "sha256": "4c40a3ba24c6c998fbc86e22ff2dec361e237840d18a7a9cf35bc5a86d4cff8a",
       "rows": 151
     }
   },

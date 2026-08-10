@@ -23,7 +23,7 @@ class DictionaryQualityTests(unittest.TestCase):
         )
 
         cleaned, replacements, removals = quality.clean_text(
-            Path("xmjd6.cizu.dict.yaml"), source
+            Path("eosphoros.cizu.dict.yaml"), source
         )
 
         self.assertIn("淡啦\tdflsa\n碳蜡\ttflsv", cleaned)
@@ -41,9 +41,9 @@ class DictionaryQualityTests(unittest.TestCase):
         self.assertTrue(quality.is_rejected("肏鬼", "czg"))
 
     def test_danzi_is_outside_cleanup_scope(self) -> None:
-        self.assertNotIn("xmjd6.danzi.dict.yaml", quality.TARGET_NAMES)
-        self.assertNotIn("xmjd6.danzi.dict.yaml", quality.ROW_REPLACEMENTS)
-        self.assertNotIn("xmjd6.danzi.dict.yaml", quality.ROW_REMOVALS)
+        self.assertNotIn("eosphoros.danzi.dict.yaml", quality.TARGET_NAMES)
+        self.assertNotIn("eosphoros.danzi.dict.yaml", quality.ROW_REPLACEMENTS)
+        self.assertNotIn("eosphoros.danzi.dict.yaml", quality.ROW_REMOVALS)
 
     def test_repository_is_already_clean(self) -> None:
         remaining = [result.path.name for result in quality.process(ROOT) if result.changed]

@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: "3.14.6"
 
-      - name: Prepare conflict-safe xmjd6 adaptation
+      - name: Prepare conflict-safe eosphoros adaptation
         id: adapt
         shell: pwsh
         run: |
@@ -97,12 +97,12 @@ jobs:
             git fetch origin "+refs/heads/${Branch}:refs/remotes/origin/${Branch}"
           }
           git switch -c $Branch
-          git add -- lua/xmjd6 zzc THIRD_PARTY.md tools/upstream_code.lock.json tools/zzc_windows_executables.lock.json
+          git add -- lua/eosphoros zzc THIRD_PARTY.md tools/upstream_code.lock.json tools/zzc_windows_executables.lock.json
           git commit -m "chore: adapt rime-txjx upstream $Short"
           git push --force-with-lease origin "HEAD:refs/heads/$Branch"
           $Compare = "https://github.com/wzxmer/rime-txjx/compare/$($Report.base_commit)...$($Report.target_commit)"
           $Body = @"
-          Controlled three-way adaptation of rime-txjx into the xmjd6 namespace.
+          Controlled three-way adaptation of rime-txjx into the eosphoros namespace.
 
           - Upstream: ``$($Report.base_commit)`` → ``$($Report.target_commit)``
           - Adapted local files: ``$($Report.adapted_targets.Count)``
@@ -110,7 +110,7 @@ jobs:
           - Requires Release-only Windows EXE rebuild: ``$($Report.windows_exe_rebuild_required)``
           - [Review upstream commits]($Compare)
 
-          The adapter preserved local xmjd6 names and behavior through a three-way merge. Full repository CI must pass before this PR is merged.
+          The adapter preserved local eosphoros names and behavior through a three-way merge. Full repository CI must pass before this PR is merged.
           "@
           $Existing = gh pr list --base $env:BASE_BRANCH --head $Branch --state open --json url --jq '.[0].url'
           if ($Existing) {
@@ -141,7 +141,7 @@ jobs:
               '',
               ...details,
               '',
-              '请人工决定冲突行为或为新文件添加明确的 xmjd6 映射；不要直接复制 txjx 文件。',
+              '请人工决定冲突行为或为新文件添加明确的 eosphoros 映射；不要直接复制 txjx 文件。',
             ].join('\n');
             const open = await github.rest.issues.listForRepo({
               owner: context.repo.owner,

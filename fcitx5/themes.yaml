@@ -29,37 +29,37 @@ themes:
   - weasel
 - id: mac_light
   name: Mac浅色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: mac_dark
   name: Mac深色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: mac_green
   name: Mac绿
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: mac_orange
   name: Mac橙
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: mac_blue
   name: Mac浅蓝
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: win10
   name: win10
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
 - id: appsored
@@ -70,13 +70,13 @@ themes:
   - weasel
 - id: dracula
   name: dracula
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: dracula_light
   name: dracula_light
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
@@ -105,25 +105,25 @@ themes:
   - squirrel
 - id: milan
   name: 米兰
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: nord_dark
   name: 北方深色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: nord_light
   name: 北方浅色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: purity
   name: 纯洁
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
@@ -147,19 +147,19 @@ themes:
   - weasel
 - id: wechat_dark
   name: 微信键盘深色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: wechat_light
   name: 微信键盘浅色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: white
   name: 白色/white
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
@@ -189,13 +189,13 @@ themes:
   - weasel
 - id: win10_MDL_preset
   name: win10_MDL_preset
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: win10_preset
   name: win10_preset
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
@@ -207,7 +207,7 @@ themes:
   - weasel
 - id: win11_preset
   name: win11_preset
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
@@ -261,31 +261,31 @@ themes:
   - weasel
 - id: win10black
   name: Win10Black
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: win10blue
   name: Win10Blue
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: win10gray
   name: Win10Gray
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: win11dark
   name: Win11Dark
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
 - id: win11light
   name: Win11Light
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
@@ -303,7 +303,7 @@ themes:
   - weasel
 - id: native
   name: 系統配色
-  author: xmjd6 desktop theme collection
+  author: eosphoros desktop theme collection
   sources:
   - squirrel
 - id: aqua

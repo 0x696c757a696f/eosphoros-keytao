@@ -13,7 +13,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools.build_catholicism_expansion import PREFERRED_PHONETIC_PREFIXES
-from tools.xmjd6_codes import (
+from tools.eosphoros_codes import (
     code_candidates,
     choose_code,
     iter_dictionary_rows,
@@ -28,26 +28,26 @@ VERSION = "2026-08-10"
 TARGET_SPECS = (
     (
         "新教：",
-        "xmjd6.protestantism.dict.yaml",
-        "xmjd6.protestantism",
+        "eosphoros.protestantism.dict.yaml",
+        "eosphoros.protestantism",
         "新教专有词汇",
     ),
     (
         "东正教：",
-        "xmjd6.orthodoxy.dict.yaml",
-        "xmjd6.orthodoxy",
+        "eosphoros.orthodoxy.dict.yaml",
+        "eosphoros.orthodoxy",
         "东正教专有词汇",
     ),
     (
         "东方正统教会：",
-        "xmjd6.oriental.dict.yaml",
-        "xmjd6.oriental",
+        "eosphoros.oriental.dict.yaml",
+        "eosphoros.oriental",
         "东方正统教会专有词汇",
     ),
     (
         "东方亚述教会：",
-        "xmjd6.assyrian.dict.yaml",
-        "xmjd6.assyrian",
+        "eosphoros.assyrian.dict.yaml",
+        "eosphoros.assyrian",
         "东方亚述教会与东方教会专有词汇",
     ),
 )
@@ -167,20 +167,20 @@ def build_entries(root: Path = ROOT) -> BuildResult:
     generated_names = {spec[1] for spec in TARGET_SPECS}
     dictionary_paths = [
         path
-        for path in sorted((root / "dicts" / "xmjd6").glob("*.dict.yaml"))
+        for path in sorted((root / "dicts" / "eosphoros").glob("*.dict.yaml"))
         if path.name not in generated_names
     ]
-    generated_fallbacks = {"xmjd6.ice.dict.yaml"}
+    generated_fallbacks = {"eosphoros.ice.dict.yaml"}
     fixed_dictionary_paths = [
         path
         for path in dictionary_paths
         if path.name not in generated_fallbacks and ".wanxiang." not in path.name
     ]
     manifest_rows = load_manifest(root / MANIFEST_NAME)
-    code_options = load_character_code_options(root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml")
+    code_options = load_character_code_options(root / "dicts" / "eosphoros" / "eosphoros.danzi.dict.yaml")
     validate_phonetic_selections(manifest_rows, code_options)
     character_codes = load_character_codes(
-        root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
+        root / "dicts" / "eosphoros" / "eosphoros.danzi.dict.yaml", PREFERRED_PREFIXES
     )
 
     # Generated upstream supplements are rebuilt after local dictionaries and can move a lower-priority
@@ -264,7 +264,7 @@ def render_dictionary(
 def expected_dictionary_texts(root: Path = ROOT) -> tuple[dict[Path, str], BuildResult]:
     result = build_entries(root)
     texts = {
-        root / "dicts" / "xmjd6" / filename: render_dictionary(
+        root / "dicts" / "eosphoros" / filename: render_dictionary(
             result, category_prefix, dictionary_name, title
         )
         for category_prefix, filename, dictionary_name, title in TARGET_SPECS

@@ -3,26 +3,26 @@
 recipe:
   Rx: mobile
   description: >-
-    为 Android 与 iOS Rime 前端安装或更新星猫键道6，并带入仓/元书同步规则。
+    为 Android 与 iOS Rime 前端安装或更新晨星键道，并带入仓/元书同步规则。
 install_files: >-
   default.yaml
   liangfen*.yaml
   pinyin_simp*.yaml
-  xmjd6.*.dict.yaml
-  dicts/xmjd6/*.dict.yaml
-  xmjd6.*.schema.yaml
-  xmjd6.schema.yaml
-  xmjd6.symbols.yaml
-  xmjd6.custom.yaml
-  lua/xmjd6/*.lua
-  lua/xmjd6/*/*.lua
-  opencc/xmjd6/*.lua
+  eosphoros.*.dict.yaml
+  dicts/eosphoros/*.dict.yaml
+  eosphoros.*.schema.yaml
+  eosphoros.schema.yaml
+  eosphoros.symbols.yaml
+  eosphoros.custom.yaml
+  lua/eosphoros/*.lua
+  lua/eosphoros/*/*.lua
+  opencc/eosphoros/*.lua
   zzc_state/char_parts.tsv
   zzc/README.md
   zzc/自造词使用教程.md
   zzc/自造词使用教程.png
-  zzc/xmjd6_词库合并.py
-  zzc/xmjd6_撤回合并.py
+  zzc/eosphoros_词库合并.py
+  zzc/eosphoros_撤回合并.py
   zzc/iOS_词库合并.py
   zzc/iOS快捷指令合并说明.md
   zzc/a-Shell快捷指令合并说明.md
@@ -34,4 +34,4 @@ patch_files:
   default.custom.yaml:
     - patch/+:
         schema_list/+/+:
-          - schema: xmjd6
+          - schema: eosphoros

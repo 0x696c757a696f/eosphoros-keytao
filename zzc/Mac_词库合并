@@ -25,13 +25,13 @@ def find_one(base: Path, pattern: str) -> Path:
 
 
 def target_dict_name_options(prefix: str) -> list[list[str]]:
-    if prefix == "xmjd6":
-        return [["xmjd6.cizu.dict.yaml"], ["xmjd6.fjcy.dict.yaml"]]
-    raise ValueError(f"unsupported zzc schema (expected xmjd6): {prefix}")
+    if prefix == "eosphoros":
+        return [["eosphoros.cizu.dict.yaml"], ["eosphoros.fjcy.dict.yaml"]]
+    raise ValueError(f"unsupported zzc schema (expected eosphoros): {prefix}")
 
 
 def resolve_target_dicts(root: Path, prefix: str) -> list[Path]:
-    dictionary_root = root / "dicts" / "xmjd6"
+    dictionary_root = root / "dicts" / "eosphoros"
     out = []
     for options in target_dict_name_options(prefix):
         matched = None
@@ -87,18 +87,18 @@ def ops_family(
 
 
 def discover_layout() -> tuple[Path, Path, Path, tuple[Path, ...], str]:
-    root_override = os.environ.get("xmjd6_zzc_root")
+    root_override = os.environ.get("eosphoros_zzc_root")
     if root_override:
         start_dir = Path(root_override).expanduser().resolve()
         if not start_dir.exists():
             raise FileNotFoundError(f"missing scheme root: {start_dir}")
         search_dirs = [start_dir]
-        ops_search_dirs = [start_dir, start_dir / "dicts" / "xmjd6", start_dir / "zzc"]
+        ops_search_dirs = [start_dir, start_dir / "dicts" / "eosphoros", start_dir / "zzc"]
     else:
         script_path = Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve()
         start_dir = script_path.parent
         search_dirs = [start_dir, start_dir.parent]
-        ops_search_dirs = search_dirs + [base / "dicts" / "xmjd6" for base in search_dirs]
+        ops_search_dirs = search_dirs + [base / "dicts" / "eosphoros" for base in search_dirs]
     op_candidates = discover_ops_files(ops_search_dirs)
     if not op_candidates:
         raise FileNotFoundError(
@@ -120,8 +120,8 @@ def discover_layout() -> tuple[Path, Path, Path, tuple[Path, ...], str]:
 
 ROOT, ZZC_DIR, OPS, OPS_SOURCES, SCHEMA = discover_layout()
 STATE_DIR = (
-    Path(os.environ["xmjd6_zzc_state_dir"]).expanduser().resolve()
-    if os.environ.get("xmjd6_zzc_state_dir")
+    Path(os.environ["eosphoros_zzc_state_dir"]).expanduser().resolve()
+    if os.environ.get("eosphoros_zzc_state_dir")
     else ROOT / "zzc_state"
 )
 ROLLBACK_DIR = ZZC_DIR / "撤回合并"
@@ -132,7 +132,7 @@ CHAR_PARTS = STATE_DIR / "char_parts.tsv"
 CACHE_VERSION = STATE_DIR / "cache_version.tsv"
 RESET_MARKER = STATE_DIR / "zzc_reset.tsv"
 RESET_SEEN = STATE_DIR / "zzc_reset_seen.tsv"
-CHAR_DICT = ROOT / "dicts" / "xmjd6" / f"{SCHEMA}.danzi.dict.yaml"
+CHAR_DICT = ROOT / "dicts" / "eosphoros" / f"{SCHEMA}.danzi.dict.yaml"
 LEGACY_ROOT_OPS = ROOT / f"{SCHEMA}.zzc.ops.tsv"
 LEGACY_OPS = ZZC_DIR / "ops.tsv"
 LEGACY_PENDING = ZZC_DIR / "pending.tsv"

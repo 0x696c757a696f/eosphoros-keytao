@@ -4,7 +4,7 @@ The generated dictionaries below retain their upstream provenance. Exact source
 commits and generated-file checksums are recorded in
 `tools/upstream_dictionaries.lock.json`.
 
-## `dicts/xmjd6/xmjd6.protestantism.dict.yaml` Bible terminology
+## `dicts/eosphoros/eosphoros.protestantism.dict.yaml` Bible terminology
 
 - Reference text: 1919 Chinese Union Version (`ChiUns`)
 - Source information: <https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=ChiUns>
@@ -16,7 +16,7 @@ theological and Bible dictionaries whose redistribution terms are unclear are
 manual verification sources only. The complete review policy and links are in
 `tools/christian_traditions_sources.md`.
 
-## `dicts/xmjd6/xmjd6.danzi.dict.yaml`
+## `dicts/eosphoros/eosphoros.danzi.dict.yaml`
 
 - Upstream: <https://github.com/amorphobia/rime-jiandao>
 - Source: `dicts/01.danzi.txt`
@@ -25,10 +25,10 @@ manual verification sources only. The complete review policy and links are in
 - License copy: `licenses/rime-jiandao-AGPL-3.0.txt`
 
 The local synchronization tool reproduces the relevant `make_dicts.sh`
-behavior for this repository: it writes an xmjd6-specific Rime header and then
+behavior for this repository: it writes an eosphoros-specific Rime header and then
 appends the upstream single-character rows unchanged.
 
-## `dicts/xmjd6/xmjd6.ice.dict.yaml`
+## `dicts/eosphoros/eosphoros.ice.dict.yaml`
 
 - Upstream: <https://github.com/iDvel/rime-ice>
 - Sources: `cn_dicts/base.dict.yaml`, `cn_dicts/ext.dict.yaml`, and
@@ -46,7 +46,7 @@ lower-priority homophones receive successive stroke suffixes. Remaining exact
 full-code collisions are pruned against the existing local collision-rate
 baseline, with no more than eight new combined candidates per code.
 
-## `dicts/xmjd6/xmjd6.en.dict.yaml`
+## `dicts/eosphoros/eosphoros.en.dict.yaml`
 
 - Upstream: <https://github.com/iDvel/rime-ice>
 - Sources: `en_dicts/en.dict.yaml` and `en_dicts/en_ext.dict.yaml`
@@ -55,11 +55,11 @@ baseline, with no more than eight new combined candidates per code.
 
 The two English sources are merged in main-then-extension order. Codes are
 normalized to reachable lowercase letter sequences and prefixed with `i` before
-the generated dictionary is imported into the main xmjd6 table. This removes
+the generated dictionary is imported into the main eosphoros table. This removes
 the need for a separate auxiliary English schema while keeping English entries
 isolated from JianDao 6 codes.
 
-## `dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml`
+## `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml`
 
 - Upstream: <https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts>
 - Sources: `yaopin`, `yixue`, `huaxue`, `diming`, `mingren`, `taifeng`, and
@@ -77,7 +77,7 @@ introduce new different-text/same-code collisions. Exact source commit,
 generated checksum, filter statistics, and modification date are retained in
 `tools/upstream_dictionaries.lock.json` and the generated dictionary header.
 
-## `opencc/xmjd6/xmjd6_emoji_extra_*`
+## `opencc/eosphoros/eosphoros_emoji_extra_*`
 
 - Upstream: <https://github.com/iDvel/rime-ice>
 - Source: `opencc/emoji.txt`
@@ -86,7 +86,7 @@ generated checksum, filter statistics, and modification date are retained in
 
 The synchronization tool excludes keys already present in the adapted TXJX
 Emoji tables, then emits the remaining Rime-Ice mappings as an
-xmjd6-namespaced Lua overlay. Single-character entries, a first-character
+eosphoros-namespaced Lua overlay. Single-character entries, a first-character
 phrase index, and the phrase shard are generated separately so the existing
 lazy OpenCC provider can load the data without replacing the original
 mappings. No locally invented Emoji combinations are added.
@@ -103,8 +103,8 @@ mappings. No locally invented Emoji combinations are added.
 - Integration lock: `tools/upstream_code.lock.json`
 
 The implementation is adapted rather than copied as a whole: module names are
-kept below `lua/xmjd6/`, state keys use the xmjd6 namespace, OpenCC assets stay
-below `opencc/xmjd6/`, and the main processor preserves this repository's `i`
+kept below `lua/eosphoros/`, state keys use the eosphoros namespace, OpenCC assets stay
+below `opencc/eosphoros/`, and the main processor preserves this repository's `i`
 English prefix and JianDao 6 top-up behavior. TXJX dictionaries, schema files,
 root-level OpenCC data, opaque platform binaries, and project-specific release
 configuration are intentionally not imported.

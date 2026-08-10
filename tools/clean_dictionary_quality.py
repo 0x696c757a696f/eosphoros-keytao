@@ -12,19 +12,19 @@ from pathlib import Path
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.xmjd6_codes import load_character_code_options
+from tools.eosphoros_codes import load_character_code_options
 
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET_NAMES = (
-    "xmjd6.cizu.dict.yaml",
-    "xmjd6.fjcy.dict.yaml",
-    "xmjd6.ice.dict.yaml",
+    "eosphoros.cizu.dict.yaml",
+    "eosphoros.fjcy.dict.yaml",
+    "eosphoros.ice.dict.yaml",
     "pinyin_simp.dict.yaml",
 )
 
 ROW_REPLACEMENTS = {
-    "xmjd6.cizu.dict.yaml": {
+    "eosphoros.cizu.dict.yaml": {
         "不成其为\tbjqwvvv": "不成其为\tbjqwvv",
         "布甲鞋\tbjxvviv": "布甲鞋\tbjxviv",
         "钡盐\tbwyfivv": "钡盐\tbwyfiv",
@@ -43,7 +43,7 @@ ROW_REPLACEMENTS = {
         "脾胃虚弱\tbwxr": "脾胃虚弱\tpwxr",
         "不用挣扎\tbyffv": "不用挣扎\tbyqfv",
     },
-    "xmjd6.fjcy.dict.yaml": {
+    "eosphoros.fjcy.dict.yaml": {
         "基莲\tjklmvii": "基莲\tjklmvi",
     },
     "pinyin_simp.dict.yaml": {
@@ -53,7 +53,7 @@ ROW_REPLACEMENTS = {
 }
 
 ROW_REMOVALS = {
-    "xmjd6.cizu.dict.yaml": {
+    "eosphoros.cizu.dict.yaml": {
         "不必这样\tbbfq",
         "练但三等分\tlmdx",
     },
@@ -128,7 +128,7 @@ def valid_word_codes(word: str, options: dict[str, tuple[str, ...]]) -> set[str]
 
 
 def validate_replacements(root: Path = ROOT) -> None:
-    options = load_character_code_options(root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml")
+    options = load_character_code_options(root / "dicts" / "eosphoros" / "eosphoros.danzi.dict.yaml")
     errors: list[str] = []
     for filename, replacements in ROW_REPLACEMENTS.items():
         for old_row, new_rows in replacements.items():
@@ -199,7 +199,7 @@ def clean_text(path: Path, source: str) -> tuple[str, int, int]:
 def process(root: Path = ROOT, write: bool = False) -> list[Result]:
     results: list[Result] = []
     for name in TARGET_NAMES:
-        path = root / "dicts" / "xmjd6" / name
+        path = root / "dicts" / "eosphoros" / name
         source = path.read_text(encoding="utf-8")
         cleaned, replacements, removals = clean_text(path, source)
         changed = cleaned != source
@@ -230,7 +230,7 @@ def main() -> int:
     validate_replacements()
     if args.list_rejections:
         for name in TARGET_NAMES:
-            path = ROOT / "dicts" / "xmjd6" / name
+            path = ROOT / "dicts" / "eosphoros" / name
             for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                 fields = line.split("\t")
                 if len(fields) >= 2 and is_rejected(fields[0], fields[1]):

@@ -17,7 +17,7 @@ import yaml
 
 
 def dict_path(root: Path, name: str) -> Path:
-    path = root / "dicts" / "xmjd6" / name
+    path = root / "dicts" / "eosphoros" / name
     path.parent.mkdir(parents=True, exist_ok=True)
     return path
 
@@ -29,7 +29,7 @@ class FetchOpenCCTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             archive = root / "opencc.zip"
-            destination = root / "opencc" / "xmjd6"
+            destination = root / "opencc" / "eosphoros"
             destination.mkdir(parents=True)
             (destination / "local.lua").write_text("return {}\n", encoding="utf-8")
             with zipfile.ZipFile(archive, "w") as bundle:
@@ -55,10 +55,33 @@ class FetchOpenCCTests(unittest.TestCase):
                 bundle.writestr("opencc/../../escaped.json", "{}")
 
             with self.assertRaises(ValueError):
-                extract_opencc_archive(archive, root / "opencc" / "xmjd6")
+                extract_opencc_archive(archive, root / "opencc" / "eosphoros")
 
 
 class RepositoryValidationTests(unittest.TestCase):
+    def test_current_project_uses_eosphoros_names_without_legacy_paths(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        main_schema_path = root / "eosphoros.schema.yaml"
+        self.assertTrue(main_schema_path.is_file())
+        main_schema = main_schema_path.read_text(encoding="utf-8")
+        self.assertIn("schema_id: eosphoros", main_schema)
+        self.assertIn("name: 晨星键道", main_schema)
+        for relative in (
+            "dicts/eosphoros",
+            "lua/eosphoros",
+            "opencc/eosphoros",
+        ):
+            self.assertTrue((root / relative).is_dir(), relative)
+
+        legacy_paths = []
+        for path in root.rglob("*"):
+            relative = path.relative_to(root)
+            if relative.parts and relative.parts[0] in {".git", "build"}:
+                continue
+            if ("xm" + "jd6") in path.name.lower():
+                legacy_paths.append(relative.as_posix())
+        self.assertEqual(legacy_paths, [])
+
     def test_fcitx5_theme_collections_match_desktop_sources(self) -> None:
         root = Path(__file__).resolve().parents[1]
         result = subprocess.run(
@@ -82,14 +105,14 @@ class RepositoryValidationTests(unittest.TestCase):
         linux_root = root / "fcitx5" / "linux" / "themes"
         macos_root = root / "fcitx5" / "macos" / "themes"
         self.assertEqual(
-            {path.name.removeprefix("xmjd6-") for path in linux_root.iterdir()},
+            {path.name.removeprefix("eosphoros-") for path in linux_root.iterdir()},
             theme_ids,
         )
         self.assertEqual(
             {
-                path.stem.removeprefix("xmjd6-")
-                for path in macos_root.glob("xmjd6-*.conf")
-                if path.stem != "xmjd6-auto"
+                path.stem.removeprefix("eosphoros-")
+                for path in macos_root.glob("eosphoros-*.conf")
+                if path.stem != "eosphoros-auto"
             },
             theme_ids,
         )
@@ -106,7 +129,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
         auto_theme = configparser.ConfigParser(interpolation=None)
         auto_theme.optionxform = str
-        auto_theme.read(macos_root / "xmjd6-auto.conf", encoding="utf-8")
+        auto_theme.read(macos_root / "eosphoros-auto.conf", encoding="utf-8")
         self.assertEqual(auto_theme["LightMode"]["OverrideDefault"], "True")
         self.assertEqual(auto_theme["DarkMode"]["OverrideDefault"], "True")
         self.assertEqual(auto_theme["DarkMode"]["SameWithLightMode"], "False")
@@ -154,7 +177,7 @@ class RepositoryValidationTests(unittest.TestCase):
             encoding="utf-8"
         )
         for platform in ("linux", "macos"):
-            artifact = f"fcitx5-{platform}-xmjd6-themes"
+            artifact = f"fcitx5-{platform}-eosphoros-themes"
             self.assertIn(f"{artifact}.zip", release_workflow)
             self.assertIn(f"name: {artifact}", package_workflow)
 
@@ -170,12 +193,12 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("python tools/build_platform_packages.py", release)
         self.assertIn("python tools/build_platform_packages.py --check", package)
         for archive in (
-            "xmjd6.zip",
-            "xmjd6-weasel.zip",
-            "xmjd6-squirrel.zip",
-            "xmjd6-fcitx5-macos.zip",
-            "xmjd6-fcitx5-linux.zip",
-            "xmjd6-mobile.zip",
+            "eosphoros.zip",
+            "eosphoros-weasel.zip",
+            "eosphoros-squirrel.zip",
+            "eosphoros-fcitx5-macos.zip",
+            "eosphoros-fcitx5-linux.zip",
+            "eosphoros-mobile.zip",
         ):
             self.assertIn(f"asset_path: ./{archive}", release)
             self.assertIn(f"asset_name: {archive}", release)
@@ -187,17 +210,17 @@ class RepositoryValidationTests(unittest.TestCase):
         )
         readme = (root / "README.md").read_text(encoding="utf-8")
 
-        self.assertIn("zip -r ../yong-xmjd6.zip yong", release)
-        self.assertNotIn("zip -r yong-xmjd6.zip .yong", release)
-        self.assertNotIn("yong-xmjd6-full.zip", release)
-        self.assertNotIn("yong-xmjd6-full.zip", readme)
+        self.assertIn("zip -r ../yong-eosphoros.zip yong", release)
+        self.assertNotIn("zip -r yong-eosphoros.zip .yong", release)
+        self.assertNotIn("yong-eosphoros-full.zip", release)
+        self.assertNotIn("yong-eosphoros-full.zip", readme)
 
-    def test_generated_xmjd6_user_text_database_is_not_distributed(self) -> None:
+    def test_generated_eosphoros_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]
 
-        self.assertFalse((root / "xmjd6_user.txt").exists())
+        self.assertFalse((root / "eosphoros_user.txt").exists())
         ignored = subprocess.run(
-            ["git", "check-ignore", "-q", "--no-index", "xmjd6_user.txt"],
+            ["git", "check-ignore", "-q", "--no-index", "eosphoros_user.txt"],
             cwd=root,
             check=False,
         )
@@ -226,9 +249,9 @@ class RepositoryValidationTests(unittest.TestCase):
 
         runtime_files = [
             *root.glob("*.yaml"),
-            *(root / "dicts" / "xmjd6").glob("*.dict.yaml"),
-            *(root / "lua" / "xmjd6").rglob("*.lua"),
-            *(root / "opencc" / "xmjd6").rglob("*.lua"),
+            *(root / "dicts" / "eosphoros").glob("*.dict.yaml"),
+            *(root / "lua" / "eosphoros").rglob("*.lua"),
+            *(root / "opencc" / "eosphoros").rglob("*.lua"),
         ]
         runtime_names = {
             path.relative_to(root).as_posix()
@@ -268,9 +291,9 @@ class RepositoryValidationTests(unittest.TestCase):
         for recipe in recipes.values():
             self.assertIn("patch_files:", recipe)
             self.assertIn("default.custom.yaml:", recipe)
-            self.assertIn("- schema: xmjd6", recipe)
+            self.assertIn("- schema: eosphoros", recipe)
         for name, recipe_patterns in patterns.items():
-            self.assertIn("xmjd6.custom.yaml", recipe_patterns, name)
+            self.assertIn("eosphoros.custom.yaml", recipe_patterns, name)
             self.assertEqual(
                 [item for item in recipe_patterns if item.startswith("zzc_state/")],
                 ["zzc_state/char_parts.tsv"],
@@ -280,8 +303,8 @@ class RepositoryValidationTests(unittest.TestCase):
                 "zzc/README.md",
                 "zzc/自造词使用教程.md",
                 "zzc/自造词使用教程.png",
-                "zzc/xmjd6_词库合并.py",
-                "zzc/xmjd6_撤回合并.py",
+                "zzc/eosphoros_词库合并.py",
+                "zzc/eosphoros_撤回合并.py",
             ):
                 self.assertIn(shared_zzc, recipe_patterns, name)
 
@@ -310,8 +333,8 @@ class RepositoryValidationTests(unittest.TestCase):
             "zzc/README.md",
             "zzc/自造词使用教程.md",
             "zzc/自造词使用教程.png",
-            "zzc/xmjd6_词库合并.py",
-            "zzc/xmjd6_撤回合并.py",
+            "zzc/eosphoros_词库合并.py",
+            "zzc/eosphoros_撤回合并.py",
         }
         platform_zzc = {
             "core": set(),
@@ -346,8 +369,8 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertFalse(any("weasel" in item for item in patterns[name]))
             self.assertFalse(any("squirrel" in item for item in patterns[name]))
             self.assertFalse(any("Hamster" in item for item in patterns[name]))
-            self.assertIn("zzc/xmjd6_词库合并.py", patterns[name])
-            self.assertIn("zzc/xmjd6_撤回合并.py", patterns[name])
+            self.assertIn("zzc/eosphoros_词库合并.py", patterns[name])
+            self.assertIn("zzc/eosphoros_撤回合并.py", patterns[name])
         self.assertIn(
             "zzc/Fcitx5_macOS_词库合并.py", patterns["fcitx5-macos"]
         )
@@ -361,10 +384,10 @@ class RepositoryValidationTests(unittest.TestCase):
             "zzc/Fcitx5_Linux_撤回合并.py", patterns["fcitx5-linux"]
         )
 
-    def test_plum_install_keeps_the_xmjd6_scheme_icon(self) -> None:
+    def test_plum_install_keeps_the_eosphoros_scheme_icon(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
-        custom = (root / "xmjd6.custom.yaml").read_text(encoding="utf-8")
+        schema = (root / "eosphoros.schema.yaml").read_text(encoding="utf-8")
+        custom = (root / "eosphoros.custom.yaml").read_text(encoding="utf-8")
 
         for name in (
             "recipe.yaml",
@@ -381,13 +404,13 @@ class RepositoryValidationTests(unittest.TestCase):
             patterns = install_block.split()
             self.assertTrue(
                 any(
-                    fnmatch.fnmatchcase("xmjd6.custom.yaml", pattern)
+                    fnmatch.fnmatchcase("eosphoros.custom.yaml", pattern)
                     for pattern in patterns
                 ),
                 name,
             )
         self.assertIn('  icon: ""', schema)
-        self.assertIn('schema/icon: "xmjd6.ico"', custom)
+        self.assertIn('schema/icon: "eosphoros.ico"', custom)
 
     def test_desktop_style_files_use_current_consistent_defaults(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -467,7 +490,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_main_schema_exposes_explicit_switch_defaults_for_rimetool(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
+        schema = (root / "eosphoros.schema.yaml").read_text(encoding="utf-8")
         expected_defaults = {
             "ascii_mode": 0,
             "jffh": 0,
@@ -492,11 +515,11 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_main_schema_supports_rimetool_mint_template_with_live_aliases(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
-        opencc_filter = (root / "lua" / "xmjd6" / "xmjd6_opencc_filter.lua").read_text(
+        schema = (root / "eosphoros.schema.yaml").read_text(encoding="utf-8")
+        opencc_filter = (root / "lua" / "eosphoros" / "eosphoros_opencc_filter.lua").read_text(
             encoding="utf-8"
         )
-        processor = (root / "lua" / "xmjd6" / "xmjd6_processor.lua").read_text(
+        processor = (root / "lua" / "eosphoros" / "eosphoros_processor.lua").read_text(
             encoding="utf-8"
         )
 
@@ -520,12 +543,12 @@ class RepositoryValidationTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
-            (root / "lua" / "xmjd6").mkdir(parents=True)
-            (root / "lua" / "xmjd6" / "filter.lua").write_text(
+            (root / "lua" / "eosphoros").mkdir(parents=True)
+            (root / "lua" / "eosphoros" / "filter.lua").write_text(
                 "return {}\n", encoding="utf-8"
             )
-            (root / "xmjd6.schema.yaml").write_text(
-                "filters:\n  - lua_filter@*xmjd6/filter@filter_namespace\n",
+            (root / "eosphoros.schema.yaml").write_text(
+                "filters:\n  - lua_filter@*eosphoros/filter@filter_namespace\n",
                 encoding="utf-8",
             )
             errors: list[str] = []
@@ -537,17 +560,17 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_main_schema_gives_opencc_filter_a_stable_namespace(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
+        schema = (root / "eosphoros.schema.yaml").read_text(encoding="utf-8")
 
         self.assertIn(
-            "lua_filter@*xmjd6/xmjd6_opencc_filter@xmjd6_opencc_filter",
+            "lua_filter@*eosphoros/eosphoros_opencc_filter@eosphoros_opencc_filter",
             schema,
         )
 
     def test_modular_ascii_handler_owns_uppercase_and_shift_behavior(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        schema = (root / "xmjd6.schema.yaml").read_text(encoding="utf-8")
-        custom = (root / "xmjd6.custom.yaml").read_text(encoding="utf-8")
+        schema = (root / "eosphoros.schema.yaml").read_text(encoding="utf-8")
+        custom = (root / "eosphoros.custom.yaml").read_text(encoding="utf-8")
 
         self.assertNotIn("uppercase:", schema)
         self.assertIn("Shift_L: commit_code", schema)
@@ -555,10 +578,10 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("Shift_L: commit_code", custom)
         self.assertIn("Shift_R: commit_code", custom)
 
-    def test_zzc_merge_targets_the_xmjd6_cizu_dictionary(self) -> None:
+    def test_zzc_merge_targets_the_eosphoros_cizu_dictionary(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        script = root / "zzc" / "xmjd6_词库合并.py"
-        spec = importlib.util.spec_from_file_location("xmjd6_zzc_merge_test", script)
+        script = root / "zzc" / "eosphoros_词库合并.py"
+        spec = importlib.util.spec_from_file_location("eosphoros_zzc_merge_test", script)
         self.assertIsNotNone(spec)
         self.assertIsNotNone(spec.loader if spec else None)
         module = importlib.util.module_from_spec(spec)
@@ -566,22 +589,22 @@ class RepositoryValidationTests(unittest.TestCase):
         spec.loader.exec_module(module)
 
         self.assertEqual(
-            module.target_dict_name_options("xmjd6"),
-            [["xmjd6.cizu.dict.yaml"], ["xmjd6.fjcy.dict.yaml"]],
+            module.target_dict_name_options("eosphoros"),
+            [["eosphoros.cizu.dict.yaml"], ["eosphoros.fjcy.dict.yaml"]],
         )
         self.assertEqual(
-            module.resolve_target_dicts(root, "xmjd6"),
+            module.resolve_target_dicts(root, "eosphoros"),
             [
-                root / "dicts" / "xmjd6" / "xmjd6.cizu.dict.yaml",
-                root / "dicts" / "xmjd6" / "xmjd6.fjcy.dict.yaml",
+                root / "dicts" / "eosphoros" / "eosphoros.cizu.dict.yaml",
+                root / "dicts" / "eosphoros" / "eosphoros.fjcy.dict.yaml",
             ],
         )
-        with self.assertRaisesRegex(ValueError, "expected xmjd6"):
+        with self.assertRaisesRegex(ValueError, "expected eosphoros"):
             module.target_dict_name_options("other")
-        with self.assertRaisesRegex(ValueError, "expected xmjd6"):
+        with self.assertRaisesRegex(ValueError, "expected eosphoros"):
             module.target_dict_name_options("xmjd7")
 
-    def test_zzc_merge_integrates_numbered_xmjd6_operation_files(self) -> None:
+    def test_zzc_merge_integrates_numbered_eosphoros_operation_files(self) -> None:
         repository = Path(__file__).resolve().parents[1]
         dictionary_header = """# Rime dictionary
 ---
@@ -593,7 +616,7 @@ sort: by_weight
         operation_header = """# Rime dictionary
 # encoding: utf-8
 ---
-name: xmjd6.zzc
+name: eosphoros.zzc
 version: "2026-08-09"
 sort: by_weight
 use_preset_vocabulary: false
@@ -606,14 +629,14 @@ columns:
             root = Path(temp_dir)
             zzc_dir = root / "zzc"
             zzc_dir.mkdir()
-            shutil.copy2(repository / "zzc" / "xmjd6_词库合并.py", zzc_dir)
-            dict_path(root, "xmjd6.cizu.dict.yaml").write_text(
-                dictionary_header.format(name="xmjd6.cizu"), encoding="utf-8"
+            shutil.copy2(repository / "zzc" / "eosphoros_词库合并.py", zzc_dir)
+            dict_path(root, "eosphoros.cizu.dict.yaml").write_text(
+                dictionary_header.format(name="eosphoros.cizu"), encoding="utf-8"
             )
-            dict_path(root, "xmjd6.fjcy.dict.yaml").write_text(
-                dictionary_header.format(name="xmjd6.fjcy"), encoding="utf-8"
+            dict_path(root, "eosphoros.fjcy.dict.yaml").write_text(
+                dictionary_header.format(name="eosphoros.fjcy"), encoding="utf-8"
             )
-            dict_path(root, "xmjd6.zzc.dict(1).yaml").write_text(
+            dict_path(root, "eosphoros.zzc.dict(1).yaml").write_text(
                 operation_header + "100\tadd\t测试自造词\tcszc\t+\n",
                 encoding="utf-8",
             )
@@ -622,7 +645,7 @@ columns:
             (state_dir / "runtime_ops.tsv").write_text("", encoding="utf-8")
 
             result = subprocess.run(
-                [sys.executable, str(zzc_dir / "xmjd6_词库合并.py")],
+                [sys.executable, str(zzc_dir / "eosphoros_词库合并.py")],
                 cwd=root,
                 capture_output=True,
                 text=True,
@@ -636,11 +659,11 @@ columns:
                 0,
                 (result.stdout or "") + (result.stderr or ""),
             )
-            merged = dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+            merged = dict_path(root, "eosphoros.cizu.dict.yaml").read_text(encoding="utf-8")
             self.assertIn("测试自造词\tcszc", merged)
-            self.assertFalse(dict_path(root, "xmjd6.zzc.dict(1).yaml").exists())
+            self.assertFalse(dict_path(root, "eosphoros.zzc.dict(1).yaml").exists())
             self.assertEqual(
-                dict_path(root, "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "eosphoros.zzc.dict.yaml").read_text(encoding="utf-8"),
                 operation_header,
             )
             for state_name in (
@@ -663,7 +686,7 @@ columns:
         with tempfile.TemporaryDirectory() as temp_dir:
             state_dir = Path(temp_dir) / "zzc_state"
             state_dir.mkdir()
-            (Path(temp_dir) / "dicts" / "xmjd6").mkdir(parents=True)
+            (Path(temp_dir) / "dicts" / "eosphoros").mkdir(parents=True)
             env = os.environ.copy()
             env["ZZC_TEST_DATA_DIR"] = temp_dir
             result = subprocess.run(
@@ -682,7 +705,7 @@ columns:
                 (result.stdout or "") + (result.stderr or ""),
             )
 
-    def test_fcitx5_python_merge_entries_run_the_shared_xmjd6_core(self) -> None:
+    def test_fcitx5_python_merge_entries_run_the_shared_eosphoros_core(self) -> None:
         repository = Path(__file__).resolve().parents[1]
         for entry_name in (
             "Fcitx5_Linux_词库合并.py",
@@ -692,17 +715,17 @@ columns:
                 root = Path(temp_dir)
                 zzc_dir = root / "zzc"
                 zzc_dir.mkdir()
-                shutil.copy2(repository / "zzc" / "xmjd6_词库合并.py", zzc_dir)
+                shutil.copy2(repository / "zzc" / "eosphoros_词库合并.py", zzc_dir)
                 shutil.copy2(repository / "zzc" / entry_name, zzc_dir)
-                for name in ("xmjd6.cizu", "xmjd6.fjcy"):
+                for name in ("eosphoros.cizu", "eosphoros.fjcy"):
                     dict_path(root, f"{name}.dict.yaml").write_text(
                         "# Rime dictionary\n---\n"
                         f'name: {name}\nversion: "2026-08-09"\n'
                         "sort: by_weight\n...\n",
                         encoding="utf-8",
                     )
-                dict_path(root, "xmjd6.zzc.dict.yaml").write_text(
-                    "# Rime dictionary\n---\nname: xmjd6.zzc\n"
+                dict_path(root, "eosphoros.zzc.dict.yaml").write_text(
+                    "# Rime dictionary\n---\nname: eosphoros.zzc\n"
                     'version: "2026-08-09"\nsort: by_weight\n'
                     "columns:\n  - text\n  - code\n...\n"
                     "100\tadd\tFcitx5入口\tfcitx\t+\n",
@@ -722,7 +745,7 @@ columns:
                     0,
                     (result.stdout or "") + (result.stderr or ""),
                 )
-                merged = dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+                merged = dict_path(root, "eosphoros.cizu.dict.yaml").read_text(encoding="utf-8")
                 self.assertIn("Fcitx5入口\tfcitx", merged)
 
     def test_typing_stats_migrates_to_namespaced_zzc_state(self) -> None:
@@ -752,7 +775,7 @@ columns:
             )
 
     @unittest.skipUnless(sys.platform == "win32", "committed EXE is Windows-only")
-    def test_windows_merge_executable_runs_current_xmjd6_behavior(self) -> None:
+    def test_windows_merge_executable_runs_current_eosphoros_behavior(self) -> None:
         repository = Path(__file__).resolve().parents[1]
         dictionary_header = """# Rime dictionary
 ---
@@ -764,7 +787,7 @@ sort: by_weight
         operation_header = """# Rime dictionary
 # encoding: utf-8
 ---
-name: xmjd6.zzc
+name: eosphoros.zzc
 version: "2026-08-04"
 sort: by_weight
 use_preset_vocabulary: false
@@ -778,13 +801,13 @@ columns:
             zzc_dir = root / "zzc"
             zzc_dir.mkdir()
             shutil.copy2(repository / "zzc" / "Win_词库合并.exe", zzc_dir)
-            dict_path(root, "xmjd6.cizu.dict.yaml").write_text(
-                dictionary_header.format(name="xmjd6.cizu"), encoding="utf-8"
+            dict_path(root, "eosphoros.cizu.dict.yaml").write_text(
+                dictionary_header.format(name="eosphoros.cizu"), encoding="utf-8"
             )
-            dict_path(root, "xmjd6.fjcy.dict.yaml").write_text(
-                dictionary_header.format(name="xmjd6.fjcy"), encoding="utf-8"
+            dict_path(root, "eosphoros.fjcy.dict.yaml").write_text(
+                dictionary_header.format(name="eosphoros.fjcy"), encoding="utf-8"
             )
-            dict_path(root, "xmjd6.zzc.dict(1).yaml").write_text(
+            dict_path(root, "eosphoros.zzc.dict(1).yaml").write_text(
                 operation_header + "100\tadd\tEXE当前逻辑\texedq\t+\n",
                 encoding="utf-8",
             )
@@ -805,10 +828,10 @@ columns:
                 0,
                 (result.stdout or "") + (result.stderr or ""),
             )
-            merged = dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+            merged = dict_path(root, "eosphoros.cizu.dict.yaml").read_text(encoding="utf-8")
             self.assertIn("EXE当前逻辑\texedq", merged)
-            self.assertFalse(dict_path(root, "xmjd6.zzc.dict(1).yaml").exists())
-            self.assertTrue(dict_path(root, "xmjd6.zzc.dict.yaml").is_file())
+            self.assertFalse(dict_path(root, "eosphoros.zzc.dict(1).yaml").exists())
+            self.assertTrue(dict_path(root, "eosphoros.zzc.dict.yaml").is_file())
 
     @unittest.skipUnless(sys.platform == "win32", "committed EXE is Windows-only")
     def test_windows_rollback_executable_restores_latest_merge(self) -> None:
@@ -823,7 +846,7 @@ sort: by_weight
         operation_header = """# Rime dictionary
 # encoding: utf-8
 ---
-name: xmjd6.zzc
+name: eosphoros.zzc
 version: "2026-08-04"
 sort: by_weight
 use_preset_vocabulary: false
@@ -838,13 +861,13 @@ columns:
             zzc_dir.mkdir()
             for executable in ("Win_词库合并.exe", "Win_撤回合并.exe"):
                 shutil.copy2(repository / "zzc" / executable, zzc_dir)
-            original_cizu = dictionary_header.format(name="xmjd6.cizu") + "原词\tycw\n"
-            dict_path(root, "xmjd6.cizu.dict.yaml").write_text(original_cizu, encoding="utf-8")
-            dict_path(root, "xmjd6.fjcy.dict.yaml").write_text(
-                dictionary_header.format(name="xmjd6.fjcy"), encoding="utf-8"
+            original_cizu = dictionary_header.format(name="eosphoros.cizu") + "原词\tycw\n"
+            dict_path(root, "eosphoros.cizu.dict.yaml").write_text(original_cizu, encoding="utf-8")
+            dict_path(root, "eosphoros.fjcy.dict.yaml").write_text(
+                dictionary_header.format(name="eosphoros.fjcy"), encoding="utf-8"
             )
             original_ops = operation_header + "100\tadd\t待撤回词\tdcht\t+\n"
-            dict_path(root, "xmjd6.zzc.dict.yaml").write_text(original_ops, encoding="utf-8")
+            dict_path(root, "eosphoros.zzc.dict.yaml").write_text(original_ops, encoding="utf-8")
 
             merge = subprocess.run(
                 [str(zzc_dir / "Win_词库合并.exe")],
@@ -859,7 +882,7 @@ columns:
             self.assertEqual(merge.returncode, 0, (merge.stdout or "") + (merge.stderr or ""))
             self.assertIn(
                 "待撤回词\tdcht",
-                dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "eosphoros.cizu.dict.yaml").read_text(encoding="utf-8"),
             )
 
             rollback = subprocess.run(
@@ -880,11 +903,11 @@ columns:
                 (rollback.stdout or "") + (rollback.stderr or ""),
             )
             self.assertEqual(
-                dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "eosphoros.cizu.dict.yaml").read_text(encoding="utf-8"),
                 original_cizu,
             )
             self.assertEqual(
-                dict_path(root, "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "eosphoros.zzc.dict.yaml").read_text(encoding="utf-8"),
                 original_ops,
             )
 
@@ -917,7 +940,7 @@ columns:
             self.assertIn(release_only, release)
 
         for executable_check in (
-            "test_windows_merge_executable_runs_current_xmjd6_behavior",
+            "test_windows_merge_executable_runs_current_eosphoros_behavior",
             "test_windows_rollback_executable_restores_latest_merge",
             "test_committed_windows_executables_match_sources_and_lock",
         ):
@@ -998,8 +1021,8 @@ print("Win_撤回合并.exe", file=sys.stderr)
     def test_bundled_zzc_sources_reconfigure_stdio_to_utf8(self) -> None:
         root = Path(__file__).resolve().parents[1]
         scripts = (
-            root / "zzc" / "xmjd6_词库合并.py",
-            root / "zzc" / "xmjd6_撤回合并.py",
+            root / "zzc" / "eosphoros_词库合并.py",
+            root / "zzc" / "eosphoros_撤回合并.py",
         )
         code = """
 import importlib.util

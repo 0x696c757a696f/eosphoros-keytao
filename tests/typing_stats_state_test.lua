@@ -2,7 +2,7 @@ package.path = "./lua/?.lua;./lua/?/init.lua;" .. package.path
 
 local data_dir = assert(os.getenv("TYPING_STATS_TEST_DATA_DIR"), "missing typing stats test directory")
 local legacy_path = data_dir .. "/typing_stats.txt"
-local current_path = data_dir .. "/zzc_state/xmjd6_typing_stats.tsv"
+local current_path = data_dir .. "/zzc_state/eosphoros_typing_stats.tsv"
 local today = os.date("%Y-%m-%d")
 
 local legacy = assert(io.open(legacy_path, "w"))
@@ -25,7 +25,7 @@ local context = {
 local env = {
     engine = {
         context = context,
-        schema = { schema_id = "xmjd6" },
+        schema = { schema_id = "eosphoros" },
     },
 }
 local key = {
@@ -36,7 +36,7 @@ local key = {
     super = function() return false end,
 }
 
-local stats = require("xmjd6.typing_stats")
+local stats = require("eosphoros.typing_stats")
 stats.init_processor(env)
 assert(stats.processor(key, env) == 2)
 assert(type(notify) == "function")

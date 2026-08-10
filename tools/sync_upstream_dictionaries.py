@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync pinned Jiandao and Rime-Ice sources into native xmjd6 dictionaries."""
+"""Sync pinned Jiandao and Rime-Ice sources into native eosphoros dictionaries."""
 
 from __future__ import annotations
 
@@ -20,28 +20,28 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools.clean_dictionary_quality import is_rejected
-from tools.xmjd6_codes import code_candidates_from_full_codes, iter_dictionary_rows
+from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
 
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCK_PATH = ROOT / "tools" / "upstream_dictionaries.lock.json"
-DICTIONARY_DIR = ROOT / "dicts" / "xmjd6"
-DANZI_TARGET = DICTIONARY_DIR / "xmjd6.danzi.dict.yaml"
-ICE_TARGET = DICTIONARY_DIR / "xmjd6.ice.dict.yaml"
+DICTIONARY_DIR = ROOT / "dicts" / "eosphoros"
+DANZI_TARGET = DICTIONARY_DIR / "eosphoros.danzi.dict.yaml"
+ICE_TARGET = DICTIONARY_DIR / "eosphoros.ice.dict.yaml"
 WANXIANG_SOURCE_NAMES = (
     "yaopin", "yixue", "huaxue", "diming", "mingren", "taifeng", "jichu"
 )
 WANXIANG_TARGETS = {
-    source_name: DICTIONARY_DIR / f"xmjd6.wanxiang.{source_name}.dict.yaml"
+    source_name: DICTIONARY_DIR / f"eosphoros.wanxiang.{source_name}.dict.yaml"
     for source_name in WANXIANG_SOURCE_NAMES
 }
-ENGLISH_TARGET = DICTIONARY_DIR / "xmjd6.en.dict.yaml"
-EMOJI_EXTRA_CHARS_TARGET = ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_chars.lua"
+ENGLISH_TARGET = DICTIONARY_DIR / "eosphoros.en.dict.yaml"
+EMOJI_EXTRA_CHARS_TARGET = ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_chars.lua"
 EMOJI_EXTRA_INDEX_TARGET = (
-    ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_phrases_index.lua"
+    ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_phrases_index.lua"
 )
 EMOJI_EXTRA_PHRASES_TARGET = (
-    ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_phrases_0.lua"
+    ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_phrases_0.lua"
 )
 TARGETS = (
     DANZI_TARGET,
@@ -54,26 +54,26 @@ TARGETS = (
 )
 
 LOCAL_WORD_DICTIONARIES = (
-    "xmjd6.user.dict.yaml",
-    "xmjd6.zzc.dict.yaml",
-    "xmjd6.cizu.dict.yaml",
-    "xmjd6.catholicism.dict.yaml",
-    "xmjd6.protestantism.dict.yaml",
-    "xmjd6.orthodoxy.dict.yaml",
-    "xmjd6.oriental.dict.yaml",
-    "xmjd6.assyrian.dict.yaml",
-    "xmjd6.core.dict.yaml",
-    "xmjd6.fjcy.dict.yaml",
+    "eosphoros.user.dict.yaml",
+    "eosphoros.zzc.dict.yaml",
+    "eosphoros.cizu.dict.yaml",
+    "eosphoros.catholicism.dict.yaml",
+    "eosphoros.protestantism.dict.yaml",
+    "eosphoros.orthodoxy.dict.yaml",
+    "eosphoros.oriental.dict.yaml",
+    "eosphoros.assyrian.dict.yaml",
+    "eosphoros.core.dict.yaml",
+    "eosphoros.fjcy.dict.yaml",
 )
 
 # Curated specialty dictionaries must remain collision-free even when every
 # legal suffix of a low-priority ICE row is occupied. In that situation the
 # ICE row is omitted instead of sharing the specialty term's final six-key code.
 STRICT_LOCAL_COLLISION_DICTIONARIES = (
-    "xmjd6.protestantism.dict.yaml",
-    "xmjd6.orthodoxy.dict.yaml",
-    "xmjd6.oriental.dict.yaml",
-    "xmjd6.assyrian.dict.yaml",
+    "eosphoros.protestantism.dict.yaml",
+    "eosphoros.orthodoxy.dict.yaml",
+    "eosphoros.oriental.dict.yaml",
+    "eosphoros.assyrian.dict.yaml",
 )
 
 RIME_ICE_FILES = (
@@ -100,7 +100,7 @@ RIME_WANXIANG_FILES = tuple(
 # removed; this cap only controls additional Rime-Ice rows.
 MAX_COMBINED_CANDIDATES_PER_CODE = 8
 
-# Rime-Ice is a fallback vocabulary here, not the primary xmjd6 lexicon. Keep
+# Rime-Ice is a fallback vocabulary here, not the primary eosphoros lexicon. Keep
 # short lexical items, but trim the long tail that is expensive to deploy and
 # can still be entered naturally as shorter segments. The upstream ``ext``
 # dictionary assigns every row the same weight, so length and template shape
@@ -297,14 +297,14 @@ def raw_url(source: dict[str, Any], relative_path: str) -> str:
 
 
 def fetch_text(url: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": "xmjd6-sync/1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "eosphoros-sync/1"})
     with urllib.request.urlopen(request, timeout=90) as response:
         return response.read().decode("utf-8-sig")
 
 
 def resolve_ref(repository: str, branch: str) -> str:
     url = f"https://api.github.com/repos/{repository}/commits/{branch}"
-    request = urllib.request.Request(url, headers={"User-Agent": "xmjd6-sync/1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "eosphoros-sync/1"})
     with urllib.request.urlopen(request, timeout=90) as response:
         payload = json.load(response)
     return str(payload["sha"])
@@ -421,7 +421,7 @@ WANXIANG_PLACE_SUFFIXES = (
 
 
 def wanxiang_low_value_reason(row: SourceRow) -> str | None:
-    """Return why an upstream Wanxiang row is unsuitable for xmjd6.
+    """Return why an upstream Wanxiang row is unsuitable for eosphoros.
 
     Wanxiang's pinyin weights are selection signals only.  This conservative
     profile keeps specialist vocabulary and a very small high-frequency slice
@@ -514,7 +514,7 @@ def load_local_vocabulary(root: Path) -> tuple[set[str], dict[str, set[str]]]:
     words: set[str] = set()
     occupied: dict[str, set[str]] = defaultdict(set)
     for filename in LOCAL_WORD_DICTIONARIES:
-        path = root / "dicts" / "xmjd6" / filename
+        path = root / "dicts" / "eosphoros" / filename
         if not path.is_file():
             continue
         for word, code in iter_dictionary_rows(path):
@@ -617,7 +617,7 @@ def render_danzi(source_text: str, lock: dict[str, Any]) -> str:
         "# Source file: dicts/01.danzi.txt\n"
         "# Header/concatenation behavior follows scripts/make_dicts.sh.\n"
         "---\n"
-        "name: xmjd6.danzi\n"
+        "name: eosphoros.danzi\n"
         f"version: \"{lock['generated_on']}\"\n"
         "sort: original\n"
         "...\n\n"
@@ -685,14 +685,14 @@ def render_english(
         f"# Source commit: {source['commit']}",
         "# Sources: en_dicts/en.dict.yaml, en_dicts/en_ext.dict.yaml",
         "# Codes are normalized to lowercase letters and prefixed with i.",
-        "# Imported by the main xmjd6 table; no auxiliary schema is needed.",
+        "# Imported by the main eosphoros table; no auxiliary schema is needed.",
         f"# Source rows: {stats['english_source_rows']}",
         f"# Generated rows: {stats['english_generated_rows']}",
         f"# Deduplicated inside upstream: {stats['english_deduplicated_upstream']}",
         f"# Skipped unreachable rows: {stats['english_skipped_unreachable']}",
         f"# Skipped local code collisions: {stats['english_skipped_local_code_collision']}",
         "---",
-        "name: xmjd6.en",
+        "name: eosphoros.en",
         f"version: \"{lock['generated_on']}\"",
         "sort: original",
         "...",
@@ -718,10 +718,10 @@ def lua_quote(value: str) -> str:
 
 
 def load_base_emoji_keys(root: Path) -> set[str]:
-    emoji_root = root / "opencc" / "xmjd6"
-    paths = [emoji_root / "xmjd6_emoji_chars.lua"]
+    emoji_root = root / "opencc" / "eosphoros"
+    paths = [emoji_root / "eosphoros_emoji_chars.lua"]
     paths.extend(
-        emoji_root / f"xmjd6_emoji_phrases_{suffix}.lua"
+        emoji_root / f"eosphoros_emoji_phrases_{suffix}.lua"
         for suffix in "0123456789abcdef"
     )
     keys: set[str] = set()
@@ -767,7 +767,7 @@ def build_emoji_extra(
 
     source = lock["sources"]["rime_ice"]
     header = [
-        "-- xmjd6 Rime-Ice Emoji 增补数据",
+        "-- eosphoros Rime-Ice Emoji 增补数据",
         "-- Generated from iDvel/rime-ice; do not edit by hand.",
         f"-- Source commit: {source['commit']}",
         f"-- 更新：{lock['generated_on']}",
@@ -924,7 +924,7 @@ def render_ice(
         f"# Local collision rows: {stats['local_collision_rows']} / {stats['local_rows']}",
         f"# Combined collision rows: {stats['combined_collision_rows']} / {stats['combined_rows']}",
         "---",
-        "name: xmjd6.ice",
+        "name: eosphoros.ice",
         f"version: \"{lock['generated_on']}\"",
         "sort: original",
         "...",
@@ -1015,13 +1015,13 @@ def render_wanxiang(
         "# Generated from amzxyz/rime-wanxiang; do not edit by hand.",
         f"# Source commit: {source['commit']}",
         f"# Selected source: dicts/{source_name}.dict.yaml.",
-        "# Pinyin weights are used only for filtering/order; codes are regenerated as xmjd6.",
+        "# Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.",
         "# Curated local vocabulary takes precedence; colliding rows are omitted.",
         "# Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.",
         f"# Source rows in category: {stats[f'wanxiang_source_{source_name}']}",
         f"# Generated rows in category: {stats[f'wanxiang_generated_{source_name}']}",
         "---",
-        f"name: xmjd6.wanxiang.{source_name}",
+        f"name: eosphoros.wanxiang.{source_name}",
         f"version: \"{lock['generated_on']}\"",
         "sort: original",
         "...",
@@ -1055,14 +1055,14 @@ def build(
     }
 
     character_codes = parse_danzi_rows(danzi_source_text)
-    pinyin_readings = load_pinyin_readings(root / "dicts" / "xmjd6" / "pinyin_simp.dict.yaml")
+    pinyin_readings = load_pinyin_readings(root / "dicts" / "eosphoros" / "pinyin_simp.dict.yaml")
     pinyin_prefixes = build_pinyin_prefixes(character_codes, pinyin_readings)
     local_words, occupied = load_local_vocabulary(root)
     protected_local_codes = {
         code
         for filename in STRICT_LOCAL_COLLISION_DICTIONARIES
-        if (root / "dicts" / "xmjd6" / filename).is_file()
-        for _, code in iter_dictionary_rows(root / "dicts" / "xmjd6" / filename)
+        if (root / "dicts" / "eosphoros" / filename).is_file()
+        for _, code in iter_dictionary_rows(root / "dicts" / "eosphoros" / filename)
     }
     wanxiang_rows, wanxiang_stats = build_wanxiang_rows(
         wanxiang_source_texts,
@@ -1135,15 +1135,15 @@ def update_generated_metadata(
             "sha256": sha256_text(result.english_text),
             "rows": result.stats["english_generated_rows"],
         },
-        "opencc/xmjd6/xmjd6_emoji_extra_chars.lua": {
+        "opencc/eosphoros/eosphoros_emoji_extra_chars.lua": {
             "sha256": sha256_text(result.emoji_extra_chars_text),
             "rows": result.stats["emoji_extra_char_rows"],
         },
-        "opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua": {
+        "opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua": {
             "sha256": sha256_text(result.emoji_extra_index_text),
             "rows": result.stats["emoji_extra_index_rows"],
         },
-        "opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua": {
+        "opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua": {
             "sha256": sha256_text(result.emoji_extra_phrases_text),
             "rows": result.stats["emoji_extra_phrase_rows"],
         },

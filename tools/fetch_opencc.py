@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download a pinned OpenCC bundle and merge its data into opencc/xmjd6."""
+"""Download a pinned OpenCC bundle and merge its data into opencc/eosphoros."""
 
 from __future__ import annotations
 
@@ -65,7 +65,7 @@ def extract_opencc_archive(archive: Path, destination: Path) -> int:
 
 
 def download(url: str, destination: Path) -> None:
-    request = urllib.request.Request(url, headers={"User-Agent": "xmjd6-release-builder"})
+    request = urllib.request.Request(url, headers={"User-Agent": "eosphoros-release-builder"})
     with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as output:
         shutil.copyfileobj(response, output)
 
@@ -74,14 +74,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--url", required=True)
     parser.add_argument("--sha256", required=True)
-    parser.add_argument("--destination", type=Path, default=ROOT / "opencc" / "xmjd6")
+    parser.add_argument("--destination", type=Path, default=ROOT / "opencc" / "eosphoros")
     args = parser.parse_args()
 
     expected = args.sha256.lower().removeprefix("sha256:")
     if len(expected) != 64 or any(char not in "0123456789abcdef" for char in expected):
         parser.error("--sha256 must be a 64-character SHA-256 digest")
 
-    with tempfile.TemporaryDirectory(prefix="xmjd6-opencc-") as temp_dir:
+    with tempfile.TemporaryDirectory(prefix="eosphoros-opencc-") as temp_dir:
         archive = Path(temp_dir) / "opencc.zip"
         download(args.url, archive)
         actual = sha256_file(archive)

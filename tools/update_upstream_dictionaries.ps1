@@ -3,7 +3,7 @@ param(
     [switch]$CheckOnly,
     [switch]$Force,
     [string]$Python = "",
-    [string]$CacheDirectory = (Join-Path ([IO.Path]::GetTempPath()) "xmjd6-upstream-git-cache")
+    [string]$CacheDirectory = (Join-Path ([IO.Path]::GetTempPath()) "eosphoros-upstream-git-cache")
 )
 
 Set-StrictMode -Version Latest

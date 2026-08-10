@@ -17,4 +17,4 @@ patch:
     abbreviate_options: true      # 折叠时是否缩写选项
     option_list_separator: ' / '  # 折叠时的选项分隔符
   schema_list:
-    - schema: xmjd6
+    - schema: eosphoros

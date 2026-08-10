@@ -89,7 +89,7 @@ jobs:
       run: python tools/build_zzc_windows_exe.py
 
     - name: Run rebuilt Windows executable checks
-      run: python -m unittest tests.test_tools.RepositoryValidationTests.test_windows_merge_executable_runs_current_xmjd6_behavior tests.test_tools.RepositoryValidationTests.test_windows_rollback_executable_restores_latest_merge tests.test_tools.RepositoryValidationTests.test_committed_windows_executables_match_sources_and_lock -v
+      run: python -m unittest tests.test_tools.RepositoryValidationTests.test_windows_merge_executable_runs_current_eosphoros_behavior tests.test_tools.RepositoryValidationTests.test_windows_rollback_executable_restores_latest_merge tests.test_tools.RepositoryValidationTests.test_committed_windows_executables_match_sources_and_lock -v
 
     - name: Upload rebuilt Windows executables
       uses: actions/upload-artifact@v7
@@ -142,14 +142,14 @@ jobs:
     - name: Create directories
       run: |
         mkdir -p Rime
-        mkdir -p mb/xmjd6
+        mkdir -p mb/eosphoros
 
     - name: Download verified OpenCC data
       run: |
         python tools/fetch_opencc.py \
           --url "$OPENCC_TONGGUI_URL" \
           --sha256 "$OPENCC_TONGGUI_SHA256" \
-          --destination opencc/xmjd6
+          --destination opencc/eosphoros
 
     - name: Build generic and platform-specific Rime packages
       run: python tools/build_platform_packages.py
@@ -157,8 +157,8 @@ jobs:
     - name: Package Fcitx5 themes
       run: |
         python tools/build_fcitx5_themes.py --check
-        (cd fcitx5/linux/themes && zip -r ../../../fcitx5-linux-xmjd6-themes.zip .)
-        (cd fcitx5/macos/themes && zip -r ../../../fcitx5-macos-xmjd6-themes.zip .)
+        (cd fcitx5/linux/themes && zip -r ../../../fcitx5-linux-eosphoros-themes.zip .)
+        (cd fcitx5/macos/themes && zip -r ../../../fcitx5-macos-eosphoros-themes.zip .)
 
     - name: Prepare Rime directory for Rabbit
       run: |
@@ -221,24 +221,24 @@ jobs:
         cp Rabbit/Data/symbols.yaml /tmp/Rabbit_backup/
         cp Rabbit/Data/rabbit.yaml /tmp/Rabbit_backup/
         cp Rime/default.custom.yaml Rabbit/Rime
-        mkdir -p Rabbit/Rime/dicts/xmjd6
-        cp Rime/dicts/xmjd6/xmjd6.user.dict.yaml Rabbit/Rime/dicts/xmjd6
-        cp Rime/xmjd6.custom.yaml Rabbit/Rime
+        mkdir -p Rabbit/Rime/dicts/eosphoros
+        cp Rime/dicts/eosphoros/eosphoros.user.dict.yaml Rabbit/Rime/dicts/eosphoros
+        cp Rime/eosphoros.custom.yaml Rabbit/Rime
         rm -rf Rabbit/Data/*
         rm -f Rime/default.custom.yaml
-        rm -f Rime/dicts/xmjd6/xmjd6.user.dict.yaml
-        rm -f Rime/xmjd6.custom.yaml
+        rm -f Rime/dicts/eosphoros/eosphoros.user.dict.yaml
+        rm -f Rime/eosphoros.custom.yaml
         cp /tmp/Rabbit_backup/* Rabbit/Data/
         rm -rf /tmp/Rabbit_backup
 
     - name: Merge Rime into Rabbit
       run: |
         cp -r Rime/. Rabbit/Data
-        zip -r Rabbit-xmjd6.zip Rabbit/
+        zip -r Rabbit-eosphoros.zip Rabbit/
 
     - name: Convert .dict.yaml files to .txt using Bash
       run: |
-        for dict_file in dicts/xmjd6/xmjd6.core.dict.yaml dicts/xmjd6/xmjd6.danzi.dict.yaml dicts/xmjd6/xmjd6.catholicism.dict.yaml dicts/xmjd6/xmjd6.protestantism.dict.yaml dicts/xmjd6/xmjd6.orthodoxy.dict.yaml dicts/xmjd6/xmjd6.oriental.dict.yaml dicts/xmjd6/xmjd6.assyrian.dict.yaml dicts/xmjd6/xmjd6.cizu.dict.yaml dicts/xmjd6/xmjd6.fjcy.dict.yaml dicts/xmjd6/xmjd6.ice.dict.yaml dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml dicts/xmjd6/xmjd6.en.dict.yaml
+        for dict_file in dicts/eosphoros/eosphoros.core.dict.yaml dicts/eosphoros/eosphoros.danzi.dict.yaml dicts/eosphoros/eosphoros.catholicism.dict.yaml dicts/eosphoros/eosphoros.protestantism.dict.yaml dicts/eosphoros/eosphoros.orthodoxy.dict.yaml dicts/eosphoros/eosphoros.oriental.dict.yaml dicts/eosphoros/eosphoros.assyrian.dict.yaml dicts/eosphoros/eosphoros.cizu.dict.yaml dicts/eosphoros/eosphoros.fjcy.dict.yaml dicts/eosphoros/eosphoros.ice.dict.yaml dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml dicts/eosphoros/eosphoros.en.dict.yaml
         do
           base=$(basename "$dict_file")
           if [[ "$base" == *.dict.yaml ]]; then
@@ -250,7 +250,7 @@ jobs:
           awk -F'\t' '
           /^[^#]/ {
             if ($0 ~ /^---|name:|version:|sort:|\.\.\.$/) next;
-            if (FILENAME ~ /xmjd6[.]en[.]dict[.]yaml$/) {
+            if (FILENAME ~ /eosphoros[.]en[.]dict[.]yaml$/) {
               print $2 " " $1
             } else if ($1 ~ /^[A-Za-z0-9\s]+$/) {
               print $1 " " $2
@@ -263,46 +263,46 @@ jobs:
     - name: Merge .txt files in specific order, add header
       run: |
         # 创建头文件
-        header='name=星猫键道6\nkey=`abcedfghijklmnopqrstuvwxyz;\\\nlen=12\nwildcard=~\nbihua=viuoa\ncode_e2=p11+p12+p21+p22+p13+p23\ncode_e3=p11+p21+p31+p13+p23+p33\ncode_a4=p11+p21+p31+n11+p13+p23+p33\n[DATA]'
-        echo -e "$header" > Rime/xmjd6.header.txt
+        header='name=晨星键道\nkey=`abcedfghijklmnopqrstuvwxyz;\\\nlen=12\nwildcard=~\nbihua=viuoa\ncode_e2=p11+p12+p21+p22+p13+p23\ncode_e3=p11+p21+p31+p13+p23+p33\ncode_a4=p11+p21+p31+n11+p13+p23+p33\n[DATA]'
+        echo -e "$header" > Rime/eosphoros.header.txt
 
         # 按照指定顺序合并 .txt 文件
-        cat Rime/xmjd6.danzi.txt \
-            Rime/xmjd6.cizu.txt \
-            Rime/xmjd6.catholicism.txt \
-            Rime/xmjd6.protestantism.txt \
-            Rime/xmjd6.orthodoxy.txt \
-            Rime/xmjd6.oriental.txt \
-            Rime/xmjd6.assyrian.txt \
-            Rime/xmjd6.core.txt \
-            Rime/xmjd6.fjcy.txt \
-            Rime/xmjd6.ice.txt \
-            Rime/xmjd6.wanxiang.yaopin.txt \
-            Rime/xmjd6.wanxiang.yixue.txt \
-            Rime/xmjd6.wanxiang.huaxue.txt \
-            Rime/xmjd6.wanxiang.diming.txt \
-            Rime/xmjd6.wanxiang.mingren.txt \
-            Rime/xmjd6.wanxiang.taifeng.txt \
-            Rime/xmjd6.wanxiang.jichu.txt \
-            Rime/xmjd6.en.txt > Rime/xmjd6.body.txt
+        cat Rime/eosphoros.danzi.txt \
+            Rime/eosphoros.cizu.txt \
+            Rime/eosphoros.catholicism.txt \
+            Rime/eosphoros.protestantism.txt \
+            Rime/eosphoros.orthodoxy.txt \
+            Rime/eosphoros.oriental.txt \
+            Rime/eosphoros.assyrian.txt \
+            Rime/eosphoros.core.txt \
+            Rime/eosphoros.fjcy.txt \
+            Rime/eosphoros.ice.txt \
+            Rime/eosphoros.wanxiang.yaopin.txt \
+            Rime/eosphoros.wanxiang.yixue.txt \
+            Rime/eosphoros.wanxiang.huaxue.txt \
+            Rime/eosphoros.wanxiang.diming.txt \
+            Rime/eosphoros.wanxiang.mingren.txt \
+            Rime/eosphoros.wanxiang.taifeng.txt \
+            Rime/eosphoros.wanxiang.jichu.txt \
+            Rime/eosphoros.en.txt > Rime/eosphoros.body.txt
 
         # 将头文件和主体文件合并到一个中间文件
-        cat Rime/xmjd6.header.txt Rime/xmjd6.body.txt > mb/xmjd6/tmp_xmjd6.txt
+        cat Rime/eosphoros.header.txt Rime/eosphoros.body.txt > mb/eosphoros/tmp_eosphoros.txt
 
         # 将中间文件移动到最终位置
-        mv mb/xmjd6/tmp_xmjd6.txt mb/xmjd6/xmjd6.txt
-    - name: Generate dazhu.txt from xmjd6.body.txt，and clean up
+        mv mb/eosphoros/tmp_eosphoros.txt mb/eosphoros/eosphoros.txt
+    - name: Generate dazhu.txt from eosphoros.body.txt，and clean up
       run: |
         # 1. 检查输入文件
-        if [ ! -f Rime/xmjd6.body.txt ]; then
-          echo "Error: Rime/xmjd6.body.txt not found. Cannot proceed."
+        if [ ! -f Rime/eosphoros.body.txt ]; then
+          echo "Error: Rime/eosphoros.body.txt not found. Cannot proceed."
           exit 1
         fi
 
         # 2. 对文件进行排序 (稳定排序)
         #    -k1,1 按第一列 (编码) 排序
         #    -s (--stable) **关键修正：** 保持相同键的原始相对顺序
-        sort -k1,1 -s Rime/xmjd6.body.txt > /tmp/sorted_body.txt
+        sort -k1,1 -s Rime/eosphoros.body.txt > /tmp/sorted_body.txt
 
         # 3. AWK 脚本 (保持不变，它会忠实地执行 sorted_body.txt 的顺序)
         awk '
@@ -340,10 +340,10 @@ jobs:
 
         # 4. 检查文件并清理
         ls -al dazhu.txt
-        rm /tmp/sorted_body.txt Rime/xmjd6.header.txt Rime/xmjd6.body.txt
+        rm /tmp/sorted_body.txt Rime/eosphoros.header.txt Rime/eosphoros.body.txt
 
         # 5. 编码转换 (保持不变)
-        python -c "with open('mb/xmjd6/xmjd6.txt', 'r', encoding='utf-8') as f: data = f.read(); open('mb/xmjd6/xmjd6.txt', 'w', encoding='gb18030', errors='ignore').write(data)"
+        python -c "with open('mb/eosphoros/eosphoros.txt', 'r', encoding='utf-8') as f: data = f.read(); open('mb/eosphoros/eosphoros.txt', 'w', encoding='gb18030', errors='ignore').write(data)"
 
     - name: Zip yong
       run: |
@@ -357,7 +357,7 @@ jobs:
         7z x yong-win.7z -oyong_temp
         cp -r .yong yong_temp/yong
         cd yong_temp
-        zip -r ../yong-xmjd6.zip yong
+        zip -r ../yong-eosphoros.zip yong
         rm -rf ../.yong ../yong_temp
 
     - name: Create Release
@@ -376,84 +376,84 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload Rabbit-xmjd6.zip to Release
+    - name: Upload Rabbit-eosphoros.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Rabbit-xmjd6.zip
-        asset_name: Rabbit-xmjd6.zip
+        asset_path: ./Rabbit-eosphoros.zip
+        asset_name: Rabbit-eosphoros.zip
         asset_content_type: application/zip
 
-    - name: Upload yong-xmjd6.zip to Release
+    - name: Upload yong-eosphoros.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./yong-xmjd6.zip
-        asset_name: yong-xmjd6.zip
+        asset_path: ./yong-eosphoros.zip
+        asset_name: yong-eosphoros.zip
         asset_content_type: application/zip
 
-    - name: Upload xmjd6.zip to Release
+    - name: Upload eosphoros.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./xmjd6.zip
-        asset_name: xmjd6.zip
+        asset_path: ./eosphoros.zip
+        asset_name: eosphoros.zip
         asset_content_type: application/zip
 
-    - name: Upload xmjd6-weasel.zip to Release
+    - name: Upload eosphoros-weasel.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./xmjd6-weasel.zip
-        asset_name: xmjd6-weasel.zip
+        asset_path: ./eosphoros-weasel.zip
+        asset_name: eosphoros-weasel.zip
         asset_content_type: application/zip
 
-    - name: Upload xmjd6-squirrel.zip to Release
+    - name: Upload eosphoros-squirrel.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./xmjd6-squirrel.zip
-        asset_name: xmjd6-squirrel.zip
+        asset_path: ./eosphoros-squirrel.zip
+        asset_name: eosphoros-squirrel.zip
         asset_content_type: application/zip
 
-    - name: Upload xmjd6-fcitx5-macos.zip to Release
+    - name: Upload eosphoros-fcitx5-macos.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./xmjd6-fcitx5-macos.zip
-        asset_name: xmjd6-fcitx5-macos.zip
+        asset_path: ./eosphoros-fcitx5-macos.zip
+        asset_name: eosphoros-fcitx5-macos.zip
         asset_content_type: application/zip
 
-    - name: Upload xmjd6-fcitx5-linux.zip to Release
+    - name: Upload eosphoros-fcitx5-linux.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./xmjd6-fcitx5-linux.zip
-        asset_name: xmjd6-fcitx5-linux.zip
+        asset_path: ./eosphoros-fcitx5-linux.zip
+        asset_name: eosphoros-fcitx5-linux.zip
         asset_content_type: application/zip
 
-    - name: Upload xmjd6-mobile.zip to Release
+    - name: Upload eosphoros-mobile.zip to Release
       uses: shogo82148/actions-upload-release-asset@v1.10.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./xmjd6-mobile.zip
-        asset_name: xmjd6-mobile.zip
+        asset_path: ./eosphoros-mobile.zip
+        asset_name: eosphoros-mobile.zip
         asset_content_type: application/zip
 
     - name: Upload Fcitx5 Linux themes to Release
@@ -462,8 +462,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./fcitx5-linux-xmjd6-themes.zip
-        asset_name: fcitx5-linux-xmjd6-themes.zip
+        asset_path: ./fcitx5-linux-eosphoros-themes.zip
+        asset_name: fcitx5-linux-eosphoros-themes.zip
         asset_content_type: application/zip
 
     - name: Upload Fcitx5 macOS themes to Release
@@ -472,8 +472,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./fcitx5-macos-xmjd6-themes.zip
-        asset_name: fcitx5-macos-xmjd6-themes.zip
+        asset_path: ./fcitx5-macos-eosphoros-themes.zip
+        asset_name: fcitx5-macos-eosphoros-themes.zip
         asset_content_type: application/zip
 
     - name: Upload dazhu.txt to Release

@@ -23,23 +23,23 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertEqual(
             set(members),
             {
-                "xmjd6.zip",
-                "xmjd6-weasel.zip",
-                "xmjd6-squirrel.zip",
-                "xmjd6-fcitx5-macos.zip",
-                "xmjd6-fcitx5-linux.zip",
-                "xmjd6-mobile.zip",
+                "eosphoros.zip",
+                "eosphoros-weasel.zip",
+                "eosphoros-squirrel.zip",
+                "eosphoros-fcitx5-macos.zip",
+                "eosphoros-fcitx5-linux.zip",
+                "eosphoros-mobile.zip",
             },
         )
 
         common = {
             "default.yaml",
             "default.custom.yaml",
-            "xmjd6.schema.yaml",
-            "dicts/xmjd6/xmjd6.danzi.dict.yaml",
-            "dicts/xmjd6/xmjd6.wanxiang.yaopin.dict.yaml",
-            "lua/xmjd6/xmjd6_core.lua",
-            "opencc/xmjd6/xmjd6_emoji_chars.lua",
+            "eosphoros.schema.yaml",
+            "dicts/eosphoros/eosphoros.danzi.dict.yaml",
+            "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml",
+            "lua/eosphoros/eosphoros_core.lua",
+            "opencc/eosphoros/eosphoros_emoji_chars.lua",
             "zzc_state/char_parts.tsv",
             "README.md",
             "THIRD_PARTY.md",
@@ -47,8 +47,8 @@ class PlatformPackageTests(unittest.TestCase):
             "zzc/README.md",
             "zzc/自造词使用教程.md",
             "zzc/自造词使用教程.png",
-            "zzc/xmjd6_词库合并.py",
-            "zzc/xmjd6_撤回合并.py",
+            "zzc/eosphoros_词库合并.py",
+            "zzc/eosphoros_撤回合并.py",
             "licenses/rime-ice-GPL-3.0.txt",
         }
         for name, files in members.items():
@@ -58,26 +58,26 @@ class PlatformPackageTests(unittest.TestCase):
 
         shared_zzc = {path for path in common if path.startswith("zzc/")}
         expected_platform_zzc = {
-            "xmjd6.zip": set(),
-            "xmjd6-weasel.zip": {
+            "eosphoros.zip": set(),
+            "eosphoros-weasel.zip": {
                 "zzc/Win_词库合并.exe",
                 "zzc/Win_撤回合并.exe",
                 "zzc/Windows_词库合并.py",
                 "zzc/Windows_撤回合并.py",
             },
-            "xmjd6-squirrel.zip": {
+            "eosphoros-squirrel.zip": {
                 "zzc/Mac_词库合并",
                 "zzc/Mac_撤回合并",
             },
-            "xmjd6-fcitx5-macos.zip": {
+            "eosphoros-fcitx5-macos.zip": {
                 "zzc/Fcitx5_macOS_词库合并.py",
                 "zzc/Fcitx5_macOS_撤回合并.py",
             },
-            "xmjd6-fcitx5-linux.zip": {
+            "eosphoros-fcitx5-linux.zip": {
                 "zzc/Fcitx5_Linux_词库合并.py",
                 "zzc/Fcitx5_Linux_撤回合并.py",
             },
-            "xmjd6-mobile.zip": {
+            "eosphoros-mobile.zip": {
                 "zzc/iOS_词库合并.py",
                 "zzc/iOS快捷指令合并说明.md",
                 "zzc/a-Shell快捷指令合并说明.md",
@@ -90,7 +90,7 @@ class PlatformPackageTests(unittest.TestCase):
                 name,
             )
 
-        core = members["xmjd6.zip"]
+        core = members["eosphoros.zip"]
         for frontend_file in (
             "weasel.yaml",
             "squirrel.yaml",
@@ -99,48 +99,48 @@ class PlatformPackageTests(unittest.TestCase):
         ):
             self.assertNotIn(frontend_file, core)
 
-        weasel = members["xmjd6-weasel.zip"]
+        weasel = members["eosphoros-weasel.zip"]
         self.assertIn("weasel.yaml", weasel)
         self.assertIn("weasel.custom.yaml", weasel)
-        self.assertIn("xmjd6.ico", weasel)
+        self.assertIn("eosphoros.ico", weasel)
         self.assertIn("zzc/Win_词库合并.exe", weasel)
         self.assertIn("zzc/Windows_词库合并.py", weasel)
         self.assertIn("zzc/Windows_撤回合并.py", weasel)
         self.assertNotIn("squirrel.yaml", weasel)
         self.assertNotIn("Hamster.yaml", weasel)
 
-        squirrel = members["xmjd6-squirrel.zip"]
+        squirrel = members["eosphoros-squirrel.zip"]
         self.assertIn("squirrel.yaml", squirrel)
         self.assertIn("squirrel.custom.yaml", squirrel)
         self.assertIn("zzc/Mac_词库合并", squirrel)
         self.assertNotIn("weasel.yaml", squirrel)
         self.assertNotIn("Hamster.yaml", squirrel)
 
-        fcitx5_macos = members["xmjd6-fcitx5-macos.zip"]
+        fcitx5_macos = members["eosphoros-fcitx5-macos.zip"]
         self.assertIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_macos)
         self.assertIn("zzc/Fcitx5_macOS_撤回合并.py", fcitx5_macos)
-        self.assertIn("fcitx5/macos/themes/xmjd6-auto.conf", fcitx5_macos)
+        self.assertIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_macos)
         self.assertNotIn(
-            "fcitx5/linux/themes/xmjd6-CatLight/theme.conf", fcitx5_macos
+            "fcitx5/linux/themes/eosphoros-CatLight/theme.conf", fcitx5_macos
         )
         self.assertNotIn("weasel.yaml", fcitx5_macos)
         self.assertNotIn("squirrel.yaml", fcitx5_macos)
         self.assertNotIn("Hamster.yaml", fcitx5_macos)
 
-        fcitx5_linux = members["xmjd6-fcitx5-linux.zip"]
-        self.assertIn("zzc/xmjd6_词库合并.py", fcitx5_linux)
+        fcitx5_linux = members["eosphoros-fcitx5-linux.zip"]
+        self.assertIn("zzc/eosphoros_词库合并.py", fcitx5_linux)
         self.assertIn("zzc/Fcitx5_Linux_词库合并.py", fcitx5_linux)
         self.assertIn("zzc/Fcitx5_Linux_撤回合并.py", fcitx5_linux)
         self.assertIn(
-            "fcitx5/linux/themes/xmjd6-CatLight/theme.conf", fcitx5_linux
+            "fcitx5/linux/themes/eosphoros-CatLight/theme.conf", fcitx5_linux
         )
-        self.assertNotIn("fcitx5/macos/themes/xmjd6-auto.conf", fcitx5_linux)
+        self.assertNotIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_linux)
         self.assertNotIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_linux)
         self.assertNotIn("weasel.yaml", fcitx5_linux)
         self.assertNotIn("squirrel.yaml", fcitx5_linux)
         self.assertNotIn("Hamster.yaml", fcitx5_linux)
 
-        mobile = members["xmjd6-mobile.zip"]
+        mobile = members["eosphoros-mobile.zip"]
         self.assertIn("Hamster.yaml", mobile)
         self.assertIn("include_iCloud_rime_files.txt", mobile)
         self.assertIn("include_keyboard_rime_files.txt", mobile)
@@ -150,10 +150,10 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("zzc/Win_词库合并.exe", mobile)
 
         for name in (
-            "xmjd6.zip",
-            "xmjd6-weasel.zip",
-            "xmjd6-squirrel.zip",
-            "xmjd6-mobile.zip",
+            "eosphoros.zip",
+            "eosphoros-weasel.zip",
+            "eosphoros-squirrel.zip",
+            "eosphoros-mobile.zip",
         ):
             self.assertFalse(
                 any(path.startswith("fcitx5/") for path in members[name]), name

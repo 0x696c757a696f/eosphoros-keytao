@@ -29,11 +29,11 @@ def add_error(errors: list[str], path: Path, message: str) -> None:
 
 def validate_layout(errors: list[str]) -> None:
     for path in (ROOT / "lua").rglob("*.lua"):
-        if path.relative_to(ROOT / "lua").parts[0] != "xmjd6":
-            add_error(errors, path, "Lua source must live below lua/xmjd6/")
+        if path.relative_to(ROOT / "lua").parts[0] != "eosphoros":
+            add_error(errors, path, "Lua source must live below lua/eosphoros/")
     for path in (ROOT / "opencc").rglob("*"):
-        if path.is_file() and path.relative_to(ROOT / "opencc").parts[0] != "xmjd6":
-            add_error(errors, path, "OpenCC data must live below opencc/xmjd6/")
+        if path.is_file() and path.relative_to(ROOT / "opencc").parts[0] != "eosphoros":
+            add_error(errors, path, "OpenCC data must live below opencc/eosphoros/")
 
 
 def validate_versions(errors: list[str]) -> None:
@@ -80,7 +80,7 @@ def dict_header(path: Path, errors: list[str]) -> tuple[dict, int | None]:
 
 def validate_dictionaries(errors: list[str]) -> None:
     dictionary_paths = list(ROOT.glob("*.dict.yaml"))
-    dictionary_paths.extend((ROOT / "dicts" / "xmjd6").glob("*.dict.yaml"))
+    dictionary_paths.extend((ROOT / "dicts" / "eosphoros").glob("*.dict.yaml"))
     for path in sorted(dictionary_paths):
         header, marker = dict_header(path, errors)
         imports = header.get("import_tables", [])
@@ -117,7 +117,7 @@ def validate_module_references(errors: list[str]) -> None:
     for path in sorted((ROOT / "lua").rglob("*.lua")):
         text = path.read_text(encoding="utf-8-sig")
         for module in REQUIRE_RE.findall(text):
-            if not module.startswith("xmjd6"):
+            if not module.startswith("eosphoros"):
                 continue
             target = ROOT / "lua" / Path(*module.split("."))
             target = target.with_suffix(".lua")

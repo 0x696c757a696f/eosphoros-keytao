@@ -14,7 +14,7 @@ from tools.build_catholicism_expansion import START_MARKER as EXPANSION_START_MA
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGET_NAME = "xmjd6.catholicism.dict.yaml"
+TARGET_NAME = "eosphoros.catholicism.dict.yaml"
 START_MARKER = "# 2026-08-04 既有天主教词库分类 ==========================================="
 END_MARKER = "# ============================ 既有词库分类结束 ============================"
 DESCRIPTION = "# 保留原有词条、编码和候选顺序，仅按既有来源块添加分类分隔线。"
@@ -74,7 +74,7 @@ def organize_dictionary_text(text: str) -> str:
 
 
 def expected_dictionary_text(root: Path = ROOT) -> str:
-    target = root / "dicts" / "xmjd6" / TARGET_NAME
+    target = root / "dicts" / "eosphoros" / TARGET_NAME
     return organize_dictionary_text(target.read_text(encoding="utf-8-sig"))
 
 
@@ -88,7 +88,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    target = ROOT / "dicts" / "xmjd6" / TARGET_NAME
+    target = ROOT / "dicts" / "eosphoros" / TARGET_NAME
     expected = expected_dictionary_text(ROOT)
     if args.check:
         actual = target.read_text(encoding="utf-8-sig").replace("\r\n", "\n")

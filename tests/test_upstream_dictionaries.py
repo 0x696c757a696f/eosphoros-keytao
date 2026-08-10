@@ -24,11 +24,11 @@ from tools.sync_upstream_dictionaries import (
     render_danzi,
     verify_generated_hashes,
 )
-from tools.xmjd6_codes import code_candidates_from_full_codes, iter_dictionary_rows
+from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DICT_DIR = ROOT / "dicts" / "xmjd6"
+DICT_DIR = ROOT / "dicts" / "eosphoros"
 
 
 def source_text(*rows: str) -> str:
@@ -36,25 +36,25 @@ def source_text(*rows: str) -> str:
 
 
 class UpstreamDictionaryTests(unittest.TestCase):
-    def test_data_dictionaries_live_below_dicts_xmjd6_with_rimetool_root_index(self) -> None:
+    def test_data_dictionaries_live_below_dicts_eosphoros_with_rimetool_root_index(self) -> None:
         self.assertEqual(
             [path.name for path in ROOT.glob("*.dict.yaml")],
-            ["xmjd6.extended.dict.yaml"],
+            ["eosphoros.extended.dict.yaml"],
         )
-        dictionary_dir = ROOT / "dicts" / "xmjd6"
+        dictionary_dir = ROOT / "dicts" / "eosphoros"
         self.assertTrue((dictionary_dir / "pinyin_simp.dict.yaml").is_file())
         self.assertTrue((dictionary_dir / "liangfen.dict.yaml").is_file())
-        main_schema = (ROOT / "xmjd6.schema.yaml").read_text(encoding="utf-8")
-        self.assertIn("dictionary: xmjd6.extended", main_schema)
+        main_schema = (ROOT / "eosphoros.schema.yaml").read_text(encoding="utf-8")
+        self.assertIn("dictionary: eosphoros.extended", main_schema)
         for schema_name in ("pinyin_simp.schema.yaml", "liangfen.schema.yaml"):
             schema = (ROOT / schema_name).read_text(encoding="utf-8")
-            self.assertIn("dictionary: dicts/xmjd6/", schema)
-        root_index = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
+            self.assertIn("dictionary: dicts/eosphoros/", schema)
+        root_index = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
         import_block = root_index.split("import_tables:", 1)[1]
         first_import = next(
             line.strip() for line in import_block.splitlines() if line.startswith("  - ")
         )
-        self.assertEqual(first_import, "- dicts/xmjd6/xmjd6.user")
+        self.assertEqual(first_import, "- dicts/eosphoros/eosphoros.user")
 
     def test_tone_marked_pinyin_normalizes_without_losing_umlaut(self) -> None:
         self.assertEqual(normalize_pinyin_syllable("piàn"), "pian")
@@ -107,12 +107,12 @@ class UpstreamDictionaryTests(unittest.TestCase):
     def test_emoji_extra_adds_rime_ice_rows_without_overwriting_local_data(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            emoji_root = root / "opencc" / "xmjd6"
+            emoji_root = root / "opencc" / "eosphoros"
             emoji_root.mkdir(parents=True)
-            (emoji_root / "xmjd6_emoji_chars.lua").write_text(
+            (emoji_root / "eosphoros_emoji_chars.lua").write_text(
                 'return {\n  ["笑"] = "😁",\n}\n', encoding="utf-8"
             )
-            (emoji_root / "xmjd6_emoji_phrases_0.lua").write_text(
+            (emoji_root / "eosphoros_emoji_phrases_0.lua").write_text(
                 'return {\n  ["你好"] = "👋",\n}\n', encoding="utf-8"
             )
             chars, index, phrases, stats = build_emoji_extra(
@@ -345,7 +345,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         lock = load_lock()
         rendered = render_danzi("不\tb\n宾\tbb\n滨\tbbv\n", lock)
 
-        self.assertIn("name: xmjd6.danzi", rendered)
+        self.assertIn("name: eosphoros.danzi", rendered)
         self.assertIn(lock["sources"]["rime_jiandao"]["commit"], rendered)
         self.assertTrue(rendered.endswith("不\tb\n宾\tbb\n滨\tbbv\n"))
 
@@ -375,36 +375,36 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(verify_generated_hashes(ROOT), [])
 
     def test_ice_dictionary_is_imported_after_local_wordlists(self) -> None:
-        text = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
-        self.assertIn("  - dicts/xmjd6/xmjd6.ice", text)
+        text = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        self.assertIn("  - dicts/eosphoros/eosphoros.ice", text)
         self.assertLess(
-            text.index("  - dicts/xmjd6/xmjd6.fjcy"),
-            text.index("  - dicts/xmjd6/xmjd6.ice"),
+            text.index("  - dicts/eosphoros/eosphoros.fjcy"),
+            text.index("  - dicts/eosphoros/eosphoros.ice"),
         )
 
-    def test_wanxiang_dictionaries_are_split_below_dicts_xmjd6_after_ice(self) -> None:
-        text = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
+    def test_wanxiang_dictionaries_are_split_below_dicts_eosphoros_after_ice(self) -> None:
+        text = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
         names = [name for name, _ in RIME_WANXIANG_FILES]
         paths = [
-            ROOT / "dicts" / "xmjd6" / f"xmjd6.wanxiang.{name}.dict.yaml"
+            ROOT / "dicts" / "eosphoros" / f"eosphoros.wanxiang.{name}.dict.yaml"
             for name in names
         ]
         for name, path in zip(names, paths, strict=True):
-            table = f"dicts/xmjd6/xmjd6.wanxiang.{name}"
+            table = f"dicts/eosphoros/eosphoros.wanxiang.{name}"
             self.assertIn(f"  - {table}", text)
             self.assertLess(
-                text.index("  - dicts/xmjd6/xmjd6.ice"), text.index(f"  - {table}")
+                text.index("  - dicts/eosphoros/eosphoros.ice"), text.index(f"  - {table}")
             )
             self.assertTrue(path.is_file())
-        self.assertFalse((ROOT / "xmjd6.wanxiang.dict.yaml").exists())
+        self.assertFalse((ROOT / "eosphoros.wanxiang.dict.yaml").exists())
         rows = [row for path in paths for row in iter_dictionary_rows(path)]
         self.assertEqual(len(rows), len({word for word, _ in rows}))
         self.assertTrue(all(re.fullmatch(r"[a-z]{3,6}", code) for _, code in rows))
         wanxiang_codes = {code for _, code in rows}
         higher_priority_codes = {
             code
-            for path in DICT_DIR.glob("xmjd6.*.dict.yaml")
-            if path.name != "xmjd6.en.dict.yaml" and ".wanxiang." not in path.name
+            for path in DICT_DIR.glob("eosphoros.*.dict.yaml")
+            if path.name != "eosphoros.en.dict.yaml" and ".wanxiang." not in path.name
             for _, code in iter_dictionary_rows(path)
         }
         self.assertEqual(wanxiang_codes & higher_priority_codes, set())
@@ -413,32 +413,32 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(lock["sources"]["rime_wanxiang"]["license"], "CC-BY-4.0")
 
     def test_english_dictionary_uses_main_schema_i_namespace(self) -> None:
-        extended = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
-        schema = (ROOT / "xmjd6.schema.yaml").read_text(encoding="utf-8")
-        self.assertIn("  - dicts/xmjd6/xmjd6.en", extended)
+        extended = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        schema = (ROOT / "eosphoros.schema.yaml").read_text(encoding="utf-8")
+        self.assertIn("  - dicts/eosphoros/eosphoros.en", extended)
         self.assertIn("xform/^i(.+)$/$1/", schema)
         self.assertIn('prefix: "i"', schema)
         self.assertIn("max_code_length: 64", schema)
-        self.assertNotIn("- xmjd6.en", schema)
-        self.assertFalse((ROOT / "xmjd6.en.schema.yaml").exists())
-        rows = list(iter_dictionary_rows(DICT_DIR / "xmjd6.en.dict.yaml"))
+        self.assertNotIn("- eosphoros.en", schema)
+        self.assertFalse((ROOT / "eosphoros.en.schema.yaml").exists())
+        rows = list(iter_dictionary_rows(DICT_DIR / "eosphoros.en.dict.yaml"))
         self.assertGreater(len(rows), 20_000)
         self.assertEqual(len(rows), len(set(rows)))
         self.assertTrue(all(re.fullmatch(r"i[a-z]+", code) for _, code in rows))
         english_codes = {code for _, code in rows}
         local_files = (
-            "xmjd6.user.dict.yaml",
-            "xmjd6.zzc.dict.yaml",
-            "xmjd6.danzi.dict.yaml",
-            "xmjd6.cizu.dict.yaml",
-            "xmjd6.catholicism.dict.yaml",
-            "xmjd6.protestantism.dict.yaml",
-            "xmjd6.orthodoxy.dict.yaml",
-            "xmjd6.oriental.dict.yaml",
-            "xmjd6.assyrian.dict.yaml",
-            "xmjd6.core.dict.yaml",
-            "xmjd6.fjcy.dict.yaml",
-            "xmjd6.ice.dict.yaml",
+            "eosphoros.user.dict.yaml",
+            "eosphoros.zzc.dict.yaml",
+            "eosphoros.danzi.dict.yaml",
+            "eosphoros.cizu.dict.yaml",
+            "eosphoros.catholicism.dict.yaml",
+            "eosphoros.protestantism.dict.yaml",
+            "eosphoros.orthodoxy.dict.yaml",
+            "eosphoros.oriental.dict.yaml",
+            "eosphoros.assyrian.dict.yaml",
+            "eosphoros.core.dict.yaml",
+            "eosphoros.fjcy.dict.yaml",
+            "eosphoros.ice.dict.yaml",
         )
         local_codes = {
             code
@@ -449,16 +449,16 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(english_codes & local_codes, set())
 
     def test_rime_ice_emoji_overlay_is_loaded_by_the_existing_lua_filter(self) -> None:
-        schema = (ROOT / "xmjd6.schema.yaml").read_text(encoding="utf-8")
+        schema = (ROOT / "eosphoros.schema.yaml").read_text(encoding="utf-8")
         chars = (
-            ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_chars.lua"
+            ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_chars.lua"
         ).read_text(encoding="utf-8")
         phrases = (
-            ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_phrases_0.lua"
+            ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_phrases_0.lua"
         ).read_text(encoding="utf-8")
         lock = load_lock()
 
-        self.assertIn('dataset_name: "xmjd6_emoji_extra"', schema)
+        self.assertIn('dataset_name: "eosphoros_emoji_extra"', schema)
         self.assertIn('["嗅"] = "嗅 👃"', chars)
         self.assertIn('["熬夜"] = "熬夜 🫩"', phrases)
         self.assertIn('["指纹"] = "指纹 🫆"', phrases)
@@ -469,13 +469,13 @@ class UpstreamDictionaryTests(unittest.TestCase):
         workflow = (ROOT / ".github" / "workflows" / "create-release.yml").read_text(
             encoding="utf-8"
         )
-        self.assertIn("xmjd6.ice.dict.yaml", workflow)
-        self.assertIn("Rime/xmjd6.ice.txt", workflow)
-        self.assertIn("xmjd6.en.dict.yaml", workflow)
-        self.assertIn("Rime/xmjd6.en.txt", workflow)
-        self.assertIn("dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml", workflow)
-        self.assertIn("Rime/xmjd6.wanxiang.yaopin.txt", workflow)
-        self.assertIn("Rime/xmjd6.wanxiang.jichu.txt", workflow)
+        self.assertIn("eosphoros.ice.dict.yaml", workflow)
+        self.assertIn("Rime/eosphoros.ice.txt", workflow)
+        self.assertIn("eosphoros.en.dict.yaml", workflow)
+        self.assertIn("Rime/eosphoros.en.txt", workflow)
+        self.assertIn("dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml", workflow)
+        self.assertIn("Rime/eosphoros.wanxiang.yaopin.txt", workflow)
+        self.assertIn("Rime/eosphoros.wanxiang.jichu.txt", workflow)
 
     def test_incremental_updater_compares_pinned_git_commits(self) -> None:
         script = (ROOT / "tools" / "update_upstream_dictionaries.ps1").read_text(
