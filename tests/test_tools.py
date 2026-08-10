@@ -66,6 +66,9 @@ class RepositoryValidationTests(unittest.TestCase):
         main_schema = main_schema_path.read_text(encoding="utf-8")
         self.assertIn("schema_id: eosphoros", main_schema)
         self.assertIn("name: 晨星键道", main_schema)
+        custom_schema = (root / "eosphoros.custom.yaml").read_text(encoding="utf-8")
+        self.assertIn("schema/name: 晨星键道", custom_schema)
+        self.assertNotIn("🌟🐈", custom_schema)
         for relative in (
             "dicts/eosphoros",
             "lua/eosphoros",
