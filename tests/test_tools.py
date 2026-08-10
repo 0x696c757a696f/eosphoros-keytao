@@ -16,6 +16,12 @@ from unittest.mock import patch
 import yaml
 
 
+def dict_path(root: Path, name: str) -> Path:
+    path = root / "dicts" / "xmjd6" / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
+
+
 class FetchOpenCCTests(unittest.TestCase):
     def test_extracts_only_opencc_data_into_namespaced_directory(self) -> None:
         from tools.fetch_opencc import extract_opencc_archive
@@ -220,6 +226,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
         runtime_files = [
             *root.glob("*.yaml"),
+            *(root / "dicts" / "xmjd6").glob("*.dict.yaml"),
             *(root / "lua" / "xmjd6").rglob("*.lua"),
             *(root / "opencc" / "xmjd6").rglob("*.lua"),
         ]
@@ -562,6 +569,13 @@ class RepositoryValidationTests(unittest.TestCase):
             module.target_dict_name_options("xmjd6"),
             [["xmjd6.cizu.dict.yaml"], ["xmjd6.fjcy.dict.yaml"]],
         )
+        self.assertEqual(
+            module.resolve_target_dicts(root, "xmjd6"),
+            [
+                root / "dicts" / "xmjd6" / "xmjd6.cizu.dict.yaml",
+                root / "dicts" / "xmjd6" / "xmjd6.fjcy.dict.yaml",
+            ],
+        )
         with self.assertRaisesRegex(ValueError, "expected xmjd6"):
             module.target_dict_name_options("other")
         with self.assertRaisesRegex(ValueError, "expected xmjd6"):
@@ -593,13 +607,13 @@ columns:
             zzc_dir = root / "zzc"
             zzc_dir.mkdir()
             shutil.copy2(repository / "zzc" / "xmjd6_词库合并.py", zzc_dir)
-            (root / "xmjd6.cizu.dict.yaml").write_text(
+            dict_path(root, "xmjd6.cizu.dict.yaml").write_text(
                 dictionary_header.format(name="xmjd6.cizu"), encoding="utf-8"
             )
-            (root / "xmjd6.fjcy.dict.yaml").write_text(
+            dict_path(root, "xmjd6.fjcy.dict.yaml").write_text(
                 dictionary_header.format(name="xmjd6.fjcy"), encoding="utf-8"
             )
-            (root / "xmjd6.zzc.dict(1).yaml").write_text(
+            dict_path(root, "xmjd6.zzc.dict(1).yaml").write_text(
                 operation_header + "100\tadd\t测试自造词\tcszc\t+\n",
                 encoding="utf-8",
             )
@@ -622,11 +636,11 @@ columns:
                 0,
                 (result.stdout or "") + (result.stderr or ""),
             )
-            merged = (root / "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+            merged = dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
             self.assertIn("测试自造词\tcszc", merged)
-            self.assertFalse((root / "xmjd6.zzc.dict(1).yaml").exists())
+            self.assertFalse(dict_path(root, "xmjd6.zzc.dict(1).yaml").exists())
             self.assertEqual(
-                (root / "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
                 operation_header,
             )
             for state_name in (
@@ -649,6 +663,7 @@ columns:
         with tempfile.TemporaryDirectory() as temp_dir:
             state_dir = Path(temp_dir) / "zzc_state"
             state_dir.mkdir()
+            (Path(temp_dir) / "dicts" / "xmjd6").mkdir(parents=True)
             env = os.environ.copy()
             env["ZZC_TEST_DATA_DIR"] = temp_dir
             result = subprocess.run(
@@ -680,13 +695,13 @@ columns:
                 shutil.copy2(repository / "zzc" / "xmjd6_词库合并.py", zzc_dir)
                 shutil.copy2(repository / "zzc" / entry_name, zzc_dir)
                 for name in ("xmjd6.cizu", "xmjd6.fjcy"):
-                    (root / f"{name}.dict.yaml").write_text(
+                    dict_path(root, f"{name}.dict.yaml").write_text(
                         "# Rime dictionary\n---\n"
                         f'name: {name}\nversion: "2026-08-09"\n'
                         "sort: by_weight\n...\n",
                         encoding="utf-8",
                     )
-                (root / "xmjd6.zzc.dict.yaml").write_text(
+                dict_path(root, "xmjd6.zzc.dict.yaml").write_text(
                     "# Rime dictionary\n---\nname: xmjd6.zzc\n"
                     'version: "2026-08-09"\nsort: by_weight\n'
                     "columns:\n  - text\n  - code\n...\n"
@@ -707,7 +722,7 @@ columns:
                     0,
                     (result.stdout or "") + (result.stderr or ""),
                 )
-                merged = (root / "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+                merged = dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
                 self.assertIn("Fcitx5入口\tfcitx", merged)
 
     def test_typing_stats_migrates_to_namespaced_zzc_state(self) -> None:
@@ -763,13 +778,13 @@ columns:
             zzc_dir = root / "zzc"
             zzc_dir.mkdir()
             shutil.copy2(repository / "zzc" / "Win_词库合并.exe", zzc_dir)
-            (root / "xmjd6.cizu.dict.yaml").write_text(
+            dict_path(root, "xmjd6.cizu.dict.yaml").write_text(
                 dictionary_header.format(name="xmjd6.cizu"), encoding="utf-8"
             )
-            (root / "xmjd6.fjcy.dict.yaml").write_text(
+            dict_path(root, "xmjd6.fjcy.dict.yaml").write_text(
                 dictionary_header.format(name="xmjd6.fjcy"), encoding="utf-8"
             )
-            (root / "xmjd6.zzc.dict(1).yaml").write_text(
+            dict_path(root, "xmjd6.zzc.dict(1).yaml").write_text(
                 operation_header + "100\tadd\tEXE当前逻辑\texedq\t+\n",
                 encoding="utf-8",
             )
@@ -790,10 +805,10 @@ columns:
                 0,
                 (result.stdout or "") + (result.stderr or ""),
             )
-            merged = (root / "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
+            merged = dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8")
             self.assertIn("EXE当前逻辑\texedq", merged)
-            self.assertFalse((root / "xmjd6.zzc.dict(1).yaml").exists())
-            self.assertTrue((root / "xmjd6.zzc.dict.yaml").is_file())
+            self.assertFalse(dict_path(root, "xmjd6.zzc.dict(1).yaml").exists())
+            self.assertTrue(dict_path(root, "xmjd6.zzc.dict.yaml").is_file())
 
     @unittest.skipUnless(sys.platform == "win32", "committed EXE is Windows-only")
     def test_windows_rollback_executable_restores_latest_merge(self) -> None:
@@ -824,12 +839,12 @@ columns:
             for executable in ("Win_词库合并.exe", "Win_撤回合并.exe"):
                 shutil.copy2(repository / "zzc" / executable, zzc_dir)
             original_cizu = dictionary_header.format(name="xmjd6.cizu") + "原词\tycw\n"
-            (root / "xmjd6.cizu.dict.yaml").write_text(original_cizu, encoding="utf-8")
-            (root / "xmjd6.fjcy.dict.yaml").write_text(
+            dict_path(root, "xmjd6.cizu.dict.yaml").write_text(original_cizu, encoding="utf-8")
+            dict_path(root, "xmjd6.fjcy.dict.yaml").write_text(
                 dictionary_header.format(name="xmjd6.fjcy"), encoding="utf-8"
             )
             original_ops = operation_header + "100\tadd\t待撤回词\tdcht\t+\n"
-            (root / "xmjd6.zzc.dict.yaml").write_text(original_ops, encoding="utf-8")
+            dict_path(root, "xmjd6.zzc.dict.yaml").write_text(original_ops, encoding="utf-8")
 
             merge = subprocess.run(
                 [str(zzc_dir / "Win_词库合并.exe")],
@@ -844,7 +859,7 @@ columns:
             self.assertEqual(merge.returncode, 0, (merge.stdout or "") + (merge.stderr or ""))
             self.assertIn(
                 "待撤回词\tdcht",
-                (root / "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8"),
             )
 
             rollback = subprocess.run(
@@ -865,11 +880,11 @@ columns:
                 (rollback.stdout or "") + (rollback.stderr or ""),
             )
             self.assertEqual(
-                (root / "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "xmjd6.cizu.dict.yaml").read_text(encoding="utf-8"),
                 original_cizu,
             )
             self.assertEqual(
-                (root / "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
+                dict_path(root, "xmjd6.zzc.dict.yaml").read_text(encoding="utf-8"),
                 original_ops,
             )
 
@@ -935,7 +950,10 @@ columns:
             ".yml",
         }
         tracked = subprocess.run(
-            ["git", "-c", "core.quotepath=false", "ls-files", "-z"],
+            [
+                "git", "-c", "core.quotepath=false", "ls-files",
+                "--cached", "--others", "--exclude-standard", "-z",
+            ],
             cwd=root,
             capture_output=True,
             check=True,
@@ -945,6 +963,8 @@ columns:
             if not relative:
                 continue
             path = root / relative
+            if not path.is_file():
+                continue
             if path.suffix.lower() not in text_extensions and path.name != "VERSION":
                 continue
             try:

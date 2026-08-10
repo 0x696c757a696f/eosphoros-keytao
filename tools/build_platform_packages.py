@@ -62,9 +62,7 @@ def common_runtime_files(root: Path) -> list[Path]:
     files = [
         root / "default.yaml",
         root / "default.custom.yaml",
-        root / "liangfen.dict.yaml",
         root / "liangfen.schema.yaml",
-        root / "pinyin_simp.dict.yaml",
         root / "pinyin_simp.schema.yaml",
         root / "zzc_state" / "char_parts.tsv",
         root / "README.md",
@@ -77,6 +75,7 @@ def common_runtime_files(root: Path) -> list[Path]:
         root / "zzc" / "xmjd6_撤回合并.py",
     ]
     files.extend(sorted(root.glob("xmjd6*.yaml")))
+    files.extend(_files_below(root, "dicts/xmjd6"))
     files.extend(_files_below(root, "lua/xmjd6"))
     files.extend(_files_below(root, "opencc/xmjd6"))
     files.extend(_files_below(root, "licenses"))

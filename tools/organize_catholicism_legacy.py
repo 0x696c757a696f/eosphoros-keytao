@@ -74,7 +74,7 @@ def organize_dictionary_text(text: str) -> str:
 
 
 def expected_dictionary_text(root: Path = ROOT) -> str:
-    target = root / TARGET_NAME
+    target = root / "dicts" / "xmjd6" / TARGET_NAME
     return organize_dictionary_text(target.read_text(encoding="utf-8-sig"))
 
 
@@ -88,7 +88,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    target = ROOT / TARGET_NAME
+    target = ROOT / "dicts" / "xmjd6" / TARGET_NAME
     expected = expected_dictionary_text(ROOT)
     if args.check:
         actual = target.read_text(encoding="utf-8-sig").replace("\r\n", "\n")

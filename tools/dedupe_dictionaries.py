@@ -36,7 +36,7 @@ def dedupe(path: Path) -> int:
 
 def main() -> int:
     total = 0
-    for path in sorted(ROOT.glob("*.dict.yaml")):
+    for path in sorted((ROOT / "dicts" / "xmjd6").glob("*.dict.yaml")):
         removed = dedupe(path)
         if removed:
             print(f"{path.name}: removed {removed} exact duplicate row(s)")

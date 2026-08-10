@@ -30,7 +30,7 @@
 - `i` 键直接进入英文输入，不需要切换到单独的英文方案。
 - `u`、`v`、`o` 分别提供全拼、二分和 GBK/生僻字入口。
 - 支持自造词、逐码补全、630 提示、计算器、日期时间、打字统计、Emoji、简繁和火星文转换。
-- Lua 文件集中在 `lua/xmjd6/`，OpenCC 数据集中在 `opencc/xmjd6/`，避免污染用户目录的公共命名空间。
+- 词条数据集中在 `dicts/xmjd6/`，Lua 文件集中在 `lua/xmjd6/`，OpenCC 数据集中在 `opencc/xmjd6/`，避免污染用户目录的公共命名空间。
 - 上游词库使用 Git commit 锁定，可增量检测、确定性重建、定期验证并自动提交更新 PR。
 
 第一次安装请直接阅读[“如何使用”](#如何使用)。其中保留了 Windows、macOS、Android、iOS 和 Linux 各客户端的用户目录、导入步骤和重新部署方法；较少使用的 Linux 内容统一放在各平台说明末尾，并按桌面环境列出 Wayland、X11、平铺窗口管理器及 Electron 应用的特殊设置。
@@ -57,7 +57,7 @@
 本方案包含 Lua 处理器，所用 Rime 前端需要带有 `librime-lua` 支持。建议使用 librime 1.9.0 或更新版本。
 
 > [!IMPORTANT]
-> 请完整保留压缩包中的 `lua/xmjd6/` 与 `opencc/xmjd6/` 目录。只复制根目录 YAML 会导致顶功、自造词、英文、Emoji 或简繁转换不完整。
+> 请完整保留压缩包中的 `dicts/xmjd6/`、`lua/xmjd6/` 与 `opencc/xmjd6/` 目录。只复制根目录 YAML 会导致词库、顶功、自造词、英文、Emoji 或简繁转换不完整。
 
 | Release 文件 | 适用前端 | 额外内容 |
 | --- | --- | --- |
@@ -159,7 +159,7 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 
 ### 中州韵助手（rimetool）兼容性
 
-本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `xmjd6`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；各词典也都有明确的 `text`、`code` 等列和实际编码。
+本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `xmjd6`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；根目录保留 RimeTool 会按固定路径查找的 `xmjd6.extended.dict.yaml` 兼容索引，实际词条统一位于 `dicts/xmjd6/`。索引首项为 `dicts/xmjd6/xmjd6.user`，可供薄荷模板定位个人主词库。
 
 可在 rimetool 选择“薄荷解析模板”。模板要求的 `transcription`、`emoji`、`ascii_punct` 和 `melt_eng` 都已提供：`transcription` 与原有 `jffh` 都会触发简繁转换，`emoji` 与原有 `emoji_cn` 都会触发表情候选，`melt_eng/prefix` 实际参与 `i` 英文入口的识别，`ascii_punct` 与 `full_shape` 则使用 Rime 原生开关。
 
@@ -217,7 +217,7 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 | iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 使用应用内下载方案或在线方案导入 | 切换到新方案目录并重新部署 |
 | Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + Rime + librime-lua | 安装组件后解压到 Fcitx5 Rime 目录 | 重启 Fcitx5 并重新部署 |
 
-无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`lua/xmjd6/` 和 `opencc/xmjd6/` 也必须保持原目录结构一起导入，否则顶功、自造词、英文、Emoji 和简繁转换可能不完整。
+无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`dicts/xmjd6/`、`lua/xmjd6/` 和 `opencc/xmjd6/` 都必须保持原目录结构一起导入，否则词库、顶功、自造词、英文、Emoji 和简繁转换可能不完整。
 
 #### 🪟 Windows
 
@@ -227,7 +227,7 @@ rime-install 0x696c757a696f/xmjd6-0x69:mobile
 2. 从 Release 下载 `xmjd6-weasel.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
 3. 在小狼毫菜单中执行“重新部署”。
 4. 打开方案选单，选择“星猫键道”。
-5. 更新方案时覆盖同名方案文件即可；个人词汇应放在 `xmjd6.user.dict.yaml`，个人配置写在 `*.custom.yaml`，然后重新部署。
+5. 更新方案时覆盖同名方案文件即可；个人词汇应放在 `dicts/xmjd6/xmjd6.user.dict.yaml`，个人配置写在 `*.custom.yaml`，然后重新部署。
 
 **小小输入法便携版**
 
@@ -414,7 +414,7 @@ export SDL_IM_MODULE=fcitx
 | 中文能输入，但顶功、自造词或计算器失效 | `lua/xmjd6/` 是否完整，客户端是否带 `librime-lua` |
 | 没有 Emoji、简繁或火星文 | `opencc/xmjd6/` 是否完整，功能开关是否开启，是否重新部署 |
 | 更新后仍出现旧候选 | 确认没有导入到另一个用户目录；重新部署，必要时退出并重启客户端 |
-| 个人词或设置被覆盖 | 个人内容应写入 `xmjd6.user.dict.yaml` 和 `*.custom.yaml`，不要直接改自动生成词典 |
+| 个人词或设置被覆盖 | 个人内容应写入 `dicts/xmjd6/xmjd6.user.dict.yaml` 和 `*.custom.yaml`，不要直接改自动生成词典 |
 
 ### 基础输入与反查入口
 
@@ -482,7 +482,7 @@ export SDL_IM_MODULE=fcitx
 | `\--\` | 撤回最近一次尚未合并的自造词操作 |
 | `\!!!\` | 清空全部尚未合并的自造词操作 |
 
-输入法会在会话结束时把运行时操作安全追加到 `xmjd6.zzc.dict.yaml`；要永久整理进正式词库，再运行 `zzc/` 中对应平台的合并脚本。完整的保存、跨设备同步、合并和撤回流程见[自造词使用教程](zzc/自造词使用教程.md)和[合并脚本说明](zzc/README.md)。
+输入法会在会话结束时把运行时操作安全追加到 `dicts/xmjd6/xmjd6.zzc.dict.yaml`；要永久整理进正式词库，再运行 `zzc/` 中对应平台的合并脚本。完整的保存、跨设备同步、合并和撤回流程见[自造词使用教程](zzc/自造词使用教程.md)和[合并脚本说明](zzc/README.md)。
 
 Windows 用户可以在仓库根目录运行：
 
@@ -512,22 +512,23 @@ python .\zzc\Windows_词库合并.py
 
 ## 📚 词库组成
 
-以下为 2026-08-09 版本的内置记录数；自造词和个人用户词库不计入统计。
+以下为 2026-08-10 版本的内置记录数；自造词和个人用户词库不计入统计。
 
 | 词库 | 记录数 | 用途 |
 | --- | ---: | --- |
-| `xmjd6.danzi.dict.yaml` | 36,214 | 上游键道单字表 |
-| `xmjd6.cizu.dict.yaml` | 191,398 | 本地基础词组 |
-| `xmjd6.catholicism.dict.yaml` | 3,514 | Catholicism、礼仪、神学与东方礼词汇 |
-| `xmjd6.protestantism.dict.yaml` | 289 | 新教信条、循道卫理宗传统及《和合本》词汇 |
-| `xmjd6.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
-| `xmjd6.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
-| `xmjd6.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
-| `xmjd6.core.dict.yaml` | 921 | 630 规则、快符和核心候选 |
-| `xmjd6.fjcy.dict.yaml` | 514,033 | 附加扩展词组 |
-| `xmjd6.ice.dict.yaml` | 373,902 | Rime-Ice 中文精简补充词库 |
-| `xmjd6.en.dict.yaml` | 23,610 | Rime-Ice 英文词库 |
-| **合计** | **1,144,038** | 不含动态自造词和个人词库 |
+| `dicts/xmjd6/xmjd6.danzi.dict.yaml` | 36,214 | 上游键道单字表 |
+| `dicts/xmjd6/xmjd6.cizu.dict.yaml` | 191,398 | 本地基础词组 |
+| `dicts/xmjd6/xmjd6.catholicism.dict.yaml` | 3,514 | Catholicism、礼仪、神学与东方礼词汇 |
+| `dicts/xmjd6/xmjd6.protestantism.dict.yaml` | 289 | 新教信条、循道卫理宗传统及《和合本》词汇 |
+| `dicts/xmjd6/xmjd6.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
+| `dicts/xmjd6/xmjd6.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
+| `dicts/xmjd6/xmjd6.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
+| `dicts/xmjd6/xmjd6.core.dict.yaml` | 921 | 630 规则、快符和核心候选 |
+| `dicts/xmjd6/xmjd6.fjcy.dict.yaml` | 514,033 | 附加扩展词组 |
+| `dicts/xmjd6/xmjd6.ice.dict.yaml` | 362,826 | Rime-Ice 中文精简补充词库 |
+| `dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml` | 40,564 | 七个万象分类补充词库 |
+| `dicts/xmjd6/xmjd6.en.dict.yaml` | 23,610 | Rime-Ice 英文词库 |
+| **合计** | **1,173,526** | 不含动态自造词和个人词库 |
 
 四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，不靠“祷告”“教会”“基督徒”等泛用词凑量。`xmjd6.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；循道卫理宗部分覆盖恩典与圣洁神学、班会与联结制度、议会体系、立约礼拜、亚德门传统、近代在华会名和代表人物。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
 
@@ -535,15 +536,17 @@ python .\zzc\Windows_词库合并.py
 
 `xmjd6.ice` 定位为本地词库之后的精简补充库。同步过滤器不会直接删除 2～3 字词；它会排除上游低权重长尾、批量数字/年份模板、8 字以上 `ext` 整句及 12 字以上超长词，当前比未精简版本减少 71,144 条。药品名称是例外：片、胶囊、颗粒、注射液、口服液、滴眼液、喷雾剂等剂型词不会因词频低或名称过长被过滤，并在重码预算中优先保留。编码时短词优先占用基础码，长词和低频同码词尽量追加笔画码；随后再按照 `base → ext → others` 和上游权重排序。低优先级重码词会被删减，合并后的中文重码率不会高于同步前的本地基准；新增词在同一码下最多保留 8 个候选。这些过滤规则写在同步器中，因此以后拉取上游时不会重新混入。
 
+`xmjd6.wanxiang` 不直接导入万象的拼音码和词频，只吸收药品 9,368 条、医学 12,441 条、化学 10,894 条、地名 5,281 条、名人 2,239 条、台风名 190 条和高频基础词 151 条。联想句、批量普通人名、错音/多音纠错、英文、单字和方言库均不导入。带声调拼音先规范化（保留 `ü → v`），再按键道6飞键和首笔规则重新编码；本地已有词先去重，所有合法码都冲突的条目直接跳过。通过筛选的码会先受保护，再重建低优先级 ICE，因此不会新增异词同码。
+
 ### 词库加载顺序
 
 [`xmjd6.extended.dict.yaml`](xmjd6.extended.dict.yaml) 控制词库导入。当前主要顺序为：
 
 ```text
-user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy → oriental → assyrian → core → fjcy → ice → en
+user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy → oriental → assyrian → core → fjcy → ice → wanxiang → en
 ```
 
-本地词库优先于自动生成的上游词库。`xmjd6.user.dict.yaml` 权限最高，适合保存个人常用词；加入大量通用词前应优先考虑对应的专题或基础词库。
+本地词库优先于自动生成的上游词库。`dicts/xmjd6/xmjd6.user.dict.yaml` 权限最高，适合保存个人常用词；加入大量通用词前应优先考虑对应的专题或基础词库。
 
 ## ⚙️ 配置文件
 
@@ -560,12 +563,12 @@ user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy 
 | `fcitx5/themes.yaml` | 小企鹅主题来源清单，由生成脚本维护 |
 | `Hamster.yaml` | iOS 客户端自造词文件同步规则，不是元书键盘皮肤 |
 | `xmjd6.symbols.yaml` | 标点与符号 |
-| `xmjd6.core.dict.yaml` | 630、快符和核心码表 |
-| `xmjd6.user.dict.yaml` | 个人高优先级补充词库 |
+| `dicts/xmjd6/xmjd6.core.dict.yaml` | 630、快符和核心码表 |
+| `dicts/xmjd6/xmjd6.user.dict.yaml` | 个人高优先级补充词库 |
 | `lua/xmjd6/` | 方案 Lua 模块 |
 | `opencc/xmjd6/` | 简繁、Emoji、火星文数据 |
 
-修改 YAML 后必须重新部署。升级仓库时，个人配置尽量写入 `*.custom.yaml` 或 `xmjd6.user.dict.yaml`，不要直接修改自动生成的 `xmjd6.danzi`、`xmjd6.ice` 和 `xmjd6.en`。
+修改 YAML 后必须重新部署。升级仓库时，个人配置尽量写入 `*.custom.yaml` 或 `dicts/xmjd6/xmjd6.user.dict.yaml`，不要直接修改自动生成的 `xmjd6.danzi`、`xmjd6.ice`、`xmjd6.wanxiang.*` 和 `xmjd6.en`。
 
 ### 流式输入
 
@@ -587,10 +590,11 @@ patch:
 
 | 上游 | 源文件 | 生成文件 |
 | --- | --- | --- |
-| [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | `dicts/01.danzi.txt` | `xmjd6.danzi.dict.yaml` |
-| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `cn_dicts/base`、`ext`、`others` | `xmjd6.ice.dict.yaml` |
-| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `en_dicts/en`、`en_ext` | `xmjd6.en.dict.yaml` |
+| [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | `dicts/01.danzi.txt` | `dicts/xmjd6/xmjd6.danzi.dict.yaml` |
+| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `cn_dicts/base`、`ext`、`others` | `dicts/xmjd6/xmjd6.ice.dict.yaml` |
+| [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `en_dicts/en`、`en_ext` | `dicts/xmjd6/xmjd6.en.dict.yaml` |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `opencc/emoji.txt` | `opencc/xmjd6/xmjd6_emoji_extra_*` |
+| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`diming`、`mingren`、`taifeng`、`jichu` | `dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml` |
 
 同步器不会盲目追踪浮动的 `main`/`master` 内容。锁文件保存已经整合的 Git commit 和生成文件 SHA-256；更新器比较“上次 commit → 当前 HEAD”，只有目标源文件变化时才按最新完整快照重建，避免长期累积补丁造成漂移。
 
@@ -658,7 +662,7 @@ git diff --check
 
 ```powershell
 # 将 VERSION 和 YAML version 更新到指定日期
-python .\tools\update_versions.py 2026-08-09
+python .\tools\update_versions.py 2026-08-10
 
 # 清理完全相同的词典记录
 python .\tools\dedupe_dictionaries.py
@@ -684,8 +688,9 @@ python .\tools\sync_upstream_dictionaries.py --write
 ```text
 .
 ├─ xmjd6.schema.yaml                 主方案
-├─ xmjd6.extended.dict.yaml          词库入口
-├─ xmjd6.*.dict.yaml                 本地与生成词库
+├─ xmjd6.extended.dict.yaml          RimeTool 兼容词库索引（无词条正文）
+├─ dicts/xmjd6/                      本地、上游生成和个人词条数据
+│  └─ xmjd6.wanxiang.*.dict.yaml     万象七个分类词库
 ├─ lua/xmjd6/                        Lua 处理器、翻译器和过滤器
 │  ├─ input/                         模块化按键、顶功、标点和快符处理
 │  └─ zzc/                           自造词运行时、候选和操作链

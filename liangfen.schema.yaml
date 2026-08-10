@@ -5,7 +5,7 @@
 schema:
   schema_id: liangfen
   name: LiangFen
-  version: "2026-08-09"
+  version: "2026-08-10"
   author:
     - TianHeng <2417647441@qq.com>
   description: |
@@ -53,7 +53,7 @@ speller:
     - abbrev/^([a-z]).+$/$1/
 
 translator:
-  dictionary: liangfen
+  dictionary: dicts/xmjd6/liangfen
   spelling_hints: 4
   preedit_format:
     - "xlit|v|ü|"
@@ -63,7 +63,7 @@ translator:
     - xform/iü/iv/
 
 reverse_lookup:
-  dictionary: pinyin_simp
+  dictionary: dicts/xmjd6/pinyin_simp
   prefix: "`"
   tips: 〔PinYin〕
   preedit_format:

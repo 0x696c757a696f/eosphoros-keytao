@@ -128,7 +128,7 @@ def valid_word_codes(word: str, options: dict[str, tuple[str, ...]]) -> set[str]
 
 
 def validate_replacements(root: Path = ROOT) -> None:
-    options = load_character_code_options(root / "xmjd6.danzi.dict.yaml")
+    options = load_character_code_options(root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml")
     errors: list[str] = []
     for filename, replacements in ROW_REPLACEMENTS.items():
         for old_row, new_rows in replacements.items():
@@ -199,7 +199,7 @@ def clean_text(path: Path, source: str) -> tuple[str, int, int]:
 def process(root: Path = ROOT, write: bool = False) -> list[Result]:
     results: list[Result] = []
     for name in TARGET_NAMES:
-        path = root / name
+        path = root / "dicts" / "xmjd6" / name
         source = path.read_text(encoding="utf-8")
         cleaned, replacements, removals = clean_text(path, source)
         changed = cleaned != source
@@ -230,7 +230,7 @@ def main() -> int:
     validate_replacements()
     if args.list_rejections:
         for name in TARGET_NAMES:
-            path = ROOT / name
+            path = ROOT / "dicts" / "xmjd6" / name
             for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
                 fields = line.split("\t")
                 if len(fields) >= 2 and is_rejected(fields[0], fields[1]):

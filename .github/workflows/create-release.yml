@@ -221,11 +221,12 @@ jobs:
         cp Rabbit/Data/symbols.yaml /tmp/Rabbit_backup/
         cp Rabbit/Data/rabbit.yaml /tmp/Rabbit_backup/
         cp Rime/default.custom.yaml Rabbit/Rime
-        cp Rime/xmjd6.user.dict.yaml Rabbit/Rime
+        mkdir -p Rabbit/Rime/dicts/xmjd6
+        cp Rime/dicts/xmjd6/xmjd6.user.dict.yaml Rabbit/Rime/dicts/xmjd6
         cp Rime/xmjd6.custom.yaml Rabbit/Rime
         rm -rf Rabbit/Data/*
         rm -f Rime/default.custom.yaml
-        rm -f Rime/xmjd6.user.dict.yaml
+        rm -f Rime/dicts/xmjd6/xmjd6.user.dict.yaml
         rm -f Rime/xmjd6.custom.yaml
         cp /tmp/Rabbit_backup/* Rabbit/Data/
         rm -rf /tmp/Rabbit_backup
@@ -237,7 +238,7 @@ jobs:
 
     - name: Convert .dict.yaml files to .txt using Bash
       run: |
-        for dict_file in xmjd6.core.dict.yaml xmjd6.danzi.dict.yaml xmjd6.catholicism.dict.yaml xmjd6.protestantism.dict.yaml xmjd6.orthodoxy.dict.yaml xmjd6.oriental.dict.yaml xmjd6.assyrian.dict.yaml xmjd6.cizu.dict.yaml xmjd6.fjcy.dict.yaml xmjd6.ice.dict.yaml xmjd6.en.dict.yaml
+        for dict_file in dicts/xmjd6/xmjd6.core.dict.yaml dicts/xmjd6/xmjd6.danzi.dict.yaml dicts/xmjd6/xmjd6.catholicism.dict.yaml dicts/xmjd6/xmjd6.protestantism.dict.yaml dicts/xmjd6/xmjd6.orthodoxy.dict.yaml dicts/xmjd6/xmjd6.oriental.dict.yaml dicts/xmjd6/xmjd6.assyrian.dict.yaml dicts/xmjd6/xmjd6.cizu.dict.yaml dicts/xmjd6/xmjd6.fjcy.dict.yaml dicts/xmjd6/xmjd6.ice.dict.yaml dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml dicts/xmjd6/xmjd6.en.dict.yaml
         do
           base=$(basename "$dict_file")
           if [[ "$base" == *.dict.yaml ]]; then
@@ -276,6 +277,13 @@ jobs:
             Rime/xmjd6.core.txt \
             Rime/xmjd6.fjcy.txt \
             Rime/xmjd6.ice.txt \
+            Rime/xmjd6.wanxiang.yaopin.txt \
+            Rime/xmjd6.wanxiang.yixue.txt \
+            Rime/xmjd6.wanxiang.huaxue.txt \
+            Rime/xmjd6.wanxiang.diming.txt \
+            Rime/xmjd6.wanxiang.mingren.txt \
+            Rime/xmjd6.wanxiang.taifeng.txt \
+            Rime/xmjd6.wanxiang.jichu.txt \
             Rime/xmjd6.en.txt > Rime/xmjd6.body.txt
 
         # 将头文件和主体文件合并到一个中间文件

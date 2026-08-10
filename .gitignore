@@ -36,7 +36,7 @@ rime_deployer
 rime_patch
 
 # This file is a repository template despite matching the user-data pattern.
-!xmjd6.user.dict.yaml
+!dicts/xmjd6/xmjd6.user.dict.yaml
 
 # Local products made by the release workflow
 /Rime/

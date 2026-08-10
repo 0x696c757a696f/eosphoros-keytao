@@ -24,7 +24,7 @@ from tools.xmjd6_codes import (
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_NAME = "tools/christian_traditions_2026.txt"
-VERSION = "2026-08-09"
+VERSION = "2026-08-10"
 TARGET_SPECS = (
     (
         "新教：",
@@ -166,19 +166,24 @@ def validate_phonetic_selections(
 def build_entries(root: Path = ROOT) -> BuildResult:
     generated_names = {spec[1] for spec in TARGET_SPECS}
     dictionary_paths = [
-        path for path in sorted(root.glob("*.dict.yaml")) if path.name not in generated_names
+        path
+        for path in sorted((root / "dicts" / "xmjd6").glob("*.dict.yaml"))
+        if path.name not in generated_names
     ]
+    generated_fallbacks = {"xmjd6.ice.dict.yaml"}
     fixed_dictionary_paths = [
-        path for path in dictionary_paths if path.name != "xmjd6.ice.dict.yaml"
+        path
+        for path in dictionary_paths
+        if path.name not in generated_fallbacks and ".wanxiang." not in path.name
     ]
     manifest_rows = load_manifest(root / MANIFEST_NAME)
-    code_options = load_character_code_options(root / "xmjd6.danzi.dict.yaml")
+    code_options = load_character_code_options(root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml")
     validate_phonetic_selections(manifest_rows, code_options)
     character_codes = load_character_codes(
-        root / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
+        root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
     )
 
-    # ICE is regenerated after local dictionaries and can move a lower-priority
+    # Generated upstream supplements are rebuilt after local dictionaries and can move a lower-priority
     # row to a longer legal code. A reviewed term that exists only in ICE is
     # deliberately migrated into its stable specialty dictionary; the next ICE
     # rebuild then removes the upstream duplicate.
@@ -259,7 +264,9 @@ def render_dictionary(
 def expected_dictionary_texts(root: Path = ROOT) -> tuple[dict[Path, str], BuildResult]:
     result = build_entries(root)
     texts = {
-        root / filename: render_dictionary(result, category_prefix, dictionary_name, title)
+        root / "dicts" / "xmjd6" / filename: render_dictionary(
+            result, category_prefix, dictionary_name, title
+        )
         for category_prefix, filename, dictionary_name, title in TARGET_SPECS
     }
     return texts, result

@@ -40,9 +40,10 @@ jobs:
         shell: pwsh
         run: |
           $Changed = git status --porcelain -- `
-            xmjd6.danzi.dict.yaml `
-            xmjd6.ice.dict.yaml `
-            xmjd6.en.dict.yaml `
+            dicts/xmjd6 `
+            opencc/xmjd6/xmjd6_emoji_extra_chars.lua `
+            opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua `
+            opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua `
             tools/upstream_dictionaries.lock.json
           if ($Changed) {
             "changed=true" >> $env:GITHUB_OUTPUT
@@ -72,9 +73,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c $Branch
           git add -- `
-            xmjd6.danzi.dict.yaml `
-            xmjd6.ice.dict.yaml `
-            xmjd6.en.dict.yaml `
+            dicts/xmjd6 `
+            opencc/xmjd6/xmjd6_emoji_extra_chars.lua `
+            opencc/xmjd6/xmjd6_emoji_extra_phrases_index.lua `
+            opencc/xmjd6/xmjd6_emoji_extra_phrases_0.lua `
             tools/upstream_dictionaries.lock.json
           git commit -m "chore: update upstream dictionaries"
           git push origin "HEAD:refs/heads/$Branch"

@@ -27,7 +27,7 @@ schema:
     u键开启全拼反查功能拼音查全码，新增笔画提示。
     i键开启英文单词输入；继续输入后隐藏入口字母 i。
     反斜杠键（\）开启自造词模式。
-  version: "2026-08-09"
+  version: "2026-08-10"
   dependencies:
     - xmjd6.cx
     - pinyin_simp
@@ -218,7 +218,7 @@ xmjd6_opencc_filter:
 # ============ 反查与副词典 ============
 xmjd6gbk:
   tag: xmjd6gbk
-  dictionary: xmjd6.gbk
+  dictionary: dicts/xmjd6/xmjd6.gbk
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -229,7 +229,7 @@ xmjd6gbk:
 
 pinyin_simp:
   tag: pinyin_simp
-  dictionary: pinyin_simp
+  dictionary: dicts/xmjd6/pinyin_simp
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -243,7 +243,7 @@ pinyin_simp:
 
 quanpinerfen:
   tag: quanpinerfen
-  dictionary: liangfen
+  dictionary: dicts/xmjd6/liangfen
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -252,7 +252,7 @@ quanpinerfen:
 
 reverse_lookup:
   tags: [pinyin_simp, quanpinerfen, xmjd6gbk, reverse_lookup]
-  dictionary: xmjd6.cx
+  dictionary: dicts/xmjd6/xmjd6.cx
   option_name: reverse_lookup
   enable_completion: true
   initial_quality: 0.5

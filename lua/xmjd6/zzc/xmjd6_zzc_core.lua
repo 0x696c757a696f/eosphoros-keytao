@@ -359,7 +359,7 @@ local function load_char_parts_from_tsv(target)
 end
 
 local function load_char_parts_from_dict(target)
-    local f = io.open(path("xmjd6.danzi.dict.yaml"), "r")
+    local f = io.open(path("dicts/xmjd6/xmjd6.danzi.dict.yaml"), "r")
     if not f then return false, false end
     local found = false
     for line in f:lines() do
@@ -511,7 +511,7 @@ function M.deserialize_items(text)
 end
 
 local function ops_file()
-    return path("xmjd6.zzc.dict.yaml")
+    return path("dicts/xmjd6/xmjd6.zzc.dict.yaml")
 end
 
 local function pending_file()

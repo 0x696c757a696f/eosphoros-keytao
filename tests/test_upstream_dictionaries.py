@@ -9,13 +9,17 @@ from pathlib import Path
 from tools.sync_upstream_dictionaries import (
     GeneratedRow,
     PINYIN_PREFIX_OVERRIDES,
+    RIME_WANXIANG_FILES,
     SourceRow,
     build_english_rows,
     build_emoji_extra,
     build_ice_rows,
+    build_wanxiang_rows,
     ice_low_value_reason,
     is_likely_medicine_name,
+    wanxiang_low_value_reason,
     load_lock,
+    normalize_pinyin_syllable,
     prune_ice_collisions,
     render_danzi,
     verify_generated_hashes,
@@ -24,6 +28,7 @@ from tools.xmjd6_codes import code_candidates_from_full_codes, iter_dictionary_r
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DICT_DIR = ROOT / "dicts" / "xmjd6"
 
 
 def source_text(*rows: str) -> str:
@@ -31,6 +36,74 @@ def source_text(*rows: str) -> str:
 
 
 class UpstreamDictionaryTests(unittest.TestCase):
+    def test_data_dictionaries_live_below_dicts_xmjd6_with_rimetool_root_index(self) -> None:
+        self.assertEqual(
+            [path.name for path in ROOT.glob("*.dict.yaml")],
+            ["xmjd6.extended.dict.yaml"],
+        )
+        dictionary_dir = ROOT / "dicts" / "xmjd6"
+        self.assertTrue((dictionary_dir / "pinyin_simp.dict.yaml").is_file())
+        self.assertTrue((dictionary_dir / "liangfen.dict.yaml").is_file())
+        main_schema = (ROOT / "xmjd6.schema.yaml").read_text(encoding="utf-8")
+        self.assertIn("dictionary: xmjd6.extended", main_schema)
+        for schema_name in ("pinyin_simp.schema.yaml", "liangfen.schema.yaml"):
+            schema = (ROOT / schema_name).read_text(encoding="utf-8")
+            self.assertIn("dictionary: dicts/xmjd6/", schema)
+        root_index = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
+        import_block = root_index.split("import_tables:", 1)[1]
+        first_import = next(
+            line.strip() for line in import_block.splitlines() if line.startswith("  - ")
+        )
+        self.assertEqual(first_import, "- dicts/xmjd6/xmjd6.user")
+
+    def test_tone_marked_pinyin_normalizes_without_losing_umlaut(self) -> None:
+        self.assertEqual(normalize_pinyin_syllable("piàn"), "pian")
+        self.assertEqual(normalize_pinyin_syllable("lǜ"), "lv")
+        self.assertEqual(normalize_pinyin_syllable("nǚ"), "nv")
+
+    def test_wanxiang_filter_keeps_specialist_terms_and_rejects_fragments(self) -> None:
+        accepted = (
+            SourceRow("吲哚美辛", ("yin", "duo", "mei", "xin"), 100, "yaopin", 0, 0),
+            SourceRow("深静脉血栓", ("shen", "jing", "mai", "xue", "shuan"), 100, "yixue", 1, 0),
+            SourceRow("乙烯醇", ("yi", "xi", "chun"), 100, "huaxue", 2, 0),
+            SourceRow("杭州市", ("hang", "zhou", "shi"), 1000, "diming", 3, 0),
+            SourceRow("台风海葵", ("tai", "feng", "hai", "kui"), 100, "taifeng", 4, 0),
+        )
+        rejected = (
+            SourceRow("氯化亚", ("lv", "hua", "ya"), 100, "huaxue", 2, 0),
+            SourceRow("甲基己", ("jia", "ji", "ji"), 100, "huaxue", 2, 0),
+            SourceRow("老师的", ("lao", "shi", "de"), 100000, "jichu", 6, 0),
+            SourceRow("张伟", ("zhang", "wei"), 10000, "renming", 7, 0),
+        )
+        self.assertTrue(all(wanxiang_low_value_reason(row) is None for row in accepted))
+        self.assertTrue(all(wanxiang_low_value_reason(row) for row in rejected))
+
+    def test_wanxiang_conversion_deduplicates_and_uses_free_stroke_codes(self) -> None:
+        sources = {
+            "yaopin": source_text("吲哚美辛\tyin duo mei xin\t100", "本地药\tben di yao\t99"),
+            "yixue": source_text("深静脉血栓\tshen jing mai xue shuan\t100"),
+            "huaxue": source_text("氯化亚\tlv hua ya\t100"),
+            "diming": source_text(),
+            "mingren": source_text(),
+            "taifeng": source_text(),
+            "jichu": source_text(),
+        }
+        chars = {
+            "吲": ("yba",), "哚": ("dla",), "美": ("mwr",), "辛": ("xbo",),
+            "深": ("ena",), "静": ("jko",), "脉": ("mda",), "血": ("xhr",), "栓": ("egr",),
+        }
+        prefixes = {
+            "yin": "yb", "duo": "dl", "mei": "mw", "xin": "xb",
+            "shen": "en", "jing": "jk", "mai": "md", "xue": "xh", "shuan": "eg",
+        }
+        rows, stats = build_wanxiang_rows(
+            sources, chars, prefixes, {"本地药"}, {"ybmd": {"已有词"}}
+        )
+        self.assertEqual({row.word for row in rows}, {"吲哚美辛", "深静脉血栓"})
+        self.assertEqual(stats["wanxiang_deduplicated_local"], 1)
+        self.assertEqual(stats["wanxiang_skipped_low_value_incomplete"], 1)
+        self.assertTrue(all(4 <= len(row.code) <= 6 for row in rows))
+
     def test_emoji_extra_adds_rime_ice_rows_without_overwriting_local_data(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -303,19 +376,52 @@ class UpstreamDictionaryTests(unittest.TestCase):
 
     def test_ice_dictionary_is_imported_after_local_wordlists(self) -> None:
         text = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
-        self.assertIn("  - xmjd6.ice", text)
-        self.assertLess(text.index("  - xmjd6.fjcy"), text.index("  - xmjd6.ice"))
+        self.assertIn("  - dicts/xmjd6/xmjd6.ice", text)
+        self.assertLess(
+            text.index("  - dicts/xmjd6/xmjd6.fjcy"),
+            text.index("  - dicts/xmjd6/xmjd6.ice"),
+        )
+
+    def test_wanxiang_dictionaries_are_split_below_dicts_xmjd6_after_ice(self) -> None:
+        text = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
+        names = [name for name, _ in RIME_WANXIANG_FILES]
+        paths = [
+            ROOT / "dicts" / "xmjd6" / f"xmjd6.wanxiang.{name}.dict.yaml"
+            for name in names
+        ]
+        for name, path in zip(names, paths, strict=True):
+            table = f"dicts/xmjd6/xmjd6.wanxiang.{name}"
+            self.assertIn(f"  - {table}", text)
+            self.assertLess(
+                text.index("  - dicts/xmjd6/xmjd6.ice"), text.index(f"  - {table}")
+            )
+            self.assertTrue(path.is_file())
+        self.assertFalse((ROOT / "xmjd6.wanxiang.dict.yaml").exists())
+        rows = [row for path in paths for row in iter_dictionary_rows(path)]
+        self.assertEqual(len(rows), len({word for word, _ in rows}))
+        self.assertTrue(all(re.fullmatch(r"[a-z]{3,6}", code) for _, code in rows))
+        wanxiang_codes = {code for _, code in rows}
+        higher_priority_codes = {
+            code
+            for path in DICT_DIR.glob("xmjd6.*.dict.yaml")
+            if path.name != "xmjd6.en.dict.yaml" and ".wanxiang." not in path.name
+            for _, code in iter_dictionary_rows(path)
+        }
+        self.assertEqual(wanxiang_codes & higher_priority_codes, set())
+        lock = load_lock()
+        self.assertEqual(lock["sources"]["rime_wanxiang"]["branch"], "wanxiang")
+        self.assertEqual(lock["sources"]["rime_wanxiang"]["license"], "CC-BY-4.0")
 
     def test_english_dictionary_uses_main_schema_i_namespace(self) -> None:
         extended = (ROOT / "xmjd6.extended.dict.yaml").read_text(encoding="utf-8")
         schema = (ROOT / "xmjd6.schema.yaml").read_text(encoding="utf-8")
-        self.assertIn("  - xmjd6.en", extended)
+        self.assertIn("  - dicts/xmjd6/xmjd6.en", extended)
         self.assertIn("xform/^i(.+)$/$1/", schema)
         self.assertIn('prefix: "i"', schema)
         self.assertIn("max_code_length: 64", schema)
         self.assertNotIn("- xmjd6.en", schema)
         self.assertFalse((ROOT / "xmjd6.en.schema.yaml").exists())
-        rows = list(iter_dictionary_rows(ROOT / "xmjd6.en.dict.yaml"))
+        rows = list(iter_dictionary_rows(DICT_DIR / "xmjd6.en.dict.yaml"))
         self.assertGreater(len(rows), 20_000)
         self.assertEqual(len(rows), len(set(rows)))
         self.assertTrue(all(re.fullmatch(r"i[a-z]+", code) for _, code in rows))
@@ -337,8 +443,8 @@ class UpstreamDictionaryTests(unittest.TestCase):
         local_codes = {
             code
             for filename in local_files
-            if (ROOT / filename).is_file()
-            for _, code in iter_dictionary_rows(ROOT / filename)
+            if (DICT_DIR / filename).is_file()
+            for _, code in iter_dictionary_rows(DICT_DIR / filename)
         }
         self.assertEqual(english_codes & local_codes, set())
 
@@ -367,6 +473,9 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertIn("Rime/xmjd6.ice.txt", workflow)
         self.assertIn("xmjd6.en.dict.yaml", workflow)
         self.assertIn("Rime/xmjd6.en.txt", workflow)
+        self.assertIn("dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml", workflow)
+        self.assertIn("Rime/xmjd6.wanxiang.yaopin.txt", workflow)
+        self.assertIn("Rime/xmjd6.wanxiang.jichu.txt", workflow)
 
     def test_incremental_updater_compares_pinned_git_commits(self) -> None:
         script = (ROOT / "tools" / "update_upstream_dictionaries.ps1").read_text(

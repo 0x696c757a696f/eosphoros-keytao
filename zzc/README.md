@@ -21,10 +21,10 @@ Windows 与 Fcitx5 Python 入口都是薄包装，共用平台中性的 `xmjd6_*
 
 iOS 入口只负责路径配置和调用同一套合并核心，不另写合并算法。免费方案见 [`a-Shell快捷指令合并说明.md`](a-Shell快捷指令合并说明.md)，Pythonista 方案见 [`iOS快捷指令合并说明.md`](iOS快捷指令合并说明.md)。选择 `RimeUserData` 父目录时，脚本会向下查找一级；只有一个含 `*.zzc.dict.yaml` 的方案目录时自动使用它，多个方案时要求直接选择具体目录。`zzc_state` 默认跟随最终方案目录，避免正式词库和 reset/runtime 状态落在不同位置。
 
-合并脚本只接受 `xmjd6.zzc.dict.yaml` 及其带编号副本，并且只写入：
+合并脚本只接受 `dicts/xmjd6/xmjd6.zzc.dict.yaml` 及其带编号副本，并且只写入：
 
-- `xmjd6.cizu.dict.yaml`
-- `xmjd6.fjcy.dict.yaml`
+- `dicts/xmjd6/xmjd6.cizu.dict.yaml`
+- `dicts/xmjd6/xmjd6.fjcy.dict.yaml`
 
 发现其他方案的 ZZZC 文件或不受支持的前缀时会拒绝处理，避免把操作误合并到错误词库。
 
@@ -54,7 +54,7 @@ python tools/build_zzc_windows_exe.py --check
 
 关键运行状态：
 
-- `../xmjd6.zzc.dict.yaml`：部署可读的持久层，不再是运行时唯一真源。
+- `../dicts/xmjd6/xmjd6.zzc.dict.yaml`：部署可读的持久层，不再是运行时唯一真源。
 - `../zzc_state/runtime_ops.tsv`：实时运行时操作记录；每次自造词、替换、删除、置顶、前移、append、restore 都先写这里。
 - `../zzc_state/effective_state.tsv`：运行时实际生效快照，普通显示、自造词 collect、删除、置顶、前移、append、restore、completion 都读这里。
 - `../zzc_state/runtime_exact.tsv`：兼容缓存占位，不是当前主要显示来源。
@@ -89,7 +89,7 @@ session 创建时不再作为主要写入点，只做上述补偿清理。运行
 5. 备份正式码表和 zzc 状态文件到 `zzc/撤回合并/`。
 6. 清理待合并操作文件和运行时缓存。
 
-每次运行合并脚本都会清理旧撤回备份，只保留最近 3 份；即使本次没有待合并操作，也会执行这项清理。浏览器或同步工具产生的 `xmjd6.zzc.dict(1).yaml` 这类带编号副本也会按顺序合并、备份并删除；名称不符合编号格式的副本不会误处理。
+每次运行合并脚本都会清理旧撤回备份，只保留最近 3 份；即使本次没有待合并操作，也会执行这项清理。浏览器或同步工具在 `dicts/xmjd6/` 产生的 `xmjd6.zzc.dict(1).yaml` 这类带编号副本也会按顺序合并、备份并删除；名称不符合编号格式的副本不会误处理。
 
 `+r` / `restore` 行不会无条件重复写入正式码表；只有待处理操作链里存在对应运行时新增事实时，才会作为需要恢复的自造词写回。
 

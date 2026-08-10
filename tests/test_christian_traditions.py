@@ -7,6 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DICT_DIR = ROOT / "dicts" / "xmjd6"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -39,7 +40,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
 
     def test_each_tradition_has_distinctive_terms(self) -> None:
         rows = {
-            filename: {word for word, _ in iter_dictionary_rows(ROOT / filename)}
+            filename: {word for word, _ in iter_dictionary_rows(DICT_DIR / filename)}
             for _, filename, _, _ in TARGET_SPECS
         }
         self.assertTrue({"五个唯独", "奥格斯堡信纲"} <= rows["xmjd6.protestantism.dict.yaml"])
@@ -67,15 +68,15 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
 
     def test_every_generated_code_is_legal_and_has_only_reviewed_collisions(self) -> None:
         character_codes = load_character_codes(
-            ROOT / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
+            DICT_DIR / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
         )
         all_words_by_code: dict[str, set[str]] = defaultdict(set)
-        for path in ROOT.glob("*.dict.yaml"):
+        for path in DICT_DIR.glob("*.dict.yaml"):
             for word, code in iter_dictionary_rows(path):
                 all_words_by_code[code].add(word)
 
         for _, filename, _, _ in TARGET_SPECS:
-            for word, code in iter_dictionary_rows(ROOT / filename):
+            for word, code in iter_dictionary_rows(DICT_DIR / filename):
                 self.assertIn(code, code_candidates(coding_word(word), character_codes), word)
                 other_words = all_words_by_code[code] - {word}
                 if code in set(FORCED_WORD_CODES.values()):
@@ -86,20 +87,20 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         colliding_specialty_codes = {
             code
             for _, filename, _, _ in TARGET_SPECS
-            for word, code in iter_dictionary_rows(ROOT / filename)
+            for word, code in iter_dictionary_rows(DICT_DIR / filename)
             if all_words_by_code[code] - {word}
         }
         self.assertEqual(colliding_specialty_codes, set(FORCED_WORD_CODES.values()))
         for word, code in FORCED_WORD_CODES.items():
             self.assertIn(
                 (word, code),
-                set(iter_dictionary_rows(ROOT / "xmjd6.protestantism.dict.yaml")),
+                set(iter_dictionary_rows(DICT_DIR / "xmjd6.protestantism.dict.yaml")),
             )
 
     def test_multi_part_personal_names_use_a_middle_dot(self) -> None:
         protestant_words = {
             word
-            for word, _ in iter_dictionary_rows(ROOT / "xmjd6.protestantism.dict.yaml")
+            for word, _ in iter_dictionary_rows(DICT_DIR / "xmjd6.protestantism.dict.yaml")
         }
         self.assertTrue({"马丁·路德", "约翰·加尔文"} <= protestant_words)
         self.assertTrue({"马丁路德", "约翰加尔文"}.isdisjoint(protestant_words))
@@ -128,7 +129,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
     def test_methodist_vocabulary_covers_names_theology_practice_and_history(self) -> None:
         protestant_words = {
             word
-            for word, _ in iter_dictionary_rows(ROOT / "xmjd6.protestantism.dict.yaml")
+            for word, _ in iter_dictionary_rows(DICT_DIR / "xmjd6.protestantism.dict.yaml")
         }
         self.assertTrue(
             {
@@ -166,13 +167,17 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         result = build_entries(ROOT)
         generated_names = {spec[1] for spec in TARGET_SPECS}
         occupied: dict[str, set[str]] = defaultdict(set)
-        for path in ROOT.glob("*.dict.yaml"):
-            if path.name in generated_names or path.name == "xmjd6.ice.dict.yaml":
+        for path in DICT_DIR.glob("*.dict.yaml"):
+            if (
+                path.name in generated_names
+                or path.name == "xmjd6.ice.dict.yaml"
+                or ".wanxiang." in path.name
+            ):
                 continue
             for word, code in iter_dictionary_rows(path):
                 occupied[code].add(word)
         character_codes = load_character_codes(
-            ROOT / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
+            DICT_DIR / "xmjd6.danzi.dict.yaml", PREFERRED_PREFIXES
         )
         for entry in result.entries:
             occupied[entry.code].add(entry.word)
@@ -218,7 +223,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
             encoding="utf-8"
         )
         for _, filename, dictionary_name, _ in TARGET_SPECS:
-            self.assertIn(f"  - {dictionary_name}", extended)
+            self.assertIn(f"  - dicts/xmjd6/{dictionary_name}", extended)
             self.assertIn(filename, release)
             self.assertIn(filename.removesuffix(".dict.yaml") + ".txt", release)
 

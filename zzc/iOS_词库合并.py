@@ -54,20 +54,24 @@ def target_dict_name_options(prefix: str) -> list[list[str]]:
 
 
 def resolve_target_dicts(root: Path, prefix: str) -> list[Path]:
+    dictionary_root = root / "dicts" / "xmjd6"
     out = []
     for options in target_dict_name_options(prefix):
         for name in options:
-            path = root / name
+            path = dictionary_root / name
             if path.exists():
                 out.append(path)
                 break
         else:
-            out.append(root / options[0])
+            out.append(dictionary_root / options[0])
     return out
 
 
 def find_ops_candidates(root: Path) -> list[Path]:
     op_candidates = sorted(root.glob("*.zzc.dict.yaml"))
+    dictionary_dir = root / "dicts" / "xmjd6"
+    if dictionary_dir.exists():
+        op_candidates += sorted(dictionary_dir.glob("*.zzc.dict.yaml"))
     zzc_dir = root / "zzc"
     if zzc_dir.exists():
         op_candidates += sorted(zzc_dir.glob("*.zzc.dict.yaml"))

@@ -4,7 +4,7 @@
 schema:
   schema_id: xmjd6.gbk
   name: 星猫键道6GBK字集辅助方案·勿选
-  version: "2026-08-09"
+  version: "2026-08-10"
   author:
     - ProudCat
   description: 
@@ -38,7 +38,7 @@ speller:
   delimiter: " ;'"
 
 translator:
-  dictionary: xmjd6.gbk
+  dictionary: dicts/xmjd6/xmjd6.gbk
 
 
 punctuator:

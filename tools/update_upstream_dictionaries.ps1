@@ -52,16 +52,12 @@ try {
     }
 
     $Lock = Get-Content -LiteralPath $LockPath -Raw -Encoding UTF8 | ConvertFrom-Json
-    $SourceSpecs = @(
+    $SourceSpecs = @($Lock.sources.psobject.Properties | ForEach-Object {
         [pscustomobject]@{
-            Name = "rime_jiandao"
-            Source = $Lock.sources.rime_jiandao
-        },
-        [pscustomobject]@{
-            Name = "rime_ice"
-            Source = $Lock.sources.rime_ice
+            Name = $_.Name
+            Source = $_.Value
         }
-    )
+    })
 
     New-Item -ItemType Directory -Path $CacheDirectory -Force | Out-Null
     $ChangedSources = [Collections.Generic.List[string]]::new()

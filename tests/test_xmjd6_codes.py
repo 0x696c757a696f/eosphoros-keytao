@@ -13,7 +13,7 @@ class Xmjd6CodeTests(unittest.TestCase):
         from tools.xmjd6_codes import load_character_codes
 
         cls.character_codes = load_character_codes(
-            ROOT / "xmjd6.danzi.dict.yaml", {"召": "fz"}
+            ROOT / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml", {"召": "fz"}
         )
 
     def test_generates_standard_two_three_and_multi_character_codes(self) -> None:

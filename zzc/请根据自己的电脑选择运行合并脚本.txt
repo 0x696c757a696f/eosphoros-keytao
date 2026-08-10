@@ -37,7 +37,7 @@ iOS:
 - 详细步骤见 a-Shell快捷指令合并说明.md 或 iOS快捷指令合并说明.md。
 
 重要文件:
-- ../xmjd6.zzc.dict.yaml
+- ../dicts/xmjd6/xmjd6.zzc.dict.yaml
   自造词操作记录，也是临时 zzc 码表。
 - ../zzc_state/zzc_reset.tsv
   电脑合并后写入的清理标记，用于手机识别并重置已合并的本地 zzc。

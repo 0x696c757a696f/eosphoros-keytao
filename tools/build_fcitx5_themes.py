@@ -253,7 +253,7 @@ def write_tree(destination: Path) -> None:
         encoding="utf-8",
     )
     manifest = {
-        "generated": "2026-08-09",
+        "generated": "2026-08-10",
         "desktop_precedence": ["squirrel", "weasel"],
         "themes": [
             {key: item[key] for key in ("id", "name", "author", "sources")}

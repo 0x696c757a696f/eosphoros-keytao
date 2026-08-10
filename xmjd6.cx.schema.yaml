@@ -4,7 +4,7 @@
 schema:
   schema_id: xmjd6.cx
   name: 键道6反查·勿选
-  version: "2026-08-09"
+  version: "2026-08-10"
 
 engine:
   processors:
@@ -45,7 +45,7 @@ speller:
     - derive/^(.....).$/$1`/
 
 translator:
-  dictionary: xmjd6.cx
+  dictionary: dicts/xmjd6/xmjd6.cx
   enable_charset_filter: false
   enable_completion: true
   enable_sentence: false

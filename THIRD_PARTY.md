@@ -4,7 +4,7 @@ The generated dictionaries below retain their upstream provenance. Exact source
 commits and generated-file checksums are recorded in
 `tools/upstream_dictionaries.lock.json`.
 
-## `xmjd6.protestantism.dict.yaml` Bible terminology
+## `dicts/xmjd6/xmjd6.protestantism.dict.yaml` Bible terminology
 
 - Reference text: 1919 Chinese Union Version (`ChiUns`)
 - Source information: <https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=ChiUns>
@@ -16,7 +16,7 @@ theological and Bible dictionaries whose redistribution terms are unclear are
 manual verification sources only. The complete review policy and links are in
 `tools/christian_traditions_sources.md`.
 
-## `xmjd6.danzi.dict.yaml`
+## `dicts/xmjd6/xmjd6.danzi.dict.yaml`
 
 - Upstream: <https://github.com/amorphobia/rime-jiandao>
 - Source: `dicts/01.danzi.txt`
@@ -28,7 +28,7 @@ The local synchronization tool reproduces the relevant `make_dicts.sh`
 behavior for this repository: it writes an xmjd6-specific Rime header and then
 appends the upstream single-character rows unchanged.
 
-## `xmjd6.ice.dict.yaml`
+## `dicts/xmjd6/xmjd6.ice.dict.yaml`
 
 - Upstream: <https://github.com/iDvel/rime-ice>
 - Sources: `cn_dicts/base.dict.yaml`, `cn_dicts/ext.dict.yaml`, and
@@ -46,7 +46,7 @@ lower-priority homophones receive successive stroke suffixes. Remaining exact
 full-code collisions are pruned against the existing local collision-rate
 baseline, with no more than eight new combined candidates per code.
 
-## `xmjd6.en.dict.yaml`
+## `dicts/xmjd6/xmjd6.en.dict.yaml`
 
 - Upstream: <https://github.com/iDvel/rime-ice>
 - Sources: `en_dicts/en.dict.yaml` and `en_dicts/en_ext.dict.yaml`
@@ -58,6 +58,24 @@ normalized to reachable lowercase letter sequences and prefixed with `i` before
 the generated dictionary is imported into the main xmjd6 table. This removes
 the need for a separate auxiliary English schema while keeping English entries
 isolated from JianDao 6 codes.
+
+## `dicts/xmjd6/xmjd6.wanxiang.*.dict.yaml`
+
+- Upstream: <https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts>
+- Sources: `yaopin`, `yixue`, `huaxue`, `diming`, `mingren`, `taifeng`, and
+  `jichu` dictionaries
+- License: Creative Commons Attribution 4.0 International
+- License text: <https://github.com/amzxyz/rime-wanxiang/blob/wanxiang/LICENSE>
+
+These seven category files are an adapted and filtered vocabulary extract. Tone-marked pinyin is used
+only to derive native JianDao 6 codes; upstream codes and final candidate
+weights are not copied. Generic names, association sentences, correction
+tables, single characters, English, and dialect sources are excluded. Local
+vocabulary is deduplicated first, every accepted code is protected, and the
+lower-priority Rime-Ice fallback is rebuilt around it so the addition does not
+introduce new different-text/same-code collisions. Exact source commit,
+generated checksum, filter statistics, and modification date are retained in
+`tools/upstream_dictionaries.lock.json` and the generated dictionary header.
 
 ## `opencc/xmjd6/xmjd6_emoji_extra_*`
 

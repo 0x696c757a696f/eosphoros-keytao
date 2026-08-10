@@ -41,7 +41,7 @@ def validate_versions(errors: list[str]) -> None:
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", expected):
         errors.append("VERSION: expected YYYY-MM-DD")
         return
-    for path in sorted(ROOT.glob("*.yaml")):
+    for path in sorted(ROOT.rglob("*.yaml")):
         for found in VERSION_RE.findall(path.read_text(encoding="utf-8-sig")):
             if found != expected:
                 add_error(errors, path, f"version {found!r} does not match VERSION {expected!r}")
@@ -79,7 +79,9 @@ def dict_header(path: Path, errors: list[str]) -> tuple[dict, int | None]:
 
 
 def validate_dictionaries(errors: list[str]) -> None:
-    for path in sorted(ROOT.glob("*.dict.yaml")):
+    dictionary_paths = list(ROOT.glob("*.dict.yaml"))
+    dictionary_paths.extend((ROOT / "dicts" / "xmjd6").glob("*.dict.yaml"))
+    for path in sorted(dictionary_paths):
         header, marker = dict_header(path, errors)
         imports = header.get("import_tables", [])
         if isinstance(imports, list):

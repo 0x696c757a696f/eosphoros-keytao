@@ -14,16 +14,16 @@
   "executables": {
     "zzc/Win_词库合并.exe": {
       "source": "zzc/xmjd6_词库合并.py",
-      "source_sha256": "17c4c3d20268df816dd8af78074bae1de945c7a220470bf598810b3e410746b4",
-      "sha256": "57554ac6993b1ab83ce8ce66431a524ae5ffb82bd9805d5d63da32d091a0059b",
-      "size": 10152413,
+      "source_sha256": "36867dcb6e56408c58bceec30b3a4719f784e9a3be00dc1f0ded5811bf1de6b4",
+      "sha256": "cf13d9dcbc40d3eb23aa7228a7573605b2ca2da89803e6d386ffe0d352a6d0ef",
+      "size": 10152554,
       "machine": "0x8664"
     },
     "zzc/Win_撤回合并.exe": {
       "source": "zzc/xmjd6_撤回合并.py",
       "source_sha256": "5c83f772afd2db916b9597a36a215cbd92cb19214bdf3d72d78a3121f09318e6",
-      "sha256": "5f69f9164ed2624645737b267d97005c62d11bcc87340b09f89f74bc00cdd22e",
-      "size": 10133141,
+      "sha256": "8e9b36e1708da3ffb00153b55db7156ed6a1d6126d9443eca044d8d40330ad06",
+      "size": 10132312,
       "machine": "0x8664"
     }
   }

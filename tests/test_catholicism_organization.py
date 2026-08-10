@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGET = ROOT / "xmjd6.catholicism.dict.yaml"
+TARGET = ROOT / "dicts" / "xmjd6" / "xmjd6.catholicism.dict.yaml"
 
 
 class CatholicismOrganizationTests(unittest.TestCase):

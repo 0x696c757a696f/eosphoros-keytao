@@ -1,7 +1,7 @@
 # Rime default settings
 # encoding: utf-8
 
-config_version: "2026-08-09"
+config_version: "2026-08-10"
 
 schema_list:
   - schema: xmjd6

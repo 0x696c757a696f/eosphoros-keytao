@@ -21,6 +21,7 @@ from tools.xmjd6_codes import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DICT_DIR = ROOT / "dicts" / "xmjd6"
 TARGET_NAME = "xmjd6.catholicism.dict.yaml"
 MANIFEST_NAME = "tools/catholicism_expansion_2026.txt"
 START_MARKER = "# 2026-08-04 天主教词汇扩建 ==============================================="
@@ -157,20 +158,20 @@ def validate_phonetic_selections(
 
 
 def build_entries(root: Path = ROOT) -> BuildResult:
-    # xmjd6.ice is generated after, and deliberately has lower priority than,
+    # Generated upstream supplements are deliberately lower priority than
     # the curated Catholic dictionary. Letting its broad code coverage reserve
     # codes here would make the curated output unstable on every upstream sync.
     dictionary_paths = [
         path
-        for path in sorted(root.glob("*.dict.yaml"))
-        if path.name != "xmjd6.ice.dict.yaml"
+        for path in sorted((root / "dicts" / "xmjd6").glob("*.dict.yaml"))
+        if path.name != "xmjd6.ice.dict.yaml" and ".wanxiang." not in path.name
     ]
-    target = root / TARGET_NAME
+    target = root / "dicts" / "xmjd6" / TARGET_NAME
     manifest_rows = load_manifest(root / MANIFEST_NAME)
-    code_options = load_character_code_options(root / "xmjd6.danzi.dict.yaml")
+    code_options = load_character_code_options(root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml")
     validate_phonetic_selections(manifest_rows, code_options)
     character_codes = load_character_codes(
-        root / "xmjd6.danzi.dict.yaml", PREFERRED_PHONETIC_PREFIXES
+        root / "dicts" / "xmjd6" / "xmjd6.danzi.dict.yaml", PREFERRED_PHONETIC_PREFIXES
     )
 
     occupied: dict[str, set[str]] = defaultdict(set)
@@ -243,7 +244,7 @@ def render_section(entries: tuple[Entry, ...]) -> str:
 
 
 def expected_dictionary_text(root: Path = ROOT) -> tuple[str, BuildResult]:
-    target = root / TARGET_NAME
+    target = root / "dicts" / "xmjd6" / TARGET_NAME
     base = strip_expansion_section(target.read_text(encoding="utf-8-sig")).rstrip()
     result = build_entries(root)
     return base + "\n\n" + render_section(result.entries), result
@@ -260,7 +261,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     expected, result = expected_dictionary_text(ROOT)
-    target = ROOT / TARGET_NAME
+    target = ROOT / "dicts" / "xmjd6" / TARGET_NAME
     if result.collisions:
         print(f"Refusing to write {len(result.collisions)} colliding entries.", file=sys.stderr)
         return 1

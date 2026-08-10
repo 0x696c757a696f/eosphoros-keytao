@@ -9,6 +9,7 @@ import json
 import re
 import sys
 import urllib.request
+import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import date
@@ -24,9 +25,17 @@ from tools.xmjd6_codes import code_candidates_from_full_codes, iter_dictionary_r
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCK_PATH = ROOT / "tools" / "upstream_dictionaries.lock.json"
-DANZI_TARGET = ROOT / "xmjd6.danzi.dict.yaml"
-ICE_TARGET = ROOT / "xmjd6.ice.dict.yaml"
-ENGLISH_TARGET = ROOT / "xmjd6.en.dict.yaml"
+DICTIONARY_DIR = ROOT / "dicts" / "xmjd6"
+DANZI_TARGET = DICTIONARY_DIR / "xmjd6.danzi.dict.yaml"
+ICE_TARGET = DICTIONARY_DIR / "xmjd6.ice.dict.yaml"
+WANXIANG_SOURCE_NAMES = (
+    "yaopin", "yixue", "huaxue", "diming", "mingren", "taifeng", "jichu"
+)
+WANXIANG_TARGETS = {
+    source_name: DICTIONARY_DIR / f"xmjd6.wanxiang.{source_name}.dict.yaml"
+    for source_name in WANXIANG_SOURCE_NAMES
+}
+ENGLISH_TARGET = DICTIONARY_DIR / "xmjd6.en.dict.yaml"
 EMOJI_EXTRA_CHARS_TARGET = ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_chars.lua"
 EMOJI_EXTRA_INDEX_TARGET = (
     ROOT / "opencc" / "xmjd6" / "xmjd6_emoji_extra_phrases_index.lua"
@@ -37,6 +46,7 @@ EMOJI_EXTRA_PHRASES_TARGET = (
 TARGETS = (
     DANZI_TARGET,
     ICE_TARGET,
+    *WANXIANG_TARGETS.values(),
     ENGLISH_TARGET,
     EMOJI_EXTRA_CHARS_TARGET,
     EMOJI_EXTRA_INDEX_TARGET,
@@ -78,6 +88,11 @@ RIME_ICE_ENGLISH_FILES = (
 )
 
 RIME_ICE_EMOJI_FILE = ("emoji", "opencc/emoji.txt")
+
+RIME_WANXIANG_FILES = tuple(
+    (source_name, f"dicts/{source_name}.dict.yaml")
+    for source_name in WANXIANG_SOURCE_NAMES
+)
 
 
 # Keep pathological template families from filling a candidate menu even when
@@ -258,6 +273,7 @@ class GeneratedRow:
 class BuildResult:
     danzi_text: str
     ice_text: str
+    wanxiang_texts: dict[str, str]
     english_text: str
     emoji_extra_chars_text: str
     emoji_extra_index_text: str
@@ -349,6 +365,18 @@ def build_pinyin_prefixes(
     return prefixes
 
 
+def normalize_pinyin_syllable(value: str) -> str:
+    decomposed = unicodedata.normalize("NFD", value.lower())
+    output: list[str] = []
+    for char in decomposed:
+        if unicodedata.combining(char):
+            if char == "\N{COMBINING DIAERESIS}" and output and output[-1] == "u":
+                output[-1] = "v"
+            continue
+        output.append("v" if char == "ü" else char)
+    return "".join(output)
+
+
 def iter_rime_ice_rows(text: str, source: str, priority: int):
     in_data = False
     order = 0
@@ -366,13 +394,60 @@ def iter_rime_ice_rows(text: str, source: str, priority: int):
             weight = int(fields[2])
         yield SourceRow(
             word=fields[0],
-            pinyin=tuple(fields[1].replace("ü", "v").split()),
+            pinyin=tuple(normalize_pinyin_syllable(item) for item in fields[1].split()),
             weight=weight,
             source=source,
             source_priority=priority,
             order=order,
         )
         order += 1
+
+
+WANXIANG_HAN_RE = re.compile(r"^[\u3400-\u9fff\uf900-\ufaff]{2,12}$")
+WANXIANG_INCOMPLETE_ENDINGS = (
+    "的", "地", "得", "了", "着", "过", "吗", "呢", "吧", "啊", "呀",
+    "氯化亚", "甲基己",
+)
+WANXIANG_CHEMISTRY_MARKERS = (
+    "酸", "碱", "盐", "酯", "醇", "酚", "酮", "醚", "醛", "胺", "酰",
+    "烷", "烯", "炔", "苯", "硫", "磷", "氯", "溴", "碘", "氟", "氧",
+    "化物", "元素", "同位素", "聚合物", "矿物",
+)
+WANXIANG_PLACE_SUFFIXES = (
+    "省", "市", "县", "区", "旗", "盟", "州", "乡", "镇", "村", "屯", "岛",
+    "山", "岭", "峰", "河", "江", "湖", "海", "湾", "港", "洲", "路", "街",
+    "巷", "寺", "关", "口", "站", "机场", "半岛", "群岛", "自治区",
+)
+
+
+def wanxiang_low_value_reason(row: SourceRow) -> str | None:
+    """Return why an upstream Wanxiang row is unsuitable for xmjd6.
+
+    Wanxiang's pinyin weights are selection signals only.  This conservative
+    profile keeps specialist vocabulary and a very small high-frequency slice
+    of the general dictionary; noisy name extraction and sentence association
+    data are deliberately not imported.
+    """
+    word = row.word
+    if not WANXIANG_HAN_RE.fullmatch(word):
+        return "non_han_or_length"
+    if word.endswith(WANXIANG_INCOMPLETE_ENDINGS):
+        return "incomplete"
+    if row.source in {"yaopin", "yixue"}:
+        return None
+    if row.source == "huaxue":
+        return None if any(marker in word for marker in WANXIANG_CHEMISTRY_MARKERS) else "not_chemical"
+    if row.source == "diming":
+        if row.weight < 100 or not word.endswith(WANXIANG_PLACE_SUFFIXES):
+            return "weak_place"
+        return None
+    if row.source == "mingren":
+        return None if row.weight >= 100 else "rare_famous_name"
+    if row.source == "taifeng":
+        return None if word.startswith("台风") else "not_typhoon"
+    if row.source == "jichu":
+        return None if row.weight >= 10_000 and len(word) <= 6 else "general_long_tail"
+    return "unsupported_source"
 
 
 def is_likely_medicine_name(word: str) -> bool:
@@ -439,7 +514,7 @@ def load_local_vocabulary(root: Path) -> tuple[set[str], dict[str, set[str]]]:
     words: set[str] = set()
     occupied: dict[str, set[str]] = defaultdict(set)
     for filename in LOCAL_WORD_DICTIONARIES:
-        path = root / filename
+        path = root / "dicts" / "xmjd6" / filename
         if not path.is_file():
             continue
         for word, code in iter_dictionary_rows(path):
@@ -859,14 +934,112 @@ def render_ice(
     return "\n".join(header + body) + "\n"
 
 
+def build_wanxiang_rows(
+    source_texts: dict[str, str],
+    character_codes: dict[str, tuple[str, ...]],
+    pinyin_prefixes: dict[str, str],
+    higher_priority_words: set[str],
+    occupied: dict[str, set[str]],
+) -> tuple[list[GeneratedRow], Counter[str]]:
+    """Build a collision-free, low-priority specialist Wanxiang supplement."""
+    stats: Counter[str] = Counter()
+    seen: set[str] = set()
+    pending: list[PendingRow] = []
+    for priority, (source_name, _) in enumerate(RIME_WANXIANG_FILES):
+        for row in iter_rime_ice_rows(source_texts[source_name], source_name, priority):
+            stats["wanxiang_source_rows"] += 1
+            stats[f"wanxiang_source_{source_name}"] += 1
+            if row.word in seen:
+                stats["wanxiang_deduplicated_upstream"] += 1
+                continue
+            seen.add(row.word)
+            if row.word in higher_priority_words:
+                stats["wanxiang_deduplicated_local"] += 1
+                continue
+            reason = wanxiang_low_value_reason(row)
+            if reason is not None:
+                stats[f"wanxiang_skipped_low_value_{reason}"] += 1
+                continue
+            if len(row.word) != len(row.pinyin):
+                stats["wanxiang_skipped_unaligned"] += 1
+                continue
+            if is_rejected(row.word, ""):
+                stats["wanxiang_skipped_rejected"] += 1
+                continue
+            full_codes = select_full_codes(row, character_codes, pinyin_prefixes)
+            if full_codes is None:
+                stats["wanxiang_skipped_unencodable"] += 1
+                continue
+            pending.append(PendingRow(row, tuple(code_candidates_from_full_codes(full_codes))))
+
+    working = {code: set(words) for code, words in occupied.items()}
+    generated: list[GeneratedRow] = []
+    for item in sorted(
+        pending,
+        key=lambda item: (
+            item.source_row.source_priority,
+            len(item.source_row.word),
+            -item.source_row.weight,
+            item.source_row.order,
+        ),
+    ):
+        selected = next(
+            (candidate for candidate in item.candidates if not working.get(candidate)),
+            None,
+        )
+        if selected is None:
+            stats["wanxiang_skipped_collision"] += 1
+            continue
+        row = item.source_row
+        working.setdefault(selected, set()).add(row.word)
+        generated.append(
+            GeneratedRow(row.word, selected, row.weight, row.source_priority, row.order)
+        )
+        stats[f"wanxiang_generated_{row.source}"] += 1
+    generated.sort(key=lambda row: (row.code, -row.weight, row.source_priority, row.order, row.word))
+    stats["wanxiang_generated_rows"] = len(generated)
+    return generated, stats
+
+
+def render_wanxiang(
+    source_name: str,
+    rows: list[GeneratedRow],
+    stats: Counter[str],
+    lock: dict[str, Any],
+) -> str:
+    source = lock["sources"]["rime_wanxiang"]
+    header = [
+        "# Rime dictionary",
+        "# encoding: utf-8",
+        "#",
+        "# Generated from amzxyz/rime-wanxiang; do not edit by hand.",
+        f"# Source commit: {source['commit']}",
+        f"# Selected source: dicts/{source_name}.dict.yaml.",
+        "# Pinyin weights are used only for filtering/order; codes are regenerated as xmjd6.",
+        "# Curated local vocabulary takes precedence; colliding rows are omitted.",
+        "# Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.",
+        f"# Source rows in category: {stats[f'wanxiang_source_{source_name}']}",
+        f"# Generated rows in category: {stats[f'wanxiang_generated_{source_name}']}",
+        "---",
+        f"name: xmjd6.wanxiang.{source_name}",
+        f"version: \"{lock['generated_on']}\"",
+        "sort: original",
+        "...",
+        "",
+    ]
+    return "\n".join(header + [f"{row.word}\t{row.code}" for row in rows]) + "\n"
+
+
 def build(
     root: Path,
     lock: dict[str, Any],
     jiandao_root: Path | None = None,
     rime_ice_root: Path | None = None,
+    rime_wanxiang_root: Path | None = None,
 ) -> BuildResult:
     jiandao_source = lock["sources"]["rime_jiandao"]
     ice_source = lock["sources"]["rime_ice"]
+    wanxiang_source = lock["sources"]["rime_wanxiang"]
     danzi_source_text = read_source(
         jiandao_source, "dicts/01.danzi.txt", jiandao_root
     )
@@ -876,27 +1049,46 @@ def build(
             RIME_ICE_FILES + RIME_ICE_ENGLISH_FILES + (RIME_ICE_EMOJI_FILE,)
         )
     }
+    wanxiang_source_texts = {
+        source_name: read_source(wanxiang_source, relative_path, rime_wanxiang_root)
+        for source_name, relative_path in RIME_WANXIANG_FILES
+    }
 
     character_codes = parse_danzi_rows(danzi_source_text)
-    pinyin_readings = load_pinyin_readings(root / "pinyin_simp.dict.yaml")
+    pinyin_readings = load_pinyin_readings(root / "dicts" / "xmjd6" / "pinyin_simp.dict.yaml")
     pinyin_prefixes = build_pinyin_prefixes(character_codes, pinyin_readings)
     local_words, occupied = load_local_vocabulary(root)
     protected_local_codes = {
         code
         for filename in STRICT_LOCAL_COLLISION_DICTIONARIES
-        if (root / filename).is_file()
-        for _, code in iter_dictionary_rows(root / filename)
+        if (root / "dicts" / "xmjd6" / filename).is_file()
+        for _, code in iter_dictionary_rows(root / "dicts" / "xmjd6" / filename)
     }
-    ice_rows, stats = build_ice_rows(
-        source_texts,
+    wanxiang_rows, wanxiang_stats = build_wanxiang_rows(
+        wanxiang_source_texts,
         character_codes,
         pinyin_prefixes,
         local_words,
         occupied,
+    )
+    augmented_words = set(local_words)
+    augmented_occupied = {code: set(words) for code, words in occupied.items()}
+    for row in wanxiang_rows:
+        augmented_words.add(row.word)
+        augmented_occupied.setdefault(row.code, set()).add(row.word)
+    protected_local_codes.update(row.code for row in wanxiang_rows)
+    ice_rows, stats = build_ice_rows(
+        source_texts,
+        character_codes,
+        pinyin_prefixes,
+        augmented_words,
+        augmented_occupied,
         protected_local_codes,
     )
+    stats.update(wanxiang_stats)
     english_occupied = set(occupied)
     english_occupied.update(row.code for row in ice_rows)
+    english_occupied.update(row.code for row in wanxiang_rows)
     english_rows, english_stats = build_english_rows(source_texts, english_occupied)
     stats.update(english_stats)
     (
@@ -909,6 +1101,15 @@ def build(
     return BuildResult(
         danzi_text=render_danzi(danzi_source_text, lock),
         ice_text=render_ice(ice_rows, stats, lock),
+        wanxiang_texts={
+            source_name: render_wanxiang(
+                source_name,
+                [row for row in wanxiang_rows if row.source_priority == priority],
+                stats,
+                lock,
+            )
+            for priority, (source_name, _) in enumerate(RIME_WANXIANG_FILES)
+        },
         english_text=render_english(english_rows, stats, lock),
         emoji_extra_chars_text=emoji_extra_chars_text,
         emoji_extra_index_text=emoji_extra_index_text,
@@ -922,15 +1123,15 @@ def update_generated_metadata(
 ) -> dict[str, Any]:
     lock = json.loads(json.dumps(lock))
     lock["generated"] = {
-        DANZI_TARGET.name: {
+        DANZI_TARGET.relative_to(ROOT).as_posix(): {
             "sha256": sha256_text(result.danzi_text),
             "rows": result.danzi_text.count("\n") - 13,
         },
-        ICE_TARGET.name: {
+        ICE_TARGET.relative_to(ROOT).as_posix(): {
             "sha256": sha256_text(result.ice_text),
             "rows": result.stats["generated_rows"],
         },
-        ENGLISH_TARGET.name: {
+        ENGLISH_TARGET.relative_to(ROOT).as_posix(): {
             "sha256": sha256_text(result.english_text),
             "rows": result.stats["english_generated_rows"],
         },
@@ -947,6 +1148,11 @@ def update_generated_metadata(
             "rows": result.stats["emoji_extra_phrase_rows"],
         },
     }
+    for source_name, target in WANXIANG_TARGETS.items():
+        lock["generated"][target.relative_to(ROOT).as_posix()] = {
+            "sha256": sha256_text(result.wanxiang_texts[source_name]),
+            "rows": result.stats[f"wanxiang_generated_{source_name}"],
+        }
     lock["statistics"] = dict(sorted(result.stats.items()))
     return lock
 
@@ -977,12 +1183,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--refresh-source",
         action="append",
-        choices=tuple(sorted(("rime_jiandao", "rime_ice"))),
+        choices=tuple(sorted(("rime_jiandao", "rime_ice", "rime_wanxiang"))),
         default=[],
         help="refresh only one named source; may be repeated",
     )
     parser.add_argument("--jiandao-root", type=Path, help="use a local rime-jiandao checkout")
     parser.add_argument("--rime-ice-root", type=Path, help="use a local rime-ice checkout")
+    parser.add_argument("--rime-wanxiang-root", type=Path, help="use a local rime-wanxiang checkout")
     return parser.parse_args()
 
 
@@ -1001,7 +1208,9 @@ def main() -> int:
             source["commit"] = resolve_ref(source["repository"], source["branch"])
         lock["generated_on"] = date.today().isoformat()
 
-    result = build(ROOT, lock, args.jiandao_root, args.rime_ice_root)
+    result = build(
+        ROOT, lock, args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root
+    )
     expected = {
         DANZI_TARGET: result.danzi_text,
         ICE_TARGET: result.ice_text,
@@ -1010,6 +1219,12 @@ def main() -> int:
         EMOJI_EXTRA_INDEX_TARGET: result.emoji_extra_index_text,
         EMOJI_EXTRA_PHRASES_TARGET: result.emoji_extra_phrases_text,
     }
+    expected.update(
+        {
+            WANXIANG_TARGETS[source_name]: text
+            for source_name, text in result.wanxiang_texts.items()
+        }
+    )
     changed = [
         path
         for path, text in expected.items()
@@ -1023,6 +1238,7 @@ def main() -> int:
 
     if args.write:
         for path, text in expected.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8", newline="\n")
         updated_lock = update_generated_metadata(lock, result)
         LOCK_PATH.write_text(

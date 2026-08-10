@@ -4,7 +4,7 @@
 # 键道6 扩展词库控制
 ---
 name: xmjd6.extended
-version: "2026-08-09"
+version: "2026-08-10"
 sort: original 
 use_preset_vocabulary: false
 columns:
@@ -26,28 +26,29 @@ import_tables:
 # 说明：内置词库在当前目录下
 # 若需要，请仅删除下列码表名前的“#”号，并重新部署
 # 示例码表状态：
-# #  - xmjd6.danzi #关闭（前面有一个#号）
-#    - xmjd6.danzi #开启（前面没有#号了）
+# #  - dicts/xmjd6/xmjd6.danzi #关闭（前面有一个#号）
+#    - dicts/xmjd6/xmjd6.danzi #开启（前面没有#号了）
 # =======================================
 ### 内置词库@吅吅大山
 # ---------------------------------------
 # 扩展：单字
-  - xmjd6.user   #为了词频拿到上面来了
-  - xmjd6.zzc
-  - xmjd6.danzi
+# 个人词库优先，且作为 RimeTool 薄荷模板识别的首个 dicts/ 词库
+  - dicts/xmjd6/xmjd6.user
+  - dicts/xmjd6/xmjd6.zzc
+  - dicts/xmjd6/xmjd6.danzi
 # ---------------------------------------
 # 扩展：词组
-  - xmjd6.cizu
+  - dicts/xmjd6/xmjd6.cizu
 # ---------------------------------------
 # 扩展：符号
 #  - xmjd6.fuhao
 # ---------------------------------------
 # 扩展：补充码表
-  - xmjd6.catholicism
-  - xmjd6.protestantism
-  - xmjd6.orthodoxy
-  - xmjd6.oriental
-  - xmjd6.assyrian
+  - dicts/xmjd6/xmjd6.catholicism
+  - dicts/xmjd6/xmjd6.protestantism
+  - dicts/xmjd6/xmjd6.orthodoxy
+  - dicts/xmjd6/xmjd6.oriental
+  - dicts/xmjd6/xmjd6.assyrian
 # ---------------------------------------
 # 扩展：链接等
 #  - xmjd6.lianjie
@@ -59,19 +60,28 @@ import_tables:
   # - xmjd6.chaojizici
 # ---------------------------------------
 ## 扩展：525声笔笔词组
-  - xmjd6.core
+  - dicts/xmjd6/xmjd6.core
 # ---------------------------------------
 ## 扩展：用户词库
-  # - xmjd6.user   #词频改到上面去了，所以临时注释了
+  # - dicts/xmjd6/xmjd6.user   #词频改到上面去了，所以临时注释了
 # ---------------------------------------
 ## 扩展：附加词语----兰佬提供
-  - xmjd6.fjcy
+  - dicts/xmjd6/xmjd6.fjcy
 # ---------------------------------------
 ## 扩展：雾凇拼音上游词库（自动转为键道6编码并与本地词库去重）
-  - xmjd6.ice
+  - dicts/xmjd6/xmjd6.ice
+# ---------------------------------------
+## 扩展：万象专业补充词库（严格筛选、键道6重新编码、无新增异词同码）
+  - dicts/xmjd6/xmjd6.wanxiang.yaopin
+  - dicts/xmjd6/xmjd6.wanxiang.yixue
+  - dicts/xmjd6/xmjd6.wanxiang.huaxue
+  - dicts/xmjd6/xmjd6.wanxiang.diming
+  - dicts/xmjd6/xmjd6.wanxiang.mingren
+  - dicts/xmjd6/xmjd6.wanxiang.taifeng
+  - dicts/xmjd6/xmjd6.wanxiang.jichu
 # ---------------------------------------
 ## 扩展：雾凇英文词库（i 键引导，编码已加命名空间前缀）
-  - xmjd6.en
+  - dicts/xmjd6/xmjd6.en
 #  - xmjd6.zidingyi
 # ---------------------------------------
 # =======================================

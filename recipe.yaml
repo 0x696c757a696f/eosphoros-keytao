@@ -10,6 +10,7 @@ install_files: >-
   pinyin_simp*.yaml
   xmjd6.ico
   xmjd6.*.dict.yaml
+  dicts/xmjd6/*.dict.yaml
   xmjd6.*.schema.yaml
   xmjd6.schema.yaml
   xmjd6.symbols.yaml
