@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
@@ -42,7 +43,12 @@ def validate_outputs(user_dir: Path) -> list[str]:
 def deployer_command(
     deployer: str, user_dir: Path, shared_data_dir: Path | None
 ) -> list[str]:
-    command = [deployer, "--build", str(user_dir)]
+    command = [
+        deployer,
+        "--compile",
+        str(user_dir / "eosphoros.schema.yaml"),
+        str(user_dir),
+    ]
     if shared_data_dir is not None:
         command.append(str(shared_data_dir))
     return command
@@ -59,9 +65,13 @@ def smoke_test(
         user_dir = Path(temporary) / "user"
         user_dir.mkdir()
         stage_runtime(source_root, user_dir)
+        (user_dir / "build").mkdir()
+        environment = os.environ.copy()
+        environment["GLOG_logtostderr"] = "1"
         result = subprocess.run(
             deployer_command(deployer, user_dir, shared_data_dir),
             cwd=user_dir,
+            env=environment,
             text=True,
             encoding="utf-8",
             errors="replace",

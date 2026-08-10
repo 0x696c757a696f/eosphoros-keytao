@@ -29,7 +29,13 @@ class PlatformPackageTests(unittest.TestCase):
             shared_data = Path("/usr/share/rime-data")
             self.assertEqual(
                 deployer_command("rime_deployer", root, shared_data),
-                ["rime_deployer", "--build", str(root), str(shared_data)],
+                [
+                    "rime_deployer",
+                    "--compile",
+                    str(root / "eosphoros.schema.yaml"),
+                    str(root),
+                    str(shared_data),
+                ],
             )
 
     def test_builds_minimal_core_and_platform_archives(self) -> None:
