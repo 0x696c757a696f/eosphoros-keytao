@@ -107,6 +107,18 @@ test("lazy translator leaves English i input to the main table", function()
     if not ok then error("loader fallback failed: " .. tostring(err)) end
 end)
 
+test("Chinese Gregorian dates do not pad month or day", function()
+    unload("eosphoros")
+    _G.Candidate = candidate
+    local yielded = {}
+    _G.yield = function(cand) yielded[#yielded + 1] = cand end
+
+    local translator = require("eosphoros.eosphoros_time_core")
+    translator.func("=20260104", { start = 0, _end = 9 }, base_env())
+
+    assert_equal(yielded[1] and yielded[1].text, "2026年1月4日", "official Chinese date")
+end)
+
 test("ZZC candidates stay ahead of ordinary multi-character candidates", function()
     unload("eosphoros.eosphoros_completion")
     package.loaded["eosphoros.zzc.eosphoros_zzc_core"] = {

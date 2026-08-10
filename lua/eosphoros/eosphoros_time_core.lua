@@ -2,7 +2,7 @@
 -- 从 eosphoros_ext_core.lua 拆分：日期、农历、节气、日期查询。
 -- 含有日历原作者未知
 -- 此版本作者：@浮生 https://github.com/wzxmer/rime-xmjd6
--- 更新：2026-05-29
+-- 更新：2026-08-10
 
 local M = {}
 local registry = require("eosphoros.common.eosphoros_cache_registry")
@@ -24,6 +24,12 @@ local tostring = tostring
 local os_date = os.date
 local os_time = os.time
 local table_insert = table.insert
+
+-- 机关行文日期中的月、日不编虚位，例如“2026年1月4日”。
+-- ISO 8601 和 YYYYMMDD 等机器可读格式仍在各自调用处保留补零。
+local function format_chinese_gregorian_date(year, month, day)
+    return string_format("%04d年%d月%d日", tonumber(year), tonumber(month), tonumber(day))
+end
 
 -- 全局计算缓存：以“分钟”为 Key
 local _G_CACHE = {
@@ -1182,7 +1188,9 @@ local function QueryLunarInfo(date)
 		elseif string.len(str)==8 then str=str..string_sub(os_date("%m%d%H"),5) elseif string.len(str)==9 then str=str..string_sub(os_date("%m%d%H"),6) else str=string_sub(str,1,10) end
 		if tonumber(string_sub(str,5,6))>12 or tonumber(string_sub(str,5,6))<1 or tonumber(string_sub(str,7,8))>31 or tonumber(string_sub(str,7,8))<1 or tonumber(string_sub(str,9,10))>24 then return result end
 		LunarDate=Date2LunarDate(str)  LunarGz=lunarJzl(str)  DateTime=LunarDate2Date(str,0)
-		local dateRQ=string_sub(str,1,4).."年"..string_sub(str,5,6).."月"..string_sub(str,7,8).."日"
+		local dateRQ=format_chinese_gregorian_date(
+			string_sub(str,1,4), string_sub(str,5,6), string_sub(str,7,8)
+		)
 		Cweek=chinese_weekday(CXweek(string_sub(str,1,8)))--查询目标日期星期几
 		local Cweek2=string_sub(str,1,4).."年第"..CXweek2(string_sub(str,1,8)).."周 "--查询目标日期周数
 		if LunarGz~=nil then
@@ -1407,7 +1415,7 @@ local function translator(input, seg)
             local t = os_date("*t")
             local ymd = string_format("%04d%02d%02d", t.year, t.month, t.day)
             local iso = string_format("%04d-%02d-%02d", t.year, t.month, t.day)
-            local chn = string_format("%04d年%02d月%02d日", t.year, t.month, t.day)
+            local chn = format_chinese_gregorian_date(t.year, t.month, t.day)
             local num_year = t.yday .. "/" .. IsLeap(t.year)
 
             table_insert(data, {iso, ""})
