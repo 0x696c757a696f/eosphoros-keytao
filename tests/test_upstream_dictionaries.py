@@ -63,8 +63,14 @@ class UpstreamDictionaryTests(unittest.TestCase):
 
     def test_data_dictionaries_live_below_dicts_eosphoros_with_rimetool_root_index(self) -> None:
         self.assertEqual(
-            [path.name for path in ROOT.glob("*.dict.yaml")],
-            ["eosphoros.extended.dict.yaml"],
+            {path.name for path in ROOT.glob("*.dict.yaml")},
+            {
+                "eosphoros.cx.dict.yaml",
+                "eosphoros.extended.dict.yaml",
+                "eosphoros.gbk.dict.yaml",
+                "liangfen.dict.yaml",
+                "pinyin_simp.dict.yaml",
+            },
         )
         dictionary_dir = ROOT / "dicts" / "eosphoros"
         self.assertTrue((dictionary_dir / "pinyin_simp.dict.yaml").is_file())
@@ -80,6 +86,9 @@ class UpstreamDictionaryTests(unittest.TestCase):
             line.strip() for line in import_block.splitlines() if line.startswith("  - ")
         )
         self.assertEqual(first_import, "- dicts/eosphoros/eosphoros.user")
+        for dictionary in ("eosphoros.cx", "eosphoros.gbk", "liangfen", "pinyin_simp"):
+            index = (ROOT / f"{dictionary}.dict.yaml").read_text(encoding="utf-8")
+            self.assertIn(f"- dicts/eosphoros/{dictionary}", index)
 
     def test_tone_marked_pinyin_normalizes_without_losing_umlaut(self) -> None:
         self.assertEqual(normalize_pinyin_syllable("piàn"), "pian")

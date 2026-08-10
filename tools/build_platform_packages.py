@@ -77,6 +77,7 @@ def common_runtime_files(root: Path) -> list[Path]:
         root / "zzc" / "eosphoros_撤回合并.py",
     ]
     files.extend(sorted(root.glob("eosphoros*.yaml")))
+    files.extend(sorted(root.glob("*.dict.yaml")))
     files.extend(_files_below(root, "dicts/eosphoros"))
     files.extend(_files_below(root, "lua/eosphoros"))
     files.extend(_files_below(root, "opencc/eosphoros"))
