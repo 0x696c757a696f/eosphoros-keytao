@@ -23,6 +23,7 @@ REQUIRED_BUILD_OUTPUTS = (
     "eosphoros.prism.bin",
     "eosphoros.extended.table.bin",
 )
+DEFAULT_SHARED_DATA_DIR = Path("/usr/share/rime-data")
 
 
 def stage_runtime(source_root: Path, destination: Path) -> None:
@@ -38,13 +39,28 @@ def validate_outputs(user_dir: Path) -> list[str]:
     return [name for name in REQUIRED_BUILD_OUTPUTS if not (build_dir / name).is_file()]
 
 
-def smoke_test(deployer: str, source_root: Path = ROOT) -> None:
+def deployer_command(
+    deployer: str, user_dir: Path, shared_data_dir: Path | None
+) -> list[str]:
+    command = [deployer, "--build", str(user_dir)]
+    if shared_data_dir is not None:
+        command.append(str(shared_data_dir))
+    return command
+
+
+def smoke_test(
+    deployer: str,
+    source_root: Path = ROOT,
+    shared_data_dir: Path | None = None,
+) -> None:
+    if shared_data_dir is not None and not shared_data_dir.is_dir():
+        raise FileNotFoundError(f"Rime shared data directory is missing: {shared_data_dir}")
     with tempfile.TemporaryDirectory(prefix="eosphoros-rime-") as temporary:
         user_dir = Path(temporary) / "user"
         user_dir.mkdir()
         stage_runtime(source_root, user_dir)
         result = subprocess.run(
-            [deployer, "--build", str(user_dir)],
+            deployer_command(deployer, user_dir, shared_data_dir),
             cwd=user_dir,
             text=True,
             encoding="utf-8",
@@ -65,10 +81,25 @@ def smoke_test(deployer: str, source_root: Path = ROOT) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--deployer", default=shutil.which("rime_deployer"))
+    parser.add_argument(
+        "--shared-data-dir",
+        type=Path,
+        default=DEFAULT_SHARED_DATA_DIR if DEFAULT_SHARED_DATA_DIR.is_dir() else None,
+        help="Rime prelude/shared-data directory (for example /usr/share/rime-data)",
+    )
     args = parser.parse_args()
     if not args.deployer:
         parser.error("rime_deployer was not found; install librime-bin")
-    smoke_test(args.deployer)
+    try:
+        smoke_test(args.deployer, shared_data_dir=args.shared_data_dir)
+    except Exception as exc:
+        # GitHub exposes workflow annotations even when the full log requires
+        # authentication, so retain the actionable deployer output there.
+        annotation = (
+            str(exc).replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        )
+        print(f"::error title=Rime deployment failed::{annotation}", file=sys.stderr)
+        raise
     print("Real librime deployment smoke test passed.")
     return 0
 

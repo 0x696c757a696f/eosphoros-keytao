@@ -126,7 +126,7 @@ jobs:
     - name: Validate source tree
       run: |
         sudo apt-get update
-        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua
+        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude
         python -m pip install -r requirements-dev.txt
         python tools/validate_repo.py
         python tools/audit_long_dictionary_entries.py --check
@@ -155,7 +155,7 @@ jobs:
       run: python tools/build_platform_packages.py
 
     - name: Compile packaged core with librime and Lua
-      run: python tools/smoke_test_rime_deployment.py
+      run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
 
     - name: Package Fcitx5 themes
       run: |

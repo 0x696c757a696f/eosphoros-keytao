@@ -13,6 +13,7 @@ class PlatformPackageTests(unittest.TestCase):
     def test_rime_smoke_test_requires_compiled_core_artifacts(self) -> None:
         from tools.smoke_test_rime_deployment import (
             REQUIRED_BUILD_OUTPUTS,
+            deployer_command,
             validate_outputs,
         )
 
@@ -25,6 +26,11 @@ class PlatformPackageTests(unittest.TestCase):
             self.assertEqual(validate_outputs(root), [REQUIRED_BUILD_OUTPUTS[-1]])
             (build / REQUIRED_BUILD_OUTPUTS[-1]).write_bytes(b"test")
             self.assertEqual(validate_outputs(root), [])
+            shared_data = Path("/usr/share/rime-data")
+            self.assertEqual(
+                deployer_command("rime_deployer", root, shared_data),
+                ["rime_deployer", "--build", str(root), str(shared_data)],
+            )
 
     def test_builds_minimal_core_and_platform_archives(self) -> None:
         from tools.build_platform_packages import build_packages
