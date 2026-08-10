@@ -16,6 +16,7 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $LockPath = Join-Path $PSScriptRoot "upstream_dictionaries.lock.json"
 $SyncScript = Join-Path $PSScriptRoot "sync_upstream_dictionaries.py"
+$VersionScript = Join-Path $PSScriptRoot "update_versions.py"
 
 if (-not $Python) {
     $Python = (Get-Command python -ErrorAction Stop).Source
@@ -123,6 +124,9 @@ try {
         Write-Host "No relevant upstream dictionary changes."
         return
     }
+
+    # Keep VERSION and every Rime YAML version aligned with generated_on.
+    Invoke-Checked $Python @($VersionScript)
 
     $Arguments = [Collections.Generic.List[string]]::new()
     $Arguments.Add($SyncScript)

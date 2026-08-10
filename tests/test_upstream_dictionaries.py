@@ -25,6 +25,7 @@ from tools.sync_upstream_dictionaries import (
     verify_generated_hashes,
 )
 from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
+from tools.upstream_sources import raw_url, read_source
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +37,30 @@ def source_text(*rows: str) -> str:
 
 
 class UpstreamDictionaryTests(unittest.TestCase):
+    def test_upstream_source_adapter_supports_pinned_urls_and_local_checkouts(self) -> None:
+        source = {
+            "repository": "example/project",
+            "commit": "a" * 40,
+        }
+        self.assertEqual(
+            raw_url(source, "dicts/base.dict.yaml"),
+            "https://raw.githubusercontent.com/example/project/"
+            + "a" * 40
+            + "/dicts/base.dict.yaml",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "fixture.txt").write_text("词条\n", encoding="utf-8")
+            self.assertEqual(read_source(source, "fixture.txt", root), "词条\n")
+
+    def test_scheduled_sync_reuses_the_incremental_git_cache(self) -> None:
+        workflow = (ROOT / ".github/workflows/sync-upstream-dictionaries.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("uses: actions/cache@v5", workflow)
+        self.assertIn("path: .tmp/upstream-git-cache", workflow)
+        self.assertIn("-CacheDirectory .tmp/upstream-git-cache", workflow)
+
     def test_data_dictionaries_live_below_dicts_eosphoros_with_rimetool_root_index(self) -> None:
         self.assertEqual(
             [path.name for path in ROOT.glob("*.dict.yaml")],
@@ -483,6 +508,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         )
         self.assertIn('"diff", "--name-only"', script)
         self.assertIn('"--refresh-source"', script)
+        self.assertIn("update_versions.py", script)
         self.assertIn("Get-Command python", script)
         self.assertNotIn("D:\\", script)
 
@@ -494,6 +520,8 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertIn("update_upstream_dictionaries.ps1", workflow)
         self.assertIn("python tools/validate_repo.py", workflow)
         self.assertIn("gh pr create", workflow)
+        self.assertIn("VERSION", workflow)
+        self.assertIn("*.yaml", workflow)
 
 
 if __name__ == "__main__":

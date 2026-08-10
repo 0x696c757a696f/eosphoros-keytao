@@ -109,7 +109,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
 
     steps:
     - name: Set up environment variables
@@ -127,9 +126,10 @@ jobs:
     - name: Validate source tree
       run: |
         sudo apt-get update
-        sudo apt-get install -y lua5.4
+        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua
         python -m pip install -r requirements-dev.txt
         python tools/validate_repo.py
+        python tools/audit_long_dictionary_entries.py --check
         lua5.4 tests/run.lua
         python -m unittest discover -s tests -p 'test_*.py' -v
 
@@ -153,6 +153,9 @@ jobs:
 
     - name: Build generic and platform-specific Rime packages
       run: python tools/build_platform_packages.py
+
+    - name: Compile packaged core with librime and Lua
+      run: python tools/smoke_test_rime_deployment.py
 
     - name: Package Fcitx5 themes
       run: |
@@ -360,128 +363,37 @@ jobs:
         zip -r ../yong-eosphoros.zip yong
         rm -rf ../.yong ../yong_temp
 
-    - name: Create Release
-      id: create_release
-      uses: shogo82148/actions-create-release@v1.9.0
+    - name: Create checksums and publish Release
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.CURRENT_DATE }}
-        release_name: ${{ env.RELEASE_TITLE }}
-        body: |
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_NOTES: |
           ## Changelog
           ${{ steps.changelog.outputs.changelog }}
+
           ## Release Notes
           - [如何使用](${{ github.server_url }}/${{ github.repository }}#如何使用)
-        draft: false
-        prerelease: false
-
-    - name: Upload Rabbit-eosphoros.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Rabbit-eosphoros.zip
-        asset_name: Rabbit-eosphoros.zip
-        asset_content_type: application/zip
-
-    - name: Upload yong-eosphoros.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./yong-eosphoros.zip
-        asset_name: yong-eosphoros.zip
-        asset_content_type: application/zip
-
-    - name: Upload eosphoros.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./eosphoros.zip
-        asset_name: eosphoros.zip
-        asset_content_type: application/zip
-
-    - name: Upload eosphoros-weasel.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./eosphoros-weasel.zip
-        asset_name: eosphoros-weasel.zip
-        asset_content_type: application/zip
-
-    - name: Upload eosphoros-squirrel.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./eosphoros-squirrel.zip
-        asset_name: eosphoros-squirrel.zip
-        asset_content_type: application/zip
-
-    - name: Upload eosphoros-fcitx5-macos.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./eosphoros-fcitx5-macos.zip
-        asset_name: eosphoros-fcitx5-macos.zip
-        asset_content_type: application/zip
-
-    - name: Upload eosphoros-fcitx5-linux.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./eosphoros-fcitx5-linux.zip
-        asset_name: eosphoros-fcitx5-linux.zip
-        asset_content_type: application/zip
-
-    - name: Upload eosphoros-mobile.zip to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./eosphoros-mobile.zip
-        asset_name: eosphoros-mobile.zip
-        asset_content_type: application/zip
-
-    - name: Upload Fcitx5 Linux themes to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./fcitx5-linux-eosphoros-themes.zip
-        asset_name: fcitx5-linux-eosphoros-themes.zip
-        asset_content_type: application/zip
-
-    - name: Upload Fcitx5 macOS themes to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./fcitx5-macos-eosphoros-themes.zip
-        asset_name: fcitx5-macos-eosphoros-themes.zip
-        asset_content_type: application/zip
-
-    - name: Upload dazhu.txt to Release
-      uses: shogo82148/actions-upload-release-asset@v1.10.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dazhu.txt
-        asset_name: dazhu.txt
-        asset_content_type: text/plain; charset=utf-8
+      run: |
+        assets=(
+          Rabbit-eosphoros.zip
+          yong-eosphoros.zip
+          eosphoros.zip
+          eosphoros-weasel.zip
+          eosphoros-squirrel.zip
+          eosphoros-fcitx5-macos.zip
+          eosphoros-fcitx5-linux.zip
+          eosphoros-mobile.zip
+          fcitx5-linux-eosphoros-themes.zip
+          fcitx5-macos-eosphoros-themes.zip
+          dazhu.txt
+        )
+        sha256sum "${assets[@]}" > SHA256SUMS
+        assets+=(SHA256SUMS)
+        printf '%s\n' "$RELEASE_NOTES" > release-notes.md
+        if gh release view "$CURRENT_DATE" >/dev/null 2>&1; then
+          gh release upload "$CURRENT_DATE" "${assets[@]}" --clobber
+          gh release edit "$CURRENT_DATE" --title "$RELEASE_TITLE" --notes-file release-notes.md
+        else
+          gh release create "$CURRENT_DATE" "${assets[@]}" \
+            --title "$RELEASE_TITLE" \
+            --notes-file release-notes.md
+        fi

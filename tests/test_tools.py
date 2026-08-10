@@ -4,6 +4,7 @@ import fnmatch
 import importlib.util
 import configparser
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -203,8 +204,19 @@ class RepositoryValidationTests(unittest.TestCase):
             "eosphoros-fcitx5-linux.zip",
             "eosphoros-mobile.zip",
         ):
-            self.assertIn(f"asset_path: ./{archive}", release)
-            self.assertIn(f"asset_name: {archive}", release)
+            self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
+
+    def test_release_uses_one_native_upload_with_checksums(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        release = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertNotIn("shogo82148/actions-", release)
+        self.assertIn('sha256sum "${assets[@]}" > SHA256SUMS', release)
+        self.assertIn('gh release create "$CURRENT_DATE" "${assets[@]}"', release)
+        self.assertIn('gh release upload "$CURRENT_DATE" "${assets[@]}" --clobber', release)
+        self.assertNotIn("actions: write", release)
 
     def test_release_yong_archive_is_the_full_portable_build(self) -> None:
         root = Path(__file__).resolve().parents[1]

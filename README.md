@@ -651,11 +651,11 @@ python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 与 [`licenses/`](licenses/)。
 
-Release 工作流会在每月 1 日和 15 日的 04:17 UTC 自动检查。只有最新 Release 之后出现新提交时，才会继续验证、编译 Windows EXE、构建各平台压缩包并发布；没有新提交时会直接结束，不生成空 Release。手动运行 `Create Release with Zipped Branch Assets and Date` 仍可强制重新发布。
+Release 工作流会在每月 1 日和 15 日的 04:17 UTC 自动检查。只有最新 Release 之后出现新提交时，才会继续验证、编译 Windows EXE、执行真实 librime 部署冒烟测试、构建各平台压缩包并发布；没有新提交时会直接结束，不生成空 Release。每次发布同时生成 `SHA256SUMS`，可用于核对所有下载产物是否完整。手动运行 `Create Release with Zipped Branch Assets and Date` 仍可强制重新发布。
 
 ## 🛠️ 维护与验证
 
-本项目的 Python 工具需要 Python 3.11 或更新版本。可以使用系统 Python、虚拟环境或 Pixi。
+本项目的 Python 工具需要 Python 3.11 或更新版本。推荐安装 [Pixi](https://pixi.sh/) 后使用仓库锁定的跨平台环境；`pixi.lock` 固定 Python、PyYAML、Lua 和 PyInstaller 版本，避免本机与 CI 行为漂移。已有 Python 环境仍可直接运行下面的等价命令。
 
 <details>
 <summary><strong>🧪 展开维护与完整验证命令</strong></summary>
@@ -663,13 +663,20 @@ Release 工作流会在每月 1 日和 15 日的 04:17 UTC 自动检查。只有
 先激活相应环境，再在仓库根目录执行：
 
 ```powershell
+# 推荐：创建锁定环境并执行完整检查
+pixi run check
+
+# 等价的分项检查
 python -m unittest discover -s tests -p 'test_*.py' -v
 python .\tools\validate_repo.py
 python .\tools\clean_dictionary_quality.py --check
+python .\tools\audit_long_dictionary_entries.py --check
+python .\tools\check_christian_sources.py --check
 python .\tools\sync_upstream_dictionaries.py --check
 python .\tools\check_txjx_upstream.py
 python .\tools\adapt_txjx_upstream.py --json
 python .\tools\build_platform_packages.py --check
+python .\tools\build_fcitx5_themes.py --check
 git diff --check
 ```
 
@@ -685,6 +692,12 @@ python .\tools\dedupe_dictionaries.py
 # 检查或修复词库质量（单字表不在清理范围内）
 python .\tools\clean_dictionary_quality.py --check
 
+# 审计全库异常长词；确需保留的固定术语写入专用白名单
+python .\tools\audit_long_dictionary_entries.py --check
+
+# 校验基督宗派词库来源索引；联网月检由 GitHub Actions 自动执行
+python .\tools\check_christian_sources.py --check
+
 # 重新生成天主教扩展并整理分区
 python .\tools\build_catholicism_expansion.py --write
 python .\tools\organize_catholicism_legacy.py
@@ -694,7 +707,7 @@ python .\tools\build_christian_traditions.py --write
 python .\tools\sync_upstream_dictionaries.py --write
 ```
 
-仓库验证会检查 YAML、Lua、生成文件哈希、目录命名空间和关键配置。当前测试同时覆盖键道6词组编码、飞键规则、天主教分类、四个基督宗派专题词库、专题词跨库零重码、词库质量、上游去重、重码上限、英文 `i` 命名空间及自动同步工作流。
+仓库验证会检查 YAML、JSON、TOML、Lua、生成文件哈希、目录命名空间和关键配置。当前测试同时覆盖键道6词组编码、飞键规则、天主教分类、四个基督宗派专题词库、专题词跨库零重码、全库长词审计、词库质量、上游去重、重码上限、英文 `i` 命名空间、平台包内容及自动同步工作流。Ubuntu CI 还会用 `rime_deployer` 编译临时用户目录，确认主方案、棱镜和主词典能由真实 librime 生成。
 
 </details>
 
@@ -786,6 +799,6 @@ python .\tools\sync_upstream_dictionaries.py --write
 | 移动端第三方皮肤 | README 只提供外部入口，不复制、不修改、不放入仓库或 Release | 下载、导入和再分发须遵守皮肤作者的说明与许可证 |
 | 小小输入法、玉兔毫等便携包 | 在相应上游程序或发行包基础上整合 eosphoros 配置，并在 CI 中校验来源与文件哈希 | 客户端程序的权利与许可仍归各自上游；eosphoros 不改变其许可条件 |
 
-第三方来源、固定 commit、生成文件 SHA-256 和许可证副本集中记录在 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`licenses/`](licenses/)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json)及[`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。宗派词库的在线核对来源与取词边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。除上述明确标注的第三方内容外，不应仅凭本节致谢推定其他文件采用相同许可证；复用或再分发前请先核对相应文件及仓库的授权声明。
+仓库采用分层授权，不能用一个许可证覆盖所有历史词库和第三方数据；总说明见 [`LICENSE.md`](LICENSE.md)。第三方来源、固定 commit、生成文件 SHA-256 和许可证副本集中记录在 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`licenses/`](licenses/)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json)及[`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。宗派词库的在线核对来源与取词边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)，机器可读索引见 [`tools/christian_sources.json`](tools/christian_sources.json)。除上述明确标注的内容外，不应仅凭本节致谢推定其他文件采用相同许可证；复用或再分发前请先核对相应文件及仓库的授权声明。贡献规则与统一 Pixi 检查命令见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
 
 <p align="right"><a href="#top">⬆️ 返回顶部</a></p>

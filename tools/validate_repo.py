@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 try:
@@ -28,6 +29,10 @@ def add_error(errors: list[str], path: Path, message: str) -> None:
 
 
 def validate_layout(errors: list[str]) -> None:
+    for filename in ("LICENSE.md", "CONTRIBUTING.md", "pixi.toml", "pixi.lock"):
+        path = ROOT / filename
+        if not path.is_file():
+            add_error(errors, path, "required repository metadata is missing")
     for path in (ROOT / "lua").rglob("*.lua"):
         if path.relative_to(ROOT / "lua").parts[0] != "eosphoros":
             add_error(errors, path, "Lua source must live below lua/eosphoros/")
@@ -48,7 +53,7 @@ def validate_versions(errors: list[str]) -> None:
 
 
 def validate_yaml_and_json(errors: list[str]) -> None:
-    config_paths = list(ROOT.glob("*.yaml")) + list((ROOT / ".github" / "workflows").glob("*.yml"))
+    config_paths = list(ROOT.glob("*.yaml")) + list((ROOT / ".github").rglob("*.yml"))
     for path in sorted(config_paths):
         if path.name.endswith(".dict.yaml"):
             continue
@@ -56,11 +61,17 @@ def validate_yaml_and_json(errors: list[str]) -> None:
             yaml.safe_load(path.read_text(encoding="utf-8-sig"))
         except yaml.YAMLError as exc:
             add_error(errors, path, f"invalid YAML: {exc}")
-    for path in sorted((ROOT / "opencc").rglob("*.json")):
+    json_paths = list((ROOT / "opencc").rglob("*.json"))
+    json_paths.extend((ROOT / "tools").glob("*.json"))
+    for path in sorted(json_paths):
         try:
             json.loads(path.read_text(encoding="utf-8-sig"))
         except (json.JSONDecodeError, UnicodeDecodeError) as exc:
             add_error(errors, path, f"invalid JSON: {exc}")
+    try:
+        tomllib.loads((ROOT / "pixi.toml").read_text(encoding="utf-8-sig"))
+    except (tomllib.TOMLDecodeError, UnicodeDecodeError) as exc:
+        add_error(errors, ROOT / "pixi.toml", f"invalid TOML: {exc}")
 
 
 def dict_header(path: Path, errors: list[str]) -> tuple[dict, int | None]:

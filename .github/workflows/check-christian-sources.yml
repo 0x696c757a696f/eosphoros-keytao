@@ -1,0 +1,29 @@
+name: Check Christian terminology sources
+
+on:
+  schedule:
+    - cron: "27 5 2 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: "utf-8"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14.6"
+      - uses: actions/cache@v5
+        with:
+          path: .tmp/christian_source_status.json
+          key: christian-sources-${{ runner.os }}-${{ hashFiles('tools/christian_traditions_sources.md') }}
+          restore-keys: christian-sources-${{ runner.os }}-
+      - name: Validate registry and check source metadata
+        run: python tools/check_christian_sources.py --check --online

@@ -1,0 +1,3 @@
+# Reviewed exceptions use: relative dictionary path<TAB>exact text
+# Keep this list small. Medicines, medical terms, and chemical names are
+# protected by source category and do not need one entry per term.

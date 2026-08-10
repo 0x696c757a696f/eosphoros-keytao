@@ -1,0 +1,37 @@
+name: 词条、读音或编码问题
+description: 报告错词、废词、错音、错码或建议实用新词
+title: "[词库] "
+labels: [dictionary]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 类型
+      options: [错词或废词, 错音, 错码, 新词建议, 重码或候选顺序]
+    validations:
+      required: true
+  - type: input
+    id: entry
+    attributes:
+      label: 词条
+    validations:
+      required: true
+  - type: input
+    id: code
+    attributes:
+      label: 当前编码与期望编码
+      placeholder: 当前 abc；期望 abcd
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 读音、使用场景与来源
+      description: 多音字必须写读音；宗教或专业词请提供权威链接。
+    validations:
+      required: true
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: 确认
+      options:
+        - label: 这不是可以自然分开输入的整句或机械拼接长词
+          required: true

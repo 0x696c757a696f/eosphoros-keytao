@@ -10,6 +10,22 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PlatformPackageTests(unittest.TestCase):
+    def test_rime_smoke_test_requires_compiled_core_artifacts(self) -> None:
+        from tools.smoke_test_rime_deployment import (
+            REQUIRED_BUILD_OUTPUTS,
+            validate_outputs,
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            build = root / "build"
+            build.mkdir()
+            for name in REQUIRED_BUILD_OUTPUTS[:-1]:
+                (build / name).write_bytes(b"test")
+            self.assertEqual(validate_outputs(root), [REQUIRED_BUILD_OUTPUTS[-1]])
+            (build / REQUIRED_BUILD_OUTPUTS[-1]).write_bytes(b"test")
+            self.assertEqual(validate_outputs(root), [])
+
     def test_builds_minimal_core_and_platform_archives(self) -> None:
         from tools.build_platform_packages import build_packages
 
@@ -43,6 +59,8 @@ class PlatformPackageTests(unittest.TestCase):
             "zzc_state/char_parts.tsv",
             "README.md",
             "THIRD_PARTY.md",
+            "LICENSE.md",
+            "CONTRIBUTING.md",
             "VERSION",
             "zzc/README.md",
             "zzc/自造词使用教程.md",

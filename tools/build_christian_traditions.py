@@ -24,7 +24,6 @@ from tools.eosphoros_codes import (
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_NAME = "tools/christian_traditions_2026.txt"
-VERSION = "2026-08-10"
 TARGET_SPECS = (
     (
         "新教：",
@@ -117,6 +116,14 @@ class BuildResult:
 def coding_word(word: str) -> str:
     """Remove display punctuation that does not participate in JianDao codes."""
     return word.replace("·", "")
+
+
+def repository_version(root: Path = ROOT) -> str:
+    """Return the repository-wide Rime version source of truth."""
+    version = (root / "VERSION").read_text(encoding="utf-8-sig").strip()
+    if not version:
+        raise ValueError(f"{root / 'VERSION'} is empty")
+    return version
 
 
 def load_manifest(path: Path) -> tuple[tuple[str, str], ...]:
@@ -233,7 +240,11 @@ def build_entries(root: Path = ROOT) -> BuildResult:
 
 
 def render_dictionary(
-    result: BuildResult, category_prefix: str, dictionary_name: str, title: str
+    result: BuildResult,
+    category_prefix: str,
+    dictionary_name: str,
+    title: str,
+    version: str,
 ) -> str:
     lines = [
         "# Rime dictionary",
@@ -243,7 +254,7 @@ def render_dictionary(
         "# 收录经审核的传统专有词；新教词库另含《和合本》标准译语。",
         "---",
         f"name: {dictionary_name}",
-        f'version: "{VERSION}"',
+        f'version: "{version}"',
         "sort: original",
         "use_preset_vocabulary: false",
         "columns:",
@@ -269,9 +280,10 @@ def render_dictionary(
 
 def expected_dictionary_texts(root: Path = ROOT) -> tuple[dict[Path, str], BuildResult]:
     result = build_entries(root)
+    version = repository_version(root)
     texts = {
         root / "dicts" / "eosphoros" / filename: render_dictionary(
-            result, category_prefix, dictionary_name, title
+            result, category_prefix, dictionary_name, title, version
         )
         for category_prefix, filename, dictionary_name, title in TARGET_SPECS
     }

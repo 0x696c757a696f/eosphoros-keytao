@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from tools import clean_dictionary_quality as quality
+from tools.audit_long_dictionary_entries import audit, suspicious_reason
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -73,6 +74,35 @@ class DictionaryQualityTests(unittest.TestCase):
     def test_repository_is_already_clean(self) -> None:
         remaining = [result.path.name for result in quality.process(ROOT) if result.changed]
         self.assertEqual(remaining, [])
+
+    def test_global_long_entry_audit_protects_terms_and_flags_sentences(self) -> None:
+        self.assertIsNone(
+            suspicious_reason(
+                "eosphoros.yaopin.dict.yaml",
+                "盐酸左氧氟沙星氯化钠注射液",
+                "yszyvv",
+            )
+        )
+        self.assertIsNone(
+            suspicious_reason(
+                "eosphoros.cizu.dict.yaml",
+                "元江哈尼族彝族傣族自治县",
+                "yjhxva",
+            )
+        )
+        self.assertEqual(
+            suspicious_reason(
+                "eosphoros.cizu.dict.yaml",
+                "床前明月光，疑是地上霜。举头望明月，低头思故乡。",
+                "jysv",
+            ),
+            "local_nonlexical_row",
+        )
+
+    def test_repository_has_no_unreviewed_long_entry_findings(self) -> None:
+        findings, long_rows = audit(ROOT)
+        self.assertGreater(long_rows, 0)
+        self.assertEqual(findings, [])
 
 
 if __name__ == "__main__":

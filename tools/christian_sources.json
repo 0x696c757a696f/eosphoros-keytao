@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "generated_from": "tools/christian_traditions_sources.md",
+  "guide_sha256": "f8b1bae0c795e06cf0c359a380a5f36456e2bc8917afae20ef8fca64d981dae8",
+  "sources": [
+    {
+      "id": "d0e88b0a11dd",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://www.vatican.va/chinese/ccc_zh.htm",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "1809b886c54f",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://www.vatican.va/chinese/concilio.htm",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "592afd467cb6",
+      "section": "天主教与东方礼天主教会",
+      "url": "http://www.sbofmhk.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "868a1c292ddf",
+      "section": "天主教与东方礼天主教会",
+      "url": "http://www.sbofmhk.org/body/cpray/cpray.html",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "d911b64344fc",
+      "section": "天主教与东方礼天主教会",
+      "url": "http://catholic-dlc.org.hk/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "b18d0979f84c",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://catholic.org.hk/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "d7068a29c7b9",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://cnewa.org/eastern-christian-churches/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "47d3fa2da8e5",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://www.newadvent.org/cathen/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "d0c57be3d2d5",
+      "section": "新教与《和合本》",
+      "url": "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=ChiUns",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "e7bd19514157",
+      "section": "新教与《和合本》",
+      "url": "https://bibles.dbs.org/CMNUNVS/pdf/CMNUNVS.pdf",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "45be16000e92",
+      "section": "新教与《和合本》",
+      "url": "https://bible.fhl.net/gbdoc/index.html",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "8332009f41d1",
+      "section": "新教与《和合本》",
+      "url": "https://bookofconcord.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "e104faed404b",
+      "section": "新教与《和合本》",
+      "url": "https://www.lcms.org/about/beliefs/lutheran-confessions",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "8c33ed4f610e",
+      "section": "新教与《和合本》",
+      "url": "https://www.opc.org/GA/republication.html",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "a5bd56611272",
+      "section": "新教与《和合本》",
+      "url": "https://www.anglicancommunion.org/media/100850/ridley_cambridge_covenant_english.pdf",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "6882e4715032",
+      "section": "新教与《和合本》",
+      "url": "https://www.umc.org/en/content/distinctive-wesleyan-emphases",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "59141f40c730",
+      "section": "新教与《和合本》",
+      "url": "https://gameo.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "1ba481678d48",
+      "section": "新教与《和合本》",
+      "url": "https://hymnary.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "228e121e0281",
+      "section": "新教与《和合本》",
+      "url": "https://www.ccel.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "37e599d0e727",
+      "section": "新教与《和合本》",
+      "url": "https://lutheranworld.org/who-we-are",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "f3c4903368e9",
+      "section": "新教与《和合本》",
+      "url": "https://wcrc.eu/about/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "6b4b013aac65",
+      "section": "新教与《和合本》",
+      "url": "https://baptistworld.org/beliefs/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "832a63824eea",
+      "section": "新教与《和合本》",
+      "url": "https://fwcc.world/about-us/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "5e6c0eff6404",
+      "section": "新教与《和合本》",
+      "url": "https://mwc-cmm.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "7af42dff95a8",
+      "section": "新教与《和合本》",
+      "url": "https://www.unitasfratrum.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "a1a3379b7715",
+      "section": "新教与《和合本》",
+      "url": "https://www.library.manchester.ac.uk/rylands/special-collections/subject-areas/religion-and-theology/christian-brethren-collections/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "bd0d03ff71f0",
+      "section": "新教与《和合本》",
+      "url": "https://salvationarmy.org.hk/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "f8042cd081f1",
+      "section": "新教与《和合本》",
+      "url": "https://methodist.org.tw/john-wesley/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "8f98bf3aa3f1",
+      "section": "新教与《和合本》",
+      "url": "https://methodist.org.tw/2024/01/18/question-1/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "88c57f5c859a",
+      "section": "新教与《和合本》",
+      "url": "https://methodist.org.tw/2024/01/11/%E9%99%84%E9%8C%84-%E6%88%90%E8%81%96/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "652f7aa91c86",
+      "section": "新教与《和合本》",
+      "url": "https://methodist.org.tw/dogma/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "a1b7d6b8dcbb",
+      "section": "新教与《和合本》",
+      "url": "https://www.methodist.org.hk/publications/monthlynews/?p=3",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "dff3b841b05d",
+      "section": "新教与《和合本》",
+      "url": "https://www.umc.org/en/who-we-are/what-we-believe/our-wesleyan-heritage",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "210ca88d6cbf",
+      "section": "新教与《和合本》",
+      "url": "https://www.umc.org/en/content/organization-church-as-connection",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "96b62418a722",
+      "section": "东正教",
+      "url": "https://www.oca.org/orthodoxy/the-orthodox-faith",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "610079bbd903",
+      "section": "东正教",
+      "url": "https://www.oca.org/liturgics/outlines/definitions-and-sources",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "2f4b0f927819",
+      "section": "东正教",
+      "url": "https://www.oca.org/directories/world-churches",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "bc834d6aebb4",
+      "section": "东正教",
+      "url": "https://www.goarch.org/-/a-dictionary-of-orthodox-terminology-part-1",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "4754643d092c",
+      "section": "东正教",
+      "url": "https://www.goarch.org/-/a-dictionary-of-orthodox-terminology-part-2",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "c6358eff0fee",
+      "section": "东正教",
+      "url": "https://ec-patr.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "01e61ce1370a",
+      "section": "东方正统教会",
+      "url": "https://www.oikoumene.org/church-families/orthodox-churches-oriental",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "29ae33971f43",
+      "section": "东方正统教会",
+      "url": "https://copticorthodox.church/en/holysynod/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "115f3f9d040e",
+      "section": "东方正统教会",
+      "url": "https://www.armenianchurch.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "b054f25ca68c",
+      "section": "东方正统教会",
+      "url": "https://syriacpatriarchate.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "05ffe6591265",
+      "section": "东方正统教会",
+      "url": "https://www.ethiopianorthodox.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "033af98cd82c",
+      "section": "东方正统教会",
+      "url": "https://mosc.in/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "f36788e53423",
+      "section": "东方正统教会",
+      "url": "https://ccdl.claremont.edu/digital/collection/cce",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "63770034a279",
+      "section": "东方正统教会",
+      "url": "https://copticscriptorium.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "5193414d987d",
+      "section": "东方亚述教会与东方教会",
+      "url": "https://www.assyrianchurch.org/about-us/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "5a21223fa771",
+      "section": "东方亚述教会与东方教会",
+      "url": "https://bethkokheh.assyrianchurch.org/wp-content/uploads/2016/10/Basic-Features-of-Liturgy.pdf",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "8a5c6e912648",
+      "section": "东方亚述教会与东方教会",
+      "url": "https://news.assyrianchurch.org/wp-content/uploads/2017/11/Common-Statement-on-Sacramental-Life-FINAL-VERSION-18-NOV.pdf",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "b2cbec9043e2",
+      "section": "东方亚述教会与东方教会",
+      "url": "https://syriaca.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "c59b2fdd7068",
+      "section": "东方亚述教会与东方教会",
+      "url": "https://gedsh.bethmardutho.org/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "6b536e11346b",
+      "section": "东方亚述教会与东方教会",
+      "url": "https://www.vhmml.org/readingRoom/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "89cab019b3e9",
+      "section": "跨宗派与中国基督教史",
+      "url": "https://www.bdcconline.net/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "1e3b1a63c3e5",
+      "section": "跨宗派与中国基督教史",
+      "url": "https://chcdatabase.com/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "30aaf95af3e2",
+      "section": "跨宗派与中国基督教史",
+      "url": "https://www.arts.kuleuven.be/chinese-studies/english/cct",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "81831b0d73f7",
+      "section": "跨宗派与中国基督教史",
+      "url": "https://www.oikoumene.org/church-families",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "51fbb69b2475",
+      "section": "跨宗派与中国基督教史",
+      "url": "https://www.oikoumene.org/member-churches",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    }
+  ]
+}

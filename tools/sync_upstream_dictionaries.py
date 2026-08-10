@@ -8,7 +8,6 @@ import hashlib
 import json
 import re
 import sys
-import urllib.request
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -21,6 +20,7 @@ if __package__ in (None, ""):
 
 from tools.clean_dictionary_quality import is_rejected
 from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
+from tools.upstream_sources import read_source, resolve_ref
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -287,35 +287,6 @@ def sha256_text(text: str) -> str:
 
 def load_lock(path: Path = LOCK_PATH) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
-
-
-def raw_url(source: dict[str, Any], relative_path: str) -> str:
-    return (
-        f"https://raw.githubusercontent.com/{source['repository']}/"
-        f"{source['commit']}/{relative_path}"
-    )
-
-
-def fetch_text(url: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": "eosphoros-sync/1"})
-    with urllib.request.urlopen(request, timeout=90) as response:
-        return response.read().decode("utf-8-sig")
-
-
-def resolve_ref(repository: str, branch: str) -> str:
-    url = f"https://api.github.com/repos/{repository}/commits/{branch}"
-    request = urllib.request.Request(url, headers={"User-Agent": "eosphoros-sync/1"})
-    with urllib.request.urlopen(request, timeout=90) as response:
-        payload = json.load(response)
-    return str(payload["sha"])
-
-
-def read_source(
-    source: dict[str, Any], relative_path: str, local_root: Path | None
-) -> str:
-    if local_root is not None:
-        return (local_root / relative_path).read_text(encoding="utf-8-sig")
-    return fetch_text(raw_url(source, relative_path))
 
 
 def parse_danzi_rows(text: str) -> dict[str, tuple[str, ...]]:

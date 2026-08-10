@@ -1,0 +1,27 @@
+[workspace]
+name = "eosphoros-keytao"
+description = "Development and validation environment for 晨星键道"
+channels = ["conda-forge"]
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
+
+[dependencies]
+python = "3.14.*"
+pyyaml = "6.0.3.*"
+lua = "5.4.*"
+pip = ">=25"
+
+[pypi-dependencies]
+pyinstaller = "==6.21.0"
+
+[activation.env]
+PYTHONUTF8 = "1"
+PYTHONIOENCODING = "utf-8"
+
+[tasks]
+test = "python -m unittest discover -s tests -p 'test_*.py' -v"
+quality = "python tools/validate_repo.py && python tools/clean_dictionary_quality.py --check && python tools/audit_long_dictionary_entries.py --check && python tools/check_christian_sources.py --check"
+generated = "python tools/build_christian_traditions.py --check && python tools/sync_upstream_dictionaries.py --check && python tools/build_platform_packages.py --check && python tools/build_fcitx5_themes.py --check"
+check = "python -m unittest discover -s tests -p 'test_*.py' -v && python tools/validate_repo.py && python tools/clean_dictionary_quality.py --check && python tools/audit_long_dictionary_entries.py --check && python tools/check_christian_sources.py --check && python tools/build_christian_traditions.py --check && python tools/sync_upstream_dictionaries.py --check && python tools/build_platform_packages.py --check && python tools/build_fcitx5_themes.py --check"
+package = "python tools/build_platform_packages.py"
+sync = "python tools/sync_upstream_dictionaries.py --refresh --write"
+windows-exe = "python tools/build_zzc_windows_exe.py"

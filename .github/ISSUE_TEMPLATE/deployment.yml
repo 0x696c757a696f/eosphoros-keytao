@@ -1,0 +1,31 @@
+name: 安装、部署或平台问题
+description: 报告小狼毫、鼠须管、Fcitx5、移动端、东风破或 RimeTool 问题
+title: "[部署] "
+labels: [deployment]
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 平台
+      options: [Windows 小狼毫, macOS 鼠须管, Fcitx5 Linux, Fcitx5 macOS, Android, iOS, 东风破, RimeTool, 其他]
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: 客户端、librime 与方案版本
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤与日志
+      description: 请删除个人词库内容、用户名和私人路径后再粘贴日志。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true

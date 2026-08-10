@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import json
 import unittest
 from collections import defaultdict
 from pathlib import Path
@@ -37,6 +38,12 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         )
         for path, text in expected.items():
             self.assertEqual(path.read_text(encoding="utf-8-sig"), text)
+
+    def test_generated_headers_use_repository_version(self) -> None:
+        expected, _ = expected_dictionary_texts(ROOT)
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+        for text in expected.values():
+            self.assertIn(f'version: "{version}"', text)
 
     def test_each_tradition_has_distinctive_terms(self) -> None:
         rows = {
@@ -204,6 +211,18 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
             "https://syriaca.org/",
         ):
             self.assertIn(url, sources)
+
+    def test_machine_readable_source_registry_matches_guide(self) -> None:
+        from tools.check_christian_sources import render_registry
+
+        registry_path = ROOT / "tools" / "christian_sources.json"
+        self.assertEqual(registry_path.read_text(encoding="utf-8"), render_registry(ROOT))
+        payload = json.loads(registry_path.read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(payload["sources"]), 50)
+        self.assertEqual(
+            len({item["url"] for item in payload["sources"]}),
+            len(payload["sources"]),
+        )
 
     def test_fixed_dictionary_conflicts_are_skipped(self) -> None:
         result = build_entries(ROOT)

@@ -67,6 +67,8 @@ def common_runtime_files(root: Path) -> list[Path]:
         root / "zzc_state" / "char_parts.tsv",
         root / "README.md",
         root / "THIRD_PARTY.md",
+        root / "LICENSE.md",
+        root / "CONTRIBUTING.md",
         root / "VERSION",
         root / "zzc" / "README.md",
         root / "zzc" / "自造词使用教程.md",

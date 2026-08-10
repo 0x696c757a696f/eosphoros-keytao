@@ -31,15 +31,25 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Restore upstream Git cache
+        uses: actions/cache@v5
+        with:
+          path: .tmp/upstream-git-cache
+          key: upstream-git-${{ runner.os }}-${{ hashFiles('tools/upstream_dictionaries.lock.json') }}
+          restore-keys: |
+            upstream-git-${{ runner.os }}-
+
       - name: Detect and integrate upstream changes
         shell: pwsh
-        run: ./tools/update_upstream_dictionaries.ps1 -Python python
+        run: ./tools/update_upstream_dictionaries.ps1 -Python python -CacheDirectory .tmp/upstream-git-cache
 
       - name: Detect generated changes
         id: changes
         shell: pwsh
         run: |
           $Changed = git status --porcelain -- `
+            VERSION `
+            *.yaml `
             dicts/eosphoros `
             opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
@@ -60,6 +70,7 @@ jobs:
           python -m pip install -r requirements-dev.txt
           python -m unittest discover -s tests -p 'test_*.py' -v
           python tools/validate_repo.py
+          python tools/audit_long_dictionary_entries.py --check
           git diff --check
 
       - name: Commit and open pull request
@@ -73,6 +84,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c $Branch
           git add -- `
+            VERSION `
+            *.yaml `
             dicts/eosphoros `
             opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
