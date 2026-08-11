@@ -47,8 +47,8 @@
       "rows": 36214
     },
     "dicts/eosphoros/eosphoros.ice.dict.yaml": {
-      "sha256": "8869f8f5150f2a3e79ec0a13c42c2dc1d8202b36c35019774563d54b8d1457fd",
-      "rows": 362646
+      "sha256": "dfdbd99ec1afc70590607dccc1db9e37b26d857315d044d34f7ef1347c1e37b2",
+      "rows": 362645
     },
     "dicts/eosphoros/eosphoros.en.dict.yaml": {
       "sha256": "c754aa850e6cf9a6c311d4258a05f3d3a9df9b0daea4d509f28b070570a09aec",
@@ -112,13 +112,13 @@
     "english_source_rows": 23861,
     "generated_before_collision_pruning": 489437,
     "generated_medicine_names": 1477,
-    "generated_rows": 362646,
+    "generated_rows": 362645,
     "ice_collision_rows": 2543,
     "local_collision_rows": 36168,
-    "local_rows": 750229,
+    "local_rows": 750230,
     "recognized_medicine_names": 1983,
     "skipped_candidate_cap": 36,
-    "skipped_collision_budget": 126755,
+    "skipped_collision_budget": 126756,
     "skipped_low_value_long_ext": 5883,
     "skipped_low_value_numeric_template": 18153,
     "skipped_low_value_overlong": 2190,
@@ -128,7 +128,7 @@
     "skipped_unaligned": 676,
     "skipped_unencodable": 674,
     "source_rows": 882818,
-    "unavoidable_code_collisions": 136429,
+    "unavoidable_code_collisions": 136430,
     "wanxiang_deduplicated_local": 317401,
     "wanxiang_deduplicated_upstream": 225,
     "wanxiang_generated_diming": 5281,

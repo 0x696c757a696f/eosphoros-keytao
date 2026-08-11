@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import importlib.metadata
 import json
+import re
 import shutil
 import struct
 import subprocess
@@ -18,9 +19,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BUILD_ROOT = ROOT / "build" / "zzc-windows-exe"
 LOCK_PATH = ROOT / "tools" / "zzc_windows_executables.lock.json"
-BUILD_DATE = "2026-08-09"
+BUILD_REQUIREMENTS = ROOT / "requirements-build.txt"
+BUILD_DATE = "2026-08-11"
 PYTHON_SERIES = (3, 14)
-PYINSTALLER_VERSION = "6.21.0"
 PE_AMD64 = 0x8664
 
 
@@ -70,6 +71,14 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def pinned_pyinstaller_version() -> str:
+    for line in BUILD_REQUIREMENTS.read_text(encoding="utf-8").splitlines():
+        match = re.match(r"^PyInstaller==([^\s#]+)", line.strip(), re.IGNORECASE)
+        if match:
+            return match.group(1)
+    raise RuntimeError(f"missing exact PyInstaller pin in {BUILD_REQUIREMENTS.name}")
+
+
 def inspect_pe(path: Path) -> tuple[int, str]:
     data = path.read_bytes()
     if len(data) < 0x40 or data[:2] != b"MZ":
@@ -83,10 +92,12 @@ def inspect_pe(path: Path) -> tuple[int, str]:
 
 def version_resource(target: ExecutableTarget) -> str:
     original_name = target.output.name
+    year, month, day = (int(part) for part in BUILD_DATE.split("-"))
+    dotted_date = BUILD_DATE.replace("-", ".")
     return f"""VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(2026, 8, 9, 0),
-    prodvers=(2026, 8, 9, 0),
+    filevers=({year}, {month}, {day}, 0),
+    prodvers=({year}, {month}, {day}, 0),
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -100,11 +111,11 @@ def version_resource(target: ExecutableTarget) -> str:
         '040904B0',
         [StringStruct('CompanyName', 'eosphoros'),
          StringStruct('FileDescription', '{target.description}'),
-         StringStruct('FileVersion', '2026.08.09'),
+         StringStruct('FileVersion', '{dotted_date}'),
          StringStruct('InternalName', '{target.output.stem}'),
          StringStruct('OriginalFilename', '{original_name}'),
          StringStruct('ProductName', 'eosphoros ZZZC tools'),
-         StringStruct('ProductVersion', '2026.08.09')])
+         StringStruct('ProductVersion', '{dotted_date}')])
     ]),
     VarFileInfo([VarStruct('Translation', [1033, 1200])])
   ]
@@ -124,9 +135,10 @@ def build_executables() -> None:
         pyinstaller_version = importlib.metadata.version("pyinstaller")
     except importlib.metadata.PackageNotFoundError as exc:
         raise RuntimeError("PyInstaller is not installed") from exc
-    if pyinstaller_version != PYINSTALLER_VERSION:
+    expected_pyinstaller = pinned_pyinstaller_version()
+    if pyinstaller_version != expected_pyinstaller:
         raise RuntimeError(
-            f"expected PyInstaller {PYINSTALLER_VERSION}, got {pyinstaller_version}"
+            f"expected PyInstaller {expected_pyinstaller}, got {pyinstaller_version}"
         )
 
     expected_parent = (ROOT / "build").resolve()

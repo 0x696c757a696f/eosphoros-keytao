@@ -37,10 +37,10 @@ Linux/macOS 合并脚本按 Python 3.7+ 兼容写法维护，避免依赖 Python
 维护者应在 Windows 仓库根目录使用 Pixi 的隔离环境构建，不要直接上传来源不明的 EXE：
 
 ```powershell
-pixi exec --spec "python=3.14.6" --spec "pyinstaller=6.21.0" python tools/build_zzc_windows_exe.py
+pixi run windows-exe
 ```
 
-生成器会直接冻结平台中性的 `eosphoros_词库合并.py` 和 `eosphoros_撤回合并.py`，覆盖对应的 `Win_*.exe`，写入 `2026.08.09` Windows 文件版本，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
+生成器会直接冻结平台中性的 `eosphoros_词库合并.py` 和 `eosphoros_撤回合并.py`，覆盖对应的 `Win_*.exe`，按构建器中的当天版本写入 Windows 文件信息，并更新 `tools/zzc_windows_executables.lock.json`。临时文件只写入被 Git 忽略的 `build/zzc-windows-exe/`。
 
 不安装 PyInstaller也可以检查已提交 EXE 是否匹配当前源码：
 
@@ -48,7 +48,7 @@ pixi exec --spec "python=3.14.6" --spec "pyinstaller=6.21.0" python tools/build_
 python tools/build_zzc_windows_exe.py --check
 ```
 
-校验会检查构建器与核心源码哈希、EXE 哈希和大小、PE 签名及 AMD64 架构。正式 Release 会在 `windows-latest` 上使用相同的 Python 3.14.6 + PyInstaller 6.21.0 重新构建，再实际执行一次隔离的合并与撤回；通过测试的 CI 产物会覆盖工作流检出的 EXE 后进入最终压缩包。任何构建失败、二进制损坏或行为不符都会阻止打包。
+校验会检查构建器与核心源码哈希、EXE 哈希和大小、PE 签名及 AMD64 架构。正式 Release 会在 `windows-latest` 上使用 Python 3.14 的最新补丁版和 `requirements-build.txt` 锁定的 PyInstaller 重新构建，再实际执行一次隔离的合并与撤回；通过测试的 CI 产物会覆盖工作流检出的 EXE 后进入最终压缩包。任何构建失败、二进制损坏或行为不符都会阻止打包。
 
 ## 当前 zzc 状态文件
 

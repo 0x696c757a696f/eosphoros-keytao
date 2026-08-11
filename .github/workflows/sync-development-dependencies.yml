@@ -1,0 +1,79 @@
+name: Sync development dependencies
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "requirements-*.txt"
+  schedule:
+    - cron: "37 3 * * 0"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-development-dependencies
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: "utf-8"
+  PYTHONNOUSERSITE: "1"
+  BASE_BRANCH: ${{ github.event.repository.default_branch }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          check-latest: true
+
+      - name: Align Pixi manifest with Dependabot-managed requirements
+        run: python tools/sync_dependency_manifests.py --write
+
+      - uses: prefix-dev/setup-pixi@v0.10.0
+        with:
+          cache: true
+          run-install: false
+
+      - name: Refresh all locked development dependencies
+        run: pixi update
+
+      - name: Validate refreshed environment
+        run: |
+          pixi run python tools/sync_dependency_manifests.py --check
+          pixi run test
+          git diff --check
+
+      - name: Detect changes
+        id: changes
+        shell: pwsh
+        run: |
+          $Changed = -not [string]::IsNullOrWhiteSpace((git status --short -- pixi.toml pixi.lock))
+          "changed=$($Changed.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+
+      - name: Commit and open pull request
+        if: steps.changes.outputs.changed == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $Branch = "automation/dependencies-$env:GITHUB_RUN_ID"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c $Branch
+          git add -- pixi.toml pixi.lock
+          git commit -m "chore: refresh development dependencies"
+          git push origin "HEAD:refs/heads/$Branch"
+          gh pr create `
+            --base $env:BASE_BRANCH `
+            --head $Branch `
+            --title "chore: refresh development dependencies" `
+            --body "Automated Pixi manifest alignment and lock refresh after Dependabot updates or the weekly dependency check. The full Python test suite passed in the refreshed environment."

@@ -138,6 +138,7 @@
 | 元书输入法 | [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)（综合资源）、[空山素影](https://github.com/luozikuan/kongshan-suying)（独立维护的元书皮肤） | 优先下载明确标注支持当前元书版本的 `.cskin`，或按项目说明在元书中导入并编译 Jsonnet；导入方法和结构以[元书官方文档](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/)为准。ResourceforHamster 中“仓”的旧皮肤已停止维护，不要当作最新版元书皮肤使用。 |
 | 仓输入法 | [仓／元书皮肤交流频道](https://t.me/s/hamster_skins)（第三方社区资源） | 只选择扩展名为 `.hskin` 且作者明确标注兼容当前仓版本的文件，通过系统共享菜单导入；格式及操作以[仓官方皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/)为准。社区文件未经本仓库审核，请自行确认来源、版本和授权。 |
 | 同文输入法 Trime | [rime-pure 的同文主题](https://github.com/SivanLaai/rime-pure)、[Trime 官方仓库](https://github.com/osfans/trime) | rime-pure 是完整方案资源，不要整体覆盖晨星键道；只取需要的 `*.trime.yaml`／`*.trime.custom.yaml` 主题，检查主题引用的字体、图片和配色文件是否齐全，然后在同文中选择并重新部署。 |
+| 小企鹅输入法 Android | [tankb52/fcitx5-andoird-themes](https://github.com/tankb52/fcitx5-andoird-themes)（第三方主题合集）、[官方在线主题设计器](https://fcitx5-android.github.io/theme-designer/) | 主题合集的 `themes/` 目录提供可直接导入的 ZIP，也附有 JSON 和预览图；作者明确说明部分配色移植自其他主题且可能存在版权争议，因此这里只作为外部发现入口、不随仓库分发。也可用官方设计器自行生成来源明确的主题。 |
 | 小小输入法 Android | [官方皮肤版块](https://yong.dgod.net/index.php?c=thread&fid=6)、[Android 皮肤制作参考](https://yong.dgod.net/read.php?tid=5022)、[新版兼容性讨论](https://yong.dgod.net/read.php?fid=6&tid=4977) | 优先使用明确标注兼容当前 Android 版的皮肤；官方维护者建议从当前 APK 默认皮肤修改。第三方皮肤不随本仓库分发。 |
 | 小小输入法 Windows / Linux | [官方皮肤格式说明与在线编辑器](https://yong.dgod.net/read.php?fid=7&tid=5)、[官方皮肤版块](https://yong.dgod.net/index.php?c=thread&fid=6)、[Pithiness / FreshX 等桌面皮肤](https://yong.dgod.net/read.php?tid=4338)、[Default5 SVG 多配色](https://yong.dgod.net/read.php?fid=6&tid=5267) | 基础 `skin.ini` 与 PNG/ZIP 皮肤可供 Windows、Linux 使用；Linux 系统缩放通常更好，Windows 对复杂 SVG 的兼容性有限。Default5 附带的 VBS 快速切换脚本仅适用于 Windows，Linux 只取皮肤资源并手动选择。 |
 
@@ -552,7 +553,7 @@ Windows 用户可以在仓库根目录运行：
 python .\zzc\Windows_词库合并.py
 ```
 
-没有 Python 时可以直接双击 `zzc/Win_词库合并.exe`，需要撤回最近一次合并时双击 `zzc/Win_撤回合并.exe`。两个 EXE 均由当前 eosphoros 共享 Python 核心构建；正式 Release 会在 Windows Runner 上使用 Python 3.14.6 + PyInstaller 6.21.0 重新构建并实际执行合并、撤回测试，再把通过测试的 CI 产物交给最终发布。普通推送和 PR 的 `package-main` 只验证源码、词库与已提交文件，不重复编译 EXE。构建和校验方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
+没有 Python 时可以直接双击 `zzc/Win_词库合并.exe`，需要撤回最近一次合并时双击 `zzc/Win_撤回合并.exe`。两个 EXE 均由当前 eosphoros 共享 Python 核心构建；正式 Release 会在 Windows Runner 上使用 Python 3.14 的最新补丁版和 `requirements-build.txt` 锁定的 PyInstaller 重新构建，并实际执行合并、撤回测试，再把通过测试的 CI 产物交给最终发布。普通推送和 PR 的 `package-main` 只验证源码、词库与已提交文件，不重复编译 EXE。构建和校验方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
 
 ## 🔤 英文输入
 
@@ -697,7 +698,7 @@ python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 
 对应工作流 `.github/workflows/check-txjx-upstream.yml` 每周执行：已登记且无冲突的修改会进入固定的自动化分支并创建或更新 PR；若同一区域被本地和上游同时修改、上游新增未登记源码、删除已映射文件，或变更会要求重建 Windows EXE，则不改本地文件、不推进锁，只创建或更新人工审查 Issue。Windows EXE 仍只在 Release 工作流编译。工作流不包含任何本机绝对仓库路径，在 GitHub Actions 的 checkout 目录中运行。
 
-直接上游 [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) 另用 [`tools/legacy_upstream.lock.json`](tools/legacy_upstream.lock.json) 记录人工审校点。当前已审校至 `6cbc3620f7c6046dd0f646c1265329c701e81664`：日期不补月／日虚位与 `eo` 时间候选在本地已有对应实现；词库更新只择取固定术语，并按本地单字表重新计算合法飞键、检查全库占码。`.github/workflows/check-legacy-upstream.yml` 每周只比较新提交并创建审校 Issue，不自动覆盖已更名的目录、Lua、Schema 或本地词库。
+直接上游 [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) 另用 [`tools/legacy_upstream.lock.json`](tools/legacy_upstream.lock.json) 记录人工审校点。当前已审校至 `6cbc3620f7c6046dd0f646c1265329c701e81664`：日期不补月／日虚位与 `eo` 时间候选在本地已有对应实现；词库更新只择取固定术语，并按本地单字表重新计算合法飞键、检查全库占码。`.github/workflows/check-reference-upstreams.yml` 把旧上游周检与基督教术语来源月检合并管理；旧上游仍只创建审校 Issue，不自动覆盖已更名的目录、Lua、Schema 或本地词库。
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 与 [`licenses/`](licenses/)。
 
@@ -706,6 +707,8 @@ Release 工作流会在每月 1 日和 15 日的 04:17 UTC 自动检查。只有
 ## 🛠️ 维护与验证
 
 本项目的 Python 工具需要 Python 3.11 或更新版本。推荐安装 [Pixi](https://pixi.sh/) 后使用仓库锁定的跨平台环境；`pixi.lock` 固定 Python、PyYAML、Pillow、Lua 和 PyInstaller 版本，避免本机与 CI 行为漂移。已有 Python 环境仍可直接运行下面的等价命令。
+
+依赖更新采用自动 PR 而非直接写入主分支：Dependabot 每周检查 GitHub Actions 与 `requirements-*.txt` 中的 pip、PyYAML、Pillow、PyInstaller；Python Actions 跟随 3.14 的最新补丁版。依赖 PR 合并后，`sync-development-dependencies.yml` 会把标准 requirements 版本同步到 `pixi.toml`、刷新四个平台的 `pixi.lock`、运行完整测试并再开一个锁文件 PR。定时任务也会每周刷新 Python、Lua 和间接依赖；无人审查时不会自动合并。
 
 <details>
 <summary><strong>🧪 展开维护与完整验证命令</strong></summary>
@@ -833,6 +836,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [薄荷输入法（Mintimate/oh-my-rime）](https://github.com/Mintimate/oh-my-rime) | 薄荷解析模板的方案结构与开关命名，以及 Android DocumentsUI 操作说明参考 |
 | [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)、[空山素影](https://github.com/luozikuan/kongshan-suying) | 前者的 MIT 键盘布局模板用于生成晨星元书／仓皮肤；后者仅作为元书外部皮肤入口，不随仓库分发 |
 | [rime-pure](https://github.com/SivanLaai/rime-pure) | 同文输入法外部主题参考；本仓库仅提供链接，不复制其方案文件 |
+| [tankb52/fcitx5-andoird-themes](https://github.com/tankb52/fcitx5-andoird-themes)、[Fcitx5 Android 主题设计器](https://fcitx5-android.github.io/theme-designer/) | 小企鹅输入法安卓版外部主题发现入口与官方主题生成工具；第三方主题不随仓库分发 |
 | [仓／元书皮肤交流频道](https://t.me/s/hamster_skins) | 仓输入法第三方皮肤发现入口；内容与兼容性由发布者负责 |
 | [Python](https://www.python.org/)、[PyInstaller](https://github.com/pyinstaller/pyinstaller)、[PyYAML](https://github.com/yaml/pyyaml) | 词典同步、质量检查、主题生成和 Windows 词库工具的构建环境 |
 

@@ -17,6 +17,7 @@ permissions:
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
+  PYTHONNOUSERSITE: "1"
   BASE_BRANCH: ${{ github.event.repository.default_branch }}
 
 jobs:
@@ -24,14 +25,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout default branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
-          python-version: "3.14.6"
+          python-version: "3.14"
+          check-latest: true
 
       - name: Prepare conflict-safe eosphoros adaptation
         id: adapt
@@ -52,6 +54,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lua5.4
+          python -m pip install --upgrade -r requirements-ci.txt
           python -m pip install -r requirements-dev.txt
 
       - name: Validate adapted sources

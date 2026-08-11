@@ -11,6 +11,7 @@ on:
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
+  PYTHONNOUSERSITE: "1"
   OPENCC_TONGGUI_URL: https://github.com/amorphobia/opencc-tonggui/releases/download/latest/opencc-tonggui.zip
   OPENCC_TONGGUI_SHA256: 1b76a1028669b89d55a9055400e8be628014ea6f3b200b34b5e8a7d88f04e018
 
@@ -29,7 +30,7 @@ jobs:
             binary: mira-rime1.13.1-luajit
             sha256: 70080e5e01ed6a6c31040ba8c64aa7a3faaaa64e1d3eb0dbcbbee3fffa9a4754
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install Rime Prelude for the isolated test workspace
       run: |
@@ -69,16 +70,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
-    - uses: actions/setup-python@v6
+    - uses: actions/setup-python@v7
       with:
-        python-version: '3.12'
+        python-version: '3.14'
+        check-latest: true
 
     - name: Validate source tree
       run: |
         sudo apt-get update
         sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude
+        python -m pip install --upgrade -r requirements-ci.txt
         python -m pip install -r requirements-dev.txt
         python tools/validate_repo.py
         python tools/audit_long_dictionary_entries.py --check
@@ -142,4 +145,4 @@ jobs:
           !tests/**
           !tools/**
           !VERSION
-          !requirements-dev.txt
+          !requirements*.txt

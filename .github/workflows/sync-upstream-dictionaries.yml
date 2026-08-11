@@ -17,6 +17,7 @@ permissions:
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
+  PYTHONNOUSERSITE: "1"
   BASE_BRANCH: ${{ github.event.repository.default_branch }}
 
 jobs:
@@ -24,15 +25,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout default branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
+          python-version: "3.14"
+          check-latest: true
 
       - name: Restore upstream Git cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .tmp/upstream-git-cache
           key: upstream-git-${{ runner.os }}-${{ hashFiles('tools/upstream_dictionaries.lock.json') }}
@@ -67,6 +69,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lua5.4
+          python -m pip install --upgrade -r requirements-ci.txt
           python -m pip install -r requirements-dev.txt
           python -m unittest discover -s tests -p 'test_*.py' -v
           python tools/validate_repo.py

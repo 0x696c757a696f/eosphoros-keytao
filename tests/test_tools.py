@@ -504,6 +504,8 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("yong-tool.sh --install", linux_help)
         self.assertIn("Default5 SVG", readme)
         self.assertIn("Android 皮肤制作参考", readme)
+        self.assertIn("tankb52/fcitx5-andoird-themes", readme)
+        self.assertIn("fcitx5-android.github.io/theme-designer", readme)
 
         desktop_config = (root / "packaging/yong/yong.ini").read_text(
             encoding="utf-8"
@@ -1365,13 +1367,17 @@ columns:
         for release_only in (
             "build-windows-executables:",
             "windows-latest",
-            "python-version: '3.14.6'",
-            "pyinstaller==6.21.0",
+            "python -m pip install -r requirements-build.txt",
             "python tools/build_zzc_windows_exe.py",
             "name: zzc-windows-executables",
         ):
             self.assertNotIn(release_only, package)
             self.assertIn(release_only, release)
+
+        self.assertIn("python-version: '3.14'", package)
+        self.assertIn("python-version: '3.14'", release)
+        self.assertIn("check-latest: true", package)
+        self.assertIn("check-latest: true", release)
 
         for executable_check in (
             "test_windows_merge_executable_runs_current_eosphoros_behavior",
@@ -1390,6 +1396,49 @@ columns:
                 continue
             self.assertIn('PYTHONUTF8: "1"', workflow, path.name)
             self.assertIn('PYTHONIOENCODING: "utf-8"', workflow, path.name)
+            self.assertIn('PYTHONNOUSERSITE: "1"', workflow, path.name)
+
+    def test_python_dependency_workflows_pin_pip(self) -> None:
+        workflow_dir = Path(__file__).resolve().parents[1] / ".github" / "workflows"
+        for path in workflow_dir.glob("*.yml"):
+            workflow = path.read_text(encoding="utf-8")
+            if "python -m pip install -r requirements-dev.txt" not in workflow:
+                continue
+            self.assertIn(
+                "python -m pip install --upgrade -r requirements-ci.txt",
+                workflow,
+                path.name,
+            )
+
+    def test_dependency_manifests_are_aligned_and_automated(self) -> None:
+        from tools.sync_dependency_manifests import render_pixi
+
+        root = Path(__file__).resolve().parents[1]
+        self.assertEqual(
+            (root / "pixi.toml").read_text(encoding="utf-8"),
+            render_pixi(),
+        )
+        dependabot = (root / ".github/dependabot.yml").read_text(encoding="utf-8")
+        sync = (
+            root / ".github/workflows/sync-development-dependencies.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("package-ecosystem: pip", dependabot)
+        self.assertIn("package-ecosystem: github-actions", dependabot)
+        self.assertIn("prefix-dev/setup-pixi@v0.10.0", sync)
+        self.assertIn("run-install: false", sync)
+        self.assertIn("pixi update", sync)
+        self.assertIn("pixi run test", sync)
+        self.assertIn("gh pr create", sync)
+
+    def test_core_dictionary_prioritizes_project_name(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        core = dict_path(root, "eosphoros.core.dict.yaml").read_text(encoding="utf-8")
+        imports = (root / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        self.assertIn("晨星键道\tjxjdoo\n", core)
+        self.assertLess(
+            imports.index("dicts/eosphoros/eosphoros.core"),
+            imports.index("dicts/eosphoros/eosphoros.ice"),
+        )
 
     def test_tracked_text_assets_are_valid_utf8(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -1538,10 +1587,13 @@ print("撤回完成", file=sys.stderr)
         ):
             self.assertNotIn(deprecated, workflows)
         for native_node24 in (
-            "actions/checkout@v6",
-            "actions/setup-python@v6",
+            "actions/checkout@v7",
+            "actions/setup-python@v7",
+            "actions/cache@v6",
             "actions/upload-artifact@v7",
+            "actions/download-artifact@v8",
             "actions/github-script@v9",
+            "prefix-dev/setup-pixi@v0.10.0",
         ):
             self.assertIn(native_node24, workflows)
 

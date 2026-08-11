@@ -1,29 +1,29 @@
 {
   "schema": 1,
   "build": {
-    "date": "2026-08-09",
+    "date": "2026-08-11",
     "python": "3.14.6",
     "python_series": "3.14",
-    "pyinstaller": "6.21.0",
+    "pyinstaller": "6.22.0",
     "platform": "Windows-64bit-intel"
   },
   "builder": {
     "path": "tools/build_zzc_windows_exe.py",
-    "sha256": "27a705a2460ad9bca210abf01a5329527fc7e24f49c8bf30be8d211e682a09ce"
+    "sha256": "82511b92b27770ac94ba2ec2c2fde75afb7f324d8d5a65a7cfdf67fff11367e6"
   },
   "executables": {
     "zzc/Win_词库合并.exe": {
       "source": "zzc/eosphoros_词库合并.py",
       "source_sha256": "6568fbb0bc9b39fc046ea81afe98b591679c3dc44cd872ae9a399f6ea42f4189",
-      "sha256": "efa8d5e026b68dbf6846083f439428a6e50adbd7baac28cc3c62132bdc22a045",
-      "size": 10151083,
+      "sha256": "9acd9ea5b473e488683255cefbffec1f221353df9f703617bafc55d9f605910f",
+      "size": 10149486,
       "machine": "0x8664"
     },
     "zzc/Win_撤回合并.exe": {
       "source": "zzc/eosphoros_撤回合并.py",
       "source_sha256": "b248b2cbf4f0b5e05d5ee8122138c86cfc8ede2320e585493b64d4d95f008f60",
-      "sha256": "de789ff8e04f7318eefc275fa16698d19d1fe2bd113cf26c4934c345f7d3e481",
-      "size": 10129576,
+      "sha256": "7a4dbce87607eef87769624191c7e973c9dc69be2d1fcc00815adce169cfded0",
+      "size": 10129609,
       "machine": "0x8664"
     }
   }

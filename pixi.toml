@@ -7,16 +7,17 @@ platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 [dependencies]
 python = "3.14.*"
 pyyaml = "6.0.3.*"
-pillow = "12.1.1.*"
+pillow = "12.3.0.*"
 lua = "5.4.*"
-pip = ">=25"
+pip = "26.2.1.*"
 
 [pypi-dependencies]
-pyinstaller = "==6.21.0"
+pyinstaller = "==6.22.0"
 
 [activation.env]
 PYTHONUTF8 = "1"
 PYTHONIOENCODING = "utf-8"
+PYTHONNOUSERSITE = "1"
 
 [tasks]
 test = "python -m unittest discover -s tests -p 'test_*.py' -v"
