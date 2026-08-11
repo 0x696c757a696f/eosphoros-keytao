@@ -304,7 +304,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 2. 下载 [`yong-android-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-android-eosphoros.zip)。该文件包含晨星键道配置、码表和两套可直接使用的键盘皮肤，不包含也不修改 APK。
 3. 解压后把包内 `yong` 文件夹合并到手机存储中的同名目录，确认存在 `/storage/emulated/0/yong/.yong/yong.ini` 和 `/storage/emulated/0/yong/.yong/mb/eosphoros/eosphoros.txt`。
 4. 切换到其他输入法再切回小小输入法，或从设置中重载配置。覆盖前请备份个人配置和用户数据。
-5. 包内已经放好 `yong/.yong/android/Eosphoros-Dawn.zip` 和 `Eosphoros-Night.zip`。在小小输入法的皮肤设置中直接选择“晨星·黎明”或“晨星·夜色”即可；不要解压这两个 ZIP，也不要把 Windows 的 `skin/` 皮肤当成 Android 键盘皮肤。
+5. 包内已经放好 `yong/.yong/android/Eosphoros-Dawn.zip` 和 `Eosphoros-Night.zip`。在小小输入法的皮肤设置中直接选择“晨星·黎明”或“晨星·夜色”即可；不要解压这两个 ZIP，也不要把 Windows 的 `skin/` 皮肤当成 Android 键盘皮肤。两套皮肤采用晨星键道自行维护的四行 QWERTY 布局：按键比例和错位方式参考 Gboard，配色与内联图标均由本项目独立设计；保留候选展开、长按符号、删除连发、双击 Shift、空格滑动光标、离线 Emoji、语音、粘贴、方向键、切换输入法和收起键盘，不包含旧“彩”皮肤的多配色、游戏或联网功能。
 
 > [!NOTE]
 > 本仓库不自动编译“晨星键道 APK”。当前公开的 [`dgod/yong`](https://github.com/dgod/yong) 仓库没有可直接复现当前 Android APK 的 Gradle 工程、应用签名及发布流程；二次签名 APK 还会失去官方升级链。自动生成独立配置包能保留官方 APK 更新与签名验证，同时让每次 Release 自动更新晨星码表。

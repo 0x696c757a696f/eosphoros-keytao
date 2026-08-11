@@ -1,26 +1,14 @@
 :root {
-  --键盘背景色: #eeeae2;
-  --键边框颜色: #d3ccc0;
-  --键边框大小: .05rem;
-  --键圆角: .5rem;
-  --背景色1: #fbfaf7;
-  --字体色1: #1d1c19;
-  --上标字符色1: #81796e;
-  --背景色2: #e2ddd3;
-  --字体色2: #292722;
-  --上标字符色2: #756d62;
-  --⏎背景色: #1e1d1a;
-  --⏎字体色: #fff9ed;
-  --空格: #9c761d;
-  --候背景色: #f7f5f1;
-  --候字体颜色: #32302c;
-  --候高亮首选色: #9c761d;
-  --候底线颜色: #d8d1c5;
-  --V背景色: #eeeae2;
-  --底栏字色: #746d63;
-  --uifj键色: #9c761d;
-  --展开界面背景: #f7f5f1 !important;
-  --展开键背景: #e2ddd3 !important;
-  --展开键字色: #292722 !important;
-  --展开键边框: .05rem solid #c8c0b4 !important;
+  --surface: #f3f1ec;
+  --surface-raised: #fffdf8;
+  --surface-control: #e3e0d9;
+  --surface-pressed: #d5dce2;
+  --text: #242521;
+  --text-muted: #6e716c;
+  --accent: #526f82;
+  --accent-text: #ffffff;
+  --candidate-active: #e7edf1;
+  --divider: #d8d6cf;
+  --shadow: 0 0.08rem 0.18rem rgba(35, 39, 42, 0.12);
+  color-scheme: light;
 }

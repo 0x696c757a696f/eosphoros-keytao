@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'unsafe-inline'">
+  <title>晨星键道</title>
+  <link rel="stylesheet" href="keyboard.css">
+</head>
+<body>
+  <main id="keyboard" class="keyboard" aria-label="晨星键道 Android 键盘">
+    <section class="composition">
+      <div id="code" class="code" aria-live="polite"></div>
+      <div id="candidates" class="candidates" aria-label="候选词"></div>
+    </section>
+    <section id="rows" class="rows"></section>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script>
+  "use strict";
+
+  const KEY = Object.freeze({
+    SHIFT: -1,
+    STATE: -2,
+    SYMBOLS: -10,
+    LETTERS: -11,
+    BACKSPACE: 0x08,
+    ENTER: 0x0d,
+    SPACE: 0x20,
+    LEFT: 0xff51,
+    RIGHT: 0xff53
+  });
+
+  const ICONS = Object.freeze({
+    shift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11.5 12 4l7 7.5h-4v7H9v-7H5Z"/></svg>',
+    backspace: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h10v12H9l-5-6 5-6Z"/><path d="m12 9 4 6m0-6-4 6"/></svg>',
+    enter: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5v8H7"/><path d="m10 9-4 4 4 4"/></svg>'
+  });
+
+  const LETTER_ROWS = Object.freeze([
+    [{v:"q",a:"1"},{v:"w",a:"2"},{v:"e",a:"3"},{v:"r",a:"4"},{v:"t",a:"5"},{v:"y",a:"6"},{v:"u",a:"7"},{v:"i",a:"8"},{v:"o",a:"9"},{v:"p",a:"0"}],
+    [{v:"a",a:"@"},{v:"s",a:"#"},{v:"d",a:"$"},{v:"f",a:"%"},{v:"g",a:"&"},{v:"h",a:"-"},{v:"j",a:"+"},{v:"k",a:"("},{v:"l",a:")"}],
+    [{icon:"shift",action:"shift",control:true},{v:"z",a:"*"},{v:"x",a:'"'},{v:"c",a:"'"},{v:"v",a:":"},{v:"b",a:";"},{v:"n",a:"!"},{v:"m",a:"?"},{icon:"backspace",action:"backspace",control:true}],
+    [{v:"?123",action:"symbols",control:true},{v:"中/En",action:"state",control:true},{v:","},{v:"晨星键道",action:"space",space:true},{v:"."},{icon:"enter",action:"enter",control:true,enter:true}]
+  ]);
+
+  const SYMBOL_ROWS = Object.freeze([
+    ["1","2","3","4","5","6","7","8","9","0"].map(v => ({v})),
+    ["@","#","￥","_","&","-","+","(",")","/"].map(v => ({v})),
+    [{v:"=\\<",action:"more",control:true},{v:"*"},{v:'"'},{v:"'"},{v:":"},{v:";"},{v:"!"},{v:"?"},{icon:"backspace",action:"backspace",control:true}],
+    [{v:"ABC",action:"letters",control:true},{v:","},{v:"晨星键道",action:"space",space:true},{v:"."},{icon:"enter",action:"enter",control:true,enter:true}]
+  ]);
+
+  const MORE_ROWS = Object.freeze([
+    ["~","`","|","•","√","π","÷","×","¶","△"].map(v => ({v})),
+    ["£","¢","€","¥","^","°","=","{","}","\\"].map(v => ({v})),
+    [{v:"?123",action:"symbols",control:true},{v:"%"},{v:"©"},{v:"®"},{v:"™"},{v:"["},{v:"]"},{v:"<"},{v:">"},{icon:"backspace",action:"backspace",control:true}],
+    [{v:"ABC",action:"letters",control:true},{v:","},{v:"晨星键道",action:"space",space:true},{v:"."},{icon:"enter",action:"enter",control:true,enter:true}]
+  ]);
+
+  const EMOJI_ROWS = Object.freeze([
+    ["😀","😂","🥰","😍","🤔","😭","😡","👍"].map(v => ({v})),
+    ["🙏","👏","❤️","✨","⭐","🌙","☀️","🎉"].map(v => ({v})),
+    ["✅","❌","⚠️","📌","📖","✝️","⛪","🕊️"].map(v => ({v})),
+    [{v:"ABC",action:"letters",control:true},{v:"?123",action:"symbols",control:true},{v:"晨星键道",action:"space",space:true},{icon:"backspace",action:"backspace",control:true}]
+  ]);
+
+  const TOOLS = Object.freeze([
+    {label:"符号", action:"symbols"},
+    {label:"😊", action:"emoji"},
+    {label:"←", action:"left"},
+    {label:"→", action:"right"},
+    {label:"粘贴", action:"paste"},
+    {label:"语音", action:"voice"},
+    {label:"键盘", action:"switchInput"},
+    {label:"收起", action:"hide"}
+  ]);
+
+  const state = {
+    layout: "letters",
+    shifted: false,
+    shiftLocked: false,
+    nativeState: 0,
+    schemeName: "晨星键道",
+    candidates: [],
+    selected: -1,
+    page: false,
+    tips: [],
+    code: null,
+    pointer: null,
+    longPressTimer: 0,
+    repeatTimer: 0,
+    lastShiftTap: 0
+  };
+
+  const dom = {
+    root: document.getElementById("keyboard"),
+    rows: document.getElementById("rows"),
+    code: document.getElementById("code"),
+    candidates: document.getElementById("candidates"),
+    toast: document.getElementById("toast")
+  };
+
+  const App = Object.freeze({
+    init() { console.log("yong:init"); },
+    select(index, global) { console.log(`yong:select ${index}${global ? " 1" : ""}`); },
+    key(code) { console.log(`yong:key ${code}`); },
+    text(value) { console.log(`yong:text ${value}`); },
+    page() { console.log("yong:page"); },
+    hide() { console.log("yong:hide"); },
+    voice() { console.log("yong:voice"); },
+    feedback() { console.log("yong:feedback"); },
+    query(index) { console.log(`yong:query ${index}`); },
+    action(type) { console.log(`yong:action ${type}`); },
+    resize(width) { console.log(`yong:resize ${Math.trunc(width || 0)}`); },
+    cands() { console.log("yong:cands 1 100"); },
+    commit(text) { console.log(`yong:commit ${text}`); },
+    onGetCandWords() {},
+    onClipChanged() {}
+  });
+
+  function keyLabel(key) {
+    if (key.icon) return ICONS[key.icon];
+    if (key.action === "state") {
+      return state.nativeState === 0 ? "En" : "中";
+    }
+    if (state.layout === "letters" && state.shifted && key.v && key.v.length === 1) {
+      return key.v.toUpperCase();
+    }
+    return key.v || "";
+  }
+
+  function currentRows() {
+    if (state.layout === "symbols") return SYMBOL_ROWS;
+    if (state.layout === "more") return MORE_ROWS;
+    if (state.layout === "emoji") return EMOJI_ROWS;
+    return LETTER_ROWS;
+  }
+
+  function renderKeys() {
+    dom.rows.replaceChildren();
+    currentRows().forEach((row, rowIndex) => {
+      const rowElement = document.createElement("div");
+      rowElement.className = `key-row${state.layout === "letters" && rowIndex === 1 ? " home" : ""}`;
+      row.forEach(key => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "key";
+        if (key.control) button.classList.add("control");
+        if (key.space) button.classList.add("space");
+        if (key.enter) button.classList.add("enter");
+        if (key.action === "shift" && state.shifted) button.classList.add("shift-on");
+        button.dataset.value = key.v || "";
+        button.dataset.action = key.action || "text";
+        button.dataset.alt = key.a || "";
+        button.setAttribute("aria-label", key.action || key.v || "按键");
+        button.innerHTML = keyLabel(key);
+        if (key.a) {
+          const hint = document.createElement("span");
+          hint.className = "hint";
+          hint.textContent = key.a;
+          button.appendChild(hint);
+        }
+        rowElement.appendChild(button);
+      });
+      dom.rows.appendChild(rowElement);
+    });
+  }
+
+  function renderComposition() {
+    const code = state.code || {};
+    const typed = `${code.got || ""}${code.code || ""}`;
+    dom.code.textContent = typed;
+    dom.code.classList.toggle("visible", Boolean(typed));
+    dom.candidates.replaceChildren();
+
+    state.candidates.forEach((candidate, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "candidate";
+      if (index === state.selected) button.classList.add("selected");
+      button.dataset.index = String(index);
+      button.append(document.createTextNode(candidate));
+      if (state.tips && state.tips[index]) {
+        const tip = document.createElement("span");
+        tip.className = "tip";
+        tip.textContent = state.tips[index];
+        button.appendChild(tip);
+      }
+      dom.candidates.appendChild(button);
+    });
+
+    if (!typed && state.candidates.length === 0) {
+      TOOLS.forEach(tool => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "tool-key";
+        button.dataset.tool = tool.action;
+        button.textContent = tool.label;
+        dom.candidates.appendChild(button);
+      });
+    }
+
+    if (state.page) {
+      const page = document.createElement("button");
+      page.type = "button";
+      page.className = "page-key";
+      page.dataset.page = "true";
+      page.setAttribute("aria-label", "展开候选");
+      page.textContent = "⌄";
+      dom.candidates.appendChild(page);
+    }
+  }
+
+  function clearTimers() {
+    window.clearTimeout(state.longPressTimer);
+    window.clearInterval(state.repeatTimer);
+    state.longPressTimer = 0;
+    state.repeatTimer = 0;
+  }
+
+  function sendCharacter(value) {
+    if (!value) return;
+    const output = state.layout === "letters" && state.shifted ? value.toUpperCase() : value;
+    const codePoint = output.codePointAt(0);
+    if (Array.from(output).length === 1 && codePoint < 128) App.key(codePoint);
+    else App.text(output);
+    if (state.shifted && !state.shiftLocked) {
+      state.shifted = false;
+      renderKeys();
+    }
+  }
+
+  function toggleShift() {
+    const now = Date.now();
+    if (now - state.lastShiftTap < 340) {
+      state.shifted = true;
+      state.shiftLocked = true;
+    } else if (state.shiftLocked) {
+      state.shifted = false;
+      state.shiftLocked = false;
+    } else {
+      state.shifted = !state.shifted;
+    }
+    state.lastShiftTap = now;
+    renderKeys();
+  }
+
+  function invoke(button, longPress = false) {
+    const action = button.dataset.action;
+    if (longPress && button.dataset.alt) {
+      sendCharacter(button.dataset.alt);
+      return;
+    }
+    switch (action) {
+      case "shift": toggleShift(); break;
+      case "backspace": App.key(KEY.BACKSPACE); break;
+      case "enter": App.key(KEY.ENTER); break;
+      case "state": App.key(KEY.STATE); break;
+      case "symbols": state.layout = "symbols"; renderKeys(); break;
+      case "more": state.layout = "more"; renderKeys(); break;
+      case "emoji": state.layout = "emoji"; renderKeys(); break;
+      case "letters": state.layout = "letters"; renderKeys(); break;
+      case "space": App.key(KEY.SPACE); break;
+      default: sendCharacter(button.dataset.value);
+    }
+  }
+
+  function pointerDown(event) {
+    const button = event.target.closest(".key");
+    if (!button) return;
+    event.preventDefault();
+    clearTimers();
+    button.classList.add("pressed");
+    button.setPointerCapture?.(event.pointerId);
+    state.pointer = {button, id: event.pointerId, x: event.clientX, y: event.clientY, long: false};
+    App.feedback();
+
+    if (button.dataset.action === "backspace") {
+      invoke(button);
+      state.longPressTimer = window.setTimeout(() => {
+        state.pointer.long = true;
+        state.repeatTimer = window.setInterval(() => App.key(KEY.BACKSPACE), 70);
+      }, 430);
+    } else if (button.dataset.alt) {
+      state.longPressTimer = window.setTimeout(() => {
+        state.pointer.long = true;
+        invoke(button, true);
+      }, 470);
+    }
+  }
+
+  function pointerUp(event) {
+    const press = state.pointer;
+    if (!press || press.id !== event.pointerId) return;
+    event.preventDefault();
+    clearTimers();
+    press.button.classList.remove("pressed");
+    const dx = event.clientX - press.x;
+    if (press.button.dataset.action === "space" && Math.abs(dx) > 22) {
+      App.key(dx < 0 ? KEY.LEFT : KEY.RIGHT);
+    } else if (!press.long && press.button.dataset.action !== "backspace") {
+      invoke(press.button);
+    }
+    state.pointer = null;
+  }
+
+  function pointerCancel() {
+    clearTimers();
+    if (state.pointer) state.pointer.button.classList.remove("pressed");
+    state.pointer = null;
+  }
+
+  dom.rows.addEventListener("pointerdown", pointerDown);
+  dom.rows.addEventListener("pointerup", pointerUp);
+  dom.rows.addEventListener("pointercancel", pointerCancel);
+  dom.rows.addEventListener("contextmenu", event => event.preventDefault());
+  dom.candidates.addEventListener("click", event => {
+    const candidate = event.target.closest(".candidate");
+    if (candidate) App.select(Number(candidate.dataset.index));
+    else if (event.target.closest(".page-key")) App.page();
+    else {
+      const tool = event.target.closest(".tool-key")?.dataset.tool;
+      switch (tool) {
+        case "symbols": state.layout = "symbols"; renderKeys(); break;
+        case "emoji": state.layout = "emoji"; renderKeys(); break;
+        case "left": App.key(KEY.LEFT); break;
+        case "right": App.key(KEY.RIGHT); break;
+        case "paste": App.action("paste"); break;
+        case "voice": App.voice(); break;
+        case "switchInput": App.action("switchInputMethod"); break;
+        case "hide": App.hide(); break;
+      }
+    }
+  });
+
+  const Render = Object.freeze({
+    init() {},
+    draw() { renderKeys(); renderComposition(); return true; },
+    setKeyboard() { renderKeys(); },
+    setState(nativeState, name) {
+      state.nativeState = Number(nativeState) || 0;
+      if (name) state.schemeName = name;
+      renderKeys();
+    },
+    getState() { return state.nativeState; },
+    setShifted(value) {
+      state.shifted = Boolean(value);
+      state.shiftLocked = value === "locked";
+      renderKeys();
+    },
+    isShifted() { return state.shifted; },
+    showCandidates(candidates, selected, page, tips, code) {
+      state.candidates = Array.isArray(candidates) ? candidates : [];
+      state.selected = Number.isInteger(selected) ? selected : -1;
+      state.page = Boolean(page);
+      state.tips = Array.isArray(tips) ? tips : [];
+      state.code = code || null;
+      renderComposition();
+    },
+    showMenu(items) {
+      if (!Array.isArray(items) || !items.length) return;
+      showToast(items.map(item => item.text).filter(Boolean).join(" · "));
+    },
+    showAlternatives() {},
+    hideAlternatives() {},
+    highlightKey() {},
+    unHighlightKey() {},
+    hint() {},
+    getWidth() { return dom.root.clientWidth; },
+    getHeight() { return dom.root.clientHeight; },
+    getScreenWidth() { return screen.width; }
+  });
+
+  let toastTimer = 0;
+  function showToast(message) {
+    dom.toast.textContent = message;
+    dom.toast.classList.add("visible");
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => dom.toast.classList.remove("visible"), 1300);
+  }
+
+  function init_keyboard() {
+    Render.draw();
+    App.init();
+  }
+
+  window.App = App;
+  window.Render = Render;
+  window.init_keyboard = init_keyboard;
+  window.addEventListener("resize", () => Render.draw());
+  window.addEventListener("DOMContentLoaded", init_keyboard, {once: true});
+  </script>
+</body>
+</html>

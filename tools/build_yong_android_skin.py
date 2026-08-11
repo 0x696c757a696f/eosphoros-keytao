@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply an original Eosphoros palette to a user-supplied Yong Android skin."""
+"""Build ready-to-use Yong Android skins from the maintained Eosphoros source."""
 
 from __future__ import annotations
 
@@ -79,9 +79,9 @@ def build(base: Path, theme_name: str, output: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Apply a compact Eosphoros palette to a Yong Android skin ZIP/directory."
+        description="Build a Yong Android skin from the maintained source or a compatible ZIP."
     )
-    parser.add_argument("base", type=Path, help="current compatible Yong Android skin")
+    parser.add_argument("base", type=Path, help="Eosphoros skin source or compatible ZIP")
     parser.add_argument("--theme", choices=("dawn", "night"), default="dawn")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

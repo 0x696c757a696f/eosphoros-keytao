@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import configparser
 import fnmatch
-import hashlib
 import importlib.util
+import io
 import json
 import os
 import re
@@ -328,6 +328,13 @@ class RepositoryValidationTests(unittest.TestCase):
                 (source / "config.yaml").write_text(
                     "name: 测试\nauthor: 测试\ncolor: '#ffffff'\n", encoding="utf-8"
                 )
+                (source / "demo.png").write_bytes(b"upstream preview")
+                for appearance in ("dark", "light"):
+                    resources = source / appearance / "resources"
+                    resources.mkdir(parents=True)
+                    (resources / "key.yaml").write_text(
+                        "color: '#ffffff'\n", encoding="utf-8"
+                    )
             (template / "LICENSE").write_text("MIT\n", encoding="utf-8")
             for archive_name in (
                 "eosphoros-yuanshu.zip",
@@ -357,6 +364,29 @@ class RepositoryValidationTests(unittest.TestCase):
                         ),
                         3,
                     )
+                    for skin_name in (
+                        f"skins/eosphoros-dawn{suffix}",
+                        f"skins/eosphoros-night{suffix}",
+                        f"skins/eosphoros-mono{suffix}",
+                    ):
+                        with zipfile.ZipFile(io.BytesIO(archive.read(skin_name))) as skin:
+                            skin_names = skin.namelist()
+                            skin_root = Path(skin_name).stem
+                            self.assertNotIn("config.yaml", skin_names)
+                            self.assertIn(f"{skin_root}/config.yaml", skin_names)
+                            self.assertIn(f"{skin_root}/demo.png", skin_names)
+                            self.assertTrue(
+                                any(name.startswith(f"{skin_root}/dark/") for name in skin_names)
+                            )
+                            self.assertTrue(
+                                any(name.startswith(f"{skin_root}/light/") for name in skin_names)
+                            )
+                            self.assertIn(
+                                f"{skin_root}/Eosphoros-ATTRIBUTION.txt", skin_names
+                            )
+                            self.assertIn(
+                                f"{skin_root}/THIRD_PARTY-LICENSE-MIT.txt", skin_names
+                            )
 
     def test_release_publishes_platform_packages(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -503,10 +533,10 @@ class RepositoryValidationTests(unittest.TestCase):
             "python tools/validate_yong_package.py yong_linux_temp/yong", release
         )
         self.assertIn(
-            "packaging/yong/android/base/compatible-base.zip --theme dawn", release
+            "packaging/yong/android/skin --theme dawn", release
         )
         self.assertIn(
-            "packaging/yong/android/base/compatible-base.zip --theme night", release
+            "packaging/yong/android/skin --theme night", release
         )
         self.assertIn(".yong/android/Eosphoros-Dawn.zip", release)
         self.assertIn(".yong/android/Eosphoros-Night.zip", release)
@@ -578,24 +608,33 @@ class RepositoryValidationTests(unittest.TestCase):
                 )
                 css = archive.read("keyboard.css").decode("utf-8")
                 self.assertIn("eosphoros-theme:start", css)
-                self.assertIn("--键盘背景色: #111210", css)
+                self.assertIn("--surface: #11151b", css)
                 self.assertEqual(archive.read("layout.js"), b"const layout = {};\n")
 
-    def test_yong_android_compatible_base_builds_ready_skins(self) -> None:
+    def test_yong_android_original_source_builds_ready_skins(self) -> None:
         from tools.build_yong_android_skin import build
 
         root = Path(__file__).resolve().parents[1]
-        base = root / "packaging/yong/android/base/compatible-base.zip"
+        base = root / "packaging/yong/android/skin"
+        html = (base / "keyboard.html").read_text(encoding="utf-8")
+        self.assertIn('v:"晨星键道"', html)
+        self.assertIn('className = `key-row${', html)
+        self.assertIn('action:"emoji"', html)
+        self.assertIn('App.action("paste")', html)
+        self.assertIn('App.action("switchInputMethod")', html)
+        self.assertNotRegex(html, r"https?://|fetch\(|XMLHttpRequest|WebSocket")
+        self.assertNotRegex(html, r"简约|iOS圖|深彩|浅彩|游戏|天气|翻译")
         self.assertEqual(
-            hashlib.sha256(base.read_bytes()).hexdigest(),
-            "f3d3b2c495862356246812f29f9857f5f9bfe281d55e1a95bfbf7d812a61c5db",
+            {path.name for path in base.iterdir()}, {"keyboard.html", "keyboard.css"}
         )
         with tempfile.TemporaryDirectory() as temp_dir:
             for theme in ("dawn", "night"):
                 output = Path(temp_dir) / f"Eosphoros-{theme}.zip"
                 build(base, theme, output)
                 with zipfile.ZipFile(output) as archive:
-                    self.assertIn("keyboard.html", archive.namelist())
+                    self.assertEqual(
+                        set(archive.namelist()), {"keyboard.html", "keyboard.css"}
+                    )
                     css = archive.read("keyboard.css").decode("utf-8")
                     self.assertIn("eosphoros-theme:start", css)
 

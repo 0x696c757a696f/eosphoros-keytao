@@ -359,8 +359,8 @@ jobs:
         cp -r mb yong_android/yong/.yong/
         cp packaging/yong/android/README.txt yong_android/yong/README-Eosphoros-Android.txt
         mkdir -p yong_android/yong/.yong/android
-        python tools/build_yong_android_skin.py packaging/yong/android/base/compatible-base.zip --theme dawn --output yong_android/yong/.yong/android/Eosphoros-Dawn.zip
-        python tools/build_yong_android_skin.py packaging/yong/android/base/compatible-base.zip --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
+        python tools/build_yong_android_skin.py packaging/yong/android/skin --theme dawn --output yong_android/yong/.yong/android/Eosphoros-Dawn.zip
+        python tools/build_yong_android_skin.py packaging/yong/android/skin --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
         python tools/validate_yong_package.py yong_android/yong
         cd yong_android
         zip -r ../yong-android-eosphoros.zip yong

@@ -1,0 +1,262 @@
+:root {
+  --surface: #f3f1ec;
+  --surface-raised: #fffdf8;
+  --surface-control: #e3e0d9;
+  --surface-pressed: #d5dce2;
+  --text: #242521;
+  --text-muted: #6e716c;
+  --accent: #526f82;
+  --accent-text: #ffffff;
+  --candidate-active: #e7edf1;
+  --divider: #d8d6cf;
+  --shadow: 0 0.08rem 0.18rem rgba(35, 39, 42, 0.12);
+  --key-radius: 0.62rem;
+  --keyboard-padding: 0.34rem;
+  color-scheme: light;
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", sans-serif;
+  font-size: clamp(13px, 4.25vw, 19px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--text);
+}
+
+button {
+  font: inherit;
+}
+
+.keyboard {
+  width: 100%;
+  padding-bottom: max(0.16rem, env(safe-area-inset-bottom));
+  background: var(--surface);
+}
+
+.composition {
+  display: flex;
+  min-height: 2.9rem;
+  align-items: stretch;
+  border-bottom: 1px solid var(--divider);
+  background: var(--surface);
+}
+
+.code {
+  display: none;
+  min-width: 3.2rem;
+  max-width: 34%;
+  padding: 0.76rem 0.55rem;
+  overflow: hidden;
+  color: var(--accent);
+  font-weight: 650;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.code.visible {
+  display: block;
+}
+
+.candidates {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.candidates::-webkit-scrollbar {
+  display: none;
+}
+
+.candidate,
+.page-key,
+.tool-key {
+  min-width: 3.35rem;
+  padding: 0 0.82rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.candidate:first-child {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.candidate.selected {
+  background: var(--candidate-active);
+}
+
+.candidate .tip {
+  margin-left: 0.22rem;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+}
+
+.page-key {
+  min-width: 2.8rem;
+  color: var(--accent);
+  font-size: 1.15rem;
+}
+
+.tool-key {
+  min-width: 2.95rem;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.tool-key:active {
+  background: var(--candidate-active);
+  color: var(--accent);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.34rem;
+  padding: var(--keyboard-padding);
+}
+
+.key-row {
+  display: flex;
+  min-height: 3.18rem;
+  gap: 0.28rem;
+}
+
+.key-row.home {
+  padding-inline: 4.4%;
+}
+
+.key {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--key-radius);
+  box-shadow: var(--shadow);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 1.22rem;
+  font-weight: 500;
+  line-height: 1;
+  transition: background-color 70ms ease, transform 70ms ease;
+}
+
+.key.control {
+  flex-grow: 1.35;
+  background: var(--surface-control);
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.key.space {
+  flex-grow: 5.1;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.key.enter {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.key.pressed,
+.key:active {
+  background: var(--surface-pressed);
+  box-shadow: none;
+  transform: translateY(0.08rem);
+}
+
+.key.enter.pressed,
+.key.enter:active {
+  filter: brightness(0.92);
+}
+
+.key.shift-on {
+  color: var(--accent);
+  outline: 0.1rem solid var(--accent);
+  outline-offset: -0.1rem;
+}
+
+.key .hint {
+  position: absolute;
+  top: 0.28rem;
+  right: 0.34rem;
+  color: var(--text-muted);
+  font-size: 0.5rem;
+  font-weight: 500;
+}
+
+.key svg {
+  width: 1.34rem;
+  height: 1.34rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 4.2rem;
+  z-index: 4;
+  max-width: 82%;
+  padding: 0.5rem 0.78rem;
+  border-radius: 1rem;
+  background: var(--text);
+  color: var(--surface-raised);
+  font-size: 0.72rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 0.35rem);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.toast.visible {
+  opacity: 0.94;
+  transform: translate(-50%, 0);
+}
+
+@media (orientation: landscape) {
+  :root {
+    font-size: clamp(11px, 2.25vw, 16px);
+  }
+
+  .composition {
+    min-height: 2.35rem;
+  }
+
+  .key-row {
+    min-height: 2.45rem;
+  }
+
+  .rows {
+    gap: 0.24rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .key,
+  .toast {
+    transition: none;
+  }
+}

@@ -217,7 +217,12 @@ def recolor_text(text: str, theme: dict[str, Any]) -> str:
     return "".join(output)
 
 
-def theme_archive(source: Path, theme: dict[str, Any], license_text: bytes) -> bytes:
+def theme_archive(
+    source: Path,
+    theme: dict[str, Any],
+    license_text: bytes,
+    root_name: str,
+) -> bytes:
     files: dict[str, bytes] = {}
     for path in source.rglob("*"):
         if not path.is_file() or path.name == "demo.png":
@@ -230,18 +235,40 @@ def theme_archive(source: Path, theme: dict[str, Any], license_text: bytes) -> b
                 data["name"] = f"{theme['name']}／{theme['english_name']}"
                 data["author"] = "eosphoros-keytao（布局基于 BlackCCCat MIT 模板）"
                 value = yaml.safe_dump(data, allow_unicode=True, sort_keys=False)
-            files[relative] = value.encode("utf-8")
+            files[f"{root_name}/{relative}"] = value.encode("utf-8")
         else:
-            files[relative] = path.read_bytes()
-    files["demo.png"] = preview_png(theme)
-    files["Eosphoros-ATTRIBUTION.txt"] = (
+            files[f"{root_name}/{relative}"] = path.read_bytes()
+    files[f"{root_name}/demo.png"] = preview_png(theme)
+    files[f"{root_name}/Eosphoros-ATTRIBUTION.txt"] = (
         "配色与预览：eosphoros-keytao，MIT。\n"
         "键盘布局模板：BlackCCCat/ResourceforHamster，MIT。\n"
         "固定模板提交：6c2b8d9a3c7116f41b77c32a662a7685770a5914。\n"
         "https://github.com/BlackCCCat/ResourceforHamster\n"
     ).encode("utf-8")
-    files["THIRD_PARTY-LICENSE-MIT.txt"] = license_text
-    return zip_bytes(files)
+    files[f"{root_name}/THIRD_PARTY-LICENSE-MIT.txt"] = license_text
+    archive = zip_bytes(files)
+    validate_ios_skin_archive(archive, root_name)
+    return archive
+
+
+def validate_ios_skin_archive(archive: bytes, expected_root: str) -> None:
+    """Reject packages that iOS skin importers cannot identify as one skin."""
+    with zipfile.ZipFile(io.BytesIO(archive)) as skin:
+        names = [name.rstrip("/") for name in skin.namelist() if name.rstrip("/")]
+        roots = {name.split("/", 1)[0] for name in names}
+        if roots != {expected_root}:
+            raise ValueError("iOS skin archive must contain exactly one wrapper directory")
+        required = {
+            f"{expected_root}/config.yaml",
+            f"{expected_root}/demo.png",
+        }
+        if not required.issubset(names):
+            missing = ", ".join(sorted(required.difference(names)))
+            raise ValueError(f"iOS skin archive is incomplete: {missing}")
+        for appearance in ("dark", "light"):
+            prefix = f"{expected_root}/{appearance}/"
+            if not any(name.startswith(prefix) for name in names):
+                raise ValueError(f"iOS skin archive has no {appearance} resources")
 
 
 def obtain_ios_template(config: dict[str, Any], cache: Path | None) -> Path:
@@ -278,11 +305,12 @@ def build_ios(config: dict[str, Any], template: Path) -> tuple[dict[str, bytes],
     yuanshu: dict[str, bytes] = {}
     hamster: dict[str, bytes] = {}
     for theme_id, theme in config["themes"].items():
+        root_name = f"eosphoros-{theme_id}"
         yuanshu[f"eosphoros-{theme_id}.cskin"] = theme_archive(
-            yuanshu_source, theme, license_text
+            yuanshu_source, theme, license_text, root_name
         )
         hamster[f"eosphoros-{theme_id}.hskin"] = theme_archive(
-            hamster_source, theme, license_text
+            hamster_source, theme, license_text, root_name
         )
     return yuanshu, hamster
 
