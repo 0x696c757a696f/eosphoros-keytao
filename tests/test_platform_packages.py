@@ -33,8 +33,7 @@ class PlatformPackageTests(unittest.TestCase):
                 deployer_command("rime_deployer", root, shared_data),
                 [
                     "rime_deployer",
-                    "--compile",
-                    str(root / "eosphoros.schema.yaml"),
+                    "--build",
                     str(root),
                     str(shared_data),
                 ],

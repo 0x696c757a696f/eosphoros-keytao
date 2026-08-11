@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the packaged core with a real rime_deployer and verify artifacts."""
+"""Deploy the packaged core like a Rime client and verify all artifacts."""
 
 from __future__ import annotations
 
@@ -51,8 +51,7 @@ def deployer_command(
 ) -> list[str]:
     command = [
         deployer,
-        "--compile",
-        str(user_dir / "eosphoros.schema.yaml"),
+        "--build",
         str(user_dir),
     ]
     if shared_data_dir is not None:
@@ -85,7 +84,7 @@ def smoke_test(
         )
         if result.returncode:
             raise RuntimeError(
-                "rime_deployer failed\n"
+                "rime_deployer build failed\n"
                 + (result.stdout or "")
                 + (result.stderr or "")
             )
