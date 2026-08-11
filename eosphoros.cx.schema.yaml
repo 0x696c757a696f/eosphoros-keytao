@@ -45,7 +45,7 @@ speller:
     - derive/^(.....).$/$1`/
 
 translator:
-  dictionary: dicts/eosphoros/eosphoros.cx
+  dictionary: eosphoros.cx
   enable_charset_filter: false
   enable_completion: true
   enable_sentence: false

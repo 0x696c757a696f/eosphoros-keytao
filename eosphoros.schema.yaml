@@ -218,7 +218,7 @@ eosphoros_opencc_filter:
 # ============ 反查与副词典 ============
 eosphorosgbk:
   tag: eosphorosgbk
-  dictionary: dicts/eosphoros/eosphoros.gbk
+  dictionary: eosphoros.gbk
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -229,7 +229,7 @@ eosphorosgbk:
 
 pinyin_simp:
   tag: pinyin_simp
-  dictionary: dicts/eosphoros/pinyin_simp
+  dictionary: pinyin_simp
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -243,7 +243,7 @@ pinyin_simp:
 
 quanpinerfen:
   tag: quanpinerfen
-  dictionary: dicts/eosphoros/liangfen
+  dictionary: liangfen
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -252,7 +252,7 @@ quanpinerfen:
 
 reverse_lookup:
   tags: [pinyin_simp, quanpinerfen, eosphorosgbk, reverse_lookup]
-  dictionary: dicts/eosphoros/eosphoros.cx
+  dictionary: eosphoros.cx
   option_name: reverse_lookup
   enable_completion: true
   initial_quality: 0.5

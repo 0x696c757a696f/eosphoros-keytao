@@ -91,7 +91,11 @@ class UpstreamDictionaryTests(unittest.TestCase):
             self.assertTrue((ROOT / schema_name).is_file())
         self.assertIn("dependencies:", main_schema)
         for dictionary in ("eosphoros.cx", "eosphoros.gbk", "liangfen", "pinyin_simp"):
-            self.assertIn(f"dictionary: dicts/eosphoros/{dictionary}", main_schema)
+            self.assertIn(f"dictionary: {dictionary}", main_schema)
+            helper_schema = (ROOT / f"{dictionary}.schema.yaml").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn(f"dictionary: {dictionary}", helper_schema)
         root_index = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
         import_block = root_index.split("import_tables:", 1)[1]
         first_import = next(

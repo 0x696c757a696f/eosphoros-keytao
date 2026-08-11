@@ -37,7 +37,7 @@ speller:
   delimiter: " ;'"
 
 translator:
-  dictionary: dicts/eosphoros/eosphoros.gbk
+  dictionary: eosphoros.gbk
 
 punctuator:
   import_preset: default
