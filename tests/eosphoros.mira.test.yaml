@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rimeinn/mira/refs/heads/master/spec/mira.schema.json
+schema: eosphoros
+source_dir: ..
+script: |
+  function has(text)
+    for _, candidate in pairs(cand) do
+      if candidate.text == text then
+        return true
+      end
+    end
+    print("candidate not found: " .. text)
+    return false
+  end
+
+  function has_official_date()
+    for _, candidate in pairs(cand) do
+      if candidate.text:match("^%d+年%d+月%d+日$") then
+        return true
+      end
+    end
+    return false
+  end
+
+deploy:
+  auxiliary_dictionaries:
+    options:
+      emoji_cn: true
+    tests:
+      - send: uba
+        assert: has("吧")
+      - send: vhr
+        assert: has("一")
+      - send: obgovuovviauo
+        assert: has("病")
+      - send: iabandon
+        assert: has("abandon")
+      - send: rq
+        assert: has_official_date()
+      - send: xcu
+        assert: has("笑") and has("🤣")

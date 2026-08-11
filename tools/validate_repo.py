@@ -12,6 +12,11 @@ import sys
 import tomllib
 from pathlib import Path
 
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools.validate_emoji_sequences import validate_repository as validate_emoji_repository
+
 try:
     import yaml
 except ImportError as exc:  # pragma: no cover - exercised by dependency setup
@@ -47,6 +52,8 @@ def validate_versions(errors: list[str]) -> None:
         errors.append("VERSION: expected YYYY-MM-DD")
         return
     for path in sorted(ROOT.rglob("*.yaml")):
+        if any(part in {".git", ".pixi", ".tmp"} for part in path.relative_to(ROOT).parts):
+            continue
         for found in VERSION_RE.findall(path.read_text(encoding="utf-8-sig")):
             if found != expected:
                 add_error(errors, path, f"version {found!r} does not match VERSION {expected!r}")
@@ -205,6 +212,10 @@ def validate_generated_dictionaries(errors: list[str]) -> None:
             add_error(errors, path, "content differs from upstream dictionary lock")
 
 
+def validate_emoji_sequences(errors: list[str]) -> None:
+    errors.extend(validate_emoji_repository())
+
+
 def validate_upstream_code_lock(errors: list[str]) -> None:
     lock_path = ROOT / "tools" / "upstream_code.lock.json"
     if not lock_path.is_file():
@@ -235,6 +246,7 @@ def main() -> int:
     validate_module_references(errors)
     validate_python_syntax(errors)
     validate_generated_dictionaries(errors)
+    validate_emoji_sequences(errors)
     validate_upstream_code_lock(errors)
     lua_runtime = validate_lua_syntax(errors)
 
