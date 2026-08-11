@@ -102,15 +102,16 @@ class RepositoryValidationTests(unittest.TestCase):
             (root / "fcitx5" / "themes.yaml").read_text(encoding="utf-8")
         )
         theme_ids = {item["id"] for item in manifest["themes"]}
-        self.assertIn("CatLight", theme_ids)
-        self.assertIn("CatDark", theme_ids)
+        artifact_ids = {item["artifact"] for item in manifest["themes"]}
+        self.assertIn("EosphorosLight", theme_ids)
+        self.assertIn("EosphorosDark", theme_ids)
         self.assertGreater(len(theme_ids), 50)
 
         linux_root = root / "fcitx5" / "linux" / "themes"
         macos_root = root / "fcitx5" / "macos" / "themes"
         self.assertEqual(
             {path.name.removeprefix("eosphoros-") for path in linux_root.iterdir()},
-            theme_ids,
+            artifact_ids,
         )
         self.assertEqual(
             {
@@ -118,7 +119,7 @@ class RepositoryValidationTests(unittest.TestCase):
                 for path in macos_root.glob("eosphoros-*.conf")
                 if path.stem != "eosphoros-auto"
             },
-            theme_ids,
+            artifact_ids,
         )
 
         for path in linux_root.glob("*/theme.conf"):
@@ -137,9 +138,9 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual(auto_theme["LightMode"]["OverrideDefault"], "True")
         self.assertEqual(auto_theme["DarkMode"]["OverrideDefault"], "True")
         self.assertEqual(auto_theme["DarkMode"]["SameWithLightMode"], "False")
-        self.assertEqual(auto_theme["LightMode"]["HighlightColor"], "#1F57FFFF")
-        self.assertEqual(auto_theme["DarkMode"]["HighlightColor"], "#0A3AFAFF")
-        self.assertEqual(auto_theme["DarkMode"]["TextColor"], "#FFFFFF99")
+        self.assertEqual(auto_theme["LightMode"]["HighlightColor"], "#1E1D1AFF")
+        self.assertEqual(auto_theme["DarkMode"]["HighlightColor"], "#F1EEE8FF")
+        self.assertEqual(auto_theme["DarkMode"]["TextColor"], "#E6E1D8FF")
         self.assertEqual(auto_theme["Typography"]["WritingMode"], "Horizontal top-bottom")
 
         mac_color_fields = {
@@ -285,6 +286,7 @@ class RepositoryValidationTests(unittest.TestCase):
         release = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )
+        readme = (root / "README.md").read_text(encoding="utf-8")
         help_text = (root / "packaging/yong/README.txt").read_text(encoding="utf-8")
 
         self.assertIn(
@@ -292,8 +294,74 @@ class RepositoryValidationTests(unittest.TestCase):
             release,
         )
         self.assertIn("python tools/validate_yong_package.py yong_temp/yong", release)
+        self.assertIn("python tools/validate_yong_package.py yong_android/yong", release)
+        self.assertIn("python tools/validate_yong_package.py yong_linux", release)
+        self.assertIn("cp tools/build_yong_android_skin.py", release)
+        self.assertIn("cp packaging/yong/android/themes/*.css", release)
+        self.assertRegex(release, r"(?m)^\s+yong-android-eosphoros\.zip$")
+        self.assertRegex(release, r"(?m)^\s+yong-linux-eosphoros\.zip$")
+        self.assertRegex(release, r"(?m)^\s+yong-eosphoros-skins\.zip$")
         self.assertIn("Ctrl + 空格", help_text)
         self.assertIn("eosphoros.txt", help_text)
+
+        android_config = (root / "packaging/yong/android/yong.ini").read_text(
+            encoding="utf-8"
+        )
+        android_help = (root / "packaging/yong/android/README.txt").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("arg=mb/eosphoros/eosphoros.txt", android_config)
+        self.assertNotRegex(android_config, r"(?m)^skin=")
+        self.assertNotIn("xmjd6", android_config)
+        self.assertIn("/storage/emulated/0/yong/.yong/", android_help)
+        linux_help = (root / "packaging/yong/linux/README.txt").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("$XDG_CONFIG_HOME/yong/", linux_help)
+        self.assertIn("yong-tool.sh --install", linux_help)
+        self.assertIn("Default5 SVG", readme)
+        self.assertIn("Android 皮肤制作参考", readme)
+
+        desktop_config = (root / "packaging/yong/yong.ini").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("skin=skin/Eosphoros-Mono", desktop_config)
+
+        for skin_name in ("Eosphoros-Mono", "Eosphoros-Dawn", "Eosphoros-Graphite"):
+            skin_path = root / "packaging" / "yong" / "skins" / skin_name / "skin.ini"
+            skin = configparser.ConfigParser(interpolation=None)
+            skin.read(skin_path, encoding="utf-8")
+            self.assertEqual(
+                set(skin.sections()),
+                {"about", "main", "main-dark", "input", "input-dark"},
+            )
+            self.assertEqual(skin.get("main", "scale"), "0")
+            self.assertEqual(skin.get("input", "line"), "1")
+            self.assertNotRegex(skin_path.read_text(encoding="utf-8"), r"\.(png|svg|ico)")
+
+    def test_yong_android_theme_builder_preserves_base_skin(self) -> None:
+        from tools.build_yong_android_skin import build
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            base = root / "base.zip"
+            output = root / "themed.zip"
+            with zipfile.ZipFile(base, "w") as archive:
+                archive.writestr("keyboard.html", "<html></html>\n")
+                archive.writestr("keyboard.css", ":root { --背景色1: #fff; }\n")
+                archive.writestr("layout.js", "const layout = {};\n")
+
+            build(base, "night", output)
+
+            with zipfile.ZipFile(output) as archive:
+                self.assertEqual(
+                    set(archive.namelist()),
+                    {"keyboard.html", "keyboard.css", "layout.js"},
+                )
+                css = archive.read("keyboard.css").decode("utf-8")
+                self.assertIn("eosphoros-theme:start", css)
+                self.assertIn("--键盘背景色: #111210", css)
+                self.assertEqual(archive.read("layout.js"), b"const layout = {};\n")
 
     def test_generated_eosphoros_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -510,13 +578,13 @@ class RepositoryValidationTests(unittest.TestCase):
             (squirrel, squirrel_custom),
         ):
             schemes = config["preset_color_schemes"]
-            self.assertIn("CatLight", schemes)
-            self.assertIn("CatDark", schemes)
-            self.assertEqual(config["style"]["color_scheme"], "CatLight")
-            self.assertEqual(config["style"]["color_scheme_dark"], "CatDark")
+            self.assertIn("EosphorosLight", schemes)
+            self.assertIn("EosphorosDark", schemes)
+            self.assertEqual(config["style"]["color_scheme"], "EosphorosLight")
+            self.assertEqual(config["style"]["color_scheme_dark"], "EosphorosDark")
             self.assertEqual(config["style"]["candidate_list_layout"], "stacked")
-            self.assertEqual(custom["style/color_scheme"], "CatLight")
-            self.assertEqual(custom["style/color_scheme_dark"], "CatDark")
+            self.assertEqual(custom["style/color_scheme"], "EosphorosLight")
+            self.assertEqual(custom["style/color_scheme_dark"], "EosphorosDark")
             self.assertEqual(custom["style/candidate_list_layout"], "stacked")
 
         squirrel_style = squirrel["style"]

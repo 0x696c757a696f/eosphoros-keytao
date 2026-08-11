@@ -1,4 +1,4 @@
 patch:
-  style/color_scheme: CatLight
-  style/color_scheme_dark: CatDark
+  style/color_scheme: EosphorosLight
+  style/color_scheme_dark: EosphorosDark
   style/candidate_list_layout: stacked

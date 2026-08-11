@@ -348,18 +348,47 @@ jobs:
 
     - name: Zip yong
       run: |
+        mkdir -p yong_android/yong/.yong
+        python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
+        cp -r mb yong_android/yong/.yong/
+        cp packaging/yong/android/README.txt yong_android/yong/README-Eosphoros-Android.txt
+        mkdir -p yong_android/yong/theme-builder/themes
+        cp tools/build_yong_android_skin.py yong_android/yong/theme-builder/
+        cp packaging/yong/android/themes/*.css yong_android/yong/theme-builder/themes/
+        python tools/validate_yong_package.py yong_android/yong
+        cd yong_android
+        zip -r ../yong-android-eosphoros.zip yong
+        cd ..
+        rm -rf yong_android
+
         mkdir -p .yong
         curl --fail --location --output yong-win.7z "$YONG_WIN_URL"
         echo "$YONG_WIN_SHA256  yong-win.7z" | sha256sum --check --strict
         python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb .yong/
+        mkdir -p .yong/skin
+        cp -r packaging/yong/skins/. .yong/skin/
+
+        mkdir -p yong_linux
+        cp -r .yong yong_linux/
+        cp packaging/yong/linux/README.txt yong_linux/README-Eosphoros-Linux.txt
+        python tools/validate_yong_package.py yong_linux
+        (cd yong_linux && zip -r ../yong-linux-eosphoros.zip .yong README-Eosphoros-Linux.txt)
+        rm -rf yong_linux
+
         7z x yong-win.7z -oyong_temp
         cp -r .yong yong_temp/yong
         cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt
         python tools/validate_yong_package.py yong_temp/yong
-        cd yong_temp
-        zip -r ../yong-eosphoros.zip yong
-        rm -rf ../.yong ../yong_temp
+        (cd yong_temp && zip -r ../yong-eosphoros.zip yong)
+        rm -rf .yong yong_temp
+
+        mkdir -p yong_skin_bundle/skin
+        cp -r packaging/yong/skins/. yong_skin_bundle/skin/
+        cd yong_skin_bundle
+        zip -r ../yong-eosphoros-skins.zip skin
+        cd ..
+        rm -rf yong_skin_bundle
 
     - name: Create checksums and publish Release
       env:
@@ -374,6 +403,9 @@ jobs:
         assets=(
           Rabbit-eosphoros.zip
           yong-eosphoros.zip
+          yong-linux-eosphoros.zip
+          yong-android-eosphoros.zip
+          yong-eosphoros-skins.zip
           eosphoros.zip
           eosphoros-weasel.zip
           eosphoros-squirrel.zip

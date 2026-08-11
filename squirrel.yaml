@@ -30,8 +30,8 @@ status_icon:
 
 style:
   # 选择皮肤，亮色与暗色主题
-  color_scheme: CatLight
-  color_scheme_dark: CatDark
+  color_scheme: EosphorosLight
+  color_scheme_dark: EosphorosDark
 
   # 预设选项。如果皮肤没写，则使用这些属性；如果皮肤写了，使用皮肤的。
   
@@ -111,6 +111,40 @@ app_options:
     ascii_mode: true
 
 preset_color_schemes:
+  EosphorosLight:
+    name: "晨星·黎明／Eosphoros Light"
+    author: eosphoros-keytao
+    text_color: 0x171717
+    back_color: 0xf1f5f7
+    border_color: 0xc5d1d8
+    hilited_text_color: 0x171717
+    hilited_back_color: 0xf1f5f7
+    candidate_text_color: 0x2c3032
+    candidate_back_color: 0xf1f5f7
+    hilited_candidate_text_color: 0xedf9ff
+    hilited_candidate_back_color: 0x1a1d1e
+    comment_text_color: 0x6a747b
+    hilited_comment_text_color: 0x9fc8d9
+    label_color: 0x86929a
+    hilited_label_color: 0x6ac9f0
+
+  EosphorosDark:
+    name: "晨星·夜色／Eosphoros Dark"
+    author: eosphoros-keytao
+    text_color: 0xe8eef1
+    back_color: 0x161717
+    border_color: 0x323638
+    hilited_text_color: 0xe8eef1
+    hilited_back_color: 0x161717
+    candidate_text_color: 0xd8e1e6
+    candidate_back_color: 0x161717
+    hilited_candidate_text_color: 0x161717
+    hilited_candidate_back_color: 0xe8eef1
+    comment_text_color: 0x97a0a7
+    hilited_comment_text_color: 0x50656f
+    label_color: 0x7c858b
+    hilited_label_color: 0x1d769c
+
   CatLight:
     name: "Cat光明/CatLight"
     author: ProudCat

@@ -1,540 +1,649 @@
-generated: '2026-08-10'
+generated: '2026-08-11'
 desktop_precedence:
 - squirrel
 - weasel
 themes:
+- id: EosphorosLight
+  name: 晨星·黎明／Eosphoros Light
+  author: eosphoros-keytao
+  sources:
+  - squirrel
+  - weasel
+  artifact: light
+- id: EosphorosDark
+  name: 晨星·夜色／Eosphoros Dark
+  author: eosphoros-keytao
+  sources:
+  - squirrel
+  - weasel
+  artifact: dark
 - id: CatLight
   name: Cat光明/CatLight
   author: ProudCat
   sources:
   - squirrel
   - weasel
+  artifact: CatLight
 - id: CatDark
   name: Cat暗黑/CatDark
   author: ProudCat
   sources:
   - squirrel
   - weasel
+  artifact: CatDark
 - id: mint_light_blue
   name: 蓝水鸭／Mint Light Blue
   author: Mintimate <"Mintimate's Blog">
   sources:
   - squirrel
   - weasel
+  artifact: mint_light_blue
 - id: mint_dark_blue
   name: 黑水鸭／Mint Dark Blue
   author: Mintimate <"Mintimate's Blog">
   sources:
   - squirrel
   - weasel
+  artifact: mint_dark_blue
 - id: mac_light
   name: Mac浅色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: mac_light
 - id: mac_dark
   name: Mac深色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: mac_dark
 - id: mac_green
   name: Mac绿
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: mac_green
 - id: mac_orange
   name: Mac橙
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: mac_orange
 - id: mac_blue
   name: Mac浅蓝
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: mac_blue
 - id: win10
   name: win10
   author: eosphoros desktop theme collection
   sources:
   - squirrel
+  artifact: win10
 - id: appsored
   name: AppSo 红
   author: Astrian Zheng
   sources:
   - squirrel
   - weasel
+  artifact: appsored
 - id: dracula
   name: dracula
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: dracula
 - id: dracula_light
   name: dracula_light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: dracula_light
 - id: ifanrblack
   name: 爱范儿黑
   author: Astrian Zheng
   sources:
   - squirrel
   - weasel
+  artifact: ifanrblack
 - id: macos12_dark
   name: 高仿暗色 macOS
   author: Lufs X <i@isteed.cc>
   sources:
   - squirrel
   - weasel
+  artifact: macos12_dark
 - id: macos12_light
   name: 高仿亮色 macOS
   author: Lufs X <i@isteed.cc>
   sources:
   - squirrel
   - weasel
+  artifact: macos12_light
 - id: metro
   name: metro
   author: flypy.com
   sources:
   - squirrel
+  artifact: metro
 - id: milan
   name: 米兰
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: milan
 - id: nord_dark
   name: 北方深色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: nord_dark
 - id: nord_light
   name: 北方浅色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: nord_light
 - id: purity
   name: 纯洁
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: purity
 - id: MacRoseo
   name: 玫红 / MacRoseo
   author: KyleBing
   sources:
   - squirrel
   - weasel
+  artifact: MacRoseo
 - id: MacRoseoAlt
   name: MacRoseo
   author: KyleBing
   sources:
   - squirrel
   - weasel
+  artifact: MacRoseoAlt
 - id: WhiteAqua
   name: WhiteAqua
   author: KyleBing
   sources:
   - squirrel
   - weasel
+  artifact: WhiteAqua
 - id: wechat_dark
   name: 微信键盘深色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: wechat_dark
 - id: wechat_light
   name: 微信键盘浅色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: wechat_light
 - id: white
   name: 白色/white
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: white
 - id: win10_MDL_ayaya
   name: Windows10 文文／Ayaya
   author: Lufs X <i@isteed.cc>
   sources:
   - squirrel
   - weasel
+  artifact: win10_MDL_ayaya
 - id: win10_MDL_blue
   name: Windows 10 Blue
   author: fbewivpjsbsby
   sources:
   - squirrel
   - weasel
+  artifact: win10_MDL_blue
 - id: win10_MDL_darkblue
   name: Windows 10 Dark Blue
   author: fbewivpjsbsby
   sources:
   - squirrel
   - weasel
+  artifact: win10_MDL_darkblue
 - id: win10_MDL_deepgrey
   name: Windows10 Deepgrey
   author: fbewivpjsbsby
   sources:
   - squirrel
   - weasel
+  artifact: win10_MDL_deepgrey
 - id: win10_MDL_preset
   name: win10_MDL_preset
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win10_MDL_preset
 - id: win10_preset
   name: win10_preset
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win10_preset
 - id: win10_weasel
   name: win10_weasel
   author: luminosa
   sources:
   - squirrel
   - weasel
+  artifact: win10_weasel
 - id: win11_preset
   name: win11_preset
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win11_preset
 - id: win11_weasel
   name: win11_weasel
   author: luminosa
   sources:
   - squirrel
   - weasel
+  artifact: win11_weasel
 - id: easy_dark
   name: 蓝黑
   author: 木易
   sources:
   - squirrel
   - weasel
+  artifact: easy_dark
 - id: eucalyptus
   name: 尤加利
   author: ID;Peace B
   sources:
   - squirrel
   - weasel
+  artifact: eucalyptus
 - id: gruvbox_light
   name: Gruvbox Light
   author: Q
   sources:
   - squirrel
   - weasel
+  artifact: gruvbox_light
 - id: pornhub
   name: Pornhub
   author: swwrww
   sources:
   - squirrel
   - weasel
+  artifact: pornhub
 - id: qishu
   name: 祈澍
   author: qishu
   sources:
   - squirrel
   - weasel
+  artifact: qishu
 - id: rose_red
   name: 玫红
   author: 木易
   sources:
   - squirrel
   - weasel
+  artifact: rose_red
 - id: so_young_qmod_01
   name: 致青春·Q改
   author: Q
   sources:
   - squirrel
   - weasel
+  artifact: so_young_qmod_01
 - id: win10black
   name: Win10Black
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win10black
 - id: win10blue
   name: Win10Blue
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win10blue
 - id: win10gray
   name: Win10Gray
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win10gray
 - id: win11dark
   name: Win11Dark
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win11dark
 - id: win11light
   name: Win11Light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
+  artifact: win11light
 - id: xingye
   name: 星夜
   author: lxetm
   sources:
   - squirrel
   - weasel
+  artifact: xingye
 - id: 青橙
   name: 青橙
   author: lxetm
   sources:
   - squirrel
   - weasel
+  artifact: 青橙
 - id: native
   name: 系統配色
   author: eosphoros desktop theme collection
   sources:
   - squirrel
+  artifact: native
 - id: aqua
   name: 碧水／Aqua
   author: 佛振 <chen.sst@gmail.com>
   sources:
   - squirrel
   - weasel
+  artifact: aqua
 - id: azure
   name: 青天／Azure
   author: 佛振 <chen.sst@gmail.com>
   sources:
   - squirrel
   - weasel
+  artifact: azure
 - id: luna
   name: 明月／Luna
   author: 佛振 <chen.sst@gmail.com>
   sources:
   - squirrel
   - weasel
+  artifact: luna
 - id: ink
   name: 墨池／Ink
   author: 佛振 <chen.sst@gmail.com>
   sources:
   - squirrel
   - weasel
+  artifact: ink
 - id: lost_temple
   name: 孤寺／Lost Temple
   author: 佛振 <chen.sst@gmail.com>, based on ir_black
   sources:
   - squirrel
   - weasel
+  artifact: lost_temple
 - id: dark_temple
   name: 暗堂／Dark Temple
   author: 佛振 <chen.sst@gmail.com>, based on ir_black
   sources:
   - squirrel
   - weasel
+  artifact: dark_temple
 - id: psionics
   name: 幽能／Psionics
   author: 雨過之後、佛振
   sources:
   - squirrel
   - weasel
+  artifact: psionics
 - id: purity_of_form
   name: 純粹的形式／Purity of Form
   author: 雨過之後、佛振
   sources:
   - squirrel
+  artifact: purity_of_form
 - id: purity_of_essence
   name: 純粹的本質／Purity of Essence
   author: 佛振
   sources:
   - squirrel
+  artifact: purity_of_essence
 - id: starcraft
   name: 星際我爭霸／StarCraft
   author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
   sources:
   - squirrel
   - weasel
+  artifact: starcraft
 - id: google
   name: 谷歌／Google
   author: skoj <skoj@qq.com>
   sources:
   - squirrel
   - weasel
+  artifact: google
 - id: solarized_rock
   name: 曬經石／Solarized Rock
   author: Aben <tntaben@gmail.com>, based on Ethan Schoonover's Solarized color scheme
   sources:
   - squirrel
   - weasel
+  artifact: solarized_rock
 - id: clean_white
   name: 简约白／Clean White
   author: Chongyu Zhu <lembacon@gmail.com>, based on 搜狗「简约白」
   sources:
   - squirrel
+  artifact: clean_white
 - id: apathy
   name: 冷漠／Apathy
   author: LIANG Hai
   sources:
   - squirrel
   - weasel
+  artifact: apathy
 - id: dust
   name: 浮尘／Dust
   author: Superoutman <asticosmo@gmail.com>
   sources:
   - squirrel
+  artifact: dust
 - id: mojave_dark
   name: 沙漠夜／Mojave Dark
   author: xiehuc <xiehuc@gmail.com>
   sources:
   - squirrel
+  artifact: mojave_dark
 - id: solarized_light
   name: 曬經・日／Solarized Light
   author: 雪齋 <lyc20041@gmail.com>
   sources:
   - squirrel
+  artifact: solarized_light
 - id: solarized_dark
   name: 曬經・月／Solarized Dark
   author: 雪齋 <lyc20041@gmail.com>
   sources:
   - squirrel
   - weasel
+  artifact: solarized_dark
 - id: tintin
   name: 丁丁／ Tintin
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: tintin
 - id: dota_2
   name: DOTA 2
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: dota_2
 - id: brasil
   name: 笆悉／Brasil
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: brasil
 - id: doraemon
   name: 銅鑼衛門／Doraemon
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: doraemon
 - id: espagna
   name: 埃斯巴尼亞／España
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: espagna
 - id: gholabok
   name: 胡蘿菔／Gholabok
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: gholabok
 - id: kuma_shuzboz
   name: 熊出沒／Kuma Shuzboz
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: kuma_shuzboz
 - id: kuon
   name: 琨／Kuon
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: kuon
 - id: macau
   name: 澳門／Macau
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: macau
 - id: nba
   name: NBA
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: nba
 - id: ps4
   name: 遊驛四／PS4
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: ps4
 - id: skype
   name: 斯蓋普／Skype
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: skype
 - id: xbox_silver
   name: 銀色叉盒／Xbox Silver
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: xbox_silver
 - id: youtube
   name: YouTube
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: youtube
 - id: so_young
   name: 致青春／So Young
   author: 五磅兔 <zcunlin@foxmail.com>
   sources:
   - weasel
+  artifact: so_young
 - id: smurfs
   name: 藍精靈／Smurfs
   author: skoj <skoj@qq.com>
   sources:
   - weasel
+  artifact: smurfs
 - id: wii
   name: Wii
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: wii
 - id: android
   name: 安卓／Android
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: android
 - id: cool_breeze
   name: 清風／Cool Breeze
   author: skoj <skoj@qq.com>
   sources:
   - weasel
+  artifact: cool_breeze
 - id: google_plus
   name: Google+
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: google_plus
 - id: modern_warfare
   name: 現代戰爭／Modern Warfare
   author: P1461
   sources:
   - weasel
+  artifact: modern_warfare
 - id: brisk
   name: 輕盈／Brisk
   author: skoj <skoj@qq.com>
   sources:
   - weasel
+  artifact: brisk
 - id: starcraft_ii
   name: 星際爭霸Ⅱ／StarCraft Ⅱ
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: starcraft_ii
 - id: steam
   name: Steam
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
+  artifact: steam
 - id: flypy
   name: 小鹤飞扬／flypy
   author: Pal.lxk <Pal.lxk@gmail.com>
   sources:
   - weasel
+  artifact: flypy
 - id: metroblue
   name: 现代蓝／Metro Blue
   author: Prcuvu <prcuvu@gmail.com>
   sources:
   - weasel
+  artifact: metroblue

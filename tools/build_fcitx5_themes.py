@@ -103,6 +103,14 @@ def desktop_schemes() -> list[dict[str, Any]]:
     ]
 
 
+def artifact_id(scheme_id: str) -> str:
+    """Keep the native themes concise while preserving imported palette IDs."""
+    return {
+        "EosphorosLight": "light",
+        "EosphorosDark": "dark",
+    }.get(scheme_id, scheme_id)
+
+
 def linux_theme(item: dict[str, Any]) -> str:
     c = item["colors"]
     sources = ", ".join(item["sources"])
@@ -240,23 +248,30 @@ def write_tree(destination: Path) -> None:
     macos_root.mkdir(parents=True, exist_ok=True)
 
     for item in schemes:
-        linux_dir = linux_root / f"eosphoros-{item['id']}"
+        artifact = artifact_id(item["id"])
+        linux_dir = linux_root / f"eosphoros-{artifact}"
         linux_dir.mkdir()
         (linux_dir / "theme.conf").write_text(linux_theme(item), encoding="utf-8")
-        (macos_root / f"eosphoros-{item['id']}.conf").write_text(
+        (macos_root / f"eosphoros-{artifact}.conf").write_text(
             macos_theme(item["colors"]), encoding="utf-8"
         )
 
     by_id = {item["id"]: item for item in schemes}
     (macos_root / "eosphoros-auto.conf").write_text(
-        macos_theme(by_id["CatLight"]["colors"], by_id["CatDark"]["colors"]),
+        macos_theme(
+            by_id["EosphorosLight"]["colors"],
+            by_id["EosphorosDark"]["colors"],
+        ),
         encoding="utf-8",
     )
     manifest = {
-        "generated": "2026-08-10",
+        "generated": "2026-08-11",
         "desktop_precedence": ["squirrel", "weasel"],
         "themes": [
-            {key: item[key] for key in ("id", "name", "author", "sources")}
+            {
+                **{key: item[key] for key in ("id", "name", "author", "sources")},
+                "artifact": artifact_id(item["id"]),
+            }
             for item in schemes
         ],
     }

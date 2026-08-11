@@ -160,7 +160,7 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertIn("zzc/Fcitx5_macOS_撤回合并.py", fcitx5_macos)
         self.assertIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_macos)
         self.assertNotIn(
-            "fcitx5/linux/themes/eosphoros-CatLight/theme.conf", fcitx5_macos
+            "fcitx5/linux/themes/eosphoros-light/theme.conf", fcitx5_macos
         )
         self.assertNotIn("weasel.yaml", fcitx5_macos)
         self.assertNotIn("squirrel.yaml", fcitx5_macos)
@@ -171,7 +171,7 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertIn("zzc/Fcitx5_Linux_词库合并.py", fcitx5_linux)
         self.assertIn("zzc/Fcitx5_Linux_撤回合并.py", fcitx5_linux)
         self.assertIn(
-            "fcitx5/linux/themes/eosphoros-CatLight/theme.conf", fcitx5_linux
+            "fcitx5/linux/themes/eosphoros-light/theme.conf", fcitx5_linux
         )
         self.assertNotIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_linux)
         self.assertNotIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_linux)
