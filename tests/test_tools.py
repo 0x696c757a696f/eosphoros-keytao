@@ -586,6 +586,27 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertEqual(custom["style/color_scheme"], "EosphorosLight")
             self.assertEqual(custom["style/color_scheme_dark"], "EosphorosDark")
             self.assertEqual(custom["style/candidate_list_layout"], "stacked")
+            self.assertNotIn("win10", schemes)
+            self.assertEqual(
+                schemes["win10_MDL_blue"]["hilited_candidate_back_color"],
+                0xD77800,
+            )
+            self.assertEqual(
+                schemes["win10_MDL_darkblue"]["hilited_candidate_back_color"],
+                0xD47800,
+            )
+            self.assertEqual(
+                schemes["win10_weasel"]["hilited_candidate_back_color"],
+                0xFFE8CC,
+            )
+            self.assertEqual(
+                schemes["win11_weasel"]["hilited_candidate_back_color"],
+                0xF0F0F0,
+            )
+            self.assertEqual(
+                schemes["win11_weasel"]["hilited_mark_color"],
+                0xC06700,
+            )
 
         squirrel_style = squirrel["style"]
         self.assertIn("memorize_size", squirrel_style)
@@ -635,6 +656,45 @@ class RepositoryValidationTests(unittest.TestCase):
             "Hamster.yaml",
         ):
             self.assertEqual(duplicate_keys(root / filename), [], filename)
+
+    def test_desktop_theme_names_are_canonical_and_palettes_are_usable(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        manifest = yaml.safe_load(
+            (root / "tools" / "desktop_theme_names.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+        canonical_names = manifest["names"]
+        removed = set(manifest["removed"])
+        seen: set[str] = set()
+
+        for filename in ("weasel.yaml", "squirrel.yaml"):
+            document = yaml.safe_load(
+                (root / filename).read_text(encoding="utf-8-sig")
+            )
+            schemes = document["preset_color_schemes"]
+            self.assertTrue(removed.isdisjoint(schemes), filename)
+            for scheme_id, scheme in schemes.items():
+                self.assertIn(scheme_id, canonical_names, filename)
+                self.assertIsInstance(scheme, dict, f"{filename}: {scheme_id}")
+                self.assertEqual(
+                    scheme.get("name"),
+                    canonical_names[scheme_id],
+                    f"{filename}: {scheme_id}",
+                )
+                self.assertNotIn("creat_time", scheme, f"{filename}: {scheme_id}")
+                if scheme_id != "native":
+                    self.assertIn("back_color", scheme, f"{filename}: {scheme_id}")
+                    self.assertTrue(
+                        any(
+                            key in scheme
+                            for key in ("candidate_text_color", "text_color")
+                        ),
+                        f"{filename}: {scheme_id}",
+                    )
+                seen.add(scheme_id)
+
+        self.assertEqual(seen, set(canonical_names))
 
     def test_main_schema_exposes_explicit_switch_defaults_for_rimetool(self) -> None:
         root = Path(__file__).resolve().parents[1]

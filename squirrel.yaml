@@ -146,7 +146,7 @@ preset_color_schemes:
     hilited_label_color: 0x1d769c
 
   CatLight:
-    name: "Cat光明/CatLight"
+    name: "CatLight"
     author: ProudCat
     text_color: 0x000000
     back_color: 0xf3f3f3
@@ -167,7 +167,7 @@ preset_color_schemes:
     hilited_label_color: 0xc5c5c5
 
   CatDark:
-    name: "Cat暗黑/CatDark"
+    name: "CatDark"
     author: ProudCat
     text_color: 0xe5ffffff
     back_color: 0x242424
@@ -209,7 +209,7 @@ preset_color_schemes:
     hilited_text_color: 0xed9564            # 选中拼音颜色 （inline_preedit: false）
     
   mint_dark_blue:
-    name: 黑水鸭／Mint Dark Blue
+    name: "黑水鸭／Mint Dark Blue"
     author: Mintimate <"Mintimate's Blog">
     translucency: true                     # 磨砂： false | true
     mutual_exclusive: false                 # 色不叠加： false | true
@@ -229,7 +229,7 @@ preset_color_schemes:
     text_color: 0x6495ed                    # 拼音颜色 （inline_preedit: false）
     hilited_text_color: 0xc6c01a            # 选中拼音颜色 （inline_preedit: false）
   mac_light:
-    name: Mac浅色
+    name: "Mac 浅色／Mac Light"
     candidate_list_layout: linear             # linear 横排，stacked 竖排
     candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
@@ -253,7 +253,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x999999    # 注解文字高亮
 
   mac_dark:
-    name: Mac深色
+    name: "Mac 深色／Mac Dark"
     candidate_list_layout: linear             # linear 横排，stacked 竖排
     candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
@@ -277,7 +277,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x999999    # 注解文字高亮
 
   mac_green:
-    name: Mac绿
+    name: "Mac 绿色／Mac Green"
     candidate_list_layout: linear             # linear 横排，stacked 竖排
     candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
@@ -301,7 +301,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x999999    # 注解文字高亮
 
   mac_orange:
-    name: Mac橙
+    name: "Mac 橙色／Mac Orange"
     candidate_list_layout: linear             # linear 横排，stacked 竖排
     candidate_format: "[label] [candidate] [comment] "   # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
@@ -325,7 +325,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x999999    # 注解文字高亮
 
   mac_blue:
-    name: Mac浅蓝
+    name: "Mac 浅蓝／Mac Light Blue"
     candidate_list_layout: stacked              # linear 横排，stacked 竖排
     candidate_format: "[label] [candidate] [comment] "    # 用 1/6 em 空格 U+2005 来控制编号 [label] 和候选词 [candidate] [comment] 前后的空间
     corner_radius: 5                             # 窗口圆角
@@ -345,35 +345,8 @@ preset_color_schemes:
     hilited_candidate_label_color: 0xFFFFFF # 第一候选项编号颜色
     hilited_comment_text_color: 0x999999    # 注解文字高亮
 
-  win10:
-    candidate_list_layout: linear                  # linear 横排，stacked 竖排
-    candidate_format: "[label] [candidate] [comment]  "       # 如果是竖排建议改为 "[label]\u2005[candidate] [comment]"
-    font_point: 17              # 候选文字大小
-    label_font_point: 16        # 候选编号大小
-    corner_radius: 0            # 候选条圆角
-    border_width: 6             # 窗口左右宽度
-    border_height: 6            # 窗口左右高度
-    margin_x: 12                # 字起始距左边距离
-    margin_y: 12                # 字上下边距
-    spacing: 10                 # 间距
-    candidate_spacing: 24       # 候选字间隔
-    hilite_spacing: 8           # 序号和候选字之间的间隔
-    hilite_padding: 12          # 候选字背景色色块高度 若想候选字背景色块无边界填充候选框，仅需其高度和候选字上下边距一致即可
-    round_corner: 0             # 候选字背景色块圆角幅度
-    line_spacing: 10            # 行间距(适用于竖排)
-    candidate_text_color: 0x000000          # 预选项文字颜色
-    comment_text_color: 0x888888            # 拼音等提示文字颜色
-    text_color: 0x000000                    # 拼音行文字颜色
-    back_color: 0xffffff                    # 候选条背景色，24位色值，16进制，BGR顺序
-    hilited_text_color: 0x000000            # 高亮拼音 (需要开启内嵌编码)
-    hilited_back_color: 0xffffff            # 第一候选项背景背景色
-    hilited_candidate_text_color: 0xffffff  # 第一候选项文字颜色
-    hilited_candidate_back_color: 0xcc8f29  # 候选文字背景色
-    hilited_comment_text_color: 0xffffff    # 注解文字高亮
-    hilited_label_color: 0xffffff           # 已选字的数字的颜色
-    label_color: 0x888888                   # 预选栏编号颜色    
-
   appsored:
+    name: "少数派红／AppSo Red"
     author: "Astrian Zheng"
     back_color: 0x2824C8
     candidate_format: "[label]. [candidate] [comment] "
@@ -384,10 +357,10 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_text_color: 0xFFFFFF
     label_color: 0xC5C3F2
-    name: "AppSo 红"
     text_color: 0xC5C3F2
 
   dracula:
+    name: "Dracula"
     back_color: 0x362A28
     border_color: 0x362A28
     candidate_format: "[label] [candidate] [comment] "
@@ -405,10 +378,10 @@ preset_color_schemes:
     inline_preedit: true
     label_font_point: 14
     line_spacing: 10
-    name: dracula
     text_color: 0x6CB8FF
 
   dracula_light:
+    name: "Dracula Light"
     back_color: 0xF2F8F8
     border_color: 0xF2F8F8
     candidate_format: "[label] [candidate] [comment] "
@@ -426,10 +399,10 @@ preset_color_schemes:
     inline_preedit: true
     label_font_point: 14
     line_spacing: 10
-    name: dracula_light
     text_color: 0x362A28
 
   ifanrblack:
+    name: "爱范儿黑／ifanr Black"
     author: "Astrian Zheng"
     back_color: 0x000000
     candidate_format: "[label]. [candidate] [comment] "
@@ -440,10 +413,10 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_text_color: 0xFFFFFF
     label_color: 0x2824C8
-    name: "爱范儿黑"
     text_color: 0x2824C8
 
   macos12_dark:
+    name: "macOS 12 暗色／macOS 12 Dark"
     author: "Lufs X <i@isteed.cc>"
     back_color: 0x1E1F24
     border_color: 0x1E1F24
@@ -455,10 +428,10 @@ preset_color_schemes:
     hilited_comment_text_color: 0x808080
     hilited_text_color: 0xD8000000
     label_color: 0x7C7C7C
-    name: "高仿暗色 macOS"
     text_color: 0x3F000000
 
   macos12_light:
+    name: "macOS 12 亮色／macOS 12 Light"
     author: "Lufs X <i@isteed.cc>"
     back_color: 0xFFFFFF
     border_color: 0xFFFFFF
@@ -470,10 +443,10 @@ preset_color_schemes:
     hilited_comment_text_color: 0x808080
     hilited_text_color: 0xD8000000
     label_color: 0x7F7F7F
-    name: "高仿亮色 macOS"
     text_color: 0x3F000000
 
   metro: 
+    name: "现代蓝／Metro"
     author: flypy.com
     back_color: 0xffffff
     border_color: 0xe89f00
@@ -484,19 +457,19 @@ preset_color_schemes:
     hilited_comment_text_color: 0x666666
     hilited_text_color: 0x000000
     label_color: 0x666666
-    name: metro
     text_color: 0x000000
 
   milan:
+    name: "米兰／Milan"
     back_color: 0xFFFFFF
     candidate_format: "[label] [candidate] [comment] "
     comment_text_color: 0x999999
     hilited_candidate_back_color: 0xF5803B
     hilited_candidate_text_color: 0xFFFFFF
-    name: "米兰"
     text_color: 0x424242
 
   nord_dark:
+    name: "北境暗色／Nord Dark"
     back_color: 0x473A33
     border_color: 0x473A33
     candidate_format: "[label] [candidate] [comment] "
@@ -506,10 +479,10 @@ preset_color_schemes:
     hilited_candidate_back_color: 0x5D4C43
     hilited_candidate_text_color: 0xC0E077
     hilited_text_color: 0x6EC8F5
-    name: "北方深色"
     text_color: 0x78E8F0
 
   nord_light:
+    name: "北境亮色／Nord Light"
     back_color: 0xF4EFEC
     border_color: 0xF4EFEC
     candidate_format: "[label] [candidate] [comment] "
@@ -519,10 +492,10 @@ preset_color_schemes:
     hilited_candidate_back_color: 0xE9DED8
     hilited_candidate_text_color: 0xAC815E
     hilited_text_color: 0xAD8EB4
-    name: "北方浅色"
     text_color: 0x7087D0
 
   purity:
+    name: "纯净／Purity"
     back_color: 0x444444
     candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xeeeeee
@@ -531,10 +504,10 @@ preset_color_schemes:
     hilited_candidate_back_color: 0xfafafa
     hilited_candidate_text_color: 0x000000
     hilited_text_color: 0xeeeeee
-    name: "纯洁"
     text_color: 0xc2c2c2
 
   MacRoseo:
+    name: "玫红／Mac Roseo"
     author: KyleBing
     back_color: 0xFFFFFF
     border_color: 0x33000000
@@ -543,7 +516,6 @@ preset_color_schemes:
     candidate_shadow_color: 0x00000000
     candidate_text_color: 0x000000
     comment_text_color: 0xBBCC27
-    creat_time: "2021-07-26"
     hilited_back_color: 0xEDEDF9
     hilited_candidate_back_color: 0x004F11FA
     hilited_candidate_border_color: 0x004F11FA
@@ -554,41 +526,39 @@ preset_color_schemes:
     hilited_shadow_color: 0xcccccc
     hilited_text_color: 0x000000
     label_color: 0x999999
-    name: "玫红 / MacRoseo"
     nextpage_color: 0x000000
     prevpage_color: 0x000000
     shadow_color: 0x44000000
     text_color: 0x000000
 
   MacRoseoAlt:
+    name: "玫红替代／Mac Roseo Alt"
     author: KyleBing
     back_color: 0xFFFFFF
     border_color: 0xD6D6D6
     candidate_text_color: 0x000000
     comment_text_color: 0xBBCC27
-    creat_time: "2021-07-26"
     hilited_back_color: 0xFFFFFF
     hilited_candidate_back_color: 0x4F11FA
     hilited_candidate_text_color: 0xFFFFFF
     hilited_text_color: 0x000000
-    name: MacRoseo
     text_color: 0x000000
 
   WhiteAqua:
+    name: "白色水绿／White Aqua"
     author: KyleBing
     back_color: 0xFFFFFF
     border_color: 0xD6D6D6
     candidate_text_color: 0x000000
     comment_text_color: 0xBBCC27
-    creat_time: "2021-07-26"
     hilited_back_color: 0xFFFFFF
     hilited_candidate_back_color: 0x9BAD23
     hilited_candidate_text_color: 0xFFFFFF
     hilited_text_color: 0x000000
-    name: WhiteAqua
     text_color: 0x000000
 
   wechat_dark:
+    name: "微信键盘暗色／WeChat Dark"
     back_color: 0x2e2925
     candidate_format: "[label] [candidate] [comment] "
     candidate_text_color: 0xe9e9ea
@@ -597,11 +567,11 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     inline_preedit: true
     label_color: 0x999999
-    name: "微信键盘深色"
     text_color: 0x424242
     hilited_text_color: 0xFFFFFF
 
   wechat_light:
+    name: "微信键盘亮色／WeChat Light"
     back_color: 0xFFFFFF
     border_height: 0
     border_width: 8
@@ -610,10 +580,10 @@ preset_color_schemes:
     hilited_candidate_back_color: 0x75B100
     hilited_candidate_text_color: 0xFFFFFF
     inline_preedit: true
-    name: "微信键盘浅色"
     text_color: 0x424242
 
   white:
+    name: "白色／White"
     back_color: 0xededed
     border_color: 0x40444444
     candidate_shadow_color: 0x60444444
@@ -627,10 +597,10 @@ preset_color_schemes:
     hilited_shadow_color: 0x60444444
     hilited_text_color: 0x000000
     label_color: 0x444444
-    name: "白色/white"
     shadow_color: 0x60444444
 
   win10_MDL_ayaya:
+    name: "Windows 10 文文／Ayaya"
     author: "Lufs X <i@isteed.cc>"
     back_color: 0xFFFFFF
     candidate_text_color: 0x121212
@@ -639,42 +609,42 @@ preset_color_schemes:
     hilited_candidate_text_color: 0x7A40EC
     hilited_label_color: 0xB18FF4
     label_color: 0x888785
-    name: "Windows10 文文／Ayaya"
     text_color: 0x8100EB
 
   win10_MDL_blue:
+    name: "Windows 10 蓝色／MDL Blue"
     author: fbewivpjsbsby
     back_color: 0xffffff
-    border_color: 0xcc8f29
+    border_color: 0xd77800
     candidate_text_color: 0x000000
     comment_text_color: 0x888888
     hilited_back_color: 0xffffff
-    hilited_candidate_back_color: 0xcc8f29
+    hilited_candidate_back_color: 0xd77800
     hilited_candidate_text_color: 0xffffff
     hilited_comment_text_color: 0xffffff
     hilited_label_color: 0xffffff
     hilited_text_color: 0x000000
     label_color: 0x888888
-    name: "Windows 10 Blue"
     text_color: 0x000000
 
   win10_MDL_darkblue:
+    name: "Windows 10 暗色／MDL Dark Blue"
     author: fbewivpjsbsby
     back_color: 0x1f1f1f
-    border_color: 0xa37220
+    border_color: 0xd47800
     candidate_text_color: 0xf2f2f2
     comment_text_color: 0x888888
     hilited_back_color: 0x1f1f1f
-    hilited_candidate_back_color: 0xa37220
+    hilited_candidate_back_color: 0xd47800
     hilited_candidate_text_color: 0xf2f2f2
     hilited_comment_text_color: 0xffffff
     hilited_label_color: 0xf2f2f2
     hilited_text_color: 0xffffff
     label_color: 0x888888
-    name: "Windows 10 Dark Blue"
     text_color: 0xffffff
 
   win10_MDL_deepgrey:
+    name: "Windows 10 深灰／MDL Deep Gray"
     author: fbewivpjsbsby
     back_color: 0xFFFFFF
     border_color: 0x7E7969
@@ -686,98 +656,46 @@ preset_color_schemes:
     hilited_comment_text_color: 0xffffff
     hilited_label_color: 0xffffff
     hilited_text_color: 0xFFFFFF
-    name: "Windows10 Deepgrey"
     text_color: 0x000000
 
-  win10_MDL_preset:
-    font_point: 13
-    label_font_point: 9
-    label_format: "%s"
-    layout:
-      border_width: 1
-      candidate_spacing: 30
-      corner_radius: 0
-      hilite_padding_x: 27
-      hilite_padding_y: 15
-      hilite_spacing: 5
-      margin_x: 15
-      margin_y: 2
-      round_corner: 0
-      spacing: 10
-
-  win10_preset:
-    label_format: "%s"
-    layout:
-      align_type: center
-      border_width: 2
-      candidate_spacing: 50
-      corner_radius: 10
-      hilite_padding: 18
-      hilite_padding_x: 18
-      hilite_padding_y: 18
-      hilite_spacing: 17
-      margin_x: 17
-      margin_y: 17
-      max_height: 0
-      max_width: 0
-      min_height: 0
-      min_width: 160
-      round_corner: 0
-      shadow_offset_x: 5
-      shadow_offset_y: 4
-      shadow_radius: 10
-      spacing: 10
-
   win10_weasel:
+    name: "Windows 10 原生／Weasel"
     author: luminosa
-    back_color: 0xF3F3F3
-    border_color: 0xDBDCDC
+    back_color: 0xF2F2F2
+    border_color: 0xD9D9D9
+    candidate_back_color: 0xF2F2F2
     candidate_text_color: 0x000000
-    hilited_candidate_back_color: 0xFFD8A6
-    hilited_label_color: 0x6F6F6F
+    comment_text_color: 0x666666
+    hilited_back_color: 0xF2F2F2
+    hilited_candidate_back_color: 0xFFE8CC
+    hilited_candidate_text_color: 0x000000
+    hilited_comment_text_color: 0x444444
+    hilited_label_color: 0x444444
     hilited_mark_color: 0x00000000
     label_color: 0x6F6F6F
-    name: win10_weasel
     shadow_color: 0x20000000
     text_color: 0x000000
 
-  win11_preset:
-    label_format: " %s"
-    layout:
-      align_type: center
-      border_width: 1
-      candidate_spacing: 25
-      corner_radius: 12
-      hilite_padding: 5
-      hilite_padding_x: 7
-      hilite_padding_y: 6
-      hilite_spacing: 14
-      margin_x: 16
-      margin_y: 14
-      max_height: 0
-      max_width: 0
-      min_height: 0
-      min_width: 160
-      round_corner: 12
-      shadow_offset_x: 6
-      shadow_offset_y: 6
-      shadow_radius: 13
-      spacing: 18
-
   win11_weasel:
+    name: "Windows 11 原生／Weasel"
     author: luminosa
     back_color: 0xF9F9F9
-    border_color: 0xE6E6E6
+    border_color: 0xE5E5E5
+    candidate_back_color: 0xF9F9F9
     candidate_text_color: 0x000000
-    hilited_candidate_back_color: 0xFFFFB3
-    hilited_label_color: 0x7C7C7C
-    hilited_mark_color: 0x00000000
+    comment_text_color: 0x616161
+    hilited_back_color: 0xF9F9F9
+    hilited_candidate_back_color: 0xF0F0F0
+    hilited_candidate_text_color: 0x000000
+    hilited_comment_text_color: 0x424242
+    hilited_label_color: 0x424242
+    hilited_mark_color: 0xC06700
     label_color: 0x7C7C7C
-    name: win11_weasel
     shadow_color: 0x20000000
     text_color: 0x000000
 
   easy_dark:
+    name: "蓝黑／Easy Dark"
     author: "木易"
     back_color: 0x36261F
     candidate_text_color: 0xDBDBDB
@@ -790,10 +708,10 @@ preset_color_schemes:
     hilited_mark_color: 0xD6D6D6
     hilited_text_color: 0xD6D6D6
     label_color: 0xDBDBDB
-    name: "蓝黑"
     text_color: 0xD6D6D6
 
   eucalyptus:
+    name: "尤加利／Eucalyptus"
     author: "ID;Peace B"
     back_color: 0xFFFFFF
     border_color: 0xC9B881
@@ -804,10 +722,10 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xFFFFFF
     hilited_comment_text_color: 0xFFFFFF
     hilited_mark_color: 0xFFFFFF
-    name: "尤加利"
     text_color: 0x2B1007
 
   gruvbox_light:
+    name: "Gruvbox Light"
     author: Q
     back_color: 0xc7f1fb
     border_color: 0xb2dbeb
@@ -819,32 +737,10 @@ preset_color_schemes:
     hilited_mark_color: 0x2A8585
     hilited_text_color: 0x1d24cc
     label_color: 0x0e5dd6
-    name: "Gruvbox Light"
     text_color: 0x6a9d68
 
-  pornhub:
-    author: swwrww
-    back_color: 0x232323
-    border_color: 0x00000000
-    candidate_back_color: 0x00000000
-    candidate_shadow_color: 0x000083FF
-    candidate_text_color: 0xffffff
-    comment_text_color: 0xffffff
-    hilited_back_color: 0x00000000
-    hilited_candidate_back_color: 0x0083FF
-    hilited_candidate_shadow_color: 0x00000000
-    hilited_candidate_text_color: 0x000000
-    hilited_comment_text_color: 0x000000
-    hilited_label_color: 0x000000
-    hilited_mark_color: 0xffffff
-    hilited_shadow_color: 0x000083FF
-    hilited_text_color: 0xffffff
-    label_color: 0xFFFFFF
-    name: Pornhub
-    shadow_color: 0x00000000
-    text_color: 0x0083FF
-
   qishu:
+    name: "祈澍／Qishu"
     author: qishu
     back_color: 0x53473d
     border_color: 0x53473d
@@ -855,10 +751,10 @@ preset_color_schemes:
     hilited_candidate_text_color: 0xae96fb
     hilited_comment_text_color: 0x82caa6
     hilited_text_color: 0x82caa6
-    name: "祈澍"
     text_color: 0xae96fb
 
   rose_red:
+    name: "玫红／Rose Red"
     author: "木易"
     back_color: 0xF4F4F6
     border_color: 0xffffff
@@ -872,10 +768,10 @@ preset_color_schemes:
     hilited_mark_color: 0xBCA9E8
     hilited_text_color: 0x8E8E93
     label_color: 0xaaaaaa
-    name: "玫红"
     preedit_back_color: 0x364572
 
   so_young_qmod_01:
+    name: "致青春·Q改／So Young Q"
     author: Q
     back_color: 0xe3f6fd
     border_color: 0xc5c8cc
@@ -890,12 +786,12 @@ preset_color_schemes:
     hilited_text_color: 0xd5e8ee
     key_symbol_color: 0x339977
     label_color: 0x919183
-    name: "致青春·Q改"
     preview_back_color: 0x6b55d073
     preview_text_color: 0xd5e8ee
     text_color: 0x808070
 
   win10black:
+    name: "Windows 10 Black"
     back_color: 0x000000
     border_color: 0x347440
     candidate_text_color: 0xffffff
@@ -908,11 +804,11 @@ preset_color_schemes:
     hilited_mark_color: 0xa9a9a9
     hilited_text_color: 0xffffff
     label_color: 0xa9a9a9
-    name: Win10Black
     shadow_color: 0x00000000
     text_color: 0xffffff
 
   win10blue:
+    name: "Windows 10 Blue"
     back_color: 0xffffff
     border_color: 0xd77800
     candidate_back_color: 0x00ffffff
@@ -929,11 +825,11 @@ preset_color_schemes:
     hilited_shadow_color: 0x00d77800
     hilited_text_color: 0xffffff
     label_color: 0x838383
-    name: Win10Blue
     shadow_color: 0x20000000
     text_color: 0x000000
 
   win10gray:
+    name: "Windows 10 Gray"
     back_color: 0xf4f4f4
     border_color: 0xcccccc
     candidate_text_color: 0x000000
@@ -946,11 +842,11 @@ preset_color_schemes:
     hilited_mark_color: 0x444444
     hilited_text_color: 0x000000
     label_color: 0x888888
-    name: Win10Gray
     shadow_color: 0x20000000
     text_color: 0x000000
 
   win11dark:
+    name: "Windows 11 Dark"
     back_color: 0x303030
     border_color: 0xc202020
     candidate_back_color: 0x00303030
@@ -964,11 +860,11 @@ preset_color_schemes:
     hilited_mark_color: 0xf9f9f9
     hilited_text_color: 0xf9f9f9
     label_color: 0xc9c9c9
-    name: Win11Dark
     shadow_color: 0x16000000
     text_color: 0xc9c9c9
 
   win11light:
+    name: "Windows 11 Light"
     back_color: 0xfff9f9f9
     border_color: 0x10f0f0f0
     candidate_back_color: 0xfff9f9f9
@@ -982,11 +878,11 @@ preset_color_schemes:
     hilited_mark_color: 0x303030
     hilited_text_color: 0x1a1a1a
     label_color: 0x1a1a1a
-    name: Win11Light
     shadow_color: 0x00000000
     text_color: 0x1a1a1a
 
   xingye:
+    name: "星夜／Starlit Night"
     author: lxetm
     back_color: 0x3B2C24
     border_color: 0x916539
@@ -996,10 +892,10 @@ preset_color_schemes:
     hilited_candidate_back_color: 0x3B2C24
     hilited_candidate_text_color: 0x64C5E2
     hilited_text_color: 0x64C5E2
-    name: "星夜"
     text_color: 0x64C5E2
 
   "青橙":
+    name: "青橙／Cyan Orange"
     author: lxetm
     back_color: 0x2E2D2D
     border_color: 0x949484
@@ -1009,16 +905,15 @@ preset_color_schemes:
     hilited_candidate_back_color: 0x2E2D2D
     hilited_candidate_text_color: 0xDADA11
     hilited_text_color: 0x0775E1
-    name: "青橙"
     text_color: 0x0775E1
 
   # 下面是内置的皮肤 /Library/Input Methods/Squirrel.app/Contents/SharedSupport/squirrel.yaml
 
   native:
-    name: 系統配色
+    name: "系統配色／System"
 
   aqua:
-    name: 碧水／Aqua
+    name: "碧水／Aqua"
     author: 佛振 <chen.sst@gmail.com>
     text_color: 0x606060
     back_color: 0xeeeceeee
@@ -1030,7 +925,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0xfcac9d
 
   azure:
-    name: 青天／Azure
+    name: "青天／Azure"
     author: 佛振 <chen.sst@gmail.com>
     text_color: 0xcfa677
     candidate_text_color: 0xffeacc
@@ -1041,7 +936,7 @@ preset_color_schemes:
     comment_text_color: 0xc69664
 
   luna:
-    name: 明月／Luna
+    name: "明月／Luna"
     author: 佛振 <chen.sst@gmail.com>
     text_color: 0xa5a5a5
     back_color: 0xdd000000
@@ -1053,7 +948,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x449c9d
 
   ink:
-    name: 墨池／Ink
+    name: "墨池／Ink"
     author: 佛振 <chen.sst@gmail.com>
     text_color: 0x5a5a5a
     back_color: 0xeeffffff
@@ -1066,7 +961,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x808080
 
   lost_temple:
-    name: 孤寺／Lost Temple
+    name: "孤寺／Lost Temple"
     author: 佛振 <chen.sst@gmail.com>, based on ir_black
     text_color: 0xe8f3f6
     back_color: 0xee303030
@@ -1077,7 +972,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0xbb203d34
 
   dark_temple:
-    name: 暗堂／Dark Temple
+    name: "暗堂／Dark Temple"
     author: 佛振 <chen.sst@gmail.com>, based on ir_black
     text_color: 0x92f6da
     back_color: 0x222222
@@ -1089,7 +984,7 @@ preset_color_schemes:
     comment_text_color: 0x606cff
 
   psionics:
-    name: 幽能／Psionics
+    name: "幽能／Psionics"
     author: 雨過之後、佛振
     text_color: 0xc2c2c2
     back_color: 0x444444
@@ -1103,7 +998,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x444444
 
   purity_of_form:
-    name: 純粹的形式／Purity of Form
+    name: "純粹的形式／Purity of Form"
     author: 雨過之後、佛振
     text_color: 0xc2c2c2
     back_color: 0x444444
@@ -1115,7 +1010,7 @@ preset_color_schemes:
     comment_text_color: 0x808080
 
   purity_of_essence:
-    name: 純粹的本質／Purity of Essence
+    name: "純粹的本質／Purity of Essence"
     author: 佛振
     text_color: 0x2c2ccc
     back_color: 0xfafafa
@@ -1127,7 +1022,7 @@ preset_color_schemes:
     comment_text_color: 0x808080
 
   starcraft:
-    name: 星際我爭霸／StarCraft
+    name: "星際爭霸／StarCraft"
     author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
     text_color: 0xccaa88
     candidate_text_color: 0x30bb55
@@ -1141,7 +1036,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x1010f0
 
   google:
-    name: 谷歌／Google
+    name: "谷歌／Google"
     author: skoj <skoj@qq.com>
     text_color: 0x666666                      # 拼音串
     candidate_text_color: 0x000000            # 非第一候选项
@@ -1155,7 +1050,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0xEBC6B0      # 注解文字高亮
 
   solarized_rock:
-    name: 曬經石／Solarized Rock
+    name: "曬經石／Solarized Rock"
     author: "Aben <tntaben@gmail.com>, based on Ethan Schoonover's Solarized color scheme"
     back_color: 0x362b00
     border_color: 0x362b00
@@ -1168,7 +1063,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x362b00
 
   clean_white:
-    name: 简约白／Clean White
+    name: "简约白／Clean White"
     author: Chongyu Zhu <lembacon@gmail.com>, based on 搜狗「简约白」
     candidate_list_layout: linear
     candidate_format: '[label] [candidate] [comment]'
@@ -1188,7 +1083,7 @@ preset_color_schemes:
     hilited_candidate_back_color: 0xeeeeee
 
   apathy:
-    name: 冷漠／Apathy
+    name: "冷漠／Apathy"
     author: LIANG Hai
     candidate_list_layout: linear                           # 水平排列
     inline_preedit: true                       # 单行显示，false双行显示
@@ -1207,7 +1102,7 @@ preset_color_schemes:
     comment_text_color: 0x999999               # 拼音等提示文字颜色
 
   dust:
-    name: 浮尘／Dust
+    name: "浮尘／Dust"
     author: Superoutman <asticosmo@gmail.com>
     candidate_list_layout: linear                                 # 水平排列
     inline_preedit: true                             # 单行显示，false双行显示
@@ -1232,7 +1127,7 @@ preset_color_schemes:
     hilited_comment_text_color: 0x9e9e9e             # 注解文字高亮
 
   mojave_dark:
-    name: 沙漠夜／Mojave Dark
+    name: "沙漠夜／Mojave Dark"
     author: xiehuc <xiehuc@gmail.com>
     candidate_list_layout: linear                        # 水平排列
     inline_preedit: true                    # 单行显示，false双行显示
@@ -1259,7 +1154,7 @@ preset_color_schemes:
     #hilited_comment_text_color: 0xdedddd   # 注解文字高亮
 
   solarized_light:
-    name: 曬經・日／Solarized Light
+    name: "曬經・日／Solarized Light"
     author: 雪齋 <lyc20041@gmail.com>
     color_space: display_p3                 # Only available on macOS 10.12+
     back_color: 0xF0E5F6FB                  #Lab 97 , 0 , 10
@@ -1277,7 +1172,7 @@ preset_color_schemes:
     hilited_text_color: 0x2C8BAE            #Lab 60 , 10, 65
 
   solarized_dark:
-    name: 曬經・月／Solarized Dark
+    name: "曬經・月／Solarized Dark"
     author: 雪齋 <lyc20041@gmail.com>
     back_color: 0xF0352A0A                  #Lab 15 ,-12,-12
     border_color: 0x2A1F00                  #Lab 10 ,-12,-12

@@ -18,14 +18,14 @@ themes:
   - weasel
   artifact: dark
 - id: CatLight
-  name: Cat光明/CatLight
+  name: CatLight
   author: ProudCat
   sources:
   - squirrel
   - weasel
   artifact: CatLight
 - id: CatDark
-  name: Cat暗黑/CatDark
+  name: CatDark
   author: ProudCat
   sources:
   - squirrel
@@ -46,236 +46,209 @@ themes:
   - weasel
   artifact: mint_dark_blue
 - id: mac_light
-  name: Mac浅色
+  name: Mac 浅色／Mac Light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: mac_light
 - id: mac_dark
-  name: Mac深色
+  name: Mac 深色／Mac Dark
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: mac_dark
 - id: mac_green
-  name: Mac绿
+  name: Mac 绿色／Mac Green
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: mac_green
 - id: mac_orange
-  name: Mac橙
+  name: Mac 橙色／Mac Orange
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: mac_orange
 - id: mac_blue
-  name: Mac浅蓝
+  name: Mac 浅蓝／Mac Light Blue
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: mac_blue
-- id: win10
-  name: win10
-  author: eosphoros desktop theme collection
-  sources:
-  - squirrel
-  artifact: win10
 - id: appsored
-  name: AppSo 红
+  name: 少数派红／AppSo Red
   author: Astrian Zheng
   sources:
   - squirrel
   - weasel
   artifact: appsored
 - id: dracula
-  name: dracula
+  name: Dracula
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: dracula
 - id: dracula_light
-  name: dracula_light
+  name: Dracula Light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: dracula_light
 - id: ifanrblack
-  name: 爱范儿黑
+  name: 爱范儿黑／ifanr Black
   author: Astrian Zheng
   sources:
   - squirrel
   - weasel
   artifact: ifanrblack
 - id: macos12_dark
-  name: 高仿暗色 macOS
+  name: macOS 12 暗色／macOS 12 Dark
   author: Lufs X <i@isteed.cc>
   sources:
   - squirrel
   - weasel
   artifact: macos12_dark
 - id: macos12_light
-  name: 高仿亮色 macOS
+  name: macOS 12 亮色／macOS 12 Light
   author: Lufs X <i@isteed.cc>
   sources:
   - squirrel
   - weasel
   artifact: macos12_light
 - id: metro
-  name: metro
+  name: 现代蓝／Metro
   author: flypy.com
   sources:
   - squirrel
   artifact: metro
 - id: milan
-  name: 米兰
+  name: 米兰／Milan
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: milan
 - id: nord_dark
-  name: 北方深色
+  name: 北境暗色／Nord Dark
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: nord_dark
 - id: nord_light
-  name: 北方浅色
+  name: 北境亮色／Nord Light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: nord_light
 - id: purity
-  name: 纯洁
+  name: 纯净／Purity
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: purity
 - id: MacRoseo
-  name: 玫红 / MacRoseo
+  name: 玫红／Mac Roseo
   author: KyleBing
   sources:
   - squirrel
   - weasel
   artifact: MacRoseo
 - id: MacRoseoAlt
-  name: MacRoseo
+  name: 玫红替代／Mac Roseo Alt
   author: KyleBing
   sources:
   - squirrel
   - weasel
   artifact: MacRoseoAlt
 - id: WhiteAqua
-  name: WhiteAqua
+  name: 白色水绿／White Aqua
   author: KyleBing
   sources:
   - squirrel
   - weasel
   artifact: WhiteAqua
 - id: wechat_dark
-  name: 微信键盘深色
+  name: 微信键盘暗色／WeChat Dark
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: wechat_dark
 - id: wechat_light
-  name: 微信键盘浅色
+  name: 微信键盘亮色／WeChat Light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: wechat_light
 - id: white
-  name: 白色/white
+  name: 白色／White
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: white
 - id: win10_MDL_ayaya
-  name: Windows10 文文／Ayaya
+  name: Windows 10 文文／Ayaya
   author: Lufs X <i@isteed.cc>
   sources:
   - squirrel
   - weasel
   artifact: win10_MDL_ayaya
 - id: win10_MDL_blue
-  name: Windows 10 Blue
+  name: Windows 10 蓝色／MDL Blue
   author: fbewivpjsbsby
   sources:
   - squirrel
   - weasel
   artifact: win10_MDL_blue
 - id: win10_MDL_darkblue
-  name: Windows 10 Dark Blue
+  name: Windows 10 暗色／MDL Dark Blue
   author: fbewivpjsbsby
   sources:
   - squirrel
   - weasel
   artifact: win10_MDL_darkblue
 - id: win10_MDL_deepgrey
-  name: Windows10 Deepgrey
+  name: Windows 10 深灰／MDL Deep Gray
   author: fbewivpjsbsby
   sources:
   - squirrel
   - weasel
   artifact: win10_MDL_deepgrey
-- id: win10_MDL_preset
-  name: win10_MDL_preset
-  author: eosphoros desktop theme collection
-  sources:
-  - squirrel
-  - weasel
-  artifact: win10_MDL_preset
-- id: win10_preset
-  name: win10_preset
-  author: eosphoros desktop theme collection
-  sources:
-  - squirrel
-  - weasel
-  artifact: win10_preset
 - id: win10_weasel
-  name: win10_weasel
+  name: Windows 10 原生／Weasel
   author: luminosa
   sources:
   - squirrel
   - weasel
   artifact: win10_weasel
-- id: win11_preset
-  name: win11_preset
-  author: eosphoros desktop theme collection
-  sources:
-  - squirrel
-  - weasel
-  artifact: win11_preset
 - id: win11_weasel
-  name: win11_weasel
+  name: Windows 11 原生／Weasel
   author: luminosa
   sources:
   - squirrel
   - weasel
   artifact: win11_weasel
 - id: easy_dark
-  name: 蓝黑
+  name: 蓝黑／Easy Dark
   author: 木易
   sources:
   - squirrel
   - weasel
   artifact: easy_dark
 - id: eucalyptus
-  name: 尤加利
+  name: 尤加利／Eucalyptus
   author: ID;Peace B
   sources:
   - squirrel
@@ -288,85 +261,78 @@ themes:
   - squirrel
   - weasel
   artifact: gruvbox_light
-- id: pornhub
-  name: Pornhub
-  author: swwrww
-  sources:
-  - squirrel
-  - weasel
-  artifact: pornhub
 - id: qishu
-  name: 祈澍
+  name: 祈澍／Qishu
   author: qishu
   sources:
   - squirrel
   - weasel
   artifact: qishu
 - id: rose_red
-  name: 玫红
+  name: 玫红／Rose Red
   author: 木易
   sources:
   - squirrel
   - weasel
   artifact: rose_red
 - id: so_young_qmod_01
-  name: 致青春·Q改
+  name: 致青春·Q改／So Young Q
   author: Q
   sources:
   - squirrel
   - weasel
   artifact: so_young_qmod_01
 - id: win10black
-  name: Win10Black
+  name: Windows 10 Black
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: win10black
 - id: win10blue
-  name: Win10Blue
+  name: Windows 10 Blue
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: win10blue
 - id: win10gray
-  name: Win10Gray
+  name: Windows 10 Gray
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: win10gray
 - id: win11dark
-  name: Win11Dark
+  name: Windows 11 Dark
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: win11dark
 - id: win11light
-  name: Win11Light
+  name: Windows 11 Light
   author: eosphoros desktop theme collection
   sources:
   - squirrel
   - weasel
   artifact: win11light
 - id: xingye
-  name: 星夜
+  name: 星夜／Starlit Night
   author: lxetm
   sources:
   - squirrel
   - weasel
   artifact: xingye
 - id: 青橙
-  name: 青橙
+  name: 青橙／Cyan Orange
   author: lxetm
   sources:
   - squirrel
   - weasel
   artifact: 青橙
 - id: native
-  name: 系統配色
+  name: 系統配色／System
   author: eosphoros desktop theme collection
   sources:
   - squirrel
@@ -433,7 +399,7 @@ themes:
   - squirrel
   artifact: purity_of_essence
 - id: starcraft
-  name: 星際我爭霸／StarCraft
+  name: 星際爭霸／StarCraft
   author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
   sources:
   - squirrel
@@ -492,7 +458,7 @@ themes:
   - weasel
   artifact: solarized_dark
 - id: tintin
-  name: 丁丁／ Tintin
+  name: 丁丁／Tintin
   author: Patricivs <ipatrickmac@me.com>
   sources:
   - weasel
