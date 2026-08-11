@@ -46,7 +46,18 @@ jobs:
       env:
         MIRA_BINARY: ${{ matrix.binary }}
       run: |
-        "./$MIRA_BINARY" -C .tmp/mira-cache tests/eosphoros.mira.test.yaml
+        set +e
+        output=$("./$MIRA_BINARY" -C .tmp/mira-cache tests/eosphoros.mira.test.yaml 2>&1)
+        status=$?
+        set -e
+        printf '%s\n' "$output"
+        if [ "$status" -ne 0 ]; then
+          escaped=${output//'%'/'%25'}
+          escaped=${escaped//$'\r'/'%0D'}
+          escaped=${escaped//$'\n'/'%0A'}
+          echo "::error title=Mira input behavior failed::$escaped"
+          exit "$status"
+        fi
 
   build:
     runs-on: ubuntu-latest
