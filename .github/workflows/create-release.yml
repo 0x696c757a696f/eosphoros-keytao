@@ -11,9 +11,7 @@ env:
   OPENCC_TONGGUI_URL: https://github.com/amorphobia/opencc-tonggui/releases/download/latest/opencc-tonggui.zip
   OPENCC_TONGGUI_SHA256: 1b76a1028669b89d55a9055400e8be628014ea6f3b200b34b5e8a7d88f04e018
   YONG_WIN_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-win.7z
-  YONG_INI_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong.ini
   YONG_WIN_SHA256: bd6ff885eeb5c918b46dcc7d040183a160aeb52433c67ffdb6984ff7fd7f6526
-  YONG_INI_SHA256: fef5ada081436b7f43fd847712702a669bee872a3e1c3d1becfe9c8ae9704140
   RABBIT_TAG: v0.4.0
   RABBIT_URL: https://github.com/rimeinn/rabbit/releases/download/v0.4.0/rabbit-v0.4.0-x64.zip
   RABBIT_SHA256: 33a66a9a87845ea0eb78d552a8002c4a49902575f62422327032b29c4115a6ad
@@ -352,13 +350,13 @@ jobs:
       run: |
         mkdir -p .yong
         curl --fail --location --output yong-win.7z "$YONG_WIN_URL"
-        curl --fail --location --output yong.ini "$YONG_INI_URL"
         echo "$YONG_WIN_SHA256  yong-win.7z" | sha256sum --check --strict
-        echo "$YONG_INI_SHA256  yong.ini" | sha256sum --check --strict
-        cp yong.ini .yong/
+        python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb .yong/
         7z x yong-win.7z -oyong_temp
         cp -r .yong yong_temp/yong
+        cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt
+        python tools/validate_yong_package.py yong_temp/yong
         cd yong_temp
         zip -r ../yong-eosphoros.zip yong
         rm -rf ../.yong ../yong_temp

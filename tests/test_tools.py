@@ -80,7 +80,7 @@ class RepositoryValidationTests(unittest.TestCase):
         legacy_paths = []
         for path in root.rglob("*"):
             relative = path.relative_to(root)
-            if relative.parts and relative.parts[0] in {".git", "build"}:
+            if relative.parts and relative.parts[0] in {".git", ".pixi", ".tmp", "build"}:
                 continue
             if ("xm" + "jd6") in path.name.lower():
                 legacy_paths.append(relative.as_posix())
@@ -225,10 +225,75 @@ class RepositoryValidationTests(unittest.TestCase):
         )
         readme = (root / "README.md").read_text(encoding="utf-8")
 
+        self.assertNotIn("YONG_INI_URL", release)
+        self.assertNotIn("prepare_yong_config.py", release)
+        self.assertIn("packaging/yong/yong.ini", release)
         self.assertIn("zip -r ../yong-eosphoros.zip yong", release)
         self.assertNotIn("zip -r yong-eosphoros.zip .yong", release)
         self.assertNotIn("yong-eosphoros-full.zip", release)
         self.assertNotIn("yong-eosphoros-full.zip", readme)
+
+    def test_yong_config_is_native_to_eosphoros(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        config = (root / "packaging/yong/yong.ini").read_text(encoding="utf-8")
+
+        self.assertIn("0=eosphoros", config)
+        self.assertIn("[eosphoros]", config)
+        self.assertIn("name=晨星键道", config)
+        self.assertIn("arg=mb/eosphoros/eosphoros.txt", config)
+        self.assertIn("a_caret=1", config)
+        self.assertNotIn("xmjd6", config)
+        self.assertNotIn("星猫", config)
+
+    def test_yong_package_validator_checks_all_active_file_references(self) -> None:
+        from tools.validate_yong_package import validate_package
+
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir) / "yong"
+            config_dir = package / ".yong"
+            table_dir = config_dir / "mb" / "eosphoros"
+            table_dir.mkdir(parents=True)
+            # Yong accepts built-in assets at the executable root as well as .yong overrides.
+            (package / "skin").mkdir()
+            (table_dir / "eosphoros.txt").write_text("[DATA]\n", encoding="utf-8")
+            (table_dir / "emoji.txt").write_text("[DATA]\n", encoding="utf-8")
+            (config_dir / "yong.ini").write_text(
+                "[IM]\nskin=skin\n[key]\ncrab=CTRL_SHIFT_ALT_H\n[eosphoros]\n"
+                "arg=mb/eosphoros/eosphoros.txt\n"
+                "dicts=mb/eosphoros/emoji.txt\n",
+                encoding="utf-8-sig",
+            )
+            self.assertEqual(validate_package(package), [])
+            command = subprocess.run(
+                [sys.executable, "tools/validate_yong_package.py", str(package)],
+                cwd=root,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                check=False,
+            )
+            self.assertEqual(command.returncode, 0, command.stdout + command.stderr)
+
+            (table_dir / "emoji.txt").unlink()
+            errors = validate_package(package)
+            self.assertEqual(len(errors), 1)
+            self.assertIn("missing dicts target: mb/eosphoros/emoji.txt", errors[0])
+
+    def test_yong_release_includes_offline_help_and_validates_the_archive(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        release = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+        help_text = (root / "packaging/yong/README.txt").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt",
+            release,
+        )
+        self.assertIn("python tools/validate_yong_package.py yong_temp/yong", release)
+        self.assertIn("Ctrl + 空格", help_text)
+        self.assertIn("eosphoros.txt", help_text)
 
     def test_generated_eosphoros_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]
