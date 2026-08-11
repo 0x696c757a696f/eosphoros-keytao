@@ -5,6 +5,7 @@ channels = ["conda-forge"]
 platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 
 [dependencies]
+go-jsonnet = "0.22.*"
 python = "3.14.*"
 pyyaml = "6.0.3.*"
 pillow = "12.3.0.*"

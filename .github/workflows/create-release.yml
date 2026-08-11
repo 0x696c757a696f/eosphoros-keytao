@@ -124,6 +124,11 @@ jobs:
         python-version: '3.14'
         check-latest: true
 
+    - uses: prefix-dev/setup-pixi@v0.10.0
+      with:
+        cache: true
+        run-install: true
+
     - name: Validate source tree
       run: |
         sudo apt-get update
@@ -133,7 +138,7 @@ jobs:
         python tools/validate_repo.py
         python tools/audit_long_dictionary_entries.py --check
         lua5.4 tests/run.lua
-        python -m unittest discover -s tests -p 'test_*.py' -v
+        pixi run python -m unittest discover -s tests -p 'test_*.py' -v
 
     - name: Use Windows executables rebuilt by CI
       uses: actions/download-artifact@v8
@@ -164,8 +169,8 @@ jobs:
 
     - name: Embed native mobile themes in platform packages
       run: |
-        python tools/build_mobile_themes.py --check
-        python tools/build_mobile_themes.py --platform-dir .
+        pixi run python tools/build_mobile_themes.py --check
+        pixi run python tools/build_mobile_themes.py --platform-dir .
 
     - name: Prepare Rime directory for Rabbit
       run: |

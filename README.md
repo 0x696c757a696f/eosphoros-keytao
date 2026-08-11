@@ -88,8 +88,8 @@
 | [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
 | [`eosphoros-trime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime.zip) | Android 同文 Trime | 完整方案及根目录内置 `eosphoros.trime.yaml` 晨星主题 |
 | [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 完整方案；`themes/` 内置黎明、夜色、极简三个原生主题 ZIP |
-| [`eosphoros-yuanshu.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中三个 `.cskin` 皮肤 |
-| [`eosphoros-hamster.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster.zip) | iOS 仓输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中三个 `.hskin` 皮肤 |
+| [`eosphoros-yuanshu.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |
+| [`eosphoros-hamster.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster.zip) | iOS 仓输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.hskin` 皮肤 |
 | [`yong-windows-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-windows-eosphoros.zip) | Windows 小小输入法 | Windows 完整便携程序、配置、GB18030 码表和三套桌面皮肤 |
 | [`yong-android-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-android-eosphoros.zip) | Android 小小输入法 | 小小专用 `.yong` 配置、GB18030 码表和两套可直接选择的键盘皮肤；不包含 APK |
 | [`yong-linux-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-linux-eosphoros.zip) | Linux 小小输入法 | Linux 完整程序、GB18030 码表和三套晨星桌面皮肤 |
@@ -120,11 +120,11 @@
 | macOS 鼠须管 | 内置同一套晨星黎明／夜色／极简配色，使用鼠须管 1.x 的新布局字段 | 在 `squirrel.custom.yaml` 中将 `style/color_scheme` 设为 `EosphorosMono` 可固定使用黑白极简 |
 | Windows / Linux 小小输入法 | 内置“晨星·极简”“晨星·黎明”“晨星·石墨”，便携版默认启用黑白极简；两端共用纯色 `skin.ini` | 皮肤放入程序目录的 `skin/` 或用户目录的 `.yong/skin/`，再修改 `[IM]/skin`；复杂 Windows VBS 换肤脚本不能直接用于 Linux |
 | macOS Fcitx5 | 平台包内置晨星专属自动明暗主题和黑白极简主题，并保留其余可导入 `.conf` | 从 `eosphoros-fcitx5-macos.zip` 的 `fcitx5/macos/themes/` 取用；自动明暗用 `eosphoros-auto.conf`，极简用 `eosphoros-mono.conf` |
-| iOS 元书输入法 | 平台包内置晨星黎明／夜色／极简三个 `.cskin` 原生皮肤 | 解压 `eosphoros-yuanshu.zip` 后，在元书中逐个导入 `skins/` 内皮肤；格式参见[元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
-| iOS 仓输入法 | 平台包内置晨星黎明／夜色／极简三个 `.hskin` 原生皮肤 | 解压 `eosphoros-hamster.zip` 后，通过系统共享菜单逐个导入 `skins/` 内皮肤；格式参见[仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
+| iOS 元书输入法 | 平台包内置自动明暗与黑白极简两个 `.cskin`；以 ResourceforHamster 的完整万象键盘布局为底稿，保留横竖屏、数字／符号面板、候选展开、剪贴板、常用语、Emoji、脚本、键盘菜单、方案切换及快捷手势；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-yuanshu.zip` 后，在元书中导入 `skins/eosphoros.cskin`；需要纯黑白外观时改用 `eosphoros-mono.cskin`。格式参见[元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
+| iOS 仓输入法 | 平台包内置自动明暗与黑白极简两个 `.hskin`；沿用成熟方案的横竖屏、iPad、浮动与单手布局；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-hamster.zip` 后，通过系统共享菜单导入 `skins/eosphoros.hskin`；需要纯黑白外观时改用 `eosphoros-mono.hskin`。格式参见[仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
 | Android 同文输入法 | Release 提供继承 Trime 3.0 默认布局的 `eosphoros.trime.yaml`，内含三套晨星配色 | 把主题文件放入同文用户目录，重新部署后选择“晨星键道”主题 |
 | Android Fcitx5 | Release 提供三个符合主题格式 2.1 的可导入 ZIP | 解压外层包后，在主题管理中逐个导入内部 ZIP；不能直接导入外层合集 |
-| Android 小小输入法 | 附带“晨星·黎明／夜色”原创配色构建器，不复制来源不明的整套 HTML/JS 皮肤 | 以当前兼容皮肤为基础生成 ZIP，保留键位和手势，只替换 CSS 配色 |
+| Android 小小输入法 | 附带“晨星·黎明／夜色”自制 Gboard 风格布局，不复制来源不明的整套 HTML/JS 皮肤 | 皮肤包保留剪贴板、Emoji、语音、方向键、长按符号和空格滑动光标等常用功能 |
 | Linux Fcitx5 | 平台包内置晨星日间／夜间／极简专属主题，并保留其余桌面配色 | 从 `eosphoros-fcitx5-linux.zip` 的 `fcitx5/linux/themes/` 解压到 `~/.local/share/fcitx5/themes/`，再选择相应主题 |
 
 > [!NOTE]
@@ -132,7 +132,7 @@
 
 #### 📱 移动端外部皮肤资源
 
-本仓库的晨星原生皮肤与下面的第三方皮肤入口彼此独立。Release 中的元书、仓皮肤仅复用明确采用 MIT 许可证的键盘布局模板，并固定提交和 SHA-256；配色、预览及自动构建由本仓库维护。下面的其他第三方皮肤仍只提供链接，不随仓库分发。
+Release 中的元书 `.cskin` 与仓 `.hskin` 都以 [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster) 的成熟完整布局为底稿，在 MIT 许可下保留原有功能与多设备布局，仅修改晨星名称、自动明暗／黑白极简配色、圆角及少量界面细节。元书包保留可编辑 Jsonnet 源码并在构建时重新编译；构建脚本会固定来源版本、校验值和许可证。[hamster-skin-skill](https://github.com/imfuxiao/hamster-skin-skill) 仅作为格式与校验规则参考，不再作为简化皮肤底稿。下面同时列出其他可选资源。
 
 | 客户端 | 外部资源 | 使用建议 |
 | --- | --- | --- |
@@ -835,7 +835,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [东风破 plum](https://github.com/rime/plum) | `recipe.yaml` 安装与更新机制 |
 | [中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)及其[使用文档](https://github.com/yanhuacuo/rimetool/wiki) | Rime 方案管理工具及“薄荷解析模板”兼容结构参考 |
 | [薄荷输入法（Mintimate/oh-my-rime）](https://github.com/Mintimate/oh-my-rime) | 薄荷解析模板的方案结构与开关命名，以及 Android DocumentsUI 操作说明参考 |
-| [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)、[空山素影](https://github.com/luozikuan/kongshan-suying) | 前者的 MIT 键盘布局模板用于生成晨星元书／仓皮肤；后者仅作为元书外部皮肤入口，不随仓库分发 |
+| [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)、[hamster-skin-skill](https://github.com/imfuxiao/hamster-skin-skill)、[空山素影](https://github.com/luozikuan/kongshan-suying) | ResourceforHamster 在 MIT 许可下提供晨星元书与仓皮肤采用的成熟完整底稿；hamster-skin-skill 提供格式与校验规则参考；空山素影作为仍在维护的元书外部皮肤参考 |
 | [rime-pure](https://github.com/SivanLaai/rime-pure) | 同文输入法外部主题参考；本仓库仅提供链接，不复制其方案文件 |
 | [tankb52/fcitx5-andoird-themes](https://github.com/tankb52/fcitx5-andoird-themes)、[Fcitx5 Android 主题设计器](https://fcitx5-android.github.io/theme-designer/) | 小企鹅输入法安卓版外部主题发现入口与官方主题生成工具；第三方主题不随仓库分发 |
 | [仓／元书皮肤交流频道](https://t.me/s/hamster_skins) | 仓输入法第三方皮肤发现入口；内容与兼容性由发布者负责 |

@@ -314,28 +314,13 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("name: trime-eosphoros-theme", package)
 
     def test_ios_skins_are_embedded_under_platform_skin_directories(self) -> None:
-        from tools.build_mobile_themes import embed_ios_skins, load_config
+        from tools.build_mobile_themes import (
+            embed_ios_skins,
+            load_config,
+        )
 
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
-            template = root / "template"
-            for relative in (
-                "Skin_Keyboard/万象-元书/WanxiangSkin",
-                "Skin_Keyboard/万象-仓/26键-万象",
-            ):
-                source = template / relative
-                source.mkdir(parents=True)
-                (source / "config.yaml").write_text(
-                    "name: 测试\nauthor: 测试\ncolor: '#ffffff'\n", encoding="utf-8"
-                )
-                (source / "demo.png").write_bytes(b"upstream preview")
-                for appearance in ("dark", "light"):
-                    resources = source / appearance / "resources"
-                    resources.mkdir(parents=True)
-                    (resources / "key.yaml").write_text(
-                        "color: '#ffffff'\n", encoding="utf-8"
-                    )
-            (template / "LICENSE").write_text("MIT\n", encoding="utf-8")
             for archive_name in (
                 "eosphoros-yuanshu.zip",
                 "eosphoros-hamster.zip",
@@ -343,7 +328,7 @@ class RepositoryValidationTests(unittest.TestCase):
                 with zipfile.ZipFile(root / archive_name, "w") as archive:
                     archive.writestr("eosphoros.schema.yaml", "schema:\n")
 
-            embed_ios_skins(load_config(), root, template)
+            embed_ios_skins(load_config(), root)
 
             expected = {
                 "eosphoros-yuanshu.zip": ".cskin",
@@ -362,11 +347,10 @@ class RepositoryValidationTests(unittest.TestCase):
                                 if name.startswith("skins/") and name.endswith(suffix)
                             ]
                         ),
-                        3,
+                        2,
                     )
                     for skin_name in (
-                        f"skins/eosphoros-dawn{suffix}",
-                        f"skins/eosphoros-night{suffix}",
+                        f"skins/eosphoros{suffix}",
                         f"skins/eosphoros-mono{suffix}",
                     ):
                         with zipfile.ZipFile(io.BytesIO(archive.read(skin_name))) as skin:
@@ -381,12 +365,129 @@ class RepositoryValidationTests(unittest.TestCase):
                             self.assertTrue(
                                 any(name.startswith(f"{skin_root}/light/") for name in skin_names)
                             )
-                            self.assertIn(
-                                f"{skin_root}/Eosphoros-ATTRIBUTION.txt", skin_names
+                            self.assertIn(f"{skin_root}/README.md", skin_names)
+                            config = yaml.safe_load(
+                                skin.read(f"{skin_root}/config.yaml")
                             )
-                            self.assertIn(
-                                f"{skin_root}/THIRD_PARTY-LICENSE-MIT.txt", skin_names
+                            self.assertEqual(config["author"], "eosphoros-keytao")
+                            self.assertTrue(config["name"].startswith("晨星"))
+                            keyboard_types = (
+                                ("pinyin", "alphabetic", "numeric")
+                                if suffix == ".hskin"
+                                else tuple(
+                                    name
+                                    for name in ("pinyin", "alphabetic", "numeric")
+                                    if name in config
+                                )
                             )
+                            for keyboard_type in keyboard_types:
+                                devices = (
+                                    config[keyboard_type].values()
+                                    if suffix == ".cskin"
+                                    else (config[keyboard_type]["iPhone"],)
+                                )
+                                for device in devices:
+                                    for keyboard_name in device.values():
+                                        for appearance in ("dark", "light"):
+                                            self.assertIn(
+                                                f"{skin_root}/{appearance}/{keyboard_name}.yaml",
+                                                skin_names,
+                                            )
+                            pinyin_name = config["pinyin"]["iPhone"]["portrait"]
+                            pinyin = yaml.safe_load(
+                                skin.read(f"{skin_root}/light/{pinyin_name}.yaml")
+                            )
+                            pinyin_text = skin.read(
+                                f"{skin_root}/light/{pinyin_name}.yaml"
+                            ).decode("utf-8")
+                            self.assertIn("keyboardStyle", pinyin)
+                            self.assertGreater(len(pinyin["keyboardLayout"]), 0)
+                            if suffix == ".cskin":
+                                self.assertNotIn("toolbar", pinyin)
+                                self.assertNotIn("preedit", pinyin)
+                                self.assertIn("toolbarStyle", pinyin)
+                                self.assertIn("toolbarLayout", pinyin)
+                                self.assertIn("preeditStyle", pinyin)
+                                self.assertIn("horizontalCandidatesLayout", pinyin)
+                                self.assertIn("verticalCandidatesLayout", pinyin)
+                                self.assertIn("buttonStyleType", pinyin_text)
+                                self.assertIn("#showPasteboardView", pinyin_text)
+                                self.assertIn("#showPhraseView", pinyin_text)
+                                self.assertIn('"keyboardType": "emojis"', pinyin_text)
+                                self.assertIn("#RimeSwitcher", pinyin_text)
+                                self.assertIn('"keyboardType": "symbolic"', pinyin_text)
+                                self.assertIn("#toggleScriptView", pinyin_text)
+                                self.assertIn("#keyboardMenu", pinyin_text)
+                                self.assertIn("#三选上屏", pinyin_text)
+                                self.assertIn("temp_pinyin", config)
+                                self.assertIn("panel", config)
+                                self.assertIn(
+                                    f"{skin_root}/jsonnet/main.jsonnet", skin_names
+                                )
+                            else:
+                                self.assertIn("toolbar", pinyin)
+                                self.assertIn("preedit", pinyin)
+                                self.assertNotIn("toolbarStyle", pinyin)
+                                self.assertNotIn("toolbarLayout", pinyin)
+                                self.assertNotIn("preeditStyle", pinyin)
+                                self.assertNotIn("buttonStyleType", pinyin_text)
+                                self.assertNotRegex(
+                                    pinyin_text,
+                                    r"(?m)^\s+\w*[Cc]olor:\s+['\"]?#",
+                                )
+                                for feature in (
+                                    "emoji",
+                                    "float_app",
+                                    "float_panel",
+                                    "righthand",
+                                    "lefthand",
+                                ):
+                                    self.assertIn(feature, config)
+                                self.assertNotEqual(
+                                    config["pinyin"]["iPhone"]["portrait"],
+                                    config["pinyin"]["iPhone"]["landscape"],
+                                )
+                                self.assertTrue(
+                                    any(
+                                        name.startswith(f"{skin_root}/light/resources/")
+                                        for name in skin_names
+                                    )
+                                )
+                                expected_foregrounds = (
+                                    {
+                                        "light": {"172033", "66738A", "C68A2C"},
+                                        "dark": {"F5F0E3", "AAB7CF", "E4B34B", "101522"},
+                                    }
+                                    if skin_root == "eosphoros"
+                                    else {
+                                        "light": {"000000", "666666", "FFFFFF"},
+                                        "dark": {"000000", "666666", "FFFFFF"},
+                                    }
+                                )
+                                for appearance, allowed in expected_foregrounds.items():
+                                    for yaml_name in (
+                                        name for name in skin_names
+                                        if name.startswith(f"{skin_root}/{appearance}/")
+                                        and name.endswith(".yaml")
+                                    ):
+                                        section = ""
+                                        for line in skin.read(yaml_name).decode("utf-8").splitlines():
+                                            section_match = re.match(r"^([^\s#][^:]*):", line)
+                                            if section_match:
+                                                section = section_match.group(1)
+                                            color_match = re.match(
+                                                r"^\s+(?:normalColor|highlightColor|textColor):"
+                                                r"\s*['\"]?([0-9A-Fa-f]{6})",
+                                                line,
+                                            )
+                                            if color_match and "foreground" in section.lower():
+                                                self.assertIn(
+                                                    color_match.group(1).upper(),
+                                                    allowed,
+                                                    f"unexpected foreground color in {yaml_name}",
+                                                )
+                            self.assertNotIn("万象键盘", pinyin_text)
+                            self.assertNotIn("26键-万象", pinyin_text)
 
     def test_release_publishes_platform_packages(self) -> None:
         root = Path(__file__).resolve().parents[1]
