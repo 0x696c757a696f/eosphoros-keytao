@@ -7,7 +7,7 @@
 # Header/concatenation behavior follows scripts/make_dicts.sh.
 ---
 name: eosphoros.danzi
-version: "2026-08-10"
+version: "2026-08-11"
 sort: original
 ...
 

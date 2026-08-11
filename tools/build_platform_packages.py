@@ -62,8 +62,6 @@ def common_runtime_files(root: Path) -> list[Path]:
     files = [
         root / "default.yaml",
         root / "default.custom.yaml",
-        root / "liangfen.schema.yaml",
-        root / "pinyin_simp.schema.yaml",
         root / "zzc_state" / "char_parts.tsv",
         root / "README.md",
         root / "THIRD_PARTY.md",

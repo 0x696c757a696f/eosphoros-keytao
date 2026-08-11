@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-08-10",
+  "generated_on": "2026-08-11",
   "sources": {
     "rime_jiandao": {
       "repository": "amorphobia/rime-jiandao",
@@ -43,55 +43,55 @@
   },
   "generated": {
     "dicts/eosphoros/eosphoros.danzi.dict.yaml": {
-      "sha256": "0d5eae1c6d7efed5e390994b13367844599d50410d480b348e63e459be11679f",
+      "sha256": "184576cfe50b32b19417d6888f60df275ba68cf5a62ab802d90e9c66d9450e59",
       "rows": 36214
     },
     "dicts/eosphoros/eosphoros.ice.dict.yaml": {
-      "sha256": "429a512cacba75dde613bec8ea5020d675963db495625e169cdff780a792fd22",
+      "sha256": "1b286aa84ddda59cd83431615580868b3c8844ec4affcb6cddc582b0f0c93ed0",
       "rows": 362647
     },
     "dicts/eosphoros/eosphoros.en.dict.yaml": {
-      "sha256": "1ff8991dc337c3654daa4727768953fb5309e1c9d3f061d478cd81a9549db4dc",
+      "sha256": "c754aa850e6cf9a6c311d4258a05f3d3a9df9b0daea4d509f28b070570a09aec",
       "rows": 23610
     },
     "opencc/eosphoros/eosphoros_emoji_extra_chars.lua": {
-      "sha256": "4efab947bf619ba40eeb175a05e95a54df4b2d6011fec439be31e115ea3d76ae",
+      "sha256": "aa3e68e06cdd9382446103818a7b6667cc6d2ecc8d232dcacd7aadd18167e0e7",
       "rows": 34
     },
     "opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua": {
-      "sha256": "5a1b85d26e151c3b268f1aa8bc309bdd7f38e4d5caf9c280512a0ef245c15da2",
+      "sha256": "a3aa2967987bf5111fe98d71348a00d9e5c91f8e5ca77dba86fcd14665ec3088",
       "rows": 886
     },
     "opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua": {
-      "sha256": "ecc13cbd479c1f0803c8ae7204cfc140bd4fb0055110e4335a2f5c31d2af5a8f",
+      "sha256": "e91218265c9f9daf769d7993d5851016090aba3361ddcedf1e71aa36e804cc76",
       "rows": 2482
     },
     "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml": {
-      "sha256": "752397d23a9cf1c03513b7b76f04deef5a4ad8dca97102dae9fb39216396d6cc",
+      "sha256": "61d75ad9cc772bff5394e3f566aad24e4ae8d28aeb45f3928d27341e0a48f314",
       "rows": 9367
     },
     "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml": {
-      "sha256": "a6bb473df6968a1371aeb3c2ba3966491318f092fff0399d1a81823215d6e372",
+      "sha256": "0a643f1f22eaa3fe8bb6fba0a83dc4c7a3994628a6e24e49e25d8aa76f34fd9c",
       "rows": 12441
     },
     "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml": {
-      "sha256": "13db4d43f1ce1441a6b59204bd4577d06395349183514ca016c1bf666ca0aae6",
+      "sha256": "a31a2e7ce7774011039fa63664eb6212c12fcede675b634197dc4c2d3c956877",
       "rows": 10892
     },
     "dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml": {
-      "sha256": "53f3dfab1f39733d5a9a5c35aae6cc4dfeae6989578788fc307ec777628de377",
+      "sha256": "498af6007cc1c423450527d21a6a5561d784039feaa03e5e84ca851a19219a98",
       "rows": 5281
     },
     "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml": {
-      "sha256": "7ce42d864ec8b6cc05477d802a821b2a346995cd52f71faee7164ff545924109",
+      "sha256": "edc0f332c84617af2d3c26b1f6802f42f680834c29b27d1ea45aa95255639532",
       "rows": 2239
     },
     "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml": {
-      "sha256": "26988f158402119a772c5b3a9f127a5d37b46c9008ac63df5f262126f4e79c26",
+      "sha256": "71a9c799f3215d51d2591c5b9607cb7397fee07ef52281b49aea2a4012982a38",
       "rows": 190
     },
     "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml": {
-      "sha256": "4c40a3ba24c6c998fbc86e22ff2dec361e237840d18a7a9cf35bc5a86d4cff8a",
+      "sha256": "855f59c14db72d53548c6e6d38fa6e2c5c50c63c102c26606fe1eaf46a51b9fa",
       "rows": 151
     }
   },

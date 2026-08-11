@@ -37,6 +37,11 @@ def source_text(*rows: str) -> str:
 
 
 class UpstreamDictionaryTests(unittest.TestCase):
+    def test_upstream_lock_date_matches_the_repository_version(self) -> None:
+        lock = load_lock()
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+        self.assertEqual(lock["generated_on"], version)
+
     def test_upstream_source_adapter_supports_pinned_urls_and_local_checkouts(self) -> None:
         source = {
             "repository": "example/project",
@@ -77,9 +82,16 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertTrue((dictionary_dir / "liangfen.dict.yaml").is_file())
         main_schema = (ROOT / "eosphoros.schema.yaml").read_text(encoding="utf-8")
         self.assertIn("dictionary: eosphoros.extended", main_schema)
-        for schema_name in ("pinyin_simp.schema.yaml", "liangfen.schema.yaml"):
-            schema = (ROOT / schema_name).read_text(encoding="utf-8")
-            self.assertIn("dictionary: dicts/eosphoros/", schema)
+        for schema_name in (
+            "eosphoros.cx.schema.yaml",
+            "eosphoros.gbk.schema.yaml",
+            "pinyin_simp.schema.yaml",
+            "liangfen.schema.yaml",
+        ):
+            self.assertFalse((ROOT / schema_name).exists())
+        self.assertNotIn("dependencies:", main_schema)
+        for dictionary in ("eosphoros.cx", "eosphoros.gbk", "liangfen", "pinyin_simp"):
+            self.assertIn(f"dictionary: {dictionary}", main_schema)
         root_index = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
         import_block = root_index.split("import_tables:", 1)[1]
         first_import = next(
@@ -89,6 +101,11 @@ class UpstreamDictionaryTests(unittest.TestCase):
         for dictionary in ("eosphoros.cx", "eosphoros.gbk", "liangfen", "pinyin_simp"):
             index = (ROOT / f"{dictionary}.dict.yaml").read_text(encoding="utf-8")
             self.assertIn(f"- dicts/eosphoros/{dictionary}", index)
+        custom = (ROOT / "eosphoros.custom.yaml").read_text(encoding="utf-8")
+        self.assertIn(
+            "reverse_hint/pron_map_file: dicts/eosphoros/eosphoros.cx.dict.yaml",
+            custom,
+        )
 
     def test_tone_marked_pinyin_normalizes_without_losing_umlaut(self) -> None:
         self.assertEqual(normalize_pinyin_syllable("piàn"), "pian")

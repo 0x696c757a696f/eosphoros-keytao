@@ -13,7 +13,7 @@ patch:
   eosphoros_completion/max_scan_candidates: 50      # 每次最多扫描的原始候选数；0 表示不限
   eosphoros_completion/max_deferred_candidates: 30  # 单字优先时最多暂存的词候选数；0 表示不限
   reverse_hint/use_pron_map: true                # 优先直接读取 cx 字典，减少逐候选反查
-  reverse_hint/pron_map_file: eosphoros.cx.dict.yaml
+  reverse_hint/pron_map_file: dicts/eosphoros/eosphoros.cx.dict.yaml
   
   # menu/alternative_select_labels: ["〡", "〢", " 〣", " 〤", " 〥", " 〦", " 〧", " 〨", " 〩", ""]
   # menu/alternative_select_keys: ASDFGHJKL  # 如编码字符占用数字键，则需另设选字键

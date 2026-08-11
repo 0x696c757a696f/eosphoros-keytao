@@ -11,7 +11,6 @@ import sys
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
-from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -1170,6 +1169,12 @@ def main() -> int:
         raise SystemExit("--refresh and --refresh-source require --write")
 
     lock = load_lock()
+    repository_version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", repository_version):
+        raise SystemExit("VERSION must use YYYY-MM-DD")
+    # VERSION is the single date source. A plain --write after changing the
+    # repository version must not restore an older generated_on from the lock.
+    lock["generated_on"] = repository_version
     sources_to_refresh = (
         set(lock["sources"]) if args.refresh else set(args.refresh_source)
     )
@@ -1177,7 +1182,6 @@ def main() -> int:
         for source_name in sorted(sources_to_refresh):
             source = lock["sources"][source_name]
             source["commit"] = resolve_ref(source["repository"], source["branch"])
-        lock["generated_on"] = date.today().isoformat()
 
     result = build(
         ROOT, lock, args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root
