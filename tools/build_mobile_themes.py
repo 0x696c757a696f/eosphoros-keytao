@@ -302,16 +302,24 @@ def build_committed(config: dict[str, Any], destination: Path) -> None:
     write_if_changed(destination / "trime" / "eosphoros.trime.yaml", build_trime(config))
 
 
+def artifact_contents(path: Path) -> bytes | dict[str, bytes]:
+    """Compare generated ZIP payloads independently of the host zlib build."""
+    if path.suffix.lower() != ".zip":
+        return path.read_bytes()
+    with zipfile.ZipFile(path) as archive:
+        return {name: archive.read(name) for name in sorted(archive.namelist())}
+
+
 def check_committed(config: dict[str, Any]) -> bool:
     with tempfile.TemporaryDirectory() as temporary:
         expected = Path(temporary)
         build_committed(config, expected)
         expected_files = {
-            path.relative_to(expected): path.read_bytes()
+            path.relative_to(expected): artifact_contents(path)
             for path in expected.rglob("*") if path.is_file()
         }
         actual_files = {
-            path.relative_to(OUTPUT): path.read_bytes()
+            path.relative_to(OUTPUT): artifact_contents(path)
             for folder in (OUTPUT / "fcitx5-android", OUTPUT / "trime")
             if folder.exists()
             for path in folder.rglob("*") if path.is_file()

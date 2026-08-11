@@ -266,6 +266,23 @@ class RepositoryValidationTests(unittest.TestCase):
             {"eosphoros_dawn", "eosphoros_night", "eosphoros_mono"},
         )
 
+    def test_mobile_zip_check_ignores_container_compression_bytes(self) -> None:
+        from tools.build_mobile_themes import artifact_contents
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            stored = root / "stored.zip"
+            deflated = root / "deflated.zip"
+            with zipfile.ZipFile(stored, "w", compression=zipfile.ZIP_STORED) as archive:
+                archive.writestr("theme.json", b'{"version":"2.1"}\n')
+            with zipfile.ZipFile(
+                deflated, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
+            ) as archive:
+                archive.writestr("theme.json", b'{"version":"2.1"}\n')
+
+            self.assertNotEqual(stored.read_bytes(), deflated.read_bytes())
+            self.assertEqual(artifact_contents(stored), artifact_contents(deflated))
+
     def test_release_embeds_native_mobile_themes_in_platform_archives(self) -> None:
         root = Path(__file__).resolve().parents[1]
         release = (root / ".github/workflows/create-release.yml").read_text(
