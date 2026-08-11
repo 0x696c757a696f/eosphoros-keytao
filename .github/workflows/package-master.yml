@@ -31,6 +31,12 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
+    - name: Install Rime Prelude for the isolated test workspace
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y rime-prelude
+        cp --no-clobber /usr/share/rime-data/*.yaml .
+
     - name: Download verified Mira runtime
       env:
         MIRA_BINARY: ${{ matrix.binary }}
