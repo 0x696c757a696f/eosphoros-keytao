@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import zipfile
 from pathlib import Path, PurePosixPath
 
 
@@ -18,6 +19,8 @@ SINGLE_PATH_KEYS = {
     "redirect",
     "skin",
 }
+
+ANDROID_SKIN_REQUIRED = {"keyboard.html", "keyboard.css"}
 
 
 def decode_config(data: bytes) -> str:
@@ -77,6 +80,34 @@ def validate_package(package_root: Path) -> list[str]:
         targets = (package_root / ".yong" / relative_target, package_root / relative_target)
         if not any(target.exists() for target in targets):
             errors.append(f"line {line_number}: missing {key} target: {raw_reference}")
+
+    android_dir = package_root / ".yong" / "android"
+    if android_dir.is_dir():
+        for skin_path in sorted(android_dir.glob("*.zip")):
+            if not zipfile.is_zipfile(skin_path):
+                errors.append(f"invalid Android skin ZIP: {skin_path.name}")
+                continue
+            with zipfile.ZipFile(skin_path) as skin:
+                files: set[str] = set()
+                unsafe = False
+                for member in skin.infolist():
+                    path = PurePosixPath(member.filename.replace("\\", "/"))
+                    if path.is_absolute() or ".." in path.parts:
+                        errors.append(
+                            f"unsafe Android skin member in {skin_path.name}: "
+                            f"{member.filename}"
+                        )
+                        unsafe = True
+                        break
+                    if not member.is_dir():
+                        files.add(path.as_posix())
+                if unsafe:
+                    continue
+                missing = sorted(ANDROID_SKIN_REQUIRED - files)
+                if missing:
+                    errors.append(
+                        f"Android skin {skin_path.name} is missing: {', '.join(missing)}"
+                    )
     return errors
 
 

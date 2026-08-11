@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import fnmatch
-import importlib.util
 import configparser
+import fnmatch
+import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -403,14 +404,14 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertNotIn("YONG_INI_URL", release)
         self.assertNotIn("prepare_yong_config.py", release)
         self.assertIn("packaging/yong/yong.ini", release)
-        self.assertIn("zip -r ../yong-eosphoros.zip yong", release)
+        self.assertIn("zip -r ../yong-windows-eosphoros.zip yong", release)
         self.assertIn("YONG_LINUX_URL", release)
         self.assertNotIn("YONG_WIN_SHA256", release)
         self.assertNotIn("YONG_LINUX_SHA256", release)
         self.assertNotIn("warn_if_yong_changed", release)
         self.assertIn("7z x yong-lin.7z -oyong_linux_temp", release)
         self.assertIn("zip -r ../yong-linux-eosphoros.zip yong", release)
-        self.assertNotIn("zip -r yong-eosphoros.zip .yong", release)
+        self.assertNotIn("zip -r yong-windows-eosphoros.zip .yong", release)
         self.assertNotIn("yong-eosphoros-full.zip", release)
         self.assertNotIn("yong-eosphoros-full.zip", readme)
 
@@ -461,6 +462,29 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertEqual(len(errors), 1)
             self.assertIn("missing dicts target: mb/eosphoros/emoji.txt", errors[0])
 
+    def test_yong_package_validator_checks_ready_android_skins(self) -> None:
+        from tools.validate_yong_package import validate_package
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir) / "yong"
+            config_dir = package / ".yong"
+            android_dir = config_dir / "android"
+            android_dir.mkdir(parents=True)
+            (config_dir / "yong.ini").write_text("[IM]\n", encoding="utf-8")
+
+            skin = android_dir / "Eosphoros-Dawn.zip"
+            with zipfile.ZipFile(skin, "w") as archive:
+                archive.writestr("keyboard.html", "<html></html>\n")
+                archive.writestr("keyboard.css", "body {}\n")
+            self.assertEqual(validate_package(package), [])
+
+            with zipfile.ZipFile(skin, "w") as archive:
+                archive.writestr("keyboard.html", "<html></html>\n")
+            self.assertEqual(
+                validate_package(package),
+                ["Android skin Eosphoros-Dawn.zip is missing: keyboard.css"],
+            )
+
     def test_yong_release_includes_offline_help_and_validates_the_archive(self) -> None:
         root = Path(__file__).resolve().parents[1]
         release = (root / ".github/workflows/create-release.yml").read_text(
@@ -478,8 +502,16 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn(
             "python tools/validate_yong_package.py yong_linux_temp/yong", release
         )
-        self.assertIn("cp tools/build_yong_android_skin.py", release)
-        self.assertIn("cp packaging/yong/android/themes/*.css", release)
+        self.assertIn(
+            "packaging/yong/android/base/compatible-base.zip --theme dawn", release
+        )
+        self.assertIn(
+            "packaging/yong/android/base/compatible-base.zip --theme night", release
+        )
+        self.assertIn(".yong/android/Eosphoros-Dawn.zip", release)
+        self.assertIn(".yong/android/Eosphoros-Night.zip", release)
+        self.assertNotIn("yong/theme-builder", release)
+        self.assertRegex(release, r"(?m)^\s+yong-windows-eosphoros\.zip$")
         self.assertRegex(release, r"(?m)^\s+yong-android-eosphoros\.zip$")
         self.assertRegex(release, r"(?m)^\s+yong-linux-eosphoros\.zip$")
         self.assertRegex(release, r"(?m)^\s+yong-eosphoros-skins\.zip$")
@@ -496,6 +528,7 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertNotRegex(android_config, r"(?m)^skin=")
         self.assertNotIn("xmjd6", android_config)
         self.assertIn("/storage/emulated/0/yong/.yong/", android_help)
+        self.assertIn("不需要运行 Python", android_help)
         linux_help = (root / "packaging/yong/linux/README.txt").read_text(
             encoding="utf-8"
         )
@@ -547,6 +580,24 @@ class RepositoryValidationTests(unittest.TestCase):
                 self.assertIn("eosphoros-theme:start", css)
                 self.assertIn("--键盘背景色: #111210", css)
                 self.assertEqual(archive.read("layout.js"), b"const layout = {};\n")
+
+    def test_yong_android_compatible_base_builds_ready_skins(self) -> None:
+        from tools.build_yong_android_skin import build
+
+        root = Path(__file__).resolve().parents[1]
+        base = root / "packaging/yong/android/base/compatible-base.zip"
+        self.assertEqual(
+            hashlib.sha256(base.read_bytes()).hexdigest(),
+            "f3d3b2c495862356246812f29f9857f5f9bfe281d55e1a95bfbf7d812a61c5db",
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            for theme in ("dawn", "night"):
+                output = Path(temp_dir) / f"Eosphoros-{theme}.zip"
+                build(base, theme, output)
+                with zipfile.ZipFile(output) as archive:
+                    self.assertIn("keyboard.html", archive.namelist())
+                    css = archive.read("keyboard.css").decode("utf-8")
+                    self.assertIn("eosphoros-theme:start", css)
 
     def test_generated_eosphoros_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]

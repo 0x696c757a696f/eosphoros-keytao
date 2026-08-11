@@ -358,9 +358,9 @@ jobs:
         python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb yong_android/yong/.yong/
         cp packaging/yong/android/README.txt yong_android/yong/README-Eosphoros-Android.txt
-        mkdir -p yong_android/yong/theme-builder/themes
-        cp tools/build_yong_android_skin.py yong_android/yong/theme-builder/
-        cp packaging/yong/android/themes/*.css yong_android/yong/theme-builder/themes/
+        mkdir -p yong_android/yong/.yong/android
+        python tools/build_yong_android_skin.py packaging/yong/android/base/compatible-base.zip --theme dawn --output yong_android/yong/.yong/android/Eosphoros-Dawn.zip
+        python tools/build_yong_android_skin.py packaging/yong/android/base/compatible-base.zip --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
         python tools/validate_yong_package.py yong_android/yong
         cd yong_android
         zip -r ../yong-android-eosphoros.zip yong
@@ -391,7 +391,7 @@ jobs:
         cp -r .yong yong_temp/yong
         cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt
         python tools/validate_yong_package.py yong_temp/yong
-        (cd yong_temp && zip -r ../yong-eosphoros.zip yong)
+        (cd yong_temp && zip -r ../yong-windows-eosphoros.zip yong)
         rm -rf .yong yong_temp
 
         mkdir -p yong_skin_bundle/skin
@@ -413,7 +413,7 @@ jobs:
       run: |
         assets=(
           Rabbit-eosphoros.zip
-          yong-eosphoros.zip
+          yong-windows-eosphoros.zip
           yong-linux-eosphoros.zip
           yong-android-eosphoros.zip
           yong-eosphoros-skins.zip
