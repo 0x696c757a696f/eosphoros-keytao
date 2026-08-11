@@ -22,6 +22,13 @@ REQUIRED_BUILD_OUTPUTS = (
     "eosphoros.schema.yaml",
     "eosphoros.extended.table.bin",
     "eosphoros.extended.prism.bin",
+    "dicts/eosphoros/eosphoros.cx.table.bin",
+    "dicts/eosphoros/eosphoros.cx.reverse.bin",
+    "dicts/eosphoros/eosphoros.gbk.table.bin",
+    "dicts/eosphoros/liangfen.table.bin",
+    "dicts/eosphoros/liangfen.prism.bin",
+    "dicts/eosphoros/pinyin_simp.table.bin",
+    "dicts/eosphoros/pinyin_simp.prism.bin",
 )
 DEFAULT_SHARED_DATA_DIR = Path("/usr/share/rime-data")
 

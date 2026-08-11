@@ -28,6 +28,11 @@ schema:
     i键开启英文单词输入；继续输入后隐藏入口字母 i。
     反斜杠键（\）开启自造词模式。
   version: "2026-08-11"
+  dependencies:
+    - eosphoros.cx
+    - pinyin_simp
+    - liangfen
+    - eosphoros.gbk
 
 # ============ 引擎 ============
 engine:
@@ -213,7 +218,7 @@ eosphoros_opencc_filter:
 # ============ 反查与副词典 ============
 eosphorosgbk:
   tag: eosphorosgbk
-  dictionary: eosphoros.gbk
+  dictionary: dicts/eosphoros/eosphoros.gbk
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -224,7 +229,7 @@ eosphorosgbk:
 
 pinyin_simp:
   tag: pinyin_simp
-  dictionary: pinyin_simp
+  dictionary: dicts/eosphoros/pinyin_simp
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -238,7 +243,7 @@ pinyin_simp:
 
 quanpinerfen:
   tag: quanpinerfen
-  dictionary: liangfen
+  dictionary: dicts/eosphoros/liangfen
   enable_sentence: true
   enable_completion: true
   enable_user_dict: false
@@ -247,7 +252,7 @@ quanpinerfen:
 
 reverse_lookup:
   tags: [pinyin_simp, quanpinerfen, eosphorosgbk, reverse_lookup]
-  dictionary: eosphoros.cx
+  dictionary: dicts/eosphoros/eosphoros.cx
   option_name: reverse_lookup
   enable_completion: true
   initial_quality: 0.5

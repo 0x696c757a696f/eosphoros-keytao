@@ -22,7 +22,9 @@ class PlatformPackageTests(unittest.TestCase):
             build = root / "build"
             build.mkdir()
             for name in REQUIRED_BUILD_OUTPUTS[:-1]:
-                (build / name).write_bytes(b"test")
+                output = build / name
+                output.parent.mkdir(parents=True, exist_ok=True)
+                output.write_bytes(b"test")
             self.assertEqual(validate_outputs(root), [REQUIRED_BUILD_OUTPUTS[-1]])
             (build / REQUIRED_BUILD_OUTPUTS[-1]).write_bytes(b"test")
             self.assertEqual(validate_outputs(root), [])
@@ -64,6 +66,10 @@ class PlatformPackageTests(unittest.TestCase):
             "default.yaml",
             "default.custom.yaml",
             "eosphoros.schema.yaml",
+            "eosphoros.cx.schema.yaml",
+            "eosphoros.gbk.schema.yaml",
+            "liangfen.schema.yaml",
+            "pinyin_simp.schema.yaml",
             "eosphoros.cx.dict.yaml",
             "eosphoros.gbk.dict.yaml",
             "liangfen.dict.yaml",

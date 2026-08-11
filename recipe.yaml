@@ -11,6 +11,7 @@ install_files: >-
   eosphoros.ico
   eosphoros.*.dict.yaml
   dicts/eosphoros/*.dict.yaml
+  eosphoros.*.schema.yaml
   eosphoros.schema.yaml
   eosphoros.symbols.yaml
   eosphoros.custom.yaml

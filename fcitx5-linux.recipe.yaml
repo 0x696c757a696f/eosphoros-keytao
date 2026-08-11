@@ -10,6 +10,7 @@ install_files: >-
   pinyin_simp*.yaml
   eosphoros.*.dict.yaml
   dicts/eosphoros/*.dict.yaml
+  eosphoros.*.schema.yaml
   eosphoros.schema.yaml
   eosphoros.symbols.yaml
   eosphoros.custom.yaml
