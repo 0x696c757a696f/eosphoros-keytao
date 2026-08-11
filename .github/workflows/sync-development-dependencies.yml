@@ -35,13 +35,13 @@ jobs:
           python-version: "3.14"
           check-latest: true
 
-      - name: Align Pixi manifest with Dependabot-managed requirements
-        run: python tools/sync_dependency_manifests.py --write
-
       - uses: prefix-dev/setup-pixi@v0.10.0
         with:
           cache: true
-          run-install: false
+          run-install: true
+
+      - name: Align Pixi manifest with Dependabot-managed requirements
+        run: python tools/sync_dependency_manifests.py --write
 
       - name: Refresh all locked development dependencies
         run: pixi update

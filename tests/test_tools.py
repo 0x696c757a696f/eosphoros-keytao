@@ -1425,7 +1425,11 @@ columns:
         self.assertIn("package-ecosystem: pip", dependabot)
         self.assertIn("package-ecosystem: github-actions", dependabot)
         self.assertIn("prefix-dev/setup-pixi@v0.10.0", sync)
-        self.assertIn("run-install: false", sync)
+        self.assertIn("run-install: true", sync)
+        self.assertLess(
+            sync.index("prefix-dev/setup-pixi@v0.10.0"),
+            sync.index("Align Pixi manifest with Dependabot-managed requirements"),
+        )
         self.assertIn("pixi update", sync)
         self.assertIn("pixi run test", sync)
         self.assertIn("gh pr create", sync)
