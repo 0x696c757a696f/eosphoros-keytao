@@ -101,6 +101,9 @@ jobs:
     - name: Validate Fcitx5 themes
       run: python tools/build_fcitx5_themes.py --check
 
+    - name: Validate native mobile themes
+      run: python tools/build_mobile_themes.py --check
+
     - uses: actions/upload-artifact@v7
       with:
         name: fcitx5-linux-eosphoros-themes
@@ -115,6 +118,18 @@ jobs:
 
     - uses: actions/upload-artifact@v7
       with:
+        name: fcitx5-android-eosphoros-themes
+        path: mobile_themes/fcitx5-android/*.zip
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: trime-eosphoros-theme
+        path: mobile_themes/trime/eosphoros.trime.yaml
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v7
+      with:
         name: eosphoros
         path: |
           **/*
@@ -122,6 +137,7 @@ jobs:
           !.github/**
           !.git*
           !fcitx5/**
+          !mobile_themes/**
           !yong*.*
           !tests/**
           !tools/**

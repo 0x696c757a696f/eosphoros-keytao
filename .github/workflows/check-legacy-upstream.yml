@@ -1,0 +1,86 @@
+name: Check xmjd6-rere upstream
+
+on:
+  schedule:
+    - cron: "23 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: "utf-8"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14.6"
+
+      - name: Compare with the last reviewed upstream commit
+        id: upstream
+        shell: pwsh
+        run: |
+          python tools/check_xmjd6_upstream.py --json > xmjd6-upstream-report.json
+          $Report = Get-Content xmjd6-upstream-report.json -Raw -Encoding utf8 | ConvertFrom-Json
+          "update=$($Report.update_available.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          "reviewed=$($Report.reviewed_commit)" >> $env:GITHUB_OUTPUT
+          "current=$($Report.current_commit)" >> $env:GITHUB_OUTPUT
+          "compare=$($Report.compare_url)" >> $env:GITHUB_OUTPUT
+
+      - name: Publish summary
+        shell: pwsh
+        run: |
+          $Report = Get-Content xmjd6-upstream-report.json -Raw -Encoding utf8 | ConvertFrom-Json
+          @"
+          ## xmjd6-rere upstream review
+
+          - Last reviewed: ``$($Report.reviewed_commit)``
+          - Current: ``$($Report.current_commit)``
+          - Update available: ``$($Report.update_available)``
+          - [Compare commits]($($Report.compare_url))
+
+          Changes require selective review plus local deduplication and collision checks; this workflow never overwrites the renamed Eosphoros files.
+          "@ | Out-File $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+
+      - name: Open or update review issue
+        if: steps.upstream.outputs.update == 'true'
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const title = 'xmjd6-rere 上游有新提交待审校';
+            const body = [
+              `- 已审校：\`${{ steps.upstream.outputs.reviewed }}\``,
+              `- 当前上游：\`${{ steps.upstream.outputs.current }}\``,
+              `- [查看增量](${{ steps.upstream.outputs.compare }})`,
+              '',
+              '请逐条审校。不要整体覆盖词库、Lua、Schema、目录名或 Release 配置；择取词条后必须运行全库去重、合法编码和重码检查。',
+            ].join('\n');
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = issues.data.find(issue => issue.title === title);
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+            }

@@ -30,6 +30,8 @@ VERSION text eol=lf
 *.gif  binary
 *.webp binary
 *.zip  binary
+*.cskin binary
+*.hskin binary
 *.7z   binary
 *.bin  binary
 *.pdf  binary

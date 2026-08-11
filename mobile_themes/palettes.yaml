@@ -1,0 +1,58 @@
+version: "2026-08-11"
+author: eosphoros-keytao
+themes:
+  dawn:
+    name: 晨星·黎明
+    english_name: Eosphoros Dawn
+    dark: false
+    background: "#F7F5F1"
+    bar: "#F1EEE8"
+    keyboard: "#E9E5DD"
+    key: "#FFFFFF"
+    text: "#1E1D1A"
+    secondary: "#6B6760"
+    alternative: "#DDD8CE"
+    accent: "#1E1D1A"
+    accent_text: "#FFFFFF"
+    pressed: "#D2CCC1"
+    shadow: "#33000000"
+    divider: "#C9C2B7"
+  night:
+    name: 晨星·夜色
+    english_name: Eosphoros Night
+    dark: true
+    background: "#171716"
+    bar: "#1E1D1A"
+    keyboard: "#252421"
+    key: "#302F2B"
+    text: "#F1EEE8"
+    secondary: "#AAA49A"
+    alternative: "#3B3934"
+    accent: "#F1EEE8"
+    accent_text: "#171716"
+    pressed: "#4B4841"
+    shadow: "#99000000"
+    divider: "#4A4741"
+  mono:
+    name: 晨星·极简
+    english_name: Eosphoros Mono
+    dark: false
+    background: "#FFFFFF"
+    bar: "#FFFFFF"
+    keyboard: "#FFFFFF"
+    key: "#FFFFFF"
+    text: "#000000"
+    secondary: "#666666"
+    alternative: "#F2F2F2"
+    accent: "#000000"
+    accent_text: "#FFFFFF"
+    pressed: "#D9D9D9"
+    shadow: "#00000000"
+    divider: "#000000"
+
+ios_template:
+  repository: https://github.com/BlackCCCat/ResourceforHamster
+  commit: 6c2b8d9a3c7116f41b77c32a662a7685770a5914
+  archive: https://codeload.github.com/BlackCCCat/ResourceforHamster/zip/6c2b8d9a3c7116f41b77c32a662a7685770a5914
+  sha256: fc2781f007b6d5c3f523400763208f1f8665e835e9b250bcaa92a344fd936559
+  license: MIT

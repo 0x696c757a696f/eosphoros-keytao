@@ -39,7 +39,13 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/Fcitx5_Linux_词库合并.py",
         "zzc/Fcitx5_Linux_撤回合并.py",
     ),
-    "eosphoros-mobile.zip": (
+    "eosphoros-trime.zip": (
+        "mobile_themes/trime/eosphoros.trime.yaml",
+    ),
+    "eosphoros-fcitx5-android.zip": (
+        "mobile_themes/fcitx5-android",
+    ),
+    "eosphoros-yuanshu.zip": (
         "Hamster.yaml",
         "exclude_iCloud_rime_files.txt",
         "include_iCloud_rime_files.txt",
@@ -47,6 +53,24 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/iOS_词库合并.py",
         "zzc/iOS快捷指令合并说明.md",
         "zzc/a-Shell快捷指令合并说明.md",
+    ),
+    "eosphoros-hamster.zip": (
+        "Hamster.yaml",
+        "exclude_iCloud_rime_files.txt",
+        "include_iCloud_rime_files.txt",
+        "include_keyboard_rime_files.txt",
+        "zzc/iOS_词库合并.py",
+        "zzc/iOS快捷指令合并说明.md",
+        "zzc/a-Shell快捷指令合并说明.md",
+    ),
+}
+
+PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
+    "eosphoros-trime.zip": (
+        ("mobile_themes/trime/eosphoros.trime.yaml", "eosphoros.trime.yaml"),
+    ),
+    "eosphoros-fcitx5-android.zip": (
+        ("mobile_themes/fcitx5-android/", "themes/"),
     ),
 }
 
@@ -108,13 +132,23 @@ def package_files(root: Path) -> dict[str, list[Path]]:
     return packages
 
 
-def _write_zip(root: Path, destination: Path, files: list[Path]) -> None:
+def _archive_name(root: Path, archive_name: str, path: Path) -> str:
+    relative = path.relative_to(root).as_posix()
+    for source, target in PACKAGE_PREFIX_RENAMES.get(archive_name, ()):
+        if relative == source or relative.startswith(source):
+            return target + relative[len(source):]
+    return relative
+
+
+def _write_zip(
+    root: Path, destination: Path, archive_name: str, files: list[Path]
+) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(
         destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
     ) as archive:
         for path in files:
-            relative = path.relative_to(root).as_posix()
+            relative = _archive_name(root, archive_name, path)
             info = zipfile.ZipInfo(relative, FIXED_ZIP_TIME)
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
@@ -125,7 +159,7 @@ def build_packages(root: Path = ROOT, output_dir: Path = ROOT) -> list[Path]:
     archives = []
     for archive_name, files in package_files(root).items():
         destination = output_dir / archive_name
-        _write_zip(root, destination, files)
+        _write_zip(root, destination, archive_name, files)
         archives.append(destination)
     return archives
 

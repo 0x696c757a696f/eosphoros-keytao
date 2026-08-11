@@ -108,6 +108,7 @@ def artifact_id(scheme_id: str) -> str:
     return {
         "EosphorosLight": "light",
         "EosphorosDark": "dark",
+        "EosphorosMono": "mono",
     }.get(scheme_id, scheme_id)
 
 

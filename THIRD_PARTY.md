@@ -108,3 +108,32 @@ below `opencc/eosphoros/`, and the main processor preserves this repository's `i
 English prefix and JianDao 6 top-up behavior. TXJX dictionaries, schema files,
 root-level OpenCC data, opaque platform binaries, and project-specific release
 configuration are intentionally not imported.
+
+## 小小输入法桌面发行包
+
+- Integration source: <https://github.com/hugh7007/xmjd6-rere/releases/tag/20231115>
+- Windows asset: `yong-win.7z`
+- Linux asset: `yong-lin.7z`
+- Original project: <https://yong.dgod.net/>
+
+Release 构建会下载当前发行附件，再加入晨星配置、码表、帮助和原创皮肤。
+这些附件由同一维护者更新，允许在保留文件名的情况下重新上传；工作流不会进行
+固定哈希比较。下载失败或附件无法解压时仍会中断。小小输入法程序本身仍遵循其
+上游授权和分发条件，晨星键道不改变程序本体的许可证。
+
+## 元书与仓输入法键盘布局模板
+
+- Upstream: <https://github.com/BlackCCCat/ResourceforHamster>
+- Integrated commit: `6c2b8d9a3c7116f41b77c32a662a7685770a5914`
+- Sources: `Skin_Keyboard/万象-元书/WanxiangSkin` and
+  `Skin_Keyboard/万象-仓/26键-万象`
+- License: MIT
+- Archive SHA-256:
+  `fc2781f007b6d5c3f523400763208f1f8665e835e9b250bcaa92a344fd936559`
+
+`tools/build_mobile_themes.py` downloads this exact archive only while building
+Release assets, verifies the checksum, keeps the complete keyboard layouts, and
+replaces their presentation with the repository's original Dawn, Night, and
+Mono palettes and previews. The large template and generated `.cskin`/`.hskin`
+files are not committed to the source tree; each generated skin contains its
+own attribution notice.

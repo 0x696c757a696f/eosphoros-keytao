@@ -17,6 +17,13 @@ themes:
   - squirrel
   - weasel
   artifact: dark
+- id: EosphorosMono
+  name: 晨星·极简／Eosphoros Mono
+  author: eosphoros-keytao
+  sources:
+  - squirrel
+  - weasel
+  artifact: mono
 - id: CatLight
   name: CatLight
   author: ProudCat

@@ -57,7 +57,10 @@ class PlatformPackageTests(unittest.TestCase):
                 "eosphoros-squirrel.zip",
                 "eosphoros-fcitx5-macos.zip",
                 "eosphoros-fcitx5-linux.zip",
-                "eosphoros-mobile.zip",
+                "eosphoros-trime.zip",
+                "eosphoros-fcitx5-android.zip",
+                "eosphoros-yuanshu.zip",
+                "eosphoros-hamster.zip",
             },
         )
 
@@ -116,7 +119,14 @@ class PlatformPackageTests(unittest.TestCase):
                 "zzc/Fcitx5_Linux_词库合并.py",
                 "zzc/Fcitx5_Linux_撤回合并.py",
             },
-            "eosphoros-mobile.zip": {
+            "eosphoros-trime.zip": set(),
+            "eosphoros-fcitx5-android.zip": set(),
+            "eosphoros-yuanshu.zip": {
+                "zzc/iOS_词库合并.py",
+                "zzc/iOS快捷指令合并说明.md",
+                "zzc/a-Shell快捷指令合并说明.md",
+            },
+            "eosphoros-hamster.zip": {
                 "zzc/iOS_词库合并.py",
                 "zzc/iOS快捷指令合并说明.md",
                 "zzc/a-Shell快捷指令合并说明.md",
@@ -179,20 +189,37 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("squirrel.yaml", fcitx5_linux)
         self.assertNotIn("Hamster.yaml", fcitx5_linux)
 
-        mobile = members["eosphoros-mobile.zip"]
-        self.assertIn("Hamster.yaml", mobile)
-        self.assertIn("include_iCloud_rime_files.txt", mobile)
-        self.assertIn("include_keyboard_rime_files.txt", mobile)
-        self.assertIn("zzc/iOS_词库合并.py", mobile)
-        self.assertNotIn("weasel.yaml", mobile)
-        self.assertNotIn("squirrel.yaml", mobile)
-        self.assertNotIn("zzc/Win_词库合并.exe", mobile)
+        trime = members["eosphoros-trime.zip"]
+        self.assertIn("eosphoros.trime.yaml", trime)
+        self.assertFalse(any(path.startswith("mobile_themes/") for path in trime))
+
+        fcitx5_android = members["eosphoros-fcitx5-android.zip"]
+        self.assertEqual(
+            {path for path in fcitx5_android if path.startswith("themes/")},
+            {
+                "themes/eosphoros-dawn.zip",
+                "themes/eosphoros-night.zip",
+                "themes/eosphoros-mono.zip",
+            },
+        )
+
+        for name in ("eosphoros-yuanshu.zip", "eosphoros-hamster.zip"):
+            mobile = members[name]
+            self.assertIn("Hamster.yaml", mobile)
+            self.assertIn("include_iCloud_rime_files.txt", mobile)
+            self.assertIn("include_keyboard_rime_files.txt", mobile)
+            self.assertIn("zzc/iOS_词库合并.py", mobile)
+            self.assertNotIn("weasel.yaml", mobile)
+            self.assertNotIn("squirrel.yaml", mobile)
+            self.assertNotIn("zzc/Win_词库合并.exe", mobile)
 
         for name in (
             "eosphoros.zip",
             "eosphoros-weasel.zip",
             "eosphoros-squirrel.zip",
-            "eosphoros-mobile.zip",
+            "eosphoros-trime.zip",
+            "eosphoros-yuanshu.zip",
+            "eosphoros-hamster.zip",
         ):
             self.assertFalse(
                 any(path.startswith("fcitx5/") for path in members[name]), name

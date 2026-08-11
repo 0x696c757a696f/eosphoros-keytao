@@ -47,8 +47,8 @@
       "rows": 36214
     },
     "dicts/eosphoros/eosphoros.ice.dict.yaml": {
-      "sha256": "1b286aa84ddda59cd83431615580868b3c8844ec4affcb6cddc582b0f0c93ed0",
-      "rows": 362647
+      "sha256": "8869f8f5150f2a3e79ec0a13c42c2dc1d8202b36c35019774563d54b8d1457fd",
+      "rows": 362646
     },
     "dicts/eosphoros/eosphoros.en.dict.yaml": {
       "sha256": "c754aa850e6cf9a6c311d4258a05f3d3a9df9b0daea4d509f28b070570a09aec",
@@ -96,8 +96,8 @@
     }
   },
   "statistics": {
-    "combined_collision_rows": 53651,
-    "combined_rows": 1112870,
+    "combined_collision_rows": 53650,
+    "combined_rows": 1112875,
     "deduplicated_local": 278119,
     "deduplicated_upstream": 2578,
     "emoji_deduplicated_local": 2341,
@@ -112,13 +112,13 @@
     "english_source_rows": 23861,
     "generated_before_collision_pruning": 489437,
     "generated_medicine_names": 1477,
-    "generated_rows": 362647,
-    "ice_collision_rows": 2545,
+    "generated_rows": 362646,
+    "ice_collision_rows": 2543,
     "local_collision_rows": 36168,
-    "local_rows": 750223,
+    "local_rows": 750229,
     "recognized_medicine_names": 1983,
     "skipped_candidate_cap": 36,
-    "skipped_collision_budget": 126754,
+    "skipped_collision_budget": 126755,
     "skipped_low_value_long_ext": 5883,
     "skipped_low_value_numeric_template": 18153,
     "skipped_low_value_overlong": 2190,
@@ -129,7 +129,7 @@
     "skipped_unencodable": 674,
     "source_rows": 882818,
     "unavoidable_code_collisions": 136429,
-    "wanxiang_deduplicated_local": 317399,
+    "wanxiang_deduplicated_local": 317401,
     "wanxiang_deduplicated_upstream": 225,
     "wanxiang_generated_diming": 5281,
     "wanxiang_generated_huaxue": 10892,
@@ -140,7 +140,7 @@
     "wanxiang_generated_yaopin": 9367,
     "wanxiang_generated_yixue": 12441,
     "wanxiang_skipped_collision": 12588,
-    "wanxiang_skipped_low_value_general_long_tail": 1025555,
+    "wanxiang_skipped_low_value_general_long_tail": 1025553,
     "wanxiang_skipped_low_value_incomplete": 84148,
     "wanxiang_skipped_low_value_non_han_or_length": 361,
     "wanxiang_skipped_low_value_not_chemical": 1559,

@@ -11,7 +11,7 @@ env:
   OPENCC_TONGGUI_URL: https://github.com/amorphobia/opencc-tonggui/releases/download/latest/opencc-tonggui.zip
   OPENCC_TONGGUI_SHA256: 1b76a1028669b89d55a9055400e8be628014ea6f3b200b34b5e8a7d88f04e018
   YONG_WIN_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-win.7z
-  YONG_WIN_SHA256: bd6ff885eeb5c918b46dcc7d040183a160aeb52433c67ffdb6984ff7fd7f6526
+  YONG_LINUX_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-lin.7z
   RABBIT_TAG: v0.4.0
   RABBIT_URL: https://github.com/rimeinn/rabbit/releases/download/v0.4.0/rabbit-v0.4.0-x64.zip
   RABBIT_SHA256: 33a66a9a87845ea0eb78d552a8002c4a49902575f62422327032b29c4115a6ad
@@ -155,11 +155,13 @@ jobs:
     - name: Compile packaged core with librime and Lua
       run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
 
-    - name: Package Fcitx5 themes
+    - name: Validate embedded Fcitx5 themes
+      run: python tools/build_fcitx5_themes.py --check
+
+    - name: Embed native mobile themes in platform packages
       run: |
-        python tools/build_fcitx5_themes.py --check
-        (cd fcitx5/linux/themes && zip -r ../../../fcitx5-linux-eosphoros-themes.zip .)
-        (cd fcitx5/macos/themes && zip -r ../../../fcitx5-macos-eosphoros-themes.zip .)
+        python tools/build_mobile_themes.py --check
+        python tools/build_mobile_themes.py --platform-dir .
 
     - name: Prepare Rime directory for Rabbit
       run: |
@@ -363,18 +365,23 @@ jobs:
 
         mkdir -p .yong
         curl --fail --location --output yong-win.7z "$YONG_WIN_URL"
-        echo "$YONG_WIN_SHA256  yong-win.7z" | sha256sum --check --strict
+        curl --fail --location --output yong-lin.7z "$YONG_LINUX_URL"
         python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb .yong/
         mkdir -p .yong/skin
         cp -r packaging/yong/skins/. .yong/skin/
 
-        mkdir -p yong_linux
-        cp -r .yong yong_linux/
-        cp packaging/yong/linux/README.txt yong_linux/README-Eosphoros-Linux.txt
-        python tools/validate_yong_package.py yong_linux
-        (cd yong_linux && zip -r ../yong-linux-eosphoros.zip .yong README-Eosphoros-Linux.txt)
-        rm -rf yong_linux
+        7z x yong-lin.7z -oyong_linux_temp
+        mkdir -p yong_linux_temp/yong/.yong
+        cp .yong/yong.ini yong_linux_temp/yong/.yong/yong.ini
+        cp .yong/yong.ini yong_linux_temp/yong/yong.ini
+        cp -r mb yong_linux_temp/yong/
+        mkdir -p yong_linux_temp/yong/skin
+        cp -r packaging/yong/skins/. yong_linux_temp/yong/skin/
+        cp packaging/yong/linux/README.txt yong_linux_temp/yong/README-Eosphoros-Linux.txt
+        python tools/validate_yong_package.py yong_linux_temp/yong
+        (cd yong_linux_temp && zip -r ../yong-linux-eosphoros.zip yong)
+        rm -rf yong_linux_temp
 
         7z x yong-win.7z -oyong_temp
         cp -r .yong yong_temp/yong
@@ -411,9 +418,10 @@ jobs:
           eosphoros-squirrel.zip
           eosphoros-fcitx5-macos.zip
           eosphoros-fcitx5-linux.zip
-          eosphoros-mobile.zip
-          fcitx5-linux-eosphoros-themes.zip
-          fcitx5-macos-eosphoros-themes.zip
+          eosphoros-trime.zip
+          eosphoros-fcitx5-android.zip
+          eosphoros-yuanshu.zip
+          eosphoros-hamster.zip
           dazhu.txt
         )
         sha256sum "${assets[@]}" > SHA256SUMS

@@ -3,6 +3,7 @@ from __future__ import annotations
 import fnmatch
 import importlib.util
 import configparser
+import json
 import os
 import re
 import shutil
@@ -80,7 +81,10 @@ class RepositoryValidationTests(unittest.TestCase):
         legacy_paths = []
         for path in root.rglob("*"):
             relative = path.relative_to(root)
-            if relative.parts and relative.parts[0] in {".git", ".pixi", ".tmp", "build"}:
+            if (
+                relative.parts
+                and relative.parts[0] in {".git", ".pixi", ".tmp", "build"}
+            ) or "__pycache__" in relative.parts:
                 continue
             if ("xm" + "jd6") in path.name.lower():
                 legacy_paths.append(relative.as_posix())
@@ -105,6 +109,8 @@ class RepositoryValidationTests(unittest.TestCase):
         artifact_ids = {item["artifact"] for item in manifest["themes"]}
         self.assertIn("EosphorosLight", theme_ids)
         self.assertIn("EosphorosDark", theme_ids)
+        self.assertIn("EosphorosMono", theme_ids)
+        self.assertIn("mono", artifact_ids)
         self.assertGreater(len(theme_ids), 50)
 
         linux_root = root / "fcitx5" / "linux" / "themes"
@@ -173,7 +179,7 @@ class RepositoryValidationTests(unittest.TestCase):
                 for field in mac_color_fields:
                     self.assertRegex(parser[section][field], r"^#[0-9A-F]{8}$")
 
-    def test_release_publishes_fcitx5_theme_archives(self) -> None:
+    def test_release_embeds_fcitx5_themes_in_platform_archives(self) -> None:
         root = Path(__file__).resolve().parents[1]
         release_workflow = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
@@ -183,8 +189,156 @@ class RepositoryValidationTests(unittest.TestCase):
         )
         for platform in ("linux", "macos"):
             artifact = f"fcitx5-{platform}-eosphoros-themes"
-            self.assertIn(f"{artifact}.zip", release_workflow)
+            self.assertNotIn(f"{artifact}.zip", release_workflow)
+            self.assertRegex(
+                release_workflow,
+                rf"(?m)^\s+eosphoros-fcitx5-{platform}\.zip$",
+            )
             self.assertIn(f"name: {artifact}", package_workflow)
+
+    def test_native_mobile_themes_are_current_and_importable(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        result = subprocess.run(
+            [sys.executable, "tools/build_mobile_themes.py", "--check"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+        required = {
+            "name",
+            "isDark",
+            "backgroundImage",
+            "backgroundColor",
+            "barColor",
+            "keyboardColor",
+            "keyBackgroundColor",
+            "keyTextColor",
+            "candidateTextColor",
+            "candidateLabelColor",
+            "candidateCommentColor",
+            "altKeyBackgroundColor",
+            "altKeyTextColor",
+            "accentKeyBackgroundColor",
+            "accentKeyTextColor",
+            "keyPressHighlightColor",
+            "keyShadowColor",
+            "popupBackgroundColor",
+            "popupTextColor",
+            "spaceBarColor",
+            "dividerColor",
+            "clipboardEntryColor",
+            "genericActiveBackgroundColor",
+            "genericActiveForegroundColor",
+            "version",
+        }
+        theme_dir = root / "mobile_themes" / "fcitx5-android"
+        self.assertEqual(
+            {path.name for path in theme_dir.glob("*.zip")},
+            {"eosphoros-dawn.zip", "eosphoros-night.zip", "eosphoros-mono.zip"},
+        )
+        for archive_path in theme_dir.glob("*.zip"):
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertEqual(len(archive.namelist()), 1)
+                payload = json.loads(archive.read(archive.namelist()[0]))
+            self.assertEqual(set(payload), required)
+            self.assertEqual(payload["version"], "2.1")
+            self.assertIsNone(payload["backgroundImage"])
+
+        trime = yaml.safe_load(
+            (root / "mobile_themes/trime/eosphoros.trime.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(trime["config_version"], "3.0")
+        self.assertEqual(trime["__include"], "trime:/")
+        self.assertEqual(trime["style"]["color_scheme"], "eosphoros_dawn")
+        self.assertEqual(trime["style"]["color_scheme_dark"], "eosphoros_night")
+        self.assertEqual(
+            {
+                key
+                for key in trime["preset_color_schemes"]
+                if key.startswith("eosphoros_")
+            },
+            {"eosphoros_dawn", "eosphoros_night", "eosphoros_mono"},
+        )
+
+    def test_release_embeds_native_mobile_themes_in_platform_archives(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        release = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+        package = (root / ".github/workflows/package-master.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("python tools/build_mobile_themes.py --platform-dir .", release)
+        for archive in (
+            "eosphoros-trime.zip",
+            "eosphoros-fcitx5-android.zip",
+            "eosphoros-yuanshu.zip",
+            "eosphoros-hamster.zip",
+        ):
+            self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
+        for obsolete_archive in (
+            "eosphoros-mobile.zip",
+            "fcitx5-linux-eosphoros-themes.zip",
+            "fcitx5-macos-eosphoros-themes.zip",
+            "fcitx5-android-eosphoros-themes.zip",
+            "trime-eosphoros-theme.zip",
+            "yuanshu-eosphoros-skins.zip",
+            "hamster-eosphoros-skins.zip",
+        ):
+            self.assertNotRegex(release, rf"(?m)^\s+{re.escape(obsolete_archive)}$")
+        self.assertIn("name: fcitx5-android-eosphoros-themes", package)
+        self.assertIn("name: trime-eosphoros-theme", package)
+
+    def test_ios_skins_are_embedded_under_platform_skin_directories(self) -> None:
+        from tools.build_mobile_themes import embed_ios_skins, load_config
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            template = root / "template"
+            for relative in (
+                "Skin_Keyboard/万象-元书/WanxiangSkin",
+                "Skin_Keyboard/万象-仓/26键-万象",
+            ):
+                source = template / relative
+                source.mkdir(parents=True)
+                (source / "config.yaml").write_text(
+                    "name: 测试\nauthor: 测试\ncolor: '#ffffff'\n", encoding="utf-8"
+                )
+            (template / "LICENSE").write_text("MIT\n", encoding="utf-8")
+            for archive_name in (
+                "eosphoros-yuanshu.zip",
+                "eosphoros-hamster.zip",
+            ):
+                with zipfile.ZipFile(root / archive_name, "w") as archive:
+                    archive.writestr("eosphoros.schema.yaml", "schema:\n")
+
+            embed_ios_skins(load_config(), root, template)
+
+            expected = {
+                "eosphoros-yuanshu.zip": ".cskin",
+                "eosphoros-hamster.zip": ".hskin",
+            }
+            for archive_name, suffix in expected.items():
+                with zipfile.ZipFile(root / archive_name) as archive:
+                    names = archive.namelist()
+                    self.assertIn("eosphoros.schema.yaml", names)
+                    self.assertIn("README-MOBILE-SKINS.txt", names)
+                    self.assertEqual(
+                        len(
+                            [
+                                name
+                                for name in names
+                                if name.startswith("skins/") and name.endswith(suffix)
+                            ]
+                        ),
+                        3,
+                    )
 
     def test_release_publishes_platform_packages(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -203,7 +357,10 @@ class RepositoryValidationTests(unittest.TestCase):
             "eosphoros-squirrel.zip",
             "eosphoros-fcitx5-macos.zip",
             "eosphoros-fcitx5-linux.zip",
-            "eosphoros-mobile.zip",
+            "eosphoros-trime.zip",
+            "eosphoros-fcitx5-android.zip",
+            "eosphoros-yuanshu.zip",
+            "eosphoros-hamster.zip",
         ):
             self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
 
@@ -230,6 +387,12 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertNotIn("prepare_yong_config.py", release)
         self.assertIn("packaging/yong/yong.ini", release)
         self.assertIn("zip -r ../yong-eosphoros.zip yong", release)
+        self.assertIn("YONG_LINUX_URL", release)
+        self.assertNotIn("YONG_WIN_SHA256", release)
+        self.assertNotIn("YONG_LINUX_SHA256", release)
+        self.assertNotIn("warn_if_yong_changed", release)
+        self.assertIn("7z x yong-lin.7z -oyong_linux_temp", release)
+        self.assertIn("zip -r ../yong-linux-eosphoros.zip yong", release)
         self.assertNotIn("zip -r yong-eosphoros.zip .yong", release)
         self.assertNotIn("yong-eosphoros-full.zip", release)
         self.assertNotIn("yong-eosphoros-full.zip", readme)
@@ -295,7 +458,9 @@ class RepositoryValidationTests(unittest.TestCase):
         )
         self.assertIn("python tools/validate_yong_package.py yong_temp/yong", release)
         self.assertIn("python tools/validate_yong_package.py yong_android/yong", release)
-        self.assertIn("python tools/validate_yong_package.py yong_linux", release)
+        self.assertIn(
+            "python tools/validate_yong_package.py yong_linux_temp/yong", release
+        )
         self.assertIn("cp tools/build_yong_android_skin.py", release)
         self.assertIn("cp packaging/yong/android/themes/*.css", release)
         self.assertRegex(release, r"(?m)^\s+yong-android-eosphoros\.zip$")
@@ -317,6 +482,7 @@ class RepositoryValidationTests(unittest.TestCase):
         linux_help = (root / "packaging/yong/linux/README.txt").read_text(
             encoding="utf-8"
         )
+        self.assertIn("Linux 完整包", linux_help)
         self.assertIn("$XDG_CONFIG_HOME/yong/", linux_help)
         self.assertIn("yong-tool.sh --install", linux_help)
         self.assertIn("Default5 SVG", readme)
@@ -580,6 +746,7 @@ class RepositoryValidationTests(unittest.TestCase):
             schemes = config["preset_color_schemes"]
             self.assertIn("EosphorosLight", schemes)
             self.assertIn("EosphorosDark", schemes)
+            self.assertIn("EosphorosMono", schemes)
             self.assertEqual(config["style"]["color_scheme"], "EosphorosLight")
             self.assertEqual(config["style"]["color_scheme_dark"], "EosphorosDark")
             self.assertEqual(config["style"]["candidate_list_layout"], "stacked")
@@ -623,6 +790,48 @@ class RepositoryValidationTests(unittest.TestCase):
                 candidate_format = str(scheme.get("candidate_format", ""))
                 self.assertNotIn("%c", candidate_format)
                 self.assertNotIn("%@", candidate_format)
+
+    def test_reviewed_xmjd6_terms_use_free_standard_codes(self) -> None:
+        from tools.clean_dictionary_quality import valid_word_codes
+        from tools.eosphoros_codes import (
+            iter_dictionary_rows,
+            load_character_code_options,
+        )
+
+        root = Path(__file__).resolve().parents[1]
+        lock = json.loads(
+            (root / "tools/legacy_upstream.lock.json").read_text(encoding="utf-8")
+        )
+        selected = set(lock["review"]["selected_terms"])
+        options = load_character_code_options(
+            root / "dicts/eosphoros/eosphoros.danzi.dict.yaml"
+        )
+        rows_by_word: dict[str, list[str]] = {}
+        words_by_code: dict[str, set[str]] = {}
+        for path in sorted((root / "dicts/eosphoros").glob("*.dict.yaml")):
+            for word, code in iter_dictionary_rows(path):
+                rows_by_word.setdefault(word, []).append(code)
+                words_by_code.setdefault(code, set()).add(word)
+
+        self.assertEqual(selected, set(rows_by_word) & selected)
+        for word in selected:
+            self.assertEqual(len(rows_by_word[word]), 1, word)
+            code = rows_by_word[word][0]
+            self.assertIn(code, valid_word_codes(word, options), (word, code))
+            self.assertEqual(words_by_code[code], {word}, (word, code))
+
+    def test_xmjd6_upstream_checker_uses_review_lock(self) -> None:
+        from tools import check_legacy_upstream
+
+        lock = json.loads(check_legacy_upstream.LOCK_PATH.read_text(encoding="utf-8"))
+        with patch.object(
+            check_legacy_upstream,
+            "remote_commit",
+            return_value=lock["reviewed_commit"],
+        ):
+            report = check_legacy_upstream.build_report()
+        self.assertFalse(report["update_available"])
+        self.assertEqual(report["reviewed_commit"], lock["reviewed_commit"])
 
     def test_desktop_style_yaml_has_no_duplicate_keys(self) -> None:
         root = Path(__file__).resolve().parents[1]

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "updated": "2026-08-11",
+  "repository": "https://github.com/hugh7007/xmjd6-rere.git",
+  "ref": "refs/heads/main",
+  "reviewed_commit": "6cbc3620f7c6046dd0f646c1265329c701e81664",
+  "review_base": "39717e178bd1ad6e49f6cb8b24e2e1a39a7f4710",
+  "review": {
+    "date_and_time": "already implemented locally with non-padded Chinese month/day and richer eo candidates",
+    "dictionary_policy": "selective fixed terms only; never replace local cizu or fjcy wholesale",
+    "selected_terms": [
+      "咖啡胶囊",
+      "保险协议",
+      "玻尔效应",
+      "诊断试剂盒",
+      "买量市场",
+      "控制技能"
+    ],
+    "collision_policy": "derive valid JianDao 6 candidates from local single-character codes and choose the first unoccupied suffix"
+  }
+}
