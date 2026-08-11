@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-# 晨星键道 · Eosphoros KeyTao
+# 🌟 晨星键道 · Eosphoros KeyTao
 
 > Repository: `eosphoros-keytao` · Rime schema ID: `eosphoros`
 
@@ -30,7 +30,7 @@
 
 循星而行，以键成文。
 
-晨星键道继承自星猫键道，并沿袭星空键道6.2以来的编码体系持续整理和扩展，兼顾常用词短码、单字精确定位、生僻字反查和可维护的大型词库。本方案已获得相关授权，适用于 Windows、macOS、Android、iOS 和 Linux 上支持 Rime/Lua 的输入法前端。方案 ID、文件名和本地命名空间统一使用 `eosphoros`，GitHub 仓库名使用 `eosphoros-keytao`。
+晨星键道继承自星猫键道，并沿袭星空键道6.2以来的编码体系继续整理和维护。本仓库主要尝试在保留原有键道手感的同时，改善词库组织、跨平台部署和后续维护；其中大量编码、词条和使用经验都来自历代维护者，并非从零创造。本方案已获得相关授权，适用于 Windows、macOS、Android、iOS 和 Linux 上支持 Rime/Lua 的输入法前端。方案 ID、文件名和本地命名空间统一使用 `eosphoros`，GitHub 仓库名使用 `eosphoros-keytao`。
 
 - 当前维护仓库：[0x696c757a696f/eosphoros-keytao](https://github.com/0x696c757a696f/eosphoros-keytao)
 - 发行包：[Releases](https://github.com/0x696c757a696f/eosphoros-keytao/releases/)
@@ -38,15 +38,20 @@
 - 历史使用资料：[星猫键道6飞书笔记](https://hu0w1jn4xq.feishu.cn/docx/ZgQ8deGPlozhWCxOyeucBvHJnPe)（由原方案维护者整理，并非本仓库文档）
 - 键道6练习：[直连网站](https://keytao.rea.ink/practice) · [Vercel 网站（需梯子）](https://keytao.vercel.app/practice)
 
-## ✨ 主要特点
+## ✨ 方案侧重与取舍
 
-- 约 117 万条内置码表记录，覆盖单字、常用词、扩展词、天主教专题词和英文词汇。
-- 保留键道6的短码、顶功、飞键和首笔辅助码规则，常用词优先使用较短编码。
-- `i` 键直接进入英文输入，不需要切换到单独的英文方案。
-- `u`、`v`、`o` 分别提供全拼、二分和 GBK/生僻字入口。
-- 支持自造词、逐码补全、630 提示、计算器、日期时间、打字统计、Emoji、简繁和火星文转换。
-- 词条数据集中在 `dicts/eosphoros/`，Lua 文件集中在 `lua/eosphoros/`，OpenCC 数据集中在 `opencc/eosphoros/`，避免污染用户目录的公共命名空间。
-- 上游词库使用 Git commit 锁定，可增量检测、确定性重建、定期验证并自动提交更新 PR。
+晨星键道不以“功能最多”或“词条最多”为目标，当前维护更看重编码可解释、常用输入稳定和更新过程可复查。以下是它相对侧重的方面，不代表一定比其他键道分支或输入方案更适合所有人：
+
+- 继承键道6的短码、顶功、飞键和首笔辅助码规则，尽量不改变已有用户的基本手感。
+- 约 117 万条内置码表记录，覆盖单字、常用词、专业补充、基督宗派词汇和英文；词库会主动舍弃一部分低频长句、模板词和重码收益较低的内容，因此记录数可能少于某些上游版本。
+- `i` 键可直接进入英文输入；`u`、`v`、`o` 分别用于全拼、二分和 GBK／生僻字反查，减少临时切换方案的需要。
+- 提供自造词、逐码补全、630 提示、计算器、日期时间、打字统计、Emoji、简繁和火星文等日常辅助功能；部分上游实验性工具没有照单全收。
+- 词典、Lua 和 OpenCC 数据分别集中在 `dicts/eosphoros/`、`lua/eosphoros/` 与 `opencc/eosphoros/`，方便检查来源、替换生成文件和排查部署问题。
+- 上游词库以 Git commit 和生成文件校验值记录来源，自动化负责发现变化和重复劳动，涉及编码取舍的内容仍尽量保留人工审查。
+- Release 按输入法前端拆包，并提供东风破配方、桌面主题和部分移动端皮肤；受不同客户端能力限制，各平台体验仍不可能完全一致。
+
+> [!NOTE]
+> 本方案依赖 `librime-lua`，安装体积和配置复杂度高于精简码表；顶功、飞键和辅助码也需要一定学习。如果更重视零学习成本、云端整句预测，或只需要一个很小的基础词库，纯拼音或更精简的键道配置可能更合适。
 
 第一次安装请直接阅读[“如何使用”](#如何使用)。其中保留了 Windows、macOS、Android、iOS 和 Linux 各客户端的用户目录、导入步骤和重新部署方法；较少使用的 Linux 内容统一放在各平台说明末尾，并按桌面环境列出 Wayland、X11、平铺窗口管理器及 Electron 应用的特殊设置。
 
@@ -62,7 +67,7 @@
 
 ## 📦 快速安装
 
-### 选择适合前端的方案包
+### 📥 选择适合前端的方案包
 
 1. 按下表下载适合当前输入法前端的压缩包；不确定时使用通用核心包 [`eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros.zip)。
 2. 解压到 Rime 用户文件夹；保留压缩包内的目录结构。
@@ -104,7 +109,7 @@
 
 部署失败或更新后仍显示旧候选时，请先确认文件放在正确的用户目录，再从输入法菜单执行一次“重新部署”。
 
-### 各平台皮肤与样式
+### 🎨 各平台皮肤与样式
 
 皮肤由输入法前端绘制，并不是 Rime 方案本身的通用能力；因此同一套配色文件不能直接跨平台复用：
 
@@ -139,7 +144,7 @@
 > [!WARNING]
 > 导入前请备份客户端现有皮肤和配置。第三方资源可能随客户端升级改变格式；下载时应查看其最新 Release、README 和许可证。若皮肤要求替换方案词典、`eosphoros.schema.yaml`、`lua/eosphoros/` 或 `opencc/eosphoros/`，不要直接覆盖，以免破坏晨星键道的编码、Emoji 或 Lua 功能。
 
-#### 小企鹅主题安装
+#### 🐧 小企鹅主题安装
 
 主题颜色由 `weasel.yaml` 与 `squirrel.yaml` 自动生成，不是手工近似。转换程序会把 Rime 的 BGR／AABBGGRR 色值转换成 Fcitx 使用的 RGBA，并分别映射普通候选、首选、序号、注释、预编辑、背景和边框。两份桌面配置同名时采用鼠须管的当前定义，小狼毫独有的配色也会全部保留。
 
@@ -159,7 +164,7 @@
 
 维护者修改桌面配色后，运行 `python tools/build_fcitx5_themes.py` 即可重新生成两端主题；CI 会用 `--check` 阻止过期主题进入 Release。
 
-### 东风破（plum）安装与更新
+### 🌱 东风破（plum）安装与更新
 
 仓库根目录提供通用配方和各前端配方，可由东风破直接安装或更新。macOS、Linux 以及其他带 Bash 的环境可执行：
 
@@ -183,9 +188,9 @@ rime-install 0x696c757a696f/eosphoros-keytao:fcitx5-linux
 rime-install 0x696c757a696f/eosphoros-keytao:mobile
 ```
 
-不带后缀的 `rime-install 0x696c757a696f/eosphoros-keytao` 安装通用核心。安装完成后仍需重新部署。配方会复制对应前端运行所需的 YAML、`lua/eosphoros/`、`opencc/eosphoros/`，并安装 ZZZC 公共 Python 核心、说明和教程；Weasel 额外安装 Windows EXE 与 Python 入口，Squirrel、Fcitx5 和移动端则只安装各自适用的入口。所有配方都会安装仓库提供的 `eosphoros.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `eosphoros` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、`eosphoros_user.txt`、`*.userdb` 和 ZZZC 运行记录也不会被安装或覆盖。`zzc_state/` 中只有静态拆分索引 `char_parts.tsv` 随配方和 Release 分发；`runtime_ops.tsv`、`effective_state.tsv`、撤回/重置状态及打字统计均由本机运行时创建，更新包不会用空文件清除用户数据。Fcitx5 桌面主题仍使用单独的主题压缩包安装。
+不带后缀的 `rime-install 0x696c757a696f/eosphoros-keytao` 安装通用核心。安装完成后仍需重新部署。配方会复制对应前端运行所需的 YAML、`lua/eosphoros/`、`opencc/eosphoros/`，并安装 ZZZC 公共 Python 核心、说明和教程；Weasel 额外安装 Windows EXE 与 Python 入口，Squirrel、Fcitx5 和移动端则只安装各自适用的入口。所有配方都会安装仓库提供的 `eosphoros.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `eosphoros` 安全加入现有方案列表。若已经自行修改过同名文件，请先备份再更新。其他客户端级 `*.custom.yaml` 不会被配方整份覆盖；仓库测试、`eosphoros_user.txt`、`*.userdb` 和 ZZZC 运行记录也不会被安装或覆盖。`zzc_state/` 中只有静态拆分索引 `char_parts.tsv` 随配方和 Release 分发；`runtime_ops.tsv`、`effective_state.tsv`、撤回/重置状态及打字统计均由本机运行时创建，更新包不会用空文件清除用户数据。Fcitx5 桌面主题已内置在对应平台 Release 包中，东风破安装方案后仍需按客户端说明将主题放到 Fcitx5 的主题目录。
 
-### 中州韵助手（rimetool）兼容性
+### 🔧 中州韵助手（rimetool）兼容性
 
 本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `eosphoros`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；根目录保留 RimeTool 会按固定路径查找的 `eosphoros.extended.dict.yaml` 兼容索引，实际词条统一位于 `dicts/eosphoros/`。索引首项为 `dicts/eosphoros/eosphoros.user`，可供薄荷模板定位个人主词库。
 
@@ -194,7 +199,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 > [!WARNING]
 > 为了让宗派词库及大型词库仍可人工审阅，部分码表正文保留了分类注释。中州韵助手的兼容约定不建议正文注释，因此不建议在其中对这些大型码表执行“全库重写”。正常浏览、Rime 编译和输入不受影响。`custom_phrase` 是雾凇方案专用的节点，本方案不添加无效的同名占位配置。
 
-### 便携与主题发行包
+### 💾 便携与主题发行包
 
 - Windows 小小输入法完整便携版：[yong-eosphoros.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-eosphoros.zip)
 - Windows / Linux 小小输入法原创皮肤：[yong-eosphoros-skins.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/yong-eosphoros-skins.zip)
@@ -236,7 +241,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 
 ## 🚀 如何使用
 
-### 各客户端安装、导入与更新
+### 📋 各客户端安装、导入与更新
 
 方案运行核心在各压缩包中一致；建议按前端下载对应包，以免携带无关平台配置：
 
@@ -250,7 +255,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 
 无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`dicts/eosphoros/`、`lua/eosphoros/` 和 `opencc/eosphoros/` 都必须保持原目录结构一起导入，否则词库、顶功、自造词、英文、Emoji 和简繁转换可能不完整。
 
-#### 🪟 Windows
+#### 🖥️ Windows
 
 **小狼毫 Weasel**
 
@@ -463,7 +468,7 @@ export SDL_IM_MODULE=fcitx
 
 </details>
 
-#### 客户端更新与排错
+#### ❓ 客户端更新与排错
 
 | 现象 | 优先检查 |
 | --- | --- |
@@ -473,7 +478,7 @@ export SDL_IM_MODULE=fcitx
 | 更新后仍出现旧候选 | 确认没有导入到另一个用户目录；重新部署，必要时退出并重启客户端 |
 | 个人词或设置被覆盖 | 个人内容应写入 `dicts/eosphoros/eosphoros.user.dict.yaml` 和 `*.custom.yaml`，不要直接改自动生成词典 |
 
-### 基础输入与反查入口
+### 🔎 基础输入与反查入口
 
 | 想做什么 | 输入方式 | 示例或说明 |
 | --- | --- | --- |
@@ -492,7 +497,7 @@ export SDL_IM_MODULE=fcitx
 
 打字统计现在按 eosphoros 命名保存在 `zzc_state/eosphoros_typing_stats.tsv`。首次运行会兼容读取旧的根目录 `typing_stats.txt`，随后写入新文件；旧文件暂不自动删除，便于确认迁移结果或手工备份。移动端规则只把本机统计回传到应用目录，不用 iCloud 统计覆盖另一台设备。
 
-### 候选、翻页和方案切换
+### ⏩ 候选、翻页和方案切换
 
 | 按键 | 条件 | 行为 |
 | --- | --- | --- |
@@ -505,7 +510,7 @@ export SDL_IM_MODULE=fcitx
 | <kbd>F7</kbd> | 任意状态 | 切换简体/繁体输出 |
 | <kbd>Ctrl</kbd> + <kbd>\</kbd> | 任意状态 | 开启或关闭 Emoji 候选 |
 
-### 功能开关和默认状态
+### 🎛️ 功能开关和默认状态
 
 重新部署后，方案选单中的开关状态由 [`eosphoros.custom.yaml`](eosphoros.custom.yaml) 控制：
 
@@ -525,7 +530,7 @@ export SDL_IM_MODULE=fcitx
 
 默认启用键道顶功、逐码补全、Emoji、快符、计算器和 630 提示，默认关闭流式整句输入。Emoji 使用 Lua 懒加载：保留原有 txjx 映射，并追加 2,516 个来自 Rime-Ice 的不重复关键词，涵盖更多情绪别名、手势、人物、动物、食物、交通、旗帜和新版 Emoji。若 Emoji 没出现，依次确认“表情展示”已开启、输入的是普通中文编码而不是 `u/v/o` 反查、文件已完整复制到 `opencc/eosphoros/`，然后重新部署。
 
-### 自造词指令速查
+### ✍️ 自造词指令速查
 
 | 指令 | 作用 |
 | --- | --- |
@@ -595,7 +600,7 @@ python .\zzc\Windows_词库合并.py
 
 `eosphoros.wanxiang` 不直接导入万象的拼音码和词频，只吸收药品 9,367 条、医学 12,441 条、化学 10,892 条、地名 5,281 条、名人 2,239 条、台风名 190 条和高频基础词 151 条。联想句、批量普通人名、错音/多音纠错、英文、单字和方言库均不导入。带声调拼音先规范化（保留 `ü → v`），再按键道6飞键和首笔规则重新编码；本地已有词先去重，所有合法码都冲突的条目直接跳过。通过筛选的码会先受保护，再重建低优先级 ICE，因此不会新增异词同码。
 
-### 词库加载顺序
+### 📑 词库加载顺序
 
 [`eosphoros.extended.dict.yaml`](eosphoros.extended.dict.yaml) 控制词库导入。当前主要顺序为：
 
@@ -628,7 +633,7 @@ user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy 
 
 修改 YAML 后必须重新部署。升级仓库时，个人配置尽量写入 `*.custom.yaml` 或 `dicts/eosphoros/eosphoros.user.dict.yaml`，不要直接修改自动生成的 `eosphoros.danzi`、`eosphoros.ice`、`eosphoros.wanxiang.*` 和 `eosphoros.en`。
 
-### 流式输入
+### 🌊 流式输入
 
 默认使用键道顶功。需要整句流式输入时，可在 `eosphoros.custom.yaml` 中启用：
 
@@ -692,7 +697,7 @@ python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 
 对应工作流 `.github/workflows/check-txjx-upstream.yml` 每周执行：已登记且无冲突的修改会进入固定的自动化分支并创建或更新 PR；若同一区域被本地和上游同时修改、上游新增未登记源码、删除已映射文件，或变更会要求重建 Windows EXE，则不改本地文件、不推进锁，只创建或更新人工审查 Issue。Windows EXE 仍只在 Release 工作流编译。工作流不包含任何本机绝对仓库路径，在 GitHub Actions 的 checkout 目录中运行。
 
-直接上游 [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) 另用 [`tools/legacy_upstream.lock.json`](tools/legacy_upstream.lock.json) 记录人工审校点。当前已审校至 `6cbc3620f7c6046dd0f646c1265329c701e81664`：日期不补月／日虚位与 `eo` 时间候选在本地已有更完整实现；词库更新只择取固定术语，并按本地单字表重新计算合法飞键、检查全库占码。`.github/workflows/check-legacy-upstream.yml` 每周只比较新提交并创建审校 Issue，绝不会自动覆盖已更名的目录、Lua、Schema 或本地词库。
+直接上游 [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) 另用 [`tools/legacy_upstream.lock.json`](tools/legacy_upstream.lock.json) 记录人工审校点。当前已审校至 `6cbc3620f7c6046dd0f646c1265329c701e81664`：日期不补月／日虚位与 `eo` 时间候选在本地已有对应实现；词库更新只择取固定术语，并按本地单字表重新计算合法飞键、检查全库占码。`.github/workflows/check-legacy-upstream.yml` 每周只比较新提交并创建审校 Issue，不自动覆盖已更名的目录、Lua、Schema 或本地词库。
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 与 [`licenses/`](licenses/)。
 
@@ -778,17 +783,19 @@ python .\tools\sync_upstream_dictionaries.py --write
 └─ .github/workflows/                发布和定期同步工作流
 ```
 
-## 💡 为什么选择键道6
+## 💡 适合怎样的使用者
 
-键道6以音码提供低学习成本和词组输入效率，又通过首笔辅助码减少纯音码的重码。遇到不会读的字时，可使用二分或 GBK 扩展入口；遇到同音候选时，可继续补首笔精确定位。它不是依赖云端大模型的整句输入法，而是一套编码稳定、结果可解释、词库可以自行维护的本地方案。
+键道6以音码为基础，再用首笔辅助码区分一部分同音候选。对已经熟悉拼音、同时愿意学习顶功和少量笔画规则的用户，它可以在学习成本与候选确定性之间提供一种折中；遇到不会读的字时，也可以借助二分或 GBK 入口反查。
 
-本仓库的目标是在不破坏键道手感和飞键规则的前提下，持续改善词库质量、重码控制、跨平台可部署性和维护自动化。
+晨星键道更适合希望离线使用、在意编码可解释性、愿意维护个人词库，或者需要在多个 Rime 前端之间迁移配置的用户。它不依赖云端大模型，也不以长句预测为主要方向；这既有隐私、稳定和可维护方面的便利，也意味着它不会在所有整句输入场景中胜过现代云拼音。
+
+本仓库能做的，是在尽量不破坏既有键道规则的前提下，继续整理词库、控制明显重码、改善跨平台部署，并让更新过程更容易检查和复现。实际输入体验仍会受到个人词频、客户端实现和使用习惯影响，欢迎按自己的需要调整，而不必把仓库默认配置当作唯一答案。
 
 ## 🙏 致谢与授权
 
 本方案的演进关系为“星空键道6.2 → 星猫键道6 → 晨星键道”。首先感谢吅吅大山、Proud丶Cat、热热、浮生、千年蟲等历代方案和词库维护者。没有他们长期整理编码、词库与使用经验，就没有今天的晨星键道。
 
-### 核心引擎与方案传承
+### 🌱 核心引擎与方案传承
 
 | 项目或贡献者 | 本仓库中的作用 |
 | --- | --- |
@@ -798,7 +805,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | 本方案的直接上游、历史配置及小小输入法打包素材来源 |
 | [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx) | 模块化 Lua、Emoji 查询优化、自造词操作链、合并脚本及测试思路参考 |
 
-### 词典、数据与核对资料
+### 📖 词典、数据与核对资料
 
 | 项目或资料 | 本仓库中的作用 |
 | --- | --- |
@@ -831,7 +838,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 </details>
 
-### 授权与再分发边界
+### ⚖️ 授权与再分发边界
 
 > [!IMPORTANT]
 > 致谢表示来源、依赖或技术参考，不代表相关作者和项目为晨星键道（`eosphoros-keytao`）提供官方支持，也不改变任何上游许可证。引用链接不等于取得皮肤、词典、软件或文章的再分发授权。
