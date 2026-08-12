@@ -606,7 +606,7 @@ def readme(title: str, instructions: str) -> bytes:
     return (
         f"{title}\n{'=' * len(title)}\n\n{instructions}\n\n"
         "包含自动跟随系统明暗模式的晨星键道主题，以及晨星·极简主题。\n"
-        "生成日期：2026-08-11；文本编码：UTF-8。\n"
+        f"生成日期：{(ROOT / 'VERSION').read_text(encoding='utf-8').strip()}；文本编码：UTF-8。\n"
     ).encode("utf-8")
 
 

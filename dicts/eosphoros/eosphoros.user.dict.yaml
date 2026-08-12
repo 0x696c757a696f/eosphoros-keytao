@@ -4,7 +4,7 @@
 # 该文件以UTF-8编码保存
 ---
 name: eosphoros.user
-version: "2026-08-11"
+version: "2026-08-12"
 sort: original
 ...
 # 编码各字段以制表符（Tab）分隔

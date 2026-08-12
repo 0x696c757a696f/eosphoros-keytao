@@ -72,7 +72,7 @@ def load_weasel_yaml(path: Path) -> dict[str, Any]:
 
 def build_rabbit_config(base: dict[str, Any], weasel: dict[str, Any]) -> dict[str, Any]:
     result = dict(base)
-    result["config_version"] = "2026-08-12"
+    result["config_version"] = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
     result["app_options"] = {**base.get("app_options", {}), **weasel.get("app_options", {})}
 
     source_style = weasel.get("style", {})

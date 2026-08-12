@@ -4,7 +4,7 @@
 # 单字读音来源：https://yuhao.forfudan.com/ 宇浩输入法
 ---
 name: eosphoros.cx
-version: "2026-08-11"
+version: "2026-08-12"
 sort: original
 import_tables:
   - dicts/eosphoros/eosphoros.danzi

@@ -266,7 +266,7 @@ def write_tree(destination: Path) -> None:
         encoding="utf-8",
     )
     manifest = {
-        "generated": "2026-08-11",
+        "generated": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
         "desktop_precedence": ["squirrel", "weasel"],
         "themes": [
             {

@@ -4,7 +4,7 @@
 schema:
   schema_id: eosphoros.gbk
   name: 晨星键道GBK字集辅助方案·勿选
-  version: "2026-08-11"
+  version: "2026-08-12"
   author:
     - ProudCat
   description: GBK字集辅助方案
