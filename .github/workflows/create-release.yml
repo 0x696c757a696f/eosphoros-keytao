@@ -172,13 +172,6 @@ jobs:
         pixi run python tools/build_mobile_themes.py --check
         pixi run python tools/build_mobile_themes.py --platform-dir .
 
-    - name: Prepare Rime directory for Rabbit
-      run: |
-        mkdir -p Rime/
-        rsync -avm --exclude='.git*' --exclude='*.github*' --exclude='/fcitx5/' --exclude='squirrel*' --exclude='weasel*' --exclude='hamster*' --exclude='*.txt' --exclude='*.zip' --exclude='yong*' --exclude='mb*' --exclude='Rime*' --exclude='/tests/' --exclude='/tools/' --exclude='/VERSION' --exclude='/requirements*.txt' . Rime/
-        ls -al Rime/
-        pwd
-
     - name: Fetch tags and generate changelog from last release
       id: changelog
       uses: actions/github-script@v9
@@ -224,28 +217,9 @@ jobs:
         mkdir -p Rabbit
         unzip "rabbit-$RABBIT_TAG.zip" -d Rabbit
 
-    - name: Clean Data
+    - name: Prepare minimal Rabbit bundle
       run: |
-        mkdir -p /tmp/Rabbit_backup
-        cp Rabbit/Data/punctuation.yaml /tmp/Rabbit_backup/
-        cp Rabbit/Data/key_bindings.yaml /tmp/Rabbit_backup/
-        cp Rabbit/Data/default.yaml /tmp/Rabbit_backup/
-        cp Rabbit/Data/symbols.yaml /tmp/Rabbit_backup/
-        cp Rabbit/Data/rabbit.yaml /tmp/Rabbit_backup/
-        cp Rime/default.custom.yaml Rabbit/Rime
-        mkdir -p Rabbit/Rime/dicts/eosphoros
-        cp Rime/dicts/eosphoros/eosphoros.user.dict.yaml Rabbit/Rime/dicts/eosphoros
-        cp Rime/eosphoros.custom.yaml Rabbit/Rime
-        rm -rf Rabbit/Data/*
-        rm -f Rime/default.custom.yaml
-        rm -f Rime/dicts/eosphoros/eosphoros.user.dict.yaml
-        rm -f Rime/eosphoros.custom.yaml
-        cp /tmp/Rabbit_backup/* Rabbit/Data/
-        rm -rf /tmp/Rabbit_backup
-
-    - name: Merge Rime into Rabbit
-      run: |
-        cp -r Rime/. Rabbit/Data
+        pixi run python tools/prepare_rabbit_release.py --rabbit-dir Rabbit
         zip -r Rabbit-eosphoros.zip Rabbit/
 
     - name: Convert .dict.yaml files to .txt using Bash

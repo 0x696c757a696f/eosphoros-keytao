@@ -280,6 +280,9 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`Rabbit-eosphoros.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/Rabbit-eosphoros.zip)。
 2. 解压到路径中不含空格的目录。
 3. 运行玉兔毫并选择晨星键道；该包已经带入方案文件，不需要再复制 `eosphoros.zip`。
+4. 包内 `rabbit.yaml` 已合入 `weasel.yaml` 的主题和兼容样式，`rabbit.custom.yaml` 默认启用“晨星·黎明”，并随 Windows 黑暗模式自动切换“晨星·夜色”。候选序号使用 Rabbit 所需的 AutoHotkey v2 格式 `{:s}. `。
+5. Rabbit 包只保留程序本体、运行晨星键道所需的词典／Lua／OpenCC 文件和少量用户配置，不包含东风破配方、其他平台皮肤、开发工具及仓库文档。
+6. 输入 `\` 可直接使用方案内自造词；需要永久整理词库时双击包根目录的 `ZZZC-Merge.cmd`，撤回最近一次合并时运行 `ZZZC-Rollback.cmd`。两个入口会自动处理 Rabbit 的 `Data/` 与 `Rime/` 双目录，不需要手工移动词库。
 
 #### 🍎 macOS
 

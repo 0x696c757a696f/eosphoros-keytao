@@ -513,6 +513,50 @@ class RepositoryValidationTests(unittest.TestCase):
         ):
             self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
 
+    def test_rabbit_release_is_minimal_and_uses_weasel_themes(self) -> None:
+        from tools.prepare_rabbit_release import build_rabbit_config, load_weasel_yaml
+
+        root = Path(__file__).resolve().parents[1]
+        weasel = load_weasel_yaml(root / "weasel.yaml")
+        merged = build_rabbit_config(
+            {
+                "suspend_hotkey": None,
+                "style": {"label_format": "{:s}. "},
+                "preset_color_schemes": {"aqua": {}},
+            },
+            weasel,
+        )
+        self.assertEqual(merged["style"]["color_scheme"], "EosphorosLight")
+        self.assertEqual(merged["style"]["color_scheme_dark"], "EosphorosDark")
+        self.assertEqual(merged["style"]["label_format"], "{:s}. ")
+        self.assertEqual(
+            merged["preset_color_schemes"]["EosphorosLight"]["color_format"],
+            "abgr",
+        )
+        self.assertRegex(
+            merged["preset_color_schemes"]["EosphorosLight"]["back_color"],
+            r"^0x[0-9A-Fa-f]{6,8}$",
+        )
+        custom = yaml.safe_load((root / "rabbit.custom.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(custom["patch"]["style/color_scheme"], "EosphorosLight")
+        self.assertEqual(custom["patch"]["style/color_scheme_dark"], "EosphorosDark")
+
+        release = (root / ".github/workflows/create-release.yml").read_text(encoding="utf-8")
+        self.assertIn("tools/prepare_rabbit_release.py --rabbit-dir Rabbit", release)
+        self.assertNotIn("Prepare Rime directory for Rabbit", release)
+        self.assertNotIn("cp -r Rime/. Rabbit/Data", release)
+
+        preparer = (root / "tools/prepare_rabbit_release.py").read_text(encoding="utf-8")
+        for name in (
+            "ZZZC-Merge.cmd",
+            "ZZZC-Rollback.cmd",
+            "Merge-ZZZC.exe",
+            "Rollback-ZZZC.exe",
+        ):
+            self.assertIn(name, preparer)
+        self.assertIn("eosphoros_zzc_root=%RABBIT_ROOT%Data", preparer)
+        self.assertIn("eosphoros_zzc_state_dir=%RABBIT_ROOT%Rime\\zzc_state", preparer)
+
     def test_release_uses_one_native_upload_with_checksums(self) -> None:
         root = Path(__file__).resolve().parents[1]
         release = (root / ".github/workflows/create-release.yml").read_text(

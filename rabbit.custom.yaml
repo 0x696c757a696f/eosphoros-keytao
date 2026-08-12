@@ -1,0 +1,7 @@
+# Rabbit customization
+# encoding: utf-8
+
+patch:
+  style/color_scheme: EosphorosLight
+  style/color_scheme_dark: EosphorosDark
+  style/label_format: "{:s}. "
