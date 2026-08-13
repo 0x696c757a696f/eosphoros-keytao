@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Install native build dependencies
         run: |
@@ -51,7 +51,7 @@ jobs:
       - name: Stage install tree
         run: DESTDIR="$PWD/build/native-install" cmake --install build/native-fcitx5
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: eosphoros-fcitx5-native-linux
           path: |
