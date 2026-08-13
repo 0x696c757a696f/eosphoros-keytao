@@ -39,6 +39,9 @@ LogicalKey logicalKey(const fcitx::Key &key) {
     if (symbol == FcitxKey_apostrophe) {
         return {KeyKind::Code, '\'', 0};
     }
+    if (symbol == FcitxKey_equal) {
+        return {KeyKind::Code, '=', 0};
+    }
     switch (symbol) {
     case FcitxKey_space:
         return {KeyKind::Space};
@@ -140,7 +143,21 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
     auto *current = state(inputContext);
     auto logical = logicalKey(event.key());
     const auto symbol = event.key().normalize().sym();
-    if (!current->context.input().empty()) {
+    if (current->context.mode() == Mode::Calculator) {
+        const auto raw = event.key().sym();
+        char calculator = '\0';
+        if (raw >= FcitxKey_0 && raw <= FcitxKey_9) calculator = static_cast<char>('0' + raw - FcitxKey_0);
+        else if (raw == FcitxKey_period) calculator = '.';
+        else if (raw == FcitxKey_plus) calculator = '+';
+        else if (raw == FcitxKey_minus) calculator = '-';
+        else if (raw == FcitxKey_asterisk) calculator = '*';
+        else if (raw == FcitxKey_slash) calculator = '/';
+        else if (raw == FcitxKey_percent) calculator = '%';
+        else if (raw == FcitxKey_asciicircum) calculator = '^';
+        else if (raw == FcitxKey_parenleft) calculator = '(';
+        else if (raw == FcitxKey_parenright) calculator = ')';
+        if (calculator) logical = {KeyKind::Calculator, calculator};
+    } else if (!current->context.input().empty()) {
         // Tab is bound to candidate 2 by the schema.  With smarttwo enabled,
         // semicolon and apostrophe select candidates 2 and 3 while a menu is
         // active; outside composition they retain their normal frontend use.
@@ -151,8 +168,7 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
         }
     }
     if (logical.kind == KeyKind::PassThrough ||
-        (current->context.input().empty() &&
-         (symbol == FcitxKey_semicolon || symbol == FcitxKey_apostrophe))) {
+        (current->context.input().empty() && symbol == FcitxKey_apostrophe)) {
         logical = symbolKey(event.key());
     }
     const auto result = keyHandler_.handle(current->context, logical);
@@ -190,7 +206,7 @@ void EosphorosEngine::updateUI(fcitx::InputContext *inputContext) {
         for (std::size_t i = 0; i < context.candidates().size(); ++i) {
             const auto &candidate = context.candidates()[i];
             list->append<CandidateWord>(this, i, candidate.text, candidate.code,
-                                        candidate.completion);
+                                        candidate.completion, candidate.comment);
         }
         if (!context.candidates().empty()) {
             list->setGlobalCursorIndex(static_cast<int>(context.selected()));

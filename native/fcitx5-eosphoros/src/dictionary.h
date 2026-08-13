@@ -9,7 +9,7 @@
 
 namespace eosphoros {
 
-enum class Mode { Normal, English, ReversePinyin, ReverseLiangfen, ReverseGBK };
+enum class Mode { Normal, English, ReversePinyin, ReverseLiangfen, ReverseGBK, Calculator };
 
 struct DictionaryEntry {
     std::string text;
@@ -23,6 +23,7 @@ struct Candidate {
     std::string text;
     std::string code;
     bool completion = false;
+    std::string comment;
 };
 
 class Dictionary {

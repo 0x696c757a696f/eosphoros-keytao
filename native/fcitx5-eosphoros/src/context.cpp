@@ -1,4 +1,5 @@
 #include "context.h"
+#include "special.h"
 
 #include <algorithm>
 #include <cctype>
@@ -15,6 +16,7 @@ Mode modeForInput(const std::string &input) {
     case 'u': return Mode::ReversePinyin;
     case 'v': return Mode::ReverseLiangfen;
     case 'o': return Mode::ReverseGBK;
+    case '=': return Mode::Calculator;
     default: return Mode::Normal;
     }
 }
@@ -25,8 +27,10 @@ EosphorosContext::EosphorosContext(const Dictionary *dictionary)
 
 void EosphorosContext::refresh() {
     mode_ = modeForInput(input_);
-    candidates_ = input_.empty() ? std::vector<Candidate>{}
-                                 : dictionary_->lookup(input_, mode_);
+    candidates_ = specialCandidates(input_);
+    if (candidates_.empty() && !input_.empty() && mode_ != Mode::Calculator) {
+        candidates_ = dictionary_->lookup(input_, mode_);
+    }
     if (candidates_.empty()) {
         selected_ = 0;
     } else {
@@ -35,7 +39,7 @@ void EosphorosContext::refresh() {
 }
 
 std::string EosphorosContext::displayInput() const {
-    if (mode_ != Mode::Normal && input_.size() > 1) {
+    if (mode_ != Mode::Normal && mode_ != Mode::Calculator && input_.size() > 1) {
         return input_.substr(1);
     }
     return input_;
@@ -54,7 +58,7 @@ bool EosphorosContext::hasExactCandidate() const {
 
 KeyResult EosphorosContext::type(char key) {
     KeyResult result;
-    if (!(key >= 'a' && key <= 'z') && key != ';' && key != '\'') {
+    if (!(key >= 'a' && key <= 'z') && key != ';' && key != '\'' && key != '=') {
         return result;
     }
 
@@ -121,6 +125,14 @@ KeyResult EosphorosContext::type(char key) {
     refresh();
     result.consumed = true;
     return result;
+}
+
+KeyResult EosphorosContext::typeCalculator(char key) {
+    if (mode_ != Mode::Calculator || !isCalculatorCharacter(key)) return {};
+    input_.push_back(key);
+    selected_ = 0;
+    refresh();
+    return {true, {}};
 }
 
 KeyResult EosphorosContext::commit(std::size_t index) {

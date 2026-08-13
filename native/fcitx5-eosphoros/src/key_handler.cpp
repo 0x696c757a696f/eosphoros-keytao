@@ -30,6 +30,8 @@ KeyResult KeyHandler::handle(EosphorosContext &context,
     }
     case KeyKind::Symbol:
         return context.symbol(key.text);
+    case KeyKind::Calculator:
+        return context.typeCalculator(key.code);
     case KeyKind::PassThrough:
         break;
     }

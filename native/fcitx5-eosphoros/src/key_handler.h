@@ -19,6 +19,7 @@ enum class KeyKind {
     PageDown,
     Select,
     Symbol,
+    Calculator,
 };
 
 struct LogicalKey {

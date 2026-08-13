@@ -12,7 +12,8 @@ class CandidateWord final : public fcitx::CandidateWord {
 public:
     CandidateWord(EosphorosEngine *engine, std::size_t index,
                   const std::string &text,
-                  const std::string &code, bool completion);
+                  const std::string &code, bool completion,
+                  const std::string &comment);
     void select(fcitx::InputContext *inputContext) const override;
 
 private:

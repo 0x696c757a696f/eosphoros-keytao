@@ -35,6 +35,7 @@ add_library(eosphoros-native-core STATIC
     src/context.cpp
     src/dictionary.cpp
     src/key_handler.cpp
+    src/special.cpp
     src/topup.cpp)
 target_include_directories(eosphoros-native-core PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/src")
@@ -100,6 +101,10 @@ if(BUILD_TESTING)
     add_executable(eosphoros-native-topup-test tests/test_topup.cpp)
     target_link_libraries(eosphoros-native-topup-test PRIVATE eosphoros-native-core)
     add_test(NAME eosphoros-native-topup COMMAND eosphoros-native-topup-test)
+
+    add_executable(eosphoros-native-special-test tests/test_special.cpp)
+    target_link_libraries(eosphoros-native-special-test PRIVATE eosphoros-native-core)
+    add_test(NAME eosphoros-native-special COMMAND eosphoros-native-special-test)
 
     add_executable(eosphoros-native-context-test tests/test_context.cpp)
     target_link_libraries(eosphoros-native-context-test PRIVATE eosphoros-native-core)

@@ -24,6 +24,7 @@ public:
     explicit EosphorosContext(const Dictionary *dictionary);
 
     KeyResult type(char key);
+    KeyResult typeCalculator(char key);
     KeyResult space();
     KeyResult enter();
     KeyResult select(std::size_t index);

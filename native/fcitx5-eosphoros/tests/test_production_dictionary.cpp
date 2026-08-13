@@ -14,6 +14,8 @@ int main(int argc, char **argv) {
                 "production dictionary is unexpectedly incomplete");
         require(dictionary.lookup("jxjdoo").front().text == "晨星键道",
                 "main namespace lookup failed");
+        require(dictionary.lookup(";a").front().text == "！",
+                "direct-symbol namespace lookup failed");
         require(dictionary.lookup("ihello", eosphoros::Mode::English).front().text == "hello",
                 "English namespace lookup failed");
         require(dictionary.lookup("uni", eosphoros::Mode::ReversePinyin).front().text == "你",

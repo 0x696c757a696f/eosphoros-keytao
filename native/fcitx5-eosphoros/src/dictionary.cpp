@@ -17,6 +17,7 @@ char namespaceForMode(Mode mode) {
     case Mode::ReversePinyin: return 'u';
     case Mode::ReverseLiangfen: return 'v';
     case Mode::ReverseGBK: return 'o';
+    case Mode::Calculator: return '\0';
     case Mode::Normal: return '\0';
     }
     return '\0';
