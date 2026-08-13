@@ -99,6 +99,10 @@ class PlatformPackageTests(unittest.TestCase):
             self.assertTrue(common <= files, name)
             self.assertNotIn("zzc_state/runtime_ops.tsv", files, name)
             self.assertNotIn("tools/build_platform_packages.py", files, name)
+            self.assertFalse(
+                any(path.startswith("native/") for path in files),
+                f"{name} must not contain the native Fcitx5 source tree",
+            )
 
         shared_zzc = {path for path in common if path.startswith("zzc/")}
         expected_platform_zzc = {
@@ -227,6 +231,14 @@ class PlatformPackageTests(unittest.TestCase):
             self.assertFalse(
                 any(path.startswith("fcitx5/") for path in members[name]), name
             )
+
+    def test_master_rime_artifact_excludes_native_fcitx5_sources(self) -> None:
+        workflow = (ROOT / ".github/workflows/package-master.yml").read_text(
+            encoding="utf-8"
+        )
+        artifact_block = workflow.split("name: eosphoros", 1)[1]
+        self.assertIn("!native/**", artifact_block)
+        self.assertIn("!fcitx5/**", artifact_block)
 
 
 if __name__ == "__main__":

@@ -145,6 +145,7 @@ jobs:
           !.github/**
           !.git*
           !fcitx5/**
+          !native/**
           !mobile_themes/**
           !yong*.*
           !tests/**
