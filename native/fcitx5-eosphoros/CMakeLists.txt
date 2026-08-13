@@ -14,6 +14,8 @@ set(EOSPHOROS_SCHEMA
     CACHE FILEPATH "Rime schema whose topup/menu settings are compiled into native data")
 file(GLOB EOSPHOROS_REPOSITORY_DICTIONARIES CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/../../dicts/eosphoros/*.dict.yaml")
+file(GLOB EOSPHOROS_EMOJI_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../*cc/eosphoros/eosphoros_emoji*_*.lua")
 
 set(NATIVE_DICTIONARY "${CMAKE_CURRENT_BINARY_DIR}/eosphoros-native.dict")
 add_custom_command(
@@ -31,7 +33,23 @@ add_custom_command(
     VERBATIM)
 add_custom_target(eosphoros-native-dictionary ALL DEPENDS "${NATIVE_DICTIONARY}")
 
+set(NATIVE_AUXILIARY "${CMAKE_CURRENT_BINARY_DIR}/eosphoros-native.aux")
+add_custom_command(
+    OUTPUT "${NATIVE_AUXILIARY}"
+    COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_auxiliary.py"
+            --pronunciation
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../dicts/eosphoros/eosphoros.cx.dict.yaml"
+            --root "${CMAKE_CURRENT_SOURCE_DIR}/../.."
+            --output "${NATIVE_AUXILIARY}"
+    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_auxiliary.py"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../dicts/eosphoros/eosphoros.cx.dict.yaml"
+            ${EOSPHOROS_EMOJI_SOURCES}
+    VERBATIM)
+add_custom_target(eosphoros-native-auxiliary ALL DEPENDS "${NATIVE_AUXILIARY}")
+
 add_library(eosphoros-native-core STATIC
+    src/auxiliary.cpp
     src/context.cpp
     src/dictionary.cpp
     src/key_handler.cpp
@@ -72,6 +90,8 @@ if(BUILD_FCITX_ADDON)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/eosphoros-native.conf"
             DESTINATION "${FCITX_INSTALL_PKGDATADIR}/inputmethod")
     install(FILES "${NATIVE_DICTIONARY}"
+            DESTINATION "${FCITX_INSTALL_PKGDATADIR}/eosphoros-native")
+    install(FILES "${NATIVE_AUXILIARY}"
             DESTINATION "${FCITX_INSTALL_PKGDATADIR}/eosphoros-native")
     install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/eosphoros-icon.png"
             RENAME fcitx-eosphoros-native.png
@@ -121,4 +141,12 @@ if(BUILD_TESTING)
         eosphoros-native-dictionary)
     add_test(NAME eosphoros-native-production-dictionary
         COMMAND eosphoros-native-production-dictionary-test "${NATIVE_DICTIONARY}")
+
+    add_executable(eosphoros-native-auxiliary-test tests/test_auxiliary.cpp)
+    target_link_libraries(eosphoros-native-auxiliary-test PRIVATE eosphoros-native-core)
+    add_dependencies(eosphoros-native-auxiliary-test eosphoros-native-auxiliary
+                     eosphoros-native-dictionary)
+    add_test(NAME eosphoros-native-auxiliary
+        COMMAND eosphoros-native-auxiliary-test "${NATIVE_AUXILIARY}"
+                "${NATIVE_DICTIONARY}")
 endif()

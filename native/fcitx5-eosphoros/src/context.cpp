@@ -22,14 +22,44 @@ Mode modeForInput(const std::string &input) {
 }
 } // namespace
 
-EosphorosContext::EosphorosContext(const Dictionary *dictionary)
-    : dictionary_(dictionary), topup_(dictionary->topupConfig()) {}
+EosphorosContext::EosphorosContext(const Dictionary *dictionary,
+                                   const AuxiliaryData *auxiliary)
+    : dictionary_(dictionary), auxiliary_(auxiliary),
+      topup_(dictionary->topupConfig()) {}
 
 void EosphorosContext::refresh() {
     mode_ = modeForInput(input_);
     candidates_ = specialCandidates(input_);
     if (candidates_.empty() && !input_.empty() && mode_ != Mode::Calculator) {
         candidates_ = dictionary_->lookup(input_, mode_);
+    }
+    if (auxiliary_) {
+        if (mode_ == Mode::ReversePinyin || mode_ == Mode::ReverseLiangfen ||
+            mode_ == Mode::ReverseGBK) {
+            for (auto &candidate : candidates_) {
+                if (const auto *value = auxiliary_->pronunciation(candidate.text)) {
+                    candidate.comment = *value;
+                }
+            }
+        } else if (mode_ == Mode::Normal) {
+            const auto originalSize = candidates_.size();
+            for (std::size_t i = 0; i < originalSize; ++i) {
+                if (candidates_[i].completion) continue;
+                const auto *values = auxiliary_->emoji(candidates_[i].text);
+                if (!values) continue;
+                for (const auto &value : *values) {
+                    const auto duplicate = std::any_of(
+                        candidates_.begin(), candidates_.end(),
+                        [&value](const Candidate &candidate) {
+                            return candidate.text == value;
+                        });
+                    if (!duplicate) {
+                        candidates_.push_back(
+                            {value, candidates_[i].code, false, "Emoji"});
+                    }
+                }
+            }
+        }
     }
     if (candidates_.empty()) {
         selected_ = 0;

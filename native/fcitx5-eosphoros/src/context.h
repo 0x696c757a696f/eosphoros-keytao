@@ -1,5 +1,6 @@
 #pragma once
 
+#include "auxiliary.h"
 #include "dictionary.h"
 #include "topup.h"
 
@@ -21,7 +22,8 @@ struct TopupState {
 
 class EosphorosContext {
 public:
-    explicit EosphorosContext(const Dictionary *dictionary);
+    explicit EosphorosContext(const Dictionary *dictionary,
+                              const AuxiliaryData *auxiliary = nullptr);
 
     KeyResult type(char key);
     KeyResult typeCalculator(char key);
@@ -49,6 +51,7 @@ private:
     KeyResult commit(std::size_t index);
 
     const Dictionary *dictionary_;
+    const AuxiliaryData *auxiliary_;
     TopupPolicy topup_;
     std::string input_;
     std::vector<Candidate> candidates_;

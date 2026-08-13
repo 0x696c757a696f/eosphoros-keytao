@@ -1,5 +1,6 @@
 #pragma once
 
+#include "auxiliary.h"
 #include "context.h"
 #include "dictionary.h"
 #include "key_handler.h"
@@ -19,8 +20,9 @@ namespace eosphoros::fcitx5 {
 
 class State final : public fcitx::InputContextProperty {
 public:
-    State(fcitx::InputContext *inputContext, const Dictionary *dictionary)
-        : inputContext(inputContext), context(dictionary) {}
+    State(fcitx::InputContext *inputContext, const Dictionary *dictionary,
+          const AuxiliaryData *auxiliary)
+        : inputContext(inputContext), context(dictionary, auxiliary) {}
 
     fcitx::InputContext *inputContext;
     EosphorosContext context;
@@ -48,8 +50,10 @@ private:
 
     fcitx::Instance *instance_;
     Dictionary dictionary_;
+    AuxiliaryData auxiliary_;
     KeyHandler keyHandler_;
     std::string dictionaryError_;
+    std::string auxiliaryError_;
     fcitx::FactoryFor<State> stateFactory_;
 };
 

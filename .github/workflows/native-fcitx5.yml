@@ -90,6 +90,7 @@ jobs:
           test -n "$(find build/native-install -type f -path '*/fcitx5/addon/eosphoros-native.conf' -print -quit)"
           test -n "$(find build/native-install -type f -path '*/fcitx5/inputmethod/eosphoros-native.conf' -print -quit)"
           test -n "$(find build/native-install -type f -name 'eosphoros-native.dict' -print -quit)"
+          test -n "$(find build/native-install -type f -name 'eosphoros-native.aux' -print -quit)"
           test -n "$(find build/native-install -type f -name 'fcitx-eosphoros-native.png' -print -quit)"
 
       - uses: actions/upload-artifact@v7

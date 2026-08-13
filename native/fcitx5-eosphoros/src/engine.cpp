@@ -102,7 +102,7 @@ LogicalKey symbolKey(const fcitx::Key &key) {
 EosphorosEngine::EosphorosEngine(fcitx::Instance *instance)
     : instance_(instance),
       stateFactory_([this](fcitx::InputContext &inputContext) {
-          return new State(&inputContext, &dictionary_);
+          return new State(&inputContext, &dictionary_, &auxiliary_);
       }) {
     instance_->inputContextManager().registerProperty("eosphorosNativeState",
                                                        &stateFactory_);
@@ -119,6 +119,19 @@ EosphorosEngine::EosphorosEngine(fcitx::Instance *instance)
         dictionaryError_ = "native dictionary was not found";
     } else {
         dictionary_.load(path, &dictionaryError_);
+    }
+
+    if (const auto *overridePath = std::getenv("EOSPHOROS_NATIVE_AUXILIARY")) {
+        path = overridePath;
+    } else {
+        path = fcitx::StandardPath::global().locate(
+            fcitx::StandardPath::Type::PkgData,
+            "eosphoros-native/eosphoros-native.aux");
+    }
+    if (path.empty()) {
+        auxiliaryError_ = "native auxiliary data was not found";
+    } else {
+        auxiliary_.load(path, &auxiliaryError_);
     }
 }
 
