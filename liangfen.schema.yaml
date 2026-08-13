@@ -4,7 +4,7 @@
 schema:
   schema_id: liangfen
   name: 两分辅助方案·勿选
-  version: "2026-08-12"
+  version: "2026-08-13"
   author:
     - TianHeng <2417647441@qq.com>
   description: |

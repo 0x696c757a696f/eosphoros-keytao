@@ -294,10 +294,10 @@ class RepositoryValidationTests(unittest.TestCase):
         )
         self.assertIn("python tools/build_mobile_themes.py --platform-dir .", release)
         for archive in (
-            "eosphoros-trime.zip",
+            "eosphoros-trime-android.zip",
             "eosphoros-fcitx5-android.zip",
-            "eosphoros-yuanshu.zip",
-            "eosphoros-hamster.zip",
+            "eosphoros-yuanshu-ios.zip",
+            "eosphoros-hamster-ios.zip",
         ):
             self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
         for obsolete_archive in (
@@ -322,8 +322,8 @@ class RepositoryValidationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             for archive_name in (
-                "eosphoros-yuanshu.zip",
-                "eosphoros-hamster.zip",
+                "eosphoros-yuanshu-ios.zip",
+                "eosphoros-hamster-ios.zip",
             ):
                 with zipfile.ZipFile(root / archive_name, "w") as archive:
                     archive.writestr("eosphoros.schema.yaml", "schema:\n")
@@ -331,8 +331,8 @@ class RepositoryValidationTests(unittest.TestCase):
             embed_ios_skins(load_config(), root)
 
             expected = {
-                "eosphoros-yuanshu.zip": ".cskin",
-                "eosphoros-hamster.zip": ".hskin",
+                "eosphoros-yuanshu-ios.zip": ".cskin",
+                "eosphoros-hamster-ios.zip": ".hskin",
             }
             for archive_name, suffix in expected.items():
                 with zipfile.ZipFile(root / archive_name) as archive:
@@ -501,15 +501,15 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("python tools/build_platform_packages.py", release)
         self.assertIn("python tools/build_platform_packages.py --check", package)
         for archive in (
-            "eosphoros.zip",
-            "eosphoros-weasel.zip",
-            "eosphoros-squirrel.zip",
+            "eosphoros-rime-cross-platform.zip",
+            "eosphoros-weasel-windows.zip",
+            "eosphoros-squirrel-macos.zip",
             "eosphoros-fcitx5-macos.zip",
             "eosphoros-fcitx5-linux.zip",
-            "eosphoros-trime.zip",
+            "eosphoros-trime-android.zip",
             "eosphoros-fcitx5-android.zip",
-            "eosphoros-yuanshu.zip",
-            "eosphoros-hamster.zip",
+            "eosphoros-yuanshu-ios.zip",
+            "eosphoros-hamster-ios.zip",
         ):
             self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
 
@@ -529,6 +529,9 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual(merged["style"]["color_scheme"], "EosphorosLight")
         self.assertEqual(merged["style"]["color_scheme_dark"], "EosphorosDark")
         self.assertEqual(merged["style"]["label_format"], "{:s}. ")
+        self.assertEqual(merged["style"]["font_face"], "Microsoft YaHei UI")
+        self.assertEqual(merged["style"]["font_point"], 16)
+        self.assertEqual(merged["style"]["layout"]["min_width"], 220)
         self.assertEqual(
             merged["preset_color_schemes"]["EosphorosLight"]["color_format"],
             "abgr",
@@ -556,6 +559,8 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertIn(name, preparer)
         self.assertIn("eosphoros_zzc_root=%RABBIT_ROOT%Data", preparer)
         self.assertIn("eosphoros_zzc_state_dir=%RABBIT_ROOT%Rime\\zzc_state", preparer)
+        self.assertIn('root / "eosphoros.ico"', preparer)
+        self.assertIn('root / "eosphoros-ascii.ico"', preparer)
 
     def test_release_uses_one_native_upload_with_checksums(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -579,14 +584,14 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertNotIn("YONG_INI_URL", release)
         self.assertNotIn("prepare_yong_config.py", release)
         self.assertIn("packaging/yong/yong.ini", release)
-        self.assertIn("zip -r ../yong-windows-eosphoros.zip yong", release)
+        self.assertIn("zip -r ../eosphoros-yong-windows.zip yong", release)
         self.assertIn("YONG_LINUX_URL", release)
         self.assertNotIn("YONG_WIN_SHA256", release)
         self.assertNotIn("YONG_LINUX_SHA256", release)
         self.assertNotIn("warn_if_yong_changed", release)
         self.assertIn("7z x yong-lin.7z -oyong_linux_temp", release)
-        self.assertIn("zip -r ../yong-linux-eosphoros.zip yong", release)
-        self.assertNotIn("zip -r yong-windows-eosphoros.zip .yong", release)
+        self.assertIn("zip -r ../eosphoros-yong-linux.zip yong", release)
+        self.assertNotIn("zip -r eosphoros-yong-windows.zip .yong", release)
         self.assertNotIn("yong-eosphoros-full.zip", release)
         self.assertNotIn("yong-eosphoros-full.zip", readme)
 
@@ -686,10 +691,10 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn(".yong/android/Eosphoros-Dawn.zip", release)
         self.assertIn(".yong/android/Eosphoros-Night.zip", release)
         self.assertNotIn("yong/theme-builder", release)
-        self.assertRegex(release, r"(?m)^\s+yong-windows-eosphoros\.zip$")
-        self.assertRegex(release, r"(?m)^\s+yong-android-eosphoros\.zip$")
-        self.assertRegex(release, r"(?m)^\s+yong-linux-eosphoros\.zip$")
-        self.assertRegex(release, r"(?m)^\s+yong-eosphoros-skins\.zip$")
+        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-windows\.zip$")
+        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-android\.zip$")
+        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-linux\.zip$")
+        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-desktop-skins\.zip$")
         self.assertIn("Ctrl + 空格", help_text)
         self.assertIn("eosphoros.txt", help_text)
 
@@ -726,11 +731,11 @@ class RepositoryValidationTests(unittest.TestCase):
             skin.read(skin_path, encoding="utf-8")
             self.assertEqual(
                 set(skin.sections()),
-                {"about", "main", "main-dark", "input", "input-dark"},
+                {"about", "main", "main-dark", "input", "input-dark", "tray"},
             )
             self.assertEqual(skin.get("main", "scale"), "0")
-            self.assertEqual(skin.get("input", "line"), "1")
-            self.assertNotRegex(skin_path.read_text(encoding="utf-8"), r"\.(png|svg|ico)")
+            self.assertEqual(skin.get("input", "line"), "2")
+            self.assertEqual(skin.get("tray", "icon"), "tray1.ico tray2.ico")
 
     def test_yong_android_theme_builder_preserves_base_skin(self) -> None:
         from tools.build_yong_android_skin import build
@@ -799,6 +804,7 @@ class RepositoryValidationTests(unittest.TestCase):
         recipe_files = {
             "core": root / "recipe.yaml",
             "weasel": root / "weasel.recipe.yaml",
+            "rabbit": root / "rabbit.recipe.yaml",
             "squirrel": root / "squirrel.recipe.yaml",
             "fcitx5-macos": root / "fcitx5-macos.recipe.yaml",
             "fcitx5-linux": root / "fcitx5-linux.recipe.yaml",
@@ -846,6 +852,7 @@ class RepositoryValidationTests(unittest.TestCase):
             "default.custom.yaml",
             "squirrel.custom.yaml",
             "weasel.custom.yaml",
+            "rabbit.custom.yaml",
         ):
             for name, recipe_patterns in patterns.items():
                 self.assertFalse(
@@ -862,6 +869,11 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertIn("- schema: eosphoros", recipe)
         for name, recipe_patterns in patterns.items():
             self.assertIn("eosphoros.custom.yaml", recipe_patterns, name)
+            for icon_name in ("eosphoros.ico", "eosphoros-ascii.ico"):
+                self.assertTrue(
+                    any(fnmatch.fnmatchcase(icon_name, pattern) for pattern in recipe_patterns),
+                    f"{name}: {icon_name}",
+                )
             self.assertEqual(
                 [item for item in recipe_patterns if item.startswith("zzc_state/")],
                 ["zzc_state/char_parts.tsv"],
@@ -880,6 +892,8 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertFalse(any("squirrel" in item for item in patterns["core"]))
         self.assertFalse(any("Hamster" in item for item in patterns["core"]))
         self.assertTrue(any("weasel" in item for item in patterns["weasel"]))
+        self.assertFalse(any("weasel" in item for item in patterns["rabbit"]))
+        self.assertIn("rabbit_themes.yaml", patterns["rabbit"])
         self.assertTrue(any("squirrel" in item for item in patterns["squirrel"]))
         self.assertTrue(any("Hamster" in item for item in patterns["mobile"]))
         for weasel_zzc in (
@@ -907,6 +921,12 @@ class RepositoryValidationTests(unittest.TestCase):
         platform_zzc = {
             "core": set(),
             "weasel": {
+                "zzc/Win_词库合并.exe",
+                "zzc/Win_撤回合并.exe",
+                "zzc/Windows_词库合并.py",
+                "zzc/Windows_撤回合并.py",
+            },
+            "rabbit": {
                 "zzc/Win_词库合并.exe",
                 "zzc/Win_撤回合并.exe",
                 "zzc/Windows_词库合并.py",
@@ -960,6 +980,7 @@ class RepositoryValidationTests(unittest.TestCase):
         for name in (
             "recipe.yaml",
             "weasel.recipe.yaml",
+            "rabbit.recipe.yaml",
             "squirrel.recipe.yaml",
             "fcitx5-macos.recipe.yaml",
             "fcitx5-linux.recipe.yaml",
@@ -979,6 +1000,7 @@ class RepositoryValidationTests(unittest.TestCase):
             )
         self.assertIn('  icon: ""', schema)
         self.assertIn('schema/icon: "eosphoros.ico"', custom)
+        self.assertIn('schema/ascii_icon: "eosphoros-ascii.ico"', custom)
 
     def test_desktop_style_files_use_current_consistent_defaults(self) -> None:
         root = Path(__file__).resolve().parents[1]

@@ -13,17 +13,16 @@ ROOT = Path(__file__).resolve().parents[1]
 FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 
 PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
-    "eosphoros.zip": (),
-    "eosphoros-weasel.zip": (
+    "eosphoros-rime-cross-platform.zip": (),
+    "eosphoros-weasel-windows.zip": (
         "weasel.yaml",
         "weasel.custom.yaml",
-        "eosphoros.ico",
         "zzc/Win_词库合并.exe",
         "zzc/Win_撤回合并.exe",
         "zzc/Windows_词库合并.py",
         "zzc/Windows_撤回合并.py",
     ),
-    "eosphoros-squirrel.zip": (
+    "eosphoros-squirrel-macos.zip": (
         "squirrel.yaml",
         "squirrel.custom.yaml",
         "zzc/Mac_词库合并",
@@ -39,13 +38,13 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/Fcitx5_Linux_词库合并.py",
         "zzc/Fcitx5_Linux_撤回合并.py",
     ),
-    "eosphoros-trime.zip": (
+    "eosphoros-trime-android.zip": (
         "mobile_themes/trime/eosphoros.trime.yaml",
     ),
     "eosphoros-fcitx5-android.zip": (
         "mobile_themes/fcitx5-android",
     ),
-    "eosphoros-yuanshu.zip": (
+    "eosphoros-yuanshu-ios.zip": (
         "Hamster.yaml",
         "exclude_iCloud_rime_files.txt",
         "include_iCloud_rime_files.txt",
@@ -54,7 +53,7 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/iOS快捷指令合并说明.md",
         "zzc/a-Shell快捷指令合并说明.md",
     ),
-    "eosphoros-hamster.zip": (
+    "eosphoros-hamster-ios.zip": (
         "Hamster.yaml",
         "exclude_iCloud_rime_files.txt",
         "include_iCloud_rime_files.txt",
@@ -66,7 +65,7 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
 }
 
 PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
-    "eosphoros-trime.zip": (
+    "eosphoros-trime-android.zip": (
         ("mobile_themes/trime/eosphoros.trime.yaml", "eosphoros.trime.yaml"),
     ),
     "eosphoros-fcitx5-android.zip": (
@@ -88,6 +87,8 @@ def common_runtime_files(root: Path) -> list[Path]:
         root / "default.custom.yaml",
         root / "liangfen.schema.yaml",
         root / "pinyin_simp.schema.yaml",
+        root / "eosphoros.ico",
+        root / "eosphoros-ascii.ico",
         root / "zzc_state" / "char_parts.tsv",
         root / "README.md",
         root / "THIRD_PARTY.md",

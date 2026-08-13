@@ -1,4 +1,4 @@
-﻿name: Create Release with Zipped Branch Assets and Date
+name: Create Release with Zipped Branch Assets and Date
 
 on:
   schedule:
@@ -220,7 +220,7 @@ jobs:
     - name: Prepare minimal Rabbit bundle
       run: |
         pixi run python tools/prepare_rabbit_release.py --rabbit-dir Rabbit
-        zip -r Rabbit-eosphoros.zip Rabbit/
+        zip -r eosphoros-rabbit-windows.zip Rabbit/
 
     - name: Convert .dict.yaml files to .txt using Bash
       run: |
@@ -333,6 +333,7 @@ jobs:
 
     - name: Zip yong
       run: |
+        python tools/build_eosphoros_icons.py --check
         mkdir -p yong_android/yong/.yong
         python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb yong_android/yong/.yong/
@@ -342,7 +343,7 @@ jobs:
         python tools/build_yong_android_skin.py packaging/yong/android/skin --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
         python tools/validate_yong_package.py yong_android/yong
         cd yong_android
-        zip -r ../yong-android-eosphoros.zip yong
+        zip -r ../eosphoros-yong-android.zip yong
         cd ..
         rm -rf yong_android
 
@@ -351,34 +352,31 @@ jobs:
         curl --fail --location --output yong-lin.7z "$YONG_LINUX_URL"
         python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb .yong/
-        mkdir -p .yong/skin
-        cp -r packaging/yong/skins/. .yong/skin/
 
         7z x yong-lin.7z -oyong_linux_temp
         mkdir -p yong_linux_temp/yong/.yong
         cp .yong/yong.ini yong_linux_temp/yong/.yong/yong.ini
         cp .yong/yong.ini yong_linux_temp/yong/yong.ini
         cp -r mb yong_linux_temp/yong/
-        mkdir -p yong_linux_temp/yong/skin
-        cp -r packaging/yong/skins/. yong_linux_temp/yong/skin/
+        python tools/prepare_yong_desktop_skins.py --base-skin yong_linux_temp/yong/skin --destination yong_linux_temp/yong/skin
         cp packaging/yong/linux/README.txt yong_linux_temp/yong/README-Eosphoros-Linux.txt
         python tools/validate_yong_package.py yong_linux_temp/yong
-        (cd yong_linux_temp && zip -r ../yong-linux-eosphoros.zip yong)
+        (cd yong_linux_temp && zip -r ../eosphoros-yong-linux.zip yong)
         rm -rf yong_linux_temp
 
         7z x yong-win.7z -oyong_temp
         cp -r .yong yong_temp/yong
+        python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_temp/yong/.yong/skin
         cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt
         python tools/validate_yong_package.py yong_temp/yong
-        (cd yong_temp && zip -r ../yong-windows-eosphoros.zip yong)
-        rm -rf .yong yong_temp
+        (cd yong_temp && zip -r ../eosphoros-yong-windows.zip yong)
 
         mkdir -p yong_skin_bundle/skin
-        cp -r packaging/yong/skins/. yong_skin_bundle/skin/
+        python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_skin_bundle/skin
         cd yong_skin_bundle
-        zip -r ../yong-eosphoros-skins.zip skin
+        zip -r ../eosphoros-yong-desktop-skins.zip skin
         cd ..
-        rm -rf yong_skin_bundle
+        rm -rf .yong yong_temp yong_skin_bundle
 
     - name: Create checksums and publish Release
       env:
@@ -391,20 +389,20 @@ jobs:
           - [如何使用](${{ github.server_url }}/${{ github.repository }}#如何使用)
       run: |
         assets=(
-          Rabbit-eosphoros.zip
-          yong-windows-eosphoros.zip
-          yong-linux-eosphoros.zip
-          yong-android-eosphoros.zip
-          yong-eosphoros-skins.zip
-          eosphoros.zip
-          eosphoros-weasel.zip
-          eosphoros-squirrel.zip
+          eosphoros-rabbit-windows.zip
+          eosphoros-yong-windows.zip
+          eosphoros-yong-linux.zip
+          eosphoros-yong-android.zip
+          eosphoros-yong-desktop-skins.zip
+          eosphoros-rime-cross-platform.zip
+          eosphoros-weasel-windows.zip
+          eosphoros-squirrel-macos.zip
           eosphoros-fcitx5-macos.zip
           eosphoros-fcitx5-linux.zip
-          eosphoros-trime.zip
+          eosphoros-trime-android.zip
           eosphoros-fcitx5-android.zip
-          eosphoros-yuanshu.zip
-          eosphoros-hamster.zip
+          eosphoros-yuanshu-ios.zip
+          eosphoros-hamster-ios.zip
           dazhu.txt
         )
         sha256sum "${assets[@]}" > SHA256SUMS

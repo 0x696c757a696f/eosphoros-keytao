@@ -8,6 +8,7 @@ install_files: >-
   default.yaml
   liangfen*.yaml
   pinyin_simp*.yaml
+  eosphoros*.ico
   eosphoros.*.dict.yaml
   dicts/eosphoros/*.dict.yaml
   eosphoros.*.schema.yaml
@@ -28,7 +29,6 @@ install_files: >-
   zzc/Windows_词库合并.py
   zzc/Windows_撤回合并.py
   weasel.yaml
-  eosphoros.ico
 patch_files:
   default.custom.yaml:
     - patch/+:

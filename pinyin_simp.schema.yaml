@@ -4,7 +4,7 @@
 schema:
   schema_id: pinyin_simp
   name: 拼音反查辅助方案·勿选
-  version: "2026-08-12"
+  version: "2026-08-13"
   author:
     - 佚名
   description: 源自 Android 拼音

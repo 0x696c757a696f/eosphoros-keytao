@@ -8,7 +8,7 @@ install_files: >-
   default.yaml
   liangfen*.yaml
   pinyin_simp*.yaml
-  eosphoros.ico
+  eosphoros*.ico
   eosphoros.*.dict.yaml
   dicts/eosphoros/*.dict.yaml
   eosphoros.*.schema.yaml

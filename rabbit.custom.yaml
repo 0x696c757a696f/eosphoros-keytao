@@ -4,4 +4,19 @@
 patch:
   style/color_scheme: EosphorosLight
   style/color_scheme_dark: EosphorosDark
+  style/font_face: "Microsoft YaHei UI"
+  style/label_font_face: "Microsoft YaHei UI"
+  style/comment_font_face: "Microsoft YaHei UI"
+  style/font_point: 16
+  style/label_font_point: 15
+  style/comment_font_point: 13
   style/label_format: "{:s}. "
+  style/layout/margin_x: 8
+  style/layout/margin_y: 6
+  style/layout/min_width: 220
+  preset_color_schemes/EosphorosLight:
+    __include: rabbit_themes:/preset_color_schemes/EosphorosLight
+  preset_color_schemes/EosphorosDark:
+    __include: rabbit_themes:/preset_color_schemes/EosphorosDark
+  preset_color_schemes/EosphorosMono:
+    __include: rabbit_themes:/preset_color_schemes/EosphorosMono

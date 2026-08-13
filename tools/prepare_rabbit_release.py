@@ -13,17 +13,25 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 RABBIT_BASE_FILES = ("punctuation.yaml", "key_bindings.yaml", "symbols.yaml")
-RABBIT_STYLE_KEYS = (
-    "color_scheme",
-    "color_scheme_dark",
-    "font_face",
-    "label_font_face",
-    "comment_font_face",
-    "font_point",
-    "label_font_point",
-    "comment_font_point",
-)
-RABBIT_LAYOUT_KEYS = ("corner_radius", "round_corner", "margin_x", "margin_y", "min_width")
+RABBIT_STYLE = {
+    "color_scheme": "EosphorosLight",
+    "color_scheme_dark": "EosphorosDark",
+    # Rabbit passes this value directly to AutoHotkey/CreateFont.  Unlike
+    # Weasel, it does not accept a comma-separated fallback chain.
+    "font_face": "Microsoft YaHei UI",
+    "label_font_face": "Microsoft YaHei UI",
+    "comment_font_face": "Microsoft YaHei UI",
+    "font_point": 16,
+    "label_font_point": 15,
+    "comment_font_point": 13,
+}
+RABBIT_LAYOUT = {
+    "corner_radius": 8,
+    "round_corner": 8,
+    "margin_x": 8,
+    "margin_y": 6,
+    "min_width": 220,
+}
 MERGE_LAUNCHER = r"""@echo off
 setlocal
 set "RABBIT_ROOT=%~dp0"
@@ -75,20 +83,13 @@ def build_rabbit_config(base: dict[str, Any], weasel: dict[str, Any]) -> dict[st
     result["config_version"] = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
     result["app_options"] = {**base.get("app_options", {}), **weasel.get("app_options", {})}
 
-    source_style = weasel.get("style", {})
     style = dict(base.get("style", {}))
-    for key in RABBIT_STYLE_KEYS:
-        if key in source_style:
-            style[key] = source_style[key]
+    style.update(RABBIT_STYLE)
     # Rabbit uses AutoHotkey v2 Format(), not Weasel's printf-style label format.
     style["label_format"] = "{:s}. "
-    source_layout = source_style.get("layout", {})
     layout = dict(style.get("layout", {}))
-    for key in RABBIT_LAYOUT_KEYS:
-        if key in source_layout:
-            layout[key] = source_layout[key]
-    if layout:
-        style["layout"] = layout
+    layout.update(RABBIT_LAYOUT)
+    style["layout"] = layout
     result["style"] = style
 
     schemes: dict[str, Any] = {}
@@ -103,7 +104,13 @@ def build_rabbit_config(base: dict[str, Any], weasel: dict[str, Any]) -> dict[st
 
 
 def runtime_files(root: Path) -> list[Path]:
-    files = [root / "default.yaml", root / "liangfen.schema.yaml", root / "pinyin_simp.schema.yaml"]
+    files = [
+        root / "default.yaml",
+        root / "liangfen.schema.yaml",
+        root / "pinyin_simp.schema.yaml",
+        root / "eosphoros.ico",
+        root / "eosphoros-ascii.ico",
+    ]
     files.extend(path for path in root.glob("eosphoros*.yaml") if not path.name.endswith(".custom.yaml"))
     files.extend(root.glob("*.dict.yaml"))
     for folder in ("dicts/eosphoros", "lua/eosphoros", "opencc/eosphoros"):
@@ -144,7 +151,14 @@ def prepare(rabbit_dir: Path, root: Path = ROOT) -> None:
 
     shutil.rmtree(user_dir, ignore_errors=True)
     (user_dir / "dicts" / "eosphoros").mkdir(parents=True)
-    for name in ("default.custom.yaml", "eosphoros.custom.yaml", "rabbit.custom.yaml"):
+    for name in (
+        "default.custom.yaml",
+        "eosphoros.custom.yaml",
+        "rabbit.custom.yaml",
+        "rabbit_themes.yaml",
+        "eosphoros.ico",
+        "eosphoros-ascii.ico",
+    ):
         shutil.copy2(root / name, user_dir / name)
     shutil.copy2(
         root / "dicts" / "eosphoros" / "eosphoros.user.dict.yaml",

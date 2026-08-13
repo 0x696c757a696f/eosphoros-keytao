@@ -1,0 +1,69 @@
+# Rabbit themes derived from the canonical Weasel Eosphoros palettes.
+# Rabbit reads Weasel hexadecimal colors correctly when declared as abgr.
+
+preset_color_schemes:
+  EosphorosLight:
+    name: "晨星·黎明／Eosphoros Light"
+    author: eosphoros-keytao
+    color_format: abgr
+    text_color: 0x171717
+    back_color: 0xf1f5f7
+    shadow_color: 0x22000000
+    border_color: 0xc5d1d8
+    hilited_text_color: 0x171717
+    hilited_back_color: 0xf1f5f7
+    hilited_shadow_color: 0x00000000
+    candidate_text_color: 0x2c3032
+    candidate_back_color: 0xf1f5f7
+    candidate_shadow_color: 0x00000000
+    hilited_candidate_text_color: 0xedf9ff
+    hilited_candidate_back_color: 0x1a1d1e
+    hilited_candidate_shadow_color: 0x22000000
+    comment_text_color: 0x6a747b
+    hilited_comment_text_color: 0x9fc8d9
+    label_color: 0x86929a
+    hilited_label_color: 0x6ac9f0
+
+  EosphorosDark:
+    name: "晨星·夜色／Eosphoros Dark"
+    author: eosphoros-keytao
+    color_format: abgr
+    text_color: 0xe8eef1
+    back_color: 0x161717
+    shadow_color: 0x66000000
+    border_color: 0x323638
+    hilited_text_color: 0xe8eef1
+    hilited_back_color: 0x161717
+    hilited_shadow_color: 0x00000000
+    candidate_text_color: 0xd8e1e6
+    candidate_back_color: 0x161717
+    candidate_shadow_color: 0x00000000
+    hilited_candidate_text_color: 0x161717
+    hilited_candidate_back_color: 0xe8eef1
+    hilited_candidate_shadow_color: 0x44000000
+    comment_text_color: 0x97a0a7
+    hilited_comment_text_color: 0x50656f
+    label_color: 0x7c858b
+    hilited_label_color: 0x1d769c
+
+  EosphorosMono:
+    name: "晨星·极简／Eosphoros Mono"
+    author: eosphoros-keytao
+    color_format: abgr
+    text_color: 0x000000
+    back_color: 0xffffff
+    shadow_color: 0x00000000
+    border_color: 0x000000
+    hilited_text_color: 0x000000
+    hilited_back_color: 0xffffff
+    hilited_shadow_color: 0x00000000
+    candidate_text_color: 0x000000
+    candidate_back_color: 0xffffff
+    candidate_shadow_color: 0x00000000
+    hilited_candidate_text_color: 0xffffff
+    hilited_candidate_back_color: 0x000000
+    hilited_candidate_shadow_color: 0x00000000
+    comment_text_color: 0x666666
+    hilited_comment_text_color: 0xcccccc
+    label_color: 0x666666
+    hilited_label_color: 0xcccccc
