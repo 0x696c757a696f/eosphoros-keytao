@@ -104,7 +104,7 @@
 | Android | [同文 Trime](https://github.com/osfans/trime/releases/latest) | `/storage/emulated/0/rime/` |
 | Android | [Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 应用数据中的 `data/rime/` |
 | Android | [小小输入法 Yong](https://yong.dgod.net/read.php?fid=2&tid=1) | `/storage/emulated/0/yong/.yong/` |
-| iOS | [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701) | 使用应用内方案导入功能 |
+| iOS | [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701) | 下载对应平台包后，通过应用的本地导入功能安装；仓输入法不支持在线方案下载 |
 | Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + `fcitx5-rime` + `librime-lua` | `~/.local/share/fcitx5/rime/` |
 | Linux | [小小输入法 Yong](https://yong.dgod.net/read.php?fid=7&tid=6) | `~/.yong/` 或 `$XDG_CONFIG_HOME/yong/` |
 
@@ -253,7 +253,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 | Windows | [小狼毫](https://github.com/rime/weasel/releases/latest)、[水龙月 Fork](https://github.com/Techince/weasel/releases/latest)、玉兔毫、小小输入法 | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
 | macOS | [鼠须管](https://github.com/rime/squirrel/releases/latest)、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 解压到对应 Rime 用户目录 | 重新部署 |
 | Android | [同文](https://github.com/osfans/trime/releases/latest)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 通过应用配置管理或系统文件选择器导入 | 在应用内重新部署 |
-| iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 使用应用内下载方案或在线方案导入 | 切换到新方案目录并重新部署 |
+| iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 手动下载对应平台包，再通过应用的本地导入功能安装；仓输入法不能在线下载方案 | 切换到新方案目录并重新部署 |
 | Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + Rime + librime-lua，或小小输入法 | 安装组件后解压到对应用户目录 | 重启输入法；Rime 前端还需重新部署 |
 
 无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`dicts/eosphoros/`、`lua/eosphoros/` 和 `opencc/eosphoros/` 都必须保持原目录结构一起导入，否则词库、顶功、自造词、英文、Emoji 和简繁转换可能不完整。
@@ -347,9 +347,10 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 **仓输入法**
 
 1. 安装[仓输入法](https://apps.apple.com/app/id6446617683)。
-2. 使用应用内在线方案下载功能导入 [`eosphoros-hamster-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios.zip)。
-3. 导入或更新后重新部署，并在应用中切换到对应方案。
-4. 如需晨星键盘皮肤，解压平台包后，通过系统共享菜单逐个打开 `skins/` 中所需的 `.hskin` 导入。
+2. 在浏览器中手动下载 [`eosphoros-hamster-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios.zip)，并把文件保存到 iOS“文件”应用；仓输入法不支持通过在线方案地址直接下载晨星键道。
+3. 在仓输入法中使用本地方案导入功能选择刚下载的 ZIP；也可以从“文件”应用通过系统共享菜单交给仓输入法打开。不要先删除包内的词典、Lua 或 OpenCC 目录。
+4. 导入或更新后重新部署，并在应用中切换到晨星键道。
+5. 如需晨星键盘皮肤，先解压平台包，再通过系统共享菜单逐个打开 `skins/` 中所需的 `.hskin`；皮肤和输入方案需要分别导入。
 
 #### 🐧 Linux
 
