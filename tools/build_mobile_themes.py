@@ -5,11 +5,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import io
 import json
 import re
 import subprocess
 import tempfile
+import time
+import urllib.error
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -532,8 +535,28 @@ def adapt_mature_skin(
 def download_locked(url: str, sha256: str, destination: Path) -> bytes:
     destination.parent.mkdir(parents=True, exist_ok=True)
     if not destination.exists():
-        with urllib.request.urlopen(url, timeout=120) as response:
-            destination.write_bytes(response.read())
+        request = urllib.request.Request(
+            url,
+            headers={"User-Agent": "eosphoros-keytao-release-builder"},
+        )
+        last_error: BaseException | None = None
+        for attempt in range(4):
+            try:
+                with urllib.request.urlopen(request, timeout=120) as response:
+                    destination.write_bytes(response.read())
+                break
+            except (
+                urllib.error.URLError,
+                http.client.RemoteDisconnected,
+                TimeoutError,
+                ConnectionError,
+            ) as exc:
+                last_error = exc
+                if attempt == 3:
+                    raise RuntimeError(
+                        f"failed to download locked iOS template after 4 attempts: {url}"
+                    ) from last_error
+                time.sleep(2**attempt)
     data = destination.read_bytes()
     digest = hashlib.sha256(data).hexdigest()
     if digest != sha256.lower():

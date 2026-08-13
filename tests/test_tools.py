@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import configparser
 import fnmatch
+import hashlib
+import http.client
 import importlib.util
 import io
 import json
@@ -283,6 +285,36 @@ class RepositoryValidationTests(unittest.TestCase):
 
             self.assertNotEqual(stored.read_bytes(), deflated.read_bytes())
             self.assertEqual(artifact_contents(stored), artifact_contents(deflated))
+
+    def test_locked_mobile_template_download_retries_transient_disconnects(self) -> None:
+        from tools.build_mobile_themes import download_locked
+
+        payload = b"locked mobile skin template"
+
+        class Response:
+            def __enter__(self) -> Response:
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                return None
+
+            def read(self) -> bytes:
+                return payload
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "tools.build_mobile_themes.urllib.request.urlopen",
+            side_effect=[http.client.RemoteDisconnected(), Response()],
+        ) as urlopen, patch("tools.build_mobile_themes.time.sleep") as sleep:
+            destination = Path(temp_dir) / "template.cskin"
+            result = download_locked(
+                "https://example.invalid/template.cskin",
+                hashlib.sha256(payload).hexdigest(),
+                destination,
+            )
+
+        self.assertEqual(result, payload)
+        self.assertEqual(urlopen.call_count, 2)
+        sleep.assert_called_once_with(1)
 
     def test_release_embeds_native_mobile_themes_in_platform_archives(self) -> None:
         root = Path(__file__).resolve().parents[1]
