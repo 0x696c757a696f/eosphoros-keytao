@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION_RE = re.compile(
-    r"^(\s*(?:(?:config_)?version|generated):\s*)[\"']?\d{4}-\d{2}-\d{2}[\"']?",
+    r"^(\s*(?:(?:config_)?version|generated):\s*)([\"']?)\d{4}-\d{2}-\d{2}[\"']?",
     re.MULTILINE,
 )
 
@@ -49,7 +49,11 @@ def main() -> int:
     )
     for path in sorted(yaml_paths):
         original = path.read_text(encoding="utf-8-sig")
-        updated, count = VERSION_RE.subn(lambda match: f'{match.group(1)}"{args.date}"', original)
+        def replace_version(match: re.Match[str]) -> str:
+            quote = match.group(2) or '"'
+            return f"{match.group(1)}{quote}{args.date}{quote}"
+
+        updated, count = VERSION_RE.subn(replace_version, original)
         if count and updated != original:
             path.write_text(updated, encoding="utf-8", newline="\n")
             changed += 1
