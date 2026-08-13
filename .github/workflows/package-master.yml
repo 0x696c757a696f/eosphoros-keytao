@@ -85,7 +85,7 @@ jobs:
     - name: Validate source tree
       run: |
         sudo apt-get update
-        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude
+        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude libime-bin
         python -m pip install --upgrade -r requirements-ci.txt
         python -m pip install -r requirements-dev.txt
         python tools/validate_repo.py
@@ -105,6 +105,9 @@ jobs:
         python tools/build_platform_packages.py --check
         python tools/build_fcitx5_table.py --check
 
+    - name: Build Fcitx5 built-in Table packages
+      run: python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
+
     - name: Compile packaged core with librime and Lua
       run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
 
@@ -113,6 +116,24 @@ jobs:
 
     - name: Validate native mobile themes
       run: pixi run python tools/build_mobile_themes.py --check
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: eosphoros-fcitx5-linux
+        path: eosphoros-fcitx5-linux.zip
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: eosphoros-fcitx5-macos
+        path: eosphoros-fcitx5-macos.zip
+        if-no-files-found: error
+
+    - uses: actions/upload-artifact@v7
+      with:
+        name: eosphoros-fcitx5-android
+        path: eosphoros-fcitx5-android.zip
+        if-no-files-found: error
 
     - uses: actions/upload-artifact@v7
       with:
@@ -148,7 +169,9 @@ jobs:
           !.git*
           !fcitx5/**
           !native/**
+          !packaging/fcitx5/**
           !mobile_themes/**
+          !eosphoros-fcitx5-*.zip
           !yong*.*
           !tests/**
           !tools/**

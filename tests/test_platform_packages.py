@@ -196,6 +196,21 @@ class PlatformPackageTests(unittest.TestCase):
         artifact_block = workflow.split("name: eosphoros", 1)[1]
         self.assertIn("!native/**", artifact_block)
         self.assertIn("!fcitx5/**", artifact_block)
+        self.assertIn("!packaging/fcitx5/**", artifact_block)
+        self.assertIn("!eosphoros-fcitx5-*.zip", artifact_block)
+
+    def test_master_builds_real_official_table_packages(self) -> None:
+        workflow = (ROOT / ".github/workflows/package-master.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("libime-bin", workflow)
+        self.assertIn(
+            'python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"',
+            workflow,
+        )
+        for platform in ("linux", "macos", "android"):
+            self.assertIn(f"name: eosphoros-fcitx5-{platform}", workflow)
+            self.assertIn(f"path: eosphoros-fcitx5-{platform}.zip", workflow)
 
 
 if __name__ == "__main__":
