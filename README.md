@@ -301,7 +301,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 
 **Fcitx5 macOS**
 
-1. 安装[小企鹅输入法 macOS 版（中州韵版）](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)。
+1. 安装[小企鹅输入法 macOS 版（中州韵版）](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)。这里使用的是 Fcitx5 官方 Rime 插件路线，不需要另装晨星原生插件。
 2. 下载 `eosphoros-fcitx5-macos.zip`，把方案文件完整复制到 `~/.local/share/fcitx5/rime/`。
 3. 包内 `fcitx5/macos/themes/` 是 macOS 专用主题，可在“主题编辑器 → 基础 → 选择／导入主题”中导入；不要使用同包中的路径作为 Rime 方案目录。
 4. 重启 Fcitx5 或重新部署 Rime。
@@ -329,7 +329,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 
 **Fcitx5 for Android**
 
-1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)及 Rime 插件；需要测试构建时可使用[主程序构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/)、[Rime 插件构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)和[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
+1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)及其官方 Rime 插件；不需要另装晨星插件 APK。需要测试构建时可使用[主程序构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/)、[Rime 插件构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)和[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
 2. 在小企鹅输入法中添加中州韵后，Rime 数据目录通常为 `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`。
 3. 下载并解压 [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip)。推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
 4. 返回应用重新部署 Rime。

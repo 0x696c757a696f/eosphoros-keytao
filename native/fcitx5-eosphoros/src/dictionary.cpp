@@ -163,7 +163,7 @@ std::vector<Candidate> Dictionary::lookup(const std::string &input,
                 return;
             }
             if (seen.insert(entry.text).second) {
-                out.push_back({entry.text, entry.code, completion});
+            out.push_back({entry.text, entry.code, completion, {}});
             }
         }
     };
@@ -191,7 +191,7 @@ std::vector<Candidate> Dictionary::lookup(const std::string &input,
             break;
         }
         if (seen.insert(entry->text).second) {
-            result.push_back({entry->text, entry->code, true});
+            result.push_back({entry->text, entry->code, true, {}});
         }
     }
     return result;

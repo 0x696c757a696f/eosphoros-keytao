@@ -36,7 +36,10 @@ bool UserData::load(std::string *error) {
         }
         try {
             std::getline(row, sequence);
-            const auto order = sequence.empty() ? 0 : std::stoull(sequence);
+            const std::uint64_t order = sequence.empty()
+                                            ? 0
+                                            : static_cast<std::uint64_t>(
+                                                  std::stoull(sequence));
             entries_[key(code, text)] = {std::stoull(count), kind == "custom", order};
             sequence_ = std::max(sequence_, order);
         } catch (...) {

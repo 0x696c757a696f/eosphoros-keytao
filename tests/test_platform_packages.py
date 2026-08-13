@@ -173,6 +173,10 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("Hamster.yaml", squirrel)
 
         fcitx5_macos = members["eosphoros-fcitx5-macos.zip"]
+        self.assertIn("eosphoros.schema.yaml", fcitx5_macos)
+        self.assertTrue(any(path.startswith("dicts/eosphoros/") for path in fcitx5_macos))
+        self.assertTrue(any(path.startswith("lua/eosphoros/") for path in fcitx5_macos))
+        self.assertTrue(any(path.startswith("opencc/eosphoros/") for path in fcitx5_macos))
         self.assertIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_macos)
         self.assertIn("zzc/Fcitx5_macOS_撤回合并.py", fcitx5_macos)
         self.assertIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_macos)
@@ -204,6 +208,12 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertFalse(any(path.startswith("mobile_themes/") for path in trime))
 
         fcitx5_android = members["eosphoros-fcitx5-android.zip"]
+        self.assertIn("eosphoros.schema.yaml", fcitx5_android)
+        self.assertTrue(any(path.startswith("dicts/eosphoros/") for path in fcitx5_android))
+        self.assertTrue(any(path.startswith("lua/eosphoros/") for path in fcitx5_android))
+        self.assertTrue(any(path.startswith("opencc/eosphoros/") for path in fcitx5_android))
+        self.assertFalse(any(path.startswith("fcitx5/macos/") for path in fcitx5_android))
+        self.assertFalse(any(path.startswith("fcitx5/linux/") for path in fcitx5_android))
         self.assertEqual(
             {path for path in fcitx5_android if path.startswith("themes/")},
             {
