@@ -12,7 +12,7 @@ fixed_topup	lua/eosphoros/input/eosphoros_topup.lua:86-87	k b c d x	按部就班
 continuous_topup	lua/eosphoros/eosphoros_processor.lua:173-180	k b c d k b c d x	按部就班|按部就班	x	新输入
 topup_key_transition	lua/eosphoros/input/eosphoros_topup.lua:86	k b c a x	顶功候选	x	新输入
 missing_candidate_clear_and_start_next	lua/eosphoros/eosphoros_processor.lua:168-173	z z z z x	-	x	新输入
-backspace	Rime express_editor	k b BACKSPACE	-	k	-
+backspace	Rime express_editor + prefix lookup	k b BACKSPACE	-	k	阿
 escape	Rime express_editor	k b ESCAPE	-	-	-
 enter_raw	packaging/yong/yong.ini enter=default	k b ENTER	kb	-	-
 page_and_numeric_selection	Fcitx5 native candidate contract	m m PAGE_DOWN 2	重码七	-	-
