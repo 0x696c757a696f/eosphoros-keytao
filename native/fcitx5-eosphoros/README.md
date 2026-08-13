@@ -45,7 +45,7 @@ schema，也不会把顶功阈值散落硬编码在按键路径中。
 原生插件只链接 Fcitx5 Core 和系统 C++ 运行库。发布前应检查：
 
 ```bash
-ldd build/native/eosphoros-native.so
+ldd build/native/libeosphoros-native.so
 ```
 
 输出不得包含 `rime`、`librime`、`lua` 或 `opencc`。当前使用自有只读词典

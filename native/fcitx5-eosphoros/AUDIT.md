@@ -22,9 +22,14 @@ OpenCC、Lua 附加功能、用户词典、ZZZC 或词频学习。
 - 原生构建器按显式输入文件顺序和行序生成确定性二进制词典；运行时只做
   exact/prefix lookup，不解析百万行 YAML。精确候选列在补全项之前，同文本去重；
   补全项标为 `completion`，不会被顶功自动提交。
-- MVP 不实现用户学习，因此静态顺序不会被本地词频改变。若以后评估 libime，
-  只复用满足 prefix/exact/multiple candidates 的低层词典 API，不采用会改变顶功的
-  `TableContext`。
+- 已核对 libime 当前公开 API：`TableBasedDictionary` 提供二进制载入、
+  `TableMatchMode::Exact/Prefix`、多候选回调和插入序号，具备后续承载完整大词典的
+  基础能力；`TableContext` 同时带有自动选择、学习和组句状态，不适合作为晨星顶功
+  状态机。第一阶段仍使用小型只读 `EOSDICT2`，把 schema 转换后的顶功参数与测试
+  词典放在同一确定性产物中，避免在完整词库尚未迁移时增加 libime-table 构建／运行
+  依赖；第二阶段迁移百万级正式词典时再以 golden trace 约束候选顺序，评估替换
+  Dictionary 后端，TopupPolicy 与 EosphorosContext 不随之替换。
+- MVP 不实现用户学习，因此静态顺序不会被本地词频改变。
 
 ## 2. 短码
 
