@@ -40,9 +40,9 @@ if(BUILD_FCITX_ADDON)
     find_package(ECM REQUIRED 1.0.0)
     set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
     find_package(Fcitx5Core ${REQUIRED_FCITX_VERSION} REQUIRED)
-    include("${FCITX_INSTALL_CMAKECONFIG_DIR}/Fcitx5Utils/Fcitx5CompilerSettings.cmake")
+    include("${Fcitx5Utils_DIR}/Fcitx5CompilerSettings.cmake")
 
-    add_fcitx5_addon(eosphoros-native
+    add_library(eosphoros-native MODULE
         src/addon.cpp
         src/candidate.cpp
         src/engine.cpp)
@@ -50,6 +50,9 @@ if(BUILD_FCITX_ADDON)
         eosphoros-native-core
         Fcitx5::Core)
     target_compile_features(eosphoros-native PRIVATE cxx_std_17)
+    set_target_properties(eosphoros-native PROPERTIES
+        CXX_VISIBILITY_PRESET hidden
+        VISIBILITY_INLINES_HIDDEN ON)
 
     configure_file(data/eosphoros-native-addon.conf.in
                    eosphoros-native-addon.conf @ONLY)
