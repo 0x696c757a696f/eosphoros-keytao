@@ -745,12 +745,12 @@ def check_committed(config: dict[str, Any]) -> bool:
 def embed_ios_skins(config: dict[str, Any], destination: Path) -> None:
     yuanshu, hamster = build_ios(config)
     targets = {
-        "eosphoros-yuanshu-ios.zip": (
+        "eosphoros-yuanshu-ios-rime.zip": (
             yuanshu,
             "元书输入法晨星皮肤",
             "方案文件可直接导入；skins/ 中的 .cskin 需在元书中逐个导入。",
         ),
-        "eosphoros-hamster-ios.zip": (
+        "eosphoros-hamster-ios-rime.zip": (
             hamster,
             "仓输入法晨星皮肤",
             "方案文件可直接导入；skins/ 中的 .hskin 需通过系统共享菜单逐个导入。",

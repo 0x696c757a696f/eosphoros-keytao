@@ -87,7 +87,7 @@ class Fcitx5TableTests(unittest.TestCase):
             self.assertFalse(any(path.startswith("lua/") for path in platform))
             self.assertFalse(any(path.startswith("opencc/") for path in platform))
         self.assertIn("themes/eosphoros-auto.conf", macos)
-        self.assertIn("themes/eosphoros-dawn.zip", android)
+        self.assertEqual(android, {"eosphoros.conf", "eosphoros.txt"})
         self.assertFalse(any("macos" in path.lower() for path in android))
         for package in members.values():
             self.assertFalse(any(path.startswith("fcitx5/") for path in package))

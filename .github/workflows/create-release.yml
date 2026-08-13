@@ -224,7 +224,7 @@ jobs:
     - name: Prepare minimal Rabbit bundle
       run: |
         pixi run python tools/prepare_rabbit_release.py --rabbit-dir Rabbit
-        zip -r eosphoros-rabbit-windows.zip Rabbit/
+        zip -r eosphoros-rabbit-windows-rime.zip Rabbit/
 
     - name: Convert .dict.yaml files to .txt using Bash
       run: |
@@ -393,20 +393,23 @@ jobs:
           - [如何使用](${{ github.server_url }}/${{ github.repository }}#如何使用)
       run: |
         assets=(
-          eosphoros-rabbit-windows.zip
+          eosphoros-rabbit-windows-rime.zip
           eosphoros-yong-windows.zip
           eosphoros-yong-linux.zip
           eosphoros-yong-android.zip
           eosphoros-yong-desktop-skins.zip
           eosphoros-rime-cross-platform.zip
-          eosphoros-weasel-windows.zip
-          eosphoros-squirrel-macos.zip
+          eosphoros-weasel-windows-rime.zip
+          eosphoros-squirrel-macos-rime.zip
           eosphoros-fcitx5-macos.zip
           eosphoros-fcitx5-linux.zip
+          eosphoros-fcitx5-macos-rime.zip
+          eosphoros-fcitx5-linux-rime.zip
           eosphoros-trime-android.zip
           eosphoros-fcitx5-android.zip
-          eosphoros-yuanshu-ios.zip
-          eosphoros-hamster-ios.zip
+          eosphoros-fcitx5-android-rime.zip
+          eosphoros-yuanshu-ios-rime.zip
+          eosphoros-hamster-ios-rime.zip
           dazhu.txt
         )
         sha256sum "${assets[@]}" > SHA256SUMS

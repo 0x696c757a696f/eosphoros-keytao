@@ -9,7 +9,8 @@
 - macOS：在 Fcitx5 的“输入法 → 导入码表”中同时选择 ZIP 内的
   `eosphoros.conf` 与 `eosphoros.txt`。
 - Android：在“小企鹅输入法 → 输入法 → 码表管理”中直接导入平台 ZIP；
-  应用会用内置 libime 将文本码表转换为二进制码表。
+  应用会用内置 libime 将文本码表转换为二进制码表。Android 码表 ZIP 只含
+  `eosphoros.conf` 与 `eosphoros.txt`；主题必须单独导入。
 
 普通中文主表保留 1～6 键编码、候选顺序和无匹配／满码自动上屏。Android 与
 macOS 客户端通常已经包含 Chinese Addons；Linux 发行版常将其拆为

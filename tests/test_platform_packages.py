@@ -53,11 +53,14 @@ class PlatformPackageTests(unittest.TestCase):
             set(members),
             {
                 "eosphoros-rime-cross-platform.zip",
-                "eosphoros-weasel-windows.zip",
-                "eosphoros-squirrel-macos.zip",
+                "eosphoros-weasel-windows-rime.zip",
+                "eosphoros-squirrel-macos-rime.zip",
+                "eosphoros-fcitx5-macos-rime.zip",
+                "eosphoros-fcitx5-linux-rime.zip",
                 "eosphoros-trime-android.zip",
-                "eosphoros-yuanshu-ios.zip",
-                "eosphoros-hamster-ios.zip",
+                "eosphoros-fcitx5-android-rime.zip",
+                "eosphoros-yuanshu-ios-rime.zip",
+                "eosphoros-hamster-ios-rime.zip",
             },
         )
 
@@ -104,23 +107,26 @@ class PlatformPackageTests(unittest.TestCase):
         shared_zzc = {path for path in common if path.startswith("zzc/")}
         expected_platform_zzc = {
             "eosphoros-rime-cross-platform.zip": set(),
-            "eosphoros-weasel-windows.zip": {
+            "eosphoros-weasel-windows-rime.zip": {
                 "zzc/Win_词库合并.exe",
                 "zzc/Win_撤回合并.exe",
                 "zzc/Windows_词库合并.py",
                 "zzc/Windows_撤回合并.py",
             },
-            "eosphoros-squirrel-macos.zip": {
+            "eosphoros-squirrel-macos-rime.zip": {
                 "zzc/Mac_词库合并",
                 "zzc/Mac_撤回合并",
             },
+            "eosphoros-fcitx5-macos-rime.zip": set(),
+            "eosphoros-fcitx5-linux-rime.zip": set(),
             "eosphoros-trime-android.zip": set(),
-            "eosphoros-yuanshu-ios.zip": {
+            "eosphoros-fcitx5-android-rime.zip": set(),
+            "eosphoros-yuanshu-ios-rime.zip": {
                 "zzc/iOS_词库合并.py",
                 "zzc/iOS快捷指令合并说明.md",
                 "zzc/a-Shell快捷指令合并说明.md",
             },
-            "eosphoros-hamster-ios.zip": {
+            "eosphoros-hamster-ios-rime.zip": {
                 "zzc/iOS_词库合并.py",
                 "zzc/iOS快捷指令合并说明.md",
                 "zzc/a-Shell快捷指令合并说明.md",
@@ -142,7 +148,7 @@ class PlatformPackageTests(unittest.TestCase):
         ):
             self.assertNotIn(frontend_file, core)
 
-        weasel = members["eosphoros-weasel-windows.zip"]
+        weasel = members["eosphoros-weasel-windows-rime.zip"]
         self.assertIn("weasel.yaml", weasel)
         self.assertIn("weasel.custom.yaml", weasel)
         self.assertIn("eosphoros.ico", weasel)
@@ -153,7 +159,7 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("squirrel.yaml", weasel)
         self.assertNotIn("Hamster.yaml", weasel)
 
-        squirrel = members["eosphoros-squirrel-macos.zip"]
+        squirrel = members["eosphoros-squirrel-macos-rime.zip"]
         self.assertIn("squirrel.yaml", squirrel)
         self.assertIn("squirrel.custom.yaml", squirrel)
         self.assertIn("zzc/Mac_词库合并", squirrel)
@@ -167,7 +173,21 @@ class PlatformPackageTests(unittest.TestCase):
         )
         self.assertFalse(any(path.startswith("mobile_themes/") for path in trime))
 
-        for name in ("eosphoros-yuanshu-ios.zip", "eosphoros-hamster-ios.zip"):
+        for name in (
+            "eosphoros-fcitx5-macos-rime.zip",
+            "eosphoros-fcitx5-linux-rime.zip",
+            "eosphoros-fcitx5-android-rime.zip",
+        ):
+            package = members[name]
+            self.assertIn("eosphoros.schema.yaml", package)
+            self.assertTrue(any(path.startswith("dicts/eosphoros/") for path in package))
+            self.assertTrue(any(path.startswith("lua/eosphoros/") for path in package))
+            self.assertTrue(any(path.startswith("opencc/eosphoros/") for path in package))
+            self.assertTrue(any(path.startswith("themes/") for path in package))
+            self.assertFalse(any(path.startswith("fcitx5/") for path in package))
+            self.assertFalse(any(path.startswith("mobile_themes/") for path in package))
+
+        for name in ("eosphoros-yuanshu-ios-rime.zip", "eosphoros-hamster-ios-rime.zip"):
             mobile = members[name]
             self.assertIn("Hamster.yaml", mobile)
             self.assertIn("include_iCloud_rime_files.txt", mobile)
@@ -179,11 +199,14 @@ class PlatformPackageTests(unittest.TestCase):
 
         for name in (
             "eosphoros-rime-cross-platform.zip",
-            "eosphoros-weasel-windows.zip",
-            "eosphoros-squirrel-macos.zip",
+            "eosphoros-weasel-windows-rime.zip",
+            "eosphoros-squirrel-macos-rime.zip",
+            "eosphoros-fcitx5-macos-rime.zip",
+            "eosphoros-fcitx5-linux-rime.zip",
+            "eosphoros-fcitx5-android-rime.zip",
             "eosphoros-trime-android.zip",
-            "eosphoros-yuanshu-ios.zip",
-            "eosphoros-hamster-ios.zip",
+            "eosphoros-yuanshu-ios-rime.zip",
+            "eosphoros-hamster-ios-rime.zip",
         ):
             self.assertFalse(
                 any(path.startswith("fcitx5/") for path in members[name]), name

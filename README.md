@@ -82,18 +82,22 @@
 | Release 文件 | 适用前端 | 额外内容 |
 | --- | --- | --- |
 | [`eosphoros-rime-cross-platform.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-cross-platform.zip) | 通用 Rime / 其他前端 | 最小运行核心和跨平台 Python 自造词工具 |
-| [`eosphoros-weasel-windows.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-weasel-windows.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
-| [`eosphoros-squirrel-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
+| [`eosphoros-weasel-windows-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-weasel-windows-rime.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
+| [`eosphoros-rabbit-windows-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime.zip) | Windows 玉兔毫 | 玉兔毫便携程序、完整 Rime 方案和晨星主题 |
+| [`eosphoros-squirrel-macos-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos-rime.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
 | [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | 官方 Table 可导入码表和 macOS 专用主题；无需 Rime |
 | [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | 官方 Table 二进制码表、输入法配置和 Classic UI 主题；无需 Rime |
+| [`eosphoros-fcitx5-macos-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-rime.zip) | macOS Fcitx5 + Rime 插件 | 完整 Rime 方案、Lua、OpenCC、反查、英文和 macOS 主题 |
+| [`eosphoros-fcitx5-linux-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux-rime.zip) | Linux Fcitx5 + Rime 插件 | 完整 Rime 方案、Lua、OpenCC、反查、英文和 Linux 主题 |
 
-> **Fcitx5 应该下载哪一个？** 直接下载对应系统的平台包。晨星只使用各平台客户端
-> 提供的官方 Table／libime、标点、快捷短语、简繁转换、Emoji／Unicode 等组件；
-> 不需要 `fcitx5-rime`、librime、晨星 `.so` 或第三方插件。
+> **Fcitx5 应该下载哪一个？** 不带 `-rime` 的包使用官方 Table／libime，安装最简单，
+> 不需要 Rime；带 `-rime` 的包保留原有完整 Rime 功能，需要对应平台的 Rime 插件
+> （Linux 还需要 librime-lua）。两者择一安装，不要放入同一个数据目录。
 | [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 mytrime“格调”完整布局版 `eosphoros.trime.yaml` |
-| [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 本体可直接导入的官方 Table 码表；`themes/` 内置三套主题 |
-| [`eosphoros-yuanshu-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |
-| [`eosphoros-hamster-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios.zip) | iOS 仓输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.hskin` 皮肤 |
+| [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 仅含可直接导入的官方 Table 配置与码表，不夹带主题目录 |
+| [`eosphoros-fcitx5-android-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-rime.zip) | Android Fcitx5 + Rime 插件 | 原有完整 Rime 方案及三套 Android 主题 |
+| [`eosphoros-yuanshu-ios-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios-rime.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |
+| [`eosphoros-hamster-ios-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios-rime.zip) | iOS 仓输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.hskin` 皮肤 |
 | [`eosphoros-yong-windows.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-windows.zip) | Windows 小小输入法 | Windows 完整便携程序、配置、GB18030 码表和三套桌面皮肤 |
 | [`eosphoros-yong-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-android.zip) | Android 小小输入法 | 小小专用 `.yong` 配置、GB18030 码表和两套可直接选择的键盘皮肤；不包含 APK |
 | [`eosphoros-yong-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-linux.zip) | Linux 小小输入法 | Linux 完整程序、GB18030 码表和三套晨星桌面皮肤 |
@@ -124,8 +128,8 @@
 | macOS 鼠须管 | 内置同一套晨星黎明／夜色／极简配色，使用鼠须管 1.x 的新布局字段 | 在 `squirrel.custom.yaml` 中将 `style/color_scheme` 设为 `EosphorosMono` 可固定使用黑白极简 |
 | Windows / Linux 小小输入法 | 内置“晨星·极简”“晨星·黎明”“晨星·石墨”，便携版默认启用黑白极简；两端共用纯色 `skin.ini` | 皮肤放入程序目录的 `skin/` 或用户目录的 `.yong/skin/`，再修改 `[IM]/skin`；复杂 Windows VBS 换肤脚本不能直接用于 Linux |
 | macOS Fcitx5 | 平台包内置晨星专属自动明暗主题和黑白极简主题，并保留其余可导入 `.conf` | 从 `eosphoros-fcitx5-macos.zip` 的 `themes/` 取用；自动明暗用 `eosphoros-auto.conf`，极简用 `eosphoros-mono.conf` |
-| iOS 元书输入法 | 平台包内置自动明暗与黑白极简两个 `.cskin`；以 ResourceforHamster 的完整万象键盘布局为底稿，保留横竖屏、数字／符号面板、候选展开、剪贴板、常用语、Emoji、脚本、键盘菜单、方案切换及快捷手势；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-yuanshu-ios.zip` 后，在元书中导入 `skins/eosphoros.cskin`；需要纯黑白外观时改用 `eosphoros-mono.cskin`。格式参见[元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
-| iOS 仓输入法 | 平台包内置自动明暗与黑白极简两个 `.hskin`；沿用成熟方案的横竖屏、iPad、浮动与单手布局；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-hamster-ios.zip` 后，通过系统共享菜单导入 `skins/eosphoros.hskin`；需要纯黑白外观时改用 `eosphoros-mono.hskin`。格式参见[仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
+| iOS 元书输入法 | 平台包内置自动明暗与黑白极简两个 `.cskin`；以 ResourceforHamster 的完整万象键盘布局为底稿，保留横竖屏、数字／符号面板、候选展开、剪贴板、常用语、Emoji、脚本、键盘菜单、方案切换及快捷手势；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-yuanshu-ios-rime.zip` 后，在元书中导入 `skins/eosphoros.cskin`；需要纯黑白外观时改用 `eosphoros-mono.cskin`。格式参见[元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
+| iOS 仓输入法 | 平台包内置自动明暗与黑白极简两个 `.hskin`；沿用成熟方案的横竖屏、iPad、浮动与单手布局；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-hamster-ios-rime.zip` 后，通过系统共享菜单导入 `skins/eosphoros.hskin`；需要纯黑白外观时改用 `eosphoros-mono.hskin`。格式参见[仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
 | Android 同文输入法 | Release 提供基于 mytrime 3.3.10 `style.trime.yaml`“格调”版的完整 `eosphoros.trime.yaml`，保留工具栏、符号、编辑和液态键盘，并内含三套晨星配色 | 把主题文件放入同文用户目录，重新部署后选择“晨星键道·格调”主题 |
 | Android Fcitx5 | Release 提供三个符合主题格式 2.1 的可导入 ZIP | 解压外层包后，在主题管理中逐个导入内部 ZIP；不能直接导入外层合集 |
 | Android 小小输入法 | 附带“晨星·黎明／夜色”皮肤；以小小官方完整 Android 键盘为兼容底稿，仅维护晨星工具栏、名称和配色覆盖 | 保留官方候选展开、按键提示、长按、Emoji、语音、编辑面板和剪贴板历史，并增加切换输入法的直接入口 |
@@ -212,7 +216,7 @@ Fcitx5 配方；Fcitx5 用户应直接使用对应系统的官方 Table Release 
 - Windows / Linux 小小输入法原创皮肤：[eosphoros-yong-desktop-skins.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-desktop-skins.zip)
 - Linux 小小输入法完整便携版：[eosphoros-yong-linux.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-linux.zip)
 - Android 小小输入法晨星配置：[eosphoros-yong-android.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-android.zip)
-- 玉兔毫：[eosphoros-rabbit-windows.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows.zip)
+- 玉兔毫：[eosphoros-rabbit-windows-rime.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime.zip)
 - macOS 小企鹅方案与主题：[eosphoros-fcitx5-macos.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip)
 - Linux 小企鹅方案与主题：[eosphoros-fcitx5-linux.zip](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip)
 
@@ -268,7 +272,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 **小狼毫 Weasel**
 
 1. 安装[小狼毫正式版](https://github.com/rime/weasel/releases/latest)或[小狼毫测试版](https://github.com/rime/weasel/releases/tag/latest)。也可使用[水龙月 Fork 版](https://github.com/Techince/weasel/releases/latest)；从原版切换到 Fork 版时，建议先卸载原版并重启系统。
-2. 从 Release 下载 `eosphoros-weasel-windows.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
+2. 从 Release 下载 `eosphoros-weasel-windows-rime.zip`，解压后把压缩包内的文件和目录复制到 `%APPDATA%\Rime`。
 3. 在小狼毫菜单中执行“重新部署”。
 4. 打开方案选单，选择“晨星键道”。
 5. 更新方案时覆盖同名方案文件即可；个人词汇应放在 `dicts/eosphoros/eosphoros.user.dict.yaml`，个人配置写在 `*.custom.yaml`，然后重新部署。
@@ -283,7 +287,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 
 **玉兔毫 Rabbit**
 
-1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`eosphoros-rabbit-windows.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows.zip)。
+1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`eosphoros-rabbit-windows-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime.zip)。
 2. 解压到路径中不含空格的目录。
 3. 运行玉兔毫并选择晨星键道；该包已经带入方案文件，不需要再复制 `eosphoros-rime-cross-platform.zip`。
 4. 包内 `rabbit.yaml` 已合入 `weasel.yaml` 的主题和兼容样式，`rabbit.custom.yaml` 默认启用“晨星·黎明”，并随 Windows 黑暗模式自动切换“晨星·夜色”。候选序号使用 Rabbit 所需的 AutoHotkey v2 格式 `{:s}. `。
@@ -295,7 +299,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 **鼠须管 Squirrel**
 
 1. 安装[鼠须管正式版](https://github.com/rime/squirrel/releases/latest)或[测试版](https://github.com/rime/squirrel/releases/tag/latest)。
-2. 下载并解压 `eosphoros-squirrel-macos.zip`，把全部内容复制到 `~/Library/Rime`。
+2. 下载并解压 `eosphoros-squirrel-macos-rime.zip`，把全部内容复制到 `~/Library/Rime`。
 3. 从鼠须管菜单执行“重新部署”，再在方案选单中选择“晨星键道”。
 
 **Fcitx5 macOS**
@@ -304,6 +308,10 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 2. 下载并解压 `eosphoros-fcitx5-macos.zip`。
 3. 打开“输入法 → 添加输入法 → 导入码表”，同时选择根目录的 `eosphoros.conf` 与 `eosphoros.txt`。客户端会使用内置 libime 完成转换。
 4. `themes/` 内是 macOS 专用主题，可在主题编辑器中另行导入；重启 Fcitx5 后添加“晨星键道”。
+
+需要完整 Lua、英文和反查功能时，改装官方 Rime 插件并下载
+`eosphoros-fcitx5-macos-rime.zip`，将方案部署到 Fcitx5 的 Rime 用户目录；不要同时
+导入同名 Table 方案。
 
 #### 🤖 Android
 
@@ -331,7 +339,10 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)主程序；自定义码表由本体内置 Chinese Addons／Table 提供，不安装 Rime 插件。剪贴板、符号／Emoji 选择器等客户端自带功能不受影响。
 2. 下载 [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip)。
 3. 打开“小企鹅输入法 → 输入法 → 码表管理 → 导入码表 → 从 ZIP 导入”，直接选择整个平台包。根目录中的 `eosphoros.conf` 与 `eosphoros.txt` 会由应用内置 libime 转换并安装。
-4. 在输入法列表添加“晨星键道”。若要使用晨星配色，再在主题管理中分别导入 `themes/` 内的三个主题 ZIP。
+4. 在输入法列表添加“晨星键道”。这个码表 ZIP 特意不含 `themes/`，避免 Android 码表导入失败；晨星主题通过 Release／Actions 中独立的 Fcitx5 Android 主题资源导入。
+
+需要完整 Rime 功能时，安装 Fcitx5 Android 的官方 Rime 插件，改用
+`eosphoros-fcitx5-android-rime.zip`，在 Rime 插件的数据管理中导入并重新部署。
 
 #### 📱 iOS
 
@@ -340,8 +351,8 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 1. 在“输入方案”中选择“下载方案”。
 2. 使用以下任一地址：
 
-   - 原始地址：<https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip>
-   - 国内网络可用代理地址：<https://gh-proxy.com/https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip>
+   - 原始地址：<https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios-rime.zip>
+   - 国内网络可用代理地址：<https://gh-proxy.com/https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios-rime.zip>
 
 3. 下载完成后进入“方案目录切换”，在 `RimeUserData` 中选择刚导入的方案目录，点击右上角“打开”。
 4. 后续更新时重新下载方案，再回到“方案目录切换”选择更新后的目录并重新部署。
@@ -351,7 +362,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 **仓输入法**
 
 1. 安装[仓输入法](https://apps.apple.com/app/id6446617683)。
-2. 在浏览器中手动下载 [`eosphoros-hamster-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios.zip)，并把文件保存到 iOS“文件”应用；仓输入法不支持通过在线方案地址直接下载晨星键道。
+2. 在浏览器中手动下载 [`eosphoros-hamster-ios-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios-rime.zip)，并把文件保存到 iOS“文件”应用；仓输入法不支持通过在线方案地址直接下载晨星键道。
 3. 在仓输入法中使用本地方案导入功能选择刚下载的 ZIP；也可以从“文件”应用通过系统共享菜单交给仓输入法打开。不要先删除包内的词典、Lua 或 OpenCC 目录。
 4. 导入或更新后重新部署，并在应用中切换到晨星键道。
 5. 如需晨星键盘皮肤，先解压平台包，再通过系统共享菜单逐个打开 `skins/` 中所需的 `.hskin`；皮肤和输入方案需要分别导入。
@@ -392,6 +403,10 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 这个纯 Table 版本保留完整 1～6 键普通中文码表、稳定候选顺序、学习以及无匹配／
 满码自动上屏。Fcitx5 官方标点、快捷短语、简繁转换、Emoji 与 Unicode 可照常使用；
 Rime 专属的 Lua 命令、`i/u/v/o` 长前缀反查和 ZZC 不会混进主表，以免破坏顶功。
+
+如果更看重与其他 Rime 客户端一致的完整功能，可安装 `fcitx5-rime` 与
+`librime-lua`，改用 `eosphoros-fcitx5-linux-rime.zip` 并部署到 Fcitx5 的 Rime
+用户目录。带 `-rime` 与不带后缀的 Table 包是两套独立方案，择一使用。
 
 <details>
 <summary><strong>🧰 展开 Linux 桌面环境与应用兼容设置</strong></summary>

@@ -363,8 +363,8 @@ class RepositoryValidationTests(unittest.TestCase):
         for archive in (
             "eosphoros-trime-android.zip",
             "eosphoros-fcitx5-android.zip",
-            "eosphoros-yuanshu-ios.zip",
-            "eosphoros-hamster-ios.zip",
+            "eosphoros-yuanshu-ios-rime.zip",
+            "eosphoros-hamster-ios-rime.zip",
         ):
             self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
         for obsolete_archive in (
@@ -389,8 +389,8 @@ class RepositoryValidationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             for archive_name in (
-                "eosphoros-yuanshu-ios.zip",
-                "eosphoros-hamster-ios.zip",
+                "eosphoros-yuanshu-ios-rime.zip",
+                "eosphoros-hamster-ios-rime.zip",
             ):
                 with zipfile.ZipFile(root / archive_name, "w") as archive:
                     archive.writestr("eosphoros.schema.yaml", "schema:\n")
@@ -398,8 +398,8 @@ class RepositoryValidationTests(unittest.TestCase):
             embed_ios_skins(load_config(), root)
 
             expected = {
-                "eosphoros-yuanshu-ios.zip": ".cskin",
-                "eosphoros-hamster-ios.zip": ".hskin",
+                "eosphoros-yuanshu-ios-rime.zip": ".cskin",
+                "eosphoros-hamster-ios-rime.zip": ".hskin",
             }
             for archive_name, suffix in expected.items():
                 with zipfile.ZipFile(root / archive_name) as archive:
@@ -615,14 +615,17 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("python tools/build_platform_packages.py --check", package)
         for archive in (
             "eosphoros-rime-cross-platform.zip",
-            "eosphoros-weasel-windows.zip",
-            "eosphoros-squirrel-macos.zip",
+            "eosphoros-weasel-windows-rime.zip",
+            "eosphoros-squirrel-macos-rime.zip",
             "eosphoros-fcitx5-macos.zip",
             "eosphoros-fcitx5-linux.zip",
+            "eosphoros-fcitx5-macos-rime.zip",
+            "eosphoros-fcitx5-linux-rime.zip",
             "eosphoros-trime-android.zip",
             "eosphoros-fcitx5-android.zip",
-            "eosphoros-yuanshu-ios.zip",
-            "eosphoros-hamster-ios.zip",
+            "eosphoros-fcitx5-android-rime.zip",
+            "eosphoros-yuanshu-ios-rime.zip",
+            "eosphoros-hamster-ios-rime.zip",
         ):
             self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
 

@@ -14,7 +14,7 @@ FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 
 PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
     "eosphoros-rime-cross-platform.zip": (),
-    "eosphoros-weasel-windows.zip": (
+    "eosphoros-weasel-windows-rime.zip": (
         "weasel.yaml",
         "weasel.custom.yaml",
         "zzc/Win_词库合并.exe",
@@ -22,16 +22,25 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/Windows_词库合并.py",
         "zzc/Windows_撤回合并.py",
     ),
-    "eosphoros-squirrel-macos.zip": (
+    "eosphoros-squirrel-macos-rime.zip": (
         "squirrel.yaml",
         "squirrel.custom.yaml",
         "zzc/Mac_词库合并",
         "zzc/Mac_撤回合并",
     ),
+    "eosphoros-fcitx5-macos-rime.zip": (
+        "fcitx5/macos/themes",
+    ),
+    "eosphoros-fcitx5-linux-rime.zip": (
+        "fcitx5/linux/themes",
+    ),
     "eosphoros-trime-android.zip": (
         "mobile_themes/trime",
     ),
-    "eosphoros-yuanshu-ios.zip": (
+    "eosphoros-fcitx5-android-rime.zip": (
+        "mobile_themes/fcitx5-android",
+    ),
+    "eosphoros-yuanshu-ios-rime.zip": (
         "Hamster.yaml",
         "exclude_iCloud_rime_files.txt",
         "include_iCloud_rime_files.txt",
@@ -40,7 +49,7 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/iOS快捷指令合并说明.md",
         "zzc/a-Shell快捷指令合并说明.md",
     ),
-    "eosphoros-hamster-ios.zip": (
+    "eosphoros-hamster-ios-rime.zip": (
         "Hamster.yaml",
         "exclude_iCloud_rime_files.txt",
         "include_iCloud_rime_files.txt",
@@ -54,6 +63,15 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
 PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
     "eosphoros-trime-android.zip": (
         ("mobile_themes/trime/", ""),
+    ),
+    "eosphoros-fcitx5-macos-rime.zip": (
+        ("fcitx5/macos/themes/", "themes/"),
+    ),
+    "eosphoros-fcitx5-linux-rime.zip": (
+        ("fcitx5/linux/themes/", "themes/"),
+    ),
+    "eosphoros-fcitx5-android-rime.zip": (
+        ("mobile_themes/fcitx5-android/", "themes/"),
     ),
 }
 

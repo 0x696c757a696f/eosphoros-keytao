@@ -231,8 +231,11 @@ def build_packages(
                 # dictionary and compile it inside the application.
                 _zip_write(archive, "eosphoros.conf", config)
                 _zip_write(archive, "eosphoros.txt", table)
-            for name, path in _theme_files(root, platform):
-                _zip_write(archive, name, path.read_bytes())
+            # Android's custom-table ZIP importer expects only the table
+            # configuration and dictionary. Themes are published separately.
+            if platform != "android":
+                for name, path in _theme_files(root, platform):
+                    _zip_write(archive, name, path.read_bytes())
         archives.append(destination)
     print(f"Fcitx5 Table: {len(entries)} unique rows")
     return archives
