@@ -283,10 +283,13 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         release = (ROOT / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )
+        manifest = (
+            ROOT / "packaging/fcitx5/table/production-dictionaries.tsv"
+        ).read_text(encoding="utf-8")
         for _, filename, dictionary_name, _ in TARGET_SPECS:
             self.assertIn(f"  - dicts/eosphoros/{dictionary_name}", extended)
-            self.assertIn(filename, release)
-            self.assertIn(filename.removesuffix(".dict.yaml") + ".txt", release)
+            self.assertIn(filename, manifest)
+        self.assertIn("tools/build_yong_table.py", release)
 
 
 if __name__ == "__main__":

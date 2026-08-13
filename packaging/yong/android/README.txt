@@ -22,6 +22,9 @@ Gboard 的常见全键盘结构，配色和图标由本项目独立设计。皮�
 长按符号、删除连发、双击 Shift、空格滑动光标、离线 Emoji、语音、粘贴、
 方向键、切换输入法和收起键盘；不含旧“彩”皮肤的多配色、游戏或联网功能。
 
+码表包含 i + 英文、u + 连写全拼、v + 二分、o + 键道单字码四个静态入口，
+例如 ihello 和 uhao。普通词库没有删减，配置使用后台线程加载大码表。
+
 小小输入法官网：https://yong.dgod.net/
 官方下载页：https://yongim.ysepan.com/
 晨星键道：https://github.com/0x696c757a696f/eosphoros-keytao

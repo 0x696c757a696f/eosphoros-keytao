@@ -475,6 +475,16 @@ class RepositoryValidationTests(unittest.TestCase):
                                 self.assertIn("toolbarStyle", pinyin)
                                 self.assertIn("toolbarLayout", pinyin)
                                 self.assertIn("preeditStyle", pinyin)
+                                self.assertGreaterEqual(pinyin["preeditHeight"], 28)
+                                self.assertEqual(
+                                    pinyin["preeditStyle"]["backgroundStyle"],
+                                    "preeditBackgroundStyle",
+                                )
+                                self.assertIn("preeditBackgroundStyle", pinyin)
+                                self.assertNotEqual(
+                                    pinyin["preeditStyle"]["backgroundStyle"],
+                                    pinyin["horizontalCandidatesStyle"]["backgroundStyle"],
+                                )
                                 self.assertIn("horizontalCandidatesLayout", pinyin)
                                 self.assertIn("verticalCandidatesLayout", pinyin)
                                 self.assertIn("buttonStyleType", pinyin_text)

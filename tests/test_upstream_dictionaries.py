@@ -524,13 +524,16 @@ class UpstreamDictionaryTests(unittest.TestCase):
         workflow = (ROOT / ".github" / "workflows" / "create-release.yml").read_text(
             encoding="utf-8"
         )
-        self.assertIn("eosphoros.ice.dict.yaml", workflow)
-        self.assertIn("Rime/eosphoros.ice.txt", workflow)
-        self.assertIn("eosphoros.en.dict.yaml", workflow)
-        self.assertIn("Rime/eosphoros.en.txt", workflow)
-        self.assertIn("dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml", workflow)
-        self.assertIn("Rime/eosphoros.wanxiang.yaopin.txt", workflow)
-        self.assertIn("Rime/eosphoros.wanxiang.jichu.txt", workflow)
+        self.assertIn("tools/build_yong_table.py", workflow)
+        self.assertIn("--table mb/eosphoros/eosphoros.txt", workflow)
+        self.assertIn("--dazhu dazhu.txt", workflow)
+        manifest = (
+            ROOT / "packaging/fcitx5/table/production-dictionaries.tsv"
+        ).read_text(encoding="utf-8")
+        self.assertIn("eosphoros.ice.dict.yaml", manifest)
+        self.assertIn("eosphoros.en.dict.yaml", manifest)
+        self.assertIn("eosphoros.wanxiang.yaopin.dict.yaml", manifest)
+        self.assertIn("eosphoros.wanxiang.jichu.dict.yaml", manifest)
 
     def test_incremental_updater_compares_pinned_git_commits(self) -> None:
         script = (ROOT / "tools" / "update_upstream_dictionaries.ps1").read_text(

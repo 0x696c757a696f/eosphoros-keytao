@@ -1,5 +1,6 @@
 # Fcitx5 built-in Table sources in stable candidate priority order.
-# Prefix namespaces are documented but excluded from the six-key main table.
+# Prefix namespaces share the table but branch at the first key. Normal KeyTao
+# Namespace data diverges at i/u/o/v without deleting any normal source row.
 dicts/eosphoros/eosphoros.danzi.dict.yaml
 dicts/eosphoros/eosphoros.cizu.dict.yaml
 dicts/eosphoros/eosphoros.catholicism.dict.yaml
@@ -21,4 +22,4 @@ dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml
 i	dicts/eosphoros/eosphoros.en.dict.yaml
 u	dicts/eosphoros/pinyin_simp.dict.yaml
 v	dicts/eosphoros/liangfen.dict.yaml
-o	dicts/eosphoros/eosphoros.gbk.dict.yaml
+o	dicts/eosphoros/eosphoros.danzi.dict.yaml

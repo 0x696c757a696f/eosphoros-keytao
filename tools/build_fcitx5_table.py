@@ -9,6 +9,8 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+from collections import Counter
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -16,9 +18,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "packaging" / "fcitx5" / "table" / "production-dictionaries.tsv"
 FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
-NORMAL_PREFIXES = {""}
 KEY_CODE = "abcdefghijklmnopqrstuvwxyz;"
-MAX_CODE_LENGTH = 6
+NAMESPACE_PREFIXES = frozenset("iuov")
+MAX_CODE_LENGTH = 63
+
+
+@dataclass(frozen=True)
+class DictionarySource:
+    namespace: str
+    path: Path
 
 
 @dataclass(frozen=True)
@@ -27,6 +35,7 @@ class Entry:
     code: str
     weight: int
     source_order: int
+    namespace: str = ""
 
 
 def parse_weight(value: str) -> int:
@@ -39,8 +48,8 @@ def parse_weight(value: str) -> int:
         return 0
 
 
-def read_manifest(root: Path = ROOT) -> list[Path]:
-    result: list[Path] = []
+def read_manifest(root: Path = ROOT) -> list[DictionarySource]:
+    result: list[DictionarySource] = []
     for line_number, raw in enumerate(
         (root / MANIFEST.relative_to(ROOT)).read_text(encoding="utf-8-sig").splitlines(), 1
     ):
@@ -54,18 +63,28 @@ def read_manifest(root: Path = ROOT) -> list[Path]:
             prefix, relative = fields
         else:
             raise ValueError(f"manifest line {line_number}: expected [prefix TAB] path")
-        # Built-in Table is intentionally the normal KeyTao table. Rime-only
-        # namespaces (English and reverse lookup) would change normal topup.
-        if prefix not in NORMAL_PREFIXES:
-            continue
+        if prefix not in ({""} | NAMESPACE_PREFIXES):
+            raise ValueError(f"manifest line {line_number}: unsupported namespace {prefix!r}")
         path = root / relative
         if not path.is_file():
             raise FileNotFoundError(path)
-        result.append(path)
+        result.append(DictionarySource(prefix, path))
     return result
 
 
-def read_rime_dictionary(path: Path, start_order: int) -> tuple[list[Entry], int]:
+def _namespace_code(namespace: str, code: str) -> str:
+    code = code.lower().replace(" ", "").replace("'", "")
+    # The synchronized English dictionary is already stored with its i prefix.
+    # The other source dictionaries contain bare codes, so a leading u/v/o is
+    # data and must not be mistaken for an existing namespace marker.
+    if namespace and not (namespace == "i" and code.startswith("i")):
+        code = namespace + code
+    return code
+
+
+def read_rime_dictionary(
+    path: Path, start_order: int, namespace: str = ""
+) -> tuple[list[Entry], int]:
     entries: list[Entry] = []
     in_body = False
     sort_mode = "original"
@@ -84,7 +103,7 @@ def read_rime_dictionary(path: Path, start_order: int) -> tuple[list[Entry], int
             fields = line.split("\t")
             if len(fields) < 2:
                 continue
-            text, code = fields[0].strip(), fields[1].strip()
+            text, code = fields[0].strip(), _namespace_code(namespace, fields[1].strip())
             if not text or not code:
                 continue
             if any(char not in KEY_CODE for char in code):
@@ -92,7 +111,7 @@ def read_rime_dictionary(path: Path, start_order: int) -> tuple[list[Entry], int
             if len(code) > MAX_CODE_LENGTH:
                 raise ValueError(f"{path}:{line_number}: code exceeds {MAX_CODE_LENGTH} keys")
             weight = parse_weight(fields[2]) if len(fields) > 2 else 0
-            entries.append(Entry(text, code, weight, order))
+            entries.append(Entry(text, code, weight, order, namespace))
             order += 1
     if not in_body:
         raise ValueError(f"{path}: missing dictionary body marker (...)")
@@ -105,8 +124,8 @@ def collect_entries(root: Path = ROOT) -> list[Entry]:
     result: list[Entry] = []
     seen: set[tuple[str, str]] = set()
     order = 0
-    for path in read_manifest(root):
-        entries, order = read_rime_dictionary(path, order)
+    for source in read_manifest(root):
+        entries, order = read_rime_dictionary(source.path, order, source.namespace)
         for entry in entries:
             key = (entry.code, entry.text)
             if key in seen:
@@ -114,6 +133,21 @@ def collect_entries(root: Path = ROOT) -> list[Entry]:
             seen.add(key)
             result.append(entry)
     return result
+
+
+def prefix_fanout(entries: Iterable[Entry]) -> dict[int, int]:
+    """Return the largest subtree size at each prefix length."""
+    counters: dict[int, Counter[str]] = {
+        length: Counter() for length in range(1, 7)
+    }
+    for entry in entries:
+        for length in counters:
+            if len(entry.code) >= length:
+                counters[length][entry.code[:length]] += 1
+    return {
+        length: max(counter.values(), default=0)
+        for length, counter in counters.items()
+    }
 
 
 def render_table(entries: list[Entry]) -> str:
@@ -153,7 +187,9 @@ OrderPolicy=No
 UseSystemLanguageModel=False
 UseContextRelatedOrder=False
 AutoPhraseLength=0
-Learning=True
+SaveAutoPhraseAfter=-1
+Learning=False
+ExactMatch=False
 Hint=False
 UseFullWidth=True
 CandidateLayoutHint=Vertical
@@ -243,23 +279,48 @@ def build_packages(
 
 def check(root: Path = ROOT) -> None:
     entries = collect_entries(root)
-    if len(entries) < 1_000_000:
+    if len(entries) < 1_300_000:
         raise ValueError("Fcitx5 Table dictionary is unexpectedly incomplete")
     expected = {
         ("jxjdoo", "晨星键道"),
         ("hyefa", "婚姻圣召"),
         ("zqquo", "赞主曲"),
+        ("ihello", "hello"),
+        ("uhao", "好"),
+        ("vhr", "一"),
+        ("ohz", "好"),
     }
     actual = {(entry.code, entry.text) for entry in entries}
     missing = sorted(expected - actual)
     if missing:
         raise ValueError(f"Fcitx5 Table is missing smoke rows: {missing}")
+    normal_fanout = prefix_fanout(
+        entry for entry in entries if entry.namespace == ""
+    )
+    limits = {1: 100_000, 2: 8_000, 3: 600}
+    oversized = {
+        length: normal_fanout[length]
+        for length, limit in limits.items()
+        if normal_fanout[length] > limit
+    }
+    if oversized:
+        raise ValueError(f"normal KeyTao prefix fanout regressed: {oversized}")
     config = render_config()
-    for required in ("Addon=table", "NoMatchAutoSelectLength=1", "Length=6"):
-        haystack = config if required != "Length=6" else render_table(entries[:1])
+    for required in (
+        "Addon=table",
+        "NoMatchAutoSelectLength=1",
+        "Learning=False",
+        "SaveAutoPhraseAfter=-1",
+        "Length=63",
+    ):
+        haystack = config if required != "Length=63" else render_table(entries[:1])
         if required not in haystack:
             raise ValueError(f"missing Fcitx5 Table setting: {required}")
-    print(f"Fcitx5 Table check passed: {len(entries)} unique rows")
+    print(
+        f"Fcitx5 Table check passed: {len(entries)} unique rows; "
+        f"normal max fanout 1/2/3={normal_fanout[1]}/"
+        f"{normal_fanout[2]}/{normal_fanout[3]}"
+    )
 
 
 def main() -> int:

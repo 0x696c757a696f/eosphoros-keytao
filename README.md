@@ -93,6 +93,8 @@
 > **Fcitx5 应该下载哪一个？** 不带 `-rime` 的包使用官方 Table／libime，安装最简单，
 > 不需要 Rime；带 `-rime` 的包保留原有完整 Rime 功能，需要对应平台的 Rime 插件
 > （Linux 还需要 librime-lua）。两者择一安装，不要放入同一个数据目录。
+> 原生 Table 也包含 `i` 英文、`u` 连写全拼、`v` 二分和 `o` 单字编码四个静态入口；
+> 例如 `ihello`、`uhao`。Rime 版则另外提供模糊音、反查注释、Lua、OpenCC 与 ZZC。
 | [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 mytrime“格调”完整布局版 `eosphoros.trime.yaml` |
 | [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 仅含可直接导入的官方 Table 配置与码表，不夹带主题目录 |
 | [`eosphoros-fcitx5-android-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-rime.zip) | Android Fcitx5 + Rime 插件 | 原有完整 Rime 方案及三套 Android 主题 |
@@ -309,7 +311,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 3. 打开“输入法 → 添加输入法 → 导入码表”，同时选择根目录的 `eosphoros.conf` 与 `eosphoros.txt`。客户端会使用内置 libime 完成转换。
 4. `themes/` 内是 macOS 专用主题，可在主题编辑器中另行导入；重启 Fcitx5 后添加“晨星键道”。
 
-需要完整 Lua、英文和反查功能时，改装官方 Rime 插件并下载
+需要拼音模糊音、反查注释、Lua、OpenCC 或 ZZC 时，改装官方 Rime 插件并下载
 `eosphoros-fcitx5-macos-rime.zip`，将方案部署到 Fcitx5 的 Rime 用户目录；不要同时
 导入同名 Table 方案。
 
@@ -400,9 +402,10 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 3. 重启 Fcitx5，在配置工具中添加“晨星键道”。
 4. 若仍不能输入，运行 `fcitx5-diagnose`，确认 Table／Chinese Addons 已加载。
 
-这个纯 Table 版本保留完整 1～6 键普通中文码表、稳定候选顺序、学习以及无匹配／
-满码自动上屏。Fcitx5 官方标点、快捷短语、简繁转换、Emoji 与 Unicode 可照常使用；
-Rime 专属的 Lua 命令、`i/u/v/o` 长前缀反查和 ZZC 不会混进主表，以免破坏顶功。
+这个纯 Table 版本保留完整 1～6 键普通中文码表、稳定候选顺序以及无匹配／满码
+自动上屏。主表关闭学习与自动造词，短码按词典固定顺序；`i/u/v/o` 在首键处分流，
+不会挂到其他普通编码的前缀子树。Fcitx5 官方标点、快捷短语、简繁转换、Emoji 与
+Unicode 可照常使用；Rime 专属的模糊音、反查注释、Lua 和 ZZC 不会混进原生 Table。
 
 如果更看重与其他 Rime 客户端一致的完整功能，可安装 `fcitx5-rime` 与
 `librime-lua`，改用 `eosphoros-fcitx5-linux-rime.zip` 并部署到 Fcitx5 的 Rime

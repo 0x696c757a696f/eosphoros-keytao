@@ -438,6 +438,24 @@ def restyle_wanxiang_source(
             "toolbarcollectionCellBackgroundStyle: { "
             "normalColor: 0, highlightColor: 0 },",
         )
+        text = text.replace(
+            "insets: { left: 15, top: 2 },\n"
+            "      // backgroundStyle: 'toolbarBackgroundStyle',",
+            "insets: { left: 15, right: 15, top: 4, bottom: 4 },\n"
+            "      backgroundStyle: 'preeditBackgroundStyle',",
+        )
+        text = text.replace(
+            "toolbarBackgroundStyle: "
+            "styleFactories.makeGeometryStyle(color[theme]['键盘背景颜色']),",
+            "preeditBackgroundStyle: styleFactories.makeGeometryStyle("
+            "color[theme]['功能键背景颜色-普通']),\n"
+            "    toolbarBackgroundStyle: "
+            "styleFactories.makeGeometryStyle(color[theme]['键盘背景颜色']),",
+        )
+    elif relative.endswith("shared/styles/others.libsonnet"):
+        text = text.replace("'preedit高度': 15,", "'preedit高度': 30,")
+    elif relative.endswith(("iPad.libsonnet", "iPadBuilder.libsonnet")):
+        text = text.replace("'preedit高度': 20,", "'preedit高度': 30,")
     return text
 
 
