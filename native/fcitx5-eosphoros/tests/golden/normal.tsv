@@ -1,8 +1,18 @@
-# name<TAB>keys (space separated)<TAB>commits (| separated, -=none)<TAB>final input (-=empty)
-space_commit	k b c d SPACE	按部就班	-
-digit_second	k b 2	安	-
-fixed_topup	k b c d x	按部就班	x
-topup_key_transition	k b c a x	顶功候选	x
-missing_candidate_clear	z z z z x	-	-
-backspace_escape	k b BACKSPACE ESCAPE	-	-
-enter_raw	k b ENTER	kb	-
+# name<TAB>evidence<TAB>keys<TAB>commits (| separated, -=none)<TAB>preedit (-=empty)<TAB>first candidate (-=none)
+short_code	dicts/eosphoros/eosphoros.core.dict.yaml:13	b a	-	ba	不能
+two_character_collision	eosphoros.extended import order: cizu before catholicism	h y e f a	-	hyefa	洪山
+three_character_word	dicts/eosphoros/eosphoros.cizu.dict.yaml:8	b b b	-	bbb	棒不棒
+four_character_word	dicts/eosphoros/eosphoros.cizu.dict.yaml:9	b b b b	-	bbbb	哔哔啵啵
+first_stroke_auxiliary	dicts/eosphoros/eosphoros.core.dict.yaml:823	a a i v	-	aaiv	毌
+confirmed_fly_key	dicts/eosphoros/eosphoros.catholicism.dict.yaml:3220	z q q u o	-	zqquo	赞主曲
+collision_second_candidate	eosphoros.extended import order: cizu before catholicism	s f j 2	三钟经	-	-
+space_commit	Rime express_editor + selected exact candidate	k b c d SPACE	按部就班	-	-
+digit_second	Rime selector numeric candidate	k b 2	安	-	-
+fixed_topup	lua/eosphoros/input/eosphoros_topup.lua:86-87	k b c d x	按部就班	x	新输入
+continuous_topup	lua/eosphoros/eosphoros_processor.lua:173-180	k b c d k b c d x	按部就班|按部就班	x	新输入
+topup_key_transition	lua/eosphoros/input/eosphoros_topup.lua:86	k b c a x	顶功候选	x	新输入
+missing_candidate_clear_and_start_next	lua/eosphoros/eosphoros_processor.lua:168-173	z z z z x	-	x	新输入
+backspace	Rime express_editor	k b BACKSPACE	-	k	-
+escape	Rime express_editor	k b ESCAPE	-	-	-
+enter_raw	packaging/yong/yong.ini enter=default	k b ENTER	kb	-	-
+page_and_numeric_selection	Fcitx5 native candidate contract	m m PAGE_DOWN 2	重码七	-	-

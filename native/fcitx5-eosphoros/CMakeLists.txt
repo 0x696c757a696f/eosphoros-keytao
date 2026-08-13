@@ -9,6 +9,9 @@ option(BUILD_FCITX_ADDON "Build and install the Fcitx5 addon" ON)
 set(EOSPHOROS_DICTIONARY_INPUTS
     "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/minimal.dict.yaml"
     CACHE STRING "Semicolon-separated Rime dictionaries compiled into native data")
+set(EOSPHOROS_SCHEMA
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../eosphoros.schema.yaml"
+    CACHE FILEPATH "Rime schema whose topup/menu settings are compiled into native data")
 
 set(NATIVE_DICTIONARY "${CMAKE_CURRENT_BINARY_DIR}/eosphoros-native.dict")
 set(DICTIONARY_ARGS)
@@ -19,8 +22,10 @@ add_custom_command(
     OUTPUT "${NATIVE_DICTIONARY}"
     COMMAND "${Python3_EXECUTABLE}"
             "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_dictionary.py"
+            --schema "${EOSPHOROS_SCHEMA}"
             ${DICTIONARY_ARGS} --output "${NATIVE_DICTIONARY}"
     DEPENDS ${EOSPHOROS_DICTIONARY_INPUTS}
+            "${EOSPHOROS_SCHEMA}"
             "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_dictionary.py"
     VERBATIM)
 add_custom_target(eosphoros-native-dictionary ALL DEPENDS "${NATIVE_DICTIONARY}")
@@ -72,10 +77,20 @@ if(BUILD_FCITX_ADDON)
 endif()
 
 if(BUILD_TESTING)
-    add_executable(eosphoros-native-core-test tests/test_core.cpp)
-    target_link_libraries(eosphoros-native-core-test PRIVATE eosphoros-native-core)
-    add_dependencies(eosphoros-native-core-test eosphoros-native-dictionary)
-    add_test(NAME eosphoros-native-core
-        COMMAND eosphoros-native-core-test "${NATIVE_DICTIONARY}"
+    add_executable(eosphoros-native-dictionary-test tests/test_dictionary.cpp)
+    target_link_libraries(eosphoros-native-dictionary-test PRIVATE eosphoros-native-core)
+    add_dependencies(eosphoros-native-dictionary-test eosphoros-native-dictionary)
+    add_test(NAME eosphoros-native-dictionary
+        COMMAND eosphoros-native-dictionary-test "${NATIVE_DICTIONARY}")
+
+    add_executable(eosphoros-native-topup-test tests/test_topup.cpp)
+    target_link_libraries(eosphoros-native-topup-test PRIVATE eosphoros-native-core)
+    add_test(NAME eosphoros-native-topup COMMAND eosphoros-native-topup-test)
+
+    add_executable(eosphoros-native-context-test tests/test_context.cpp)
+    target_link_libraries(eosphoros-native-context-test PRIVATE eosphoros-native-core)
+    add_dependencies(eosphoros-native-context-test eosphoros-native-dictionary)
+    add_test(NAME eosphoros-native-context
+        COMMAND eosphoros-native-context-test "${NATIVE_DICTIONARY}"
                 "${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/normal.tsv")
 endif()

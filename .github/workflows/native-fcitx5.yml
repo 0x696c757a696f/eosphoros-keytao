@@ -4,10 +4,14 @@ on:
   push:
     paths:
       - "native/fcitx5-eosphoros/**"
+      - "eosphoros.schema.yaml"
+      - "tests/test_native_fcitx5.py"
       - ".github/workflows/native-fcitx5.yml"
   pull_request:
     paths:
       - "native/fcitx5-eosphoros/**"
+      - "eosphoros.schema.yaml"
+      - "tests/test_native_fcitx5.py"
       - ".github/workflows/native-fcitx5.yml"
   workflow_dispatch:
 
@@ -37,6 +41,12 @@ jobs:
           cmake --build build/native-fcitx5
           ctest --test-dir build/native-fcitx5 --output-on-failure
 
+      - name: Verify input method metadata
+        run: |
+          grep -Fx 'Name=晨星键道（原生）' build/native-fcitx5/eosphoros-native.conf
+          grep -Fx 'Addon=eosphoros-native' build/native-fcitx5/eosphoros-native.conf
+          grep -Fx 'Library=libeosphoros-native' build/native-fcitx5/eosphoros-native-addon.conf
+
       - name: Verify native dependency boundary
         shell: bash
         run: |
@@ -47,6 +57,8 @@ jobs:
             echo "Forbidden Rime/Lua/OpenCC dependency detected" >&2
             exit 1
           fi
+          ! grep -RIE 'fcitx5-rime|librime|rime/schema|opencc' \
+            native/fcitx5-eosphoros/src native/fcitx5-eosphoros/CMakeLists.txt
 
       - name: Stage install tree
         run: DESTDIR="$PWD/build/native-install" cmake --install build/native-fcitx5

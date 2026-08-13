@@ -2,6 +2,7 @@
 
 #include "context.h"
 #include "dictionary.h"
+#include "key_handler.h"
 
 #include <fcitx/addonfactory.h>
 #include <fcitx/inputcontextproperty.h>
@@ -22,12 +23,12 @@ public:
         : inputContext(inputContext), context(dictionary) {}
 
     fcitx::InputContext *inputContext;
-    Context context;
+    EosphorosContext context;
 };
 
-class Engine final : public fcitx::InputMethodEngineV2 {
+class EosphorosEngine final : public fcitx::InputMethodEngineV2 {
 public:
-    explicit Engine(fcitx::Instance *instance);
+    explicit EosphorosEngine(fcitx::Instance *instance);
 
     void keyEvent(const fcitx::InputMethodEntry &entry,
                   fcitx::KeyEvent &event) override;
@@ -47,6 +48,7 @@ private:
 
     fcitx::Instance *instance_;
     Dictionary dictionary_;
+    KeyHandler keyHandler_;
     std::string dictionaryError_;
     fcitx::FactoryFor<State> stateFactory_;
 };

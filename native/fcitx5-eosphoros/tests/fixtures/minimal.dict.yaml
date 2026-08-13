@@ -12,3 +12,21 @@ sort: original
 六码候选	kbcdef	100
 新输入	x	100
 晨星键道	jxjdoo	100
+# 下列词条按 eosphoros.extended.dict.yaml 的实际导入优先级摘录。
+不能	ba	100
+棒不棒	bbb	100
+哔哔啵啵	bbbb	100
+毌	aaiv	100
+洪山	hyefa	100
+婚姻圣召	hyefa	90
+赞主曲	zqquo	100
+散装酒	sfj	100
+三钟经	sfj	90
+# 仅用于验证原生候选翻页，不代表新增正式词条。
+重码一	mm	100
+重码二	mm	90
+重码三	mm	80
+重码四	mm	70
+重码五	mm	60
+重码六	mm	50
+重码七	mm	40

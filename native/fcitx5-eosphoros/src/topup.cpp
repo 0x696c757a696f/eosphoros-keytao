@@ -6,13 +6,13 @@ bool TopupPolicy::isTopup(char key) const {
     return config_.topupKeys.find(key) != std::string_view::npos;
 }
 
-TopupAction TopupPolicy::decide(std::string_view input, char next,
-                                bool hasCommittableCandidate) const {
-    if (input.empty() || input == ";") {
-        return TopupAction::Continue;
+TopupDecision TopupPolicy::process(std::string_view input, char next,
+                                   const LookupResult &lookup) const {
+    if (input.empty()) {
+        return {};
     }
     if (config_.topupCommand && isTopup(input.front())) {
-        return TopupAction::Continue;
+        return {};
     }
 
     const bool previousTopup = isTopup(input.back());
@@ -22,13 +22,13 @@ TopupAction TopupPolicy::decide(std::string_view input, char next,
                            (input.size() >= config_.minLength &&
                             !previousTopup && !nextTopup);
     if (!fixedRule) {
-        return TopupAction::Continue;
+        return {};
     }
-    if (hasCommittableCandidate) {
-        return TopupAction::CommitAndStartNext;
+    if (lookup.selectedCommittable) {
+        return {TopupAction::CommitAndStartNext};
     }
-    return config_.autoClear ? TopupAction::ClearAndConsumeNext
-                             : TopupAction::Continue;
+    return config_.autoClear ? TopupDecision{TopupAction::ClearAndStartNext}
+                             : TopupDecision{TopupAction::HoldAndConsume};
 }
 
 } // namespace eosphoros

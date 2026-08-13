@@ -1,5 +1,37 @@
 #include "key_handler.h"
 
-// Key translation belongs to the Fcitx adapter. This unit intentionally keeps
-// the core vocabulary independent from Fcitx headers for fast deterministic
-// tests and future frontends.
+namespace eosphoros {
+
+KeyResult KeyHandler::handle(EosphorosContext &context,
+                             const LogicalKey &key) const {
+    switch (key.kind) {
+    case KeyKind::Code:
+        return context.type(key.code);
+    case KeyKind::Space:
+        return context.space();
+    case KeyKind::Enter:
+        return context.enter();
+    case KeyKind::Backspace:
+        return context.backspace();
+    case KeyKind::Escape:
+        return context.escape();
+    case KeyKind::Up:
+        return {context.moveSelection(-1), {}};
+    case KeyKind::Down:
+        return {context.moveSelection(1), {}};
+    case KeyKind::PageUp:
+        return {context.moveSelection(-static_cast<int>(context.pageSize())), {}};
+    case KeyKind::PageDown:
+        return {context.moveSelection(static_cast<int>(context.pageSize())), {}};
+    case KeyKind::Select: {
+        const auto pageStart =
+            (context.selected() / context.pageSize()) * context.pageSize();
+        return context.select(pageStart + key.index);
+    }
+    case KeyKind::PassThrough:
+        break;
+    }
+    return {};
+}
+
+} // namespace eosphoros

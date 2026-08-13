@@ -1,26 +1,47 @@
 #pragma once
 
 #include <cstddef>
+#include <string>
 #include <string_view>
 
 namespace eosphoros {
 
-enum class TopupAction { Continue, CommitAndStartNext, ClearAndConsumeNext };
+enum class TopupAction {
+    Continue,
+    CommitFirst,
+    CommitSelected,
+    CommitAndStartNext,
+    Clear,
+    ClearAndStartNext,
+    PassThrough,
+    HoldAndConsume,
+};
 
 struct TopupConfig {
-    std::string_view topupKeys = "avuio;";
+    std::string topupThis = "bcdefghjklmnpqrstwxyz";
+    std::string topupKeys = "avuio;";
     std::size_t minLength = 4;
     std::size_t maxLength = 6;
     bool autoClear = true;
     bool topupCommand = false;
 };
 
+struct LookupResult {
+    bool hasCandidate = false;
+    bool selectedCommittable = false;
+    std::size_t selectedIndex = 0;
+};
+
+struct TopupDecision {
+    TopupAction action = TopupAction::Continue;
+};
+
 class TopupPolicy {
 public:
     explicit TopupPolicy(TopupConfig config = {}) : config_(config) {}
 
-    TopupAction decide(std::string_view input, char next,
-                       bool hasCommittableCandidate) const;
+    TopupDecision process(std::string_view input, char next,
+                          const LookupResult &lookup) const;
 
 private:
     bool isTopup(char key) const;

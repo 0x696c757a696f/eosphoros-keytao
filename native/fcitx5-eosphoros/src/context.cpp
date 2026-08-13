@@ -5,10 +5,10 @@
 
 namespace eosphoros {
 
-Context::Context(const Dictionary *dictionary, TopupConfig topupConfig)
-    : dictionary_(dictionary), topup_(topupConfig) {}
+EosphorosContext::EosphorosContext(const Dictionary *dictionary)
+    : dictionary_(dictionary), topup_(dictionary->topupConfig()) {}
 
-void Context::refresh() {
+void EosphorosContext::refresh() {
     candidates_ = input_.empty() ? std::vector<Candidate>{}
                                  : dictionary_->lookup(input_);
     if (candidates_.empty()) {
@@ -18,18 +18,22 @@ void Context::refresh() {
     }
 }
 
-bool Context::hasCommittableCandidate() const {
+bool EosphorosContext::hasCommittableCandidate() const {
     return selected_ < candidates_.size() && !candidates_[selected_].completion;
 }
 
-KeyResult Context::type(char key) {
+KeyResult EosphorosContext::type(char key) {
     KeyResult result;
     if (!(key >= 'a' && key <= 'z') && key != ';' && key != '\'') {
         return result;
     }
 
-    const auto action = topup_.decide(input_, key, hasCommittableCandidate());
+    const LookupResult lookup{!candidates_.empty(), hasCommittableCandidate(),
+                              selected_};
+    const auto action = topup_.process(input_, key, lookup).action;
+    topupState_.lastAction = action;
     if (action == TopupAction::CommitAndStartNext) {
+        ++topupState_.transitions;
         result.commits.push_back(candidates_[selected_].text);
         input_.assign(1, key);
         selected_ = 0;
@@ -37,8 +41,17 @@ KeyResult Context::type(char key) {
         result.consumed = true;
         return result;
     }
-    if (action == TopupAction::ClearAndConsumeNext) {
-        reset();
+    if (action == TopupAction::ClearAndStartNext) {
+        input_.assign(1, key);
+        candidates_.clear();
+        selected_ = 0;
+        mode_ = Mode::Normal;
+        ++topupState_.transitions;
+        refresh();
+        result.consumed = true;
+        return result;
+    }
+    if (action == TopupAction::HoldAndConsume) {
         result.consumed = true;
         return result;
     }
@@ -50,7 +63,7 @@ KeyResult Context::type(char key) {
     return result;
 }
 
-KeyResult Context::commit(std::size_t index) {
+KeyResult EosphorosContext::commit(std::size_t index) {
     KeyResult result{true, {}};
     if (index < candidates_.size()) {
         result.commits.push_back(candidates_[index].text);
@@ -59,7 +72,7 @@ KeyResult Context::commit(std::size_t index) {
     return result;
 }
 
-KeyResult Context::space() {
+KeyResult EosphorosContext::space() {
     if (input_.empty()) {
         return {};
     }
@@ -70,7 +83,7 @@ KeyResult Context::space() {
     return {true, {}};
 }
 
-KeyResult Context::enter() {
+KeyResult EosphorosContext::enter() {
     if (input_.empty()) {
         return {};
     }
@@ -79,14 +92,14 @@ KeyResult Context::enter() {
     return result;
 }
 
-KeyResult Context::select(std::size_t index) {
+KeyResult EosphorosContext::select(std::size_t index) {
     if (input_.empty() || index >= candidates_.size()) {
         return {};
     }
     return commit(index);
 }
 
-KeyResult Context::backspace() {
+KeyResult EosphorosContext::backspace() {
     if (input_.empty()) {
         return {};
     }
@@ -96,7 +109,7 @@ KeyResult Context::backspace() {
     return {true, {}};
 }
 
-KeyResult Context::escape() {
+KeyResult EosphorosContext::escape() {
     if (input_.empty()) {
         return {};
     }
@@ -104,7 +117,7 @@ KeyResult Context::escape() {
     return {true, {}};
 }
 
-bool Context::moveSelection(int delta) {
+bool EosphorosContext::moveSelection(int delta) {
     if (candidates_.empty()) {
         return false;
     }
@@ -114,11 +127,12 @@ bool Context::moveSelection(int delta) {
     return true;
 }
 
-void Context::reset() {
+void EosphorosContext::reset() {
     input_.clear();
     candidates_.clear();
     selected_ = 0;
     mode_ = Mode::Normal;
+    topupState_ = {};
 }
 
 } // namespace eosphoros

@@ -16,10 +16,14 @@ struct KeyResult {
     std::vector<std::string> commits;
 };
 
-class Context {
+struct TopupState {
+    TopupAction lastAction = TopupAction::Continue;
+    std::size_t transitions = 0;
+};
+
+class EosphorosContext {
 public:
-    explicit Context(const Dictionary *dictionary,
-                     TopupConfig topupConfig = {});
+    explicit EosphorosContext(const Dictionary *dictionary);
 
     KeyResult type(char key);
     KeyResult space();
@@ -34,6 +38,8 @@ public:
     const std::vector<Candidate> &candidates() const { return candidates_; }
     std::size_t selected() const { return selected_; }
     Mode mode() const { return mode_; }
+    std::size_t pageSize() const { return dictionary_->pageSize(); }
+    const TopupState &topupState() const { return topupState_; }
 
 private:
     bool hasCommittableCandidate() const;
@@ -46,6 +52,7 @@ private:
     std::vector<Candidate> candidates_;
     std::size_t selected_ = 0;
     Mode mode_ = Mode::Normal;
+    TopupState topupState_;
 };
 
 } // namespace eosphoros

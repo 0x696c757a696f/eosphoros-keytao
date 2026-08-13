@@ -5,7 +5,7 @@
 
 namespace eosphoros::fcitx5 {
 
-CandidateWord::CandidateWord(Engine *engine, std::size_t index,
+CandidateWord::CandidateWord(EosphorosEngine *engine, std::size_t index,
                              const std::string &text, const std::string &code,
                              bool completion)
     : fcitx::CandidateWord(fcitx::Text(text)), engine_(engine), index_(index) {

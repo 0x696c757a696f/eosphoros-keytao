@@ -1,51 +1,131 @@
 # 现有晨星键道行为审计（2026.8.13）
 
-## 结论
+## 审计范围与原则
 
-现有 Rime 版应继续保留；原生 Fcitx5 版是并行实现，不替换现有方案。
-第一阶段的可验证边界是普通键道输入，不提前移植 Lua/OpenCC/用户词典。
+本审计直接阅读了 `eosphoros.schema.yaml`、`eosphoros.extended.dict.yaml`、
+`dicts/eosphoros/**`、`lua/eosphoros/**`、`opencc/eosphoros/**`、
+`packaging/yong/**` 与现有测试。顶功结论以
+`lua/eosphoros/eosphoros_processor.lua`、
+`lua/eosphoros/input/eosphoros_topup.lua` 和
+`lua/eosphoros/input/eosphoros_commit_guard.lua` 为准，不由 README 推测。
 
-## 编码与词典
+现有 Rime 与 Yong 实现继续保留；原生 Fcitx5 是并行输入法，不替换、修改
+或打包进既有客户端方案。第一阶段只实现普通键道热路径，不提前移植
+OpenCC、Lua 附加功能、用户词典、ZZZC 或词频学习。
 
-- 主方案 `eosphoros.schema.yaml` 的编码字母表是
-  `abcdefghijklmnopqrstuvwxyz;'`，候选页大小为 5。
-- `dicts/eosphoros/` 中的词典采用 `sort: original` 及导入表。原生构建器按
-  命令行输入文件顺序、再按原文件行顺序生成确定性二进制词典。
-- 原生候选先列当前编码的精确项，再列前缀补全项；相同文本去重。补全项在
-  内部标记为不可被顶功自动提交。
-- 第一阶段不实现用户词频，因此不会以学习频率破坏静态优先级。
+## 1. 主编码查询与候选排序
 
-## 顶功状态机
+- 主方案使用 `table_translator` 和 `eosphoros.extended`，字母表为
+  `abcdefghijklmnopqrstuvwxyz;'`，`enable_completion: true`，关闭句子与用户词典。
+- `eosphoros.extended.dict.yaml` 为 `sort: original`。候选静态优先级由
+  `import_tables` 顺序及各源文件行序共同决定，而不是运行时 weight 重排。
+- 原生构建器按显式输入文件顺序和行序生成确定性二进制词典；运行时只做
+  exact/prefix lookup，不解析百万行 YAML。精确候选列在补全项之前，同文本去重；
+  补全项标为 `completion`，不会被顶功自动提交。
+- MVP 不实现用户学习，因此静态顺序不会被本地词频改变。若以后评估 libime，
+  只复用满足 prefix/exact/multiple candidates 的低层词典 API，不采用会改变顶功的
+  `TableContext`。
 
-依据 `lua/eosphoros/input/eosphoros_topup.lua`：
+## 2. 短码
 
-- `topup_with = avuio;`，最短 4 码，最长 6 码；当前配置自动清空开启，
-  `topup_command` 关闭。
-- 已达到 6 码时，下一个编码键触发顶功。
-- 前一键属于顶功键、下一键不属于顶功键时触发。
-- 已有至少 4 码，且前一键与下一键都不是顶功键时触发。
-- 只有精确候选可以自动提交；补全项和原始编码不能由顶功提交。
-- 有可提交候选时先提交候选，再让新键成为下一段首码；没有候选且开启
-  `auto_clear` 时清空旧编码并吃掉触发键。
+- 两码、三码等短码是正式 exact 候选；不会仅因“短”而自动上屏。
+- Space、数字选词或后续满足顶功规则时才提交。golden trace 使用真实词条
+  `不能 ba`、`棒不棒 bbb` 验证。
 
-这部分实现为无 Fcitx 依赖的纯 `TopupPolicy`，并由 golden trace 覆盖。
+## 3. 顶功与连续顶功
 
-## 按键语义（第一阶段）
+schema 当前值为：
 
-- 编码键：`a-z`、`;`、`'`。
-- Space：提交当前高亮候选；无候选时清空组合。
-- 1–9：提交对应全局候选；当前 UI 每页显示 5 项。
-- Backspace：删除一个编码；Escape：清空当前组合。
-- Up/Down 与 PageUp/PageDown：移动候选光标。
-- Enter：按小小输入法当前 `enter=default` 的行为直出原始编码。
+- `topup_this = bcdefghjklmnpqrstwxyz`
+- `topup_with = avuio;`
+- `min_length = 4`
+- `max_length = 6`
+- `auto_clear = true`
+- `topup_command = false`
+- `menu/page_size = 5`
 
-分号选二、Tab 选二、符号前导、自动回退、英文模式和 `u/v/o` 反查留到
-后续阶段，以免第一阶段把未经验证的分支混入顶功核心。
+这些值由 `build_dictionary.py --schema` 在构建期转换进 `EOSDICT2`，运行时
+不读取或执行 schema。`TopupPolicy` 是不依赖 Fcitx 对象的纯逻辑。
 
-## 为什么没有直接使用 libime TableContext
+`eosphoros_processor.lua` 的固定规则按当前顺序等价为：
 
-libime 的表码词典格式可作为未来的存储选择，但 `TableContext` 自带的自动
-选择、组词、学习和提交状态机会改变上述顶功边界，尤其是“补全候选不可
-顶功”“无候选时吃掉触发键”和“提交后新键另起一段”。第一阶段因此使用
-只读原生词典和独立状态机；等 golden trace 全部稳定后，再评估只复用
-libime 的低层词典结构，而不是复用它的输入上下文。
+1. 已有 6 码时，下一编码键触发；
+2. 前一键属于 `topup_with`、下一键不属于时触发；
+3. 已有至少 4 码，且前一键、下一键都不属于 `topup_with` 时触发；
+4. `topup_command` 开启且首键属于顶功键时不触发（当前关闭）；
+5. 分号快符前导输入在 direct-symbol 分支处理，不进入普通固定顶功。
+
+触发后，只有当前选中的 exact 非 raw 候选可提交。成功提交后，新键由下一段
+继续接收，从而支持连续顶功。
+
+## 4. 空码顶功
+
+这是原先 MVP 审计中的一处错误，现已纠正。`eosphoros_topup.exec()` 在没有
+可提交候选且 `auto_clear=true` 时清空旧输入并报告状态已转换；processor 随后
+返回 `kNoop`，让当前触发键继续交给 speller。因此真实行为是“清空旧码，触发键
+成为下一段首码”，不是吞掉触发键。若 `auto_clear=false`，旧码保留并消费该键。
+
+## 5. 飞键与首笔辅助码
+
+- `layout/algebra` 用反引号派生展示编码中的声、笔位置；正式词典仍存最终键道码。
+- 三字词第六位为第三字首笔，四字词编码按首字母位置组合；这些规则体现在生成词典
+  而不是 native 运行时重新编码。
+- MVP 的词典查询不会改写编码。golden 使用已人工确认的 `赞主曲 zqquo` 和单字
+  辅助码 `毌 aaiv`，确保运行时保留现有飞键／首笔结果。
+
+## 6. 第二候选快捷键与重码
+
+- Rime `Tab` 通过 key binder 发送 `2`；`smarttwo` 开启时，分号提交候选索引 1，
+  撇号提交索引 2。Yong 的 `select=; \'` 同样提供次选快捷键。
+- 第一阶段要求的数字 1–9 和鼠标候选选择已实现；Tab／分号／撇号属于第二阶段，
+  不在 MVP 中伪装成已完成。
+- golden 使用真实冲突 `洪山 / 婚姻圣召 hyefa`、`散装酒 / 三钟经 sfj` 验证
+  静态重码顺序和数字次选。
+
+## 7. 基础编辑键
+
+- Space：提交当前高亮 exact 候选；没有候选时清空组合。
+- 1–9：按当前候选页选择；候选点击使用 Fcitx5 原生 `CandidateWord::select()`。
+- Up/Down、PageUp/PageDown：改变全局候选光标，页面大小来自 schema 编译配置。
+- Backspace：删除一码并刷新候选；Escape：清空组合。
+- Enter：Yong 当前为 `enter=default`；MVP 采用原始编码直出，并在差异表明确记录。
+
+## 8. 英文与反查入口（仅审计，MVP 不实现）
+
+- `i`：`melt_eng/prefix` 与 `english/prefix` 均为 `i`，主词典预编辑规则在继续输入后
+  隐藏入口字母；processor 遇到此前缀时让 Rime translator 接管。
+- `u`：全拼反查 `pinyin_simp`；`v`：二分反查 `quanpinerfen`；`o`：GBK／生僻字
+  反查 `eosphorosgbk`。
+- 原生 `Mode` 已预留 `English`、`ReversePinyin`、`ReverseLiangfen`、
+  `ReverseGBK`，第一阶段只运行 `Normal`。
+
+## 9. Yong 非 Rime 参考
+
+`packaging/yong/yong.ini` 使用同一晨星码表，候选数 5，`enter=default`、
+`space=default`、`select=; \'`，关闭自动造词和自动调频。它证明晨星编码可以在
+非 Rime 引擎运行，但 Yong 自身不定义 Lua 顶功细节，因此顶功仍以 Lua 源码为准。
+
+## 10. OpenCC 与 Lua 附加功能（只审计，不迁移）
+
+现有 OpenCC Lua 管线包含 replace、append、Emoji split 等候选操作，不能等同于
+简单文字转换。计算器、日期、统计、火星文、Emoji、ZZZC、自造词和用户数据库均
+明确留给后续阶段；正常 native 汉字输入路径不链接 Lua、OpenCC 或 librime。
+
+## 第一阶段行为差异与未实现
+
+- 已实现：小型原生词典、exact/prefix 候选、静态排序、独立输入上下文、原生候选窗、
+  Space/数字/鼠标选词、方向与翻页、Backspace/Escape、Enter 原码、固定顶功、连续顶功、
+  空码顶功、schema 构建期配置转换。
+- 与 Rime 差异：不学习词频；不做自动回退；不处理分号快符、Tab/分号/撇号次选；
+  不提供标点、英文和反查入口；不做 OpenCC 或 Lua 候选过滤。
+- 未实现：完整词库发布、完整短码／辅助码／飞键行为测试、第二候选快捷键、标点、
+  `i/u/v/o`、OpenCC、Lua 附加功能、用户词典、ZZZC、自造词、性能 benchmark。
+  它们均属于第二阶段以后，不冒充第一阶段能力。
+
+## 第一阶段验证门
+
+- CMake 构建 `.so`，CTest 分别运行 Dictionary、TopupPolicy、golden Context 测试；
+- 安装树包含 addon、输入法元数据、`eosphoros-native.dict` 与晨星图标；
+- 元数据名称为“晨星键道（原生）”；
+- CI 对 `.so` 执行 `ldd`，禁止 `librime`、`rime`、`lua`、`opencc`；
+- 所有 Rime／客户端 Release 包和 Package Master 通用 artifact 禁止包含 `native/`。

@@ -9,7 +9,7 @@
 namespace eosphoros {
 namespace {
 
-constexpr std::array<char, 8> kMagic{'E', 'O', 'S', 'D', 'I', 'C', 'T', '1'};
+constexpr std::array<char, 8> kMagic{'E', 'O', 'S', 'D', 'I', 'C', 'T', '2'};
 
 template <typename T> bool readNumber(std::istream &stream, T &value) {
     std::array<unsigned char, sizeof(T)> bytes{};
@@ -44,9 +44,27 @@ bool Dictionary::load(const std::string &path, std::string *error) {
 
     std::array<char, 8> magic{};
     std::uint32_t version = 0;
+    std::uint32_t minLength = 0;
+    std::uint32_t maxLength = 0;
+    std::uint32_t autoClear = 0;
+    std::uint32_t topupCommand = 0;
+    std::uint32_t pageSize = 0;
     std::uint32_t count = 0;
+    std::string topupThis;
+    std::string topupKeys;
+    std::uint32_t topupThisLength = 0;
+    std::uint32_t topupKeysLength = 0;
     if (!stream.read(magic.data(), magic.size()) || magic != kMagic ||
-        !readNumber(stream, version) || version != 1 ||
+        !readNumber(stream, version) || version != 2 ||
+        !readNumber(stream, topupThisLength) ||
+        !readString(stream, topupThisLength, topupThis) ||
+        !readNumber(stream, topupKeysLength) ||
+        !readString(stream, topupKeysLength, topupKeys) ||
+        !readNumber(stream, minLength) || !readNumber(stream, maxLength) ||
+        !readNumber(stream, autoClear) || !readNumber(stream, topupCommand) ||
+        !readNumber(stream, pageSize) || topupThis.empty() ||
+        topupKeys.empty() || minLength == 0 || maxLength < minLength ||
+        pageSize == 0 || pageSize > 9 || autoClear > 1 || topupCommand > 1 ||
         !readNumber(stream, count)) {
         if (error) {
             *error = "invalid native dictionary header";
@@ -75,6 +93,9 @@ bool Dictionary::load(const std::string &path, std::string *error) {
     }
 
     byCode_ = std::move(loaded);
+    topupConfig_ = {std::move(topupThis), std::move(topupKeys), minLength,
+                    maxLength, autoClear != 0, topupCommand != 0};
+    pageSize_ = pageSize;
     sortedCodes_.clear();
     sortedCodes_.reserve(byCode_.size());
     for (const auto &[code, entries] : byCode_) {
