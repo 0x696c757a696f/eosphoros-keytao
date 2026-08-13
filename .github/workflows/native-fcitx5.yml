@@ -5,12 +5,16 @@ on:
     paths:
       - "native/fcitx5-eosphoros/**"
       - "eosphoros.schema.yaml"
+      - "eosphoros.extended.dict.yaml"
+      - "dicts/eosphoros/**"
       - "tests/test_native_fcitx5.py"
       - ".github/workflows/native-fcitx5.yml"
   pull_request:
     paths:
       - "native/fcitx5-eosphoros/**"
       - "eosphoros.schema.yaml"
+      - "eosphoros.extended.dict.yaml"
+      - "dicts/eosphoros/**"
       - "tests/test_native_fcitx5.py"
       - ".github/workflows/native-fcitx5.yml"
   workflow_dispatch:

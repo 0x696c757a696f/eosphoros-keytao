@@ -117,9 +117,9 @@ class NativeFcitx5Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             data = output.read_bytes()
 
-        self.assertEqual(data[:8], b"EOSDICT2")
+        self.assertEqual(data[:8], b"EOSDICT3")
         version, offset = read_u32(data, 8)
-        self.assertEqual(version, 2)
+        self.assertEqual(version, 3)
         topup_this, offset = read_string(data, offset)
         topup_with, offset = read_string(data, offset)
         min_length, offset = read_u32(data, offset)
@@ -134,6 +134,50 @@ class NativeFcitx5Tests(unittest.TestCase):
         self.assertEqual((auto_clear, topup_command), (1, 0))
         self.assertEqual(page_size, 5)
         self.assertEqual(count, 20)
+
+    def test_native_production_manifest_covers_active_static_dictionaries(self) -> None:
+        manifest = NATIVE / "data/production-dictionaries.tsv"
+        rows = [
+            line.split("\t")[-1]
+            for line in manifest.read_text(encoding="utf-8").splitlines()
+            if line and not line.startswith("#")
+        ]
+        extended = (ROOT / "eosphoros.extended.dict.yaml").read_text(
+            encoding="utf-8"
+        )
+        active = []
+        for line in extended.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("- dicts/eosphoros/"):
+                active.append(stripped[2:] + ".dict.yaml")
+        # User and zzc contain mutable/runtime state and intentionally stay local.
+        expected = [
+            path
+            for path in active
+            if path
+            not in {
+                "dicts/eosphoros/eosphoros.user.dict.yaml",
+                "dicts/eosphoros/eosphoros.zzc.dict.yaml",
+            }
+        ]
+        self.assertEqual(rows[: len(expected)], expected)
+        self.assertIn("dicts/eosphoros/pinyin_simp.dict.yaml", rows)
+        self.assertIn("dicts/eosphoros/liangfen.dict.yaml", rows)
+
+    def test_native_manifest_namespaces_reverse_lookup_sources(self) -> None:
+        sys.path.insert(0, str(NATIVE / "tools"))
+        try:
+            from build_dictionary import read_manifest
+
+            sources = read_manifest(
+                NATIVE / "data/production-dictionaries.tsv", ROOT
+            )
+        finally:
+            sys.path.pop(0)
+        by_name = {path.name: prefix for prefix, path in sources}
+        self.assertEqual(by_name["pinyin_simp.dict.yaml"], "u")
+        self.assertEqual(by_name["liangfen.dict.yaml"], "v")
+        self.assertEqual(by_name["eosphoros.gbk.dict.yaml"], "o")
 
 
 if __name__ == "__main__":

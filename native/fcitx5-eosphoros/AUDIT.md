@@ -25,10 +25,9 @@ OpenCC、Lua 附加功能、用户词典、ZZZC 或词频学习。
 - 已核对 libime 当前公开 API：`TableBasedDictionary` 提供二进制载入、
   `TableMatchMode::Exact/Prefix`、多候选回调和插入序号，具备后续承载完整大词典的
   基础能力；`TableContext` 同时带有自动选择、学习和组句状态，不适合作为晨星顶功
-  状态机。第一阶段仍使用小型只读 `EOSDICT2`，把 schema 转换后的顶功参数与测试
-  词典放在同一确定性产物中，避免在完整词库尚未迁移时增加 libime-table 构建／运行
-  依赖；第二阶段迁移百万级正式词典时再以 golden trace 约束候选顺序，评估替换
-  Dictionary 后端，TopupPolicy 与 EosphorosContext 不随之替换。
+  状态机。第二阶段使用紧凑、稳定按编码排序的 `EOSDICT3` 数组，已经编译约 117 万条
+  正式静态词条；它避免 `unordered_map` 在百万级数据上的节点内存膨胀，同时保留源文件
+  优先级。命名空间字节隔离主码与 `i/u/v/o`，不依赖 libime-table。
 - MVP 不实现用户学习，因此静态顺序不会被本地词频改变。
 
 ## 2. 短码
@@ -49,7 +48,7 @@ schema 当前值为：
 - `topup_command = false`
 - `menu/page_size = 5`
 
-这些值由 `build_dictionary.py --schema` 在构建期转换进 `EOSDICT2`，运行时
+这些值由 `build_dictionary.py --schema` 在构建期转换进 `EOSDICT3`，运行时
 不读取或执行 schema。`TopupPolicy` 是不依赖 Fcitx 对象的纯逻辑。
 
 `eosphoros_processor.lua` 的固定规则按当前顺序等价为：
@@ -84,8 +83,7 @@ schema 当前值为：
 
 - Rime `Tab` 通过 key binder 发送 `2`；`smarttwo` 开启时，分号提交候选索引 1，
   撇号提交索引 2。Yong 的 `select=; \'` 同样提供次选快捷键。
-- 第一阶段要求的数字 1–9 和鼠标候选选择已实现；Tab／分号／撇号属于第二阶段，
-  不在 MVP 中伪装成已完成。
+- 数字 1–9、鼠标、Tab，以及开启 smarttwo 时的分号／撇号候选选择均已实现。
 - golden 使用真实冲突 `洪山 / 婚姻圣召 hyefa`、`散装酒 / 三钟经 sfj` 验证
   静态重码顺序和数字次选。
 
@@ -97,14 +95,14 @@ schema 当前值为：
 - Backspace：删除一码并刷新候选；Escape：清空组合。
 - Enter：Yong 当前为 `enter=default`；MVP 采用原始编码直出，并在差异表明确记录。
 
-## 8. 英文与反查入口（仅审计，MVP 不实现）
+## 8. 英文与反查入口
 
 - `i`：`melt_eng/prefix` 与 `english/prefix` 均为 `i`，主词典预编辑规则在继续输入后
   隐藏入口字母；processor 遇到此前缀时让 Rime translator 接管。
 - `u`：全拼反查 `pinyin_simp`；`v`：二分反查 `quanpinerfen`；`o`：GBK／生僻字
   反查 `eosphorosgbk`。
-- 原生 `Mode` 已预留 `English`、`ReversePinyin`、`ReverseLiangfen`、
-  `ReverseGBK`，第一阶段只运行 `Normal`。
+- 原生 `Mode` 已启用 `English`、`ReversePinyin`、`ReverseLiangfen`、
+  `ReverseGBK`；构建期命名空间确保相同编码不会跨模式串候选。
 
 ## 9. Yong 非 Rime 参考
 
@@ -118,16 +116,17 @@ schema 当前值为：
 简单文字转换。计算器、日期、统计、火星文、Emoji、ZZZC、自造词和用户数据库均
 明确留给后续阶段；正常 native 汉字输入路径不链接 Lua、OpenCC 或 librime。
 
-## 第一阶段行为差异与未实现
+## 第二阶段行为差异与未实现
 
 - 已实现：小型原生词典、exact/prefix 候选、静态排序、独立输入上下文、原生候选窗、
   Space/数字/鼠标选词、方向与翻页、Backspace/Escape、Enter 原码、固定顶功、连续顶功、
   空码顶功、schema 构建期配置转换，以及 Shift 字母键规范化为小写编码。
-- 与 Rime 差异：不学习词频；不做自动回退；不处理分号快符、Tab/分号/撇号次选；
-  不提供标点、英文和反查入口；不做 OpenCC 或 Lua 候选过滤。
-- 未实现：完整词库发布、完整短码／辅助码／飞键行为测试、第二候选快捷键、标点、
-  `i/u/v/o`、OpenCC、Lua 附加功能、用户词典、ZZZC、自造词、性能 benchmark。
-  它们均属于第二阶段以后，不冒充第一阶段能力。
+- 新增：完整静态词典、自动回退、Tab/分号/撇号候选快捷键、基础中文标点和
+  `i/u/v/o` 隔离入口。
+- 与 Rime 差异：不学习词频；不实现分号快符、动态注音 comment、OpenCC 或 Lua
+  候选过滤；反查只做静态候选，不组句。
+- 未实现：OpenCC、Lua 附加功能、用户词典、ZZZC、自造词、动态词频及系统化性能
+  benchmark。它们属于后续阶段，不冒充当前能力。
 
 ## 第一阶段验证门
 

@@ -5,12 +5,28 @@
 
 namespace eosphoros {
 
+namespace {
+Mode modeForInput(const std::string &input) {
+    if (input.empty()) {
+        return Mode::Normal;
+    }
+    switch (input.front()) {
+    case 'i': return Mode::English;
+    case 'u': return Mode::ReversePinyin;
+    case 'v': return Mode::ReverseLiangfen;
+    case 'o': return Mode::ReverseGBK;
+    default: return Mode::Normal;
+    }
+}
+} // namespace
+
 EosphorosContext::EosphorosContext(const Dictionary *dictionary)
     : dictionary_(dictionary), topup_(dictionary->topupConfig()) {}
 
 void EosphorosContext::refresh() {
+    mode_ = modeForInput(input_);
     candidates_ = input_.empty() ? std::vector<Candidate>{}
-                                 : dictionary_->lookup(input_);
+                                 : dictionary_->lookup(input_, mode_);
     if (candidates_.empty()) {
         selected_ = 0;
     } else {
@@ -18,13 +34,37 @@ void EosphorosContext::refresh() {
     }
 }
 
+std::string EosphorosContext::displayInput() const {
+    if (mode_ != Mode::Normal && input_.size() > 1) {
+        return input_.substr(1);
+    }
+    return input_;
+}
+
 bool EosphorosContext::hasCommittableCandidate() const {
     return selected_ < candidates_.size() && !candidates_[selected_].completion;
+}
+
+bool EosphorosContext::hasExactCandidate() const {
+    return std::any_of(candidates_.begin(), candidates_.end(),
+                       [](const Candidate &candidate) {
+                           return !candidate.completion;
+                       });
 }
 
 KeyResult EosphorosContext::type(char key) {
     KeyResult result;
     if (!(key >= 'a' && key <= 'z') && key != ';' && key != '\'') {
+        return result;
+    }
+
+    // These prefixes are translator namespaces in the Rime scheme.  They do
+    // not participate in key-topup or normal-code auto fallback.
+    if (mode_ != Mode::Normal) {
+        input_.push_back(key);
+        selected_ = 0;
+        refresh();
+        result.consumed = true;
         return result;
     }
 
@@ -52,6 +92,26 @@ KeyResult EosphorosContext::type(char key) {
         return result;
     }
     if (action == TopupAction::HoldAndConsume) {
+        result.consumed = true;
+        return result;
+    }
+
+    // Rime's auto_fallback switch is enabled by default.  When appending a
+    // normal code would leave no exact candidate, commit the current exact
+    // candidate and let the new key begin the next segment.  Fixed top-up is
+    // evaluated first above, matching eosphoros_topup.lua.
+    if (hasCommittableCandidate()) {
+        const auto previous = candidates_[selected_].text;
+        input_.push_back(key);
+        selected_ = 0;
+        refresh();
+        if (!hasExactCandidate()) {
+            result.commits.push_back(previous);
+            input_.assign(1, key);
+            selected_ = 0;
+            refresh();
+            ++topupState_.transitions;
+        }
         result.consumed = true;
         return result;
     }
@@ -97,6 +157,20 @@ KeyResult EosphorosContext::select(std::size_t index) {
         return {};
     }
     return commit(index);
+}
+
+KeyResult EosphorosContext::symbol(const std::string &text) {
+    KeyResult result{true, {}};
+    if (!input_.empty()) {
+        if (hasCommittableCandidate()) {
+            result.commits.push_back(candidates_[selected_].text);
+        } else {
+            result.commits.push_back(input_);
+        }
+    }
+    result.commits.push_back(text);
+    reset();
+    return result;
 }
 
 KeyResult EosphorosContext::backspace() {

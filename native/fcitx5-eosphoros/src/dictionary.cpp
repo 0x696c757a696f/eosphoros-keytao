@@ -9,7 +9,18 @@
 namespace eosphoros {
 namespace {
 
-constexpr std::array<char, 8> kMagic{'E', 'O', 'S', 'D', 'I', 'C', 'T', '2'};
+constexpr std::array<char, 8> kMagic{'E', 'O', 'S', 'D', 'I', 'C', 'T', '3'};
+
+char namespaceForMode(Mode mode) {
+    switch (mode) {
+    case Mode::English: return 'i';
+    case Mode::ReversePinyin: return 'u';
+    case Mode::ReverseLiangfen: return 'v';
+    case Mode::ReverseGBK: return 'o';
+    case Mode::Normal: return '\0';
+    }
+    return '\0';
+}
 
 template <typename T> bool readNumber(std::istream &stream, T &value) {
     std::array<unsigned char, sizeof(T)> bytes{};
@@ -55,7 +66,7 @@ bool Dictionary::load(const std::string &path, std::string *error) {
     std::uint32_t topupThisLength = 0;
     std::uint32_t topupKeysLength = 0;
     if (!stream.read(magic.data(), magic.size()) || magic != kMagic ||
-        !readNumber(stream, version) || version != 2 ||
+        !readNumber(stream, version) || version != 3 ||
         !readNumber(stream, topupThisLength) ||
         !readString(stream, topupThisLength, topupThis) ||
         !readNumber(stream, topupKeysLength) ||
@@ -72,14 +83,18 @@ bool Dictionary::load(const std::string &path, std::string *error) {
         return false;
     }
 
-    std::unordered_map<std::string, std::vector<DictionaryEntry>> loaded;
+    std::vector<DictionaryEntry> loaded;
+    loaded.reserve(count);
     for (std::uint32_t ordinal = 0; ordinal < count; ++ordinal) {
         std::uint32_t codeLength = 0;
         std::uint32_t textLength = 0;
         std::uint32_t rawWeight = 0;
+        unsigned char nameSpace = 0;
         DictionaryEntry entry;
         if (!readNumber(stream, codeLength) || !readNumber(stream, textLength) ||
-            !readNumber(stream, rawWeight) || codeLength > 64 ||
+            !readNumber(stream, rawWeight) ||
+            !stream.read(reinterpret_cast<char *>(&nameSpace), 1) ||
+            codeLength > 64 ||
             !readString(stream, codeLength, entry.code) ||
             !readString(stream, textLength, entry.text)) {
             if (error) {
@@ -89,40 +104,60 @@ bool Dictionary::load(const std::string &path, std::string *error) {
         }
         entry.weight = static_cast<std::int32_t>(rawWeight);
         entry.ordinal = ordinal;
-        loaded[entry.code].push_back(std::move(entry));
+        entry.nameSpace = static_cast<char>(nameSpace);
+        loaded.push_back(std::move(entry));
     }
 
-    byCode_ = std::move(loaded);
+    std::stable_sort(loaded.begin(), loaded.end(), [](const auto &left,
+                                                      const auto &right) {
+        return left.code < right.code;
+    });
+    entries_ = std::move(loaded);
     topupConfig_ = {std::move(topupThis), std::move(topupKeys), minLength,
                     maxLength, autoClear != 0, topupCommand != 0};
     pageSize_ = pageSize;
-    sortedCodes_.clear();
-    sortedCodes_.reserve(byCode_.size());
-    for (const auto &[code, entries] : byCode_) {
-        (void)entries;
-        sortedCodes_.push_back(code);
-    }
-    std::sort(sortedCodes_.begin(), sortedCodes_.end());
     entryCount_ = count;
     return true;
 }
 
+std::pair<Dictionary::EntryIterator, Dictionary::EntryIterator>
+Dictionary::codeRange(const std::string &code) const {
+    const auto lower = std::lower_bound(
+        entries_.begin(), entries_.end(), code,
+        [](const DictionaryEntry &entry, const std::string &value) {
+            return entry.code < value;
+        });
+    const auto upper = std::upper_bound(
+        lower, entries_.end(), code,
+        [](const std::string &value, const DictionaryEntry &entry) {
+            return value < entry.code;
+        });
+    return {lower, upper};
+}
+
 bool Dictionary::hasPrefix(const std::string &input) const {
-    const auto it = std::lower_bound(sortedCodes_.begin(), sortedCodes_.end(), input);
-    return it != sortedCodes_.end() && it->compare(0, input.size(), input) == 0;
+    const auto it = std::lower_bound(
+        entries_.begin(), entries_.end(), input,
+        [](const DictionaryEntry &entry, const std::string &value) {
+            return entry.code < value;
+        });
+    return it != entries_.end() && it->code.compare(0, input.size(), input) == 0;
 }
 
 std::vector<Candidate> Dictionary::lookup(const std::string &input,
+                                          Mode mode,
                                           std::size_t limit) const {
     std::vector<Candidate> result;
     std::unordered_set<std::string> seen;
+    const auto wantedNamespace = namespaceForMode(mode);
     const auto appendCode = [&](const std::string &code, bool completion,
                                 std::vector<Candidate> &out) {
-        const auto found = byCode_.find(code);
-        if (found == byCode_.end()) {
-            return;
-        }
-        for (const auto &entry : found->second) {
+        const auto [first, last] = codeRange(code);
+        for (auto it = first; it != last; ++it) {
+            const auto &entry = *it;
+            if (entry.nameSpace != wantedNamespace) {
+                continue;
+            }
             if (out.size() >= limit) {
                 return;
             }
@@ -134,14 +169,15 @@ std::vector<Candidate> Dictionary::lookup(const std::string &input,
 
     appendCode(input, false, result);
     std::vector<const DictionaryEntry *> completions;
-    auto it = std::lower_bound(sortedCodes_.begin(), sortedCodes_.end(), input);
-    while (it != sortedCodes_.end() &&
-           it->compare(0, input.size(), input) == 0) {
-        if (*it != input) {
-            const auto found = byCode_.find(*it);
-            for (const auto &entry : found->second) {
-                completions.push_back(&entry);
-            }
+    auto it = std::lower_bound(
+        entries_.begin(), entries_.end(), input,
+        [](const DictionaryEntry &entry, const std::string &value) {
+            return entry.code < value;
+        });
+    while (it != entries_.end() &&
+           it->code.compare(0, input.size(), input) == 0) {
+        if (it->code != input && it->nameSpace == wantedNamespace) {
+            completions.push_back(&*it);
         }
         ++it;
     }

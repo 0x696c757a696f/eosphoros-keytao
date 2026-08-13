@@ -14,8 +14,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-MAGIC = b"EOSDICT2"
-VERSION = 2
+MAGIC = b"EOSDICT3"
+VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -23,6 +23,7 @@ class Entry:
     text: str
     code: str
     weight: int
+    namespace: str = ""
 
 
 @dataclass(frozen=True)
@@ -124,6 +125,29 @@ def read_rime_dictionary(path: Path) -> list[Entry]:
     return entries
 
 
+def read_manifest(path: Path, root: Path) -> list[tuple[str, Path]]:
+    """Read PREFIX<TAB>REPOSITORY_RELATIVE_PATH rows in declared order."""
+    result: list[tuple[str, Path]] = []
+    for line_number, raw in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        fields = line.split("\t")
+        if len(fields) == 1:
+            prefix, relative = "", fields[0]
+        elif len(fields) == 2:
+            prefix, relative = fields
+        else:
+            raise ValueError(f"{path}:{line_number}: expected [prefix TAB] path")
+        if prefix and (len(prefix) != 1 or prefix not in "iuvo"):
+            raise ValueError(f"{path}:{line_number}: unsupported namespace prefix")
+        source = root / relative
+        if not source.is_file():
+            raise ValueError(f"{path}:{line_number}: missing dictionary {source}")
+        result.append((prefix, source))
+    return result
+
+
 def write_string(target: object, value: str) -> None:
     encoded = value.encode("ascii")
     target.write(struct.pack("<I", len(encoded)))
@@ -151,7 +175,8 @@ def write_dictionary(path: Path, config: NativeConfig, entries: list[Entry]) -> 
         for entry in entries:
             code = entry.code.encode("ascii")
             text = entry.text.encode("utf-8")
-            target.write(struct.pack("<IIi", len(code), len(text), entry.weight))
+            namespace = ord(entry.namespace) if entry.namespace else 0
+            target.write(struct.pack("<IIiB", len(code), len(text), entry.weight, namespace))
             target.write(code)
             target.write(text)
 
@@ -159,13 +184,30 @@ def write_dictionary(path: Path, config: NativeConfig, entries: list[Entry]) -> 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--schema", type=Path, required=True)
-    parser.add_argument("--input", action="append", type=Path, required=True)
+    parser.add_argument("--input", action="append", type=Path, default=[])
+    parser.add_argument("--manifest", type=Path)
+    parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
+    sources = [("", path) for path in args.input]
+    if args.manifest:
+        sources.extend(read_manifest(args.manifest, args.root))
+    if not sources:
+        parser.error("at least one --input or --manifest is required")
+
     entries: list[Entry] = []
-    for input_path in args.input:
-        entries.extend(read_rime_dictionary(input_path))
+    for prefix, input_path in sources:
+        source_entries = read_rime_dictionary(input_path)
+        entries.extend(
+            Entry(
+                entry.text,
+                entry.code if prefix and entry.code.startswith(prefix) else prefix + entry.code,
+                entry.weight,
+                prefix,
+            )
+            for entry in source_entries
+        )
     write_dictionary(args.output, read_native_config(args.schema), entries)
     print(f"built {args.output}: {len(entries)} entries")
     return 0

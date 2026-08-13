@@ -1,0 +1,25 @@
+# Native dictionary sources in eosphoros.extended.dict.yaml priority order.
+# User-created words and zzc runtime state remain frontend-local and are not embedded.
+dicts/eosphoros/eosphoros.danzi.dict.yaml
+dicts/eosphoros/eosphoros.cizu.dict.yaml
+dicts/eosphoros/eosphoros.catholicism.dict.yaml
+dicts/eosphoros/eosphoros.protestantism.dict.yaml
+dicts/eosphoros/eosphoros.orthodoxy.dict.yaml
+dicts/eosphoros/eosphoros.oriental.dict.yaml
+dicts/eosphoros/eosphoros.assyrian.dict.yaml
+dicts/eosphoros/eosphoros.core.dict.yaml
+dicts/eosphoros/eosphoros.fjcy.dict.yaml
+dicts/eosphoros/eosphoros.ice.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml
+dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml
+# English is already normalized with an i prefix by its updater.
+i	dicts/eosphoros/eosphoros.en.dict.yaml
+# Native reverse-lookup namespaces. Prefixing keeps them isolated from normal codes.
+u	dicts/eosphoros/pinyin_simp.dict.yaml
+v	dicts/eosphoros/liangfen.dict.yaml
+o	dicts/eosphoros/eosphoros.gbk.dict.yaml

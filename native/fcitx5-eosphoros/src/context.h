@@ -9,8 +9,6 @@
 
 namespace eosphoros {
 
-enum class Mode { Normal, English, ReversePinyin, ReverseLiangfen, ReverseGBK };
-
 struct KeyResult {
     bool consumed = false;
     std::vector<std::string> commits;
@@ -29,6 +27,7 @@ public:
     KeyResult space();
     KeyResult enter();
     KeyResult select(std::size_t index);
+    KeyResult symbol(const std::string &text);
     KeyResult backspace();
     KeyResult escape();
     bool moveSelection(int delta);
@@ -38,8 +37,10 @@ public:
     const std::vector<Candidate> &candidates() const { return candidates_; }
     std::size_t selected() const { return selected_; }
     Mode mode() const { return mode_; }
+    std::string displayInput() const;
     std::size_t pageSize() const { return dictionary_->pageSize(); }
     const TopupState &topupState() const { return topupState_; }
+    bool hasExactCandidate() const;
 
 private:
     bool hasCommittableCandidate() const;

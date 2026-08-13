@@ -6,25 +6,26 @@ include(CTest)
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 option(BUILD_FCITX_ADDON "Build and install the Fcitx5 addon" ON)
-set(EOSPHOROS_DICTIONARY_INPUTS
-    "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/minimal.dict.yaml"
-    CACHE STRING "Semicolon-separated Rime dictionaries compiled into native data")
+set(EOSPHOROS_DICTIONARY_MANIFEST
+    "${CMAKE_CURRENT_SOURCE_DIR}/data/production-dictionaries.tsv"
+    CACHE FILEPATH "Ordered repository dictionary manifest compiled into native data")
 set(EOSPHOROS_SCHEMA
     "${CMAKE_CURRENT_SOURCE_DIR}/../../eosphoros.schema.yaml"
     CACHE FILEPATH "Rime schema whose topup/menu settings are compiled into native data")
+file(GLOB EOSPHOROS_REPOSITORY_DICTIONARIES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../dicts/eosphoros/*.dict.yaml")
 
 set(NATIVE_DICTIONARY "${CMAKE_CURRENT_BINARY_DIR}/eosphoros-native.dict")
-set(DICTIONARY_ARGS)
-foreach(DICTIONARY_INPUT IN LISTS EOSPHOROS_DICTIONARY_INPUTS)
-    list(APPEND DICTIONARY_ARGS --input "${DICTIONARY_INPUT}")
-endforeach()
 add_custom_command(
     OUTPUT "${NATIVE_DICTIONARY}"
     COMMAND "${Python3_EXECUTABLE}"
             "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_dictionary.py"
             --schema "${EOSPHOROS_SCHEMA}"
-            ${DICTIONARY_ARGS} --output "${NATIVE_DICTIONARY}"
-    DEPENDS ${EOSPHOROS_DICTIONARY_INPUTS}
+            --manifest "${EOSPHOROS_DICTIONARY_MANIFEST}"
+            --root "${CMAKE_CURRENT_SOURCE_DIR}/../.."
+            --output "${NATIVE_DICTIONARY}"
+    DEPENDS "${EOSPHOROS_DICTIONARY_MANIFEST}"
+            ${EOSPHOROS_REPOSITORY_DICTIONARIES}
             "${EOSPHOROS_SCHEMA}"
             "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_dictionary.py"
     VERBATIM)
@@ -77,11 +78,24 @@ if(BUILD_FCITX_ADDON)
 endif()
 
 if(BUILD_TESTING)
+    set(TEST_DICTIONARY "${CMAKE_CURRENT_BINARY_DIR}/eosphoros-native-test.dict")
+    add_custom_command(
+        OUTPUT "${TEST_DICTIONARY}"
+        COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_dictionary.py"
+                --schema "${EOSPHOROS_SCHEMA}"
+                --input "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/minimal.dict.yaml"
+                --output "${TEST_DICTIONARY}"
+        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/minimal.dict.yaml"
+                "${EOSPHOROS_SCHEMA}"
+                "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_dictionary.py"
+        VERBATIM)
+    add_custom_target(eosphoros-native-test-dictionary DEPENDS "${TEST_DICTIONARY}")
     add_executable(eosphoros-native-dictionary-test tests/test_dictionary.cpp)
     target_link_libraries(eosphoros-native-dictionary-test PRIVATE eosphoros-native-core)
-    add_dependencies(eosphoros-native-dictionary-test eosphoros-native-dictionary)
+    add_dependencies(eosphoros-native-dictionary-test eosphoros-native-test-dictionary)
     add_test(NAME eosphoros-native-dictionary
-        COMMAND eosphoros-native-dictionary-test "${NATIVE_DICTIONARY}")
+        COMMAND eosphoros-native-dictionary-test "${TEST_DICTIONARY}")
 
     add_executable(eosphoros-native-topup-test tests/test_topup.cpp)
     target_link_libraries(eosphoros-native-topup-test PRIVATE eosphoros-native-core)
@@ -89,8 +103,17 @@ if(BUILD_TESTING)
 
     add_executable(eosphoros-native-context-test tests/test_context.cpp)
     target_link_libraries(eosphoros-native-context-test PRIVATE eosphoros-native-core)
-    add_dependencies(eosphoros-native-context-test eosphoros-native-dictionary)
+    add_dependencies(eosphoros-native-context-test eosphoros-native-test-dictionary)
     add_test(NAME eosphoros-native-context
-        COMMAND eosphoros-native-context-test "${NATIVE_DICTIONARY}"
+        COMMAND eosphoros-native-context-test "${TEST_DICTIONARY}"
                 "${CMAKE_CURRENT_SOURCE_DIR}/tests/golden/normal.tsv")
+
+    add_executable(eosphoros-native-production-dictionary-test
+        tests/test_production_dictionary.cpp)
+    target_link_libraries(eosphoros-native-production-dictionary-test
+        PRIVATE eosphoros-native-core)
+    add_dependencies(eosphoros-native-production-dictionary-test
+        eosphoros-native-dictionary)
+    add_test(NAME eosphoros-native-production-dictionary
+        COMMAND eosphoros-native-production-dictionary-test "${NATIVE_DICTIONARY}")
 endif()

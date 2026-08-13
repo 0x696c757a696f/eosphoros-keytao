@@ -28,6 +28,8 @@ KeyResult KeyHandler::handle(EosphorosContext &context,
             (context.selected() / context.pageSize()) * context.pageSize();
         return context.select(pageStart + key.index);
     }
+    case KeyKind::Symbol:
+        return context.symbol(key.text);
     case KeyKind::PassThrough:
         break;
     }

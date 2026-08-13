@@ -1,14 +1,15 @@
-# 晨星键道原生 Fcitx5 引擎（第一阶段）
+# 晨星键道原生 Fcitx5 引擎（第二阶段）
 
 这是与仓库现有 Rime 方案并行的实验性原生实现。它直接实现
 `InputMethodEngineV2`，运行时不加载 `fcitx5-rime`、`librime`、
 `librime-lua`、Rime schema 或 YAML 词典。
 
-当前第一阶段只实现普通键道模式：原生二进制词典查询、候选窗、空格和
-数字选词、退格、Escape、Enter 编码直出、上下/翻页选择，以及与现有
-`eosphoros_topup.lua` 固定规则一致的顶功、连续顶功和空码顶功。英文和三种反查模式只在
-状态枚举中预留，尚未启用；OpenCC、Lua 扩展、用户词典和词频学习也不在
-本阶段范围内。
+当前实现会按 [production-dictionaries.tsv](data/production-dictionaries.tsv)
+编译主方案约 117 万条静态词条，并提供候选窗、数字/鼠标/Tab/分号/撇号选词、
+退格、Escape、Enter 编码直出、上下/翻页、中文标点、固定与连续顶功、空码顶功和
+自动回退。`i` 英文、`u` 全拼、`v` 两分、`o` GBK 入口使用独立词典命名空间，继续
+输入后预编辑会隐藏入口字母。OpenCC、Lua 附加功能、用户词典、ZZZC 和词频学习
+仍不属于本阶段。
 
 ## 构建
 
@@ -26,12 +27,13 @@ sudo cmake --install build/native
 重新启动 Fcitx5 后，在配置工具中添加“晨星键道（原生）”。开发时可以用
 `EOSPHOROS_NATIVE_DICTIONARY=/path/to/eosphoros-native.dict` 临时覆盖词典。
 
-默认构建小型确定性测试词典。要编译真实词典，可按导入优先级传入多个
-Rime 词典；源文件顺序和每个文件的行顺序都会保留：
+默认构建正式词典，同时另建小型确定性词典供快速单元测试。正式来源清单保留
+`eosphoros.extended` 的导入顺序和各文件行序；新增静态词典时需同步更新该清单，
+仓库测试会检查遗漏：
 
 ```bash
 cmake -S native/fcitx5-eosphoros -B build/native \
-  -DEOSPHOROS_DICTIONARY_INPUTS="dicts/eosphoros/eosphoros.core.dict.yaml;dicts/eosphoros/eosphoros.ext.dict.yaml"
+  -DEOSPHOROS_DICTIONARY_MANIFEST=/path/to/production-dictionaries.tsv
 ```
 
 构建器同时通过 `-DEOSPHOROS_SCHEMA=eosphoros.schema.yaml` 把当前 schema 的
@@ -51,11 +53,13 @@ ldd build/native/libeosphoros-native.so
 输出不得包含 `rime`、`librime`、`lua` 或 `opencc`。当前使用自有只读词典
 和上下文状态机，没有使用 libime `TableContext`，原因见 [AUDIT.md](AUDIT.md)。
 
-## 第一阶段测试
+## 第二阶段测试
 
 CTest 分别验证 Dictionary、纯 `TopupPolicy` 和基于来源标注 golden trace 的
 `EosphorosContext`。trace 覆盖短码、二／三／四字词、首笔辅助码、确认过的飞键、
-真实重码、Space／数字选词、退格、Escape、固定／连续／空码顶功和翻页选择。
+真实重码、Space／数字/快捷键选词、退格、Escape、固定／连续／空码顶功、自动回退、
+中文标点和翻页选择。生产词典冒烟测试还会检查总条数及主码、英文、全拼、两分、
+GBK 五种查询路径。
 测试夹具不包含临时编造的词条；仓库级测试会逐项确认其文本和编码仍存在于正式
 晨星词库，避免 golden 结果与实际方案脱节。
 完整已实现、差异和未实现清单见 [AUDIT.md](AUDIT.md)。

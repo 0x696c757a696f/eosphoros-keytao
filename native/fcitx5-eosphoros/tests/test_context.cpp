@@ -42,6 +42,15 @@ void runTrace(const eosphoros::Dictionary &dictionary,
             logical.kind = eosphoros::KeyKind::PageUp;
         } else if (key == "PAGE_DOWN") {
             logical.kind = eosphoros::KeyKind::PageDown;
+        } else if (key == "TAB" || key == "SEMICOLON") {
+            logical.kind = eosphoros::KeyKind::Select;
+            logical.index = 1;
+        } else if (key == "APOSTROPHE") {
+            logical.kind = eosphoros::KeyKind::Select;
+            logical.index = 2;
+        } else if (key == "PERIOD") {
+            logical.kind = eosphoros::KeyKind::Symbol;
+            logical.text = "。";
         } else if (key.size() == 1 && key[0] >= '1' && key[0] <= '9') {
             logical.kind = eosphoros::KeyKind::Select;
             logical.index = static_cast<std::size_t>(key[0] - '1');
@@ -91,6 +100,17 @@ int main(int argc, char **argv) {
         second.type('j');
         require(first.input() == "a" && second.input() == "j",
                 "input contexts leaked state");
+        eosphoros::EosphorosContext modes(&dictionary);
+        modes.type('i');
+        require(modes.mode() == eosphoros::Mode::English &&
+                    modes.displayInput() == "i",
+                "English namespace did not start");
+        modes.type('a');
+        require(modes.displayInput() == "a", "English prefix was not hidden");
+        modes.reset();
+        modes.type('u');
+        require(modes.mode() == eosphoros::Mode::ReversePinyin,
+                "Pinyin namespace did not start");
         std::cout << "context golden tests passed\n";
         return EXIT_SUCCESS;
     } catch (const std::exception &error) {

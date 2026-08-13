@@ -66,6 +66,34 @@ LogicalKey logicalKey(const fcitx::Key &key) {
     }
 }
 
+LogicalKey symbolKey(const fcitx::Key &key) {
+    switch (key.sym()) {
+    case FcitxKey_slash: return {KeyKind::Symbol, '\0', 0, "/"};
+    case FcitxKey_question: return {KeyKind::Symbol, '\0', 0, "？"};
+    case FcitxKey_backslash: return {KeyKind::Symbol, '\0', 0, "\\"};
+    case FcitxKey_bar: return {KeyKind::Symbol, '\0', 0, "·"};
+    case FcitxKey_minus: return {KeyKind::Symbol, '\0', 0, "-"};
+    case FcitxKey_underscore: return {KeyKind::Symbol, '\0', 0, "——"};
+    case FcitxKey_equal: return {KeyKind::Symbol, '\0', 0, "＝"};
+    case FcitxKey_plus: return {KeyKind::Symbol, '\0', 0, "+"};
+    case FcitxKey_semicolon: return {KeyKind::Symbol, '\0', 0, "；"};
+    case FcitxKey_colon: return {KeyKind::Symbol, '\0', 0, "："};
+    case FcitxKey_apostrophe: return {KeyKind::Symbol, '\0', 0, "‘"};
+    case FcitxKey_quotedbl: return {KeyKind::Symbol, '\0', 0, "“"};
+    case FcitxKey_bracketleft: return {KeyKind::Symbol, '\0', 0, "【"};
+    case FcitxKey_braceleft: return {KeyKind::Symbol, '\0', 0, "{"};
+    case FcitxKey_bracketright: return {KeyKind::Symbol, '\0', 0, "】"};
+    case FcitxKey_braceright: return {KeyKind::Symbol, '\0', 0, "}"};
+    case FcitxKey_comma: return {KeyKind::Symbol, '\0', 0, "，"};
+    case FcitxKey_less: return {KeyKind::Symbol, '\0', 0, "《"};
+    case FcitxKey_period: return {KeyKind::Symbol, '\0', 0, "。"};
+    case FcitxKey_greater: return {KeyKind::Symbol, '\0', 0, "》"};
+    case FcitxKey_grave: return {KeyKind::Symbol, '\0', 0, "·"};
+    case FcitxKey_asciitilde: return {KeyKind::Symbol, '\0', 0, "～"};
+    default: return {};
+    }
+}
+
 } // namespace
 
 EosphorosEngine::EosphorosEngine(fcitx::Instance *instance)
@@ -110,7 +138,24 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
     }
     auto *inputContext = event.inputContext();
     auto *current = state(inputContext);
-    const auto result = keyHandler_.handle(current->context, logicalKey(event.key()));
+    auto logical = logicalKey(event.key());
+    const auto symbol = event.key().normalize().sym();
+    if (!current->context.input().empty()) {
+        // Tab is bound to candidate 2 by the schema.  With smarttwo enabled,
+        // semicolon and apostrophe select candidates 2 and 3 while a menu is
+        // active; outside composition they retain their normal frontend use.
+        if (symbol == FcitxKey_Tab || symbol == FcitxKey_semicolon) {
+            logical = {KeyKind::Select, '\0', 1};
+        } else if (symbol == FcitxKey_apostrophe) {
+            logical = {KeyKind::Select, '\0', 2};
+        }
+    }
+    if (logical.kind == KeyKind::PassThrough ||
+        (current->context.input().empty() &&
+         (symbol == FcitxKey_semicolon || symbol == FcitxKey_apostrophe))) {
+        logical = symbolKey(event.key());
+    }
+    const auto result = keyHandler_.handle(current->context, logical);
 
     if (result.consumed) {
         apply(inputContext, result);
@@ -127,8 +172,9 @@ void EosphorosEngine::updateUI(fcitx::InputContext *inputContext) {
     const auto &context = state(inputContext)->context;
     inputContext->inputPanel().reset();
     if (!context.input().empty()) {
-        fcitx::Text preedit(context.input());
-        preedit.setCursor(context.input().size());
+        const auto displayInput = context.displayInput();
+        fcitx::Text preedit(displayInput);
+        preedit.setCursor(displayInput.size());
         inputContext->inputPanel().setPreedit(preedit);
 
         auto list = std::make_unique<fcitx::CommonCandidateList>();

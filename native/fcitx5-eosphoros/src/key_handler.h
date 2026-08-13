@@ -18,12 +18,14 @@ enum class KeyKind {
     PageUp,
     PageDown,
     Select,
+    Symbol,
 };
 
 struct LogicalKey {
     KeyKind kind = KeyKind::PassThrough;
     char code = '\0';
     std::size_t index = 0;
+    std::string text;
 };
 
 class KeyHandler {
