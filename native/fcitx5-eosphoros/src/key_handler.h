@@ -20,6 +20,7 @@ enum class KeyKind {
     Select,
     Symbol,
     Calculator,
+    ToggleZzc,
 };
 
 struct LogicalKey {

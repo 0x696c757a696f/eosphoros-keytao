@@ -44,6 +44,7 @@ add_custom_command(
             --output "${NATIVE_AUXILIARY}"
     DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tools/build_auxiliary.py"
             "${CMAKE_CURRENT_SOURCE_DIR}/../../dicts/eosphoros/eosphoros.cx.dict.yaml"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../zzc_state/char_parts.tsv"
             ${EOSPHOROS_EMOJI_SOURCES}
     VERBATIM)
 add_custom_target(eosphoros-native-auxiliary ALL DEPENDS "${NATIVE_AUXILIARY}")
@@ -149,7 +150,8 @@ if(BUILD_TESTING)
                      eosphoros-native-dictionary)
     add_test(NAME eosphoros-native-auxiliary
         COMMAND eosphoros-native-auxiliary-test "${NATIVE_AUXILIARY}"
-                "${NATIVE_DICTIONARY}")
+                "${NATIVE_DICTIONARY}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-zzc-user-data.tsv")
 
     add_executable(eosphoros-native-user-data-test tests/test_user_data.cpp)
     target_link_libraries(eosphoros-native-user-data-test PRIVATE eosphoros-native-core)

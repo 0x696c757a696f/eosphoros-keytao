@@ -6,7 +6,7 @@
 
 namespace eosphoros {
 namespace {
-constexpr std::array<char, 8> kMagic{'E','O','S','A','U','X','0','1'};
+constexpr std::array<char, 8> kMagic{'E','O','S','A','U','X','0','2'};
 
 bool number(std::istream &source, std::uint32_t &value) {
     std::array<unsigned char, 4> bytes{};
@@ -29,14 +29,16 @@ bool text(std::istream &source, std::string &value) {
 bool AuxiliaryData::load(const std::string &path, std::string *error) {
     std::ifstream source(path, std::ios::binary);
     std::array<char, 8> magic{};
-    std::uint32_t pronCount = 0, emojiCount = 0;
+    std::uint32_t pronCount = 0, emojiCount = 0, partsCount = 0;
     if (!source || !source.read(magic.data(), magic.size()) || magic != kMagic ||
-        !number(source, pronCount) || !number(source, emojiCount)) {
+        !number(source, pronCount) || !number(source, emojiCount) ||
+        !number(source, partsCount)) {
         if (error) *error = "invalid native auxiliary data";
         return false;
     }
     std::unordered_map<std::string, std::string> pron;
     std::unordered_map<std::string, std::vector<std::string>> emoji;
+    std::unordered_map<std::string, CharacterParts> parts;
     for (std::uint32_t i = 0; i < pronCount; ++i) {
         std::string key, value;
         if (!text(source, key) || !text(source, value)) return false;
@@ -52,8 +54,21 @@ bool AuxiliaryData::load(const std::string &path, std::string *error) {
             values.push_back(std::move(value));
         }
     }
+    for (std::uint32_t i = 0; i < partsCount; ++i) {
+        std::string key; CharacterParts value;
+        if (!text(source, key) || !text(source, value.sound) ||
+            !text(source, value.rhyme) || !text(source, value.stroke)) return false;
+        parts.emplace(std::move(key), std::move(value));
+    }
     pronunciation_ = std::move(pron); emoji_ = std::move(emoji);
+    characterParts_ = std::move(parts);
     return true;
+}
+
+const AuxiliaryData::CharacterParts *AuxiliaryData::characterParts(
+    const std::string &value) const {
+    const auto found = characterParts_.find(value);
+    return found == characterParts_.end() ? nullptr : &found->second;
 }
 
 const std::string *AuxiliaryData::pronunciation(const std::string &value) const {

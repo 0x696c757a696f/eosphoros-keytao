@@ -7,6 +7,18 @@
 namespace eosphoros {
 
 namespace {
+std::vector<std::string> utf8Characters(const std::string &text) {
+    std::vector<std::string> result;
+    for (std::size_t i = 0; i < text.size();) {
+        const auto lead = static_cast<unsigned char>(text[i]);
+        const std::size_t length = lead < 0x80 ? 1 : lead < 0xE0 ? 2 : lead < 0xF0 ? 3 : 4;
+        if (i + length > text.size()) return {};
+        result.push_back(text.substr(i, length));
+        i += length;
+    }
+    return result;
+}
+
 Mode modeForInput(const std::string &input) {
     if (input.empty()) {
         return Mode::Normal;
@@ -85,10 +97,18 @@ void EosphorosContext::refresh() {
 }
 
 std::string EosphorosContext::displayInput() const {
+    if (zzcActive_) return "自造词：" + zzcWord_ + input_;
     if (mode_ != Mode::Normal && mode_ != Mode::Calculator && input_.size() > 1) {
         return input_.substr(1);
     }
     return input_;
+}
+
+void EosphorosContext::appendCommit(KeyResult &result, const std::string &text,
+                                    const std::string &code, bool learn) {
+    if (zzcActive_) zzcWord_ += text;
+    else result.commits.push_back(text);
+    if (learn && userData_) userData_->record(code, text);
 }
 
 bool EosphorosContext::hasCommittableCandidate() const {
@@ -124,9 +144,8 @@ KeyResult EosphorosContext::type(char key) {
     topupState_.lastAction = action;
     if (action == TopupAction::CommitAndStartNext) {
         ++topupState_.transitions;
-        result.commits.push_back(candidates_[selected_].text);
-        if (userData_ && candidates_[selected_].comment != "Emoji")
-            userData_->record(input_, candidates_[selected_].text);
+        appendCommit(result, candidates_[selected_].text, input_,
+                     candidates_[selected_].comment != "Emoji");
         input_.assign(1, key);
         selected_ = 0;
         refresh();
@@ -158,8 +177,7 @@ KeyResult EosphorosContext::type(char key) {
         selected_ = 0;
         refresh();
         if (!hasExactCandidate()) {
-            result.commits.push_back(previous);
-            if (userData_) userData_->record(input_.substr(0, input_.size() - 1), previous);
+            appendCommit(result, previous, input_.substr(0, input_.size() - 1));
             input_.assign(1, key);
             selected_ = 0;
             refresh();
@@ -187,12 +205,67 @@ KeyResult EosphorosContext::typeCalculator(char key) {
 KeyResult EosphorosContext::commit(std::size_t index) {
     KeyResult result{true, {}};
     if (index < candidates_.size()) {
-        result.commits.push_back(candidates_[index].text);
-        if (userData_ && mode_ == Mode::Normal && candidates_[index].comment != "Emoji")
-            userData_->record(input_, candidates_[index].text);
+        appendCommit(result, candidates_[index].text, input_,
+                     mode_ == Mode::Normal && candidates_[index].comment != "Emoji");
     }
-    reset();
+    if (zzcActive_) {
+        input_.clear();
+        candidates_.clear();
+        selected_ = 0;
+        mode_ = Mode::Normal;
+    } else {
+        reset();
+    }
     return result;
+}
+
+std::string EosphorosContext::zzcCode() const {
+    if (!auxiliary_) return {};
+    const auto characters = utf8Characters(zzcWord_);
+    if (characters.size() < 2) return {};
+    std::vector<const AuxiliaryData::CharacterParts *> parts;
+    for (const auto &character : characters) {
+        const auto *value = auxiliary_->characterParts(character);
+        if (!value) return {};
+        parts.push_back(value);
+    }
+    std::string code;
+    if (parts.size() == 2) {
+        code = parts[0]->sound + parts[0]->rhyme + parts[1]->sound +
+               parts[1]->rhyme + parts[0]->stroke + parts[1]->stroke;
+    } else if (parts.size() == 3) {
+        code = parts[0]->sound + parts[1]->sound + parts[2]->sound +
+               parts[0]->stroke + parts[1]->stroke + parts[2]->stroke;
+    } else {
+        code = parts[0]->sound + parts[1]->sound + parts[2]->sound +
+               parts.back()->sound + parts[0]->stroke + parts[1]->stroke;
+    }
+    return code.substr(0, 6);
+}
+
+KeyResult EosphorosContext::toggleZzc() {
+    if (!zzcActive_) {
+        if (!input_.empty()) return {};
+        zzcActive_ = true;
+        zzcWord_.clear();
+        return {true, {}};
+    }
+    if (!input_.empty() && hasCommittableCandidate()) {
+        zzcWord_ += candidates_[selected_].text;
+        if (userData_ && candidates_[selected_].comment != "Emoji")
+            userData_->record(input_, candidates_[selected_].text);
+        input_.clear();
+        candidates_.clear();
+        selected_ = 0;
+    }
+    const auto word = zzcWord_;
+    const auto code = zzcCode();
+    zzcActive_ = false;
+    zzcWord_.clear();
+    reset();
+    if (word.empty()) return {true, {}};
+    if (userData_ && !code.empty()) userData_->record(code, word, true);
+    return {true, {word}};
 }
 
 KeyResult EosphorosContext::space() {
@@ -247,7 +320,7 @@ KeyResult EosphorosContext::backspace() {
 }
 
 KeyResult EosphorosContext::escape() {
-    if (input_.empty()) {
+    if (input_.empty() && !zzcActive_) {
         return {};
     }
     reset();
@@ -270,6 +343,8 @@ void EosphorosContext::reset() {
     selected_ = 0;
     mode_ = Mode::Normal;
     topupState_ = {};
+    zzcActive_ = false;
+    zzcWord_.clear();
 }
 
 } // namespace eosphoros

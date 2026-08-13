@@ -29,6 +29,7 @@ public:
 
     KeyResult type(char key);
     KeyResult typeCalculator(char key);
+    KeyResult toggleZzc();
     KeyResult space();
     KeyResult enter();
     KeyResult select(std::size_t index);
@@ -46,11 +47,16 @@ public:
     std::size_t pageSize() const { return dictionary_->pageSize(); }
     const TopupState &topupState() const { return topupState_; }
     bool hasExactCandidate() const;
+    bool composing() const { return !input_.empty() || zzcActive_; }
+    bool zzcActive() const { return zzcActive_; }
 
 private:
     bool hasCommittableCandidate() const;
     void refresh();
     KeyResult commit(std::size_t index);
+    void appendCommit(KeyResult &result, const std::string &text,
+                      const std::string &code, bool learn = true);
+    std::string zzcCode() const;
 
     const Dictionary *dictionary_;
     const AuxiliaryData *auxiliary_;
@@ -61,6 +67,8 @@ private:
     std::size_t selected_ = 0;
     Mode mode_ = Mode::Normal;
     TopupState topupState_;
+    bool zzcActive_ = false;
+    std::string zzcWord_;
 };
 
 } // namespace eosphoros

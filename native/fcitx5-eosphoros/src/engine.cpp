@@ -174,6 +174,10 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
     auto *current = state(inputContext);
     auto logical = logicalKey(event.key());
     const auto symbol = event.key().normalize().sym();
+    if (symbol == FcitxKey_backslash &&
+        (current->context.zzcActive() || current->context.input().empty())) {
+        logical = {KeyKind::ToggleZzc};
+    }
     if (current->context.mode() == Mode::Calculator) {
         const auto raw = event.key().sym();
         char calculator = '\0';
@@ -218,7 +222,7 @@ void EosphorosEngine::selectCandidate(fcitx::InputContext *inputContext,
 void EosphorosEngine::updateUI(fcitx::InputContext *inputContext) {
     const auto &context = state(inputContext)->context;
     inputContext->inputPanel().reset();
-    if (!context.input().empty()) {
+    if (context.composing()) {
         const auto displayInput = context.displayInput();
         fcitx::Text preedit(displayInput);
         preedit.setCursor(displayInput.size());

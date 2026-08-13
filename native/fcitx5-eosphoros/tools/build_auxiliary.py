@@ -10,7 +10,7 @@ import struct
 from pathlib import Path
 
 
-MAGIC = b"EOSAUX01"
+MAGIC = b"EOSAUX02"
 LUA_ROW = re.compile(r'^  \[("(?:[^"\\]|\\.)*")\] = ("(?:[^"\\]|\\.)*"),?$')
 
 
@@ -48,6 +48,18 @@ def emoji_rows(root: Path) -> dict[str, list[str]]:
     return result
 
 
+def character_parts(path: Path) -> dict[str, tuple[str, str, str]]:
+    result: dict[str, tuple[str, str, str]] = {}
+    for line_number, line in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):
+        if not line or line.startswith("#"):
+            continue
+        fields = line.split("\t")
+        if len(fields) < 4:
+            raise ValueError(f"{path}:{line_number}: invalid character-parts row")
+        result.setdefault(fields[0], (fields[1], fields[2], fields[3]))
+    return result
+
+
 def text(target: object, value: str) -> None:
     data = value.encode("utf-8")
     target.write(struct.pack("<I", len(data)))
@@ -62,10 +74,11 @@ def main() -> int:
     args = parser.parse_args()
     pron = pronunciations(args.pronunciation)
     emoji = emoji_rows(args.root / "opencc" / "eosphoros")
+    parts = character_parts(args.root / "zzc_state" / "char_parts.tsv")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("wb") as target:
         target.write(MAGIC)
-        target.write(struct.pack("<II", len(pron), len(emoji)))
+        target.write(struct.pack("<III", len(pron), len(emoji), len(parts)))
         for key, value in pron.items():
             text(target, key); text(target, value)
         for key, values in emoji.items():
@@ -73,7 +86,11 @@ def main() -> int:
             target.write(struct.pack("<I", len(values)))
             for value in values:
                 text(target, value)
-    print(f"built {args.output}: {len(pron)} pronunciations, {len(emoji)} emoji keys")
+        for key, values in parts.items():
+            text(target, key)
+            for value in values:
+                text(target, value)
+    print(f"built {args.output}: {len(pron)} pronunciations, {len(emoji)} emoji keys, {len(parts)} character parts")
     return 0
 
 
