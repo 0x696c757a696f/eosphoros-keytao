@@ -18,7 +18,9 @@ int main(int argc, char **argv) {
                 "English namespace lookup failed");
         require(dictionary.lookup("uni", eosphoros::Mode::ReversePinyin).front().text == "你",
                 "Pinyin namespace lookup failed");
-        require(dictionary.lookup("vlyly", eosphoros::Mode::ReverseLiangfen).front().text == "龘",
+        const auto liangfen = dictionary.lookup("vlyly", eosphoros::Mode::ReverseLiangfen);
+        require(liangfen.size() >= 2 && liangfen[0].text == "龖" &&
+                    liangfen[1].text == "龘",
                 "Liangfen namespace lookup failed");
         require(dictionary.lookup("odsovouviavvvavavvvovouviavvvavavvvovouviavvvavavvv", eosphoros::Mode::ReverseGBK)
                     .front().text == "龘",

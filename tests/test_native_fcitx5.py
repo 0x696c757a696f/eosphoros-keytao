@@ -134,7 +134,7 @@ class NativeFcitx5Tests(unittest.TestCase):
         self.assertEqual((min_length, max_length), (4, 6))
         self.assertEqual((auto_clear, topup_command), (1, 0))
         self.assertEqual(page_size, 5)
-        self.assertEqual(count, 21)
+        self.assertEqual(count, 23)
 
     def test_native_production_manifest_covers_active_static_dictionaries(self) -> None:
         manifest = NATIVE / "data/production-dictionaries.tsv"

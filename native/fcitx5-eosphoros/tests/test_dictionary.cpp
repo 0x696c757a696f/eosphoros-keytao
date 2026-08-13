@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         eosphoros::Dictionary dictionary;
         std::string error;
         require(dictionary.load(argv[1], &error), error);
-        require(dictionary.size() == 21, "unexpected fixture size");
+        require(dictionary.size() == 23, "unexpected fixture size");
         require(dictionary.pageSize() == 5, "schema page size was not loaded");
         const auto &config = dictionary.topupConfig();
         require(config.topupThis == "bcdefghjklmnpqrstwxyz",
