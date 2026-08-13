@@ -9,7 +9,7 @@ collision_second_candidate	eosphoros.extended import order: cizu before catholic
 space_commit	Rime express_editor + selected exact candidate	a a i v SPACE	毌	-	-
 digit_second	Rime selector numeric candidate	b 2	吧	-	-
 fixed_topup	lua/eosphoros/input/eosphoros_topup.lua:86-87	a a i v x	毌	x	嗯
-continuous_topup	lua/eosphoros/eosphoros_processor.lua:173-180	a a i v a a i v x	毌|毌	x	嗯
+continuous_topup	lua/eosphoros/eosphoros_processor.lua:173-180	a a i v b a x	毌|不能	x	嗯
 topup_key_transition	lua/eosphoros/input/eosphoros_topup.lua:86	b a x	不能	x	嗯
 missing_candidate_clear_and_start_next	lua/eosphoros/eosphoros_processor.lua:168-173	z z z z x	-	x	嗯
 backspace	Rime express_editor + prefix lookup	b a BACKSPACE	-	b	不
