@@ -37,9 +37,27 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=/usr
 
       - name: Build and test
+        shell: bash
         run: |
-          cmake --build build/native-fcitx5
-          ctest --test-dir build/native-fcitx5 --output-on-failure
+          set +e
+          cmake --build build/native-fcitx5 2>&1 | tee build/native-fcitx5/build.log
+          build_status=${PIPESTATUS[0]}
+          set -e
+          if (( build_status != 0 )); then
+            details=$(tail -n 35 build/native-fcitx5/build.log | sed -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/$/%0A/' | tr -d '\n')
+            echo "::error title=Native Fcitx5 build failed::$details"
+            exit "$build_status"
+          fi
+
+          set +e
+          ctest --test-dir build/native-fcitx5 --output-on-failure 2>&1 | tee build/native-fcitx5/ctest.log
+          test_status=${PIPESTATUS[0]}
+          set -e
+          if (( test_status != 0 )); then
+            details=$(tail -n 50 build/native-fcitx5/ctest.log | sed -e 's/%/%25/g' -e 's/\r/%0D/g' -e 's/$/%0A/' | tr -d '\n')
+            echo "::error title=Native Fcitx5 tests failed::$details"
+            exit "$test_status"
+          fi
 
       - name: Verify input method metadata
         run: |
