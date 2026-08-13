@@ -8,6 +8,7 @@ sort: original
 # 下列词条按 eosphoros.extended.dict.yaml 的实际导入优先级摘录。
 不	b	100
 吧	b	90
+宾	bb	100
 嗯	x	100
 不能	ba	100
 棒不棒	bbb	100

@@ -38,6 +38,7 @@ class NativeFcitx5Tests(unittest.TestCase):
 
         source_rows: Counter[tuple[str, str]] = Counter()
         for path in (
+            ROOT / "dicts/eosphoros/eosphoros.danzi.dict.yaml",
             ROOT / "dicts/eosphoros/eosphoros.cizu.dict.yaml",
             ROOT / "dicts/eosphoros/eosphoros.catholicism.dict.yaml",
             ROOT / "dicts/eosphoros/eosphoros.core.dict.yaml",
@@ -133,7 +134,7 @@ class NativeFcitx5Tests(unittest.TestCase):
         self.assertEqual((min_length, max_length), (4, 6))
         self.assertEqual((auto_clear, topup_command), (1, 0))
         self.assertEqual(page_size, 5)
-        self.assertEqual(count, 20)
+        self.assertEqual(count, 21)
 
     def test_native_production_manifest_covers_active_static_dictionaries(self) -> None:
         manifest = NATIVE / "data/production-dictionaries.tsv"

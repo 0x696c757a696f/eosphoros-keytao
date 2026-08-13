@@ -103,10 +103,13 @@ def parse_weight(value: str) -> int:
 def read_rime_dictionary(path: Path) -> list[Entry]:
     entries: list[Entry] = []
     in_body = False
+    sort_mode = "original"
     with path.open("r", encoding="utf-8-sig", newline="") as source:
         for line_number, raw in enumerate(source, 1):
             line = raw.rstrip("\r\n")
             if not in_body:
+                if line.strip().startswith("sort:"):
+                    sort_mode = line.split(":", 1)[1].strip().split("#", 1)[0].strip()
                 if line.strip() == "...":
                     in_body = True
                 continue
@@ -122,6 +125,9 @@ def read_rime_dictionary(path: Path) -> list[Entry]:
             entries.append(Entry(text, code, weight))
     if not in_body:
         raise ValueError(f"{path}: missing Rime dictionary body marker (...)")
+    if sort_mode == "by_weight":
+        # Python's sort is stable, so equal weights retain source order.
+        entries.sort(key=lambda entry: entry.weight, reverse=True)
     return entries
 
 
