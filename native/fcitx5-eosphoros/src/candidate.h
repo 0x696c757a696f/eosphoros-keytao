@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <fcitx/candidatelist.h>
+#include <string>
 
 namespace eosphoros::fcitx5 {
 

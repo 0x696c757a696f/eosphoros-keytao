@@ -385,6 +385,18 @@ RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RH
 5. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
 6. 若仍不能输入，先运行 `fcitx5-diagnose`，确认当前桌面会话、Fcitx5 自启动、Rime 插件和输入法环境变量是否被识别。
 
+**实验性原生 Fcitx5 引擎**
+
+仓库另有 [`native/fcitx5-eosphoros/`](native/fcitx5-eosphoros/) 第一阶段 MVP，
+它直接实现 Fcitx5 `InputMethodEngineV2`，不依赖 `fcitx5-rime`、`librime`、
+`librime-lua`，也不会在运行时解析 Rime schema。当前只用于 Linux 开发验证，
+实现小型原生词典、候选选择和晨星基本／连续／空码顶功；英文、反查、OpenCC、
+Lua 附加功能及用户词典尚未迁移。它拥有独立的 `Native Fcitx5` 构建产物，
+不会混入上述 Rime、Weasel、Rabbit、Squirrel、小小或移动端 Release 包。
+构建方法、行为审计和当前差异见[原生引擎 README](native/fcitx5-eosphoros/README.md)
+与[行为审计](native/fcitx5-eosphoros/AUDIT.md)。普通用户目前仍应使用上面的
+Fcitx5 + Rime 稳定方案。
+
 <details>
 <summary><strong>🧰 展开 Linux 桌面环境与应用兼容设置</strong></summary>
 

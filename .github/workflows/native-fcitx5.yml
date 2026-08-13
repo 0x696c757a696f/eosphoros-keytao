@@ -61,7 +61,14 @@ jobs:
             native/fcitx5-eosphoros/src native/fcitx5-eosphoros/CMakeLists.txt
 
       - name: Stage install tree
-        run: DESTDIR="$PWD/build/native-install" cmake --install build/native-fcitx5
+        shell: bash
+        run: |
+          DESTDIR="$PWD/build/native-install" cmake --install build/native-fcitx5
+          test -n "$(find build/native-install -type f -name 'libeosphoros-native.so' -print -quit)"
+          test -n "$(find build/native-install -type f -path '*/fcitx5/addon/eosphoros-native.conf' -print -quit)"
+          test -n "$(find build/native-install -type f -path '*/fcitx5/inputmethod/eosphoros-native.conf' -print -quit)"
+          test -n "$(find build/native-install -type f -name 'eosphoros-native.dict' -print -quit)"
+          test -n "$(find build/native-install -type f -name 'fcitx-eosphoros-native.png' -print -quit)"
 
       - uses: actions/upload-artifact@v7
         with:
