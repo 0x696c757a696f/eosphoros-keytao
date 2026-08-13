@@ -1,0 +1,11 @@
+[Addon]
+Name=Eosphoros KeyTao Native
+Category=InputMethod
+Version=@PROJECT_VERSION@
+Library=libeosphoros-native
+Type=@FCITX_ADDON_TYPE@
+OnDemand=True
+Configurable=False
+
+[Addon/Dependencies]
+0=core:@REQUIRED_FCITX_VERSION@

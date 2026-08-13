@@ -1,0 +1,8 @@
+# name<TAB>keys (space separated)<TAB>commits (| separated, -=none)<TAB>final input (-=empty)
+space_commit	k b c d SPACE	按部就班	-
+digit_second	k b 2	安	-
+fixed_topup	k b c d x	按部就班	x
+topup_key_transition	k b c a x	顶功候选	x
+missing_candidate_clear	z z z z x	-	-
+backspace_escape	k b BACKSPACE ESCAPE	-	-
+enter_raw	k b ENTER	kb	-

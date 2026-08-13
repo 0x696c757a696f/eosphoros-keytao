@@ -1,0 +1,8 @@
+[InputMethod]
+Name=晨星键道（原生）
+Icon=fcitx-eosphoros-native
+Label=晨
+LangCode=zh_CN
+Addon=eosphoros-native
+Configurable=False
+Enable=True

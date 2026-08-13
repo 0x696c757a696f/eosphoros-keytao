@@ -1,0 +1,14 @@
+# Native engine test dictionary. UTF-8, deterministic source order.
+---
+name: eosphoros_native_test
+version: "2026.8.13"
+sort: original
+...
+阿	kb	100
+安	kb	90
+按部就班	kbcd	100
+岸边	kbcda	80
+顶功候选	kbca	100
+六码候选	kbcdef	100
+新输入	x	100
+晨星键道	jxjdoo	100

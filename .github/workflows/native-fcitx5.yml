@@ -1,0 +1,60 @@
+name: Native Fcitx5
+
+on:
+  push:
+    paths:
+      - "native/fcitx5-eosphoros/**"
+      - ".github/workflows/native-fcitx5.yml"
+  pull_request:
+    paths:
+      - "native/fcitx5-eosphoros/**"
+      - ".github/workflows/native-fcitx5.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install native build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            cmake extra-cmake-modules g++ libfcitx5core-dev ninja-build python3
+
+      - name: Configure
+        run: >-
+          cmake -S native/fcitx5-eosphoros -B build/native-fcitx5 -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_INSTALL_PREFIX=/usr
+
+      - name: Build and test
+        run: |
+          cmake --build build/native-fcitx5
+          ctest --test-dir build/native-fcitx5 --output-on-failure
+
+      - name: Verify native dependency boundary
+        shell: bash
+        run: |
+          addon="$(find build/native-fcitx5 -type f -name '*eosphoros-native*.so' -print -quit)"
+          test -n "$addon"
+          ldd "$addon" | tee build/native-fcitx5/ldd.txt
+          if grep -Eiq '(^|[^a-z])(librime|rime|lua|opencc)([^a-z]|$)' build/native-fcitx5/ldd.txt; then
+            echo "Forbidden Rime/Lua/OpenCC dependency detected" >&2
+            exit 1
+          fi
+
+      - name: Stage install tree
+        run: DESTDIR="$PWD/build/native-install" cmake --install build/native-fcitx5
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eosphoros-fcitx5-native-linux
+          path: |
+            build/native-install/
+            build/native-fcitx5/ldd.txt
+          if-no-files-found: error
