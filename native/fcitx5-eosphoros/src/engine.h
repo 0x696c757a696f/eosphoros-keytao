@@ -4,6 +4,7 @@
 #include "context.h"
 #include "dictionary.h"
 #include "key_handler.h"
+#include "user_data.h"
 
 #include <fcitx/addonfactory.h>
 #include <fcitx/inputcontextproperty.h>
@@ -21,8 +22,8 @@ namespace eosphoros::fcitx5 {
 class State final : public fcitx::InputContextProperty {
 public:
     State(fcitx::InputContext *inputContext, const Dictionary *dictionary,
-          const AuxiliaryData *auxiliary)
-        : inputContext(inputContext), context(dictionary, auxiliary) {}
+          const AuxiliaryData *auxiliary, UserData *userData)
+        : inputContext(inputContext), context(dictionary, auxiliary, userData) {}
 
     fcitx::InputContext *inputContext;
     EosphorosContext context;
@@ -51,9 +52,11 @@ private:
     fcitx::Instance *instance_;
     Dictionary dictionary_;
     AuxiliaryData auxiliary_;
+    UserData userData_;
     KeyHandler keyHandler_;
     std::string dictionaryError_;
     std::string auxiliaryError_;
+    std::string userDataError_;
     fcitx::FactoryFor<State> stateFactory_;
 };
 

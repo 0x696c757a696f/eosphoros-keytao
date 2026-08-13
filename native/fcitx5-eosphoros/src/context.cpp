@@ -23,8 +23,10 @@ Mode modeForInput(const std::string &input) {
 } // namespace
 
 EosphorosContext::EosphorosContext(const Dictionary *dictionary,
-                                   const AuxiliaryData *auxiliary)
+                                   const AuxiliaryData *auxiliary,
+                                   UserData *userData)
     : dictionary_(dictionary), auxiliary_(auxiliary),
+      userData_(userData),
       topup_(dictionary->topupConfig()) {}
 
 void EosphorosContext::refresh() {
@@ -32,6 +34,20 @@ void EosphorosContext::refresh() {
     candidates_ = specialCandidates(input_);
     if (candidates_.empty() && !input_.empty() && mode_ != Mode::Calculator) {
         candidates_ = dictionary_->lookup(input_, mode_);
+    }
+    if (userData_ && mode_ == Mode::Normal && !input_.empty()) {
+        auto custom = userData_->candidates(input_);
+        for (auto it = custom.rbegin(); it != custom.rend(); ++it) {
+            const auto duplicate = std::find_if(candidates_.begin(), candidates_.end(),
+                [&it](const Candidate &candidate) { return candidate.text == it->text; });
+            if (duplicate == candidates_.end()) candidates_.insert(candidates_.begin(), *it);
+        }
+        std::stable_sort(candidates_.begin(), candidates_.end(),
+            [this](const Candidate &a, const Candidate &b) {
+                if (a.completion != b.completion) return !a.completion;
+                return userData_->frequency(input_, a.text) >
+                       userData_->frequency(input_, b.text);
+            });
     }
     if (auxiliary_) {
         if (mode_ == Mode::ReversePinyin || mode_ == Mode::ReverseLiangfen ||
@@ -109,6 +125,8 @@ KeyResult EosphorosContext::type(char key) {
     if (action == TopupAction::CommitAndStartNext) {
         ++topupState_.transitions;
         result.commits.push_back(candidates_[selected_].text);
+        if (userData_ && candidates_[selected_].comment != "Emoji")
+            userData_->record(input_, candidates_[selected_].text);
         input_.assign(1, key);
         selected_ = 0;
         refresh();
@@ -141,6 +159,7 @@ KeyResult EosphorosContext::type(char key) {
         refresh();
         if (!hasExactCandidate()) {
             result.commits.push_back(previous);
+            if (userData_) userData_->record(input_.substr(0, input_.size() - 1), previous);
             input_.assign(1, key);
             selected_ = 0;
             refresh();
@@ -169,6 +188,8 @@ KeyResult EosphorosContext::commit(std::size_t index) {
     KeyResult result{true, {}};
     if (index < candidates_.size()) {
         result.commits.push_back(candidates_[index].text);
+        if (userData_ && mode_ == Mode::Normal && candidates_[index].comment != "Emoji")
+            userData_->record(input_, candidates_[index].text);
     }
     reset();
     return result;

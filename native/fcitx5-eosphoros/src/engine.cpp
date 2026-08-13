@@ -2,6 +2,7 @@
 
 #include "candidate.h"
 #include <cstdlib>
+#include <filesystem>
 #include <fcitx-utils/key.h>
 #include <fcitx-utils/keysym.h>
 #include <fcitx-utils/standardpath.h>
@@ -15,6 +16,21 @@
 
 namespace eosphoros::fcitx5 {
 namespace {
+
+std::string userDataPath() {
+    if (const auto *overridePath = std::getenv("EOSPHOROS_NATIVE_USER_DATA")) {
+        return overridePath;
+    }
+    if (const auto *xdg = std::getenv("XDG_DATA_HOME")) {
+        return (std::filesystem::path(xdg) / "fcitx5" / "eosphoros-native" /
+                "user-data.tsv").string();
+    }
+    if (const auto *home = std::getenv("HOME")) {
+        return (std::filesystem::path(home) / ".local" / "share" / "fcitx5" /
+                "eosphoros-native" / "user-data.tsv").string();
+    }
+    return {};
+}
 
 LogicalKey logicalKey(const fcitx::Key &key) {
     // Some frontends keep Shift in the raw key state. normalize() removes it
@@ -101,8 +117,9 @@ LogicalKey symbolKey(const fcitx::Key &key) {
 
 EosphorosEngine::EosphorosEngine(fcitx::Instance *instance)
     : instance_(instance),
+      userData_(userDataPath()),
       stateFactory_([this](fcitx::InputContext &inputContext) {
-          return new State(&inputContext, &dictionary_, &auxiliary_);
+          return new State(&inputContext, &dictionary_, &auxiliary_, &userData_);
       }) {
     instance_->inputContextManager().registerProperty("eosphorosNativeState",
                                                        &stateFactory_);
@@ -133,6 +150,7 @@ EosphorosEngine::EosphorosEngine(fcitx::Instance *instance)
     } else {
         auxiliary_.load(path, &auxiliaryError_);
     }
+    userData_.load(&userDataError_);
 }
 
 State *EosphorosEngine::state(fcitx::InputContext *inputContext) {

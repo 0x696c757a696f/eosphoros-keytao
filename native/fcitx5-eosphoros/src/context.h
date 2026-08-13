@@ -3,6 +3,7 @@
 #include "auxiliary.h"
 #include "dictionary.h"
 #include "topup.h"
+#include "user_data.h"
 
 #include <cstddef>
 #include <string>
@@ -23,7 +24,8 @@ struct TopupState {
 class EosphorosContext {
 public:
     explicit EosphorosContext(const Dictionary *dictionary,
-                              const AuxiliaryData *auxiliary = nullptr);
+                              const AuxiliaryData *auxiliary = nullptr,
+                              UserData *userData = nullptr);
 
     KeyResult type(char key);
     KeyResult typeCalculator(char key);
@@ -52,6 +54,7 @@ private:
 
     const Dictionary *dictionary_;
     const AuxiliaryData *auxiliary_;
+    UserData *userData_;
     TopupPolicy topup_;
     std::string input_;
     std::vector<Candidate> candidates_;

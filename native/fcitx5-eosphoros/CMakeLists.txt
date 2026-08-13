@@ -55,6 +55,7 @@ add_library(eosphoros-native-core STATIC
     src/key_handler.cpp
     src/special.cpp
     src/topup.cpp)
+target_sources(eosphoros-native-core PRIVATE src/user_data.cpp)
 target_include_directories(eosphoros-native-core PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_compile_features(eosphoros-native-core PUBLIC cxx_std_17)
@@ -149,4 +150,11 @@ if(BUILD_TESTING)
     add_test(NAME eosphoros-native-auxiliary
         COMMAND eosphoros-native-auxiliary-test "${NATIVE_AUXILIARY}"
                 "${NATIVE_DICTIONARY}")
+
+    add_executable(eosphoros-native-user-data-test tests/test_user_data.cpp)
+    target_link_libraries(eosphoros-native-user-data-test PRIVATE eosphoros-native-core)
+    add_dependencies(eosphoros-native-user-data-test eosphoros-native-test-dictionary)
+    add_test(NAME eosphoros-native-user-data
+        COMMAND eosphoros-native-user-data-test "${TEST_DICTIONARY}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-user-data.tsv")
 endif()
