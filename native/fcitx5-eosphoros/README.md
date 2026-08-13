@@ -56,4 +56,6 @@ ldd build/native/libeosphoros-native.so
 CTest 分别验证 Dictionary、纯 `TopupPolicy` 和基于来源标注 golden trace 的
 `EosphorosContext`。trace 覆盖短码、二／三／四字词、首笔辅助码、确认过的飞键、
 真实重码、Space／数字选词、退格、Escape、固定／连续／空码顶功和翻页选择。
+测试夹具不包含临时编造的词条；仓库级测试会逐项确认其文本和编码仍存在于正式
+晨星词库，避免 golden 结果与实际方案脱节。
 完整已实现、差异和未实现清单见 [AUDIT.md](AUDIT.md)。

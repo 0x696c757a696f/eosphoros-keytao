@@ -19,6 +19,12 @@ int main() {
         require(topup.process("abca", 'x', {true, true, 0}).action ==
                     eosphoros::TopupAction::CommitAndStartNext,
                 "topup-to-non-topup transition failed");
+        require(topup.process("aaiv", 'x', {true, true, 0}).action ==
+                    eosphoros::TopupAction::CommitAndStartNext,
+                "real auxiliary-code topup failed");
+        require(topup.process("ba", 'x', {true, true, 0}).action ==
+                    eosphoros::TopupAction::CommitAndStartNext,
+                "real topup-key transition failed");
         require(topup.process("zzzz", 'x', {}).action ==
                     eosphoros::TopupAction::ClearAndStartNext,
                 "empty topup must clear and start the next code");

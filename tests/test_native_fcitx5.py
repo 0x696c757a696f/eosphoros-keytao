@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from collections import Counter
 from pathlib import Path
 
 
@@ -22,6 +23,39 @@ def read_string(data: bytes, offset: int) -> tuple[str, int]:
 
 
 class NativeFcitx5Tests(unittest.TestCase):
+    def test_native_fixture_entries_are_real_dictionary_rows(self) -> None:
+        fixture = NATIVE / "tests/fixtures/minimal.dict.yaml"
+        rows: list[tuple[str, str]] = []
+        in_body = False
+        for line in fixture.read_text(encoding="utf-8-sig").splitlines():
+            if not in_body:
+                in_body = line.strip() == "..."
+                continue
+            if not line or line.startswith("#"):
+                continue
+            text, code, *_ = line.split("\t")
+            rows.append((text, code))
+
+        source_rows: Counter[tuple[str, str]] = Counter()
+        for path in (
+            ROOT / "dicts/eosphoros/eosphoros.cizu.dict.yaml",
+            ROOT / "dicts/eosphoros/eosphoros.catholicism.dict.yaml",
+            ROOT / "dicts/eosphoros/eosphoros.core.dict.yaml",
+        ):
+            body = False
+            for line in path.read_text(encoding="utf-8-sig").splitlines():
+                if not body:
+                    body = line.strip() == "..."
+                    continue
+                if not line or line.startswith("#"):
+                    continue
+                fields = line.split("\t")
+                if len(fields) >= 2:
+                    source_rows[(fields[0], fields[1])] += 1
+
+        missing = [row for row in rows if not source_rows[row]]
+        self.assertEqual(missing, [], f"invented native fixture rows: {missing}")
+
     def test_native_runtime_boundary_and_fcitx_metadata(self) -> None:
         source_text = "\n".join(
             path.read_text(encoding="utf-8")
@@ -36,6 +70,7 @@ class NativeFcitx5Tests(unittest.TestCase):
         self.assertIn("EosphorosEngine", source_text)
         self.assertIn("EosphorosContext", source_text)
         self.assertIn("FactoryFor<State>", source_text)
+        self.assertIn("key.normalize()", source_text)
 
         input_method = (NATIVE / "data/eosphoros-native.conf.in").read_text(
             encoding="utf-8"
@@ -98,7 +133,7 @@ class NativeFcitx5Tests(unittest.TestCase):
         self.assertEqual((min_length, max_length), (4, 6))
         self.assertEqual((auto_clear, topup_command), (1, 0))
         self.assertEqual(page_size, 5)
-        self.assertEqual(count, 24)
+        self.assertEqual(count, 20)
 
 
 if __name__ == "__main__":

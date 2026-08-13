@@ -4,15 +4,11 @@ name: eosphoros_native_test
 version: "2026.8.13"
 sort: original
 ...
-阿	kb	100
-安	kb	90
-按部就班	kbcd	100
-岸边	kbcda	80
-顶功候选	kbca	100
-六码候选	kbcdef	100
-新输入	x	100
 晨星键道	jxjdoo	100
 # 下列词条按 eosphoros.extended.dict.yaml 的实际导入优先级摘录。
+不	b	100
+吧	b	90
+嗯	x	100
 不能	ba	100
 棒不棒	bbb	100
 哔哔啵啵	bbbb	100
@@ -22,11 +18,11 @@ sort: original
 赞主曲	zqquo	100
 散装酒	sfj	100
 三钟经	sfj	90
-# 仅用于验证原生候选翻页，不代表新增正式词条。
-重码一	mm	100
-重码二	mm	90
-重码三	mm	80
-重码四	mm	70
-重码五	mm	60
-重码六	mm	50
-重码七	mm	40
+# 下列 xcyf 重码均按 eosphoros.cizu.dict.yaml 的实际行序摘录。
+消炎	xcyf	100
+阿莫西林	xcyf	90
+头孢克肟	xcyf	80
+头孢拉定	xcyf	70
+阿昔洛韦	xcyf	60
+氧氟沙星	xcyf	50
+头孢拉定胶囊	xcyf	40

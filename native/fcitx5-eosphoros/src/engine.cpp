@@ -17,13 +17,21 @@ namespace eosphoros::fcitx5 {
 namespace {
 
 LogicalKey logicalKey(const fcitx::Key &key) {
-    if (key.hasModifier()) {
+    // Some frontends keep Shift in the raw key state. normalize() removes it
+    // for letter keys while retaining real Ctrl/Alt/Super shortcuts, matching
+    // the Rime processor's plain_code_key behavior.
+    const auto normalized = key.normalize();
+    if (normalized.hasModifier()) {
         return {};
     }
-    const auto symbol = key.sym();
+    const auto symbol = normalized.sym();
     if (symbol >= FcitxKey_a && symbol <= FcitxKey_z) {
         return {KeyKind::Code,
                 static_cast<char>('a' + symbol - FcitxKey_a), 0};
+    }
+    if (symbol >= FcitxKey_A && symbol <= FcitxKey_Z) {
+        return {KeyKind::Code,
+                static_cast<char>('a' + symbol - FcitxKey_A), 0};
     }
     if (symbol == FcitxKey_semicolon) {
         return {KeyKind::Code, ';', 0};
