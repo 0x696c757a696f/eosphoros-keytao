@@ -1002,6 +1002,16 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn('schema/icon: "eosphoros.ico"', custom)
         self.assertIn('schema/ascii_icon: "eosphoros-ascii.ico"', custom)
 
+    def test_icon_check_ignores_equivalent_ico_container_bytes(self) -> None:
+        from tools.build_eosphoros_icons import icons_visually_equal
+
+        root = Path(__file__).resolve().parents[1]
+        expected = (root / "eosphoros-ascii.ico").read_bytes()
+        # ICO readers ignore harmless trailing container bytes. This models the
+        # platform encoder difference seen between Windows and Ubuntu runners.
+        self.assertNotEqual(expected + b"\0", expected)
+        self.assertTrue(icons_visually_equal(expected + b"\0", expected))
+
     def test_desktop_style_files_use_current_consistent_defaults(self) -> None:
         root = Path(__file__).resolve().parents[1]
         weasel = yaml.safe_load((root / "weasel.yaml").read_text(encoding="utf-8-sig"))

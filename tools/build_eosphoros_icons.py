@@ -7,7 +7,7 @@ import argparse
 import io
 from pathlib import Path
 
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageChops, ImageEnhance
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +49,30 @@ def outputs() -> dict[Path, bytes]:
     }
 
 
+def icons_visually_equal(actual: bytes, expected: bytes) -> bool:
+    """Compare decoded ICO frames, ignoring platform-specific container bytes."""
+
+    try:
+        with Image.open(io.BytesIO(actual)) as actual_icon, Image.open(
+            io.BytesIO(expected)
+        ) as expected_icon:
+            actual_sizes = actual_icon.ico.sizes()
+            expected_sizes = expected_icon.ico.sizes()
+            if actual_sizes != expected_sizes:
+                return False
+            for size in expected_sizes:
+                actual_frame = actual_icon.ico.getimage(size).convert("RGBA")
+                expected_frame = expected_icon.ico.getimage(size).convert("RGBA")
+                extrema = ImageChops.difference(actual_frame, expected_frame).getextrema()
+                # Pillow uses platform image codecs when writing ICO frames. Allow
+                # only an imperceptible one-level rounding difference in pixels.
+                if any(channel_max > 1 for _, channel_max in extrema):
+                    return False
+    except (OSError, SyntaxError):
+        return False
+    return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -56,7 +80,15 @@ def main() -> int:
     stale: list[Path] = []
     for path, content in outputs().items():
         if args.check:
-            if not path.is_file() or path.read_bytes() != content:
+            if not path.is_file():
+                stale.append(path)
+                continue
+            actual = path.read_bytes()
+            if path.name == "eosphoros-tray-active.ico":
+                current = actual == content
+            else:
+                current = icons_visually_equal(actual, content)
+            if not current:
                 stale.append(path)
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
