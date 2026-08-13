@@ -172,6 +172,16 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
     }
     auto *inputContext = event.inputContext();
     auto *current = state(inputContext);
+    if (event.key().check(FcitxKey_Delete, fcitx::KeyState::Ctrl) &&
+        current->context.composing()) {
+        const auto result = keyHandler_.handle(current->context,
+                                                {KeyKind::DeleteCustom});
+        if (result.consumed) {
+            apply(inputContext, result);
+            event.filterAndAccept();
+        }
+        return;
+    }
     if (event.key().normalize().sym() == FcitxKey_F7) {
         current->context.toggleConversion();
         updateUI(inputContext);
@@ -183,6 +193,12 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
     if (symbol == FcitxKey_backslash &&
         (current->context.zzcActive() || current->context.input().empty())) {
         logical = {KeyKind::ToggleZzc};
+    }
+    if (current->context.zzcActive() &&
+        (event.key().sym() == FcitxKey_minus ||
+         event.key().sym() == FcitxKey_exclam)) {
+        logical = {KeyKind::ZzcCommand,
+                   event.key().sym() == FcitxKey_minus ? '-' : '!'};
     }
     if (current->context.mode() == Mode::Calculator) {
         const auto raw = event.key().sym();

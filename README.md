@@ -87,6 +87,11 @@
 | [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
 | [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
 | [`eosphoros-fcitx5-native-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-native-linux.zip) | Linux Fcitx5 原生插件 | 不依赖 Rime/Lua/OpenCC；内含原生词典、辅助索引、学习数据与 ZZC 支持 |
+
+> **Fcitx5 应该下载哪一个？** macOS 与 Android 使用对应平台晨星方案包，并安装
+> Fcitx5 官方 Rime 插件；不需要额外的晨星插件。Linux 也可以采用同样方式。
+> `eosphoros-fcitx5-native-linux.zip` 是完全绕开 Rime 的可选原生输入法 addon，里面的
+> 二进制码表不能脱离 addon 单独导入。
 | [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 mytrime“格调”完整布局版 `eosphoros.trime.yaml` |
 | [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 完整方案；`themes/` 内置黎明、夜色、极简三个原生主题 ZIP |
 | [`eosphoros-yuanshu-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |

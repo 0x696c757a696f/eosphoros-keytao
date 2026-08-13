@@ -21,6 +21,8 @@ enum class KeyKind {
     Symbol,
     Calculator,
     ToggleZzc,
+    ZzcCommand,
+    DeleteCustom,
 };
 
 struct LogicalKey {

@@ -30,6 +30,8 @@ public:
     KeyResult type(char key);
     KeyResult typeCalculator(char key);
     KeyResult toggleZzc();
+    KeyResult zzcCommand(char key);
+    KeyResult deleteSelectedCustom();
     KeyResult space();
     KeyResult enter();
     KeyResult select(std::size_t index);
@@ -71,6 +73,7 @@ private:
     TopupState topupState_;
     bool zzcActive_ = false;
     std::string zzcWord_;
+    std::string zzcCommand_;
     bool conversionEnabled_ = false;
 };
 

@@ -34,6 +34,10 @@ KeyResult KeyHandler::handle(EosphorosContext &context,
         return context.typeCalculator(key.code);
     case KeyKind::ToggleZzc:
         return context.toggleZzc();
+    case KeyKind::ZzcCommand:
+        return context.zzcCommand(key.code);
+    case KeyKind::DeleteCustom:
+        return context.deleteSelectedCustom();
     case KeyKind::PassThrough:
         break;
     }

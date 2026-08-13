@@ -100,7 +100,7 @@ void EosphorosContext::refresh() {
 }
 
 std::string EosphorosContext::displayInput() const {
-    if (zzcActive_) return "自造词：" + zzcWord_ + input_;
+    if (zzcActive_) return "自造词：" + zzcWord_ + zzcCommand_ + input_;
     if (mode_ != Mode::Normal && mode_ != Mode::Calculator && input_.size() > 1) {
         return input_.substr(1);
     }
@@ -257,6 +257,17 @@ KeyResult EosphorosContext::toggleZzc() {
         if (!input_.empty()) return {};
         zzcActive_ = true;
         zzcWord_.clear();
+        zzcCommand_.clear();
+        return {true, {}};
+    }
+    if (zzcWord_.empty() && zzcCommand_ == "--") {
+        if (userData_) userData_->undoLastCustom();
+        reset();
+        return {true, {}};
+    }
+    if (zzcWord_.empty() && zzcCommand_ == "!!!") {
+        if (userData_) userData_->clearCustom();
+        reset();
         return {true, {}};
     }
     if (!input_.empty() && hasCommittableCandidate()) {
@@ -275,6 +286,23 @@ KeyResult EosphorosContext::toggleZzc() {
     if (word.empty()) return {true, {}};
     if (userData_ && !code.empty()) userData_->record(code, word, true);
     return {true, {word}};
+}
+
+KeyResult EosphorosContext::zzcCommand(char key) {
+    if (!zzcActive_ || !zzcWord_.empty() || !input_.empty() ||
+        (key != '-' && key != '!')) return {};
+    if (zzcCommand_.size() >= 3 ||
+        (!zzcCommand_.empty() && zzcCommand_.front() != key)) return {true, {}};
+    zzcCommand_.push_back(key);
+    return {true, {}};
+}
+
+KeyResult EosphorosContext::deleteSelectedCustom() {
+    if (!userData_ || selected_ >= candidates_.size() ||
+        candidates_[selected_].comment != "自造词") return {};
+    userData_->removeCustom(input_, candidates_[selected_].text);
+    refresh();
+    return {true, {}};
 }
 
 KeyResult EosphorosContext::space() {
@@ -354,6 +382,7 @@ void EosphorosContext::reset() {
     topupState_ = {};
     zzcActive_ = false;
     zzcWord_.clear();
+    zzcCommand_.clear();
 }
 
 } // namespace eosphoros

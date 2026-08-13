@@ -20,21 +20,25 @@ std::string UserData::key(const std::string &code, const std::string &text) {
 
 bool UserData::load(std::string *error) {
     entries_.clear();
+    sequence_ = 0;
     if (path_.empty() || !std::filesystem::exists(path_)) return true;
     std::ifstream source(path_);
     std::string line;
     while (std::getline(source, line)) {
         if (line.empty() || line.front() == '#') continue;
         std::istringstream row(line);
-        std::string code, text, count, kind;
+        std::string code, text, count, kind, sequence;
         if (!std::getline(row, code, '\t') || !std::getline(row, text, '\t') ||
-            !std::getline(row, count, '\t') || !std::getline(row, kind) ||
+            !std::getline(row, count, '\t') || !std::getline(row, kind, '\t') ||
             !valid(code) || !valid(text)) {
             if (error) *error = "invalid user data row";
             return false;
         }
         try {
-            entries_[key(code, text)] = {std::stoull(count), kind == "custom"};
+            std::getline(row, sequence);
+            const auto order = sequence.empty() ? 0 : std::stoull(sequence);
+            entries_[key(code, text)] = {std::stoull(count), kind == "custom", order};
+            sequence_ = std::max(sequence_, order);
         } catch (...) {
             if (error) *error = "invalid user data frequency";
             return false;
@@ -51,7 +55,7 @@ bool UserData::save(std::string *error) {
     const auto temporary = target.string() + ".tmp";
     std::ofstream output(temporary, std::ios::trunc);
     if (!output) { if (error) *error = "cannot write user data"; return false; }
-    output << "# EOSPHOROS_USER_V1\n";
+    output << "# EOSPHOROS_USER_V2\n";
     std::vector<std::pair<std::string, Entry>> rows(entries_.begin(), entries_.end());
     std::sort(rows.begin(), rows.end(), [](const auto &a, const auto &b) {
         return a.first < b.first;
@@ -60,7 +64,8 @@ bool UserData::save(std::string *error) {
         const auto separator = joined.find('\0');
         output << joined.substr(0, separator) << '\t' << joined.substr(separator + 1)
                << '\t' << entry.frequency << '\t'
-               << (entry.custom ? "custom" : "learned") << '\n';
+               << (entry.custom ? "custom" : "learned") << '\t'
+               << entry.sequence << '\n';
     }
     output.close();
     if (!output) { if (error) *error = "cannot flush user data"; return false; }
@@ -79,7 +84,37 @@ bool UserData::record(const std::string &code, const std::string &text,
     auto &entry = entries_[key(code, text)];
     ++entry.frequency;
     entry.custom = entry.custom || custom;
+    if (custom) entry.sequence = ++sequence_;
     return save(error);
+}
+
+bool UserData::removeCustom(const std::string &code, const std::string &text,
+                            std::string *error) {
+    const auto found = entries_.find(key(code, text));
+    if (found == entries_.end() || !found->second.custom) return false;
+    entries_.erase(found);
+    return save(error);
+}
+
+bool UserData::undoLastCustom(std::string *error) {
+    auto latest = entries_.end();
+    for (auto it = entries_.begin(); it != entries_.end(); ++it) {
+        if (it->second.custom &&
+            (latest == entries_.end() || it->second.sequence > latest->second.sequence))
+            latest = it;
+    }
+    if (latest == entries_.end()) return false;
+    entries_.erase(latest);
+    return save(error);
+}
+
+bool UserData::clearCustom(std::string *error) {
+    bool changed = false;
+    for (auto it = entries_.begin(); it != entries_.end();) {
+        if (it->second.custom) { it = entries_.erase(it); changed = true; }
+        else ++it;
+    }
+    return changed && save(error);
 }
 
 std::uint64_t UserData::frequency(const std::string &code,
