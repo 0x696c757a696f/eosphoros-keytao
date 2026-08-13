@@ -1,4 +1,4 @@
-# 晨星键道原生 Fcitx5 引擎（第二阶段）
+# 晨星键道原生 Fcitx5 引擎（第三阶段预览）
 
 这是与仓库现有 Rime 方案并行的实验性原生实现。它直接实现
 `InputMethodEngineV2`，运行时不加载 `fcitx5-rime`、`librime`、
@@ -8,8 +8,10 @@
 编译主方案约 117 万条静态词条，并提供候选窗、数字/鼠标/Tab/分号/撇号选词、
 退格、Escape、Enter 编码直出、上下/翻页、中文标点、固定与连续顶功、空码顶功和
 自动回退。`i` 英文、`u` 全拼、`v` 两分、`o` GBK 入口使用独立词典命名空间，继续
-输入后预编辑会隐藏入口字母。OpenCC、Lua 附加功能、用户词典、ZZZC 和词频学习
-仍不属于本阶段。
+输入后预编辑会隐藏入口字母。构建时还会把反查注音、仓库已有 Emoji 与简繁映射、
+ZZC 单字拆分编译成只读辅助索引；运行时仍不加载 Lua 或 OpenCC。支持 F7 简繁、
+计算器与日期时间、候选词频学习和用户词持久化。按反斜杠进入原生 ZZC，依次输入并
+选择组成词的各字，再按反斜杠结束，词会按键道 6 规则计算六码并保存。
 
 ## 构建
 
@@ -25,7 +27,9 @@ sudo cmake --install build/native
 ```
 
 重新启动 Fcitx5 后，在配置工具中添加“晨星键道（原生）”。开发时可以用
-`EOSPHOROS_NATIVE_DICTIONARY=/path/to/eosphoros-native.dict` 临时覆盖词典。
+`EOSPHOROS_NATIVE_DICTIONARY=/path/to/eosphoros-native.dict`、
+`EOSPHOROS_NATIVE_AUXILIARY=/path/to/eosphoros-native.aux` 和
+`EOSPHOROS_NATIVE_USER_DATA=/path/to/user-data.tsv` 临时覆盖相应路径。
 
 默认构建正式词典，同时另建小型确定性词典供快速单元测试。正式来源清单保留
 `eosphoros.extended` 的导入顺序和各文件行序；新增静态词典时需同步更新该清单，
@@ -53,7 +57,7 @@ ldd build/native/libeosphoros-native.so
 输出不得包含 `rime`、`librime`、`lua` 或 `opencc`。当前使用自有只读词典
 和上下文状态机，没有使用 libime `TableContext`，原因见 [AUDIT.md](AUDIT.md)。
 
-## 第二阶段测试
+## 第三阶段测试
 
 CTest 分别验证 Dictionary、纯 `TopupPolicy` 和基于来源标注 golden trace 的
 `EosphorosContext`。trace 覆盖短码、二／三／四字词、首笔辅助码、确认过的飞键、

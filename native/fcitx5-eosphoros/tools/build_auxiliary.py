@@ -10,7 +10,7 @@ import struct
 from pathlib import Path
 
 
-MAGIC = b"EOSAUX02"
+MAGIC = b"EOSAUX03"
 LUA_ROW = re.compile(r'^  \[("(?:[^"\\]|\\.)*")\] = ("(?:[^"\\]|\\.)*"),?$')
 
 
@@ -48,6 +48,19 @@ def emoji_rows(root: Path) -> dict[str, list[str]]:
     return result
 
 
+def conversion_rows(root: Path) -> dict[str, str]:
+    result: dict[str, str] = {}
+    for path in sorted(root.glob("eosphoros_s2g_*.lua")):
+        for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if not line.startswith("  ["):
+                continue
+            match = LUA_ROW.match(line)
+            if not match:
+                raise ValueError(f"{path}:{line_number}: unsupported generated Lua row")
+            result.setdefault(json.loads(match.group(1)), json.loads(match.group(2)))
+    return result
+
+
 def character_parts(path: Path) -> dict[str, tuple[str, str, str]]:
     result: dict[str, tuple[str, str, str]] = {}
     for line_number, line in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):
@@ -75,10 +88,11 @@ def main() -> int:
     pron = pronunciations(args.pronunciation)
     emoji = emoji_rows(args.root / "opencc" / "eosphoros")
     parts = character_parts(args.root / "zzc_state" / "char_parts.tsv")
+    conversion = conversion_rows(args.root / "opencc" / "eosphoros")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("wb") as target:
         target.write(MAGIC)
-        target.write(struct.pack("<III", len(pron), len(emoji), len(parts)))
+        target.write(struct.pack("<IIII", len(pron), len(emoji), len(parts), len(conversion)))
         for key, value in pron.items():
             text(target, key); text(target, value)
         for key, values in emoji.items():
@@ -90,7 +104,9 @@ def main() -> int:
             text(target, key)
             for value in values:
                 text(target, value)
-    print(f"built {args.output}: {len(pron)} pronunciations, {len(emoji)} emoji keys, {len(parts)} character parts")
+        for key, value in conversion.items():
+            text(target, key); text(target, value)
+    print(f"built {args.output}: {len(pron)} pronunciations, {len(emoji)} emoji keys, {len(parts)} character parts, {len(conversion)} conversion rows")
     return 0
 
 

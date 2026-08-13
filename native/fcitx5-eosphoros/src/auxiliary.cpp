@@ -6,7 +6,7 @@
 
 namespace eosphoros {
 namespace {
-constexpr std::array<char, 8> kMagic{'E','O','S','A','U','X','0','2'};
+constexpr std::array<char, 8> kMagic{'E','O','S','A','U','X','0','3'};
 
 bool number(std::istream &source, std::uint32_t &value) {
     std::array<unsigned char, 4> bytes{};
@@ -29,16 +29,17 @@ bool text(std::istream &source, std::string &value) {
 bool AuxiliaryData::load(const std::string &path, std::string *error) {
     std::ifstream source(path, std::ios::binary);
     std::array<char, 8> magic{};
-    std::uint32_t pronCount = 0, emojiCount = 0, partsCount = 0;
+    std::uint32_t pronCount = 0, emojiCount = 0, partsCount = 0, conversionCount = 0;
     if (!source || !source.read(magic.data(), magic.size()) || magic != kMagic ||
         !number(source, pronCount) || !number(source, emojiCount) ||
-        !number(source, partsCount)) {
+        !number(source, partsCount) || !number(source, conversionCount)) {
         if (error) *error = "invalid native auxiliary data";
         return false;
     }
     std::unordered_map<std::string, std::string> pron;
     std::unordered_map<std::string, std::vector<std::string>> emoji;
     std::unordered_map<std::string, CharacterParts> parts;
+    std::unordered_map<std::string, std::string> conversion;
     for (std::uint32_t i = 0; i < pronCount; ++i) {
         std::string key, value;
         if (!text(source, key) || !text(source, value)) return false;
@@ -60,9 +61,30 @@ bool AuxiliaryData::load(const std::string &path, std::string *error) {
             !text(source, value.rhyme) || !text(source, value.stroke)) return false;
         parts.emplace(std::move(key), std::move(value));
     }
+    for (std::uint32_t i = 0; i < conversionCount; ++i) {
+        std::string key, value;
+        if (!text(source, key) || !text(source, value)) return false;
+        conversion.emplace(std::move(key), std::move(value));
+    }
     pronunciation_ = std::move(pron); emoji_ = std::move(emoji);
     characterParts_ = std::move(parts);
+    conversion_ = std::move(conversion);
     return true;
+}
+
+std::string AuxiliaryData::convert(const std::string &value) const {
+    if (const auto found = conversion_.find(value); found != conversion_.end())
+        return found->second;
+    std::string result;
+    for (std::size_t i = 0; i < value.size();) {
+        const auto lead = static_cast<unsigned char>(value[i]);
+        const std::size_t length = lead < 0x80 ? 1 : lead < 0xE0 ? 2 : lead < 0xF0 ? 3 : 4;
+        const auto character = value.substr(i, length);
+        const auto found = conversion_.find(character);
+        result += found == conversion_.end() ? character : found->second;
+        i += length;
+    }
+    return result;
 }
 
 const AuxiliaryData::CharacterParts *AuxiliaryData::characterParts(

@@ -86,6 +86,7 @@
 | [`eosphoros-squirrel-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
 | [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
 | [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
+| [`eosphoros-fcitx5-native-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-native-linux.zip) | Linux Fcitx5 原生插件 | 不依赖 Rime/Lua/OpenCC；内含原生词典、辅助索引、学习数据与 ZZC 支持 |
 | [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 mytrime“格调”完整布局版 `eosphoros.trime.yaml` |
 | [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 完整方案；`themes/` 内置黎明、夜色、极简三个原生主题 ZIP |
 | [`eosphoros-yuanshu-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |
@@ -386,13 +387,14 @@ RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RH
 5. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
 6. 若仍不能输入，先运行 `fcitx5-diagnose`，确认当前桌面会话、Fcitx5 自启动、Rime 插件和输入法环境变量是否被识别。
 
-**实验性原生 Fcitx5 引擎**
+**原生 Fcitx5 引擎（预览）**
 
 仓库另有 [`native/fcitx5-eosphoros/`](native/fcitx5-eosphoros/) 第一阶段 MVP，
 它直接实现 Fcitx5 `InputMethodEngineV2`，不依赖 `fcitx5-rime`、`librime`、
 `librime-lua`，也不会在运行时解析 Rime schema。当前只用于 Linux 开发验证，
-实现小型原生词典、候选选择和晨星基本／连续／空码顶功；英文、反查、OpenCC、
-Lua 附加功能及用户词典尚未迁移。它拥有独立的 `Native Fcitx5` 构建产物，
+已覆盖完整静态词典、候选选择、基本／连续／空码顶功、英文和三种反查入口、反查
+注音、Emoji、F7 简繁转换、快符、计算器、日期时间、候选词频学习、持久化用户词与
+原生 ZZC 捕获。它拥有独立的 `Native Fcitx5` 构建及 Release 包，
 不会混入上述 Rime、Weasel、Rabbit、Squirrel、小小或移动端 Release 包。
 构建方法、行为审计和当前差异见[原生引擎 README](native/fcitx5-eosphoros/README.md)
 与[行为审计](native/fcitx5-eosphoros/AUDIT.md)。普通用户目前仍应使用上面的

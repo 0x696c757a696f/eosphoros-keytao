@@ -49,6 +49,8 @@ public:
     bool hasExactCandidate() const;
     bool composing() const { return !input_.empty() || zzcActive_; }
     bool zzcActive() const { return zzcActive_; }
+    bool conversionEnabled() const { return conversionEnabled_; }
+    void toggleConversion();
 
 private:
     bool hasCommittableCandidate() const;
@@ -69,6 +71,7 @@ private:
     TopupState topupState_;
     bool zzcActive_ = false;
     std::string zzcWord_;
+    bool conversionEnabled_ = false;
 };
 
 } // namespace eosphoros

@@ -10,8 +10,8 @@
 `lua/eosphoros/input/eosphoros_commit_guard.lua` 为准，不由 README 推测。
 
 现有 Rime 与 Yong 实现继续保留；原生 Fcitx5 是并行输入法，不替换、修改
-或打包进既有客户端方案。第一阶段只实现普通键道热路径，不提前移植
-OpenCC、Lua 附加功能、用户词典、ZZZC 或词频学习。
+或打包进既有客户端方案。本文前九节保留第一、二阶段的来源审计，末节记录第三阶段
+已迁移功能与仍有差异。
 
 ## 1. 主编码查询与候选排序
 
@@ -28,7 +28,7 @@ OpenCC、Lua 附加功能、用户词典、ZZZC 或词频学习。
   状态机。第二阶段使用紧凑、稳定按编码排序的 `EOSDICT3` 数组，已经编译约 117 万条
   正式静态词条；它避免 `unordered_map` 在百万级数据上的节点内存膨胀，同时保留源文件
   优先级。命名空间字节隔离主码与 `i/u/v/o`，不依赖 libime-table。
-- MVP 不实现用户学习，因此静态顺序不会被本地词频改变。
+- 第三阶段在静态顺序之上加入独立 TSV 学习层；未选择过的候选仍保持源顺序。
 
 ## 2. 短码
 
@@ -110,28 +110,30 @@ schema 当前值为：
 `space=default`、`select=; \'`，关闭自动造词和自动调频。它证明晨星编码可以在
 非 Rime 引擎运行，但 Yong 自身不定义 Lua 顶功细节，因此顶功仍以 Lua 源码为准。
 
-## 10. OpenCC 与 Lua 附加功能（只审计，不迁移）
+## 10. OpenCC 与 Lua 附加功能
 
-现有 OpenCC Lua 管线包含 replace、append、Emoji split 等候选操作，不能等同于
-简单文字转换。计算器、日期、统计、火星文、Emoji、ZZZC、自造词和用户数据库均
-明确留给后续阶段；正常 native 汉字输入路径不链接 Lua、OpenCC 或 librime。
+现有 Lua 管线包含 replace、append、Emoji split 等候选操作，不能等同于简单文字
+转换。第三阶段在构建时离线编译 Emoji、简繁和反查注音，运行时只读自有二进制索引；
+另以纯 C++ 实现计算器、日期时间、用户学习和 ZZC 捕获。火星文与打字统计尚未迁移，
+正常 native 汉字输入路径仍不链接 Lua、OpenCC 或 librime。
 
-## 第二阶段行为差异与未实现
+## 第三阶段行为差异与未实现
 
 - 已实现：小型原生词典、exact/prefix 候选、静态排序、独立输入上下文、原生候选窗、
   Space/数字/鼠标选词、方向与翻页、Backspace/Escape、Enter 原码、固定顶功、连续顶功、
   空码顶功、schema 构建期配置转换，以及 Shift 字母键规范化为小写编码。
 - 新增：完整静态词典、自动回退、Tab/分号/撇号候选快捷键、基础中文标点和
   `i/u/v/o` 隔离入口。
-- 与 Rime 差异：不学习词频；不实现分号快符、动态注音 comment、OpenCC 或 Lua
-  候选过滤；反查只做静态候选，不组句。
-- 未实现：OpenCC、Lua 附加功能、用户词典、ZZZC、自造词、动态词频及系统化性能
-  benchmark。它们属于后续阶段，不冒充当前能力。
+- 新增：分号快符、反查注音、Emoji、F7 简繁转换、计算器、日期时间、持久化词频、
+  用户词和按键道 6 规则编码的原生 ZZC。
+- 与 Rime 差异：反查不组句；ZZC 使用“反斜杠开始—逐字选取—反斜杠结束”的原生
+  交互，尚不支持 Rime 版的删除、顺延、撤回和合并命令；尚未迁移火星文和打字统计。
+- 仍需系统化性能 benchmark；现有 CI 已覆盖全量词典、辅助索引、持久化重载和安装树。
 
-## 第一阶段验证门
+## 第三阶段验证门
 
 - CMake 构建 `.so`，CTest 分别运行 Dictionary、TopupPolicy、golden Context 测试；
-- 安装树包含 addon、输入法元数据、`eosphoros-native.dict` 与晨星图标；
+- 安装树包含 addon、输入法元数据、`eosphoros-native.dict`、`eosphoros-native.aux` 与晨星图标；
 - 元数据名称为“晨星键道（原生）”；
 - CI 对 `.so` 执行 `ldd`，禁止 `librime`、`rime`、`lua`、`opencc`；
 - 所有 Rime／客户端 Release 包和 Package Master 通用 artifact 禁止包含 `native/`。

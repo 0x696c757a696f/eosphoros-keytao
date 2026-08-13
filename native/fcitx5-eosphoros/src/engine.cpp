@@ -172,6 +172,12 @@ void EosphorosEngine::keyEvent(const fcitx::InputMethodEntry &,
     }
     auto *inputContext = event.inputContext();
     auto *current = state(inputContext);
+    if (event.key().normalize().sym() == FcitxKey_F7) {
+        current->context.toggleConversion();
+        updateUI(inputContext);
+        event.filterAndAccept();
+        return;
+    }
     auto logical = logicalKey(event.key());
     const auto symbol = event.key().normalize().sym();
     if (symbol == FcitxKey_backslash &&

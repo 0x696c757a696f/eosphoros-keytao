@@ -132,7 +132,8 @@ jobs:
     - name: Validate source tree
       run: |
         sudo apt-get update
-        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude
+        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude \
+          cmake extra-cmake-modules g++ libfcitx5core-dev ninja-build
         python -m pip install --upgrade -r requirements-ci.txt
         python -m pip install -r requirements-dev.txt
         python tools/validate_repo.py
@@ -150,6 +151,19 @@ jobs:
       run: |
         mkdir -p Rime
         mkdir -p mb/eosphoros
+
+    - name: Build standalone native Fcitx5 package
+      run: |
+        cmake -S native/fcitx5-eosphoros -B build/native-release -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+        cmake --build build/native-release
+        ctest --test-dir build/native-release --output-on-failure
+        DESTDIR="$PWD/build/native-package" cmake --install build/native-release
+        addon="$(find build/native-package -type f -name 'libeosphoros-native.so' -print -quit)"
+        test -n "$addon"
+        ! ldd "$addon" | grep -Eiq '(^|[^a-z])(librime|rime|lua|opencc)([^a-z]|$)'
+        cp native/fcitx5-eosphoros/README.md build/native-package/README-Eosphoros-Native-Fcitx5.md
+        (cd build/native-package && zip -r ../../eosphoros-fcitx5-native-linux.zip .)
 
     - name: Download verified OpenCC data
       run: |
@@ -399,6 +413,7 @@ jobs:
           eosphoros-squirrel-macos.zip
           eosphoros-fcitx5-macos.zip
           eosphoros-fcitx5-linux.zip
+          eosphoros-fcitx5-native-linux.zip
           eosphoros-trime-android.zip
           eosphoros-fcitx5-android.zip
           eosphoros-yuanshu-ios.zip

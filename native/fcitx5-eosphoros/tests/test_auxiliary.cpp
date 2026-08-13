@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
     const auto *parts = data.characterParts("你");
     assert(parts && !parts->sound.empty() && !parts->rhyme.empty() &&
            !parts->stroke.empty());
+    assert(data.convert("汉字") != "汉字");
     eosphoros::Dictionary dictionary;
     assert(dictionary.load(argv[2], &error));
     eosphoros::EosphorosContext context(&dictionary, &data);

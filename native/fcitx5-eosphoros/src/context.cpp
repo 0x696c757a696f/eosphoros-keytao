@@ -89,6 +89,9 @@ void EosphorosContext::refresh() {
             }
         }
     }
+    if (conversionEnabled_ && auxiliary_) {
+        for (auto &candidate : candidates_) candidate.text = auxiliary_->convert(candidate.text);
+    }
     if (candidates_.empty()) {
         selected_ = 0;
     } else {
@@ -106,9 +109,15 @@ std::string EosphorosContext::displayInput() const {
 
 void EosphorosContext::appendCommit(KeyResult &result, const std::string &text,
                                     const std::string &code, bool learn) {
+    const auto output = conversionEnabled_ && auxiliary_ ? auxiliary_->convert(text) : text;
     if (zzcActive_) zzcWord_ += text;
-    else result.commits.push_back(text);
+    else result.commits.push_back(output);
     if (learn && userData_) userData_->record(code, text);
+}
+
+void EosphorosContext::toggleConversion() {
+    conversionEnabled_ = !conversionEnabled_;
+    refresh();
 }
 
 bool EosphorosContext::hasCommittableCandidate() const {
