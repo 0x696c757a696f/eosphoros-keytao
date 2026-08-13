@@ -28,21 +28,8 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/Mac_词库合并",
         "zzc/Mac_撤回合并",
     ),
-    "eosphoros-fcitx5-macos.zip": (
-        "fcitx5/macos/themes",
-        "zzc/Fcitx5_macOS_词库合并.py",
-        "zzc/Fcitx5_macOS_撤回合并.py",
-    ),
-    "eosphoros-fcitx5-linux.zip": (
-        "fcitx5/linux/themes",
-        "zzc/Fcitx5_Linux_词库合并.py",
-        "zzc/Fcitx5_Linux_撤回合并.py",
-    ),
     "eosphoros-trime-android.zip": (
         "mobile_themes/trime",
-    ),
-    "eosphoros-fcitx5-android.zip": (
-        "mobile_themes/fcitx5-android",
     ),
     "eosphoros-yuanshu-ios.zip": (
         "Hamster.yaml",
@@ -67,9 +54,6 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
 PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
     "eosphoros-trime-android.zip": (
         ("mobile_themes/trime/", ""),
-    ),
-    "eosphoros-fcitx5-android.zip": (
-        ("mobile_themes/fcitx5-android/", "themes/"),
     ),
 }
 

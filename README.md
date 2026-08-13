@@ -84,16 +84,14 @@
 | [`eosphoros-rime-cross-platform.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-cross-platform.zip) | 通用 Rime / 其他前端 | 最小运行核心和跨平台 Python 自造词工具 |
 | [`eosphoros-weasel-windows.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-weasel-windows.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
 | [`eosphoros-squirrel-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
-| [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
-| [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
-| [`eosphoros-fcitx5-native-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-native-linux.zip) | Linux Fcitx5 原生插件 | 不依赖 Rime/Lua/OpenCC；内含原生词典、辅助索引、学习数据与 ZZC 支持 |
+| [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | 官方 Table 可导入码表和 macOS 专用主题；无需 Rime |
+| [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | 官方 Table 二进制码表、输入法配置和 Classic UI 主题；无需 Rime |
 
-> **Fcitx5 应该下载哪一个？** macOS 与 Android 使用对应平台晨星方案包，并安装
-> Fcitx5 官方 Rime 插件；不需要额外的晨星插件。Linux 也可以采用同样方式。
-> `eosphoros-fcitx5-native-linux.zip` 是完全绕开 Rime 的可选原生输入法 addon，里面的
-> 二进制码表不能脱离 addon 单独导入。
+> **Fcitx5 应该下载哪一个？** 直接下载对应系统的平台包。晨星只使用各平台客户端
+> 提供的官方 Table／libime、标点、快捷短语、简繁转换、Emoji／Unicode 等组件；
+> 不需要 `fcitx5-rime`、librime、晨星 `.so` 或第三方插件。
 | [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 mytrime“格调”完整布局版 `eosphoros.trime.yaml` |
-| [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 完整方案；`themes/` 内置黎明、夜色、极简三个原生主题 ZIP |
+| [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 本体可直接导入的官方 Table 码表；`themes/` 内置三套主题 |
 | [`eosphoros-yuanshu-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |
 | [`eosphoros-hamster-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios.zip) | iOS 仓输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.hskin` 皮肤 |
 | [`eosphoros-yong-windows.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-windows.zip) | Windows 小小输入法 | Windows 完整便携程序、配置、GB18030 码表和三套桌面皮肤 |
@@ -108,10 +106,10 @@
 | Windows | [小狼毫 Weasel](https://github.com/rime/weasel/releases/latest) | `%APPDATA%\Rime` |
 | macOS | [鼠须管 Squirrel](https://github.com/rime/squirrel/releases/latest) | `~/Library/Rime` |
 | Android | [同文 Trime](https://github.com/osfans/trime/releases/latest) | `/storage/emulated/0/rime/` |
-| Android | [Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 应用数据中的 `data/rime/` |
+| Android | [Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 应用内“输入法 → 码表管理”直接导入 ZIP |
 | Android | [小小输入法 Yong](https://yong.dgod.net/read.php?fid=2&tid=1) | `/storage/emulated/0/yong/.yong/` |
 | iOS | [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701) | 下载对应平台包后，通过应用的本地导入功能安装；仓输入法不支持在线方案下载 |
-| Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + `fcitx5-rime` + `librime-lua` | `~/.local/share/fcitx5/rime/` |
+| Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + 官方 Chinese Addons / Table | `~/.local/share/fcitx5/` |
 | Linux | [小小输入法 Yong](https://yong.dgod.net/read.php?fid=7&tid=6) | `~/.yong/` 或 `$XDG_CONFIG_HOME/yong/` |
 
 部署失败或更新后仍显示旧候选时，请先确认文件放在正确的用户目录，再从输入法菜单执行一次“重新部署”。
@@ -125,13 +123,13 @@
 | Windows 小狼毫 | 内置原创“晨星·黎明／夜色／极简”；默认由 `EosphorosLight` / `EosphorosDark` 自动跟随系统明暗模式 | 在 `weasel.custom.yaml` 中将 `style/color_scheme` 设为 `EosphorosMono` 可固定使用黑白极简 |
 | macOS 鼠须管 | 内置同一套晨星黎明／夜色／极简配色，使用鼠须管 1.x 的新布局字段 | 在 `squirrel.custom.yaml` 中将 `style/color_scheme` 设为 `EosphorosMono` 可固定使用黑白极简 |
 | Windows / Linux 小小输入法 | 内置“晨星·极简”“晨星·黎明”“晨星·石墨”，便携版默认启用黑白极简；两端共用纯色 `skin.ini` | 皮肤放入程序目录的 `skin/` 或用户目录的 `.yong/skin/`，再修改 `[IM]/skin`；复杂 Windows VBS 换肤脚本不能直接用于 Linux |
-| macOS Fcitx5 | 平台包内置晨星专属自动明暗主题和黑白极简主题，并保留其余可导入 `.conf` | 从 `eosphoros-fcitx5-macos.zip` 的 `fcitx5/macos/themes/` 取用；自动明暗用 `eosphoros-auto.conf`，极简用 `eosphoros-mono.conf` |
+| macOS Fcitx5 | 平台包内置晨星专属自动明暗主题和黑白极简主题，并保留其余可导入 `.conf` | 从 `eosphoros-fcitx5-macos.zip` 的 `themes/` 取用；自动明暗用 `eosphoros-auto.conf`，极简用 `eosphoros-mono.conf` |
 | iOS 元书输入法 | 平台包内置自动明暗与黑白极简两个 `.cskin`；以 ResourceforHamster 的完整万象键盘布局为底稿，保留横竖屏、数字／符号面板、候选展开、剪贴板、常用语、Emoji、脚本、键盘菜单、方案切换及快捷手势；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-yuanshu-ios.zip` 后，在元书中导入 `skins/eosphoros.cskin`；需要纯黑白外观时改用 `eosphoros-mono.cskin`。格式参见[元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
 | iOS 仓输入法 | 平台包内置自动明暗与黑白极简两个 `.hskin`；沿用成熟方案的横竖屏、iPad、浮动与单手布局；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-hamster-ios.zip` 后，通过系统共享菜单导入 `skins/eosphoros.hskin`；需要纯黑白外观时改用 `eosphoros-mono.hskin`。格式参见[仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
 | Android 同文输入法 | Release 提供基于 mytrime 3.3.10 `style.trime.yaml`“格调”版的完整 `eosphoros.trime.yaml`，保留工具栏、符号、编辑和液态键盘，并内含三套晨星配色 | 把主题文件放入同文用户目录，重新部署后选择“晨星键道·格调”主题 |
 | Android Fcitx5 | Release 提供三个符合主题格式 2.1 的可导入 ZIP | 解压外层包后，在主题管理中逐个导入内部 ZIP；不能直接导入外层合集 |
 | Android 小小输入法 | 附带“晨星·黎明／夜色”皮肤；以小小官方完整 Android 键盘为兼容底稿，仅维护晨星工具栏、名称和配色覆盖 | 保留官方候选展开、按键提示、长按、Emoji、语音、编辑面板和剪贴板历史，并增加切换输入法的直接入口 |
-| Linux Fcitx5 | 平台包内置晨星日间／夜间／极简专属主题，并保留其余桌面配色 | 从 `eosphoros-fcitx5-linux.zip` 的 `fcitx5/linux/themes/` 解压到 `~/.local/share/fcitx5/themes/`，再选择相应主题 |
+| Linux Fcitx5 | 平台包内置晨星日间／夜间／极简专属主题，并保留其余桌面配色 | 从 `eosphoros-fcitx5-linux.zip` 的 `themes/` 解压到 `~/.local/share/fcitx5/themes/`，再选择相应主题 |
 
 > [!NOTE]
 > `Hamster.yaml` 只负责元书/仓输入法中的自造词文件同步规则，不是键盘皮肤。元书的 `.cskin`、仓的 `.hskin` 与同文的 Trime YAML 主题互不兼容，不能通过改文件名或扩展名混用。
@@ -158,14 +156,14 @@ Release 中的元书 `.cskin` 与仓 `.hskin` 都以 [ResourceforHamster](https:
 
 **macOS 小企鹅**
 
-1. 主题直接取自 `eosphoros-fcitx5-macos.zip` 内的 `fcitx5/macos/themes/`。
+1. 主题直接取自 `eosphoros-fcitx5-macos.zip` 内的 `themes/`。
 2. 打开“主题编辑器 → 基础 → 选择／导入主题”。推荐导入 `eosphoros-auto.conf`：浅色使用“晨星·黎明”，深色使用“晨星·夜色”，可跟随系统外观。
 3. 需要其他桌面主题时，导入对应的 `eosphoros-主题名.conf`；单主题文件会在系统明暗模式下保持同一套颜色。
 4. macOS 26 启用液态玻璃时，系统可能根据候选窗下方内容调整外观，这是小企鹅的系统级行为，不是主题颜色丢失。导入规则参见 [Fcitx5 macOS 官方文档](https://fcitx-contrib.github.io/docs/theme/import.html)。
 
 **Linux 小企鹅**
 
-1. 主题直接取自 `eosphoros-fcitx5-linux.zip` 内的 `fcitx5/linux/themes/`。
+1. 主题直接取自 `eosphoros-fcitx5-linux.zip` 内的 `themes/`。
 2. 将压缩包直接解压到 `~/.local/share/fcitx5/themes/`；解压后应看到 `eosphoros-light/theme.conf` 等目录，不要再多套一层目录。
 3. 打开 `fcitx5-configtool`，进入“附加组件 → 经典用户界面”。亮色主题选择 `eosphoros-light`，暗色主题选择 `eosphoros-dark`；也可以选择压缩包内其他桌面配色。
 4. 应用设置后重启 Fcitx5。主题只使用官方支持的纯色字段，不依赖 SVG，避免不同 Wayland/GTK 渲染器加载 SVG 时出现兼容问题。格式参见 [Fcitx5 官方主题文档](https://fcitx-im.org/wiki/Fcitx_5_Theme)。
@@ -192,12 +190,12 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 rime-install 0x696c757a696f/eosphoros-keytao:weasel
 rime-install 0x696c757a696f/eosphoros-keytao:rabbit
 rime-install 0x696c757a696f/eosphoros-keytao:squirrel
-rime-install 0x696c757a696f/eosphoros-keytao:fcitx5-macos
-rime-install 0x696c757a696f/eosphoros-keytao:fcitx5-linux
 rime-install 0x696c757a696f/eosphoros-keytao:mobile
 ```
 
-不带后缀的 `rime-install 0x696c757a696f/eosphoros-keytao` 安装通用核心。安装完成后仍需重新部署。配方会复制对应前端运行所需的 YAML、`lua/eosphoros/`、`opencc/eosphoros/`，并安装 ZZZC 公共 Python 核心、说明和教程；Weasel 与 Rabbit 额外安装 Windows EXE 和 Python 入口，其中 Rabbit 配方只补充 Rabbit 专用主题与客户端设置，不安装 `weasel.yaml`。Squirrel、Fcitx5 和移动端则只安装各自适用的入口。所有配方都会安装仓库提供的 `eosphoros.custom.yaml`，确保推荐开关、候选设置和图标引用完整生效，并通过东风破补丁把 `eosphoros` 安全加入现有方案列表。客户端级 `*.custom.yaml` 不会被配方整份覆盖；Rabbit 配方只向现有 `rabbit.custom.yaml` 合并晨星主题选择和 AutoHotkey v2 候选序号格式。仓库测试、`eosphoros_user.txt`、`*.userdb` 和 ZZZC 运行记录也不会被安装或覆盖。`zzc_state/` 中只有静态拆分索引 `char_parts.tsv` 随配方和 Release 分发；`runtime_ops.tsv`、`effective_state.tsv`、撤回/重置状态及打字统计均由本机运行时创建，更新包不会用空文件清除用户数据。Fcitx5 桌面主题已内置在对应平台 Release 包中，东风破安装方案后仍需按客户端说明将主题放到 Fcitx5 的主题目录。
+不带后缀的命令安装通用 Rime 核心。东风破只部署 Rime 方案，因此不再提供
+Fcitx5 配方；Fcitx5 用户应直接使用对应系统的官方 Table Release 包。其余配方会
+复制对应前端所需 YAML、Lua、OpenCC 和 ZZZC 工具，并安全加入晨星方案列表。
 
 ### 🔧 中州韵助手（rimetool）兼容性
 
@@ -257,12 +255,13 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 | 平台 | 推荐客户端 | 安装方式 | 更新后必须做的操作 |
 | --- | --- | --- | --- |
 | Windows | [小狼毫](https://github.com/rime/weasel/releases/latest)、[水龙月 Fork](https://github.com/Techince/weasel/releases/latest)、玉兔毫、小小输入法 | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
-| macOS | [鼠须管](https://github.com/rime/squirrel/releases/latest)、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 解压到对应 Rime 用户目录 | 重新部署 |
-| Android | [同文](https://github.com/osfans/trime/releases/latest)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 通过应用配置管理或系统文件选择器导入 | 在应用内重新部署 |
+| macOS | 鼠须管、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 鼠须管解压到 Rime 目录；Fcitx5 在应用内导入码表 | 重新部署 Rime，或重启 Fcitx5 |
+| Android | 同文、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 同文导入方案；Fcitx5 在码表管理导入 ZIP | 部署同文，或添加晨星 Table |
 | iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 手动下载对应平台包，再通过应用的本地导入功能安装；仓输入法不能在线下载方案 | 切换到新方案目录并重新部署 |
-| Linux | [Fcitx5](https://github.com/fcitx/fcitx5) + Rime + librime-lua，或小小输入法 | 安装组件后解压到对应用户目录 | 重启输入法；Rime 前端还需重新部署 |
+| Linux | [Fcitx5](https://github.com/fcitx/fcitx5) 官方 Table，或小小输入法 | 将码表、配置、主题放入 Fcitx5 同名用户目录 | 重启输入法 |
 
-无论使用哪个客户端，都不要只复制根目录的 YAML 文件：`dicts/eosphoros/`、`lua/eosphoros/` 和 `opencc/eosphoros/` 都必须保持原目录结构一起导入，否则词库、顶功、自造词、英文、Emoji 和简繁转换可能不完整。
+Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lua/eosphoros/`、
+`opencc/eosphoros/`。Fcitx5 平台包是独立的官方 Table 码表，不使用这些 Rime 目录。
 
 #### 🖥️ Windows
 
@@ -301,10 +300,10 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 
 **Fcitx5 macOS**
 
-1. 安装[小企鹅输入法 macOS 版（中州韵版）](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)。这里使用的是 Fcitx5 官方 Rime 插件路线，不需要另装晨星原生插件。
-2. 下载 `eosphoros-fcitx5-macos.zip`，把方案文件完整复制到 `~/.local/share/fcitx5/rime/`。
-3. 包内 `fcitx5/macos/themes/` 是 macOS 专用主题，可在“主题编辑器 → 基础 → 选择／导入主题”中导入；不要使用同包中的路径作为 Rime 方案目录。
-4. 重启 Fcitx5 或重新部署 Rime。
+1. 安装[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)，确认官方 Chinese Addons／Table 可用；不安装 Rime 插件。macOS 的官方插件集合包含 Chinese Addons。
+2. 下载并解压 `eosphoros-fcitx5-macos.zip`。
+3. 打开“输入法 → 添加输入法 → 导入码表”，同时选择根目录的 `eosphoros.conf` 与 `eosphoros.txt`。客户端会使用内置 libime 完成转换。
+4. `themes/` 内是 macOS 专用主题，可在主题编辑器中另行导入；重启 Fcitx5 后添加“晨星键道”。
 
 #### 🤖 Android
 
@@ -329,11 +328,10 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 
 **Fcitx5 for Android**
 
-1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)及其官方 Rime 插件；不需要另装晨星插件 APK。需要测试构建时可使用[主程序构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/)、[Rime 插件构建](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)和[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
-2. 在小企鹅输入法中添加中州韵后，Rime 数据目录通常为 `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`。
-3. 下载并解压 [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip)。推荐通过 Android 系统 DocumentsUI 管理文件：打开系统文件选择器，在侧边栏选择“小企鹅输入法5”，即可访问其 `files/` 数据目录并复制完整方案，不需要第三方文件管理器、root 或 ADB。相关做法可参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
-4. 返回应用重新部署 Rime。
-5. 若要使用晨星键盘配色，在主题管理中分别导入平台包 `themes/` 内的 `eosphoros-dawn.zip`、`eosphoros-night.zip` 或 `eosphoros-mono.zip`；整个平台包不能作为主题直接导入。
+1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)主程序；自定义码表由本体内置 Chinese Addons／Table 提供，不安装 Rime 插件。剪贴板、符号／Emoji 选择器等客户端自带功能不受影响。
+2. 下载 [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip)。
+3. 打开“小企鹅输入法 → 输入法 → 码表管理 → 导入码表 → 从 ZIP 导入”，直接选择整个平台包。根目录中的 `eosphoros.conf` 与 `eosphoros.txt` 会由应用内置 libime 转换并安装。
+4. 在输入法列表添加“晨星键道”。若要使用晨星配色，再在主题管理中分别导入 `themes/` 内的三个主题 ZIP。
 
 #### 📱 iOS
 
@@ -368,42 +366,32 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 4. GNOME 推荐通过 IBus 添加 Yong；KDE Plasma Wayland 可在“系统设置 → 键盘 → 虚拟键盘”选择 Yong Wayland；wlroots 桌面可按官方说明使用 `yong --wayland`。不要把 XIM、IBus 与 Wayland 的环境变量配置全部叠加。
 5. 小小程序本体来自上游 `yong-lin.7z`，晨星只替换配置、码表和新增皮肤；上游重新上传同名附件后，下一次 Release 会直接使用新附件构建。
 
-**Fcitx5 + Rime**
+**Fcitx5 官方 Table**
 
-需要同时安装 Fcitx5、Rime 插件和 Lua 支持。不同发行版的软件包名称、拆包方式和仓库版本可能不同；如果命令提示找不到 `librime-lua`，请先查询本发行版是否已把 Lua 支持合并进 `librime`/`fcitx5-rime`，或按照该发行版的软件包说明安装对应组件。
+晨星 Fcitx5 版不使用 Rime。只需安装发行版提供的 Fcitx5、配置工具和
+`fcitx5-chinese-addons`（其中含官方 Table 引擎与 libime）。
 
 | 发行版 | 安装命令或说明 |
 | --- | --- |
-| Arch / Manjaro / EndeavourOS | `sudo pacman -S fcitx5-im fcitx5-rime fcitx5-configtool librime-lua` |
-| Ubuntu / Debian / Linux Mint | `sudo apt install fcitx5 fcitx5-rime librime-lua` |
-| Fedora | `sudo dnf install fcitx5 fcitx5-rime librime-lua` |
-| RHEL / AlmaLinux / Rocky Linux | 先启用 EPEL；RHEL/Rocky 9 再启用 CRB，然后安装 `fcitx5 fcitx5-rime librime-lua` |
-| Deepin / UOS | 如仍使用 Fcitx4，先卸载旧组件，再安装 `fcitx5 fcitx5-rime librime-lua` |
-| Flatpak | `flatpak install org.fcitx.Fcitx5 org.fcitx.Fcitx5.Addon.Rime` |
+| Arch / Manjaro / EndeavourOS | `sudo pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-configtool` |
+| Ubuntu / Debian / Linux Mint | `sudo apt install fcitx5 fcitx5-chinese-addons fcitx5-config-qt` |
+| Fedora | `sudo dnf install fcitx5 fcitx5-chinese-addons fcitx5-configtool` |
+| RHEL / AlmaLinux / Rocky Linux | 先启用 EPEL／CRB，再安装仓库提供的 Fcitx5 Chinese Addons |
+| Deepin / UOS | 如仍使用 Fcitx4，先卸载旧组件，再安装 Fcitx5 与 Chinese Addons |
 
-RHEL、AlmaLinux、Rocky Linux 可先运行 `sudo dnf install epel-release`；RHEL/Rocky 9 再运行 `sudo /usr/bin/crb enable` 后安装 Fcitx5。Deepin/UOS 如存在旧版 Fcitx4，可先运行 `sudo apt remove fcitx fcitx-bin fcitx-table-all`，再安装 Fcitx5 组件。
+不同发行版拆包名称可能略有差异；配置工具中能看到“码表／Table”即满足运行条件。
 
 安装方案：
 
-1. 将 `eosphoros-fcitx5-linux.zip` 完整解压到 `~/.local/share/fcitx5/rime/`。
-2. Flatpak 版通常使用 `~/.var/app/org.fcitx.Fcitx5/data/fcitx5/rime/`。
-3. 将包内 `fcitx5/linux/themes/` 下的主题目录复制到 `~/.local/share/fcitx5/themes/`；方案文件与主题文件不能混用安装目录。
-4. 打开 Fcitx5 配置工具，添加“中州韵”或 Rime 输入法。
-5. 重启 Fcitx5，并从 Rime 菜单执行重新部署。
-6. 若仍不能输入，先运行 `fcitx5-diagnose`，确认当前桌面会话、Fcitx5 自启动、Rime 插件和输入法环境变量是否被识别。
+1. 解压 `eosphoros-fcitx5-linux.zip`。
+2. 把 `inputmethod/eosphoros.conf`、`table/eosphoros.main.dict` 和所需 `themes/`
+   分别复制到 `~/.local/share/fcitx5/` 下的同名目录。
+3. 重启 Fcitx5，在配置工具中添加“晨星键道”。
+4. 若仍不能输入，运行 `fcitx5-diagnose`，确认 Table／Chinese Addons 已加载。
 
-**原生 Fcitx5 引擎（预览）**
-
-仓库另有 [`native/fcitx5-eosphoros/`](native/fcitx5-eosphoros/) 第一阶段 MVP，
-它直接实现 Fcitx5 `InputMethodEngineV2`，不依赖 `fcitx5-rime`、`librime`、
-`librime-lua`，也不会在运行时解析 Rime schema。当前只用于 Linux 开发验证，
-已覆盖完整静态词典、候选选择、基本／连续／空码顶功、英文和三种反查入口、反查
-注音、Emoji、F7 简繁转换、快符、计算器、日期时间、候选词频学习、持久化用户词与
-原生 ZZC 捕获。它拥有独立的 `Native Fcitx5` 构建及 Release 包，
-不会混入上述 Rime、Weasel、Rabbit、Squirrel、小小或移动端 Release 包。
-构建方法、行为审计和当前差异见[原生引擎 README](native/fcitx5-eosphoros/README.md)
-与[行为审计](native/fcitx5-eosphoros/AUDIT.md)。普通用户目前仍应使用上面的
-Fcitx5 + Rime 稳定方案。
+这个纯 Table 版本保留完整 1～6 键普通中文码表、稳定候选顺序、学习以及无匹配／
+满码自动上屏。Fcitx5 官方标点、快捷短语、简繁转换、Emoji 与 Unicode 可照常使用；
+Rime 专属的 Lua 命令、`i/u/v/o` 长前缀反查和 ZZC 不会混进主表，以免破坏顶功。
 
 <details>
 <summary><strong>🧰 展开 Linux 桌面环境与应用兼容设置</strong></summary>
@@ -755,6 +743,7 @@ python .\tools\check_legacy_upstream.py
 python .\tools\check_txjx_upstream.py
 python .\tools\adapt_txjx_upstream.py --json
 python .\tools\build_platform_packages.py --check
+python .\tools\build_fcitx5_table.py --check
 python .\tools\build_fcitx5_themes.py --check
 python .\tools\build_mobile_themes.py --check
 git diff --check

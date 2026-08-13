@@ -9,11 +9,9 @@
 - macOS 撤回合并：运行 `Mac_撤回合并`
 - 通用 Python 合并：运行 `python3 zzc/eosphoros_词库合并.py`
 - 通用 Python 撤回：运行 `python3 zzc/eosphoros_撤回合并.py`
-- Fcitx5 Linux：运行 `python3 zzc/Fcitx5_Linux_词库合并.py`；撤回时运行同目录的 `Fcitx5_Linux_撤回合并.py`
-- Fcitx5 macOS：运行 `python3 zzc/Fcitx5_macOS_词库合并.py`；撤回时运行同目录的 `Fcitx5_macOS_撤回合并.py`
 - iOS 合并：免费方案用 a-Shell 运行 `iOS_词库合并.py`，Pythonista 也可运行同一脚本
 
-Windows 与 Fcitx5 Python 入口都是薄包装，共用平台中性的 `eosphoros_*` 可审查核心；两个 Windows `.exe` 也直接从相同核心构建，不使用另一套算法或不透明的上游二进制。macOS 传统入口继续保留无扩展脚本，Fcitx5 macOS 另有文件名明确的 `.py` 入口。Release 和东风破配方只组合“公共核心 + 当前平台入口”，不会夹带其他操作系统的脚本。
+Windows Python 入口是薄包装，共用平台中性的 `eosphoros_*` 可审查核心；两个 Windows `.exe` 也直接从相同核心构建。macOS 传统入口继续保留无扩展脚本。Fcitx5 官方 Table 包不使用 Rime ZZZC；修改源词库后需重新构建码表。
 
 旧的 `apply_zzc.py`、`gen_char_parts.py`、`.cmd`、`.bat` 入口已经废弃，不要恢复。
 
@@ -131,10 +129,6 @@ session 创建时不再作为主要写入点，只做上述补偿清理。运行
 - `Win_撤回合并.exe`
 - `Windows_词库合并.py`
 - `Windows_撤回合并.py`
-- `Fcitx5_Linux_词库合并.py`
-- `Fcitx5_Linux_撤回合并.py`
-- `Fcitx5_macOS_词库合并.py`
-- `Fcitx5_macOS_撤回合并.py`
 - `Mac_词库合并`
 - `Mac_撤回合并`
 - `eosphoros_词库合并.py`

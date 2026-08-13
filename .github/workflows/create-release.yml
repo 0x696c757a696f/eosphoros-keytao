@@ -133,7 +133,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude \
-          cmake extra-cmake-modules g++ libfcitx5core-dev ninja-build
+          libime-bin
         python -m pip install --upgrade -r requirements-ci.txt
         python -m pip install -r requirements-dev.txt
         python tools/validate_repo.py
@@ -152,28 +152,12 @@ jobs:
         mkdir -p Rime
         mkdir -p mb/eosphoros
 
-    - name: Build standalone native Fcitx5 package
-      run: |
-        cmake -S native/fcitx5-eosphoros -B build/native-release -G Ninja \
-          -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-        cmake --build build/native-release
-        ctest --test-dir build/native-release --output-on-failure
-        DESTDIR="$PWD/build/native-package" cmake --install build/native-release
-        addon="$(find build/native-package -type f -name 'libeosphoros-native.so' -print -quit)"
-        test -n "$addon"
-        ! ldd "$addon" | grep -Eiq '(^|[^a-z])(librime|rime|lua|opencc)([^a-z]|$)'
-        cp native/fcitx5-eosphoros/README.md build/native-package/README-Eosphoros-Native-Fcitx5.md
-        (cd build/native-package && zip -r ../../eosphoros-fcitx5-native-linux.zip .)
-
     - name: Download verified OpenCC data
       run: |
         python tools/fetch_opencc.py \
           --url "$OPENCC_TONGGUI_URL" \
           --sha256 "$OPENCC_TONGGUI_SHA256" \
           --destination opencc/eosphoros
-
-    - name: Build generic and platform-specific Rime packages
-      run: python tools/build_platform_packages.py
 
     - name: Compile packaged core with librime and Lua
       run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
@@ -185,6 +169,12 @@ jobs:
       run: |
         pixi run python tools/build_mobile_themes.py --check
         pixi run python tools/build_mobile_themes.py --platform-dir .
+
+    - name: Build generic and platform-specific Rime packages
+      run: python tools/build_platform_packages.py
+
+    - name: Build Fcitx5 built-in Table packages
+      run: python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
 
     - name: Fetch tags and generate changelog from last release
       id: changelog
@@ -413,7 +403,6 @@ jobs:
           eosphoros-squirrel-macos.zip
           eosphoros-fcitx5-macos.zip
           eosphoros-fcitx5-linux.zip
-          eosphoros-fcitx5-native-linux.zip
           eosphoros-trime-android.zip
           eosphoros-fcitx5-android.zip
           eosphoros-yuanshu-ios.zip

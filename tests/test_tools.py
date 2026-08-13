@@ -963,8 +963,6 @@ class RepositoryValidationTests(unittest.TestCase):
             "weasel": root / "weasel.recipe.yaml",
             "rabbit": root / "rabbit.recipe.yaml",
             "squirrel": root / "squirrel.recipe.yaml",
-            "fcitx5-macos": root / "fcitx5-macos.recipe.yaml",
-            "fcitx5-linux": root / "fcitx5-linux.recipe.yaml",
             "mobile": root / "mobile.recipe.yaml",
         }
         recipes = {
@@ -1090,14 +1088,6 @@ class RepositoryValidationTests(unittest.TestCase):
                 "zzc/Windows_撤回合并.py",
             },
             "squirrel": {"zzc/Mac_词库合并", "zzc/Mac_撤回合并"},
-            "fcitx5-macos": {
-                "zzc/Fcitx5_macOS_词库合并.py",
-                "zzc/Fcitx5_macOS_撤回合并.py",
-            },
-            "fcitx5-linux": {
-                "zzc/Fcitx5_Linux_词库合并.py",
-                "zzc/Fcitx5_Linux_撤回合并.py",
-            },
             "mobile": {
                 "zzc/iOS_词库合并.py",
                 "zzc/iOS快捷指令合并说明.md",
@@ -1110,24 +1100,6 @@ class RepositoryValidationTests(unittest.TestCase):
                 shared_zzc | platform_zzc[name],
                 name,
             )
-        for name in ("fcitx5-macos", "fcitx5-linux"):
-            self.assertFalse(any("weasel" in item for item in patterns[name]))
-            self.assertFalse(any("squirrel" in item for item in patterns[name]))
-            self.assertFalse(any("Hamster" in item for item in patterns[name]))
-            self.assertIn("zzc/eosphoros_词库合并.py", patterns[name])
-            self.assertIn("zzc/eosphoros_撤回合并.py", patterns[name])
-        self.assertIn(
-            "zzc/Fcitx5_macOS_词库合并.py", patterns["fcitx5-macos"]
-        )
-        self.assertIn(
-            "zzc/Fcitx5_macOS_撤回合并.py", patterns["fcitx5-macos"]
-        )
-        self.assertIn(
-            "zzc/Fcitx5_Linux_词库合并.py", patterns["fcitx5-linux"]
-        )
-        self.assertIn(
-            "zzc/Fcitx5_Linux_撤回合并.py", patterns["fcitx5-linux"]
-        )
 
     def test_plum_install_keeps_the_eosphoros_scheme_icon(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -1139,8 +1111,6 @@ class RepositoryValidationTests(unittest.TestCase):
             "weasel.recipe.yaml",
             "rabbit.recipe.yaml",
             "squirrel.recipe.yaml",
-            "fcitx5-macos.recipe.yaml",
-            "fcitx5-linux.recipe.yaml",
             "mobile.recipe.yaml",
         ):
             recipe = (root / name).read_text(encoding="utf-8")
@@ -1564,49 +1534,6 @@ columns:
                 0,
                 (result.stdout or "") + (result.stderr or ""),
             )
-
-    def test_fcitx5_python_merge_entries_run_the_shared_eosphoros_core(self) -> None:
-        repository = Path(__file__).resolve().parents[1]
-        for entry_name in (
-            "Fcitx5_Linux_词库合并.py",
-            "Fcitx5_macOS_词库合并.py",
-        ):
-            with self.subTest(entry=entry_name), tempfile.TemporaryDirectory() as temp_dir:
-                root = Path(temp_dir)
-                zzc_dir = root / "zzc"
-                zzc_dir.mkdir()
-                shutil.copy2(repository / "zzc" / "eosphoros_词库合并.py", zzc_dir)
-                shutil.copy2(repository / "zzc" / entry_name, zzc_dir)
-                for name in ("eosphoros.cizu", "eosphoros.fjcy"):
-                    dict_path(root, f"{name}.dict.yaml").write_text(
-                        "# Rime dictionary\n---\n"
-                        f'name: {name}\nversion: "2026-08-09"\n'
-                        "sort: by_weight\n...\n",
-                        encoding="utf-8",
-                    )
-                dict_path(root, "eosphoros.zzc.dict.yaml").write_text(
-                    "# Rime dictionary\n---\nname: eosphoros.zzc\n"
-                    'version: "2026-08-09"\nsort: by_weight\n'
-                    "columns:\n  - text\n  - code\n...\n"
-                    "100\tadd\tFcitx5入口\tfcitx\t+\n",
-                    encoding="utf-8",
-                )
-                result = subprocess.run(
-                    [sys.executable, str(zzc_dir / entry_name)],
-                    cwd=root,
-                    capture_output=True,
-                    text=True,
-                    encoding="utf-8",
-                    errors="replace",
-                    check=False,
-                )
-                self.assertEqual(
-                    result.returncode,
-                    0,
-                    (result.stdout or "") + (result.stderr or ""),
-                )
-                merged = dict_path(root, "eosphoros.cizu.dict.yaml").read_text(encoding="utf-8")
-                self.assertIn("Fcitx5入口\tfcitx", merged)
 
     def test_typing_stats_migrates_to_namespaced_zzc_state(self) -> None:
         repository = Path(__file__).resolve().parents[1]

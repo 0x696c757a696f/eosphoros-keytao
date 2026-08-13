@@ -101,7 +101,9 @@ jobs:
           --destination opencc/eosphoros
 
     - name: Validate platform package manifests
-      run: python tools/build_platform_packages.py --check
+      run: |
+        python tools/build_platform_packages.py --check
+        python tools/build_fcitx5_table.py --check
 
     - name: Compile packaged core with librime and Lua
       run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data

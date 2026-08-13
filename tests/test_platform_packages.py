@@ -55,10 +55,7 @@ class PlatformPackageTests(unittest.TestCase):
                 "eosphoros-rime-cross-platform.zip",
                 "eosphoros-weasel-windows.zip",
                 "eosphoros-squirrel-macos.zip",
-                "eosphoros-fcitx5-macos.zip",
-                "eosphoros-fcitx5-linux.zip",
                 "eosphoros-trime-android.zip",
-                "eosphoros-fcitx5-android.zip",
                 "eosphoros-yuanshu-ios.zip",
                 "eosphoros-hamster-ios.zip",
             },
@@ -117,16 +114,7 @@ class PlatformPackageTests(unittest.TestCase):
                 "zzc/Mac_词库合并",
                 "zzc/Mac_撤回合并",
             },
-            "eosphoros-fcitx5-macos.zip": {
-                "zzc/Fcitx5_macOS_词库合并.py",
-                "zzc/Fcitx5_macOS_撤回合并.py",
-            },
-            "eosphoros-fcitx5-linux.zip": {
-                "zzc/Fcitx5_Linux_词库合并.py",
-                "zzc/Fcitx5_Linux_撤回合并.py",
-            },
             "eosphoros-trime-android.zip": set(),
-            "eosphoros-fcitx5-android.zip": set(),
             "eosphoros-yuanshu-ios.zip": {
                 "zzc/iOS_词库合并.py",
                 "zzc/iOS快捷指令合并说明.md",
@@ -172,56 +160,12 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("weasel.yaml", squirrel)
         self.assertNotIn("Hamster.yaml", squirrel)
 
-        fcitx5_macos = members["eosphoros-fcitx5-macos.zip"]
-        self.assertIn("eosphoros.schema.yaml", fcitx5_macos)
-        self.assertTrue(any(path.startswith("dicts/eosphoros/") for path in fcitx5_macos))
-        self.assertTrue(any(path.startswith("lua/eosphoros/") for path in fcitx5_macos))
-        self.assertTrue(any(path.startswith("opencc/eosphoros/") for path in fcitx5_macos))
-        self.assertIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_macos)
-        self.assertIn("zzc/Fcitx5_macOS_撤回合并.py", fcitx5_macos)
-        self.assertIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_macos)
-        self.assertNotIn(
-            "fcitx5/linux/themes/eosphoros-light/theme.conf", fcitx5_macos
-        )
-        self.assertNotIn("weasel.yaml", fcitx5_macos)
-        self.assertNotIn("squirrel.yaml", fcitx5_macos)
-        self.assertNotIn("Hamster.yaml", fcitx5_macos)
-
-        fcitx5_linux = members["eosphoros-fcitx5-linux.zip"]
-        self.assertIn("zzc/eosphoros_词库合并.py", fcitx5_linux)
-        self.assertIn("zzc/Fcitx5_Linux_词库合并.py", fcitx5_linux)
-        self.assertIn("zzc/Fcitx5_Linux_撤回合并.py", fcitx5_linux)
-        self.assertIn(
-            "fcitx5/linux/themes/eosphoros-light/theme.conf", fcitx5_linux
-        )
-        self.assertNotIn("fcitx5/macos/themes/eosphoros-auto.conf", fcitx5_linux)
-        self.assertNotIn("zzc/Fcitx5_macOS_词库合并.py", fcitx5_linux)
-        self.assertNotIn("weasel.yaml", fcitx5_linux)
-        self.assertNotIn("squirrel.yaml", fcitx5_linux)
-        self.assertNotIn("Hamster.yaml", fcitx5_linux)
-
         trime = members["eosphoros-trime-android.zip"]
         self.assertEqual(
             {path for path in trime if path.endswith(".trime.yaml")},
             {"eosphoros.trime.yaml"},
         )
         self.assertFalse(any(path.startswith("mobile_themes/") for path in trime))
-
-        fcitx5_android = members["eosphoros-fcitx5-android.zip"]
-        self.assertIn("eosphoros.schema.yaml", fcitx5_android)
-        self.assertTrue(any(path.startswith("dicts/eosphoros/") for path in fcitx5_android))
-        self.assertTrue(any(path.startswith("lua/eosphoros/") for path in fcitx5_android))
-        self.assertTrue(any(path.startswith("opencc/eosphoros/") for path in fcitx5_android))
-        self.assertFalse(any(path.startswith("fcitx5/macos/") for path in fcitx5_android))
-        self.assertFalse(any(path.startswith("fcitx5/linux/") for path in fcitx5_android))
-        self.assertEqual(
-            {path for path in fcitx5_android if path.startswith("themes/")},
-            {
-                "themes/eosphoros-dawn.zip",
-                "themes/eosphoros-night.zip",
-                "themes/eosphoros-mono.zip",
-            },
-        )
 
         for name in ("eosphoros-yuanshu-ios.zip", "eosphoros-hamster-ios.zip"):
             mobile = members[name]

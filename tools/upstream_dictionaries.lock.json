@@ -55,15 +55,15 @@
       "rows": 23610
     },
     "opencc/eosphoros/eosphoros_emoji_extra_chars.lua": {
-      "sha256": "aa3e68e06cdd9382446103818a7b6667cc6d2ecc8d232dcacd7aadd18167e0e7",
+      "sha256": "d5c84ff9dbf04a760628da2ac5600a43aba952f0238d3c9c15df62786d6f6e95",
       "rows": 34
     },
     "opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua": {
-      "sha256": "a3aa2967987bf5111fe98d71348a00d9e5c91f8e5ca77dba86fcd14665ec3088",
+      "sha256": "c8d61147c3f97bb7a8fd132c29ec24406005e44007980b99ec41ea13bda239fe",
       "rows": 886
     },
     "opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua": {
-      "sha256": "e91218265c9f9daf769d7993d5851016090aba3361ddcedf1e71aa36e804cc76",
+      "sha256": "b3c8fadc452bde3063d0dc29c888379c49ea29d4f639f183272a487220a3eef2",
       "rows": 2482
     },
     "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml": {
