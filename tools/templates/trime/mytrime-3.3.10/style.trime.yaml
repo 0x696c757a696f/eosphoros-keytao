@@ -1,5 +1,3 @@
-# 晨星键道 Trime 完整皮肤；以用户审定的格调布局为基准。
-# Upstream commit: 419b31be726ba8c8277daf8913b84dee974e2048
 # SPDX-FileCopyrightText: 2015 - 2024 Rime community
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -8,8 +6,8 @@
 # encoding: utf-8
 
 config_version: "3.0"
-name: 晨星键道·格调
-author: 风花絮；晨星键道适配
+name: 格调          #方案名称
+author: 风花絮        #作者信息
 
 #键盘高度
 height:
@@ -29,8 +27,6 @@ round_corner:
 
 #界面风格、功能开关
 style:
-  color_scheme: eosphoros_dawn
-  color_scheme_dark: eosphoros_night
   auto_caps: false #自動句首大寫:true|false|ascii
   candidate_corner_radius: 12  #高亮候选背景圆角
   candidate_font: han.ttf  #候选字体
@@ -169,179 +165,359 @@ colors:
 
 #配色方案
 preset_color_schemes:
-  eosphoros_dawn:
-    name: 晨星·黎明／Eosphoros Dawn
-    author: eosphoros-keytao
-    back_color: '0xe9eef6'
-    border_color: '0xaab8cc'
-    candidate_separator_color: '0xaab8cc'
-    candidate_text_color: '0x172033'
-    comment_text_color: '0x66738a'
-    hilited_back_color: '0xf8f5ed'
-    hilited_candidate_back_color: '0xc68a2c'
-    hilited_candidate_text_color: '0x172033'
-    hilited_comment_text_color: '0x172033'
-    hilited_key_back_color: '0xb7c5d8'
-    hilited_key_symbol_color: '0x172033'
-    hilited_key_text_color: '0x172033'
-    hilited_text_color: '0x172033'
-    key_back_color: '0xffffff'
-    key_border_color: '0xaab8cc'
-    key_symbol_color: '0x66738a'
-    key_text_color: '0x172033'
-    keyboard_back_color: '0xdce4f0'
-    label_color: '0x66738a'
-    off_key_back_color: '0xc8d3e3'
-    off_key_text_color: '0x172033'
-    on_key_back_color: '0xc68a2c'
-    on_key_text_color: '0x172033'
-    preview_back_color: '0xffffff'
-    preview_text_color: '0x172033'
-    shadow_color: '0x38172033'
-    text_color: '0x172033'
-    text_back_color: '0xf8f5ed'
-    bkg: '0xffffff'
-    tkg: '0x172033'
-    benter: '0xc68a2c'
-    tenter: '0x172033'
-    bgn: '0xc8d3e3'
-    tgn: '0x172033'
-    bbs: '0xc8d3e3'
-    tbs: '0x172033'
-    baoe: '0xffffff'
-    taoe: '0xc68a2c'
-    bh1: '0xffffff'
-    th1: '0x172033'
-    bh2: '0xffffff'
-    th2: '0x172033'
-    bh3: '0xffffff'
-    th3: '0x172033'
-    bh4: '0xffffff'
-    th4: '0x172033'
-    bh5: '0xffffff'
-    bh6: '0xffffff'
-    c1: '0xc8d3e3'
-    c2: '0xc8d3e3'
-    c3: '0xc8d3e3'
-    c4: '0xc8d3e3'
-    c5: '0xc8d3e3'
-    c7: '0xc68a2c'
-    dark_scheme: eosphoros_night
-  eosphoros_night:
-    name: 晨星·夜色／Eosphoros Night
-    author: eosphoros-keytao
-    back_color: '0x10182a'
-    border_color: '0x405575'
-    candidate_separator_color: '0x405575'
-    candidate_text_color: '0xf5f0e3'
-    comment_text_color: '0xaab7cf'
-    hilited_back_color: '0x090e1b'
-    hilited_candidate_back_color: '0xe4b34b'
-    hilited_candidate_text_color: '0x101522'
-    hilited_comment_text_color: '0x101522'
-    hilited_key_back_color: '0x354a70'
-    hilited_key_symbol_color: '0xf5f0e3'
-    hilited_key_text_color: '0xf5f0e3'
-    hilited_text_color: '0xf5f0e3'
-    key_back_color: '0x253552'
-    key_border_color: '0x405575'
-    key_symbol_color: '0xaab7cf'
-    key_text_color: '0xf5f0e3'
-    keyboard_back_color: '0x16223a'
-    label_color: '0xaab7cf'
-    off_key_back_color: '0x1d2b47'
-    off_key_text_color: '0xf5f0e3'
-    on_key_back_color: '0xe4b34b'
-    on_key_text_color: '0x101522'
-    preview_back_color: '0x253552'
-    preview_text_color: '0xf5f0e3'
-    shadow_color: '0xa0000000'
-    text_color: '0xf5f0e3'
-    text_back_color: '0x090e1b'
-    bkg: '0x253552'
-    tkg: '0xf5f0e3'
-    benter: '0xe4b34b'
-    tenter: '0x101522'
-    bgn: '0x1d2b47'
-    tgn: '0xf5f0e3'
-    bbs: '0x1d2b47'
-    tbs: '0xf5f0e3'
-    baoe: '0x253552'
-    taoe: '0xe4b34b'
-    bh1: '0x253552'
-    th1: '0xf5f0e3'
-    bh2: '0x253552'
-    th2: '0xf5f0e3'
-    bh3: '0x253552'
-    th3: '0xf5f0e3'
-    bh4: '0x253552'
-    th4: '0xf5f0e3'
-    bh5: '0x253552'
-    bh6: '0x253552'
-    c1: '0x1d2b47'
-    c2: '0x1d2b47'
-    c3: '0x1d2b47'
-    c4: '0x1d2b47'
-    c5: '0x1d2b47'
-    c7: '0xe4b34b'
-    light_scheme: eosphoros_dawn
-  eosphoros_mono:
-    name: 晨星·极简／Eosphoros Mono
-    author: eosphoros-keytao
-    back_color: '0xffffff'
-    border_color: '0x000000'
-    candidate_separator_color: '0x000000'
-    candidate_text_color: '0x000000'
-    comment_text_color: '0x666666'
-    hilited_back_color: '0xffffff'
-    hilited_candidate_back_color: '0x000000'
-    hilited_candidate_text_color: '0xffffff'
-    hilited_comment_text_color: '0xffffff'
-    hilited_key_back_color: '0xd9d9d9'
-    hilited_key_symbol_color: '0x000000'
-    hilited_key_text_color: '0x000000'
-    hilited_text_color: '0x000000'
-    key_back_color: '0xffffff'
-    key_border_color: '0x000000'
-    key_symbol_color: '0x666666'
-    key_text_color: '0x000000'
-    keyboard_back_color: '0xffffff'
-    label_color: '0x666666'
-    off_key_back_color: '0xf2f2f2'
-    off_key_text_color: '0x000000'
-    on_key_back_color: '0x000000'
-    on_key_text_color: '0xffffff'
-    preview_back_color: '0xffffff'
-    preview_text_color: '0x000000'
-    shadow_color: '0x00000000'
-    text_color: '0x000000'
-    text_back_color: '0xffffff'
-    bkg: '0xffffff'
-    tkg: '0x000000'
-    benter: '0x000000'
-    tenter: '0xffffff'
-    bgn: '0xf2f2f2'
-    tgn: '0x000000'
-    bbs: '0xf2f2f2'
-    tbs: '0x000000'
-    baoe: '0xffffff'
-    taoe: '0x000000'
-    bh1: '0xffffff'
-    th1: '0x000000'
-    bh2: '0xffffff'
-    th2: '0x000000'
-    bh3: '0xffffff'
-    th3: '0x000000'
-    bh4: '0xffffff'
-    th4: '0x000000'
-    bh5: '0xffffff'
-    bh6: '0xffffff'
-    c1: '0xf2f2f2'
-    c2: '0xf2f2f2'
-    c3: '0xf2f2f2'
-    c4: '0xf2f2f2'
-    c5: '0xf2f2f2'
-    c7: '0x000000'
+  standard:
+    name: "标准"  #方案名称
+    author: 风花絮 #作者信息
+    dark_scheme: abyss
+    back_color: *color3 #候选区背景状态栏
+    candidate_separator_color: *color2 #候选分割背景
+    candidate_text_color: *color1 #候选文本
+    comment_text_color: *color1 #提示
+    hilited_back_color: *color2 #高亮编码背景
+    hilited_candidate_back_color: *color2 #高亮候选背景
+    hilited_candidate_text_color: *color1 #高亮候选文本
+    hilited_comment_text_color: *color1 #高亮提示
+    hilited_key_back_color: *color6 #高亮按键背景
+    hilited_key_symbol_color: *color2 #高亮按键符号
+    hilited_key_text_color: *color1 #高亮按键文本
+    hilited_off_key_back_color: *color2 #高亮按键关闭状态背景
+    hilited_off_key_text_color: *color1 #高亮按键关闭状态文本
+    hilited_text_color: *color1 #高亮编码
+    key_back_color: *color2 #按键背景
+    key_border_color: *color9 #边框颜色
+    key_symbol_color: *color8 #按键符号
+    key_text_color: *color1 #按键文本
+    keyboard_back_color: *color3 #键盘背景
+    label_color: *color6 #标签
+    off_key_back_color: *color4  #按键关闭状态背景
+    off_key_text_color: *color8 #按键关闭状态文本
+    preview_back_color: *color4 #按键提示背景
+    preview_text_color: *color6 #按键提示文本
+    text_color: *color1 #编码
+    text_back_color: *color2 #编码区背景
+    bkg: *color2 #空格键背景色
+    tkg: *color1 #空格键文字颜色
+    benter: *color6 #回车键背景色
+    tenter: *color1 #回车键文字颜色
+    bgn: *color4 #功能键背景色
+    tgn: *color1 #功能键文字颜色
+    bbs: *color4 #退格键背景色
+    tbs: *color2 #退格键文字颜色
+    baoe: *color2 #aoeiu背景色
+    taoe: *color6 #aoeiu文字颜色
+    bh1: *color2 #第一行背景色
+    th1: *color1 #第一行文字颜色
+    bh2: *color2 #第二行背景色
+    th2: *color1 #第二行文字颜色
+    bh3: *color2 #第三行背景色
+    th3: *color1 #第三行文字颜色
+    bh4: *color2 #第四行背景色
+    th4: *color1 #第四行文字颜色
+    bh5: *color2 #特定键背景色
+    bh6: *color2 #特定键背景色
+
+    c1: *color4 #Shift键颜色
+    c2: *color4 #删除键颜色
+    c3: *color4 #符号键颜色
+    c4: *color4 #数字键颜色
+    c5: *color4 #中英键颜色
+    c7: *color4 #
+
+#--------配色开始----------------#
+
+  moonlight:
+    name: "渐晚"  #方案名称
+    author: CHEN #作者信息
+    light_scheme: default
+    back_color: 0x757575 #候选区背景状态栏
+    candidate_separator_color: 0x505050 #候选分割背景
+    candidate_text_color: 0xd9d9d9 #候选文本
+    comment_text_color: *color3 #提示
+    hilited_back_color: 0x404040 #高亮编码背景
+    hilited_candidate_back_color: 0x555555 #高亮候选背景
+    hilited_candidate_text_color: 0xdddddd #高亮候选文本
+    hilited_comment_text_color: 0xdddddd #高亮提示
+    hilited_key_back_color: 0x6B807A #高亮按键背景
+    hilited_key_symbol_color: 0x999999 #高亮按键符号
+    hilited_key_text_color: 0xdddddd #高亮按键文本
+    hilited_off_key_back_color: *color2 #高亮按键关闭状态背景
+    hilited_off_key_text_color: *color1 #高亮按键关闭状态文本
+    hilited_text_color: 0xdddddd #高亮编码
+    key_back_color: 0x575757 #按键背景
+    key_border_color: 0x505050 #边框背景
+    key_symbol_color: 0x909090 #按键符号
+    key_text_color: 0xcccccc #按键文本
+    keyboard_back_color: 0x757575 #键盘背景
+    label_color: *color6 #标签
+    off_key_back_color: *color4  #按键关闭状态背景
+    off_key_text_color: *color8 #按键关闭状态文本
+    popup_back_color: 0x404040 #气泡背景
+    preview_back_color: *color4 #按键提示背景
+    preview_text_color: *color6 #按键提示文本
+    text_color: 0xdddddd #编码
+    text_back_color: 0x404040 #编码区背景
+    bkg: 0x575757 #空格键背景色
+    tkg: *color1 #空格键文字颜色
+    benter: 0x474747 #回车键背景色
+    tenter: 0x0xdddddd #回车键文字颜色
+    bgn: 0x474747 #功能键背景色
+    tgn: *color2 #功能键文字颜色
+    bbs: *color4 #退格键背景色
+    tbs: *color2 #退格键文字颜色
+    baoe: *color2 #aoeiu背景色
+    taoe: *color6 #aoeiu文字颜色
+    bh1: 0x575757 #第一行背景色
+    th1: 0xcccccc #第一行文字颜色
+    bh2: 0x575757 #第二行背景色
+    th2: 0xcccccc #第二行文字颜色
+    bh3: 0x575757 #第三行背景色
+    th3: 0xcccccc #第三行文字颜色
+    bh4: 0x575757 #第四行背景色
+    th4: 0xcccccc #第四行文字颜色
+    bh5: 0x575757 #特定键背景色
+    bh6: 0x575757 #特定键背景色
+
+    c1: 0x474747 #Shift键颜色
+    c2: 0x474747 #删除键颜色
+    c3: 0x474747 #符号键颜色
+    c4: 0x474747 #数字键颜色
+    c5: 0x474747 #中英键颜色
+    c7: 0x474747 #符号键盘删除键颜色
+
+  abyss:
+    name: "深渊"  #方案名称
+    author: CHEN #作者信息
+    light_scheme: default
+    back_color: 0x404040 #候选区背景状态栏
+    candidate_separator_color: 0x505050 #候选分割背景
+    candidate_text_color: 0xdddddd #候选文本
+    comment_text_color: *color3 #提示
+    hilited_back_color: 0x404040 #高亮编码背景
+    hilited_candidate_back_color: 0x555555 #高亮候选背景
+    hilited_candidate_text_color: 0xdddddd #高亮候选文本
+    hilited_comment_text_color: 0xdddddd #高亮提示
+    hilited_key_back_color: 0x6B807A #高亮按键背景
+    hilited_key_symbol_color: *color2 #高亮按键符号
+    hilited_key_text_color: 0xdddddd #高亮按键文本
+    hilited_off_key_back_color: *color2 #高亮按键关闭状态背景
+    hilited_off_key_text_color: *color1 #高亮按键关闭状态文本
+    hilited_text_color: 0xdddddd #高亮编码
+    key_back_color: 0x666666 #按键背景
+    key_border_color: 0x707070 #边框背景
+    key_symbol_color: 0xaaaaaa #按键符号
+    key_text_color: 0xdddddd #按键文本
+    keyboard_back_color: 0x404040 #键盘背景
+    label_color: *color6 #标签
+    off_key_back_color: *color4  #按键关闭状态背景
+    off_key_text_color: *color8 #按键关闭状态文本
+    preview_back_color: *color4 #按键提示背景
+    preview_text_color: *color6 #按键提示文本
+    text_color: 0xdddddd #编码
+    text_back_color: 0x404040 #编码区背景
+    bkg: 0x666666 #空格键背景色
+    tkg: *color1 #空格键文字颜色
+    benter: 0x7E9AA0 #回车键背景色
+    tenter: 0x0xdddddd #回车键文字颜色
+    bgn: 0x505050 #功能键背景色
+    tgn: *color2 #功能键文字颜色
+    bbs: *color4 #退格键背景色
+    tbs: *color2 #退格键文字颜色
+    baoe: *color2 #aoeiu背景色
+    taoe: *color6 #aoeiu文字颜色
+    bh1: 0x666666 #第一行背景色
+    th1: 0xdddddd #第一行文字颜色
+    bh2: 0x666666 #第二行背景色
+    th2: 0xdddddd #第二行文字颜色
+    bh3: 0x666666 #第三行背景色
+    th3: 0xdddddd #第三行文字颜色
+    bh4: 0x666666 #第四行背景色
+    th4: 0xdddddd #第四行文字颜色
+    bh5: 0x666666 #特定键背景色
+    bh6: 0x666666 #特定键背景色
+
+    c1: 0x505050 #Shift键颜色
+    c2: 0x505050 #删除键颜色
+    c3: 0x505050 #符号键颜色
+    c4: 0x505050 #数字键颜色
+    c5: 0x505050 #中英键颜色
+    c7: 0xffB06665 #符号键盘删除键颜色
+
+  default:
+    name: "破晓"  #方案名称
+    author: CHEN #作者信息
+    dark_scheme: abyss
+    back_color: 0xcccccc #候选区背景状态栏
+    candidate_separator_color: 0xbbbbbb #候选分割背景
+    candidate_text_color: *color1 #候选文本
+    comment_text_color: *color1 #提示
+    hilited_back_color: 0xcccccc #高亮编码背景
+    hilited_candidate_back_color: 0xdddddd #高亮候选背景
+    hilited_candidate_text_color: *color1 #高亮候选文本
+    hilited_comment_text_color: *color1 #高亮提示
+    hilited_key_back_color: 0xff83A4C9 #高亮按键背景
+    hilited_key_symbol_color: *color1 #高亮按键符号
+    hilited_key_text_color: *color1 #高亮按键文本
+    hilited_off_key_back_color: *color2 #高亮按键关闭状态背景
+    hilited_off_key_text_color: *color1 #高亮按键关闭状态文本
+    hilited_text_color: *color1 #高亮编码
+    key_back_color: 0xe6e6e6 #按键背景
+    key_border_color: 0xb9b9b9
+    key_symbol_color: *color8 #按键符号
+    key_text_color: *color1 #按键文本
+    keyboard_back_color: 0xcccccc #键盘背景
+    label_color: *color6 #标签
+    off_key_back_color: *color4  #按键关闭状态背景
+    off_key_text_color: *color8 #按键关闭状态文本
+    preview_back_color: *color4 #按键提示背景
+    preview_text_color: *color6 #按键提示文本
+    text_color: *color1 #编码
+    text_back_color: 0xcccccc #编码区背景
+    bkg: 0xe6e6e6 #空格键背景色
+    tkg: *color1 #空格键文字颜色
+    benter: 0x7E9AA0 #回车键背景色
+    tenter: 0x000000 #回车键文字颜色
+    bgn: 0xbcbcbc #功能键背景色
+    tgn: *color1 #功能键文字颜色
+    bbs: *color4 #退格键背景色
+    tbs: *color2 #退格键文字颜色
+    baoe: *color2 #aoeiu背景色
+    taoe: *color6 #aoeiu文字颜色
+    bh1: 0xe6e6e6 #第一行背景色
+    th1: *color1 #第一行文字颜色
+    bh2: 0xe6e6e6 #第二行背景色
+    th2: *color1 #第二行文字颜色
+    bh3: 0xe6e6e6 #第三行背景色
+    th3: *color1 #第三行文字颜色
+    bh4: 0xe6e6e6 #第四行背景色
+    th4: *color1 #第四行文字颜色
+    bh5: 0xe6e6e6 #特定键背景色
+    bh6: 0xe6e6e6 #特定键背景色
+
+    c1: 0xB1B4B6 #Shift键颜色
+    c2: 0xB1B4B6 #删除键颜色
+    c3: 0xB1B4B6 #符号键颜色
+    c4: 0xB1B4B6 #数字键颜色
+    c5: 0xB1B4B6 #中英键颜色
+    c7: 0xffB06665 #符号键盘删除键颜色
+
+  color:
+    name: "色彩"  #方案名称
+    author: CHEN #作者信息
+    dark_scheme: nebula
+    back_color: 0xcccccc #候选区背景状态栏
+    candidate_separator_color: 0xbbbbbb #候选分割背景
+    candidate_text_color: *color1 #候选文本
+    comment_text_color: *color1 #提示
+    hilited_back_color: 0xcccccc #高亮编码背景
+    hilited_candidate_back_color: 0xdddddd #高亮候选背景
+    hilited_candidate_text_color: *color1 #高亮候选文本
+    hilited_comment_text_color: *color1 #高亮提示
+    hilited_key_back_color: 0xff83A4C9 #高亮按键背景
+    hilited_key_symbol_color: *color1 #高亮按键符号
+    hilited_key_text_color: *color1 #高亮按键文本
+    hilited_off_key_back_color: *color2 #高亮按键关闭状态背景
+    hilited_off_key_text_color: *color1 #高亮按键关闭状态文本
+    hilited_text_color: *color1 #高亮编码
+    key_back_color: 0xe6e6e6 #按键背景
+    key_border_color: 0xb9b9b9
+    key_symbol_color: *color8 #按键符号
+    key_text_color: *color1 #按键文本
+    keyboard_back_color: 0xcccccc #键盘背景
+    label_color: *color6 #标签
+    off_key_back_color: *color4  #按键关闭状态背景
+    off_key_text_color: *color8 #按键关闭状态文本
+    preview_back_color: *color4 #按键提示背景
+    preview_text_color: *color6 #按键提示文本
+    text_color: *color1 #编码
+    text_back_color: 0xcccccc #编码区背景
+    bkg: 0xe6e6e6 #空格键背景色
+    tkg: *color1 #空格键文字颜色
+    benter: 0x7E9AA0 #回车键背景色
+    tenter: 0x000000 #回车键文字颜色
+    bgn: 0xbcbcbc #功能键背景色
+    tgn: *color1 #功能键文字颜色
+    bbs: *color4 #退格键背景色
+    tbs: *color2 #退格键文字颜色
+    baoe: *color2 #aoeiu背景色
+    taoe: *color6 #aoeiu文字颜色
+    bh1: 0xe6e6e6 #第一行背景色
+    th1: *color1 #第一行文字颜色
+    bh2: 0xe6e6e6 #第二行背景色
+    th2: *color1 #第二行文字颜色
+    bh3: 0xe6e6e6 #第三行背景色
+    th3: *color1 #第三行文字颜色
+    bh4: 0xe6e6e6 #第四行背景色
+    th4: *color1 #第四行文字颜色
+    bh5: 0xe6e6e6 #特定键背景色
+    bh6: 0xe6e6e6 #特定键背景色
+
+    c1: 0xff8FB191 #Shift键颜色
+    c2: 0xffB06665 #删除键颜色
+    c3: 0xffB095B5 #符号键颜色
+    c4: 0x95B5D8 #数字键颜色
+    c5: 0xBEB06F #中英键颜色
+    c7: 0xffB06665 #符号键盘删除键颜色
+
+  nebula:
+    name: "星云"  #方案名称
+    author: CHEN #作者信息
+    light_scheme: color
+    back_color: 0x404040 #候选区背景状态栏
+    candidate_separator_color: 0x505050 #候选分割背景
+    candidate_text_color: 0xdddddd #候选文本
+    comment_text_color: *color3 #提示
+    hilited_back_color: 0x404040 #高亮编码背景
+    hilited_candidate_back_color: 0x555555 #高亮候选背景
+    hilited_candidate_text_color: 0xdddddd #高亮候选文本
+    hilited_comment_text_color: 0xdddddd #高亮提示
+    hilited_key_back_color: 0x6B807A #高亮按键背景
+    hilited_key_symbol_color: *color2 #高亮按键符号
+    hilited_key_text_color: 0xdddddd #高亮按键文本
+    hilited_off_key_back_color: *color2 #高亮按键关闭状态背景
+    hilited_off_key_text_color: *color1 #高亮按键关闭状态文本
+    hilited_text_color: 0xdddddd #高亮编码
+    key_back_color: 0x666666 #按键背景
+    key_border_color: 0x757575
+    key_symbol_color: 0xaaaaaa #按键符号
+    key_text_color: 0xdddddd #按键文本
+    keyboard_back_color: 0x404040 #键盘背景
+    label_color: *color6 #标签
+    off_key_back_color: *color4  #按键关闭状态背景
+    off_key_text_color: *color8 #按键关闭状态文本
+    preview_back_color: *color4 #按键提示背景
+    preview_text_color: *color6 #按键提示文本
+    text_color: 0xdddddd #编码
+    text_back_color: 0x404040 #编码区背景
+    bkg: 0x666666 #空格键背景色
+    tkg: *color1 #空格键文字颜色
+    benter: 0x7E9AA0 #回车键背景色
+    tenter: 0xdddddd #回车键文字颜色
+    bgn: 0x505050 #功能键背景色
+    tgn: 0xffffff #功能键文字颜色
+    bbs: *color4 #退格键背景色
+    tbs: *color2 #退格键文字颜色
+    baoe: *color2 #aoeiu背景色
+    taoe: *color6 #aoeiu文字颜色
+    bh1: 0x666666 #第一行背景色
+    th1: 0xdddddd #第一行文字颜色
+    bh2: 0x666666 #第二行背景色
+    th2: 0xdddddd #第二行文字颜色
+    bh3: 0x666666 #第三行背景色
+    th3: 0xdddddd #第三行文字颜色
+    bh4: 0x666666 #第四行背景色
+    th4: 0xdddddd #第四行文字颜色
+    bh5: 0x666666 #特定键背景色
+    bh6: 0x666666 #特定键背景色
+
+    c1: 0xff8FB191 #Shift键颜色
+    c2: 0xffB06665 #删除键颜色
+    c3: 0xffB095B5 #符号键颜色
+    c4: 0x95B5D8 #数字键颜色
+    c5: 0xBEB06F #中英键颜色
+    c7: 0xffB06665 #符号键盘删除键颜色
+
+
+#--------配色结束----------------#
 
 liquid_keyboard:
   # 目前只能直接写参数，不支持变量或者fallback机制。
@@ -713,13 +889,13 @@ preset_keyboards:
     vertical_gap: 3
     keys:
       # 第一行
-      - { click: select_all, key_back_color: bgn, key_text_size: "14", key_border: 0}
-      - { click: Home, key_text_size: "10", key_back_color: bgn, key_border: 0}
+      - { click: select_all, key_back_color: bgn, key_text_size: "14",  , key_border: 0}
+      - { click: Home, key_text_size: "10", key_back_color: bgn,  , key_border: 0}
       - { click: Up, key_text_size: "10", key_back_color: ,  }
-      - { click: End, key_text_size: "10", key_back_color: bgn, key_border: 0}
-      - { click: Keyboard_last_lock, key_text_size: "20", key_back_color: bgn, key_border: 0}
+      - { click: End, key_text_size: "10", key_back_color: bgn, , key_border: 0}
+      - { click: Keyboard_last_lock, key_text_size: "20", key_back_color: bgn,  , key_border: 0}
       # 第二行
-      - { click: cut, key_back_color: bgn, key_text_size: "14", key_border: 0}
+      - { click: cut, key_back_color: bgn, key_text_size: "14",  , key_border: 0}
       - { click: Left, key_text_size: "10", key_back_color: ,  }
       - {
           click: Shift_L1,
@@ -729,18 +905,18 @@ preset_keyboards:
           hilited_key_back_color: hilited_off_sym_back_color,
         }
       - { click: Right, key_text_size: "10", key_back_color: ,  }
-      - { click: Delete1, key_back_color: bgn, key_text_size: 14, key_border: 0}
+      - { click: Delete1, key_back_color: bgn, key_text_size: 14,  , key_border: 0}
       # 第三行
-      - { click: copy, key_back_color: bgn, key_text_size: "14", key_border: 0}
-      - { click: Tab1, key_back_color: bgn, key_text_size: 14, key_border: 0}
+      - { click: copy, key_back_color: bgn, key_text_size: "14",  , key_border: 0}
+      - { click: Tab1, key_back_color: bgn, key_text_size: 14,  , key_border: 0}
       - { click: Down, key_text_size: "10", key_back_color: ,  }
       - { click: select_H, key_back_color: bgn, key_text_size: 30, key_text_offset_y: -5 , key_border: 0}
-      - { click: BackSpace, key_text_size: 18, key_back_color: bgn, key_border: 0}
+      - { click: BackSpace, key_text_size: 18, key_back_color: bgn,  , key_border: 0}
       # 第四行
-      - { click: paste, key_back_color: bgn, key_text_size: "14", key_border: 0}
-      - { click: Keyboard_number, key_back_color: bgn, key_text_size: 18, key_border: 0}
-      - { click: space2, key_back_color: bgn, key_text_size: 18, key_text_offset_y: , key_border: 0}
-      - { click: liquid_keyboard_ascii1, key_back_color: bgn, key_text_size: 18, key_border: 0}
+      - { click: paste, key_back_color: bgn, key_text_size: "14",  , key_border: 0}
+      - { click: Keyboard_number, key_back_color: bgn, key_text_size: 18,  , key_border: 0}
+      - { click: space2, key_back_color: bgn, key_text_size: 18, key_text_offset_y: ,  , key_border: 0}
+      - { click: liquid_keyboard_ascii1, key_back_color: bgn, key_text_size: 18,  , key_border: 0}
       - { click: Return, key_text_size: 18, key_back_color: benter, key_text_color: tenter , key_border: 0}
 
   func:

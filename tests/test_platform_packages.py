@@ -197,7 +197,10 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertNotIn("Hamster.yaml", fcitx5_linux)
 
         trime = members["eosphoros-trime-android.zip"]
-        self.assertIn("eosphoros.trime.yaml", trime)
+        self.assertEqual(
+            {path for path in trime if path.endswith(".trime.yaml")},
+            {"eosphoros.trime.yaml"},
+        )
         self.assertFalse(any(path.startswith("mobile_themes/") for path in trime))
 
         fcitx5_android = members["eosphoros-fcitx5-android.zip"]

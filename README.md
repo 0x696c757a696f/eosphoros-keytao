@@ -86,7 +86,7 @@
 | [`eosphoros-squirrel-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
 | [`eosphoros-fcitx5-macos.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos.zip) | macOS Fcitx5 | `Fcitx5_macOS_*.py` 自造词入口和专用 `.conf` 主题集 |
 | [`eosphoros-fcitx5-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-linux.zip) | Linux Fcitx5 | `Fcitx5_Linux_*.py` 自造词入口和专用 Classic UI 主题集 |
-| [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 `eosphoros.trime.yaml` 晨星主题 |
+| [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) | Android 同文 Trime | 完整方案及根目录内置 mytrime“格调”完整布局版 `eosphoros.trime.yaml` |
 | [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip) | Android Fcitx5 | 完整方案；`themes/` 内置黎明、夜色、极简三个原生主题 ZIP |
 | [`eosphoros-yuanshu-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios.zip) | iOS 元书输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.cskin` 皮肤 |
 | [`eosphoros-hamster-ios.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios.zip) | iOS 仓输入法 | 完整方案、iCloud／自造词辅助文件及 `skins/` 中自动明暗、黑白极简两个 `.hskin` 皮肤 |
@@ -122,9 +122,9 @@
 | macOS Fcitx5 | 平台包内置晨星专属自动明暗主题和黑白极简主题，并保留其余可导入 `.conf` | 从 `eosphoros-fcitx5-macos.zip` 的 `fcitx5/macos/themes/` 取用；自动明暗用 `eosphoros-auto.conf`，极简用 `eosphoros-mono.conf` |
 | iOS 元书输入法 | 平台包内置自动明暗与黑白极简两个 `.cskin`；以 ResourceforHamster 的完整万象键盘布局为底稿，保留横竖屏、数字／符号面板、候选展开、剪贴板、常用语、Emoji、脚本、键盘菜单、方案切换及快捷手势；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-yuanshu-ios.zip` 后，在元书中导入 `skins/eosphoros.cskin`；需要纯黑白外观时改用 `eosphoros-mono.cskin`。格式参见[元书皮肤结构](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/) |
 | iOS 仓输入法 | 平台包内置自动明暗与黑白极简两个 `.hskin`；沿用成熟方案的横竖屏、iPad、浮动与单手布局；标准皮肤日间使用黎明配色，系统进入黑暗模式后自动切换夜色配色 | 解压 `eosphoros-hamster-ios.zip` 后，通过系统共享菜单导入 `skins/eosphoros.hskin`；需要纯黑白外观时改用 `eosphoros-mono.hskin`。格式参见[仓皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/) |
-| Android 同文输入法 | Release 提供继承 Trime 3.0 默认布局的 `eosphoros.trime.yaml`，内含三套晨星配色 | 把主题文件放入同文用户目录，重新部署后选择“晨星键道”主题 |
+| Android 同文输入法 | Release 提供基于 mytrime 3.3.10 `style.trime.yaml`“格调”版的完整 `eosphoros.trime.yaml`，保留工具栏、符号、编辑和液态键盘，并内含三套晨星配色 | 把主题文件放入同文用户目录，重新部署后选择“晨星键道·格调”主题 |
 | Android Fcitx5 | Release 提供三个符合主题格式 2.1 的可导入 ZIP | 解压外层包后，在主题管理中逐个导入内部 ZIP；不能直接导入外层合集 |
-| Android 小小输入法 | 附带“晨星·黎明／夜色”自制 Gboard 风格布局，不复制来源不明的整套 HTML/JS 皮肤 | 皮肤包保留剪贴板、Emoji、语音、方向键、长按符号和空格滑动光标等常用功能 |
+| Android 小小输入法 | 附带“晨星·黎明／夜色”皮肤；以小小官方完整 Android 键盘为兼容底稿，仅维护晨星工具栏、名称和配色覆盖 | 保留官方候选展开、按键提示、长按、Emoji、语音、编辑面板和剪贴板历史，并增加切换输入法的直接入口 |
 | Linux Fcitx5 | 平台包内置晨星日间／夜间／极简专属主题，并保留其余桌面配色 | 从 `eosphoros-fcitx5-linux.zip` 的 `fcitx5/linux/themes/` 解压到 `~/.local/share/fcitx5/themes/`，再选择相应主题 |
 
 > [!NOTE]
@@ -138,7 +138,7 @@ Release 中的元书 `.cskin` 与仓 `.hskin` 都以 [ResourceforHamster](https:
 | --- | --- | --- |
 | 元书输入法 | [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)（综合资源）、[空山素影](https://github.com/luozikuan/kongshan-suying)（独立维护的元书皮肤） | 优先下载明确标注支持当前元书版本的 `.cskin`，或按项目说明在元书中导入并编译 Jsonnet；导入方法和结构以[元书官方文档](https://ihsiao.com/apps/hamster/v3/docs/guides/skins/structure/)为准。ResourceforHamster 中“仓”的旧皮肤已停止维护，不要当作最新版元书皮肤使用。 |
 | 仓输入法 | [仓／元书皮肤交流频道](https://t.me/s/hamster_skins)（第三方社区资源） | 只选择扩展名为 `.hskin` 且作者明确标注兼容当前仓版本的文件，通过系统共享菜单导入；格式及操作以[仓官方皮肤指南](https://ihsiao.com/apps/hamster/docs/guides/keyboard_skins/)为准。社区文件未经本仓库审核，请自行确认来源、版本和授权。 |
-| 同文输入法 Trime | [rime-pure 的同文主题](https://github.com/SivanLaai/rime-pure)、[Trime 官方仓库](https://github.com/osfans/trime) | rime-pure 是完整方案资源，不要整体覆盖晨星键道；只取需要的 `*.trime.yaml`／`*.trime.custom.yaml` 主题，检查主题引用的字体、图片和配色文件是否齐全，然后在同文中选择并重新部署。 |
+| 同文输入法 Trime | [mytrime 3.3.10“格调”布局](https://github.com/chwt163/mytrime/tree/main/3.3.10)、[rime-pure 的同文主题](https://github.com/SivanLaai/rime-pure)、[Trime 官方仓库](https://github.com/osfans/trime) | Release 内置的是经 GPL-3.0-or-later 授权的 `style.trime.yaml` 晨星适配版；其他资源只作为外部选择，不要整体覆盖晨星键道。 |
 | 小企鹅输入法 Android | [tankb52/fcitx5-andoird-themes](https://github.com/tankb52/fcitx5-andoird-themes)（第三方主题合集）、[官方在线主题设计器](https://fcitx5-android.github.io/theme-designer/) | 主题合集的 `themes/` 目录提供可直接导入的 ZIP，也附有 JSON 和预览图；作者明确说明部分配色移植自其他主题且可能存在版权争议，因此这里只作为外部发现入口、不随仓库分发。也可用官方设计器自行生成来源明确的主题。 |
 | 小小输入法 Android | [官方皮肤版块](https://yong.dgod.net/index.php?c=thread&fid=6)、[Android 皮肤制作参考](https://yong.dgod.net/read.php?tid=5022)、[新版兼容性讨论](https://yong.dgod.net/read.php?fid=6&tid=4977) | 优先使用明确标注兼容当前 Android 版的皮肤；官方维护者建议从当前 APK 默认皮肤修改。第三方皮肤不随本仓库分发。 |
 | 小小输入法 Windows / Linux | [官方皮肤格式说明与在线编辑器](https://yong.dgod.net/read.php?fid=7&tid=5)、[官方皮肤版块](https://yong.dgod.net/index.php?c=thread&fid=6)、[Pithiness / FreshX 等桌面皮肤](https://yong.dgod.net/read.php?tid=4338)、[Default5 SVG 多配色](https://yong.dgod.net/read.php?fid=6&tid=5267) | 基础 `skin.ini` 与 PNG/ZIP 皮肤可供 Windows、Linux 使用；Linux 系统缩放通常更好，Windows 对复杂 SVG 的兼容性有限。Default5 附带的 VBS 快速切换脚本仅适用于 Windows，Linux 只取皮肤资源并手动选择。 |
@@ -308,7 +308,7 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 2. 下载 [`eosphoros-yong-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-android.zip)。该文件包含晨星键道配置、码表和两套可直接使用的键盘皮肤，不包含也不修改 APK。
 3. 解压后把包内 `yong` 文件夹合并到手机存储中的同名目录，确认存在 `/storage/emulated/0/yong/.yong/yong.ini` 和 `/storage/emulated/0/yong/.yong/mb/eosphoros/eosphoros.txt`。
 4. 切换到其他输入法再切回小小输入法，或从设置中重载配置。覆盖前请备份个人配置和用户数据。
-5. 包内已经放好 `yong/.yong/android/Eosphoros-Dawn.zip` 和 `Eosphoros-Night.zip`。在小小输入法的皮肤设置中直接选择“晨星·黎明”或“晨星·夜色”即可；不要解压这两个 ZIP，也不要把 Windows 的 `skin/` 皮肤当成 Android 键盘皮肤。两套皮肤采用晨星键道自行维护的四行 QWERTY 布局：按键比例和错位方式参考 Gboard，配色与内联图标均由本项目独立设计；保留候选展开、长按符号、删除连发、双击 Shift、空格滑动光标、离线 Emoji、语音、粘贴、方向键、切换输入法和收起键盘，不包含旧“彩”皮肤的多配色、游戏或联网功能。
+5. 包内已经放好 `yong/.yong/android/Eosphoros-Dawn.zip` 和 `Eosphoros-Night.zip`。在小小输入法的皮肤设置中直接选择“晨星·黎明”或“晨星·夜色”即可；不要解压这两个 ZIP，也不要把 Windows 的 `skin/` 皮肤当成 Android 键盘皮肤。两套皮肤以小小官方完整 Android 键盘为兼容底稿，保留横竖屏、候选展开、长按、离线 Emoji、语音、完整编辑面板、剪贴板历史、切换输入法和收起键盘；晨星键道只维护工具栏入口、名称与昼夜配色，不加入多配色合集、游戏或联网功能。
 
 > [!NOTE]
 > 本仓库不自动编译“晨星键道 APK”。当前公开的 [`dgod/yong`](https://github.com/dgod/yong) 仓库没有可直接复现当前 Android APK 的 Gradle 工程、应用签名及发布流程；二次签名 APK 还会失去官方升级链。自动生成独立配置包能保留官方 APK 更新与签名验证，同时让每次 Release 自动更新晨星码表。
@@ -318,8 +318,8 @@ rime-install 0x696c757a696f/eosphoros-keytao:mobile
 1. 安装[同文输入法](https://github.com/osfans/trime/releases/latest)。
 2. 在应用设置中打开“配置管理 → 用户文件夹”。
 3. 先选择或初始化默认用户文件夹，再把 [`eosphoros-trime-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android.zip) 的完整内容导入 `/storage/emulated/0/rime/`；主题文件已经位于包的根目录。
-4. 不需要另下主题包；重新部署后即可在主题设置中选择“晨星键道”。
-5. 返回配置管理执行部署，先选择晨星键道输入方案，再在主题设置中选择“晨星键道”。主题默认以黎明／夜色跟随系统，也可在主题配色中选用黑白极简。
+4. 不需要另下主题包；重新部署后即可在主题设置中选择“晨星键道·格调”。该文件完整采用 mytrime 的“格调”键盘布局，不依赖同文官方默认皮肤。
+5. 返回配置管理执行部署，先选择晨星键道输入方案，再在主题设置中选择“晨星键道·格调”。主题默认以黎明／夜色跟随系统，也可在主题配色中选用黑白极简。
 
 **Fcitx5 for Android**
 
@@ -831,6 +831,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | --- | --- |
 | [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | 单字表和 `make_dicts.sh` 生成规则来源 |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | 中文补充词库、英文词库及 Emoji 上游数据 |
+| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang) | 药品、医学、化学、地名、名人、台风名及高频基础词的筛选来源；本仓库重新编码、去重并过滤长尾内容 |
 | [amorphobia/opencc-tonggui](https://github.com/amorphobia/opencc-tonggui) | Release 构建时下载并校验的 OpenCC 补充数据 |
 | [SCIM Tables](https://github.com/scim-im/scim-tables)与 LiangFen 作者 TianHeng | `liangfen` 两分反查的历史数据来源 |
 | [AOSP PinyinIME](https://android.googlesource.com/platform/packages/inputmethods/PinyinIME.git) | `pinyin_simp` 拼音反查的历史数据来源 |
@@ -844,7 +845,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [小狼毫](https://github.com/rime/weasel)、[鼠须管](https://github.com/rime/squirrel) | Windows、macOS 官方 Rime 前端及桌面配色格式 |
 | [Techince/weasel](https://github.com/Techince/weasel) | Windows 水龙月 Fork 客户端 |
 | [Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)、[Fcitx5](https://github.com/fcitx/fcitx5) | macOS、Android、Linux 的小企鹅前端、安装说明与主题格式 |
-| [同文输入法 Trime](https://github.com/osfans/trime) | Android Rime 前端 |
+| [同文输入法 Trime](https://github.com/osfans/trime)、[chwt163/mytrime](https://github.com/chwt163/mytrime/tree/main/3.3.10) | Android Rime 前端；mytrime 在 GPL-3.0-or-later 下提供晨星同文皮肤采用的“格调”完整布局母版 |
 | [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701)及其[官方文档](https://ihsiao.com/apps/hamster/) | iOS Rime 前端、方案导入、自造词同步和键盘皮肤格式支持 |
 | [小小输入法 Yong](https://yong.dgod.net/)（[dgod/yong 源码](https://github.com/dgod/yong)） | Windows、Linux 与 Android 输入平台；本仓库为桌面端提供便携整合包，为 Android 提供不含程序本体、但内置可直接选择皮肤的晨星配置包 |
 | [rimeinn/rabbit](https://github.com/rimeinn/rabbit)、[amorphobia/rabbit](https://github.com/amorphobia/rabbit) | 玉兔毫运行环境、便携包及相关实现 |
@@ -869,9 +870,10 @@ python .\tools\sync_upstream_dictionaries.py --write
 | Rime-Jiandao 单字数据 | 锁定上游 commit，按本方案格式确定性生成 | AGPL-3.0-or-later |
 | Rime-Ice 中文、英文与 Emoji 数据 | 去重、转换编码并锁定生成文件校验值 | GPL-3.0 |
 | rime-txjx 参考实现 | 经人工审查后适配到 `lua/eosphoros/` 与 `opencc/eosphoros/` 命名空间 | MIT |
+| mytrime 3.3.10“格调”皮肤 | 锁定上游 `style.trime.yaml`，修正严格 YAML 解析问题并注入晨星名称与昼夜配色 | GPL-3.0-or-later |
 | CrossWire `ChiUns`《和合本》 | 仅选取并人工复核书卷名、人名、地名和固定译语 | 上游标注 Public Domain |
 | 在线神学、教会与圣经资料 | 只用于人工核对词目，不批量抓取释义或正文 | 权利归各资料提供者；来源与取词原则单独记录 |
-| 移动端第三方皮肤 | README 只提供外部入口，不复制、不修改、不放入仓库或 Release | 下载、导入和再分发须遵守皮肤作者的说明与许可证 |
+| 其他移动端第三方皮肤 | README 只提供外部入口，不复制、不修改、不放入仓库或 Release | 下载、导入和再分发须遵守皮肤作者的说明与许可证 |
 | 小小输入法、玉兔毫等便携包 | 在相应上游程序或发行包基础上整合 eosphoros 配置，并在 CI 中校验来源与文件哈希 | 客户端程序的权利与许可仍归各自上游；eosphoros 不改变其许可条件 |
 
 仓库采用分层授权，不能用一个许可证覆盖所有历史词库和第三方数据；总说明见 [`LICENSE.md`](LICENSE.md)。第三方来源、固定 commit、生成文件 SHA-256 和许可证副本集中记录在 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`licenses/`](licenses/)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json)及[`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。宗派词库的在线核对来源与取词边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)，机器可读索引见 [`tools/christian_sources.json`](tools/christian_sources.json)。除上述明确标注的内容外，不应仅凭本节致谢推定其他文件采用相同许可证；复用或再分发前请先核对相应文件及仓库的授权声明。贡献规则与统一 Pixi 检查命令见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。

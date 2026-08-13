@@ -251,23 +251,58 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertEqual(payload["version"], "2.1")
             self.assertIsNone(payload["backgroundImage"])
 
-        trime = yaml.safe_load(
-            (root / "mobile_themes/trime/eosphoros.trime.yaml").read_text(
-                encoding="utf-8"
-            )
-        )
-        self.assertEqual(trime["config_version"], "3.0")
-        self.assertEqual(trime["__include"], "trime:/")
-        self.assertEqual(trime["style"]["color_scheme"], "eosphoros_dawn")
-        self.assertEqual(trime["style"]["color_scheme_dark"], "eosphoros_night")
+        trime_dir = root / "mobile_themes" / "trime"
         self.assertEqual(
-            {
-                key
-                for key in trime["preset_color_schemes"]
-                if key.startswith("eosphoros_")
-            },
-            {"eosphoros_dawn", "eosphoros_night", "eosphoros_mono"},
+            {path.name for path in trime_dir.glob("*.trime.yaml")},
+            {"eosphoros.trime.yaml"},
         )
+        for path in trime_dir.glob("*.trime.yaml"):
+            trime = yaml.safe_load(path.read_text(encoding="utf-8"))
+            self.assertEqual(trime["config_version"], "3.0")
+            self.assertEqual(trime["name"], "晨星键道·格调")
+            self.assertNotIn("__include", trime)
+            self.assertIn("preset_keyboards", trime)
+            self.assertIn("preset_keys", trime)
+            self.assertIn("liquid_keyboard", trime)
+            self.assertEqual(trime["style"]["color_scheme"], "eosphoros_dawn")
+            self.assertEqual(trime["style"]["color_scheme_dark"], "eosphoros_night")
+            # The distributed keyboard follows the user-reviewed 格调 layout,
+            # not mytrime's stock classic geometry.
+            self.assertEqual(trime["height"][6], 4)
+            self.assertEqual(trime["round_corner"][1], 3)
+            default_keyboard = trime["preset_keyboards"]["default"]
+            self.assertEqual(default_keyboard["width"], 11.12)
+            self.assertEqual(default_keyboard["keys"][0]["width"], 10)
+            self.assertEqual(default_keyboard["keys"][10]["width"], 0)
+            self.assertEqual(default_keyboard["keys"][20]["width"], 0)
+            self.assertEqual(default_keyboard["keys"][33]["width"], 27)
+            self.assertEqual(default_keyboard["keys"][36]["width"], 14)
+            self.assertEqual(
+                set(trime["preset_color_schemes"]),
+                {"eosphoros_dawn", "eosphoros_night", "eosphoros_mono"},
+            )
+            layout_color_roles = {
+                "bkg", "tkg", "benter", "tenter", "bgn", "tgn", "bbs",
+                "tbs", "baoe", "taoe", "bh1", "th1", "bh2", "th2",
+                "bh3", "th3", "bh4", "th4", "bh5", "bh6", "c1", "c2",
+                "c3", "c4", "c5", "c7",
+            }
+            for scheme_name in ("eosphoros_dawn", "eosphoros_night", "eosphoros_mono"):
+                self.assertTrue(
+                    layout_color_roles.issubset(
+                        trime["preset_color_schemes"][scheme_name]
+                    )
+                )
+                scheme = trime["preset_color_schemes"][scheme_name]
+                self.assertEqual(scheme["bh6"], scheme["key_back_color"])
+                self.assertEqual(scheme["c5"], scheme["off_key_back_color"])
+            self.assertEqual(default_keyboard["keys"][30]["key_text_color"], "tgn")
+            self.assertEqual(default_keyboard["keys"][31]["key_text_color"], "tgn")
+            self.assertEqual(default_keyboard["keys"][35]["click"], "Keyboard_letter1")
+            self.assertIn(
+                {"keys/@33/label": "英文"},
+                trime["preset_keyboards"]["letter"]["__patch"],
+            )
 
     def test_mobile_zip_check_ignores_container_compression_bytes(self) -> None:
         from tools.build_mobile_themes import artifact_contents
@@ -521,6 +556,52 @@ class RepositoryValidationTests(unittest.TestCase):
                             self.assertNotIn("万象键盘", pinyin_text)
                             self.assertNotIn("26键-万象", pinyin_text)
 
+    def test_yuanshu_skins_import_as_two_named_themes_with_uniform_toolbar(self) -> None:
+        from tools.build_mobile_themes import build_ios, load_config
+
+        yuanshu, _ = build_ios(load_config())
+        self.assertEqual(set(yuanshu), {"eosphoros.cskin", "eosphoros-mono.cskin"})
+        expected_names = {
+            "eosphoros.cskin": "晨星·昼夜／Eosphoros Adaptive",
+            "eosphoros-mono.cskin": "晨星·极简／Eosphoros Mono",
+        }
+        actual_names = set()
+        for archive_name, skin_data in yuanshu.items():
+            with zipfile.ZipFile(io.BytesIO(skin_data)) as skin:
+                names = skin.namelist()
+                skin_root = Path(archive_name).stem
+                self.assertEqual(
+                    {name.split("/", 1)[0] for name in names}, {skin_root}
+                )
+                self.assertNotIn("config.yaml", names)
+                self.assertIn(f"{skin_root}/config.yaml", names)
+                self.assertIn(f"{skin_root}/demo.png", names)
+                self.assertTrue(any(name.startswith(f"{skin_root}/light/") for name in names))
+                self.assertTrue(any(name.startswith(f"{skin_root}/dark/") for name in names))
+                config = yaml.safe_load(skin.read(f"{skin_root}/config.yaml"))
+                self.assertEqual(config["name"], expected_names[archive_name])
+                actual_names.add(config["name"])
+
+                pinyin_name = config["pinyin"]["iPhone"]["portrait"]
+                for appearance in ("light", "dark"):
+                    keyboard = yaml.safe_load(
+                        skin.read(f"{skin_root}/{appearance}/{pinyin_name}.yaml")
+                    )
+                    for slide_name in (
+                        "toolbarSlideButtonsLeft",
+                        "toolbarSlideButtonsRight",
+                        "toolbarSlideButtonsCenter",
+                    ):
+                        self.assertEqual(
+                            keyboard[slide_name]["backgroundStyle"],
+                            "toolbarButtonBackgroundStyle",
+                        )
+                    self.assertEqual(
+                        keyboard["toolbarcollectionCellBackgroundStyle"]["normalColor"],
+                        0,
+                    )
+        self.assertEqual(len(actual_names), 2)
+
     def test_release_publishes_platform_packages(self) -> None:
         root = Path(__file__).resolve().parents[1]
         release = (root / ".github/workflows/create-release.yml").read_text(
@@ -737,6 +818,7 @@ class RepositoryValidationTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("arg=mb/eosphoros/eosphoros.txt", android_config)
+        self.assertRegex(android_config, r"(?m)^\[android\]\nandroid_code_in_keyboard=0$")
         self.assertNotRegex(android_config, r"(?m)^skin=")
         self.assertNotIn("xmjd6", android_config)
         self.assertIn("/storage/emulated/0/yong/.yong/", android_help)
@@ -799,26 +881,69 @@ class RepositoryValidationTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         base = root / "packaging/yong/android/skin"
         html = (base / "keyboard.html").read_text(encoding="utf-8")
-        self.assertIn('v:"晨星键道"', html)
-        self.assertIn('className = `key-row${', html)
-        self.assertIn('action:"emoji"', html)
-        self.assertIn('App.action("paste")', html)
+        self.assertIn("const Keyboards = {", html)
+        self.assertIn("class Tools", html)
+        self.assertIn("const TOOL_ICONS = {", html)
+        self.assertIn('span.setAttribute("aria-label", list[i].label)', html)
+        self.assertIn("<svg", html)
+        self.assertIn('label:"撤销"', html)
+        self.assertIn('label:"重做"', html)
+        self.assertIn("App.key(CTRL_MASK|KEYCODE_z)", html)
+        self.assertIn("App.key(CTRL_MASK|KEYCODE_y)", html)
+        self.assertIn("{v:'123',r:1.1", html)
+        self.assertIn("{v:'晨星',r:2.7", html)
+        self.assertIn("{v:'中/En',r:1.4", html)
+        self.assertIn("{v:'⇧',c:KEYCODE_SHIFT", html)
+        self.assertNotIn("document.title.charAt(0)", html)
+        self.assertNotIn("Render._candidatePanel.style.paddingLeft", html)
+        self.assertNotIn("{v:'l'},{v:';'}", html)
+        self.assertNotIn('{title:"🎙"', html)
+        self.assertNotIn('{title:"😀"', html)
+        self.assertIn('overlay("clipboard",true)', html)
+        self.assertIn("editor(0)", html)
+        self.assertIn("emoji(0)", html)
+        self.assertIn("App.voice()", html)
         self.assertIn('App.action("switchInputMethod")', html)
+        self.assertIn('App.action("paste")', html)
+        self.assertIn('App.action("selectAll")', html)
+        self.assertIn('App.action("copy")', html)
+        self.assertIn('App.action("cut")', html)
         self.assertNotRegex(html, r"https?://|fetch\(|XMLHttpRequest|WebSocket")
         self.assertNotRegex(html, r"简约|iOS圖|深彩|浅彩|游戏|天气|翻译")
         self.assertEqual(
-            {path.name for path in base.iterdir()}, {"keyboard.html", "keyboard.css"}
+            {path.name for path in base.iterdir()},
+            {"keyboard.html", "keyboard.css", "fonts"},
         )
         with tempfile.TemporaryDirectory() as temp_dir:
             for theme in ("dawn", "night"):
                 output = Path(temp_dir) / f"Eosphoros-{theme}.zip"
                 build(base, theme, output)
                 with zipfile.ZipFile(output) as archive:
-                    self.assertEqual(
-                        set(archive.namelist()), {"keyboard.html", "keyboard.css"}
-                    )
+                    self.assertIn("keyboard.html", archive.namelist())
+                    self.assertIn("keyboard.css", archive.namelist())
+                    self.assertIn("fonts/Keyboard-Symbols.woff2", archive.namelist())
                     css = archive.read("keyboard.css").decode("utf-8")
                     self.assertIn("eosphoros-theme:start", css)
+                    self.assertIn(".keyboard-candidate-panel", css)
+                    self.assertIn(".overlay", css)
+                    self.assertIn("height: 3.6rem", css)
+                    self.assertIn("height: 2.8rem", css)
+                    self.assertIn("margin-bottom: 0.38rem", css)
+                    self.assertIn("border-radius: 0.3rem", css)
+                    self.assertIn("text-transform: uppercase", css)
+                    self.assertIn('.keyboard[data-layout="english"] .keyboard-row:nth-child(2)', css)
+                    self.assertIn("padding-inline: 5%", css)
+                    self.assertIn("grid-template-columns: repeat(4, minmax(0, 1fr))", css)
+                    self.assertIn("font-family: Sans-serif", css)
+                    self.assertIn(
+                        ".keyboard-code-panel {\n  border-color: var(--divider);\n  background: var(--surface);",
+                        css,
+                    )
+                    self.assertIn("position: relative", css)
+                    self.assertRegex(css, r"min-height:\s*2rem")
+        self.assertIn("{v:'⇧',c:KEYCODE_SHIFT,r:1,s:true}", html)
+        self.assertIn("{v:'⌫',c:KEYCODE_DEL,r:1,s:true}", html)
+        self.assertIn("{v:'晨星',r:2.7,c:KEYCODE_SPACE,s:false}", html)
 
     def test_generated_eosphoros_user_text_database_is_not_distributed(self) -> None:
         root = Path(__file__).resolve().parents[1]

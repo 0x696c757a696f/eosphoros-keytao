@@ -1,397 +1,1638 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <meta name="color-scheme" content="light dark">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'unsafe-inline'">
-  <title>晨星键道</title>
-  <link rel="stylesheet" href="keyboard.css">
+<meta charset="utf-8"/>
+<meta name="viewport" content="user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="keyboard.css">
 </head>
 <body>
-  <main id="keyboard" class="keyboard" aria-label="晨星键道 Android 键盘">
-    <section class="composition">
-      <div id="code" class="code" aria-live="polite"></div>
-      <div id="candidates" class="candidates" aria-label="候选词"></div>
-    </section>
-    <section id="rows" class="rows"></section>
-  </main>
-  <div id="toast" class="toast" role="status"></div>
+<div class="keyboard">
+</div>
+<div class="action-shadow">
+	<div class="action-center">
+		<div class="action-menu"></div>
+	</div>
+</div>
+<script>
 
-  <script>
-  "use strict";
+const searchParams=new URLSearchParams(location.search);
+const filename=location.pathname.substring(location.pathname.lastIndexOf('/')+1);
+const landscape=filename=='keyboard_l.html' || searchParams.get('landscape')==1;
+const is_popup=filename=='popup.html' || searchParams.get('popup')==1;
+const is_cand=filename=='cand.html' || searchParams.get('cand')==1;
 
-  const KEY = Object.freeze({
-    SHIFT: -1,
-    STATE: -2,
-    SYMBOLS: -10,
-    LETTERS: -11,
-    BACKSPACE: 0x08,
-    ENTER: 0x0d,
-    SPACE: 0x20,
-    LEFT: 0xff51,
-    RIGHT: 0xff53
-  });
+/* timer */
+const REPEAT_RATE = 100;
+const REPEAT_TIMEOUT = 700;
+const MENU_TIMEOUT_KEY = 400;
+const MENU_TIMEOUT_CAND = 700;
 
-  const ICONS = Object.freeze({
-    shift: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11.5 12 4l7 7.5h-4v7H9v-7H5Z"/></svg>',
-    backspace: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h10v12H9l-5-6 5-6Z"/><path d="m12 9 4 6m0-6-4 6"/></svg>',
-    enter: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5v8H7"/><path d="m10 9-4 4 4 4"/></svg>'
-  });
+/* key code */
+const KEYCODE_SHIFT=-1;
+const KEYCODE_STATE=-2;
+const KEYCODE_MENU=-3;
+const KEYCODE_SWITCH_number=-10;
+const KEYCODE_SWITCH_english=-11;
+const KEYCODE_SWITCH_index=-13;
 
-  const LETTER_ROWS = Object.freeze([
-    [{v:"q",a:"1"},{v:"w",a:"2"},{v:"e",a:"3"},{v:"r",a:"4"},{v:"t",a:"5"},{v:"y",a:"6"},{v:"u",a:"7"},{v:"i",a:"8"},{v:"o",a:"9"},{v:"p",a:"0"}],
-    [{v:"a",a:"@"},{v:"s",a:"#"},{v:"d",a:"$"},{v:"f",a:"%"},{v:"g",a:"&"},{v:"h",a:"-"},{v:"j",a:"+"},{v:"k",a:"("},{v:"l",a:")"}],
-    [{icon:"shift",action:"shift",control:true},{v:"z",a:"*"},{v:"x",a:'"'},{v:"c",a:"'"},{v:"v",a:":"},{v:"b",a:";"},{v:"n",a:"!"},{v:"m",a:"?"},{icon:"backspace",action:"backspace",control:true}],
-    [{v:"?123",action:"symbols",control:true},{v:"中/En",action:"state",control:true},{v:","},{v:"晨星键道",action:"space",space:true},{v:"."},{icon:"enter",action:"enter",control:true,enter:true}]
-  ]);
+const KEYCODE_DEL=0x08;
+const KEYCODE_TAB=0x09;
+const KEYCODE_ENTER=0x0d;
+const KEYCODE_ESC=0x1b;
+const KEYCODE_SPACE=0x20;
+const KEYCODE_DEL_F=0x7f;
 
-  const SYMBOL_ROWS = Object.freeze([
-    ["1","2","3","4","5","6","7","8","9","0"].map(v => ({v})),
-    ["@","#","￥","_","&","-","+","(",")","/"].map(v => ({v})),
-    [{v:"=\\<",action:"more",control:true},{v:"*"},{v:'"'},{v:"'"},{v:":"},{v:";"},{v:"!"},{v:"?"},{icon:"backspace",action:"backspace",control:true}],
-    [{v:"ABC",action:"letters",control:true},{v:","},{v:"晨星键道",action:"space",space:true},{v:"."},{icon:"enter",action:"enter",control:true,enter:true}]
-  ]);
+const KEYCODE_a=0x61;
+const KEYCODE_b=0x62;
+const KEYCODE_c=0x63;
+const KEYCODE_d=0x64;
+const KEYCODE_s=0x73;
+const KEYCODE_t=0x74;
+const KEYCODE_x=0x78;
+const KEYCODE_y=0x79;
+const KEYCODE_z=0x7a;
+const CTRL_MASK=0x10000;
 
-  const MORE_ROWS = Object.freeze([
-    ["~","`","|","•","√","π","÷","×","¶","△"].map(v => ({v})),
-    ["£","¢","€","¥","^","°","=","{","}","\\"].map(v => ({v})),
-    [{v:"?123",action:"symbols",control:true},{v:"%"},{v:"©"},{v:"®"},{v:"™"},{v:"["},{v:"]"},{v:"<"},{v:">"},{icon:"backspace",action:"backspace",control:true}],
-    [{v:"ABC",action:"letters",control:true},{v:","},{v:"晨星键道",action:"space",space:true},{v:"."},{icon:"enter",action:"enter",control:true,enter:true}]
-  ]);
+const KEYCODE_HOME=0xff50;
+const KEYCODE_END=0xff57;
+const KEYCODE_LEFT=0xff51;
+const KEYCODE_UP=0xff52;
+const KEYCODE_RIGHT=0xff53;
+const KEYCODE_DOWN=0xff54;
 
-  const EMOJI_ROWS = Object.freeze([
-    ["😀","😂","🥰","😍","🤔","😭","😡","👍"].map(v => ({v})),
-    ["🙏","👏","❤️","✨","⭐","🌙","☀️","🎉"].map(v => ({v})),
-    ["✅","❌","⚠️","📌","📖","✝️","⛪","🕊️"].map(v => ({v})),
-    [{v:"ABC",action:"letters",control:true},{v:"?123",action:"symbols",control:true},{v:"晨星键道",action:"space",space:true},{icon:"backspace",action:"backspace",control:true}]
-  ]);
+const YK_VIRT_QUERY=0x0800001;
+const YK_VIRT_ADD=0x0800002;
+const YK_VIRT_DEL=0x0800003;
 
-  const TOOLS = Object.freeze([
-    {label:"符号", action:"symbols"},
-    {label:"😊", action:"emoji"},
-    {label:"←", action:"left"},
-    {label:"→", action:"right"},
-    {label:"粘贴", action:"paste"},
-    {label:"语音", action:"voice"},
-    {label:"键盘", action:"switchInput"},
-    {label:"收起", action:"hide"}
-  ]);
+const CTRL_UP=0x1ff52;
+const CTRL_DOWN=0x1ff54;
 
-  const state = {
-    layout: "letters",
-    shifted: false,
-    shiftLocked: false,
-    nativeState: 0,
-    schemeName: "晨星键道",
-    candidates: [],
-    selected: -1,
-    page: false,
-    tips: [],
-    code: null,
-    pointer: null,
-    longPressTimer: 0,
-    repeatTimer: 0,
-    lastShiftTap: 0
-  };
+function getDataset(e,m){
+	var ret;
+	do {
+		ret=e.dataset[m];
+		if(!ret) e=e.parentElement;
+	}while(!ret && e);
+	return ret;
+}
 
-  const dom = {
-    root: document.getElementById("keyboard"),
-    rows: document.getElementById("rows"),
-    code: document.getElementById("code"),
-    candidates: document.getElementById("candidates"),
-    toast: document.getElementById("toast")
-  };
+function setDataset(e,m,v){
+	e.dataset[m]=v;
+}
 
-  const App = Object.freeze({
-    init() { console.log("yong:init"); },
-    select(index, global) { console.log(`yong:select ${index}${global ? " 1" : ""}`); },
-    key(code) { console.log(`yong:key ${code}`); },
-    text(value) { console.log(`yong:text ${value}`); },
-    page() { console.log("yong:page"); },
-    hide() { console.log("yong:hide"); },
-    voice() { console.log("yong:voice"); },
-    feedback() { console.log("yong:feedback"); },
-    query(index) { console.log(`yong:query ${index}`); },
-    action(type) { console.log(`yong:action ${type}`); },
-    resize(width) { console.log(`yong:resize ${Math.trunc(width || 0)}`); },
-    cands() { console.log("yong:cands 1 100"); },
-    commit(text) { console.log(`yong:commit ${text}`); },
-    onGetCandWords() {},
-    onClipChanged() {}
-  });
+function addClass(e,c){
+	e.classList.add(c);
+}
 
-  function keyLabel(key) {
-    if (key.icon) return ICONS[key.icon];
-    if (key.action === "state") {
-      return state.nativeState === 0 ? "En" : "中";
-    }
-    if (state.layout === "letters" && state.shifted && key.v && key.v.length === 1) {
-      return key.v.toUpperCase();
-    }
-    return key.v || "";
-  }
+function removeClass(e,c){
+	e.classList.remove(c);
+}
 
-  function currentRows() {
-    if (state.layout === "symbols") return SYMBOL_ROWS;
-    if (state.layout === "more") return MORE_ROWS;
-    if (state.layout === "emoji") return EMOJI_ROWS;
-    return LETTER_ROWS;
-  }
+function $(s){
+	return document.querySelector(s);
+}
 
-  function renderKeys() {
-    dom.rows.replaceChildren();
-    currentRows().forEach((row, rowIndex) => {
-      const rowElement = document.createElement("div");
-      rowElement.className = `key-row${state.layout === "letters" && rowIndex === 1 ? " home" : ""}`;
-      row.forEach(key => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "key";
-        if (key.control) button.classList.add("control");
-        if (key.space) button.classList.add("space");
-        if (key.enter) button.classList.add("enter");
-        if (key.action === "shift" && state.shifted) button.classList.add("shift-on");
-        button.dataset.value = key.v || "";
-        button.dataset.action = key.action || "text";
-        button.dataset.alt = key.a || "";
-        button.setAttribute("aria-label", key.action || key.v || "按键");
-        button.innerHTML = keyLabel(key);
-        if (key.a) {
-          const hint = document.createElement("span");
-          hint.className = "hint";
-          hint.textContent = key.a;
-          button.appendChild(hint);
-        }
-        rowElement.appendChild(button);
-      });
-      dom.rows.appendChild(rowElement);
-    });
-  }
+/* keyboard layout */
+const Keyboards = {
+	english: {
+		shifted : false,
+		alt : {
+			"q":'1',
+			"w":'2',
+			"e":'3',
+			"r":'4',
+			"t":'5',
+			"y":'6',
+			"u":'7',
+			"i":'8',
+			"j":'-',
+			"o":'9',
+			"p":'0',
+			"a":'@',
+			"l":'"',
+			"n":'\\',
+			"m":'\'',
+			",":'/',
+			";":':',
+			".":'?',
+			"z":'←',
+			"x":'↓',
+			"c":'→',
+			"d":'↑',
+			"⇧":'→|',
+		},
+		upper: {
+			q:'Q',w:'W',e:'E',r:'R',t:'T',
+			y:'Y',u:'U',i:'I',o:'O',p:'P',
+			a:'A',s:'S',d:'D',f:'F',g:'G',
+			h:'H',j:'J',k:'K',l:'L',
+			z:'Z',x:'X',c:'C',v:'V',b:'B',
+			n:'N',m:'M'
+		},
+		key : [
+			[{v:'q'},{v:'w'},{v:'e'},{v:'r'},{v:'t'},
+			 {v:'y'},{v:'u'},{v:'i'},{v:'o'},{v:'p'}],
+			[{v:'a'},{v:'s'},{v:'d'},{v:'f'},{v:'g'},
+			 {v:'h'},{v:'j'},{v:'k'},{v:'l'}],
+			[{v:'⇧',c:KEYCODE_SHIFT,r:1.5,s:true},
+			 {v:'z'},{v:'x'},{v:'c'},{v:'v'},{v:'b'},{v:'n'},{v:'m'},
+			 {v:'⌫',c:KEYCODE_DEL,r:1.5,s:true}],
+			[{v:'中/En',r:1.4,c:KEYCODE_STATE,s:true},
+			 {v:'123',r:1.1,c:KEYCODE_SWITCH_number,s:true},
+			 {v:'晨星',r:2.7,c:KEYCODE_SPACE,s:false},
+			 {v:',',r:1.1,s:false},{v:'.',r:1.1,s:false},
+			 {v:'↲',r:1.4,c:KEYCODE_ENTER,s:true}]
+		]
+	},
+	number: {
+		shifted : false,
+		alt : {
+			"⇧":'→|',
+		},
+		upper: {
+			"1":"`",
+			"2":"~",
+			"3":"_",
+			"4":"^",
+			"5":"±",
+			"6":"|",
+			"7":"[",
+			"8":"]",
+			"9":"{",
+			"0":"}",
+			"@":"°",
+			"#":"²",
+			"$":"³",
+			"%":"©",
+			"&":"®",
+			"*":"§",
+			"-":"<",
+			"+":">",
+			"(":"«",
+			")":"»",
+			"!":"¥",
+			"\"":"€",
+			"'":"£",
+			":":"$",
+			";":"¢",
+			"/":"\\",
+			"?":"=",
+		},
+		key : [
+			[{v:'1'},{v:'2'},{v:'3'},{v:'4'},{v:'5'},
+			 {v:'6'},{v:'7'},{v:'8'},{v:'9'},{v:'0'}],
+			 [{v:'@'},{v:'#'},{v:'$'},{v:'%'},{v:'&'},
+			 {v:'*'},{v:'-'},{v:'+'},{v:'('},{v:')'}],
+			[{v:'⇧',c:KEYCODE_SHIFT,r:1,s:true},
+			 {v:'!'},{v:'"'},{v:'\''},{v:':'},{v:';'},{v:'/'},{v:'?'},
+			 {v:'⌫',c:KEYCODE_DEL,r:1,s:true}],
+			[{v:'中/En',r:1.4,c:KEYCODE_STATE,s:true},
+			 {v:'123',r:1.1,c:KEYCODE_SWITCH_english,s:true},
+			 {v:'晨星',r:2.7,c:KEYCODE_SPACE,s:false},
+			 {v:',',r:1.1,s:false},{v:'.',r:1.1,s:false},
+			 {v:'↲',r:1.4,c:KEYCODE_ENTER,s:true}]
+		]
+	},
+};
 
-  function renderComposition() {
-    const code = state.code || {};
-    const typed = `${code.got || ""}${code.code || ""}`;
-    dom.code.textContent = typed;
-    dom.code.classList.toggle("visible", Boolean(typed));
-    dom.candidates.replaceChildren();
+const TOOL_ICONS = {
+	voice: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6"/></svg>',
+	emoji: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 10h.01M15.5 10h.01M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8"/></svg>',
+	undo: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7l-5 5 5 5M5 12h8a6 6 0 0 1 6 6"/></svg>',
+	redo: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 7l5 5-5 5M19 12h-8a6 6 0 0 0-6 6"/></svg>',
+	edit: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14M8 8l-3 4 3 4M16 8l3 4-3 4"/></svg>',
+	clipboard: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 5V3h6v2M8.5 10h7M8.5 14h7M8.5 18h4.5"/></svg>',
+	hide: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>'
+};
 
-    state.candidates.forEach((candidate, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "candidate";
-      if (index === state.selected) button.classList.add("selected");
-      button.dataset.index = String(index);
-      button.append(document.createTextNode(candidate));
-      if (state.tips && state.tips[index]) {
-        const tip = document.createElement("span");
-        tip.className = "tip";
-        tip.textContent = state.tips[index];
-        button.appendChild(tip);
-      }
-      dom.candidates.appendChild(button);
-    });
+class Tools{
+	static _tools=[
+		{label:"表情",icon:"emoji",tool:"2",compact:false},
+		{label:"撤销",icon:"undo",tool:"3",compact:false},
+		{label:"重做",icon:"redo",tool:"7",compact:false},
+		{label:"编辑",icon:"edit",tool:"4",compact:false},
+		{label:"剪贴板",icon:"clipboard",tool:"5",compact:false},
+		{label:"语音",icon:"voice",tool:"1",compact:true},
+		{label:"收起键盘",icon:"hide",tool:"9",compact:true}
+	];
+	static draw(container){
+		var list=this._tools;
+		var compact=is_cand || is_popup;
+		container.innerHTML = '';
+		var fragment = document.createDocumentFragment();
+		for(var i=0;i<list.length;i++) {
+			if(compact && !list[i].compact)
+				continue;
+			var span = document.createElement('span');
+			span.innerHTML = TOOL_ICONS[list[i].icon];
+			span.setAttribute("aria-label", list[i].label);
+			span.setAttribute("title", list[i].label);
+			setDataset(span,"tool",list[i].tool);
+			addClass(span,"tool");
+			fragment.appendChild(span);
+		}
+		container.appendChild(fragment);
+	}
+	static action(tool,longpress=false){
+		switch(tool){
+			case "1":
+				if(!longpress)
+					App.voice();
+				break;
+			case "2":
+				if(longpress)
+					App.action("switchInputMethod");
+				else
+					emoji(0);
+				break;
+			case "3":
+				if(!longpress)
+					App.key(CTRL_MASK|KEYCODE_z);
+				break;
+			case "7":
+				if(!longpress)
+					App.key(CTRL_MASK|KEYCODE_y);
+				break;
+			case "4":
+				if(!longpress)
+					editor(0);
+				break;
+			case "5":
+				if(!longpress)
+					overlay("clipboard",true);
+				break;
+			case "9":
+				if(!longpress)
+					App.hide();
+				break;
+		}
+	}
+};
 
-    if (!typed && state.candidates.length === 0) {
-      TOOLS.forEach(tool => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "tool-key";
-        button.dataset.tool = tool.action;
-        button.textContent = tool.label;
-        dom.candidates.appendChild(button);
-      });
-    }
+/* draw the keyboard to screen */
+class Render{
+	static first=true;
+	static _ime;
+	static _state=0;
+	static _layout;
+	static _code={};
+	static _cand=[];
+	static _page;
+	static _select=-1;
+	static _tips=false;
 
-    if (state.page) {
-      const page = document.createElement("button");
-      page.type = "button";
-      page.className = "page-key";
-      page.dataset.page = "true";
-      page.setAttribute("aria-label", "展开候选");
-      page.textContent = "⌄";
-      dom.candidates.appendChild(page);
-    }
-  }
+	static _menuKey;
+	static _candidatePanel;
+	static _codePanel;
+	static _windowWidth;
+	static _screenWidth;
 
-  function clearTimers() {
-    window.clearTimeout(state.longPressTimer);
-    window.clearInterval(state.repeatTimer);
-    state.longPressTimer = 0;
-    state.repeatTimer = 0;
-  }
+	static _escapeHTML(str){
+		const kv={
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			"'": '&#39;',
+			'"': '&quot;'
+		};
+		return kv[str] || str
+	}
 
-  function sendCharacter(value) {
-    if (!value) return;
-    const output = state.layout === "letters" && state.shifted ? value.toUpperCase() : value;
-    const codePoint = output.codePointAt(0);
-    if (Array.from(output).length === 1 && codePoint < 128) App.key(codePoint);
-    else App.text(output);
-    if (state.shifted && !state.shiftLocked) {
-      state.shifted = false;
-      renderKeys();
-    }
-  }
+	static _buildKey(label,className, width, dataset, altNote) {
+		if (Render._layout.shifted) {
+			label = Render._layout.upper[label] || label;
+		}
+		if(altNote) {
+			dataset.push(`data-alt="${Render._escapeHTML(altNote)}"`);
+		}
+		var content =
+		`<div class="keyboard-key-wrapper" style="width: ${width}px;">
+		<div class="keyboard-key ${className}" ${dataset.join(' ')}>${label}`;
+		if(altNote)
+			content+=`<span>${altNote}</span>`;
+		content += `</div></div>`;
+		return content;
+	}
 
-  function toggleShift() {
-    const now = Date.now();
-    if (now - state.lastShiftTap < 340) {
-      state.shifted = true;
-      state.shiftLocked = true;
-    } else if (state.shiftLocked) {
-      state.shifted = false;
-      state.shiftLocked = false;
-    } else {
-      state.shifted = !state.shifted;
-    }
-    state.lastShiftTap = now;
-    renderKeys();
-  }
+	static init(keyboard){
+		Render._ime=$(keyboard);
+		if(landscape)
+			addClass(document.body,"landscape");
+	}
 
-  function invoke(button, longPress = false) {
-    const action = button.dataset.action;
-    if (longPress && button.dataset.alt) {
-      sendCharacter(button.dataset.alt);
-      return;
-    }
-    switch (action) {
-      case "shift": toggleShift(); break;
-      case "backspace": App.key(KEY.BACKSPACE); break;
-      case "enter": App.key(KEY.ENTER); break;
-      case "state": App.key(KEY.STATE); break;
-      case "symbols": state.layout = "symbols"; renderKeys(); break;
-      case "more": state.layout = "more"; renderKeys(); break;
-      case "emoji": state.layout = "emoji"; renderKeys(); break;
-      case "letters": state.layout = "letters"; renderKeys(); break;
-      case "space": App.key(KEY.SPACE); break;
-      default: sendCharacter(button.dataset.value);
-    }
-  }
+	static getWidth(){
+		return Render._windowWidth;
+	}
 
-  function pointerDown(event) {
-    const button = event.target.closest(".key");
-    if (!button) return;
-    event.preventDefault();
-    clearTimers();
-    button.classList.add("pressed");
-    button.setPointerCapture?.(event.pointerId);
-    state.pointer = {button, id: event.pointerId, x: event.clientX, y: event.clientY, long: false};
-    App.feedback();
+	static getScreenWidth(){
+		return Render._screenWidth;
+	}
 
-    if (button.dataset.action === "backspace") {
-      invoke(button);
-      state.longPressTimer = window.setTimeout(() => {
-        state.pointer.long = true;
-        state.repeatTimer = window.setInterval(() => App.key(KEY.BACKSPACE), 70);
-      }, 430);
-    } else if (button.dataset.alt) {
-      state.longPressTimer = window.setTimeout(() => {
-        state.pointer.long = true;
-        invoke(button, true);
-      }, 470);
-    }
-  }
+	static getHeight(){
+		return Render._ime.clientHeight;
+	}
 
-  function pointerUp(event) {
-    const press = state.pointer;
-    if (!press || press.id !== event.pointerId) return;
-    event.preventDefault();
-    clearTimers();
-    press.button.classList.remove("pressed");
-    const dx = event.clientX - press.x;
-    if (press.button.dataset.action === "space" && Math.abs(dx) > 22) {
-      App.key(dx < 0 ? KEY.LEFT : KEY.RIGHT);
-    } else if (!press.long && press.button.dataset.action !== "backspace") {
-      invoke(press.button);
-    }
-    state.pointer = null;
-  }
+	static setKeyboard(layout){
+		Render._layout=layout;
+		if(Render._ime)
+			setDataset(Render._ime,"layout",layout===Keyboards.english?"english":"other");
+	}
 
-  function pointerCancel() {
-    clearTimers();
-    if (state.pointer) state.pointer.button.classList.remove("pressed");
-    state.pointer = null;
-  }
+	static adjustScaleLandscape(v,w,h){
+		if(w>h)
+			return v*(16/9)/(w/h);
+		else
+			return v*(16/9)/(h/w);
+	}
 
-  dom.rows.addEventListener("pointerdown", pointerDown);
-  dom.rows.addEventListener("pointerup", pointerUp);
-  dom.rows.addEventListener("pointercancel", pointerCancel);
-  dom.rows.addEventListener("contextmenu", event => event.preventDefault());
-  dom.candidates.addEventListener("click", event => {
-    const candidate = event.target.closest(".candidate");
-    if (candidate) App.select(Number(candidate.dataset.index));
-    else if (event.target.closest(".page-key")) App.page();
-    else {
-      const tool = event.target.closest(".tool-key")?.dataset.tool;
-      switch (tool) {
-        case "symbols": state.layout = "symbols"; renderKeys(); break;
-        case "emoji": state.layout = "emoji"; renderKeys(); break;
-        case "left": App.key(KEY.LEFT); break;
-        case "right": App.key(KEY.RIGHT); break;
-        case "paste": App.action("paste"); break;
-        case "voice": App.voice(); break;
-        case "switchInput": App.action("switchInputMethod"); break;
-        case "hide": App.hide(); break;
-      }
-    }
-  });
+	static draw(){
+		var changeScale;
+		if(is_popup){
+			// var screenWidth=Math.min(screen.width,screen.height);
+			// changeScale=screenWidth*window.devicePixelRatio/40;
+			document.body.scrollLeft=0;
+			if(window.innerWidth)
+				Render._ime.style.maxWidth=window.innerWidth+'px';
+			Render._ime.style.overflowX='auto';
+			let pt=5;
+			let dpi=devicePixelRatio*96;
+			changeScale=pt*dpi/72;
+		}else{
+			if(landscape){
+				changeScale = window.innerWidth / 72;
+				changeScale=this.adjustScaleLandscape(changeScale,screen.width,screen.height);
+			}else{
+				// changeScale = window.innerWidth / 30;
+				let x0=360/640,y0=30,x1=640/360,y1=72;
+				let x=screen.width/screen.height;
+				let y=(x-x0)/(x1-x0)*(y1-y0)+y0;
+				if(y<30) y=30;
+				changeScale=window.innerWidth/y;
+			}
+		}
+		document.documentElement.style.fontSize = changeScale + 'px';
 
-  const Render = Object.freeze({
-    init() {},
-    draw() { renderKeys(); renderComposition(); return true; },
-    setKeyboard() { renderKeys(); },
-    setState(nativeState, name) {
-      state.nativeState = Number(nativeState) || 0;
-      if (name) state.schemeName = name;
-      renderKeys();
-    },
-    getState() { return state.nativeState; },
-    setShifted(value) {
-      state.shifted = Boolean(value);
-      state.shiftLocked = value === "locked";
-      renderKeys();
-    },
-    isShifted() { return state.shifted; },
-    showCandidates(candidates, selected, page, tips, code) {
-      state.candidates = Array.isArray(candidates) ? candidates : [];
-      state.selected = Number.isInteger(selected) ? selected : -1;
-      state.page = Boolean(page);
-      state.tips = Array.isArray(tips) ? tips : [];
-      state.code = code || null;
-      renderComposition();
-    },
-    showMenu(items) {
-      if (!Array.isArray(items) || !items.length) return;
-      showToast(items.map(item => item.text).filter(Boolean).join(" · "));
-    },
-    showAlternatives() {},
-    hideAlternatives() {},
-    highlightKey() {},
-    unHighlightKey() {},
-    hint() {},
-    getWidth() { return dom.root.clientWidth; },
-    getHeight() { return dom.root.clientHeight; },
-    getScreenWidth() { return screen.width; }
-  });
+		var content = '';
+		var layoutWidth=Render._layout.width || 10;
+		var totalWidth = Render._ime.clientWidth;
+		var placeHolderWidth = (landscape?totalWidth*0.7-2:totalWidth-2)/layoutWidth;
+		if(!is_popup)
+			content+="<div class='keyboard-border-inner'></div>"
+		else
+			addClass(Render._ime,'popup');
 
-  let toastTimer = 0;
-  function showToast(message) {
-    dom.toast.textContent = message;
-    dom.toast.classList.add("visible");
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => dom.toast.classList.remove("visible"), 1300);
-  }
+		content+="<div class='keyboard-code-panel' style='display:none'></div>";
+		content+="<div class='keyboard-candidate-panel'></div>";
+		if(Render._layout.key.length>0){
+			content+="<div class='keyboard-key-panel'>";
+			Render._layout.key.forEach((function buildKeyboardRow(row, nrow) {
+				content += '<div class="keyboard-row">';
+				row.forEach((function buildKeyboardColumns(key, ncolumn) {
+					var keyChar = key.v;
+					if(key.c==KEYCODE_STATE) {
+						keyChar=key.v.split('/')[Render._state];
+					}
+					var code;
+					if("c" in key) {
+						code=key.c;
+					} else {
+						code=(keyChar.length==1?keyChar.charCodeAt(0):0);
+						if(code>=128) code=0;
+					}
+					var className = key.s ? 'special-key' : '';
+					if(Render._layout.shifted && code==KEYCODE_SHIFT)
+						className+=" kbr-key-active";
+					if(code==KEYCODE_SWITCH_index)
+						className+=" kbr-key-active";
+					var ratio = key.r || 1;
+					var keyWidth = placeHolderWidth * ratio;
+					var dataset = [
+						'data-row="'+nrow+'"',
+						'data-column="'+ncolumn+'"',
+						'data-keycode="'+code+'"'
+					];
+					if(keyChar=='"') {
+						dataset.push(`data-label='"'`);
+					} else {
+						dataset.push(`data-label="${keyChar}"`);
+					}
+					if(key.c==KEYCODE_STATE) {
+						dataset.push(`data-state="${key.v}"`);
+					}
+					content+=Render._buildKey(keyChar,className,keyWidth,
+							dataset,Render._layout.alt[key.v]);
 
-  function init_keyboard() {
-    Render.draw();
-    App.init();
-  }
+				}));
+				content += '</div>';
+			}));
+			content+="</div>";
+		}
+		Render._ime.innerHTML = content;
 
-  window.App = App;
-  window.Render = Render;
-  window.init_keyboard = init_keyboard;
-  window.addEventListener("resize", () => Render.draw());
-  window.addEventListener("DOMContentLoaded", init_keyboard, {once: true});
-  </script>
+		Render._candidatePanel = $('.keyboard-candidate-panel');
+		Render._codePanel=$('.keyboard-code-panel');
+
+		if(this.getWidth())
+			Render._ime.style.setProperty("--keyboard-width",this.getWidth()+'px');
+		Render._ime.style.setProperty("--keyboard-height",this.getHeight()+'px');
+
+		Render._windowWidth=totalWidth;
+		Render._screenWidth=screen.width;
+		if(Render.first && !App.debug){
+			setTimeout(()=>{
+				this.showCandidates(Render._cand,Render._select,Render._page,Render._tips,Render._code);
+			},0);
+			Render.first=false;
+		}else{
+			this.showCandidates(Render._cand,Render._select,Render._page,Render._tips,Render._code);
+		}
+		return true;
+	}
+
+	static highlightKey(key){
+		var orig=key;
+		while(key.nodeName=="SPAN")
+			key=key.parentElement;
+		if(!key) return;
+		if(!getDataset(key,"keycode")) {
+			setDataset(orig,"active","1");
+			return;
+		}
+		addClass(key,'highlighted');
+	}
+
+	static unHighlightKey(key){
+		var orig=key;
+		while(key && key.nodeName=="SPAN")
+			key=key.parentElement;
+		if(!key) return;
+		if(!getDataset(key,"keycode")) {
+			setDataset(orig,"active","");
+			return;
+		}
+		removeClass(key,'highlighted');
+	}
+
+	static setShifted(state){
+		if(Render._layout.shifted==state)
+			return;
+		Render._layout.shifted=state;
+
+		var key = $(`div[data-keycode="${KEYCODE_SHIFT}"]`);
+		if(!key) return;
+
+		if (state) {
+			addClass(key,'kbr-key-active');
+		} else {
+			removeClass(key,'kbr-key-active');
+		}
+		var keys=document.querySelectorAll('.keyboard-key');
+		for (var i = 0; i < keys.length; ++i) {
+			key=keys[i];
+			var label=getDataset(key,"label");
+			if(state){
+				label=Render._layout.upper[label];
+			}
+			if(label) {
+				key.childNodes[0].textContent=label;
+			}
+		}
+	}
+
+	static isShifted(){
+		return Render._layout.shifted;
+	}
+
+	static setState(state,name){
+		if(Render._state==state && document.title==name)
+			return;
+		if(name) document.title=name;
+		Render._state=state;
+
+		var key = $('div[data-keycode="' + KEYCODE_STATE + '"]');
+		if(!key) return;
+		var label;
+		label=getDataset(key,"state").split('/')[Render._state];
+		setDataset(key,"label",label);
+		key.childNodes[0].textContent=label;
+	}
+
+	static getState(){
+		return Render._state;
+	}
+
+	static showToolbar(){
+		Tools.draw(this._candidatePanel);
+	}
+
+	static showCode(code){
+		if(!Render._codePanel)
+			return;
+		Render._codePanel.innerHTML='';
+		if(code && (code.code || code.got)){
+			var s,i,span;
+			if(code.got){
+				s=code.got;
+				for(i=0;i<s.length;i++){
+					span=document.createElement('span');
+					addClass(span,'code-got');
+					span.textContent=s[i];
+					Render._codePanel.appendChild(span);
+				}
+			}
+			if(code.code){
+				var spans=[];
+				s=code.code;
+				for(i=0;i<s.length;i++){
+					span=document.createElement('span');
+					addClass(span,'code-text');
+					span.textContent=(s[i]==' '?'\xa0':s[i]);
+					spans.push(span);
+				}
+				span=document.createElement('span');
+				addClass(span,'code-caret');
+				if(code.caret==-1 || code.caret==s.length){
+					spans.push(span);
+				}else{
+					spans.splice(code.caret,0,span);
+				}
+				for(i=0;i<spans.length;i++)
+					Render._codePanel.appendChild(spans[i]);
+			} else {
+				span=document.createElement('span');
+				addClass(span,'code-caret');
+				Render._codePanel.appendChild(span);
+			}
+			Render._codePanel.style.display="";
+		} else {
+			Render._codePanel.style.display="none";
+		}
+		Render._code=code;
+	}
+
+	static showCandidates(candidates,select,page,tips,code){
+		if(!candidates)
+			return;
+		overlay('cands',false);
+		Render._candidatePanel.innerHTML = '';
+
+		this.showCode(code);
+		if(candidates.length>0) {
+			var fragment = document.createDocumentFragment();
+			var selected;
+
+			candidates.forEach(function buildCandidateEntry(candidate,index) {
+				var span = document.createElement('span');
+				setDataset(span,"selection",true);
+				setDataset(span,"data",select==-1?-1:index);
+				span.textContent = candidate;
+				if(index==select){
+					addClass(span,"first");
+					selected=span;
+				}
+				if(tips && tips[index]){
+					var tipSpan=document.createElement('label');
+					addClass(tipSpan,"codetip");
+					tipSpan.textContent=tips[index];
+					span.appendChild(tipSpan);
+				}
+				fragment.appendChild(span);
+			});
+			if(page){
+				var span = document.createElement('span');
+				setDataset(span,"selection",true);
+				setDataset(span,"page",true);
+				span.textContent = "...";
+				fragment.appendChild(span);
+				addClass(Render._candidatePanel,"page");
+			}else{
+				removeClass(Render._candidatePanel,"page");
+			}
+			Render._candidatePanel.scrollLeft=0;
+			Render._candidatePanel.appendChild(fragment);
+			if(selected)
+				selected.scrollIntoView({behavior:'instant'});
+			Render._cand=candidates;
+			Render._page=page;
+			Render._tips=tips;
+			Render._select=select;
+		} else {
+			Render._cand.length=0;
+			Render._select=-1;
+			removeClass(Render._candidatePanel,"page");
+			this.showToolbar();
+			this.showMenu();
+		}
+	}
+
+	static showAlternatives(key){
+		if(!key) return;
+		if(Render._menuKey) this.hideAlternatives();
+		while(key && key.nodeName!='DIV')
+			key=key.parentElement;
+		if(!key) return;
+		var altChars=getDataset(key,"alt");
+		if(!altChars || altChars.length<1)
+			return;
+		key.children[0].hidden=true;
+		key.childNodes[0].textContent=altChars;
+		Render._menuKey=key;
+		addClass(key,'alt-show');
+	}
+
+	static hideAlternatives(){
+		var key=Render._menuKey;
+		if(!key) return;
+		Render._menuKey=undefined;
+		var label=getDataset(key,"label");
+		if(Render._layout.shifted && Render._layout.upper[label])
+			label=Render._layout.upper[label];
+		if(!label) return;
+		key.childNodes[0].textContent=label;
+		key.children[0].hidden=false;
+		removeClass(key,'alt-show');
+	}
+
+	static getCode(key){
+		var label,keyCode;
+		if(Render._menuKey){
+			label=getDataset(key,"alt");
+			if(label=="→|")
+				return KEYCODE_TAB;
+			else if(label=="M")
+				return KEYCODE_MENU;
+			else if(label=='⚡')
+				return KEYCODE_SWITCH_index;
+			if(label.length!=1)
+				return 0;
+			var code=label.charCodeAt(0);
+			if(code>=128){
+				keyCode=parseInt(getDataset(key,"keycode"));
+				if(keyCode==KEYCODE_z)
+					code=KEYCODE_LEFT;
+				else if(keyCode==KEYCODE_x)
+					code=KEYCODE_DOWN;
+				else if(keyCode==KEYCODE_c)
+					code=KEYCODE_RIGHT;
+				else if(keyCode==KEYCODE_d)
+					code=KEYCODE_UP;
+				else
+					code=0;
+			}
+			return code;
+		}
+		keyCode=parseInt(getDataset(key,"keycode"));
+		if(this.isShifted()) {
+			label=getDataset(key,"label");
+			if(Render._layout.shifted) label=Render._layout.upper[label];
+			if(label) {
+				if(label.length==1){
+					keyCode=label.charCodeAt(0);
+					if(keyCode>=128)
+						keyCode=0;
+				}else{
+					keyCode=0;
+				}
+			}
+		}
+		return keyCode;
+	}
+
+	static getText(key){
+		var label;
+		if(Render._menuKey) {
+			label=getDataset(key,"alt");
+		} else {
+			label=getDataset(key,"label");
+			if(Render._layout.shifted)
+				label=Render._layout.upper[label];
+		}
+		return label;
+	}
+
+	static getSelect(){
+		return Render._select;
+	}
+
+	static hint(on){
+	}
+
+	static showMenu(c){
+		if(!filename.startsWith("keyboard"))
+			return;
+		var cont=$('.action-shadow');
+		if(!c || c.length==0){
+			cont.style.display="none";
+			return;
+		}
+		var el=$('.action-shadow .action-menu');
+		var arr=[];
+		for(var i=0;i<c.length;i++){
+			var p=c[i];
+			if(p.visible===false)
+				continue;
+			arr.push(`<button class="action-item">${p.text}</button>`);
+		}
+		el.innerHTML=arr.join('');
+		cont.style.height=this.getHeight()+'px';
+		cont.style.display="block";
+		cont.onclick=function(e){
+			if(e.target==cont){
+				cont.style.display="none";
+				return;
+			}
+			var text=e.target.textContent;
+			e=c.find(e=>e.text==text);
+			if(e && e.click)
+				e.click(e.param);
+			setTimeout(Render.showMenu,100);
+		}
+	}
+
+	static setSelectIndex(index){
+		if(index<0 || index===undefined || index>=Render._cand.length || index==Render._select)
+			return;
+		if(index>Render._select){
+			App.commit(`$IMKEY(DOWN(${index-Render._select}))`);
+		}else{
+			App.commit(`$IMKEY(UP(${Render._select-index}))`);
+		}
+	}
+}
+
+/* handle mouse or touch screen events */
+class Handler {
+	static _ime;
+	static touchedKeys = {};
+	static touchStart = {};
+	static touchChanged = {};
+	static gesture = {};
+	static deleteTimeout;
+	static deleteInterval;
+	static menuTimeout;
+	static delayTimeout;
+	static skipKey = false;
+
+	static init(keyboard){
+		this._ime=$(keyboard);
+		for (var event in this.eventHandlers)
+			this._ime.addEventListener(event, this.eventHandlers[event]);
+	}
+
+	static setCurrentKey(value, touchId) {
+		this.touchedKeys[touchId].target = value;
+		this.touchChanged[touchId]=true;
+	}
+
+	static setMenuTimeout(target, coords, touchId){
+		var timeout=MENU_TIMEOUT_KEY;
+		if(getDataset(target,"selection")=="true")
+			timeout=MENU_TIMEOUT_CAND;
+		if(this.menuTimeout)
+			return;
+		this.menuTimeout=setTimeout(() => {
+			this.menuTimeout=undefined;
+			var keycode=Render.getCode(target);
+			Render.showAlternatives(target);
+			if(keycode==KEYCODE_z || keycode==KEYCODE_x ||
+					keycode==KEYCODE_c || keycode==KEYCODE_d){
+				this.skipKey=true;
+				switch(keycode){
+				case KEYCODE_z:keycode=KEYCODE_LEFT;break;
+				case KEYCODE_x:keycode=KEYCODE_DOWN;break;
+				case KEYCODE_c:keycode=KEYCODE_RIGHT;break;
+				case KEYCODE_d:keycode=KEYCODE_UP;break;
+				}
+				App.key(keycode);
+				this.deleteTimeout=setTimeout(() => {
+					App.key(keycode);
+					this.deleteInterval = setInterval(function() {
+						App.key(keycode);
+					}, REPEAT_RATE);
+				},REPEAT_TIMEOUT);
+			} else if(keycode==KEYCODE_SWITCH_number || keycode==KEYCODE_SWITCH_english){
+				this.skipKey=true;
+				if(['云端'].indexOf(document.title)>=0){
+					alert('没有可用操作');
+				}if(document.title=='内码' && Render.getSelect()<0){
+					Render.showMenu([{
+						text:'反查',
+						click:App.key,
+						param:YK_VIRT_QUERY
+					}]);
+				}else if(Render.getSelect()>=0){
+					alert('没有可用操作');
+				}else{
+					Render.showMenu([{
+						text:'加词',
+						click:App.key,
+						param:YK_VIRT_ADD
+					}]);
+				}
+			} else if(!keycode && !this.touchChanged[touchId]){
+				this.skipKey=true;
+				var index=getDataset(target,"data");
+				if(index>=0){
+					Render.setSelectIndex(index);
+					Render.showMenu([
+						{
+							text:'编码',
+							click:App.query,
+							param:index
+						},
+						{
+							text:'删词',
+							click:App.key,
+							param:YK_VIRT_DEL,
+						},
+						{
+							text:'上移',
+							click:App.key,
+							param:CTRL_UP,
+						},
+						{
+							text:'下移',
+							click:App.key,
+							param:CTRL_DOWN,
+						},
+					]);
+				}else if(getDataset(target,"page")=="true"){
+					if(filename.startsWith("keyboard"))
+						App.cands();
+				}else if(getDataset(target,"tool")){
+					Tools.action(getDataset(target,"tool"),true);
+				}
+			}
+		},timeout);
+	}
+
+	static startPress(target, coords, touchId) {
+		this.touchStart[touchId]=Date.now();
+		this.touchChanged[touchId]=false;
+		this.skipKey=false;
+		App.feedback();
+		var keycode=Render.getCode(target);
+		if(keycode==KEYCODE_DEL){
+			this.skipKey=true;
+			App.key(keycode);
+			this.deleteTimeout=setTimeout(() => {
+				App.key(keycode);
+				this.deleteInterval = setInterval(function() {
+					App.key(keycode);
+				}, REPEAT_RATE);
+			},REPEAT_TIMEOUT);
+		} else if(keycode==KEYCODE_SPACE) {
+			this.skipKey=true;
+			App.key(keycode);
+		} else {
+			this.setMenuTimeout(target,coords,touchId);
+		}
+		Render.highlightKey(target);
+
+		this.gesture.target=target;
+		this.gesture.x=coords.pageX;
+		this.gesture.y=coords.pageY;
+		this.gesture.cancel=false;
+		this.gesture.action=false;
+	}
+
+	static movePress(target, coords, touchId) {
+		var oldTarget = this.touchedKeys[touchId].target;
+		if (!target || !oldTarget || oldTarget == target)
+			return;
+		if(target==oldTarget.parentElement)
+			return;
+		if(!this.gesture.cancel){
+			let alt=getDataset(oldTarget,"alt");
+			if(alt && alt!='⚡' && alt!='M'){
+				if(this.gesture.action)
+					return;
+				var x=coords.pageX-this.gesture.x;
+				var y=this.gesture.y-coords.pageY;
+				var angle=Math.atan2(y,x)*180/Math.PI;
+				if(angle>70 && angle<110){
+					this.gesture.action=true;
+					Render.showAlternatives(oldTarget);
+					return;
+				}
+			}
+			this.gesture.cancel=true;
+		}
+		Render.hideAlternatives();
+		Render.unHighlightKey(oldTarget);
+		Render.highlightKey(target);
+		this.setCurrentKey(target,touchId);
+
+		clearTimeout(this.deleteTimeout);
+		this.deleteTimeout=undefined;
+		clearInterval(this.deleteInterval);
+		this.deleteInterval=undefined;
+		clearTimeout(this.menuTimeout);
+		this.menuTimeout=undefined;
+
+		var keycode=Render.getCode(target);
+		if(keycode!=KEYCODE_DEL)
+			this.setMenuTimeout(target,coords,touchId);
+	}
+
+	static endPress(target, coords, touchId) {
+		clearTimeout(this.deleteTimeout);
+		this.deleteTimeout=undefined;
+		clearInterval(this.deleteInterval);
+		this.deleteInterval=undefined;
+		clearTimeout(this.menuTimeout);
+		this.menuTimeout=undefined;
+		if (!target)
+			return;
+		if(getDataset(target,"selection")) {
+			if(!this.skipKey) {
+				if($("#keyboard-overlay")){
+					overlay(false);
+					Render.unHighlightKey(target);
+					return;
+				}
+				var page=getDataset(target,"page");
+				if(page) {
+					App.page();
+				} else {
+					var index=getDataset(target,"data");
+					if(index==-1) {
+						App.text(target.textContent);
+						Render.showCandidates([],0,false);
+					}
+					else if(!this.touchChanged[touchId] && !this.skipKey) {
+						App.select(index);
+					}
+				}
+			}
+		} else if(getDataset(target,"tool")) {
+			if(!this.skipKey){
+				Tools.action(getDataset(target,"tool"));
+			}
+		} else if(!this.skipKey) {
+			var keyCode=Render.getCode(target);
+			switch(keyCode){
+			case 0:
+				App.text(Render.getText(target));
+				break;
+			case KEYCODE_SHIFT:
+				Render.setShifted(!Render.isShifted());
+				break;
+			case KEYCODE_SWITCH_number:
+				Render.setKeyboard(Keyboards.number);
+				Render.draw();
+				break;
+			case KEYCODE_SWITCH_english:
+				Render.setKeyboard(Keyboards.english);
+				Render.draw();
+				break;
+			case KEYCODE_SWITCH_index:
+				break;
+			case KEYCODE_SPACE:
+				break;
+			default:
+				if(keyCode)
+					App.key(keyCode);
+				break;
+			}
+		}
+		var diff=Date.now()-this.touchStart[touchId];
+		if(diff>=0 && diff<150)	{
+			this.delayTimeout=setTimeout(() => {
+				Render.hideAlternatives();
+				Render.unHighlightKey(target);
+				this.delayTimeout=undefined;
+			},200-diff);
+		} else {
+			Render.hideAlternatives();
+			Render.unHighlightKey(target);
+		}
+	}
+
+	static onPointerDown(evt){
+		if(evt.pointerType === 'mouse' && evt.button !== 0)
+			return;
+		if(evt.target.closest('.keyboard-key'))
+			evt.preventDefault();
+		var pointerId = evt.pointerId;
+		var target = evt.target;
+		this.touchedKeys[pointerId] = { target: target, x: evt.pageX, y: evt.pageY };
+		this.startPress(target, evt, pointerId);
+	}
+
+	static onPointerMove(evt){
+		var pointerId = evt.pointerId;
+		if(!this.touchedKeys[pointerId])
+			return;
+		var x = Math.abs(this.touchedKeys[pointerId].x - evt.pageX);
+		var y = Math.abs(this.touchedKeys[pointerId].y - evt.pageY);
+		if (x < 5 && y < 5)
+			return;
+		this.touchChanged[pointerId] = true;
+		this.touchedKeys[pointerId].x = evt.pageX;
+		this.touchedKeys[pointerId].y = evt.pageY;
+		var target = document.elementFromPoint(evt.clientX, evt.clientY);
+		this.movePress(target, evt, pointerId);
+	}
+
+	static onPointerUp(evt){
+		var pointerId = evt.pointerId;
+		if (!this.touchedKeys[pointerId])
+			return;
+		this.endPress(this.touchedKeys[pointerId].target, evt, pointerId);
+		delete this.touchChanged[pointerId];
+		delete this.touchedKeys[pointerId];
+	}
+
+	static onContextMenu(event){
+		event.preventDefault();
+	}
+
+	static eventHandlers = {
+		pointerdown: (evt) => Handler.onPointerDown(evt),
+		pointermove: (evt) => Handler.onPointerMove(evt),
+		pointerup: (evt) => Handler.onPointerUp(evt),
+		pointercancel: (evt) => Handler.onPointerUp(evt),
+		contextmenu: (evt) => Handler.onContextMenu(evt)
+	};
+
+	static click(div,end,start){
+		var _get_pos=function(e){
+			return [e.pageX,e.pageY];
+		};
+		var _distance=function(a,b){
+			if(!a || !b)
+				return 0;
+			return Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[1]-b[1],2));
+		};
+		var _longpress_tmr=undefined;
+		var _start=function(e){
+			if(self!=top)
+				e.preventDefault();
+			if(e.target.tagName!='BUTTON')
+				return;
+			var ele=e.target;
+			if(div.scrollHeight>div.clientHeight){
+				var prev=div.scrollTop;
+				setTimeout(function(){
+					if(div.ontouchend && prev==div.scrollTop){
+						addClass(ele,"active");
+						App.feedback();
+					}
+				},100);
+			}else{
+				addClass(ele,"active");
+				App.feedback();
+			}
+
+			var pos=_get_pos(e);
+
+			var _end=function(e){
+				if(_longpress_tmr){
+					clearTimeout(_longpress_tmr);
+					_longpress_tmr=undefined;
+				}
+				if(self!=top)
+					e.preventDefault();
+				removeClass(ele,"active");
+				if(div.onpointerup)
+					div.onpointerup=null;
+				if(div.onpointercancel)
+					div.onpointercancel=null;
+				if(ele.classList.contains('longpress')){
+					removeClass(ele,'longpress');
+					return;
+				}
+				if(end && (start || _distance(_get_pos(e),pos)<5))
+					end(e);
+			};
+			if(div.onpointerdown){
+				div.onpointerup=_end;
+				div.onpointercancel=_end;
+			}
+			if(start)
+				start(e);
+
+			if(getDataset(ele,'longpress')){
+				_longpress_tmr=setTimeout(()=>{
+					_longpress_tmr=undefined;
+					if(!end({type:'longpress',target:ele,}))
+						return;
+					addClass(ele,"longpress");
+					removeClass(ele,"active");
+				},REPEAT_TIMEOUT);
+			}
+		};
+		div.onpointerdown=_start;
+	}
+}
+
+class App{
+	static debug=searchParams.get("debug")==1;
+	static initDone=false;
+
+	static init() {
+		console.log("yong:init");
+		this.initDone = true;
+	}
+
+	static select(i, g) {
+		if(g)
+			console.log("yong:select "+i+" 1");
+		else
+			console.log("yong:select "+i);
+	}
+
+	static key(code) {
+		console.log("yong:key "+code);
+	}
+
+	static text(t) {
+		console.log("yong:text "+t);
+	}
+
+	static page() {
+		console.log("yong:page");
+	}
+
+	static hide() {
+		console.log("yong:hide");
+	}
+
+	static voice() {
+		console.log("yong:voice");
+	}
+
+	static feedback() {
+		console.log("yong:feedback");
+	}
+
+	static query(i) {
+		console.log("yong:query "+i);
+	}
+
+	static action(type) {
+		console.log("yong:action "+type);
+	}
+
+	static resize(w) {
+		if(w>0)
+			w*=window.devicePixelRatio;
+		console.log("yong:resize "+(parseInt(w)&~1));
+	}
+
+	static cands() {
+		console.log("yong:cands 1 100");
+	}
+
+	static onGetCandWords(cand, tip) {
+		if(!cand){
+			return;
+		}
+		overlay("cands",true,cand,tip);
+	}
+
+	static onClipChanged(text) {
+		if(!text)
+			return;
+		var arr=window.clipboardStorage;
+		if(!Array.isArray(arr))
+			arr=[];
+		var time=Date.now();
+		var i=arr.findIndex(e=>e.text==text);
+		if(i==0 && Math.abs(time-arr[i].time)<1000)
+			return;
+		if(i>=0)
+			arr.splice(i,1);
+		arr.unshift({time,text});
+		if(arr.length>32)
+			arr.pop();
+		window.clipboardStorage=arr;
+		var div=$('#keyboard-overlay.clipboard>div');
+		if(div)
+			updateClipboardDisplay(div);
+	}
+
+	static commit(t) {
+		console.log("yong:commit "+t);
+	}
+};
+
+function init_keyboard(){
+	if(is_popup || is_cand){
+		Keyboards.english.key.length=0;
+	}
+	Render.init(".keyboard");
+	Render.setKeyboard(Keyboards.english);
+
+	Render.draw();
+	Handler.init(".keyboard");
+	App.init();
+
+	const onResize=function(){
+		if(window.innerWidth==Render.getWidth() && screen.width==Render.getScreenWidth()){
+			// console.log("same size");
+			return;
+		}
+		if(document.hidden){
+			// console.log("hidden");
+			return;
+		}
+		if(is_popup){
+			let el=$('.keyboard');
+			el.style.maxWidth=window.innerWidth+'px';
+			document.body.scrollLeft=0;
+			return;
+		}
+		$('.keyboard').style.setProperty("--keyboard-height",'0px');
+		emoji(false);
+		Render.draw();
+	};
+	window.addEventListener("resize",onResize);
+	if(screen.addEventListener)
+		screen.addEventListener("change",onResize);
+	document.addEventListener("visibilitychange",onResize);
+	if(App.debug) {
+		Render.showCandidates(
+			["1","2","3","4","5","6","7","8","9","0"],
+			0,
+			true,
+			['a','b','c','d','e'],
+			{code:"hell o",got:"> ",caret:3});
+	}
+}
+
+function emoji(show){
+	overlay("emoji",show);
+}
+
+function editor(show){
+	overlay("editor",show);
+}
+
+function editorGetShift(){
+	var el=$('#keyboard-overlay button.select');
+	if(!el)
+		return 0;
+	if(el.classList.contains('selected'))
+		return 0x020000;
+	return 0;
+}
+
+function updateClipboardDisplay(div){
+	div.innerHTML='';
+	var arr=window.clipboardStorage;
+	if(!Array.isArray(arr) || arr.length==0){
+		var p=document.createElement('p');
+		p.textContent='当前没有内容';
+		div.appendChild(p);
+		return;
+	}
+	for(var i=0;i<arr.length;i++){
+		var p=arr[i];
+		var d=new Date(p.time);
+		var h=d.getHours().toString().padStart(2,0);
+		var m=d.getMinutes().toString().padStart(2,0);
+		var s=d.getSeconds().toString().padStart(2,0);
+		var time=`${h}:${m}:${s}`;
+		var one=document.createElement('button');
+		one.textContent=time+' '+p.text;
+		div.appendChild(one);
+	}
+}
+
+function overlay(type,show,other0=undefined,other1=undefined){
+	var div=$("#keyboard-overlay");
+	var prev;
+	if(div){
+		div.remove();
+		prev=getDataset(div,"type");
+		if(type=='emoji' && prev==type){
+			if(show==0)
+				return;
+		}else if(prev==type){
+			return;
+		}
+	}
+	if(!type || show===false)
+		return;
+	var cand=$('.keyboard-candidate-panel').getBoundingClientRect();
+	var border=$('.keyboard-border-inner').getBoundingClientRect();
+	var keyboard=$('.keyboard');
+	var width=keyboard.clientWidth;
+	if(landscape)
+		width*=0.7;
+	div=document.createElement('DIV');
+	setDataset(div,"type",type);
+	setDataset(div,"show",show);
+	if(prev)
+		setDataset(div,"prev",prev);
+	div.id="keyboard-overlay";
+	div.style.left="0px";
+	div.style.width=width+"px";
+	var height;
+	if(landscape){
+		height=keyboard.clientHeight-border.bottom;
+		div.style.top=border.bottom+"px";
+	}else{
+		height=keyboard.clientHeight-cand.bottom;
+		div.style.top=cand.bottom+"px";
+	}
+	div.style.height=height+"px";
+
+	var div2=document.createElement('DIV');
+	div2.style.width='100%';
+	div.appendChild(div2);
+
+	addClass(div,"overlay");
+	addClass(div,type);
+
+	if(type=="emoji"){
+		const emojis={
+			"笑脸":[
+				"😀","😃","😄","😁","😆","😅","🤣","😂","🙂","🙃","😉","😊","😇",
+				"🥰","😍","🤩","😘","😗","😚","😙","😋","😛","😜","🤪","😝","🤑","🤗","🤭",
+				"🤫","🤔","🤐","🤨","😐","😑","😶","😏","😒","🙄","😬","🤥","😌","😔","😪",
+				"🤤","😴","😷","🤒","🤕","🤢","🤮","🤧","🥵","🥶","🥴","😵","🤯","🤠","🥳",
+				"😎","🤓","🧐","😕","😟","🙁","😮","😯","😳","🥺","😦","😧","😨","😰","😥",
+			],
+			"情绪":[
+				"💩","🤡","👹","👻","👽","🤖","💋","💌","💘","💝","💖","💕","💔",
+				"💯","💢","💥","💫","💦","💨","🕳️","💣","💬","💤","💀","☠️","🙏",
+			],
+			"人体":[
+				"👋","🤚","🖐️","✋","🖖","👌","🤏","✌️","🤞","🤟","🤘","🤙","👈",
+				"👉","👆","🖕","👇","☝️","👍","👎","✊","👊","🤛","🤜","👏","🙌","👐","🤲",
+				"🤝","🙏","✍️","💅","🤳","💪","🦾","🦿","🦵","🦶","👂","🦻","👃","🧠","🦷",
+				"🦴","👀","👁️","👅","👄","👣",
+			],
+			"人物":[
+				"🎅","🧙","🧚","🧛","🧜","🧞","🧟","🤺","🏇","⛷️","🏌️","🏄","🚣",
+				"👵","🙍","🙎","🙅","🙆","💁","🙋","🧏","🙇","🤦","🤷","🤴","💂","🤰","👸",
+				"👶","🧒","👦","👧","🧑","👨","🧔","👩","🧓","👴","🏊","⛹️","🏋️","🚴","🤸",
+				"🤼","🤽","🤾","🤹","🧘","🛀","🛌","🚶","🧍","🧎","🏃","🕴️","👯","🧗",
+			],
+			"动物":[
+				"🐵","🐒","🦍","🦧","🐶","🐕","🐺","🦊","🦝","🐱","🐈","🦁","🐯",
+				"🐅","🐆","🐎","🦄","🦓","🦌","🐮","🐂","🐃","🐄","🐷","🐖","🐗","🐏","🐪",
+				"🐫","🦒","🐘","🦏","🦛","🐭","🐁","🐀","🐰","🐇","🐿️","🦔","🦇","🐻","🐨",
+				"🐼","🦥","🦘","🐾","🐓","🐣","🐤","🐦","🐧","🕊️","🦅","🦆","🦢","🦉","🦚",
+				"🦜","🐸","🐊","🐢","🐍","🐉","🦖","🐳","🐬","🐟","🐡","🦈","🐙",
+			],
+			"虫草":[
+				"🐌","🦋","🐜","🐝","🐞","🕷️","🕸️","🦂","🦟","💐","🌸","💮","🌹",
+				"🥀","🌺","🌻","🌼","🌷","🌱","🌲","🌳","🌴","🌵","🌾","🌿","☘️","🍀","🍁",
+				"🍂","🍃",
+			],
+			"食物":[
+				"🍇","🍈","🍉","🍊","🍋","🍌","🍍","🥭","🍎","🍏","🍐","🍑","🍒",
+				"🍓","🥝","🍅","🥥","🍆","🥔","🥕","🌽","🌶️","🥒","🥬","🥦","🧄","🧅","🍄",
+				"🥜","🍞","🍖","🍗","🥩","🍔","🍟","🍕","🌭","🥪","🥚","🍳","🥗","🍿","🧂",
+				"🥫","🍱","🍙","🍚","🍜","🍠","🍣","🥮","🥟","🦀","🦞","🦐","🦑","🦪","🍦",
+				"🍩","🍪","🎂","🍫","🍬","🍭","🍷","🍺","🍻","🧊","🥢","🍽️","🍴","🥄","🔪",
+			],
+			"地理":[
+				"🌐","🗺️","🧭","⛰️","🌋","🏖️","🏜️","🏟️","🏗️","🧱","🏘️","🏢","🏤",
+				"🏥","🏦","🏨","🏫","🏭","💒","🗽","⛪","🕌",".RowStyle","⛺","🎠","🎡","🎢","🚆",
+				"🚇","🚌","🚑","🚒","🚓","🚕","🚗","🚚","🏎️","🏍️","🦽","🚲","🛹","🚨","🚥",
+				"🛑","🚧","🪂","💺","🚁","🚠","🛰️","🚀","🛸","🧳","⌛","⌚","⏰","⏱️","💧",
+				"🌌","⛅","⛈️","🌧️","🌨️","🌩️","🌪️","🌫️","🌬️","🌈","🌂","⚡","❄️","⛄","🔥",
+			],
+			"活动":[
+				"🎄","🎆","🧨","🎈","🧧","🎀","🎁","🎫","🎖️","🏆","🏅","🥇","🥈",
+				"🥉","⚽","⚾","🏀","🏐","🏈","🎾","🥏","🎳","🏑","🏒","🏓","🏸","🥊","🥋",
+				"🥅","⛳","⛸️","🎣","🤿","🎿","🛷","🥌","🎯","🪀","🪁","🎱","🎮","🕹️","🎲",
+				"🧩","🧸","♠️","♥️","♦️","♣️","♟️","🃏","🀄","🎭","🎨","🧵","🧶","🎑","🎋",
+				"✨","🎇","🎊","🎽",
+			],
+			"物品":[
+				"👓","🕶️","🥼","🦺","👔","👕","👖","🧣","🧤","🧥","🧦","👗","🩱",
+				"🩲","🩳","👙","👚","👛","👜","👝","🛍️","🎒","👞","👟","👠","👑","👒","🎩",
+				"🎓","🧢","📿","💄","💍","💎","🔇","🔈","📢","🔔","🔕","🎼","🎶","🎤","🎧",
+				"📻",".sax","🎸","🎹","🎺","🎻","🥁","📱","📞","📠","🔋","🔌","💻","🖥️","🖨️",
+				"🖱️","💿","💾","🧮","🎞️","📽️","🎬","📺","📷","📹","🔍","🕯️","💡","🔦","🏮",
+			],
+			"符号":[
+				"🏧","🚮","🚰","♿","🚹","🚺","🚻","🚼","🚾","⛔","🚫","🚳","🚭",
+				"🚯","🚱","🚷","📵","🔞","🛐","♀️","♂️","🆒","🆗","🅿️","🆘","🆙","🆚","™️",
+				"©️","®️","✔️","❌","☑️","♻️","🔱","♾️","⚛️","☯️","✝️","☪️","📶","📋","✂",
+			],
+			"旗帜":[
+				"🏁","🚩","🏳️","🇨🇳","🇺🇸","🇷🇺","🇬🇧","🇫🇷","🇯🇵","🇰🇷","🇰🇵","🇩🇪","🇺🇳",
+				"🇪🇺","🇦🇶","🇦🇷","🇭🇰","🇲🇴","🇻🇳",
+			]
+		};
+		let selectedName=typeof(show)=='number'?Object.keys(emojis)[show]:show;
+		let div3=document.createElement('DIV');
+		div2.appendChild(div3);
+		for(let name in emojis){
+			let one=document.createElement('button');
+			one.textContent=name;
+			addClass(one,"select");
+			if(name==selectedName)
+				addClass(one,"selected");
+			div3.appendChild(one);
+		}
+		div2.style.contentVisibility="auto";
+		let emoji=emojis[selectedName];
+		for(let i=0;i<emoji.length;i++){
+			let one=document.createElement('button');
+			one.textContent=emoji[i];
+			one.style.width=width/10+"px";
+			one.style.height=height/4+"px";
+			div2.appendChild(one);
+		}
+		Handler.click(div2,function(e){
+			let el=e.target;
+			let text=el.textContent;
+			if(!text || text=="　")
+				return;
+			if(el.classList.contains('select')){
+				if(!el.classList.contains('selected'))
+					overlay("emoji",text);
+				return;
+			}
+			App.text(text);
+		});
+	} else if(type=="editor"){
+		var actions=[
+			{
+				text:"选择",
+				left:"20%",top:"30%",select:true,
+				click:function(el){
+					if(el.classList.contains('selected')){
+						el.classList.remove('selected');
+					}else{
+						el.classList.add('selected');
+					}
+				}
+			},
+			{
+				text:"←",
+				left: "5%",top: "30%",repeat:true,
+				click:function(){App.key(KEYCODE_LEFT|editorGetShift());}
+			},
+			{
+				text:"↑",
+				left: "20%",top: "10%",repeat:true,
+				click:function(){App.key(KEYCODE_UP|editorGetShift());}
+			},
+			{
+				text:"→",
+				left: "35%",top: "30%",repeat:true,
+				click:function(){App.key(KEYCODE_RIGHT|editorGetShift());}
+			},
+			{
+				text:"↓",
+				left: "20%",top: "50%",repeat:true,
+				click:function(){App.key(KEYCODE_DOWN|editorGetShift());}
+			},
+			{
+				text:"|←",
+				left: "5%",top: "70%",
+				click:function(){App.key(KEYCODE_HOME|editorGetShift());}
+			},
+			{
+				text:"→|",
+				left: "30%",top: "70%",
+				click:function(){App.key(KEYCODE_END|editorGetShift());}
+			},
+			{
+				text:"全选",
+				left: "70%",top: "5%",
+				click:function(){App.action("selectAll");}
+			},
+			{
+				text:"复制",
+				alt:"☁",
+				left: "70%",top: "27%",
+				click:function(){App.action("copy");},
+				longpress:function(){
+					App.commit('$GO(action:copyCloud)');
+				},
+			},
+			{
+				text:"剪切",
+				left: "70%",top: "49%",
+				click:function(){App.action("cut");},
+			},
+			{
+				text:"粘贴",
+				alt:"☁",
+				left: "70%",top: "71%",
+				click:function(){App.action("paste");},
+				longpress:function(){
+					App.commit('$GO(action:pasteCloud)');
+				}
+			},
+			{
+				text:"前删",
+				click:function(){App.key(KEYCODE_DEL_F);}
+			},
+			{
+				text:"退格",
+				click:function(){App.key(KEYCODE_DEL);}
+			},
+			{
+				text:"空格",
+				click:function(){App.key(KEYCODE_SPACE);}
+			},
+			{
+				text:"回车",
+				click:function(){App.key(KEYCODE_ENTER);}
+			},
+			{
+				text:"返回",
+				click:function(){editor(false);}
+			},
+		];
+		var actionTimeout,actionInterval;
+		setDataset(div2,'longpress',1);
+		Handler.click(div2,function(e){
+			var ele=e.target;
+			var i=getDataset(ele,"action");
+			if(e.type=='longpress'){
+				if(actions[i].longpress){
+					actions[i].longpress();
+					return true;
+				}
+				return;
+			}
+			if(actionTimeout){
+				clearTimeout(actionTimeout);
+				actions[i].click(ele);
+				actionTimeout=undefined;
+			}else if(actionInterval){
+				clearInterval(actionInterval);
+				actionInterval=undefined;
+			} else{
+				actions[i].click(ele);
+			}
+		},function(e){
+			var ele=e.target;
+			var i=getDataset(ele,"action");
+			if(actions[i].repeat){
+				actionTimeout=setTimeout(function(){
+					actionTimeout=undefined;
+					actions[i].click();
+					actionInterval = setInterval(function() {
+						actions[i].click();
+					}, REPEAT_RATE);
+				},REPEAT_TIMEOUT);
+			}
+		});
+		for(let i=0;i<actions.length;i++){
+			let one=document.createElement('button');
+			one.textContent=actions[i].text;
+			if(actions[i].symbol)
+				one.style.fontFamily='Keyboard Symbols';
+			if(actions[i].select)
+				addClass(one,"select")
+			else if(actions[i].repeat || actions[i].text.length==1)
+				addClass(one,"arrow");
+			one.style.left=actions[i].left;
+			one.style.top=actions[i].top;
+			setDataset(one,"action",i);
+			if(actions[i].alt){
+				let alt=document.createElement('span');
+				alt.textContent=actions[i].alt;
+				one.appendChild(alt);
+			}
+			div2.appendChild(one);
+		}
+	}else if(type=="cands"){
+		for(var i=0;i<other0.length;i++){
+			var one=document.createElement('button');
+			one.textContent=other0[i];
+			if(other1 && other1[i])
+				one.textContent+=other1[i];
+			one.dataset.index=i+1;
+			div2.appendChild(one);
+		}
+		Handler.click(div2,function(e){
+			var text=e.target.textContent;
+			if(!text || text=="　")
+				return;
+			var index=getDataset(e.target,"index");
+			App.select(index,true);
+			overlay("cands",false);
+		});
+	}else if(type=="clipboard"){
+		updateClipboardDisplay(div2);
+		Handler.click(div2,function(e){
+			var text=e.target.textContent;
+			if(!text || text=="　")
+				return;
+			App.text(text.substring(9));
+		});
+	}
+	document.body.appendChild(div);
+	div.addEventListener('contextmenu',function(e){
+		e.preventDefault();
+	});
+}
+init_keyboard();
+</script>
 </body>
 </html>

@@ -109,6 +109,22 @@ English prefix and JianDao 6 top-up behavior. TXJX dictionaries, schema files,
 root-level OpenCC data, opaque platform binaries, and project-specific release
 configuration are intentionally not imported.
 
+## Android 同文输入法“格调”皮肤
+
+- Upstream: <https://github.com/chwt163/mytrime/tree/main/3.3.10>
+- Integrated commit: `419b31be726ba8c8277daf8913b84dee974e2048`
+- Source: `3.3.10/style.trime.yaml`
+- Original author: 风花絮 (`chwt163`)
+- License: GNU General Public License 3.0 or later
+- License copy: `licenses/mytrime-GPL-3.0.txt`
+
+`tools/build_mobile_themes.py` keeps the complete 格调 keyboard, toolbar,
+liquid keyboard and preset-key definitions. It repairs redundant flow-mapping
+commas that strict YAML parsers reject, changes the displayed name, and injects
+the Eosphoros dawn, night and monochrome color schemes. The generated
+`mobile_themes/trime/eosphoros.trime.yaml` does not inherit Trime's built-in
+default keyboard.
+
 ## 小小输入法桌面发行包
 
 - Integration source: <https://github.com/hugh7007/xmjd6-rere/releases/tag/20231115>

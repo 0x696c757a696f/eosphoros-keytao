@@ -12,3 +12,112 @@
   --shadow: 0 0.08rem 0.2rem rgba(0, 0, 0, 0.34);
   color-scheme: dark;
 }
+
+.keyboard {
+  background: var(--surface);
+  border-color: var(--divider);
+}
+
+.keyboard-key {
+  border: 1px solid var(--divider);
+  border-radius: 0.3rem;
+  box-shadow: var(--shadow);
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.keyboard-key.special-key {
+  border-color: var(--divider);
+  background: var(--surface-control);
+  color: var(--text);
+}
+
+.keyboard-key.kbr-key-active,
+.keyboard-key.highlighted,
+.keyboard-key.highlighted.alt-show {
+  border: 0.12rem solid var(--accent);
+  background: var(--surface-pressed);
+  color: var(--accent);
+}
+
+.keyboard-key > span {
+  color: var(--text-muted);
+}
+
+.keyboard-candidate-panel,
+body:not(.landscape) .keyboard:not(.popup) .keyboard-candidate-panel span[data-page="true"] {
+  border-color: var(--divider);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.keyboard-candidate-panel span.first,
+.keyboard-candidate-panel span label.codetip,
+.landscape .keyboard-candidate-panel span {
+  color: var(--accent);
+}
+
+.keyboard-candidate-panel .tool,
+.landscape .keyboard-candidate-panel .tool {
+  color: var(--text-muted);
+}
+
+.keyboard-candidate-panel .tool:active {
+  background: var(--candidate-active);
+  color: var(--accent);
+}
+
+.keyboard-candidate-panel span[data-active="1"] {
+  background: var(--candidate-active) !important;
+}
+
+.overlay,
+.action-menu {
+  border-color: var(--divider);
+  background: var(--surface);
+}
+
+.emoji > div > button,
+.emoji > div > div > button,
+.editor,
+.editor button,
+.cands button,
+.clipboard button,
+.action-menu > .action-item {
+  border-color: var(--divider);
+  border-radius: 0.3rem;
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.overlay button.active,
+.overlay button:active,
+.overlay button.selected,
+.action-menu > .action-item:active {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.clipboard p {
+  color: var(--text);
+}
+
+.keyboard-code-panel {
+  border-color: var(--divider);
+  background: var(--surface);
+}
+
+.keyboard-code-panel .code-got,
+.keyboard-code-panel .code-text {
+  color: var(--text);
+}
+
+.keyboard-code-panel .code-caret {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.landscape .keyboard-candidate-panel {
+  border-color: var(--divider);
+  background: var(--surface-raised);
+}

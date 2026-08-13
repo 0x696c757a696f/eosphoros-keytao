@@ -39,7 +39,7 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/Fcitx5_Linux_撤回合并.py",
     ),
     "eosphoros-trime-android.zip": (
-        "mobile_themes/trime/eosphoros.trime.yaml",
+        "mobile_themes/trime",
     ),
     "eosphoros-fcitx5-android.zip": (
         "mobile_themes/fcitx5-android",
@@ -66,7 +66,7 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
 
 PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
     "eosphoros-trime-android.zip": (
-        ("mobile_themes/trime/eosphoros.trime.yaml", "eosphoros.trime.yaml"),
+        ("mobile_themes/trime/", ""),
     ),
     "eosphoros-fcitx5-android.zip": (
         ("mobile_themes/fcitx5-android/", "themes/"),

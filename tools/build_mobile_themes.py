@@ -25,6 +25,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "mobile_themes"
 PALETTES = OUTPUT / "palettes.yaml"
+TRIME_TEMPLATE_DIR = ROOT / "tools" / "templates" / "trime" / "mytrime-3.3.10"
 ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 HASH_COLOR_RE = re.compile(r"#(?P<rgb>[0-9A-Fa-f]{6})(?P<alpha>[0-9A-Fa-f]{2})?")
 BARE_COLOR_RE = re.compile(
@@ -109,7 +110,7 @@ def build_fcitx(config: dict[str, Any]) -> dict[str, bytes]:
 
 def trime_color_scheme(theme: dict[str, Any]) -> dict[str, str]:
     color = lambda key: "0x" + theme[key].removeprefix("#").lower()
-    return {
+    scheme = {
         "name": f"{theme['name']}／{theme['english_name']}",
         "author": "eosphoros-keytao",
         "back_color": color("bar"),
@@ -141,34 +142,97 @@ def trime_color_scheme(theme: dict[str, Any]) -> dict[str, str]:
         "text_color": color("text"),
         "text_back_color": color("background"),
     }
+    # mytrime's 格调 layout addresses per-row and functional key colors by
+    # these custom role names.  Omitting them makes Trime render bare labels.
+    scheme.update(
+        {
+            "bkg": color("key"),
+            "tkg": color("text"),
+            "benter": color("accent"),
+            "tenter": color("accent_text"),
+            "bgn": color("alternative"),
+            "tgn": color("text"),
+            "bbs": color("alternative"),
+            "tbs": color("text"),
+            "baoe": color("key"),
+            "taoe": color("accent"),
+            "bh1": color("key"),
+            "th1": color("text"),
+            "bh2": color("key"),
+            "th2": color("text"),
+            "bh3": color("key"),
+            "th3": color("text"),
+            "bh4": color("key"),
+            "th4": color("text"),
+            "bh5": color("key"),
+            "bh6": color("key"),
+            "c1": color("alternative"),
+            "c2": color("alternative"),
+            "c3": color("alternative"),
+            "c4": color("alternative"),
+            "c5": color("alternative"),
+            "c7": color("accent"),
+        }
+    )
+    return scheme
 
 
-def build_trime(config: dict[str, Any]) -> bytes:
-    document: dict[str, Any] = {
-        "config_version": "3.0",
-        "__include": "trime:/",
-        "name": "晨星键道／Eosphoros KeyTao",
-        "author": "eosphoros-keytao",
-        "style": {
-            "__include": "trime:/style",
-            "color_scheme": "eosphoros_dawn",
-            "color_scheme_dark": "eosphoros_night",
-        },
-        "preset_color_schemes": {
-            "__include": "trime:/preset_color_schemes",
-            **{
-                f"eosphoros_{theme_id}": trime_color_scheme(theme)
-                for theme_id, theme in config["themes"].items()
-            },
-        },
+def build_trime(config: dict[str, Any]) -> dict[str, bytes]:
+    """Adapt the reviewed 格调 layout without inheriting Trime's default skin."""
+    variants = {
+        "style.trime.yaml": ("eosphoros.trime.yaml", "晨星键道·格调"),
     }
-    header = (
-        "# 晨星键道 Trime 主题；继承 Trime 3.0 内置默认键盘，只覆盖配色。\n"
-        "# SPDX-License-Identifier: MIT\n"
+    schemes = {
+        f"eosphoros_{theme_id}": trime_color_scheme(theme)
+        for theme_id, theme in config["themes"].items()
+    }
+    schemes["eosphoros_dawn"]["dark_scheme"] = "eosphoros_night"
+    schemes["eosphoros_night"]["light_scheme"] = "eosphoros_dawn"
+    scheme_yaml = yaml.safe_dump(
+        schemes, allow_unicode=True, sort_keys=False, default_flow_style=False
     )
-    return (header + yaml.safe_dump(document, allow_unicode=True, sort_keys=False)).encode(
-        "utf-8"
-    )
+    indented_schemes = "".join(f"  {line}\n" for line in scheme_yaml.splitlines())
+
+    result: dict[str, bytes] = {}
+    for source_name, (output_name, display_name) in variants.items():
+        source = (TRIME_TEMPLATE_DIR / source_name).read_text(encoding="utf-8")
+        # Upstream 3.3.10 contains redundant commas in several flow mappings.
+        # Trime tolerates them, but strict YAML parsers and RimeTool do not.
+        adapted = re.sub(r",[ \t]*,", ",", source)
+        adapted = re.sub(
+            r"(?m)^name:.*$", f"name: {display_name}", adapted, count=1
+        )
+        adapted = re.sub(
+            r"(?m)^author:.*$",
+            "author: 风花絮；晨星键道适配",
+            adapted,
+            count=1,
+        )
+        adapted = adapted.replace(
+            "style:\n",
+            "style:\n"
+            "  color_scheme: eosphoros_dawn\n"
+            "  color_scheme_dark: eosphoros_night\n",
+            1,
+        )
+        adapted = re.sub(
+            r"(?ms)^preset_color_schemes:\n.*?(?=^liquid_keyboard:\n)",
+            "preset_color_schemes:\n" + indented_schemes + "\n",
+            adapted,
+            count=1,
+        )
+        provenance = (
+            "# 晨星键道 Trime 完整皮肤；以用户审定的格调布局为基准。\n"
+            "# Upstream commit: 419b31be726ba8c8277daf8913b84dee974e2048\n"
+        )
+        # Keep the vendored layout readable while avoiding upstream's trailing
+        # whitespace in generated files and review diffs.
+        adapted = provenance + "\n".join(
+            line.rstrip() for line in adapted.splitlines()
+        ) + "\n"
+        yaml.safe_load(adapted)
+        result[output_name] = adapted.encode("utf-8")
+    return result
 
 
 def validate_ios_skin_archive(archive: bytes, expected_root: str) -> None:
@@ -362,6 +426,18 @@ def restyle_wanxiang_source(
     elif relative.endswith("Custom.libsonnet"):
         text = text.replace("ios26_style: true", "ios26_style: false")
         text = text.replace("cornerRadius: 8,", "cornerRadius: 11,")
+    elif relative.endswith("shared/toolbar/iPhoneRenderer.libsonnet"):
+        text = text.replace(
+            "backgroundStyle: 'toolbarcollectionCellBackgroundStyle',",
+            "backgroundStyle: 'toolbarButtonBackgroundStyle',",
+        )
+    elif relative.endswith("shared/toolbar/iPhone.libsonnet"):
+        text = text.replace(
+            "toolbarcollectionCellBackgroundStyle: "
+            "styleFactories.makeGeometryStyle(color[theme]['键盘背景颜色']),",
+            "toolbarcollectionCellBackgroundStyle: { "
+            "normalColor: 0, highlightColor: 0 },",
+        )
     return text
 
 
@@ -599,10 +675,10 @@ def build_ios(
     )
     yuanshu: dict[str, bytes] = {}
     hamster: dict[str, bytes] = {}
-    dawn = dict(config["themes"]["dawn"])
-    dawn.update(name="晨星键道", english_name="Eosphoros KeyTao")
+    adaptive = dict(config["themes"]["dawn"])
+    adaptive.update(name="晨星·昼夜", english_name="Eosphoros Adaptive")
     variants = (
-        ("eosphoros", dawn, config["themes"]["night"]),
+        ("eosphoros", adaptive, config["themes"]["night"]),
         ("eosphoros-mono", config["themes"]["mono"], None),
     )
     for root_name, theme, dark_theme in variants:
@@ -637,7 +713,8 @@ def build_committed(config: dict[str, Any], destination: Path) -> None:
     fcitx = build_fcitx(config)
     for name, data in fcitx.items():
         write_if_changed(destination / "fcitx5-android" / name, data)
-    write_if_changed(destination / "trime" / "eosphoros.trime.yaml", build_trime(config))
+    for name, data in build_trime(config).items():
+        write_if_changed(destination / "trime" / name, data)
 
 
 def artifact_contents(path: Path) -> bytes | dict[str, bytes]:
