@@ -684,6 +684,11 @@ class RepositoryValidationTests(unittest.TestCase):
 
         release = (root / ".github/workflows/create-release.yml").read_text(encoding="utf-8")
         self.assertIn("tools/prepare_rabbit_release.py --rabbit-dir Rabbit", release)
+        self.assertIn("github.rest.repos.getLatestRelease", release)
+        self.assertIn("`rabbit-${tag}-x64.zip`", release)
+        self.assertIn("asset.digest", release)
+        self.assertIn("sha256sum --check --strict", release)
+        self.assertNotIn("RABBIT_TAG: v", release)
         self.assertNotIn("Prepare Rime directory for Rabbit", release)
         self.assertNotIn("cp -r Rime/. Rabbit/Data", release)
 

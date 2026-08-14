@@ -17,10 +17,6 @@ env:
   OPENCC_TONGGUI_SHA256: 1b76a1028669b89d55a9055400e8be628014ea6f3b200b34b5e8a7d88f04e018
   YONG_WIN_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-win.7z
   YONG_LINUX_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-lin.7z
-  RABBIT_TAG: v0.4.0
-  RABBIT_URL: https://github.com/rimeinn/rabbit/releases/download/v0.4.0/rabbit-v0.4.0-x64.zip
-  RABBIT_SHA256: 33a66a9a87845ea0eb78d552a8002c4a49902575f62422327032b29c4115a6ad
-
 jobs:
   check_release_needed:
     runs-on: ubuntu-latest
@@ -227,15 +223,43 @@ jobs:
           }
           core.setOutput('changelog', changelog);
 
-    - name: Download verified Rabbit release asset
+    - name: Resolve latest Rabbit x64 release
+      id: rabbit
+      uses: actions/github-script@v9
+      with:
+        script: |
+          const release = await github.rest.repos.getLatestRelease({
+            owner: 'rimeinn',
+            repo: 'rabbit'
+          });
+          const tag = release.data.tag_name;
+          const assetName = `rabbit-${tag}-x64.zip`;
+          const asset = release.data.assets.find(candidate => candidate.name === assetName);
+          if (!asset) {
+            core.setFailed(`Latest Rabbit release ${tag} has no ${assetName} asset.`);
+            return;
+          }
+          const digest = asset.digest || '';
+          if (!/^sha256:[0-9a-f]{64}$/i.test(digest)) {
+            core.setFailed(`${assetName} has no valid SHA256 digest.`);
+            return;
+          }
+          core.info(`Using Rabbit ${tag}: ${asset.browser_download_url}`);
+          core.setOutput('url', asset.browser_download_url);
+          core.setOutput('sha256', digest.substring('sha256:'.length));
+
+    - name: Download verified latest Rabbit release asset
+      env:
+        RABBIT_URL: ${{ steps.rabbit.outputs.url }}
+        RABBIT_SHA256: ${{ steps.rabbit.outputs.sha256 }}
       run: |
-        curl --fail --location --output "rabbit-$RABBIT_TAG.zip" "$RABBIT_URL"
-        echo "$RABBIT_SHA256  rabbit-$RABBIT_TAG.zip" | sha256sum --check --strict
+        curl --retry 3 --retry-all-errors --fail --location --output rabbit.zip "$RABBIT_URL"
+        echo "$RABBIT_SHA256  rabbit.zip" | sha256sum --check --strict
 
     - name: Unzip Rabbit
       run: |
         mkdir -p Rabbit
-        unzip "rabbit-$RABBIT_TAG.zip" -d Rabbit
+        unzip rabbit.zip -d Rabbit
 
     - name: Prepare minimal Rabbit bundle
       run: |
