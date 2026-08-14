@@ -4,30 +4,18 @@ import argparse
 from pathlib import Path
 
 try:
-    from tools.build_platform_packages import PACKAGE_EXTRAS
-    from tools.dictionary_profiles import PROFILES, archive_name
+    from tools.dictionary_profiles import PROFILES
+    from tools.release_catalog import STANDALONE_ASSETS, profile_assets
 except ModuleNotFoundError:
-    from build_platform_packages import PACKAGE_EXTRAS
-    from dictionary_profiles import PROFILES, archive_name
-
-
-FCITX5_PLATFORMS = ("macos", "android", "linux")
-YONG_PLATFORMS = ("windows", "android", "linux")
+    from dictionary_profiles import PROFILES
+    from release_catalog import STANDALONE_ASSETS, profile_assets
 
 
 def expected_assets() -> tuple[str, ...]:
-    assets = set(PACKAGE_EXTRAS)
-    for platform in FCITX5_PLATFORMS:
-        for profile in PROFILES:
-            assets.add(archive_name(f"eosphoros-fcitx5-{platform}.zip", profile))
+    assets = set(profile_assets())
     for profile in PROFILES:
-        assets.add(archive_name("eosphoros-rabbit-windows-rime.zip", profile))
         assets.add(f"dazhu-{profile}.txt")
-    for platform in YONG_PLATFORMS:
-        for profile in PROFILES:
-            assets.add(archive_name(f"eosphoros-yong-{platform}.zip", profile))
-    assets.add("eosphoros-yong-desktop-skins.zip")
-    assets.add("eosphoros-fcitx5-android-themes.zip")
+    assets.update(STANDALONE_ASSETS)
     return tuple(sorted(assets))
 
 

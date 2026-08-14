@@ -15,6 +15,24 @@ class PlatformPackageTests(unittest.TestCase):
 
         self.assertEqual(DEFAULT_ZIP_COMPRESSLEVEL, 6)
 
+    def test_package_bases_can_be_split_between_parallel_jobs(self) -> None:
+        from tools.build_platform_packages import PACKAGE_EXTRAS, package_files
+
+        weasel_base = "eosphoros-weasel-windows-rime.zip"
+        weasel = package_files(ROOT, only_base_names={weasel_base})
+        native = package_files(ROOT, excluded_base_names={weasel_base})
+
+        self.assertEqual(
+            set(weasel),
+            {
+                "eosphoros-weasel-windows-rime-full.zip",
+                "eosphoros-weasel-windows-rime-standard.zip",
+                "eosphoros-weasel-windows-rime-lite.zip",
+            },
+        )
+        self.assertTrue(set(weasel).isdisjoint(native))
+        self.assertEqual(set(weasel) | set(native), set(PACKAGE_EXTRAS))
+
     def test_rime_smoke_test_requires_compiled_core_artifacts(self) -> None:
         from tools.smoke_test_rime_deployment import (
             REQUIRED_BUILD_OUTPUTS,

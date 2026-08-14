@@ -191,10 +191,13 @@ class RepositoryValidationTests(unittest.TestCase):
                     self.assertRegex(parser[section][field], r"^#[0-9A-F]{8}$")
 
     def test_release_embeds_fcitx5_themes_in_platform_archives(self) -> None:
+        from tools.release_catalog import profile_assets
+
         root = Path(__file__).resolve().parents[1]
         release_workflow = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )
+        release_assets = set(profile_assets())
         package_workflow = (root / ".github/workflows/package-master.yml").read_text(
             encoding="utf-8"
         )
@@ -204,7 +207,7 @@ class RepositoryValidationTests(unittest.TestCase):
             for profile in ("full", "standard", "lite"):
                 self.assertIn(
                     f"eosphoros-fcitx5-{platform}-{profile}.zip",
-                    release_workflow,
+                    release_assets,
                 )
             self.assertNotIn(f"name: {artifact}", package_workflow)
         self.assertIn("name: Upload complete build", package_workflow)
@@ -367,6 +370,9 @@ class RepositoryValidationTests(unittest.TestCase):
         release = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )
+        release_catalog = (root / "tools/release_catalog.py").read_text(
+            encoding="utf-8"
+        )
         package = (root / ".github/workflows/package-master.yml").read_text(
             encoding="utf-8"
         )
@@ -379,7 +385,7 @@ class RepositoryValidationTests(unittest.TestCase):
             "eosphoros-hamster-ios-rime",
         ):
             for profile in ("full", "standard", "lite"):
-                self.assertIn(f"{base}-{profile}.zip", release)
+                self.assertIn(f'"{base}.zip"', release_catalog)
         for obsolete_archive in (
             "eosphoros-mobile.zip",
             "fcitx5-linux-eosphoros-themes.zip",
@@ -652,6 +658,9 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual(len(actual_names), 2)
 
     def test_release_publishes_platform_packages(self) -> None:
+        from tools.build_release_notes import build_release_notes
+        from tools.release_catalog import render_download_table
+
         root = Path(__file__).resolve().parents[1]
         release = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
@@ -660,21 +669,35 @@ class RepositoryValidationTests(unittest.TestCase):
             encoding="utf-8"
         )
         pixi = (root / "pixi.toml").read_text(encoding="utf-8")
+        notes = build_release_notes(
+            "https://github.com/example/project",
+            "test-tag",
+            "https://github.com/example/project/actions/runs/1",
+            "1.1",
+            "- change",
+        )
 
         self.assertIn("python tools/build_platform_packages.py", release)
+        self.assertIn("python tools/build_release_notes.py", release)
         self.assertIn("pixi run generated-quick", package)
         self.assertIn("python tools/build_platform_packages.py --check", pixi)
-        self.assertIn("## 平台与词库版本", release)
+        self.assertIn("## 平台与词库版本", notes)
+        self.assertLess(
+            notes.index("## Release Notes"),
+            notes.index("## 平台与词库版本"),
+        )
         self.assertIn(
             "| 平台 | 输入法 / 引擎 | 完整版 | 标准版 | 精简版 | 主题 / 皮肤 |",
-            release,
+            notes,
         )
-        self.assertIn("eosphoros-fcitx5-android-themes.zip", release)
-        self.assertIn("eosphoros-yong-desktop-skins.zip", release)
+        self.assertIn("eosphoros-fcitx5-android-themes.zip", notes)
+        self.assertIn("eosphoros-yong-desktop-skins.zip", notes)
+        self.assertNotIn("releases/latest/download", notes)
+        self.assertIn("releases/download/test-tag", notes)
         for platform in ("macOS", "Android", "Linux"):
             self.assertLess(
-                release.index(f"| {platform} | Fcitx5 + Rime |"),
-                release.index(f"| {platform} | Fcitx5 原生 Table |"),
+                notes.index(f"| {platform} | Fcitx5 + Rime |"),
+                notes.index(f"| {platform} | Fcitx5 原生 Table |"),
             )
         bases = (
             "eosphoros-rime",
@@ -697,13 +720,25 @@ class RepositoryValidationTests(unittest.TestCase):
         for base in bases:
             for profile in ("full", "standard", "lite"):
                 self.assertIn(
-                    f"releases/latest/download/{base}-{profile}.zip", release
+                    f"releases/download/test-tag/{base}-{profile}.zip", notes
                 )
         platform_positions = [
-            release.index(f"| {platform} |")
+            notes.index(f"| {platform} |")
             for platform in ("Windows", "macOS", "Android", "iOS", "Linux")
         ]
         self.assertEqual(platform_positions, sorted(platform_positions))
+        readme = (root / "README.md").read_text(encoding="utf-8")
+        table = readme.split("<!-- release-download-table:start -->\n", 1)[1].split(
+            "\n<!-- release-download-table:end -->", 1
+        )[0]
+        self.assertEqual(
+            table,
+            render_download_table(
+                "https://github.com/0x696c757a696f/eosphoros-keytao",
+                "https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download",
+                compact_headers=False,
+            ),
+        )
 
     def test_rabbit_release_is_minimal_and_uses_weasel_themes(self) -> None:
         from tools.prepare_rabbit_release import build_rabbit_config, load_weasel_yaml
@@ -776,6 +811,7 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("GITHUB_RUN_NUMBER", release)
         self.assertIn("GITHUB_RUN_ATTEMPT", release)
         self.assertIn('--target "$GITHUB_SHA"', release)
+        self.assertIn("--latest", release)
         self.assertIn("inputs.dry_run == true", release)
         self.assertIn("inputs.dry_run != true", release)
         self.assertIn("name: release-dry-run-${{ github.run_number }}", release)
@@ -785,6 +821,7 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("pattern: release-*-assets", release)
         self.assertIn("merge-multiple: true", release)
         self.assertNotIn("actions: write", release)
+        self.assertEqual(workflow["permissions"], {"contents": "read"})
         jobs = workflow["jobs"]
         for job in (
             "build-native-release",
@@ -798,11 +835,18 @@ class RepositoryValidationTests(unittest.TestCase):
             {
                 "check_release_needed",
                 "validate-source",
+                "validate-generated",
                 "build-native-release",
                 "build-rabbit-release",
                 "build-yong-release",
             },
         )
+        self.assertEqual(jobs["build-native-release"]["needs"], "check_release_needed")
+        self.assertEqual(len(jobs["validate-source"]["strategy"]["matrix"]["include"]), 3)
+        self.assertIn("pixi run quality", release)
+        self.assertIn("pixi run generated-quick", release)
+        self.assertIn("--only-base eosphoros-weasel-windows-rime.zip", release)
+        self.assertIn("--exclude-base eosphoros-weasel-windows-rime.zip", release)
 
     def test_release_manifest_requires_every_profile_asset(self) -> None:
         from tools.build_release_manifest import build_manifest, expected_assets
@@ -1864,7 +1908,10 @@ columns:
         self.assertNotIn("actions/setup-python", release)
         self.assertNotIn("python -m pip install", release)
         self.assertIn("validate-source:", release)
-        self.assertIn("pixi run check", release)
+        self.assertIn("validate-generated:", release)
+        self.assertIn("pixi run test-shard", release)
+        self.assertIn("pixi run quality", release)
+        self.assertIn("pixi run generated-quick", release)
         self.assertNotIn("actions/setup-python", package)
         self.assertNotIn("python -m pip install", package)
         self.assertIn("pixi run test", package)
@@ -1916,11 +1963,22 @@ columns:
             render_pixi(),
         )
         dependabot = (root / ".github/dependabot.yml").read_text(encoding="utf-8")
+        dependabot_config = yaml.safe_load(dependabot)
         sync = (
             root / ".github/workflows/sync-development-dependencies.yml"
         ).read_text(encoding="utf-8")
         self.assertIn("package-ecosystem: pip", dependabot)
         self.assertIn("package-ecosystem: github-actions", dependabot)
+        actions_updates = next(
+            update
+            for update in dependabot_config["updates"]
+            if update["package-ecosystem"] == "github-actions"
+        )
+        self.assertEqual(actions_updates["schedule"]["interval"], "daily")
+        self.assertEqual(
+            actions_updates["directories"],
+            ["/", "/.github/actions/*"],
+        )
         self.assertIn("./.github/actions/setup-pixi", sync)
         self.assertLess(
             sync.index("./.github/actions/setup-pixi"),
@@ -1948,7 +2006,10 @@ columns:
         setup_action = (root / ".github/actions/setup-pixi/action.yml").read_text(
             encoding="utf-8"
         )
-        self.assertIn("prefix-dev/setup-pixi@v0.10.0", setup_action)
+        self.assertRegex(
+            setup_action,
+            r"prefix-dev/setup-pixi@[0-9a-f]{40} # v0\.10\.0",
+        )
         self.assertIn("run-install: true", setup_action)
         package = (workflows / "package-master.yml").read_text(encoding="utf-8")
         release = (workflows / "create-release.yml").read_text(encoding="utf-8")
@@ -1964,6 +2025,7 @@ columns:
         self.assertIn("./.github/actions/fetch-opencc", package)
         self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", package)
         self.assertIn("validate-source:", release)
+        self.assertIn("validate-generated:", release)
         self.assertEqual(release.count("./.github/actions/fetch-opencc"), 2)
         self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", release)
 
@@ -2127,16 +2189,34 @@ print("撤回完成", file=sys.stderr)
             "actions/github-script@v8",
         ):
             self.assertNotIn(deprecated, workflows)
-        for native_node24 in (
-            "actions/checkout@v7",
-            "actions/setup-python@v7",
-            "actions/cache@v6",
-            "actions/upload-artifact@v7",
-            "actions/download-artifact@v8",
-            "actions/github-script@v9",
-            "prefix-dev/setup-pixi@v0.10.0",
+        for action, version in (
+            ("actions/checkout", "v7"),
+            ("actions/setup-python", "v7"),
+            ("actions/cache", "v6"),
+            ("actions/upload-artifact", "v7"),
+            ("actions/download-artifact", "v8"),
+            ("actions/github-script", "v9"),
         ):
-            self.assertIn(native_node24, workflows)
+            self.assertRegex(
+                workflows,
+                rf"{re.escape(action)}@(?:{version}|[0-9a-f]{{40}} # {version})",
+            )
+        self.assertRegex(
+            workflows,
+            r"prefix-dev/setup-pixi@[0-9a-f]{40} # v0\.10\.0",
+        )
+
+        release = (root / ".github/workflows/create-release.yml").read_text(
+            encoding="utf-8"
+        )
+        remote_uses = re.findall(
+            r"uses:\s+([^./\s][^@\s]+)@([^\s#]+)(?:\s+#\s*(\S+))?",
+            release,
+        )
+        self.assertGreater(len(remote_uses), 0)
+        for action, reference, version in remote_uses:
+            self.assertRegex(reference, r"^[0-9a-f]{40}$", action)
+            self.assertRegex(version, r"^v\d", action)
 
     def test_release_changelog_compares_against_triggering_commit(self) -> None:
         root = Path(__file__).resolve().parents[1]

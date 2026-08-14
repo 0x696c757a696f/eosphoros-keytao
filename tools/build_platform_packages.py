@@ -155,25 +155,50 @@ def _validate_files(root: Path, files: list[Path]) -> list[Path]:
     return sorted(set(files), key=lambda path: path.relative_to(root).as_posix())
 
 
-def package_files(root: Path) -> dict[str, list[Path]]:
+def package_files(
+    root: Path,
+    only_base_names: set[str] | None = None,
+    excluded_base_names: set[str] | None = None,
+) -> dict[str, list[Path]]:
     common = common_runtime_files(root)
     packages: dict[str, list[Path]] = {}
-    for archive_name, extras in PACKAGE_EXTRAS.items():
-        extra_files: list[Path] = []
-        for relative in extras:
-            path = root / relative
-            if path.is_dir():
-                extra_files.extend(_files_below(root, relative))
-            else:
-                extra_files.append(path)
-        excluded = set(excluded_dictionaries(package_profile(archive_name)))
-        files = [
-            path
-            for path in common + extra_files
-            if path.relative_to(root).as_posix() not in excluded
-        ]
-        packages[archive_name] = _validate_files(root, files)
+    only_base_names = only_base_names or set(PACKAGE_BASE_EXTRAS)
+    excluded_base_names = excluded_base_names or set()
+    selected_bases = only_base_names - excluded_base_names
+    unknown = selected_bases - set(PACKAGE_BASE_EXTRAS)
+    if unknown:
+        raise ValueError("unknown package bases: " + ", ".join(sorted(unknown)))
+    for base_name, extras in PACKAGE_BASE_EXTRAS.items():
+        if base_name not in selected_bases:
+            continue
+        for profile in PROFILES:
+            profile_archive_name = archive_name(base_name, profile)
+            packages[profile_archive_name] = _package_files_for_archive(
+                root, common, profile_archive_name, extras
+            )
     return packages
+
+
+def _package_files_for_archive(
+    root: Path,
+    common: list[Path],
+    archive_name_value: str,
+    extras: tuple[str, ...],
+) -> list[Path]:
+    extra_files: list[Path] = []
+    for relative in extras:
+        path = root / relative
+        if path.is_dir():
+            extra_files.extend(_files_below(root, relative))
+        else:
+            extra_files.append(path)
+    excluded = set(excluded_dictionaries(package_profile(archive_name_value)))
+    files = [
+        path
+        for path in common + extra_files
+        if path.relative_to(root).as_posix() not in excluded
+    ]
+    return _validate_files(root, files)
 
 
 def _archive_name(root: Path, archive_name: str, path: Path) -> str:
@@ -216,8 +241,12 @@ def build_packages(
     root: Path = ROOT,
     output_dir: Path = ROOT,
     compresslevel: int = DEFAULT_ZIP_COMPRESSLEVEL,
+    only_base_names: set[str] | None = None,
+    excluded_base_names: set[str] | None = None,
 ) -> list[Path]:
-    package_specs = list(package_files(root).items())
+    package_specs = list(
+        package_files(root, only_base_names, excluded_base_names).items()
+    )
 
     def build_package(spec: tuple[str, list[Path]]) -> Path:
         archive_name, files = spec
@@ -245,15 +274,35 @@ def main() -> int:
         action="store_true",
         help="validate package manifests without writing archives",
     )
+    parser.add_argument(
+        "--only-base",
+        action="append",
+        choices=sorted(PACKAGE_BASE_EXTRAS),
+        help="build only this profile-expanded base archive; repeat as needed",
+    )
+    parser.add_argument(
+        "--exclude-base",
+        action="append",
+        default=[],
+        choices=sorted(PACKAGE_BASE_EXTRAS),
+        help="exclude this profile-expanded base archive; repeat as needed",
+    )
     args = parser.parse_args()
+    only_base_names = set(args.only_base) if args.only_base else None
+    excluded_base_names = set(args.exclude_base)
 
     if args.check:
-        packages = package_files(ROOT)
+        packages = package_files(ROOT, only_base_names, excluded_base_names)
         for name, files in packages.items():
             print(f"{name}: {len(files)} files")
         return 0
 
-    for archive in build_packages(ROOT, args.output_dir.resolve()):
+    for archive in build_packages(
+        ROOT,
+        args.output_dir.resolve(),
+        only_base_names=only_base_names,
+        excluded_base_names=excluded_base_names,
+    ):
         print(archive)
     return 0
 

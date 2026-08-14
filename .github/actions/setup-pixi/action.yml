@@ -4,7 +4,7 @@ description: Install Pixi, restore its cache, and materialize the locked environ
 runs:
   using: composite
   steps:
-    - uses: prefix-dev/setup-pixi@v0.10.0
+    - uses: prefix-dev/setup-pixi@a09b6247153796b190642a2b53fac4241043cf6f # v0.10.0
       with:
         cache: true
         run-install: true

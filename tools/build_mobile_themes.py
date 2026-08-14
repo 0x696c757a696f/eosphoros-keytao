@@ -15,6 +15,7 @@ import time
 import urllib.error
 import urllib.request
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -704,33 +705,45 @@ def build_ios(
     yuanshu_source, hamster_source, yuanshu_license, hamster_license = (
         templates or obtain_ios_templates(config)
     )
-    yuanshu: dict[str, bytes] = {}
-    hamster: dict[str, bytes] = {}
     adaptive = dict(config["themes"]["dawn"])
     adaptive.update(name="晨星·昼夜", english_name="Eosphoros Adaptive")
     variants = (
         ("eosphoros", adaptive, config["themes"]["night"]),
         ("eosphoros-mono", config["themes"]["mono"], None),
     )
-    for root_name, theme, dark_theme in variants:
-        yuanshu[f"{root_name}.cskin"] = adapt_mature_skin(
-            yuanshu_source,
-            theme,
-            root_name,
-            yuanshu_license,
-            "BlackCCCat/ResourceforHamster",
-            dark_theme,
-            compresslevel,
-        )
-        hamster[f"{root_name}.hskin"] = adapt_mature_skin(
-            hamster_source,
-            theme,
-            root_name,
-            hamster_license,
-            "BlackCCCat/ResourceforHamster",
-            dark_theme,
-            compresslevel,
-        )
+    jobs: dict[tuple[str, str], Any] = {}
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        for root_name, theme, dark_theme in variants:
+            jobs[("yuanshu", f"{root_name}.cskin")] = executor.submit(
+                adapt_mature_skin,
+                yuanshu_source,
+                theme,
+                root_name,
+                yuanshu_license,
+                "BlackCCCat/ResourceforHamster",
+                dark_theme,
+                compresslevel,
+            )
+            jobs[("hamster", f"{root_name}.hskin")] = executor.submit(
+                adapt_mature_skin,
+                hamster_source,
+                theme,
+                root_name,
+                hamster_license,
+                "BlackCCCat/ResourceforHamster",
+                dark_theme,
+                compresslevel,
+            )
+    yuanshu = {
+        name: future.result()
+        for (client, name), future in jobs.items()
+        if client == "yuanshu"
+    }
+    hamster = {
+        name: future.result()
+        for (client, name), future in jobs.items()
+        if client == "hamster"
+    }
     return yuanshu, hamster
 
 
