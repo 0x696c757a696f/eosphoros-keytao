@@ -127,13 +127,22 @@ class Fcitx5TableTests(unittest.TestCase):
                 with zipfile.ZipFile(archive) as package:
                     members[archive.name] = set(package.namelist())
 
-        linux = members["eosphoros-fcitx5-linux.zip"]
+        self.assertEqual(
+            set(members),
+            {
+                f"eosphoros-fcitx5-{platform}-{profile}.zip"
+                for platform in ("linux", "macos", "android")
+                for profile in ("full", "standard", "lite")
+            },
+        )
+
+        linux = members["eosphoros-fcitx5-linux-full.zip"]
         self.assertIn("inputmethod/eosphoros.conf", linux)
         self.assertIn("table/eosphoros.main.dict", linux)
         self.assertTrue(any(path.startswith("themes/") for path in linux))
 
-        macos = members["eosphoros-fcitx5-macos.zip"]
-        android = members["eosphoros-fcitx5-android.zip"]
+        macos = members["eosphoros-fcitx5-macos-full.zip"]
+        android = members["eosphoros-fcitx5-android-full.zip"]
         for platform in (macos, android):
             self.assertIn("eosphoros.conf", platform)
             self.assertIn("eosphoros.txt", platform)

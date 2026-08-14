@@ -21,6 +21,11 @@ from typing import Any
 import yaml
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
+try:
+    from tools.dictionary_profiles import PROFILES, archive_name
+except ModuleNotFoundError:
+    from dictionary_profiles import PROFILES, archive_name
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "mobile_themes"
@@ -775,7 +780,7 @@ def embed_ios_skins(
     compresslevel: int = 9,
 ) -> None:
     yuanshu, hamster = build_ios(config, compresslevel=compresslevel)
-    targets = {
+    base_targets = {
         "eosphoros-yuanshu-ios-rime.zip": (
             yuanshu,
             "元书输入法晨星皮肤",
@@ -787,8 +792,13 @@ def embed_ios_skins(
             "方案文件可直接导入；skins/ 中的 .hskin 需通过系统共享菜单逐个导入。",
         ),
     }
-    for archive_name, (skins, title, instructions) in targets.items():
-        archive_path = destination / archive_name
+    targets = {
+        archive_name(base_name, profile): value
+        for base_name, value in base_targets.items()
+        for profile in PROFILES
+    }
+    for target_name, (skins, title, instructions) in targets.items():
+        archive_path = destination / target_name
         if not archive_path.is_file():
             raise FileNotFoundError(
                 f"platform archive is missing; run build_platform_packages.py first: {archive_path}"

@@ -10,15 +10,32 @@ import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+try:
+    from tools.dictionary_profiles import (
+        LITE_EXCLUDED_DICTIONARIES,
+        PROFILES,
+        STANDARD_EXCLUDED_DICTIONARIES,
+        archive_name,
+        excluded_dictionaries,
+        profiled_dictionary_index,
+    )
+except ModuleNotFoundError:
+    from dictionary_profiles import (
+        LITE_EXCLUDED_DICTIONARIES,
+        PROFILES,
+        STANDARD_EXCLUDED_DICTIONARIES,
+        archive_name,
+        excluded_dictionaries,
+        profiled_dictionary_index,
+    )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 DEFAULT_ZIP_COMPRESSLEVEL = 6
 
-PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
-    "eosphoros-rime-full.zip": (),
-    "eosphoros-rime-standard.zip": (),
-    "eosphoros-rime-lite.zip": (),
+PACKAGE_BASE_EXTRAS: dict[str, tuple[str, ...]] = {
+    "eosphoros-rime.zip": (),
     "eosphoros-weasel-windows-rime.zip": (
         "weasel.yaml",
         "weasel.custom.yaml",
@@ -64,31 +81,13 @@ PACKAGE_EXTRAS: dict[str, tuple[str, ...]] = {
         "zzc/a-Shell快捷指令合并说明.md",
     ),
 }
-
-STANDARD_EXCLUDED_DICTIONARIES = (
-    "dicts/eosphoros/eosphoros.fjcy.dict.yaml",
-)
-LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
-    "dicts/eosphoros/eosphoros.ice.dict.yaml",
-    "dicts/eosphoros/eosphoros.catholicism.dict.yaml",
-    "dicts/eosphoros/eosphoros.protestantism.dict.yaml",
-    "dicts/eosphoros/eosphoros.orthodoxy.dict.yaml",
-    "dicts/eosphoros/eosphoros.oriental.dict.yaml",
-    "dicts/eosphoros/eosphoros.assyrian.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml",
-)
-PACKAGE_EXCLUDED_DICTIONARIES: dict[str, tuple[str, ...]] = {
-    "eosphoros-rime-standard.zip": STANDARD_EXCLUDED_DICTIONARIES,
-    "eosphoros-rime-lite.zip": LITE_EXCLUDED_DICTIONARIES,
+PACKAGE_EXTRAS = {
+    archive_name(base_name, profile): extras
+    for base_name, extras in PACKAGE_BASE_EXTRAS.items()
+    for profile in PROFILES
 }
 
-PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
+PACKAGE_BASE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
     "eosphoros-trime-android.zip": (
         ("mobile_themes/trime/", ""),
     ),
@@ -102,6 +101,15 @@ PACKAGE_PREFIX_RENAMES: dict[str, tuple[tuple[str, str], ...]] = {
         ("mobile_themes/fcitx5-android/", "themes/"),
     ),
 }
+PACKAGE_PREFIX_RENAMES = {
+    archive_name(base_name, profile): renames
+    for base_name, renames in PACKAGE_BASE_PREFIX_RENAMES.items()
+    for profile in PROFILES
+}
+
+
+def package_profile(archive_name_value: str) -> str:
+    return next(profile for profile in PROFILES if archive_name_value.endswith(f"-{profile}.zip"))
 
 
 def _files_below(root: Path, relative: str) -> list[Path]:
@@ -158,7 +166,7 @@ def package_files(root: Path) -> dict[str, list[Path]]:
                 extra_files.extend(_files_below(root, relative))
             else:
                 extra_files.append(path)
-        excluded = set(PACKAGE_EXCLUDED_DICTIONARIES.get(archive_name, ()))
+        excluded = set(excluded_dictionaries(package_profile(archive_name)))
         files = [
             path
             for path in common + extra_files
@@ -166,19 +174,6 @@ def package_files(root: Path) -> dict[str, list[Path]]:
         ]
         packages[archive_name] = _validate_files(root, files)
     return packages
-
-
-def _profiled_dictionary_index(path: Path, excluded: tuple[str, ...]) -> bytes:
-    excluded_imports = {
-        relative.removesuffix(".dict.yaml")
-        for relative in excluded
-    }
-    lines = [
-        line
-        for line in path.read_text(encoding="utf-8-sig").splitlines()
-        if line.strip().removeprefix("- ") not in excluded_imports
-    ]
-    return ("\n".join(lines) + "\n").encode("utf-8")
 
 
 def _archive_name(root: Path, archive_name: str, path: Path) -> str:
@@ -195,7 +190,7 @@ def _write_zip(
     archive_name: str,
     files: list[Path],
     compresslevel: int = DEFAULT_ZIP_COMPRESSLEVEL,
-    excluded_dictionaries: tuple[str, ...] = (),
+    profile: str = "full",
 ) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(
@@ -210,8 +205,8 @@ def _write_zip(
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             content = (
-                _profiled_dictionary_index(path, excluded_dictionaries)
-                if relative == "eosphoros.extended.dict.yaml" and excluded_dictionaries
+                profiled_dictionary_index(path, profile)
+                if relative == "eosphoros.extended.dict.yaml" and profile != "full"
                 else path.read_bytes()
             )
             archive.writestr(info, content, compresslevel=compresslevel)
@@ -233,7 +228,7 @@ def build_packages(
             archive_name,
             files,
             compresslevel,
-            PACKAGE_EXCLUDED_DICTIONARIES.get(archive_name, ()),
+            package_profile(archive_name),
         )
         return destination
 

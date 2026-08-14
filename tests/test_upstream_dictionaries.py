@@ -544,8 +544,9 @@ class UpstreamDictionaryTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("tools/build_yong_table.py", workflow)
-        self.assertIn("--table mb/eosphoros/eosphoros.txt", workflow)
-        self.assertIn("--dazhu dazhu.txt", workflow)
+        self.assertIn("--profiles-output-dir yong_profiles", workflow)
+        self.assertIn('yong_profiles/$profile/eosphoros.txt', workflow)
+        self.assertIn('yong_profiles/$profile/dazhu.txt', workflow)
         manifest = (
             ROOT / "packaging/fcitx5/table/production-dictionaries.tsv"
         ).read_text(encoding="utf-8")

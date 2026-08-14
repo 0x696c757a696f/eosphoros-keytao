@@ -10,6 +10,15 @@ from typing import Any
 
 import yaml
 
+try:
+    from tools.dictionary_profiles import (
+        PROFILES,
+        excluded_dictionaries,
+        profiled_dictionary_index,
+    )
+except ModuleNotFoundError:
+    from dictionary_profiles import PROFILES, excluded_dictionaries, profiled_dictionary_index
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RABBIT_BASE_FILES = ("punctuation.yaml", "key_bindings.yaml", "symbols.yaml")
@@ -103,7 +112,7 @@ def build_rabbit_config(base: dict[str, Any], weasel: dict[str, Any]) -> dict[st
     return result
 
 
-def runtime_files(root: Path) -> list[Path]:
+def runtime_files(root: Path, profile: str = "full") -> list[Path]:
     files = [
         root / "default.yaml",
         root / "liangfen.schema.yaml",
@@ -116,10 +125,15 @@ def runtime_files(root: Path) -> list[Path]:
     for folder in ("dicts/eosphoros", "lua/eosphoros", "opencc/eosphoros"):
         files.extend(path for path in (root / folder).rglob("*") if path.is_file())
     files.append(root / "zzc_state" / "char_parts.tsv")
-    return sorted(set(files))
+    excluded = set(excluded_dictionaries(profile))
+    return sorted(
+        path
+        for path in set(files)
+        if path.relative_to(root).as_posix() not in excluded
+    )
 
 
-def prepare(rabbit_dir: Path, root: Path = ROOT) -> None:
+def prepare(rabbit_dir: Path, root: Path = ROOT, profile: str = "full") -> None:
     data_dir = rabbit_dir / "Data"
     user_dir = rabbit_dir / "Rime"
     required = [data_dir / name for name in (*RABBIT_BASE_FILES, "rabbit.yaml")]
@@ -142,12 +156,15 @@ def prepare(rabbit_dir: Path, root: Path = ROOT) -> None:
         newline="\n",
     )
 
-    for source in runtime_files(root):
+    for source in runtime_files(root, profile):
         if not source.is_file():
             raise FileNotFoundError(f"required runtime file missing: {source}")
         target = data_dir / source.relative_to(root)
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, target)
+        if source == root / "eosphoros.extended.dict.yaml" and profile != "full":
+            target.write_bytes(profiled_dictionary_index(source, profile))
+        else:
+            shutil.copy2(source, target)
 
     shutil.rmtree(user_dir, ignore_errors=True)
     (user_dir / "dicts" / "eosphoros").mkdir(parents=True)
@@ -179,9 +196,10 @@ def prepare(rabbit_dir: Path, root: Path = ROOT) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rabbit-dir", type=Path, required=True)
+    parser.add_argument("--profile", choices=PROFILES, default="full")
     args = parser.parse_args()
-    prepare(args.rabbit_dir.resolve())
-    print(f"Prepared minimal Rabbit bundle: {args.rabbit_dir.resolve()}")
+    prepare(args.rabbit_dir.resolve(), profile=args.profile)
+    print(f"Prepared {args.profile} Rabbit bundle: {args.rabbit_dir.resolve()}")
     return 0
 
 

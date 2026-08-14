@@ -201,10 +201,11 @@ class RepositoryValidationTests(unittest.TestCase):
         for platform in ("linux", "macos"):
             artifact = f"fcitx5-{platform}-eosphoros-themes"
             self.assertNotIn(f"{artifact}.zip", release_workflow)
-            self.assertRegex(
-                release_workflow,
-                rf"(?m)^\s+eosphoros-fcitx5-{platform}\.zip$",
-            )
+            for profile in ("full", "standard", "lite"):
+                self.assertIn(
+                    f"eosphoros-fcitx5-{platform}-{profile}.zip",
+                    release_workflow,
+                )
             self.assertNotIn(f"name: {artifact}", package_workflow)
         self.assertIn("name: Upload complete build", package_workflow)
         self.assertNotIn("!fcitx5/**", package_workflow)
@@ -370,13 +371,15 @@ class RepositoryValidationTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("python tools/build_mobile_themes.py --platform-dir .", release)
-        for archive in (
-            "eosphoros-trime-android.zip",
-            "eosphoros-fcitx5-android.zip",
-            "eosphoros-yuanshu-ios-rime.zip",
-            "eosphoros-hamster-ios-rime.zip",
+        self.assertIn("eosphoros-*.zip", release)
+        for base in (
+            "eosphoros-trime-android",
+            "eosphoros-fcitx5-android",
+            "eosphoros-yuanshu-ios-rime",
+            "eosphoros-hamster-ios-rime",
         ):
-            self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
+            for profile in ("full", "standard", "lite"):
+                self.assertIn(f"{base}-{profile}.zip", release)
         for obsolete_archive in (
             "eosphoros-mobile.zip",
             "fcitx5-linux-eosphoros-themes.zip",
@@ -398,12 +401,13 @@ class RepositoryValidationTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
-            for archive_name in (
-                "eosphoros-yuanshu-ios-rime.zip",
-                "eosphoros-hamster-ios-rime.zip",
+            for base in (
+                "eosphoros-yuanshu-ios-rime",
+                "eosphoros-hamster-ios-rime",
             ):
-                with zipfile.ZipFile(root / archive_name, "w") as archive:
-                    archive.writestr("eosphoros.schema.yaml", "schema:\n")
+                for profile in ("full", "standard", "lite"):
+                    with zipfile.ZipFile(root / f"{base}-{profile}.zip", "w") as archive:
+                        archive.writestr("eosphoros.schema.yaml", "schema:\n")
 
             with patch(
                 "tools.build_mobile_themes.build_ios",
@@ -411,10 +415,10 @@ class RepositoryValidationTests(unittest.TestCase):
             ):
                 embed_ios_skins(load_config(), root, compresslevel=0)
 
-            expected = {
-                "eosphoros-yuanshu-ios-rime.zip": ".cskin",
-                "eosphoros-hamster-ios-rime.zip": ".hskin",
-            }
+            expected = {}
+            for profile in ("full", "standard", "lite"):
+                expected[f"eosphoros-yuanshu-ios-rime-{profile}.zip"] = ".cskin"
+                expected[f"eosphoros-hamster-ios-rime-{profile}.zip"] = ".hskin"
             for archive_name, suffix in expected.items():
                 with zipfile.ZipFile(root / archive_name) as archive:
                     names = archive.namelist()
@@ -638,27 +642,35 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("pixi run generated-quick", package)
         self.assertIn("python tools/build_platform_packages.py --check", pixi)
         self.assertIn("## 平台与词库版本", release)
-        self.assertIn("| 平台 | 输入法 / 引擎 | 下载文件 | 词库档位 |", release)
-        self.assertIn("releases/latest/download/eosphoros-rime-full.zip) | 完整版", release)
-        self.assertIn("releases/latest/download/eosphoros-rime-standard.zip) | 标准版", release)
-        self.assertIn("releases/latest/download/eosphoros-rime-lite.zip) | 精简版", release)
-        for archive in (
-            "eosphoros-rime-full.zip",
-            "eosphoros-rime-standard.zip",
-            "eosphoros-rime-lite.zip",
-            "eosphoros-weasel-windows-rime.zip",
-            "eosphoros-squirrel-macos-rime.zip",
-            "eosphoros-fcitx5-macos.zip",
-            "eosphoros-fcitx5-linux.zip",
-            "eosphoros-fcitx5-macos-rime.zip",
-            "eosphoros-fcitx5-linux-rime.zip",
-            "eosphoros-trime-android.zip",
-            "eosphoros-fcitx5-android.zip",
-            "eosphoros-fcitx5-android-rime.zip",
-            "eosphoros-yuanshu-ios-rime.zip",
-            "eosphoros-hamster-ios-rime.zip",
-        ):
-            self.assertRegex(release, rf"(?m)^\s+{re.escape(archive)}$")
+        self.assertIn("| 平台 | 输入法 / 引擎 | 完整版 | 标准版 | 精简版 |", release)
+        bases = (
+            "eosphoros-rime",
+            "eosphoros-weasel-windows-rime",
+            "eosphoros-rabbit-windows-rime",
+            "eosphoros-yong-windows",
+            "eosphoros-squirrel-macos-rime",
+            "eosphoros-fcitx5-macos",
+            "eosphoros-fcitx5-macos-rime",
+            "eosphoros-yong-android",
+            "eosphoros-trime-android",
+            "eosphoros-fcitx5-android",
+            "eosphoros-fcitx5-android-rime",
+            "eosphoros-yuanshu-ios-rime",
+            "eosphoros-hamster-ios-rime",
+            "eosphoros-fcitx5-linux",
+            "eosphoros-fcitx5-linux-rime",
+            "eosphoros-yong-linux",
+        )
+        for base in bases:
+            for profile in ("full", "standard", "lite"):
+                self.assertIn(
+                    f"releases/latest/download/{base}-{profile}.zip", release
+                )
+        platform_positions = [
+            release.index(f"| {platform} |")
+            for platform in ("Windows", "macOS", "Android", "iOS", "Linux")
+        ]
+        self.assertEqual(platform_positions, sorted(platform_positions))
 
     def test_rabbit_release_is_minimal_and_uses_weasel_themes(self) -> None:
         from tools.prepare_rabbit_release import build_rabbit_config, load_weasel_yaml
@@ -692,7 +704,9 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual(custom["patch"]["style/color_scheme_dark"], "EosphorosDark")
 
         release = (root / ".github/workflows/create-release.yml").read_text(encoding="utf-8")
-        self.assertIn("tools/prepare_rabbit_release.py --rabbit-dir Rabbit", release)
+        self.assertIn("tools/prepare_rabbit_release.py", release)
+        self.assertIn('--rabbit-dir "rabbit-profiles/$profile/Rabbit"', release)
+        self.assertIn('--profile "$profile"', release)
         self.assertIn("github.rest.repos.getLatestRelease", release)
         self.assertIn("`rabbit-${tag}-x64.zip`", release)
         self.assertIn("asset.digest", release)
@@ -722,6 +736,7 @@ class RepositoryValidationTests(unittest.TestCase):
         workflow = yaml.safe_load(release)
 
         self.assertNotIn("shogo82148/actions-", release)
+        self.assertIn("tools/build_release_manifest.py", release)
         self.assertIn('sha256sum "${assets[@]}" > SHA256SUMS', release)
         self.assertIn('gh release create "$RELEASE_TAG" "${assets[@]}"', release)
         self.assertIn('--repo "$GITHUB_REPOSITORY"', release)
@@ -756,7 +771,23 @@ class RepositoryValidationTests(unittest.TestCase):
             },
         )
 
-    def test_release_yong_archive_is_the_full_portable_build(self) -> None:
+    def test_release_manifest_requires_every_profile_asset(self) -> None:
+        from tools.build_release_manifest import build_manifest, expected_assets
+
+        expected = expected_assets()
+        self.assertEqual(len(expected), 52)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            directory = Path(temp_dir)
+            output = directory / "release-assets.txt"
+            for name in expected:
+                (directory / name).touch()
+            self.assertEqual(build_manifest(directory, output), expected)
+            self.assertEqual(output.read_text(encoding="utf-8").splitlines(), list(expected))
+            (directory / expected[0]).unlink()
+            with self.assertRaisesRegex(RuntimeError, "missing release assets"):
+                build_manifest(directory, output)
+
+    def test_release_yong_archives_are_profiled_portable_builds(self) -> None:
         root = Path(__file__).resolve().parents[1]
         release = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
@@ -766,14 +797,16 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertNotIn("YONG_INI_URL", release)
         self.assertNotIn("prepare_yong_config.py", release)
         self.assertIn("packaging/yong/yong.ini", release)
-        self.assertIn("zip -r ../eosphoros-yong-windows.zip yong", release)
+        self.assertIn("--profiles-output-dir yong_profiles", release)
+        self.assertIn('eosphoros-yong-windows-$profile.zip', release)
+        self.assertIn('eosphoros-yong-android-$profile.zip', release)
         self.assertIn("YONG_LINUX_URL", release)
         self.assertNotIn("YONG_WIN_SHA256", release)
         self.assertNotIn("YONG_LINUX_SHA256", release)
         self.assertNotIn("warn_if_yong_changed", release)
         self.assertIn("7z x yong-lin.7z -oyong_linux_temp", release)
-        self.assertIn("zip -r ../eosphoros-yong-linux.zip yong", release)
-        self.assertNotIn("zip -r eosphoros-yong-windows.zip .yong", release)
+        self.assertIn('eosphoros-yong-linux-$profile.zip', release)
+        self.assertIn('for profile in full standard lite; do', release)
         self.assertNotIn("yong-eosphoros-full.zip", release)
         self.assertNotIn("yong-eosphoros-full.zip", readme)
 
@@ -860,7 +893,9 @@ class RepositoryValidationTests(unittest.TestCase):
             release,
         )
         self.assertIn("python tools/validate_yong_package.py yong_temp/yong", release)
-        self.assertIn("python tools/validate_yong_package.py yong_android/yong", release)
+        self.assertIn(
+            "python tools/validate_yong_package.py yong_android_base/yong", release
+        )
         self.assertIn(
             "python tools/validate_yong_package.py yong_linux_temp/yong", release
         )
@@ -873,9 +908,9 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn(".yong/android/Eosphoros-Dawn.zip", release)
         self.assertIn(".yong/android/Eosphoros-Night.zip", release)
         self.assertNotIn("yong/theme-builder", release)
-        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-windows\.zip$")
-        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-android\.zip$")
-        self.assertRegex(release, r"(?m)^\s+eosphoros-yong-linux\.zip$")
+        self.assertIn("eosphoros-yong-windows-*.zip", release)
+        self.assertIn("eosphoros-yong-android-*.zip", release)
+        self.assertIn("eosphoros-yong-linux-*.zip", release)
         self.assertRegex(release, r"(?m)^\s+eosphoros-yong-desktop-skins\.zip$")
         self.assertIn("Ctrl + 空格", help_text)
         self.assertIn("eosphoros.txt", help_text)

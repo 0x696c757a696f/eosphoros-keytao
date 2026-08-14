@@ -28,6 +28,19 @@ class YongTableTests(unittest.TestCase):
             self.assertIn("\nohz 好\n", text)
             self.assertIn("ihello\thello", dazhu.read_text(encoding="utf-8"))
 
+    def test_profiles_reduce_table_size_without_losing_namespaced_entries(self) -> None:
+        from tools.build_yong_table import build_profiles
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir)
+            counts = build_profiles(ROOT, output)
+            self.assertGreater(counts["full"], counts["standard"])
+            self.assertGreater(counts["standard"], counts["lite"])
+            for profile in ("full", "standard", "lite"):
+                table = (output / profile / "eosphoros.txt").read_text(encoding="gb18030")
+                self.assertIn("\nihello hello\n", table)
+                self.assertIn("\nuhao 好\n", table)
+
     def test_desktop_yong_configuration_loads_large_static_table_off_ui_thread(self) -> None:
         for relative in ("packaging/yong/yong.ini", "packaging/yong/android/yong.ini"):
             config = (ROOT / relative).read_text(encoding="utf-8-sig")

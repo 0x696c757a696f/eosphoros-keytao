@@ -180,20 +180,7 @@ jobs:
       with:
         name: release-native-assets
         path: |
-          eosphoros-rime-full.zip
-          eosphoros-rime-standard.zip
-          eosphoros-rime-lite.zip
-          eosphoros-weasel-windows-rime.zip
-          eosphoros-squirrel-macos-rime.zip
-          eosphoros-fcitx5-macos.zip
-          eosphoros-fcitx5-linux.zip
-          eosphoros-fcitx5-macos-rime.zip
-          eosphoros-fcitx5-linux-rime.zip
-          eosphoros-trime-android.zip
-          eosphoros-fcitx5-android.zip
-          eosphoros-fcitx5-android-rime.zip
-          eosphoros-yuanshu-ios-rime.zip
-          eosphoros-hamster-ios-rime.zip
+          eosphoros-*.zip
         if-no-files-found: error
         retention-days: 1
         compression-level: 0
@@ -262,16 +249,31 @@ jobs:
         mkdir -p Rabbit
         unzip rabbit.zip -d Rabbit
 
-    - name: Prepare minimal Rabbit bundle
+    - name: Prepare three Rabbit dictionary profiles in parallel
       run: |
-        pixi run python tools/prepare_rabbit_release.py --rabbit-dir Rabbit
-        zip -r eosphoros-rabbit-windows-rime.zip Rabbit/
+        mkdir -p rabbit-profiles
+        pids=()
+        for profile in full standard lite; do
+          mkdir -p "rabbit-profiles/$profile"
+          cp -a Rabbit "rabbit-profiles/$profile/Rabbit"
+          (
+            pixi run python tools/prepare_rabbit_release.py \
+              --rabbit-dir "rabbit-profiles/$profile/Rabbit" \
+              --profile "$profile"
+            cd "rabbit-profiles/$profile"
+            zip -qr "../../eosphoros-rabbit-windows-rime-$profile.zip" Rabbit
+          ) &
+          pids+=("$!")
+        done
+        status=0
+        for pid in "${pids[@]}"; do wait "$pid" || status=$?; done
+        exit "$status"
 
     - name: Upload Rabbit release asset
       uses: actions/upload-artifact@v7
       with:
         name: release-rabbit-assets
-        path: eosphoros-rabbit-windows-rime.zip
+        path: eosphoros-rabbit-windows-rime-*.zip
         if-no-files-found: error
         retention-days: 1
         compression-level: 0
@@ -290,68 +292,73 @@ jobs:
 
     - uses: ./.github/actions/setup-pixi
 
-    - name: Build deterministic Yong table and dazhu index
+    - name: Build deterministic Yong profile tables and indexes
       run: |
-        mkdir -p mb/eosphoros
         pixi run python tools/build_yong_table.py \
-          --table mb/eosphoros/eosphoros.txt \
-          --dazhu dazhu.txt
+          --profiles-output-dir yong_profiles
+        for profile in full standard lite; do
+          cp "yong_profiles/$profile/dazhu.txt" "dazhu-$profile.txt"
+        done
 
     - name: Zip yong
       run: |
         pixi run python tools/build_eosphoros_icons.py --check
-        mkdir -p yong_android/yong/.yong
-        pixi run python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
-        cp -r mb yong_android/yong/.yong/
-        cp packaging/yong/android/README.txt yong_android/yong/README-Eosphoros-Android.txt
-        mkdir -p yong_android/yong/.yong/android
-        pixi run python tools/build_yong_android_skin.py packaging/yong/android/skin --theme dawn --output yong_android/yong/.yong/android/Eosphoros-Dawn.zip
-        pixi run python tools/build_yong_android_skin.py packaging/yong/android/skin --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
-        pixi run python tools/validate_yong_package.py yong_android/yong
-        cd yong_android
-        zip -r ../eosphoros-yong-android.zip yong
-        cd ..
-        rm -rf yong_android
+        mkdir -p yong_android_base/yong/.yong/android
+        pixi run python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android_base/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
+        cp packaging/yong/android/README.txt yong_android_base/yong/README-Eosphoros-Android.txt
+        pixi run python tools/build_yong_android_skin.py packaging/yong/android/skin --theme dawn --output yong_android_base/yong/.yong/android/Eosphoros-Dawn.zip
+        pixi run python tools/build_yong_android_skin.py packaging/yong/android/skin --theme night --output yong_android_base/yong/.yong/android/Eosphoros-Night.zip
+        for profile in full standard lite; do
+          mkdir -p yong_android_base/yong/.yong/mb/eosphoros
+          cp "yong_profiles/$profile/eosphoros.txt" yong_android_base/yong/.yong/mb/eosphoros/eosphoros.txt
+          pixi run python tools/validate_yong_package.py yong_android_base/yong
+          (cd yong_android_base && zip -qr "../eosphoros-yong-android-$profile.zip" yong)
+        done
 
-        mkdir -p .yong
         curl --fail --location --output yong-win.7z "$YONG_WIN_URL"
         curl --fail --location --output yong-lin.7z "$YONG_LINUX_URL"
-        pixi run python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
-        cp -r mb .yong/
+        pixi run python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
 
         7z x yong-lin.7z -oyong_linux_temp
         mkdir -p yong_linux_temp/yong/.yong
-        cp .yong/yong.ini yong_linux_temp/yong/.yong/yong.ini
-        cp .yong/yong.ini yong_linux_temp/yong/yong.ini
-        cp -r mb yong_linux_temp/yong/
+        cp yong.ini yong_linux_temp/yong/.yong/yong.ini
+        cp yong.ini yong_linux_temp/yong/yong.ini
         pixi run python tools/prepare_yong_desktop_skins.py --base-skin yong_linux_temp/yong/skin --destination yong_linux_temp/yong/skin
         cp packaging/yong/linux/README.txt yong_linux_temp/yong/README-Eosphoros-Linux.txt
-        pixi run python tools/validate_yong_package.py yong_linux_temp/yong
-        (cd yong_linux_temp && zip -r ../eosphoros-yong-linux.zip yong)
-        rm -rf yong_linux_temp
+        for profile in full standard lite; do
+          mkdir -p yong_linux_temp/yong/mb/eosphoros
+          cp "yong_profiles/$profile/eosphoros.txt" yong_linux_temp/yong/mb/eosphoros/eosphoros.txt
+          pixi run python tools/validate_yong_package.py yong_linux_temp/yong
+          (cd yong_linux_temp && zip -qr "../eosphoros-yong-linux-$profile.zip" yong)
+        done
 
         7z x yong-win.7z -oyong_temp
-        cp -r .yong yong_temp/yong
+        mkdir -p yong_temp/yong/.yong
+        cp yong.ini yong_temp/yong/.yong/yong.ini
         pixi run python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_temp/yong/.yong/skin
         cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt
-        pixi run python tools/validate_yong_package.py yong_temp/yong
-        (cd yong_temp && zip -r ../eosphoros-yong-windows.zip yong)
+        for profile in full standard lite; do
+          mkdir -p yong_temp/yong/.yong/mb/eosphoros
+          cp "yong_profiles/$profile/eosphoros.txt" yong_temp/yong/.yong/mb/eosphoros/eosphoros.txt
+          pixi run python tools/validate_yong_package.py yong_temp/yong
+          (cd yong_temp && zip -qr "../eosphoros-yong-windows-$profile.zip" yong)
+        done
 
         mkdir -p yong_skin_bundle/skin
         pixi run python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_skin_bundle/skin
         cd yong_skin_bundle
         zip -r ../eosphoros-yong-desktop-skins.zip skin
         cd ..
-        rm -rf .yong yong_temp yong_skin_bundle
+        rm -rf yong.ini yong_android_base yong_linux_temp yong_temp yong_skin_bundle
 
     - name: Upload Yong release assets
       uses: actions/upload-artifact@v7
       with:
         name: release-yong-assets
         path: |
-          eosphoros-yong-windows.zip
-          eosphoros-yong-linux.zip
-          eosphoros-yong-android.zip
+          eosphoros-yong-windows-*.zip
+          eosphoros-yong-linux-*.zip
+          eosphoros-yong-android-*.zip
           eosphoros-yong-desktop-skins.zip
         if-no-files-found: error
         retention-days: 1
@@ -361,7 +368,7 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: release-yong-index-assets
-        path: dazhu.txt
+        path: dazhu-*.txt
         if-no-files-found: error
         retention-days: 1
 
@@ -379,6 +386,8 @@ jobs:
       contents: write
 
     steps:
+    - uses: actions/checkout@v7
+
     - name: Set up unique release metadata
       run: |
         echo "RELEASE_TAG=$(date +'%Y%m%d')-r${GITHUB_RUN_NUMBER}-a${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_ENV"
@@ -427,29 +436,8 @@ jobs:
 
     - name: Create release asset manifest and checksums
       run: |
-        assets=(
-          eosphoros-rabbit-windows-rime.zip
-          eosphoros-yong-windows.zip
-          eosphoros-yong-linux.zip
-          eosphoros-yong-android.zip
-          eosphoros-yong-desktop-skins.zip
-          eosphoros-rime-full.zip
-          eosphoros-rime-standard.zip
-          eosphoros-rime-lite.zip
-          eosphoros-weasel-windows-rime.zip
-          eosphoros-squirrel-macos-rime.zip
-          eosphoros-fcitx5-macos.zip
-          eosphoros-fcitx5-linux.zip
-          eosphoros-fcitx5-macos-rime.zip
-          eosphoros-fcitx5-linux-rime.zip
-          eosphoros-trime-android.zip
-          eosphoros-fcitx5-android.zip
-          eosphoros-fcitx5-android-rime.zip
-          eosphoros-yuanshu-ios-rime.zip
-          eosphoros-hamster-ios-rime.zip
-          dazhu.txt
-        )
-        printf '%s\n' "${assets[@]}" > release-assets.txt
+        python tools/build_release_manifest.py --output release-assets.txt
+        mapfile -t assets < release-assets.txt
         sha256sum "${assets[@]}" > SHA256SUMS
 
     - name: Upload dry-run release bundle
@@ -459,7 +447,7 @@ jobs:
         name: release-dry-run-${{ github.run_number }}-${{ github.run_attempt }}
         path: |
           eosphoros-*.zip
-          dazhu.txt
+          dazhu-*.txt
           SHA256SUMS
           release-assets.txt
         if-no-files-found: error
@@ -472,26 +460,24 @@ jobs:
         RELEASE_NOTES: |
           ## 平台与词库版本
 
-          | 平台 | 输入法 / 引擎 | 下载文件 | 词库档位 |
-          | --- | --- | --- | --- |
-          | 通用 | Rime（需 librime-lua） | [eosphoros-rime-full.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rime-full.zip) | 完整版 |
-          | 通用 | Rime（需 librime-lua） | [eosphoros-rime-standard.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rime-standard.zip) | 标准版 |
-          | 通用 | Rime（需 librime-lua） | [eosphoros-rime-lite.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rime-lite.zip) | 精简版 |
-          | Windows | 小狼毫 Weasel | [eosphoros-weasel-windows-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-weasel-windows-rime.zip) | 完整版 |
-          | Windows | 玉兔毫 Rabbit | [eosphoros-rabbit-windows-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rabbit-windows-rime.zip) | 完整版 |
-          | Windows | 小小输入法 Yong | [eosphoros-yong-windows.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-windows.zip) | 完整版 |
-          | macOS | 鼠须管 Squirrel | [eosphoros-squirrel-macos-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-squirrel-macos-rime.zip) | 完整版 |
-          | macOS | Fcitx5 原生 Table | [eosphoros-fcitx5-macos.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos.zip) | 完整版 |
-          | macOS | Fcitx5 + Rime 插件 | [eosphoros-fcitx5-macos-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-rime.zip) | 完整版 |
-          | Linux | Fcitx5 原生 Table | [eosphoros-fcitx5-linux.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux.zip) | 完整版 |
-          | Linux | Fcitx5 + Rime 插件 | [eosphoros-fcitx5-linux-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-rime.zip) | 完整版 |
-          | Linux | 小小输入法 Yong | [eosphoros-yong-linux.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-linux.zip) | 完整版 |
-          | Android | 同文 Trime | [eosphoros-trime-android.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-trime-android.zip) | 完整版 |
-          | Android | Fcitx5 原生 Table | [eosphoros-fcitx5-android.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android.zip) | 完整版 |
-          | Android | Fcitx5 + Rime 插件 | [eosphoros-fcitx5-android-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-rime.zip) | 完整版 |
-          | Android | 小小输入法 Yong | [eosphoros-yong-android.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-android.zip) | 完整版 |
-          | iOS | 元书输入法 | [eosphoros-yuanshu-ios-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yuanshu-ios-rime.zip) | 完整版 |
-          | iOS | 仓输入法 Hamster | [eosphoros-hamster-ios-rime.zip](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-hamster-ios-rime.zip) | 完整版 |
+          | 平台 | 输入法 / 引擎 | 完整版 | 标准版 | 精简版 |
+          | --- | --- | --- | --- | --- |
+          | 通用 | Rime | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rime-lite.zip) |
+          | Windows | 小狼毫 Weasel | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-weasel-windows-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-weasel-windows-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-weasel-windows-rime-lite.zip) |
+          | Windows | 玉兔毫 Rabbit | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rabbit-windows-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rabbit-windows-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-rabbit-windows-rime-lite.zip) |
+          | Windows | 小小输入法 Yong | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-windows-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-windows-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-windows-lite.zip) |
+          | macOS | 鼠须管 Squirrel | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-squirrel-macos-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-squirrel-macos-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-squirrel-macos-rime-lite.zip) |
+          | macOS | Fcitx5 原生 Table | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-lite.zip) |
+          | macOS | Fcitx5 + Rime | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-macos-rime-lite.zip) |
+          | Android | 同文 Trime | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-trime-android-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-trime-android-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-trime-android-lite.zip) |
+          | Android | Fcitx5 原生 Table | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-lite.zip) |
+          | Android | Fcitx5 + Rime | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-android-rime-lite.zip) |
+          | Android | 小小输入法 Yong | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-android-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-android-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-android-lite.zip) |
+          | iOS | 元书输入法 | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yuanshu-ios-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yuanshu-ios-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yuanshu-ios-rime-lite.zip) |
+          | iOS | 仓输入法 Hamster | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-hamster-ios-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-hamster-ios-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-hamster-ios-rime-lite.zip) |
+          | Linux | Fcitx5 原生 Table | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-lite.zip) |
+          | Linux | Fcitx5 + Rime | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-rime-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-rime-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-fcitx5-linux-rime-lite.zip) |
+          | Linux | 小小输入法 Yong | [Full](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-linux-full.zip) | [Standard](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-linux-standard.zip) | [Lite](${{ github.server_url }}/${{ github.repository }}/releases/latest/download/eosphoros-yong-linux-lite.zip) |
 
           ## Changelog
           ${{ steps.changelog.outputs.changelog }}

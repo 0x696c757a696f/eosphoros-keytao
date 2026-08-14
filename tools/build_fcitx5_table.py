@@ -12,9 +12,15 @@ import tempfile
 import zipfile
 from collections import Counter
 from collections.abc import Iterable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
+
+try:
+    from tools.dictionary_profiles import PROFILES, archive_name, includes_dictionary
+except ModuleNotFoundError:
+    from dictionary_profiles import PROFILES, archive_name, includes_dictionary
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,7 +56,7 @@ def parse_weight(value: str) -> int:
         return 0
 
 
-def read_manifest(root: Path = ROOT) -> list[DictionarySource]:
+def read_manifest(root: Path = ROOT, profile: str = "full") -> list[DictionarySource]:
     result: list[DictionarySource] = []
     for line_number, raw in enumerate(
         (root / MANIFEST.relative_to(ROOT)).read_text(encoding="utf-8-sig").splitlines(), 1
@@ -70,6 +76,8 @@ def read_manifest(root: Path = ROOT) -> list[DictionarySource]:
         path = root / relative
         if not path.is_file():
             raise FileNotFoundError(path)
+        if not includes_dictionary(relative, profile):
+            continue
         result.append(DictionarySource(prefix, path))
     return result
 
@@ -122,7 +130,13 @@ def read_rime_dictionary(
     return entries, order
 
 
-@lru_cache(maxsize=1)
+@lru_cache(maxsize=None)
+def _read_source_cached(source: DictionarySource, fingerprint: bytes) -> tuple[Entry, ...]:
+    entries, _ = read_rime_dictionary(source.path, 0, source.namespace)
+    return tuple(entries)
+
+
+@lru_cache(maxsize=None)
 def _collect_entries_cached(
     sources: tuple[DictionarySource, ...],
     fingerprint: tuple[bytes, ...],
@@ -130,9 +144,16 @@ def _collect_entries_cached(
     result: list[Entry] = []
     seen: set[tuple[str, str]] = set()
     order = 0
-    for source in sources:
-        entries, order = read_rime_dictionary(source.path, order, source.namespace)
-        for entry in entries:
+    for source, digest in zip(sources, fingerprint, strict=True):
+        for cached in _read_source_cached(source, digest):
+            entry = Entry(
+                cached.text,
+                cached.code,
+                cached.weight,
+                order,
+                cached.namespace,
+            )
+            order += 1
             key = (entry.code, entry.text)
             if key in seen:
                 continue
@@ -146,8 +167,8 @@ def _sha256_file(path: Path) -> bytes:
         return hashlib.file_digest(source, "sha256").digest()
 
 
-def collect_entries(root: Path = ROOT) -> list[Entry]:
-    sources = tuple(read_manifest(root.resolve()))
+def collect_entries(root: Path = ROOT, profile: str = "full") -> list[Entry]:
+    sources = tuple(read_manifest(root.resolve(), profile))
     fingerprint = tuple(_sha256_file(source.path) for source in sources)
     return list(_collect_entries_cached(sources, fingerprint))
 
@@ -257,58 +278,66 @@ def build_packages(
     compiler: str | None = None,
     compiled_dictionary: bytes | None = None,
     entries: list[Entry] | None = None,
-    compresslevel: int = 9,
+    compresslevel: int = 6,
 ) -> list[Path]:
-    entries = entries if entries is not None else collect_entries(root)
-    table = render_table(entries).encode("utf-8")
+    entries_by_profile = {
+        profile: entries if entries is not None else collect_entries(root, profile)
+        for profile in PROFILES
+    }
+    tables = {
+        profile: render_table(profile_entries).encode("utf-8")
+        for profile, profile_entries in entries_by_profile.items()
+    }
     config = render_config().encode("utf-8")
     output_dir.mkdir(parents=True, exist_ok=True)
-    binary = compiled_dictionary
+    binaries = {profile: compiled_dictionary for profile in PROFILES}
     if compiler:
         resolved_compiler = shutil.which(compiler) or (
             compiler if Path(compiler).is_file() else None
         )
         if resolved_compiler is None:
             raise FileNotFoundError(f"libime_tabledict not found: {compiler}")
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp = Path(temp_dir)
-            source = temp / "eosphoros.txt"
-            destination = temp / "eosphoros.main.dict"
-            source.write_bytes(table)
-            subprocess.run([resolved_compiler, str(source), str(destination)], check=True)
-            binary = destination.read_bytes()
+        def compile_profile(profile: str) -> tuple[str, bytes]:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                temp = Path(temp_dir)
+                source = temp / "eosphoros.txt"
+                destination = temp / "eosphoros.main.dict"
+                source.write_bytes(tables[profile])
+                subprocess.run([resolved_compiler, str(source), str(destination)], check=True)
+                return profile, destination.read_bytes()
+
+        with ThreadPoolExecutor(max_workers=len(PROFILES)) as executor:
+            binaries.update(executor.map(compile_profile, PROFILES))
 
     archives: list[Path] = []
-    for platform in ("linux", "macos", "android"):
-        if platform == "linux" and binary is None:
-            raise ValueError("Linux package requires --compiler (libime_tabledict)")
-        destination = output_dir / f"eosphoros-fcitx5-{platform}.zip"
-        with zipfile.ZipFile(destination, "w") as archive:
-            if platform == "linux":
-                _zip_write(
-                    archive,
-                    "inputmethod/eosphoros.conf",
-                    config,
-                    compresslevel,
-                )
-                _zip_write(
-                    archive,
-                    "table/eosphoros.main.dict",
-                    binary or b"",
-                    compresslevel,
-                )
-            else:
-                # Both official import UIs accept a .conf plus a libime text
-                # dictionary and compile it inside the application.
-                _zip_write(archive, "eosphoros.conf", config, compresslevel)
-                _zip_write(archive, "eosphoros.txt", table, compresslevel)
-            # Android's custom-table ZIP importer expects only the table
-            # configuration and dictionary. Themes are published separately.
-            if platform != "android":
-                for name, path in _theme_files(root, platform):
-                    _zip_write(archive, name, path.read_bytes(), compresslevel)
-        archives.append(destination)
-    print(f"Fcitx5 Table: {len(entries)} unique rows")
+    for profile in PROFILES:
+        for platform in ("linux", "macos", "android"):
+            if platform == "linux" and binaries[profile] is None:
+                raise ValueError("Linux package requires --compiler (libime_tabledict)")
+            destination = output_dir / archive_name(f"eosphoros-fcitx5-{platform}.zip", profile)
+            with zipfile.ZipFile(destination, "w") as archive:
+                if platform == "linux":
+                    _zip_write(archive, "inputmethod/eosphoros.conf", config, compresslevel)
+                    _zip_write(
+                        archive,
+                        "table/eosphoros.main.dict",
+                        binaries[profile] or b"",
+                        compresslevel,
+                    )
+                else:
+                    _zip_write(archive, "eosphoros.conf", config, compresslevel)
+                    _zip_write(archive, "eosphoros.txt", tables[profile], compresslevel)
+                if platform != "android":
+                    for name, path in _theme_files(root, platform):
+                        _zip_write(archive, name, path.read_bytes(), compresslevel)
+            archives.append(destination)
+    print(
+        "Fcitx5 Table: "
+        + ", ".join(
+            f"{profile}={len(profile_entries)}"
+            for profile, profile_entries in entries_by_profile.items()
+        )
+    )
     return archives
 
 

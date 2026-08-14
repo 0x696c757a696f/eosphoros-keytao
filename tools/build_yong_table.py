@@ -9,8 +9,10 @@ from pathlib import Path
 
 try:
     from tools.build_fcitx5_table import MAX_CODE_LENGTH, ROOT, collect_entries
+    from tools.dictionary_profiles import PROFILES
 except ModuleNotFoundError:  # Direct execution: python tools/build_yong_table.py
     from build_fcitx5_table import MAX_CODE_LENGTH, ROOT, collect_entries
+    from dictionary_profiles import PROFILES
 
 
 HEADER = f"""name=晨星键道
@@ -26,8 +28,8 @@ code_a4=p11+p21+p31+n11+p13+p23+p33
 """
 
 
-def build(root: Path, table_path: Path, dazhu_path: Path) -> int:
-    entries = collect_entries(root)
+def build(root: Path, table_path: Path, dazhu_path: Path, profile: str = "full") -> int:
+    entries = collect_entries(root, profile)
     table_path.parent.mkdir(parents=True, exist_ok=True)
     dazhu_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -53,13 +55,34 @@ def build(root: Path, table_path: Path, dazhu_path: Path) -> int:
     return len(entries)
 
 
+def build_profiles(root: Path, output_dir: Path) -> dict[str, int]:
+    counts = {}
+    for profile in PROFILES:
+        profile_dir = output_dir / profile
+        counts[profile] = build(
+            root,
+            profile_dir / "eosphoros.txt",
+            profile_dir / "dazhu.txt",
+            profile,
+        )
+    return counts
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--table", type=Path, required=True)
-    parser.add_argument("--dazhu", type=Path, required=True)
+    parser.add_argument("--table", type=Path)
+    parser.add_argument("--dazhu", type=Path)
+    parser.add_argument("--profile", choices=PROFILES, default="full")
+    parser.add_argument("--profiles-output-dir", type=Path)
     args = parser.parse_args()
-    count = build(ROOT, args.table.resolve(), args.dazhu.resolve())
-    print(f"Yong table: {count} unique rows")
+    if args.profiles_output_dir:
+        counts = build_profiles(ROOT, args.profiles_output_dir.resolve())
+        print("Yong tables: " + ", ".join(f"{key}={value}" for key, value in counts.items()))
+        return 0
+    if not args.table or not args.dazhu:
+        parser.error("--table and --dazhu are required without --profiles-output-dir")
+    count = build(ROOT, args.table.resolve(), args.dazhu.resolve(), args.profile)
+    print(f"Yong {args.profile} table: {count} unique rows")
     return 0
 
 
