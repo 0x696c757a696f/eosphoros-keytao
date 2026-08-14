@@ -337,10 +337,17 @@ Fcitx5 配方；Fcitx5 用户应直接使用对应系统的官方 Table Release 
 | 平台 | 推荐客户端 | 安装方式 | 更新后必须做的操作 |
 | --- | --- | --- | --- |
 | Windows | [小狼毫](https://github.com/rime/weasel/releases/latest)、[水龙月 Fork](https://github.com/Techince/weasel/releases/latest)、[玉兔毫 Rabbit](https://github.com/rimeinn/rabbit/releases/latest)、[小小输入法 Yong](https://yong.dgod.net/) | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
-| macOS | [鼠须管 Squirrel](https://github.com/rime/squirrel/releases/latest)、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 鼠须管解压到 Rime 目录；Fcitx5 在应用内导入码表 | 重新部署 Rime，或重启 Fcitx5 |
-| Android | [同文 Trime](https://github.com/osfans/trime/releases/latest)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)、[小小输入法 Yong](https://yong.dgod.net/read.php?fid=2&tid=1) | 同文导入方案；Fcitx5 在码表管理导入 ZIP；Yong 导入晨星配置包 | 部署同文、添加晨星 Table，或重启 Yong |
+| macOS | [鼠须管 Squirrel](https://github.com/rime/squirrel/releases/latest) | 解压 Rime 平台包到 `~/Library/Rime` | 重新部署 Rime |
+| macOS | [Fcitx5 for macOS 原生 Table](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 不安装 Rime 插件，在应用内导入原生 Table 包 | 重启 Fcitx5 |
+| macOS | [Fcitx5 for macOS + Rime](https://github.com/fcitx/fcitx5-macos) | 安装 Rime 插件，导入带 `-rime` 的平台包 | 重新部署 Rime |
+| Android | [同文 Trime](https://github.com/osfans/trime/releases/latest) | 导入同文平台包 | 部署同文 |
+| Android | [Fcitx5 for Android 原生 Table](https://github.com/fcitx5-android/fcitx5-android) | 不安装 Rime 插件，在码表管理导入原生 Table 包 | 添加晨星 Table |
+| Android | [Fcitx5 for Android + Rime](https://github.com/fcitx5-android/fcitx5-android/releases/latest) | 安装官方 Rime 插件，导入带 `-rime` 的平台包 | 重新部署 Rime |
+| Android | [小小输入法 Yong](https://yong.dgod.net/read.php?fid=2&tid=1) | 导入晨星配置包 | 重启 Yong |
 | iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 手动下载对应平台包，再通过应用的本地导入功能安装；仓输入法不能在线下载方案 | 切换到新方案目录并重新部署 |
-| Linux | [Fcitx5 官方 Table](https://github.com/fcitx/fcitx5-chinese-addons)、[小小输入法 Yong](https://yong.dgod.net/read.php?fid=7&tid=6) | 将码表、配置、主题放入 Fcitx5 同名用户目录，或使用 Yong 便携包 | 重启输入法 |
+| Linux | [Fcitx5 原生 Table](https://github.com/fcitx/fcitx5-chinese-addons) | 安装 Chinese Addons，复制原生 Table 包文件 | 重启 Fcitx5 |
+| Linux | [Fcitx5 + Rime](https://github.com/fcitx/fcitx5-rime) | 安装 `fcitx5-rime` 与 `librime-lua`，部署带 `-rime` 的平台包 | 重新部署 Rime |
+| Linux | [小小输入法 Yong](https://yong.dgod.net/read.php?fid=7&tid=6) | 使用 Yong 便携包 | 重启 Yong |
 
 Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lua/eosphoros/`、
 `opencc/eosphoros/`。Fcitx5 平台包是独立的官方 Table 码表，不使用这些 Rime 目录。
@@ -380,16 +387,19 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 2. 下载并解压 `eosphoros-squirrel-macos-rime-full.zip`（或所需档位），把全部内容复制到 `~/Library/Rime`。
 3. 从鼠须管菜单执行“重新部署”，再在方案选单中选择“晨星键道”。
 
-**Fcitx5 macOS**
+**Fcitx5 for macOS 原生 Table**
 
 1. 安装[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)，确认官方 Chinese Addons／Table 可用；不安装 Rime 插件。macOS 的官方插件集合包含 Chinese Addons。
 2. 下载并解压 `eosphoros-fcitx5-macos-full.zip`（或所需档位）。
 3. 打开“输入法 → 添加输入法 → 导入码表”，同时选择根目录的 `eosphoros.conf` 与 `eosphoros.txt`。客户端会使用内置 libime 完成转换。
 4. `themes/` 内是 macOS 专用主题，可在主题编辑器中另行导入；重启 Fcitx5 后添加“晨星键道”。
 
-需要拼音模糊音、反查注释、Lua、OpenCC 或 ZZC 时，改装官方 Rime 插件并下载
-`eosphoros-fcitx5-macos-rime-full.zip`（或所需档位），将方案部署到 Fcitx5 的 Rime 用户目录；不要同时
-导入同名 Table 方案。
+**Fcitx5 for macOS + Rime**
+
+1. 安装 [Fcitx5 macOS](https://github.com/fcitx/fcitx5-macos)，再从内置 Plugin Manager 安装 Rime 插件；插件包包含 Rime 运行所需组件及 `librime-lua`。
+2. 下载 `eosphoros-fcitx5-macos-rime-full.zip`（或所需档位），在 Rime 插件的数据管理中导入完整压缩包。
+3. 重新部署 Rime，再添加“晨星键道”。该版本保留拼音模糊音、反查注释、Lua、OpenCC 与 ZZC。
+4. 不要再导入同名原生 Table 包，两种实现择一安装。
 
 #### 🤖 Android
 
@@ -412,15 +422,19 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 4. 不需要另下主题包；重新部署后即可在主题设置中选择“晨星键道·格调”。该文件完整采用 mytrime 的“格调”键盘布局，不依赖同文官方默认皮肤。
 5. 返回配置管理执行部署，先选择晨星键道输入方案，再在主题设置中选择“晨星键道·格调”。主题默认以黎明／夜色跟随系统，也可在主题配色中选用黑白极简。
 
-**Fcitx5 for Android**
+**Fcitx5 for Android 原生 Table**
 
 1. 安装[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)主程序；自定义码表由本体内置 Chinese Addons／Table 提供，不安装 Rime 插件。剪贴板、符号／Emoji 选择器等客户端自带功能不受影响。
-2. 下载 [`eosphoros-fcitx5-android.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android.zip)。
+2. 下载 [`eosphoros-fcitx5-android-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-full.zip)（或所需档位）。
 3. 打开“小企鹅输入法 → 输入法 → 码表管理 → 导入码表 → 从 ZIP 导入”，直接选择整个平台包。根目录中的 `eosphoros.conf` 与 `eosphoros.txt` 会由应用内置 libime 转换并安装。
 4. 在输入法列表添加“晨星键道”。这个码表 ZIP 特意不含 `themes/`，避免 Android 码表导入失败；晨星主题通过 Release／Actions 中独立的 Fcitx5 Android 主题资源导入。
 
-需要完整 Rime 功能时，安装 Fcitx5 Android 的官方 Rime 插件，改用
-`eosphoros-fcitx5-android-rime-full.zip`（或所需档位），在 Rime 插件的数据管理中导入并重新部署。
+**Fcitx5 for Android + Rime**
+
+1. 安装 [Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android/releases/latest) 主程序和同版本、同签名来源的官方 `plugin.rime`；不要只安装主程序。
+2. 下载 `eosphoros-fcitx5-android-rime-full.zip`（或所需档位）。
+3. 在 Rime 插件的数据管理中导入完整压缩包并重新部署，再添加“晨星键道”。
+4. 该版本保留 Lua、OpenCC、反查注释和 ZZC；不要同时导入同名原生 Table 包。
 
 #### 📱 iOS
 
@@ -455,7 +469,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 4. GNOME 推荐通过 IBus 添加 Yong；KDE Plasma Wayland 可在“系统设置 → 键盘 → 虚拟键盘”选择 Yong Wayland；wlroots 桌面可按官方说明使用 `yong --wayland`。不要把 XIM、IBus 与 Wayland 的环境变量配置全部叠加。
 5. 小小程序本体来自上游 `yong-lin.7z`，晨星只替换配置、码表和新增皮肤；上游重新上传同名附件后，下一次 Release 会直接使用新附件构建。
 
-**Fcitx5 官方 Table**
+**Fcitx5 原生 Table**
 
 晨星 Fcitx5 版不使用 Rime。只需安装发行版提供的 Fcitx5、配置工具和
 `fcitx5-chinese-addons`（其中含官方 Table 引擎与 libime）。
@@ -483,9 +497,12 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 不会挂到其他普通编码的前缀子树。Fcitx5 官方标点、快捷短语、简繁转换、Emoji 与
 Unicode 可照常使用；Rime 专属的模糊音、反查注释、Lua 和 ZZC 不会混进原生 Table。
 
-如果更看重与其他 Rime 客户端一致的完整功能，可安装 `fcitx5-rime` 与
-`librime-lua`，改用 `eosphoros-fcitx5-linux-rime-full.zip`（或所需档位）并部署到 Fcitx5 的 Rime
-用户目录。带 `-rime` 与不带后缀的 Table 包是两套独立方案，择一使用。
+**Fcitx5 + Rime**
+
+1. 安装发行版提供的 [`fcitx5-rime`](https://github.com/fcitx/fcitx5-rime) 与 `librime-lua`；仅安装 Fcitx5 或 Chinese Addons 不足以运行此包。
+2. 下载并解压 `eosphoros-fcitx5-linux-rime-full.zip`（或所需档位），把完整目录结构复制到 Fcitx5 的 Rime 用户目录。
+3. 重新部署 Rime，并在 Fcitx5 配置工具中添加“中州韵／Rime”下的“晨星键道”。
+4. 该版本保留模糊音、反查注释、Lua、OpenCC 和 ZZC。带 `-rime` 与不带 `-rime` 的 Table 包是两套独立方案，择一使用。
 
 <details>
 <summary><strong>🧰 展开 Linux 桌面环境与应用兼容设置</strong></summary>
