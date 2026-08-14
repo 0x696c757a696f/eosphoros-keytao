@@ -227,10 +227,8 @@ class PlatformPackageTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn("libime-bin", workflow)
-        self.assertIn(
-            'python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"',
-            workflow,
-        )
+        self.assertIn("pixi run python tools/build_fcitx5_table.py", workflow)
+        self.assertIn('--compiler "$(command -v libime_tabledict)"', workflow)
         for platform in ("linux", "macos", "android"):
             self.assertIn(f"name: eosphoros-fcitx5-{platform}", workflow)
             self.assertIn(f"path: eosphoros-fcitx5-{platform}.zip", workflow)

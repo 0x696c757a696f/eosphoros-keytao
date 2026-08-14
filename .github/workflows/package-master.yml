@@ -12,6 +12,9 @@ concurrency:
   group: package-master-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
@@ -23,6 +26,7 @@ jobs:
   input-behavior:
     name: Rime behavior (${{ matrix.name }})
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -70,9 +74,10 @@ jobs:
           exit "$status"
         fi
 
-  validate:
-    name: Validate repository
+  tests:
+    name: Python and Lua tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
     - uses: actions/checkout@v7
@@ -82,15 +87,34 @@ jobs:
         cache: true
         run-install: true
 
-    - name: Run repository checks
+    - name: Run behavior tests
       run: |
-        pixi run check
+        pixi run test
         pixi run lua tests/run.lua
+
+  generated-quality:
+    name: Generated and quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - uses: prefix-dev/setup-pixi@v0.10.0
+      with:
+        cache: true
+        run-install: true
+
+    - name: Validate source and generated files
+      run: |
+        pixi run quality
+        pixi run generated-quick
         git diff --check
 
   build-native:
     name: Build native packages
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
     - uses: actions/checkout@v7
@@ -112,34 +136,39 @@ jobs:
           --sha256 "$OPENCC_TONGGUI_SHA256" \
           --destination opencc/eosphoros
 
-    - name: Validate platform package manifests
+    - name: Build Fcitx5 packages and compile Rime core in parallel
       run: |
-        pixi run python tools/build_platform_packages.py --check
-        pixi run python tools/build_fcitx5_table.py --check
-
-    - name: Build Fcitx5 built-in Table packages
-      run: pixi run python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
-
-    - name: Compile packaged core with librime and Lua
-      run: pixi run python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
+        pixi run python tools/build_fcitx5_table.py \
+          --compiler "$(command -v libime_tabledict)" &
+        fcitx_pid=$!
+        pixi run python tools/smoke_test_rime_deployment.py \
+          --shared-data-dir /usr/share/rime-data &
+        rime_pid=$!
+        status=0
+        wait "$fcitx_pid" || status=$?
+        wait "$rime_pid" || status=$?
+        exit "$status"
 
     - uses: actions/upload-artifact@v7
       with:
         name: eosphoros-fcitx5-linux
         path: eosphoros-fcitx5-linux.zip
         if-no-files-found: error
+        compression-level: 0
 
     - uses: actions/upload-artifact@v7
       with:
         name: eosphoros-fcitx5-macos
         path: eosphoros-fcitx5-macos.zip
         if-no-files-found: error
+        compression-level: 0
 
     - uses: actions/upload-artifact@v7
       with:
         name: eosphoros-fcitx5-android
         path: eosphoros-fcitx5-android.zip
         if-no-files-found: error
+        compression-level: 0
 
     - uses: actions/upload-artifact@v7
       with:
@@ -158,6 +187,7 @@ jobs:
         name: fcitx5-android-eosphoros-themes
         path: mobile_themes/fcitx5-android/*.zip
         if-no-files-found: error
+        compression-level: 0
 
     - uses: actions/upload-artifact@v7
       with:

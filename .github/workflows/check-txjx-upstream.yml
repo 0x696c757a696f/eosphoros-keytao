@@ -23,23 +23,23 @@ env:
 jobs:
   adapt:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout default branch
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: prefix-dev/setup-pixi@v0.10.0
         with:
-          python-version: "3.14"
-          check-latest: true
+          cache: true
+          run-install: true
 
       - name: Prepare conflict-safe eosphoros adaptation
         id: adapt
         shell: pwsh
         run: |
-          python tools/adapt_txjx_upstream.py --write --update-lock --json > txjx-adaptation-report.json
+          pixi run python tools/adapt_txjx_upstream.py --write --update-lock --json > txjx-adaptation-report.json
           $Status = $LASTEXITCODE
           if ($Status -ne 0 -and $Status -ne 20) {
             exit $Status
@@ -49,24 +49,11 @@ jobs:
           "blocked=$($Report.blocked.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
           "changed=$(($Report.lock_updated -or $Report.written).ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
 
-      - name: Install validation dependencies
-        if: steps.adapt.outputs.changed == 'true'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lua5.4
-          python -m pip install --upgrade -r requirements-ci.txt
-          python -m pip install -r requirements-dev.txt
-
       - name: Validate adapted sources
         if: steps.adapt.outputs.changed == 'true'
         run: |
-          python tools/validate_repo.py
-          python tools/audit_long_dictionary_entries.py --check
-          lua5.4 tests/run.lua
-          python -m unittest discover -s tests -p "test_*.py" -v
-          python tools/build_platform_packages.py --check
-          python tools/build_fcitx5_themes.py --check
-          python tools/build_mobile_themes.py --check
+          pixi run check
+          pixi run lua tests/run.lua
           git diff --check
 
       - name: Publish job summary

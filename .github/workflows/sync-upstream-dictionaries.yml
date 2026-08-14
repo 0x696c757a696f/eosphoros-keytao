@@ -23,15 +23,15 @@ env:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout default branch
         uses: actions/checkout@v7
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: prefix-dev/setup-pixi@v0.10.0
         with:
-          python-version: "3.14"
-          check-latest: true
+          cache: true
+          run-install: true
 
       - name: Restore upstream Git cache
         uses: actions/cache@v6
@@ -43,7 +43,9 @@ jobs:
 
       - name: Detect and integrate upstream changes
         shell: pwsh
-        run: ./tools/update_upstream_dictionaries.ps1 -Python python -CacheDirectory .tmp/upstream-git-cache
+        run: |
+          $Python = (pixi run python -c "import sys; print(sys.executable)").Trim()
+          ./tools/update_upstream_dictionaries.ps1 -Python $Python -CacheDirectory .tmp/upstream-git-cache
 
       - name: Detect generated changes
         id: changes
@@ -67,13 +69,8 @@ jobs:
       - name: Validate generated dictionaries
         if: steps.changes.outputs.changed == 'true'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y lua5.4
-          python -m pip install --upgrade -r requirements-ci.txt
-          python -m pip install -r requirements-dev.txt
-          python -m unittest discover -s tests -p 'test_*.py' -v
-          python tools/validate_repo.py
-          python tools/audit_long_dictionary_entries.py --check
+          pixi run check
+          pixi run lua tests/run.lua
           git diff --check
 
       - name: Commit and open pull request

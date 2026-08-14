@@ -5,6 +5,10 @@ on:
     - cron: "17 4 1,15 * *"
   workflow_dispatch:
 
+concurrency:
+  group: create-release
+  cancel-in-progress: false
+
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
@@ -20,6 +24,7 @@ env:
 jobs:
   check_release_needed:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
     outputs:
@@ -67,29 +72,25 @@ jobs:
     needs: check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: windows-latest
+    timeout-minutes: 20
 
     steps:
     - uses: actions/checkout@v7
 
-    - uses: actions/setup-python@v7
+    - uses: prefix-dev/setup-pixi@v0.10.0
       with:
-        python-version: '3.14'
-        check-latest: true
+        cache: true
+        run-install: true
 
     - name: Verify UTF-8 runtime and Chinese paths
       run: >-
-        python -c "import sys; assert sys.flags.utf8_mode == 1; assert sys.stdout.encoding.lower().replace('-', '') == 'utf8'; assert sys.stderr.encoding.lower().replace('-', '') == 'utf8'; print('UTF-8 中文路径检查：Win_词库合并.exe')"
-
-    - name: Install test dependencies and pinned executable builder
-      run: |
-        python -m pip install --upgrade -r requirements-ci.txt
-        python -m pip install -r requirements-build.txt
+        pixi run python -c "import sys; assert sys.flags.utf8_mode == 1; assert sys.stdout.encoding.lower().replace('-', '') == 'utf8'; assert sys.stderr.encoding.lower().replace('-', '') == 'utf8'; print('UTF-8 中文路径检查：Win_词库合并.exe')"
 
     - name: Build Windows executables from current Python sources
-      run: python tools/build_zzc_windows_exe.py
+      run: pixi run python tools/build_zzc_windows_exe.py
 
     - name: Run rebuilt Windows executable checks
-      run: python -m unittest tests.test_tools.RepositoryValidationTests.test_windows_merge_executable_runs_current_eosphoros_behavior tests.test_tools.RepositoryValidationTests.test_windows_rollback_executable_restores_latest_merge tests.test_tools.RepositoryValidationTests.test_committed_windows_executables_match_sources_and_lock -v
+      run: pixi run python -m unittest tests.test_tools.RepositoryValidationTests.test_windows_merge_executable_runs_current_eosphoros_behavior tests.test_tools.RepositoryValidationTests.test_windows_rollback_executable_restores_latest_merge tests.test_tools.RepositoryValidationTests.test_committed_windows_executables_match_sources_and_lock -v
 
     - name: Upload rebuilt Windows executables
       uses: actions/upload-artifact@v7
@@ -101,12 +102,36 @@ jobs:
         if-no-files-found: error
         retention-days: 1
 
+  validate-source:
+    needs: check_release_needed
+    if: needs.check_release_needed.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - uses: prefix-dev/setup-pixi@v0.10.0
+      with:
+        cache: true
+        run-install: true
+
+    - name: Validate release source tree
+      run: |
+        pixi run check
+        pixi run lua tests/run.lua
+        git diff --check
+
   release:
     needs:
       - check_release_needed
       - build-windows-executables
+      - validate-source
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write
 
@@ -119,27 +144,16 @@ jobs:
     - name: Checkout master branch
       uses: actions/checkout@v7
 
-    - uses: actions/setup-python@v7
-      with:
-        python-version: '3.14'
-        check-latest: true
-
     - uses: prefix-dev/setup-pixi@v0.10.0
       with:
         cache: true
         run-install: true
 
-    - name: Validate source tree
+    - name: Install native compilers
       run: |
         sudo apt-get update
-        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude \
+        sudo apt-get install -y librime-bin librime-plugin-lua rime-prelude \
           libime-bin
-        python -m pip install --upgrade -r requirements-ci.txt
-        python -m pip install -r requirements-dev.txt
-        python tools/validate_repo.py
-        python tools/audit_long_dictionary_entries.py --check
-        lua5.4 tests/run.lua
-        pixi run python -m unittest discover -s tests -p 'test_*.py' -v
 
     - name: Use Windows executables rebuilt by CI
       uses: actions/download-artifact@v8
@@ -154,28 +168,29 @@ jobs:
 
     - name: Download verified OpenCC data
       run: |
-        python tools/fetch_opencc.py \
+        pixi run python tools/fetch_opencc.py \
           --url "$OPENCC_TONGGUI_URL" \
           --sha256 "$OPENCC_TONGGUI_SHA256" \
           --destination opencc/eosphoros
 
-    - name: Compile packaged core with librime and Lua
-      run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
-
-    - name: Validate embedded Fcitx5 themes
-      run: python tools/build_fcitx5_themes.py --check
-
-    - name: Validate native mobile themes
-      run: pixi run python tools/build_mobile_themes.py --check
+    - name: Build Fcitx5 packages and compile Rime core in parallel
+      run: |
+        pixi run python tools/build_fcitx5_table.py \
+          --compiler "$(command -v libime_tabledict)" &
+        fcitx_pid=$!
+        pixi run python tools/smoke_test_rime_deployment.py \
+          --shared-data-dir /usr/share/rime-data &
+        rime_pid=$!
+        status=0
+        wait "$fcitx_pid" || status=$?
+        wait "$rime_pid" || status=$?
+        exit "$status"
 
     - name: Build generic and platform-specific Rime packages
-      run: python tools/build_platform_packages.py
+      run: pixi run python tools/build_platform_packages.py
 
     - name: Embed native mobile themes in platform packages
       run: pixi run python tools/build_mobile_themes.py --platform-dir .
-
-    - name: Build Fcitx5 built-in Table packages
-      run: python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
 
     - name: Fetch tags and generate changelog from last release
       id: changelog
@@ -235,15 +250,15 @@ jobs:
 
     - name: Zip yong
       run: |
-        python tools/build_eosphoros_icons.py --check
+        pixi run python tools/build_eosphoros_icons.py --check
         mkdir -p yong_android/yong/.yong
-        python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
+        pixi run python -c "from pathlib import Path; source = Path('packaging/yong/android/yong.ini').read_text(encoding='utf-8'); Path('yong_android/yong/.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb yong_android/yong/.yong/
         cp packaging/yong/android/README.txt yong_android/yong/README-Eosphoros-Android.txt
         mkdir -p yong_android/yong/.yong/android
-        python tools/build_yong_android_skin.py packaging/yong/android/skin --theme dawn --output yong_android/yong/.yong/android/Eosphoros-Dawn.zip
-        python tools/build_yong_android_skin.py packaging/yong/android/skin --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
-        python tools/validate_yong_package.py yong_android/yong
+        pixi run python tools/build_yong_android_skin.py packaging/yong/android/skin --theme dawn --output yong_android/yong/.yong/android/Eosphoros-Dawn.zip
+        pixi run python tools/build_yong_android_skin.py packaging/yong/android/skin --theme night --output yong_android/yong/.yong/android/Eosphoros-Night.zip
+        pixi run python tools/validate_yong_package.py yong_android/yong
         cd yong_android
         zip -r ../eosphoros-yong-android.zip yong
         cd ..
@@ -252,7 +267,7 @@ jobs:
         mkdir -p .yong
         curl --fail --location --output yong-win.7z "$YONG_WIN_URL"
         curl --fail --location --output yong-lin.7z "$YONG_LINUX_URL"
-        python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
+        pixi run python -c "from pathlib import Path; source = Path('packaging/yong/yong.ini').read_text(encoding='utf-8'); Path('.yong/yong.ini').write_text(source, encoding='utf-8-sig', newline='\n')"
         cp -r mb .yong/
 
         7z x yong-lin.7z -oyong_linux_temp
@@ -260,21 +275,21 @@ jobs:
         cp .yong/yong.ini yong_linux_temp/yong/.yong/yong.ini
         cp .yong/yong.ini yong_linux_temp/yong/yong.ini
         cp -r mb yong_linux_temp/yong/
-        python tools/prepare_yong_desktop_skins.py --base-skin yong_linux_temp/yong/skin --destination yong_linux_temp/yong/skin
+        pixi run python tools/prepare_yong_desktop_skins.py --base-skin yong_linux_temp/yong/skin --destination yong_linux_temp/yong/skin
         cp packaging/yong/linux/README.txt yong_linux_temp/yong/README-Eosphoros-Linux.txt
-        python tools/validate_yong_package.py yong_linux_temp/yong
+        pixi run python tools/validate_yong_package.py yong_linux_temp/yong
         (cd yong_linux_temp && zip -r ../eosphoros-yong-linux.zip yong)
         rm -rf yong_linux_temp
 
         7z x yong-win.7z -oyong_temp
         cp -r .yong yong_temp/yong
-        python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_temp/yong/.yong/skin
+        pixi run python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_temp/yong/.yong/skin
         cp packaging/yong/README.txt yong_temp/yong/README-Eosphoros.txt
-        python tools/validate_yong_package.py yong_temp/yong
+        pixi run python tools/validate_yong_package.py yong_temp/yong
         (cd yong_temp && zip -r ../eosphoros-yong-windows.zip yong)
 
         mkdir -p yong_skin_bundle/skin
-        python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_skin_bundle/skin
+        pixi run python tools/prepare_yong_desktop_skins.py --base-skin yong_temp/yong/skin --destination yong_skin_bundle/skin
         cd yong_skin_bundle
         zip -r ../eosphoros-yong-desktop-skins.zip skin
         cd ..

@@ -6,6 +6,10 @@ on:
     - cron: "27 5 2 * *"
   workflow_dispatch:
 
+concurrency:
+  group: check-reference-upstreams
+  cancel-in-progress: false
+
 permissions:
   contents: read
   issues: write
@@ -19,6 +23,7 @@ jobs:
   legacy:
     if: github.event_name == 'workflow_dispatch' || github.event.schedule == '23 5 * * 1'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
 
@@ -92,6 +97,7 @@ jobs:
   christian-sources:
     if: github.event_name == 'workflow_dispatch' || github.event.schedule == '27 5 2 * *'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
 

@@ -630,9 +630,11 @@ class RepositoryValidationTests(unittest.TestCase):
         package = (root / ".github/workflows/package-master.yml").read_text(
             encoding="utf-8"
         )
+        pixi = (root / "pixi.toml").read_text(encoding="utf-8")
 
         self.assertIn("python tools/build_platform_packages.py", release)
-        self.assertIn("python tools/build_platform_packages.py --check", package)
+        self.assertIn("pixi run generated-quick", package)
+        self.assertIn("python tools/build_platform_packages.py --check", pixi)
         for archive in (
             "eosphoros-rime-cross-platform.zip",
             "eosphoros-weasel-windows-rime.zip",
@@ -1741,21 +1743,26 @@ columns:
         for release_only in (
             "build-windows-executables:",
             "windows-latest",
-            "python -m pip install -r requirements-build.txt",
-            "python tools/build_zzc_windows_exe.py",
+            "pixi run python tools/build_zzc_windows_exe.py",
             "name: zzc-windows-executables",
         ):
             self.assertNotIn(release_only, package)
             self.assertIn(release_only, release)
 
-        self.assertIn("python-version: '3.14'", release)
-        self.assertIn("check-latest: true", release)
+        self.assertNotIn("actions/setup-python", release)
+        self.assertNotIn("python -m pip install", release)
+        self.assertIn("validate-source:", release)
+        self.assertIn("pixi run check", release)
         self.assertNotIn("actions/setup-python", package)
         self.assertNotIn("python -m pip install", package)
-        self.assertIn("pixi run check", package)
-        self.assertIn("validate:", package)
+        self.assertIn("pixi run test", package)
+        self.assertIn("pixi run quality", package)
+        self.assertIn("pixi run generated-quick", package)
+        self.assertIn("tests:", package)
+        self.assertIn("generated-quality:", package)
         self.assertIn("build-native:", package)
         self.assertIn("cancel-in-progress: true", package)
+        self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", package)
 
         for executable_check in (
             "test_windows_merge_executable_runs_current_eosphoros_behavior",
@@ -1809,8 +1816,30 @@ columns:
             sync.index("Align Pixi manifest with Dependabot-managed requirements"),
         )
         self.assertIn("pixi update", sync)
-        self.assertIn("pixi run test", sync)
+        self.assertIn("pixi run check", sync)
         self.assertIn("gh pr create", sync)
+
+    def test_heavy_automation_reuses_pixi_without_pip_bootstrap(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        workflows = root / ".github" / "workflows"
+        for name in (
+            "package-master.yml",
+            "create-release.yml",
+            "check-txjx-upstream.yml",
+            "sync-development-dependencies.yml",
+            "sync-upstream-dictionaries.yml",
+        ):
+            workflow = (workflows / name).read_text(encoding="utf-8")
+            self.assertIn("prefix-dev/setup-pixi@v0.10.0", workflow, name)
+            self.assertNotIn("python -m pip install", workflow, name)
+            self.assertNotIn("actions/setup-python", workflow, name)
+
+        package = (workflows / "package-master.yml").read_text(encoding="utf-8")
+        release = (workflows / "create-release.yml").read_text(encoding="utf-8")
+        self.assertIn("generated-quality:", package)
+        self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", package)
+        self.assertIn("validate-source:", release)
+        self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", release)
 
     def test_core_dictionary_prioritizes_project_name(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -1947,8 +1976,8 @@ print("撤回完成", file=sys.stderr)
         )
         self.assertIn("gh pr create", workflow)
         self.assertIn("steps.adapt.outputs.blocked == 'true'", workflow)
-        self.assertIn("python tools/validate_repo.py", workflow)
-        self.assertIn("lua5.4 tests/run.lua", workflow)
+        self.assertIn("pixi run check", workflow)
+        self.assertIn("pixi run lua tests/run.lua", workflow)
         self.assertNotIn("build_zzc_windows_exe.py", workflow)
         self.assertNotIn("D:\\", workflow)
         self.assertNotIn("D:/", workflow)
