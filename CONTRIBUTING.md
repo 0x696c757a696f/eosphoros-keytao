@@ -18,6 +18,12 @@ pixi run check
 pixi run quality
 ```
 
+仓库文本文件统一使用 LF。若编辑器或生成器写入了 CRLF，可运行：
+
+```powershell
+pixi run line-endings
+```
+
 ## 词库原则
 
 - 不直接编辑自动生成的 ICE、万象、英文及四个非天主教专题词典；修改其清单、

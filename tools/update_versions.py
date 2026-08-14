@@ -37,7 +37,7 @@ def main() -> int:
                 f"refusing to refresh upstream lock for modified file: {relative}"
             )
 
-    (ROOT / "VERSION").write_text(args.date + "\n", encoding="utf-8")
+    (ROOT / "VERSION").write_text(args.date + "\n", encoding="utf-8", newline="\n")
     changed = 0
     yaml_paths = list(ROOT.glob("*.yaml"))
     yaml_paths.extend((ROOT / "dicts" / "eosphoros").glob("*.yaml"))

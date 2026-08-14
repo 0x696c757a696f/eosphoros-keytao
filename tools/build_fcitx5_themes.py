@@ -252,9 +252,11 @@ def write_tree(destination: Path) -> None:
         artifact = artifact_id(item["id"])
         linux_dir = linux_root / f"eosphoros-{artifact}"
         linux_dir.mkdir()
-        (linux_dir / "theme.conf").write_text(linux_theme(item), encoding="utf-8")
+        (linux_dir / "theme.conf").write_text(
+            linux_theme(item), encoding="utf-8", newline="\n"
+        )
         (macos_root / f"eosphoros-{artifact}.conf").write_text(
-            macos_theme(item["colors"]), encoding="utf-8"
+            macos_theme(item["colors"]), encoding="utf-8", newline="\n"
         )
 
     by_id = {item["id"]: item for item in schemes}
@@ -264,6 +266,7 @@ def write_tree(destination: Path) -> None:
             by_id["EosphorosDark"]["colors"],
         ),
         encoding="utf-8",
+        newline="\n",
     )
     manifest = {
         "generated": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
@@ -277,7 +280,9 @@ def write_tree(destination: Path) -> None:
         ],
     }
     (destination / "themes.yaml").write_text(
-        yaml.safe_dump(manifest, allow_unicode=True, sort_keys=False), encoding="utf-8"
+        yaml.safe_dump(manifest, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+        newline="\n",
     )
 
 

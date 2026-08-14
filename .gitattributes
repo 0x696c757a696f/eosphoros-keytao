@@ -32,6 +32,9 @@ VERSION text eol=lf
 *.zip  binary
 *.cskin binary
 *.hskin binary
+*.ttf  binary
+*.woff binary
+*.woff2 binary
 *.7z   binary
 *.bin  binary
 *.pdf  binary
