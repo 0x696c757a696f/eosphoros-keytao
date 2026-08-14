@@ -120,25 +120,19 @@ jobs:
         pixi run lua tests/run.lua
         git diff --check
 
-  release:
+  build-native-release:
     needs:
       - check_release_needed
       - build-windows-executables
       - validate-source
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     permissions:
-      contents: write
+      contents: read
 
     steps:
-    - name: Set up environment variables
-      run: |
-        echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
-        echo "RELEASE_TITLE=$(date +'%Y.%m.%d') 词库更新" >> $GITHUB_ENV
-
-    - name: Checkout master branch
-      uses: actions/checkout@v7
+    - uses: actions/checkout@v7
 
     - uses: prefix-dev/setup-pixi@v0.10.0
       with:
@@ -160,7 +154,6 @@ jobs:
     - name: Create directories
       run: |
         mkdir -p Rime
-        mkdir -p mb/eosphoros
 
     - name: Download verified OpenCC data
       run: |
@@ -188,40 +181,58 @@ jobs:
     - name: Embed native mobile themes in platform packages
       run: pixi run python tools/build_mobile_themes.py --platform-dir .
 
-    - name: Fetch tags and generate changelog from last release
-      id: changelog
-      uses: actions/github-script@v9
+    - name: Upload native release assets
+      uses: actions/upload-artifact@v7
       with:
-        script: |
-          let changelog = '';
-          const renderCommit = commit => {
-            const message = commit.commit.message.split('\n').join(' ');
-            const commitLink = `[${commit.sha.substring(0, 7)}](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commit.sha})`;
-            return `- ${commitLink} ${message} \n`;
-          };
-          try {
-            const lastRelease = await github.rest.repos.getLatestRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
-            const compare = await github.rest.repos.compareCommits({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              base: lastRelease.data.tag_name,
-              head: context.sha
-            });
-            changelog = compare.data.commits.map(renderCommit).join('');
-          } catch (error) {
-            if (error.status !== 404) throw error;
-            core.warning('Previous release tag is unavailable; changelog will contain the current commit only.');
-            const current = await github.rest.repos.getCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha
-            });
-            changelog = renderCommit(current.data);
-          }
-          core.setOutput('changelog', changelog);
+        name: release-native-assets
+        path: |
+          eosphoros-rime-cross-platform.zip
+          eosphoros-weasel-windows-rime.zip
+          eosphoros-squirrel-macos-rime.zip
+          eosphoros-fcitx5-macos.zip
+          eosphoros-fcitx5-linux.zip
+          eosphoros-fcitx5-macos-rime.zip
+          eosphoros-fcitx5-linux-rime.zip
+          eosphoros-trime-android.zip
+          eosphoros-fcitx5-android.zip
+          eosphoros-fcitx5-android-rime.zip
+          eosphoros-yuanshu-ios-rime.zip
+          eosphoros-hamster-ios-rime.zip
+        if-no-files-found: error
+        retention-days: 1
+        compression-level: 0
+
+  build-rabbit-release:
+    needs:
+      - check_release_needed
+      - build-windows-executables
+      - validate-source
+    if: needs.check_release_needed.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - uses: prefix-dev/setup-pixi@v0.10.0
+      with:
+        cache: true
+        run-install: true
+
+    - name: Use Windows executables rebuilt by CI
+      uses: actions/download-artifact@v8
+      with:
+        name: zzc-windows-executables
+        path: zzc
+
+    - name: Download verified OpenCC data
+      run: |
+        pixi run python tools/fetch_opencc.py \
+          --url "$OPENCC_TONGGUI_URL" \
+          --sha256 "$OPENCC_TONGGUI_SHA256" \
+          --destination opencc/eosphoros
 
     - name: Resolve latest Rabbit x64 release
       id: rabbit
@@ -266,8 +277,36 @@ jobs:
         pixi run python tools/prepare_rabbit_release.py --rabbit-dir Rabbit
         zip -r eosphoros-rabbit-windows-rime.zip Rabbit/
 
+    - name: Upload Rabbit release asset
+      uses: actions/upload-artifact@v7
+      with:
+        name: release-rabbit-assets
+        path: eosphoros-rabbit-windows-rime.zip
+        if-no-files-found: error
+        retention-days: 1
+        compression-level: 0
+
+  build-yong-release:
+    needs:
+      - check_release_needed
+      - validate-source
+    if: needs.check_release_needed.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - uses: prefix-dev/setup-pixi@v0.10.0
+      with:
+        cache: true
+        run-install: true
+
     - name: Build deterministic Yong table and dazhu index
       run: |
+        mkdir -p mb/eosphoros
         pixi run python tools/build_yong_table.py \
           --table mb/eosphoros/eosphoros.txt \
           --dazhu dazhu.txt
@@ -318,6 +357,86 @@ jobs:
         zip -r ../eosphoros-yong-desktop-skins.zip skin
         cd ..
         rm -rf .yong yong_temp yong_skin_bundle
+
+    - name: Upload Yong release assets
+      uses: actions/upload-artifact@v7
+      with:
+        name: release-yong-assets
+        path: |
+          eosphoros-yong-windows.zip
+          eosphoros-yong-linux.zip
+          eosphoros-yong-android.zip
+          eosphoros-yong-desktop-skins.zip
+        if-no-files-found: error
+        retention-days: 1
+        compression-level: 0
+
+    - name: Upload compressed Yong index
+      uses: actions/upload-artifact@v7
+      with:
+        name: release-yong-index-assets
+        path: dazhu.txt
+        if-no-files-found: error
+        retention-days: 1
+
+  release:
+    needs:
+      - check_release_needed
+      - build-native-release
+      - build-rabbit-release
+      - build-yong-release
+    if: needs.check_release_needed.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+    - name: Set up release metadata
+      run: |
+        echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+        echo "RELEASE_TITLE=$(date +'%Y.%m.%d') 词库更新" >> $GITHUB_ENV
+
+    - name: Download all release assets
+      uses: actions/download-artifact@v8
+      with:
+        pattern: release-*-assets
+        merge-multiple: true
+
+    - name: Generate changelog from last release
+      id: changelog
+      uses: actions/github-script@v9
+      with:
+        script: |
+          let changelog = '';
+          const renderCommit = commit => {
+            const message = commit.commit.message.split('\n').join(' ');
+            const commitLink = `[${commit.sha.substring(0, 7)}](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${commit.sha})`;
+            return `- ${commitLink} ${message} \n`;
+          };
+          try {
+            const lastRelease = await github.rest.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const compare = await github.rest.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: lastRelease.data.tag_name,
+              head: context.sha
+            });
+            changelog = compare.data.commits.map(renderCommit).join('');
+          } catch (error) {
+            if (error.status !== 404) throw error;
+            core.warning('Previous release tag is unavailable; changelog will contain the current commit only.');
+            const current = await github.rest.repos.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha
+            });
+            changelog = renderCommit(current.data);
+          }
+          core.setOutput('changelog', changelog);
 
     - name: Create checksums and publish Release
       env:

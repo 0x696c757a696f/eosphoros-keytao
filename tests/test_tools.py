@@ -710,12 +710,31 @@ class RepositoryValidationTests(unittest.TestCase):
         release = (root / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )
+        workflow = yaml.safe_load(release)
 
         self.assertNotIn("shogo82148/actions-", release)
         self.assertIn('sha256sum "${assets[@]}" > SHA256SUMS', release)
         self.assertIn('gh release create "$CURRENT_DATE" "${assets[@]}"', release)
         self.assertIn('gh release upload "$CURRENT_DATE" "${assets[@]}" --clobber', release)
+        self.assertIn("pattern: release-*-assets", release)
+        self.assertIn("merge-multiple: true", release)
         self.assertNotIn("actions: write", release)
+        jobs = workflow["jobs"]
+        for job in (
+            "build-native-release",
+            "build-rabbit-release",
+            "build-yong-release",
+        ):
+            self.assertIn(job, jobs)
+        self.assertEqual(
+            set(jobs["release"]["needs"]),
+            {
+                "check_release_needed",
+                "build-native-release",
+                "build-rabbit-release",
+                "build-yong-release",
+            },
+        )
 
     def test_release_yong_archive_is_the_full_portable_build(self) -> None:
         root = Path(__file__).resolve().parents[1]
