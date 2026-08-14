@@ -165,13 +165,14 @@ jobs:
     - name: Validate embedded Fcitx5 themes
       run: python tools/build_fcitx5_themes.py --check
 
-    - name: Embed native mobile themes in platform packages
-      run: |
-        pixi run python tools/build_mobile_themes.py --check
-        pixi run python tools/build_mobile_themes.py --platform-dir .
+    - name: Validate native mobile themes
+      run: pixi run python tools/build_mobile_themes.py --check
 
     - name: Build generic and platform-specific Rime packages
       run: python tools/build_platform_packages.py
+
+    - name: Embed native mobile themes in platform packages
+      run: pixi run python tools/build_mobile_themes.py --platform-dir .
 
     - name: Build Fcitx5 built-in Table packages
       run: python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
