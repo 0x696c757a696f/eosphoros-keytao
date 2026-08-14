@@ -7,6 +7,7 @@ local string_sub = string.sub
 local type = type
 local key_event_util = require("eosphoros.input.eosphoros_key_event")
 local commit_guard = require("eosphoros.input.eosphoros_commit_guard")
+local platform = require("eosphoros.common.eosphoros_platform")
 
 local M = {}
 local kAccepted = 1
@@ -53,12 +54,9 @@ local function core_dict_candidates(schema_id)
     local candidates, seen = {}, {}
     push_unique_path(candidates, seen, file_name)
     push_unique_path(candidates, seen, join_path(module_project_dir(), file_name))
-    local api = rime_api
-    if api and api.get_user_data_dir then
-        local ok, user_dir = pcall(api.get_user_data_dir)
-        if ok and type(user_dir) == "string" and user_dir ~= "" then
-            push_unique_path(candidates, seen, join_path(user_dir, file_name))
-        end
+    local user_dir = platform.user_data_dir()
+    if user_dir then
+        push_unique_path(candidates, seen, join_path(user_dir, file_name))
     end
     return candidates
 end

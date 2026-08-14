@@ -47,7 +47,9 @@ rime_patch
 /.artifacts/
 /yong_temp/
 /dazhu.txt
-/eosphoros-rime-cross-platform.zip
+/eosphoros-rime-full.zip
+/eosphoros-rime-standard.zip
+/eosphoros-rime-lite.zip
 /eosphoros-weasel-windows-rime.zip
 /eosphoros-squirrel-macos-rime.zip
 /eosphoros-fcitx5-macos.zip

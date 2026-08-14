@@ -5,6 +5,7 @@
 
 local M = {}
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local platform = require("eosphoros.common.eosphoros_platform")
 
 local PHRASE_SHARD_CACHE_LIMIT = 16
 
@@ -90,12 +91,9 @@ local function collect_project_dirs()
         push(".")
     end
 
-    local api = rime_api
-    if api and api.get_user_data_dir then
-        local ok, user_dir = pcall(api.get_user_data_dir)
-        if ok and type(user_dir) == "string" and user_dir ~= "" then
-            push(user_dir)
-        end
+    local user_dir = platform.user_data_dir()
+    if user_dir then
+        push(user_dir)
     end
 
     local schema_id = shared_static.schema_id or ""
@@ -126,13 +124,7 @@ local function collect_project_dirs()
 
     if schema_id ~= "" then
         push(schema_id)
-        local user_dir = nil
-        if api and api.get_user_data_dir then
-            local ok, value = pcall(api.get_user_data_dir)
-            if ok and type(value) == "string" and value ~= "" then
-                user_dir = value
-            end
-        end
+        local user_dir = platform.user_data_dir()
         if user_dir then
             push(join_path(user_dir, schema_id))
         end

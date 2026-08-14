@@ -8,6 +8,7 @@ local candidate_util = require("eosphoros.common.eosphoros_candidate")
 local reverse = require("eosphoros.common.eosphoros_reverse")
 local state = require("eosphoros.common.eosphoros_state")
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local gc = require("eosphoros.common.eosphoros_gc")
 
 local string_match = string.match
 local string_find = string.find
@@ -29,7 +30,7 @@ local function release_hint_state(env, gc_step, close_handle)
         env.core_dict_name = nil
     end
     if had_state and gc_step and gc_step > 0 then
-        collectgarbage("step", gc_step)
+        gc.step(gc_step)
     end
 end
 
@@ -355,4 +356,3 @@ local function fini(env)
 end
 
 return { init = init, func = filter, fini = fini }
-

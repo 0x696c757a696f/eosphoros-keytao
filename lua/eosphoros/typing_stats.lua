@@ -3,6 +3,7 @@
 -- 数据保存在 user_data_dir/zzc_state/eosphoros_typing_stats.tsv；兼容读取旧 typing_stats.txt。
 
 local cache_registry = require("eosphoros.common.eosphoros_cache_registry")
+local platform = require("eosphoros.common.eosphoros_platform")
 
 local M = {}
 
@@ -31,11 +32,7 @@ local function state()
 end
 
 local function user_data_dir()
-    local api = rime_api
-    if not api or not api.get_user_data_dir then return nil end
-    local ok, path = pcall(api.get_user_data_dir)
-    if ok and type(path) == "string" and path ~= "" then return path end
-    return nil
+    return platform.user_data_dir()
 end
 
 local function stats_path()
@@ -245,7 +242,7 @@ cache_registry.register("typing_stats", release_stats_cache)
 function M.init_processor(env)
     local context = env and env.engine and env.engine.context
     if context and context.commit_notifier then
-        env.commit_connection = context.commit_notifier:connect(function(current_context)
+        env.commit_connection = platform.safe_connect(context.commit_notifier, function(current_context)
             pcall(M.on_commit, current_context)
         end)
     end
@@ -253,12 +250,8 @@ function M.init_processor(env)
 end
 
 function M.fini_processor(env)
-    if env.commit_connection then
-        pcall(function()
-            env.commit_connection:disconnect()
-        end)
-        env.commit_connection = nil
-    end
+    platform.safe_disconnect(env.commit_connection)
+    env.commit_connection = nil
     flush(state())
 end
 

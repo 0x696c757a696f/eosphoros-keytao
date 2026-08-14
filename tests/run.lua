@@ -202,6 +202,48 @@ test("typing statistics uses the shared cache registry", function()
     if not found then error("typing_stats cleaner was not registered") end
 end)
 
+test("platform adapter tolerates missing APIs and manages notifier connections", function()
+    unload("eosphoros.common.eosphoros_platform")
+    local saved_api = _G.rime_api
+    _G.rime_api = nil
+    local platform = require("eosphoros.common.eosphoros_platform")
+    assert_equal(platform.user_data_dir(), nil, "missing user data API")
+
+    _G.rime_api = { get_user_data_dir = function() error("unsupported") end }
+    assert_equal(platform.user_data_dir(), nil, "failing user data API")
+    _G.rime_api = { get_user_data_dir = function() return "/tmp/rime" end }
+    assert_equal(platform.user_data_dir(), "/tmp/rime", "user data directory")
+
+    local disconnected = false
+    local notifier = {
+        connect = function(_, callback)
+            callback("connected")
+            return { disconnect = function() disconnected = true end }
+        end,
+    }
+    local observed = nil
+    local connection = platform.safe_connect(notifier, function(value) observed = value end)
+    assert_equal(observed, "connected", "notifier callback")
+    platform.safe_disconnect(connection)
+    assert_equal(disconnected, true, "notifier disconnect")
+    _G.rime_api = saved_api
+end)
+
+test("explicit garbage collection batches small cleanup requests", function()
+    unload("eosphoros.common.eosphoros_gc")
+    local gc = require("eosphoros.common.eosphoros_gc")
+    gc.reset()
+    assert_equal(gc.step(40), false, "first small request")
+    local pending, runs = gc.stats()
+    assert_equal(pending, 40, "pending GC budget")
+    assert_equal(runs, 0, "GC run count before threshold")
+    assert_equal(gc.step(56), true, "threshold request")
+    pending, runs = gc.stats()
+    assert_equal(pending, 0, "pending GC budget after run")
+    assert_equal(runs, 1, "GC run count after threshold")
+    assert_equal(gc.step(1, true), true, "forced GC request")
+end)
+
 test("modular input processor components load from the eosphoros namespace", function()
     local modules = {
         "eosphoros.input.eosphoros_key_event",

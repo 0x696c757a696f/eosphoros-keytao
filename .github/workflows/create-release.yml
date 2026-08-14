@@ -180,7 +180,9 @@ jobs:
       with:
         name: release-native-assets
         path: |
-          eosphoros-rime-cross-platform.zip
+          eosphoros-rime-full.zip
+          eosphoros-rime-standard.zip
+          eosphoros-rime-lite.zip
           eosphoros-weasel-windows-rime.zip
           eosphoros-squirrel-macos-rime.zip
           eosphoros-fcitx5-macos.zip
@@ -431,7 +433,9 @@ jobs:
           eosphoros-yong-linux.zip
           eosphoros-yong-android.zip
           eosphoros-yong-desktop-skins.zip
-          eosphoros-rime-cross-platform.zip
+          eosphoros-rime-full.zip
+          eosphoros-rime-standard.zip
+          eosphoros-rime-lite.zip
           eosphoros-weasel-windows-rime.zip
           eosphoros-squirrel-macos-rime.zip
           eosphoros-fcitx5-macos.zip
@@ -466,6 +470,29 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
         RELEASE_NOTES: |
+          ## 平台与词库版本
+
+          | 平台 | 输入法 / 引擎 | 下载文件 | 词库档位 |
+          | --- | --- | --- | --- |
+          | 通用 | Rime（需 librime-lua） | `eosphoros-rime-full.zip` | 完整版 |
+          | 通用 | Rime（需 librime-lua） | `eosphoros-rime-standard.zip` | 标准版 |
+          | 通用 | Rime（需 librime-lua） | `eosphoros-rime-lite.zip` | 精简版 |
+          | Windows | 小狼毫 Weasel | `eosphoros-weasel-windows-rime.zip` | 完整版 |
+          | Windows | 玉兔毫 Rabbit | `eosphoros-rabbit-windows-rime.zip` | 完整版 |
+          | Windows | 小小输入法 Yong | `eosphoros-yong-windows.zip` | 完整版 |
+          | macOS | 鼠须管 Squirrel | `eosphoros-squirrel-macos-rime.zip` | 完整版 |
+          | macOS | Fcitx5 原生 Table | `eosphoros-fcitx5-macos.zip` | 完整版 |
+          | macOS | Fcitx5 + Rime 插件 | `eosphoros-fcitx5-macos-rime.zip` | 完整版 |
+          | Linux | Fcitx5 原生 Table | `eosphoros-fcitx5-linux.zip` | 完整版 |
+          | Linux | Fcitx5 + Rime 插件 | `eosphoros-fcitx5-linux-rime.zip` | 完整版 |
+          | Linux | 小小输入法 Yong | `eosphoros-yong-linux.zip` | 完整版 |
+          | Android | 同文 Trime | `eosphoros-trime-android.zip` | 完整版 |
+          | Android | Fcitx5 原生 Table | `eosphoros-fcitx5-android.zip` | 完整版 |
+          | Android | Fcitx5 + Rime 插件 | `eosphoros-fcitx5-android-rime.zip` | 完整版 |
+          | Android | 小小输入法 Yong | `eosphoros-yong-android.zip` | 完整版 |
+          | iOS | 元书输入法 | `eosphoros-yuanshu-ios-rime.zip` | 完整版 |
+          | iOS | 仓输入法 Hamster | `eosphoros-hamster-ios-rime.zip` | 完整版 |
+
           ## Changelog
           ${{ steps.changelog.outputs.changelog }}
 

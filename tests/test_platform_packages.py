@@ -10,6 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PlatformPackageTests(unittest.TestCase):
+    def test_release_archives_use_balanced_deflate_level(self) -> None:
+        from tools.build_platform_packages import DEFAULT_ZIP_COMPRESSLEVEL
+
+        self.assertEqual(DEFAULT_ZIP_COMPRESSLEVEL, 6)
+
     def test_rime_smoke_test_requires_compiled_core_artifacts(self) -> None:
         from tools.smoke_test_rime_deployment import (
             REQUIRED_BUILD_OUTPUTS,
@@ -40,19 +45,29 @@ class PlatformPackageTests(unittest.TestCase):
             )
 
     def test_builds_minimal_core_and_platform_archives(self) -> None:
-        from tools.build_platform_packages import build_packages
+        from tools.build_platform_packages import (
+            LITE_EXCLUDED_DICTIONARIES,
+            STANDARD_EXCLUDED_DICTIONARIES,
+            build_packages,
+        )
 
         with tempfile.TemporaryDirectory() as temp_dir:
             archives = build_packages(ROOT, Path(temp_dir), compresslevel=0)
             members = {}
+            dictionary_indexes = {}
             for archive in archives:
                 with zipfile.ZipFile(archive) as package:
                     members[archive.name] = set(package.namelist())
+                    dictionary_indexes[archive.name] = package.read(
+                        "eosphoros.extended.dict.yaml"
+                    ).decode("utf-8")
 
         self.assertEqual(
             set(members),
             {
-                "eosphoros-rime-cross-platform.zip",
+                "eosphoros-rime-full.zip",
+                "eosphoros-rime-standard.zip",
+                "eosphoros-rime-lite.zip",
                 "eosphoros-weasel-windows-rime.zip",
                 "eosphoros-squirrel-macos-rime.zip",
                 "eosphoros-fcitx5-macos-rime.zip",
@@ -95,8 +110,14 @@ class PlatformPackageTests(unittest.TestCase):
             "zzc/eosphoros_撤回合并.py",
             "licenses/rime-ice-GPL-3.0.txt",
         }
+        profile_exclusions = {
+            "eosphoros-rime-standard.zip": set(STANDARD_EXCLUDED_DICTIONARIES),
+            "eosphoros-rime-lite.zip": set(LITE_EXCLUDED_DICTIONARIES),
+        }
         for name, files in members.items():
-            self.assertTrue(common <= files, name)
+            excluded = profile_exclusions.get(name, set())
+            self.assertTrue((common - excluded) <= files, name)
+            self.assertTrue(excluded.isdisjoint(files), name)
             self.assertNotIn("zzc_state/runtime_ops.tsv", files, name)
             self.assertNotIn("tools/build_platform_packages.py", files, name)
             self.assertFalse(
@@ -106,7 +127,9 @@ class PlatformPackageTests(unittest.TestCase):
 
         shared_zzc = {path for path in common if path.startswith("zzc/")}
         expected_platform_zzc = {
-            "eosphoros-rime-cross-platform.zip": set(),
+            "eosphoros-rime-full.zip": set(),
+            "eosphoros-rime-standard.zip": set(),
+            "eosphoros-rime-lite.zip": set(),
             "eosphoros-weasel-windows-rime.zip": {
                 "zzc/Win_词库合并.exe",
                 "zzc/Win_撤回合并.exe",
@@ -139,14 +162,30 @@ class PlatformPackageTests(unittest.TestCase):
                 name,
             )
 
-        core = members["eosphoros-rime-cross-platform.zip"]
-        for frontend_file in (
-            "weasel.yaml",
-            "squirrel.yaml",
-            "Hamster.yaml",
-            "zzc/Win_词库合并.exe",
+        for core_name in (
+            "eosphoros-rime-full.zip",
+            "eosphoros-rime-standard.zip",
+            "eosphoros-rime-lite.zip",
         ):
-            self.assertNotIn(frontend_file, core)
+            core = members[core_name]
+            for frontend_file in (
+                "weasel.yaml",
+                "squirrel.yaml",
+                "Hamster.yaml",
+                "zzc/Win_词库合并.exe",
+            ):
+                self.assertNotIn(frontend_file, core)
+
+        for name, excluded in profile_exclusions.items():
+            index = dictionary_indexes[name]
+            for relative in excluded:
+                import_name = relative.removesuffix(".dict.yaml")
+                self.assertIn(
+                    f"  - {import_name}\n",
+                    dictionary_indexes["eosphoros-rime-full.zip"],
+                    relative,
+                )
+                self.assertNotIn(f"  - {import_name}\n", index, name)
 
         weasel = members["eosphoros-weasel-windows-rime.zip"]
         self.assertIn("weasel.yaml", weasel)
@@ -198,7 +237,9 @@ class PlatformPackageTests(unittest.TestCase):
             self.assertNotIn("zzc/Win_词库合并.exe", mobile)
 
         for name in (
-            "eosphoros-rime-cross-platform.zip",
+            "eosphoros-rime-full.zip",
+            "eosphoros-rime-standard.zip",
+            "eosphoros-rime-lite.zip",
             "eosphoros-weasel-windows-rime.zip",
             "eosphoros-squirrel-macos-rime.zip",
             "eosphoros-fcitx5-macos-rime.zip",

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-cross-platform.zip">⬇️ 下载方案</a> ·
+  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip">⬇️ 下载方案</a> ·
   <a href="#如何使用">🚀 如何使用</a> ·
   <a href="#键道6编码概要">⌨️ 编码规则</a> ·
   <a href="#词库组成">📚 词库说明</a>
@@ -69,7 +69,7 @@
 
 ### 📥 选择适合前端的方案包
 
-1. 按下表下载适合当前输入法前端的压缩包；不确定时使用通用核心包 [`eosphoros-rime-cross-platform.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-cross-platform.zip)。
+1. 按下表下载适合当前输入法前端的压缩包；不确定时使用完整通用包 [`eosphoros-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip)。
 2. 解压到 Rime 用户文件夹；保留压缩包内的目录结构。
 3. 重新部署 Rime。
 4. 在方案选单中选择“晨星键道”。
@@ -81,7 +81,9 @@
 
 | Release 文件 | 适用前端 | 额外内容 |
 | --- | --- | --- |
-| [`eosphoros-rime-cross-platform.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-cross-platform.zip) | 通用 Rime / 其他前端 | 最小运行核心和跨平台 Python 自造词工具 |
+| [`eosphoros-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip) | 通用 Rime / 其他前端 | 完整词库、全部 Lua/OpenCC 功能和跨平台 Python 自造词工具 |
+| [`eosphoros-rime-standard.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-standard.zip) | 通用 Rime / 资源有限设备 | 保留 ICE 与专业词库，省略超大附加词库 `fjcy` |
+| [`eosphoros-rime-lite.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-lite.zip) | 通用 Rime / 低内存设备 | 保留基础单字、词组、核心与英文，省略大型及专题扩展词库 |
 | [`eosphoros-weasel-windows-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-weasel-windows-rime.zip) | Windows 小狼毫 | 小狼毫样式、方案图标、Windows Python 入口和 EXE |
 | [`eosphoros-rabbit-windows-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime.zip) | Windows 玉兔毫 | 玉兔毫便携程序、完整 Rime 方案和晨星主题 |
 | [`eosphoros-squirrel-macos-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos-rime.zip) | macOS 鼠须管 | 鼠须管样式、跨平台 Python 核心和 macOS 启动脚本 |
@@ -105,7 +107,7 @@
 | [`eosphoros-yong-linux.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-linux.zip) | Linux 小小输入法 | Linux 完整程序、GB18030 码表和三套晨星桌面皮肤 |
 | [`eosphoros-yong-desktop-skins.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-desktop-skins.zip) | Windows / Linux 小小输入法 | 晨星·极简、晨星·黎明、晨星·石墨三套原创桌面皮肤 |
 
-各包都包含完整方案运行核心、Python 合并/撤回核心和图文教程；平台包只额外加入该前端需要的入口、配置和主题，不会把 Windows EXE 或其他前端样式一股脑混在一起。
+三个通用包的 Lua、OpenCC、自造词工具和方案行为一致，只在预置词库体量上不同；各平台专用包继续使用完整词库，并只额外加入该前端需要的入口、配置和主题。
 
 | 平台 | 常见前端 | 默认用户目录 |
 | --- | --- | --- |
@@ -291,7 +293,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 
 1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`eosphoros-rabbit-windows-rime.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime.zip)。
 2. 解压到路径中不含空格的目录。
-3. 运行玉兔毫并选择晨星键道；该包已经带入方案文件，不需要再复制 `eosphoros-rime-cross-platform.zip`。
+3. 运行玉兔毫并选择晨星键道；该包已经带入方案文件，不需要再复制 `eosphoros-rime-full.zip`。
 4. 包内 `rabbit.yaml` 已合入 `weasel.yaml` 的主题和兼容样式，`rabbit.custom.yaml` 默认启用“晨星·黎明”，并随 Windows 黑暗模式自动切换“晨星·夜色”。候选序号使用 Rabbit 所需的 AutoHotkey v2 格式 `{:s}. `。
 5. Rabbit 包只保留程序本体、运行晨星键道所需的词典／Lua／OpenCC 文件和少量用户配置，不包含东风破配方、其他平台皮肤、开发工具及仓库文档。
 6. 输入 `\` 可直接使用方案内自造词；需要永久整理词库时双击包根目录的 `ZZZC-Merge.cmd`，撤回最近一次合并时运行 `ZZZC-Rollback.cmd`。两个入口会自动处理 Rabbit 的 `Data/` 与 `Rime/` 双目录，不需要手工移动词库。

@@ -9,6 +9,7 @@ local type = type
 local config_util = require("eosphoros.common.eosphoros_config")
 local state = require("eosphoros.common.eosphoros_state")
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local gc = require("eosphoros.common.eosphoros_gc")
 local key_event_util = require("eosphoros.input.eosphoros_key_event")
 local processor_state = require("eosphoros.input.eosphoros_processor_state")
 local commit_guard = require("eosphoros.input.eosphoros_commit_guard")
@@ -230,14 +231,14 @@ local function init(env)
         return true
     end)
 
-    collectgarbage("step", 80)
+    gc.step(80)
 end
 
 local function fini(env)
     env._english_prefix = nil
     processor_state.fini(env)
     -- 主动GC：释放资源后回收内存
-    collectgarbage("step", 200)
+    gc.step(200, true)
 end
 
 return { init = init, func = processor, fini = fini }

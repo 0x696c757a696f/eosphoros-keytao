@@ -5,6 +5,8 @@
 
 local M = {}
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local platform = require("eosphoros.common.eosphoros_platform")
+local gc = require("eosphoros.common.eosphoros_gc")
 
 local DEFAULT_CACHE_LIMIT = 256
 local MIN_CACHE_LIMIT = 64
@@ -81,14 +83,11 @@ local function core_dict_candidates(dict_name)
         push_unique(candidates, seen, join_path(dir, file_name))
     end
 
-    local api = rime_api
-    if api and api.get_user_data_dir then
-        local ok, user_dir = pcall(api.get_user_data_dir)
-        if ok and type(user_dir) == "string" and user_dir ~= "" then
-            push_unique(candidates, seen, join_path(user_dir, file_name))
-            if stem and stem ~= "" then
-                push_unique(candidates, seen, join_path(join_path(user_dir, stem), file_name))
-            end
+    local user_dir = platform.user_data_dir()
+    if user_dir then
+        push_unique(candidates, seen, join_path(user_dir, file_name))
+        if stem and stem ~= "" then
+            push_unique(candidates, seen, join_path(join_path(user_dir, stem), file_name))
         end
     end
 
@@ -239,7 +238,7 @@ function M.release()
         clear_pron_cache()
         clear_hint_cache()
         clear_core_hint_maps()
-        collectgarbage("step", 64)
+        gc.step(64)
     end
 end
 

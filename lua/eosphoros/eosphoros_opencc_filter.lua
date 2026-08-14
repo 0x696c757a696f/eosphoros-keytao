@@ -6,6 +6,7 @@ local M = {}
 local config_util = require("eosphoros.common.eosphoros_config")
 local opencc_data = require("eosphoros.eosphoros_opencc_data")
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local gc = require("eosphoros.common.eosphoros_gc")
 local list_size = config_util.list_size
 
 local DEFAULT_DELIMITER = "|"
@@ -630,7 +631,7 @@ function M.fini(env)
     env._reverse_prefixes = nil
     clear_runtime_state(true)
     opencc_data.release_all()
-    collectgarbage("step", 240)
+    gc.step(240, true)
 end
 
 function M.func(input, env)
@@ -649,7 +650,7 @@ function M.func(input, env)
             clear_runtime_state(true)
         end
         if had_runtime_state then
-            collectgarbage("step", 120)
+            gc.step(120)
         end
         for cand in input:iter() do
             yield(cand)
@@ -660,7 +661,7 @@ function M.func(input, env)
     if not rules or #rules == 0 then
         if opencc_data.release_inactive(enabled_datasets) then
             clear_runtime_state(true)
-            collectgarbage("step", 120)
+            gc.step(120)
         end
         for cand in input:iter() do
             yield(cand)
@@ -688,7 +689,7 @@ function M.func(input, env)
     if #active_rules == 0 then
         if opencc_data.release_inactive(enabled_datasets) then
             clear_runtime_state(true)
-            collectgarbage("step", 120)
+            gc.step(120)
         end
         for cand in input:iter() do
             yield(cand)
@@ -736,7 +737,7 @@ function M.func(input, env)
 
     if opencc_data.release_inactive(enabled_datasets) then
         clear_runtime_state(true)
-        collectgarbage("step", 120)
+        gc.step(120)
     end
 end
 

@@ -5,6 +5,7 @@
 local config_util = require("eosphoros.common.eosphoros_config")
 local candidate_util = require("eosphoros.common.eosphoros_candidate")
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local platform = require("eosphoros.common.eosphoros_platform")
 local zzc_core = require("eosphoros.zzc.eosphoros_zzc_core")
 
 local type = type
@@ -71,12 +72,9 @@ local function core_dict_candidates(schema_id)
     local candidates, seen = {}, {}
     push_unique_path(candidates, seen, file_name)
     push_unique_path(candidates, seen, join_path(module_project_dir(), file_name))
-    local api = rime_api
-    if api and api.get_user_data_dir then
-        local ok, user_dir = pcall(api.get_user_data_dir)
-        if ok and type(user_dir) == "string" and user_dir ~= "" then
-            push_unique_path(candidates, seen, join_path(user_dir, file_name))
-        end
+    local user_dir = platform.user_data_dir()
+    if user_dir then
+        push_unique_path(candidates, seen, join_path(user_dir, file_name))
     end
     return candidates
 end

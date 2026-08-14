@@ -38,6 +38,14 @@ function M.safe_disconnect(conn)
     end
 end
 
+function M.user_data_dir()
+    local api = rime_api
+    if not api or type(api.get_user_data_dir) ~= "function" then return nil end
+    local ok, path = pcall(api.get_user_data_dir)
+    if ok and type(path) == "string" and path ~= "" then return path end
+    return nil
+end
+
 function M.safe_key_bool(key_event, name)
     if not key_event or type(key_event[name]) ~= "function" then return false end
     local ok, value = pcall(function()

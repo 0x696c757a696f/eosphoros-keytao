@@ -6,6 +6,8 @@
 local config_util = require("eosphoros.common.eosphoros_config")
 local candidate_util = require("eosphoros.common.eosphoros_candidate")
 local reverse = require("eosphoros.common.eosphoros_reverse")
+local platform = require("eosphoros.common.eosphoros_platform")
+local gc = require("eosphoros.common.eosphoros_gc")
 
 local M = {}
 local pron_maps = {}
@@ -39,12 +41,9 @@ local function find_existing_path(file_name)
         file_name,
         join_path(module_project_dir(), file_name),
     }
-    local api = rime_api
-    if api and api.get_user_data_dir then
-        local ok, user_dir = pcall(api.get_user_data_dir)
-        if ok and type(user_dir) == "string" and user_dir ~= "" then
-            candidates[#candidates + 1] = join_path(user_dir, file_name)
-        end
+    local user_dir = platform.user_data_dir()
+    if user_dir then
+        candidates[#candidates + 1] = join_path(user_dir, file_name)
     end
     for _, path in ipairs(candidates) do
         local f = io.open(path, "r")
@@ -93,7 +92,7 @@ end
 
 local function release_pron_cache()
     reverse.clear_pron_cache()
-    collectgarbage("step", 48)
+    gc.step(48)
 end
 
 function M.func(input, env)

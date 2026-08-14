@@ -6,6 +6,7 @@
 
 local M = {}
 local registry = require("eosphoros.common.eosphoros_cache_registry")
+local gc = require("eosphoros.common.eosphoros_gc")
 
 
 local math_floor = math.floor
@@ -1509,7 +1510,7 @@ local function fini(env)
     -- 清空缓存
     _G_CACHE = { key = nil, rq = nil, nl = nil, jq = nil }
     -- 主动GC：释放资源后回收内存
-    collectgarbage("step", 200)
+    gc.step(200)
 end
 
 
