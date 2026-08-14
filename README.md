@@ -12,6 +12,7 @@
 </p>
 
 <p align="center">
+  <a href="#适合怎样的使用者">💡 适合人群</a> ·
   <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip">⬇️ 下载方案</a> ·
   <a href="#如何使用">🚀 如何使用</a> ·
   <a href="#键道6编码概要">⌨️ 编码规则</a> ·
@@ -37,6 +38,16 @@
 - 上游方案：[hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere)
 - 历史使用资料：[星猫键道6飞书笔记](https://hu0w1jn4xq.feishu.cn/docx/ZgQ8deGPlozhWCxOyeucBvHJnPe)（由原方案维护者整理，并非本仓库文档）
 - 键道6练习：[直连网站](https://keytao.rea.ink/practice) · [Vercel 网站（需梯子）](https://keytao.vercel.app/practice)
+
+<a id="适合怎样的使用者"></a>
+
+## 💡 适合怎样的使用者
+
+键道6以双拼音码为基础，再用少量字根和笔画形码筛选同音候选。它适合已经熟悉拼音、愿意学习一套双拼键位，并希望通过顶功减少空格和数字选重的用户；遇到不会读的字时，也可以使用二分或 GBK 入口反查。
+
+晨星键道尤其适合希望离线使用、重视编码可解释性、愿意维护个人词库，或者需要在多个 Rime 前端之间迁移配置的用户。它不依赖云端大模型，也不以长句预测为主要方向；这带来隐私、稳定和可维护方面的便利，也意味着它不会在所有整句输入场景中胜过现代云拼音。
+
+如果只想沿用全拼、不愿学习顶功和笔画辅助码，或者主要依赖云端整句预测，建议先体验练习页再决定是否长期使用。仓库会尽量保留既有键道规则、控制明显重码并改善跨平台部署，但实际体验仍取决于个人词频、客户端实现和使用习惯。
 
 ## ✨ 方案侧重与取舍
 
@@ -88,7 +99,6 @@
 | macOS | 鼠须管 Squirrel | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos-rime-full.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos-rime-standard.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-squirrel-macos-rime-lite.zip) |
 | macOS | Fcitx5 原生 Table | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-full.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-standard.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-lite.zip) |
 | macOS | Fcitx5 + Rime | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-rime-full.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-rime-standard.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-rime-lite.zip) |
-
 | Android | 同文 Trime | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android-full.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android-standard.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android-lite.zip) |
 | Android | Fcitx5 原生 Table | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-full.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-standard.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-lite.zip) |
 | Android | Fcitx5 + Rime | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-rime-full.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-rime-standard.zip) | [下载](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-rime-lite.zip) |
@@ -236,27 +246,85 @@ Fcitx5 配方；Fcitx5 用户应直接使用对应系统的官方 Table Release 
 
 ## ⌨️ 键道6编码概要
 
-键道6以音码为主体，以首笔画作为辅助筛选码：
+键道6是一套“**双拼音码定音、字根与笔画形码选重、后续按键顶功上屏**”的音形码方案。普通单字先输入两位音码，再按需要追加最多四位形码；词组根据词长抽取各字音码，并在发生占码或重码时追加首笔辅助码。完整键位图和历史规则可参考[键道图谱](https://pingshunhuangalex.gitbook.io/rime-xkjd/learn-xkjd/layouts)、[键道音码](https://pingshunhuangalex.gitbook.io/rime-xkjd/learn-xkjd/phonetics-rules)、[单字规则](https://pingshunhuangalex.gitbook.io/rime-xkjd/start-xkjd/characters)与[顶功说明](https://pingshunhuangalex.gitbook.io/rime-xkjd/advance-in-xkjd/top-up)。本仓库实际编码以当前单字表、生成器和 Schema 为准。
+
+### 1. 两码音码
+
+每个汉字的读音固定由两键表示：第一键表示声母，第二键表示韵母。它与普通双拼的思路相同，但只使用 21 个音码键，`a`、`i`、`o`、`u`、`v` 留给形码，因此不能直接套用其他双拼方案的键位。
+
+- `a`、`e`、`o` 开头的零声母音节使用 `x` 引导，例如 `安 → xf`、`爱 → xh`、`欧 → xd`。
+- `j`、`q`、`x`、`y` 与 `ü` 系韵母按键道拼合规则输入，例如 `居 → jl`、`去 → ql`。
+- 飞键允许部分声母或韵母使用两个键位，以改善左右手节奏并分散重码。
+
+| 飞键音码 | 可用键位 | 示例 |
+| --- | --- | --- |
+| `ch` | `j` / `w` | `超 → jz` 或 `wz` |
+| `zh` | `f` / `q` | `找 → fz` 或 `qz` |
+| `uang` | `m` / `x` | `爽 → emv` 或 `exv` |
+
+`ch`、`zh` 与不同韵母存在固定拼合范围，并非所有组合都能任意互换；初学时以码表候选和键位图为准，不必先死记全部飞键。
+
+### 2. 单字形码
+
+两位音码后可以继续输入形码筛选同音字。形码由五种基本笔画和少量字根组成，五个主笔画键如下：
 
 | 笔画 | 横 | 竖 | 撇 | 捺/点 | 折/钩 |
 | --- | --- | --- | --- | --- | --- |
 | 按键 | `v` | `i` | `u` | `o` | `a` |
 
-词组编码规则以当前生成器和单字表为准：
+单字全码最长六码，即“**两位音码 + 最多四位形码**”。日常输入通常追加一两位形码即可定位，不需要每次打满。拆字时遵循以下原则：
 
-- 两字词：两个字各取两位音码形成四码；需要区分时，第 5、6 位依次取第一、第二个字的首笔画。
-- 三字词：三个字各取音码首键形成三码；第 4、5、6 位依次取三个字的首笔画。
-- 四字及以上：取前三字和末字的音码首键形成四码；需要区分时再取前两个字的首笔画。
-- 同音词按本地词库、来源优先级和词频排序；常用词先占短码，较低优先级词追加笔画码。
+1. 按规范书写顺序取形，不能只按视觉上的左右或上下位置拆分。
+2. 二分时优先让两个部件都具有较强组字能力，通常按“独立汉字 → 常用字形 → 键道字根 → 偏旁部首”判断。
+3. 部件尽量取大，但不能跨越书写中断或笔画交错；不能稳定拆分时按笔顺直接取基本笔画。
+4. 部分字根使用双编码，两码视为一个完整字根；不足四位形码时可按规则重复末码补足。
 
-例如：
+### 3. 词组取码
+
+词组编码规则由 `eosphoros.extended.dict.yaml` 的 encoder 与本仓库生成器共同约束。`A1/A2` 表示某字音码的第一、第二键，`a` 表示该字单字全码中的首个形码：
+
+| 词长 | 基础音码 | 需要避重时追加 |
+| --- | --- | --- |
+| 两字词 | 第一字两位音码 + 第二字两位音码，共四码 | 依次追加第一、第二字首形码，最长六码 |
+| 三字词 | 三个字各取音码第一键，共三码 | 依次追加三个字首形码，最长六码 |
+| 四字及以上 | 取第一、第二、第三和末字的音码第一键，共四码 | 依次追加第一、第二字首形码，最长六码 |
+
+候选分配遵循本地词库优先级和来源词频：常用词先占短码，较低优先级词依次尝试首形码扩展；所有合法六码都被其他词占用时，自动导入词会被跳过或受重码预算限制。
 
 ```text
-赞主曲      zqquo
-婚姻圣召    hyefa
+爱德        xhde      两字词：xh + de
+慕道班      mdb       三字词基础码
+赞主曲      zqq → zqqu → zqquo → zqquoi
+婚姻圣召    hyef → hyefa → hyefaa
 ```
 
-这里的 `i` 同时也是“竖”的辅助码；只有当它位于输入开头时，才作为英文入口。
+### 4. 顶功与上屏
+
+传统双拼通常需要空格确认候选；键道顶功会利用“音码键”和“形码键”的交替关系判断编码边界。当当前首选已经形成合法的 4～6 码中文编码，继续输入下一段编码时，前一个字词可以自动上屏，从而连续输入而少按空格。当前配置的主要范围是：
+
+- 音码键：`b c d e f g h j k l m n p q r s t w x y z`
+- 形码／触发键：`a v u i o ;`
+- 中文顶功最长六码；英文 `i...`、全拼 `u...`、二分 `v...` 和 GBK `o...` 入口不套用普通中文顶功规则。
+- 不确定候选时仍可按空格确认首选，或使用数字选择其他候选；启用流式整句输入后，中文顶功会自动停用。
+
+### 5. 反查与特殊入口
+
+| 入口 | 用途 | 示例或说明 |
+| --- | --- | --- |
+| `i` | 英文词典 | `ihello → hello`；继续输入后隐藏开头的 `i` |
+| `u` | 连写全拼反查 | 输入普通全拼，并查看对应键道编码 |
+| `v` | 二分拆字反查 | 不会读但知道字形时使用 |
+| `o` | GBK／生僻字编码入口 | 查询单字及其键道码 |
+| 反引号（&#96;） | 反查分隔 | 用于 Schema 中的反查组合 |
+
+### 6. 推荐学习顺序
+
+1. 先熟悉两码音码和常用零声母音节，暂时用空格上屏。
+2. 再记五个基本笔画，只在候选不是首位时追加一两笔。
+3. 熟悉两字、三字和四字以上词组的取码规律。
+4. 最后练习顶功和飞键；飞键属于手感优化，不是开始输入的前置条件。
+
+这里的 `i` 同时也是“竖”的形码；只有位于输入开头并进入英文模式时，才作为英文入口。可配合[键道6练习页](https://keytao.rea.ink/practice)逐步熟悉，而不必一次记住全部规则。
 
 <a id="如何使用"></a>
 
@@ -650,6 +718,21 @@ user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy 
 
 本地词库优先于自动生成的上游词库。`dicts/eosphoros/eosphoros.user.dict.yaml` 权限最高，适合保存个人常用词；加入大量通用词前应优先考虑对应的专题或基础词库。
 
+### 👤 个人用户词库
+
+[`dicts/eosphoros/eosphoros.user.dict.yaml`](dicts/eosphoros/eosphoros.user.dict.yaml) 是专门保留给用户维护的高优先级 Rime 词库，Full、Standard 和 Lite 三个档位都会包含。它在扩展词库中最先加载，因此适合添加姓名、地址、专业术语和个人常用短语，不建议放入大量公共词条。
+
+词条写在文件头部的 `...` 之后，每行使用一个 **Tab 制表符** 分隔词条与键道编码；以 `#` 开头的行是注释。可以复制文件内示例并删除开头的 `#`：
+
+```text
+词组<Tab>bmmso
+单字<Tab>bb
+```
+
+其中 `<Tab>` 表示真实的 Tab 键，不是空格或文字本身。修改后需要在输入法中执行“重新部署”才能生效。请保留文件头部的 `name: eosphoros.user`、YAML 分隔符和 UTF-8 编码；升级或覆盖方案前建议单独备份此文件。
+
+该文件由 Rime、Weasel、Squirrel、Trime、Rabbit、元书、仓输入法及 Fcitx5 + Rime 包直接读取。Fcitx5 原生 Table 与 Yong 使用发布时生成的静态码表，安装后修改此 YAML 不会自动更新它们，需要等待新 Release 或自行重新构建对应码表。
+
 ## ⚙️ 配置文件
 
 | 文件 | 作用 |
@@ -832,14 +915,6 @@ python .\tools\sync_upstream_dictionaries.py --write
 ├─ THIRD_PARTY.md                    第三方来源说明
 └─ .github/workflows/                发布和定期同步工作流
 ```
-
-## 💡 适合怎样的使用者
-
-键道6以音码为基础，再用首笔辅助码区分一部分同音候选。对已经熟悉拼音、同时愿意学习顶功和少量笔画规则的用户，它可以在学习成本与候选确定性之间提供一种折中；遇到不会读的字时，也可以借助二分或 GBK 入口反查。
-
-晨星键道更适合希望离线使用、在意编码可解释性、愿意维护个人词库，或者需要在多个 Rime 前端之间迁移配置的用户。它不依赖云端大模型，也不以长句预测为主要方向；这既有隐私、稳定和可维护方面的便利，也意味着它不会在所有整句输入场景中胜过现代云拼音。
-
-本仓库能做的，是在尽量不破坏既有键道规则的前提下，继续整理词库、控制明显重码、改善跨平台部署，并让更新过程更容易检查和复现。实际输入体验仍会受到个人词频、客户端实现和使用习惯影响，欢迎按自己的需要调整，而不必把仓库默认配置当作唯一答案。
 
 ## 🙏 致谢与授权
 
