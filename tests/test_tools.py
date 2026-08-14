@@ -205,7 +205,9 @@ class RepositoryValidationTests(unittest.TestCase):
                 release_workflow,
                 rf"(?m)^\s+eosphoros-fcitx5-{platform}\.zip$",
             )
-            self.assertIn(f"name: {artifact}", package_workflow)
+            self.assertNotIn(f"name: {artifact}", package_workflow)
+        self.assertIn("name: Upload complete build", package_workflow)
+        self.assertNotIn("!fcitx5/**", package_workflow)
 
     def test_native_mobile_themes_are_current_and_importable(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -385,8 +387,8 @@ class RepositoryValidationTests(unittest.TestCase):
             "hamster-eosphoros-skins.zip",
         ):
             self.assertNotRegex(release, rf"(?m)^\s+{re.escape(obsolete_archive)}$")
-        self.assertIn("name: fcitx5-android-eosphoros-themes", package)
-        self.assertIn("name: trime-eosphoros-theme", package)
+        self.assertIn("name: Upload complete build", package)
+        self.assertNotIn("!mobile_themes/**", package)
 
     def test_ios_skins_are_embedded_under_platform_skin_directories(self) -> None:
         from tools.build_mobile_themes import (
@@ -726,10 +728,12 @@ class RepositoryValidationTests(unittest.TestCase):
             "build-yong-release",
         ):
             self.assertIn(job, jobs)
+            self.assertNotIn("validate-source", jobs[job]["needs"])
         self.assertEqual(
             set(jobs["release"]["needs"]),
             {
                 "check_release_needed",
+                "validate-source",
                 "build-native-release",
                 "build-rabbit-release",
                 "build-yong-release",
@@ -1833,10 +1837,9 @@ columns:
         ).read_text(encoding="utf-8")
         self.assertIn("package-ecosystem: pip", dependabot)
         self.assertIn("package-ecosystem: github-actions", dependabot)
-        self.assertIn("prefix-dev/setup-pixi@v0.10.0", sync)
-        self.assertIn("run-install: true", sync)
+        self.assertIn("./.github/actions/setup-pixi", sync)
         self.assertLess(
-            sync.index("prefix-dev/setup-pixi@v0.10.0"),
+            sync.index("./.github/actions/setup-pixi"),
             sync.index("Align Pixi manifest with Dependabot-managed requirements"),
         )
         self.assertIn("pixi update", sync)
@@ -1854,15 +1857,25 @@ columns:
             "sync-upstream-dictionaries.yml",
         ):
             workflow = (workflows / name).read_text(encoding="utf-8")
-            self.assertIn("prefix-dev/setup-pixi@v0.10.0", workflow, name)
+            self.assertIn("./.github/actions/setup-pixi", workflow, name)
             self.assertNotIn("python -m pip install", workflow, name)
             self.assertNotIn("actions/setup-python", workflow, name)
 
+        setup_action = (root / ".github/actions/setup-pixi/action.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("prefix-dev/setup-pixi@v0.10.0", setup_action)
+        self.assertIn("run-install: true", setup_action)
         package = (workflows / "package-master.yml").read_text(encoding="utf-8")
         release = (workflows / "create-release.yml").read_text(encoding="utf-8")
         self.assertIn("generated-quality:", package)
+        self.assertIn("pixi run test-shard", package)
+        self.assertEqual(package.count("index:"), 3)
+        self.assertEqual(package.count("actions/upload-artifact@v7"), 1)
+        self.assertIn("./.github/actions/fetch-opencc", package)
         self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", package)
         self.assertIn("validate-source:", release)
+        self.assertEqual(release.count("./.github/actions/fetch-opencc"), 2)
         self.assertIn("Build Fcitx5 packages and compile Rime core in parallel", release)
 
     def test_core_dictionary_prioritizes_project_name(self) -> None:
@@ -2008,9 +2021,13 @@ print("撤回完成", file=sys.stderr)
 
     def test_workflows_use_native_node24_actions(self) -> None:
         root = Path(__file__).resolve().parents[1]
+        action_sources = [
+            *sorted((root / ".github" / "workflows").glob("*.yml")),
+            *sorted((root / ".github" / "actions").glob("*/action.yml")),
+        ]
         workflows = "\n".join(
             path.read_text(encoding="utf-8")
-            for path in sorted((root / ".github" / "workflows").glob("*.yml"))
+            for path in action_sources
         )
 
         self.assertNotIn("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24", workflows)

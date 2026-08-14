@@ -73,10 +73,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Verify UTF-8 runtime and Chinese paths
       run: >-
@@ -109,10 +106,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Validate release source tree
       run: |
@@ -124,7 +118,6 @@ jobs:
     needs:
       - check_release_needed
       - build-windows-executables
-      - validate-source
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -134,10 +127,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Install native compilers
       run: |
@@ -155,12 +145,10 @@ jobs:
       run: |
         mkdir -p Rime
 
-    - name: Download verified OpenCC data
-      run: |
-        pixi run python tools/fetch_opencc.py \
-          --url "$OPENCC_TONGGUI_URL" \
-          --sha256 "$OPENCC_TONGGUI_SHA256" \
-          --destination opencc/eosphoros
+    - uses: ./.github/actions/fetch-opencc
+      with:
+        url: ${{ env.OPENCC_TONGGUI_URL }}
+        sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Build Fcitx5 packages and compile Rime core in parallel
       run: |
@@ -206,7 +194,6 @@ jobs:
     needs:
       - check_release_needed
       - build-windows-executables
-      - validate-source
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -216,10 +203,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Use Windows executables rebuilt by CI
       uses: actions/download-artifact@v8
@@ -227,12 +211,10 @@ jobs:
         name: zzc-windows-executables
         path: zzc
 
-    - name: Download verified OpenCC data
-      run: |
-        pixi run python tools/fetch_opencc.py \
-          --url "$OPENCC_TONGGUI_URL" \
-          --sha256 "$OPENCC_TONGGUI_SHA256" \
-          --destination opencc/eosphoros
+    - uses: ./.github/actions/fetch-opencc
+      with:
+        url: ${{ env.OPENCC_TONGGUI_URL }}
+        sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Resolve latest Rabbit x64 release
       id: rabbit
@@ -289,7 +271,6 @@ jobs:
   build-yong-release:
     needs:
       - check_release_needed
-      - validate-source
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -299,10 +280,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Build deterministic Yong table and dazhu index
       run: |
@@ -382,6 +360,7 @@ jobs:
   release:
     needs:
       - check_release_needed
+      - validate-source
       - build-native-release
       - build-rabbit-release
       - build-yong-release

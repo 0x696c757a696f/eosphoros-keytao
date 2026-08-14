@@ -1,0 +1,23 @@
+name: Fetch verified OpenCC data
+description: Download the pinned OpenCC bundle and verify its checksum.
+
+inputs:
+  url:
+    description: OpenCC release asset URL
+    required: true
+  sha256:
+    description: Expected SHA256 digest
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        OPENCC_URL: ${{ inputs.url }}
+        OPENCC_SHA256: ${{ inputs.sha256 }}
+      run: |
+        pixi run python tools/fetch_opencc.py \
+          --url "$OPENCC_URL" \
+          --sha256 "$OPENCC_SHA256" \
+          --destination opencc/eosphoros

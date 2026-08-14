@@ -212,15 +212,15 @@ class PlatformPackageTests(unittest.TestCase):
                 any(path.startswith("fcitx5/") for path in members[name]), name
             )
 
-    def test_master_rime_artifact_excludes_native_fcitx5_sources(self) -> None:
+    def test_master_combined_artifact_excludes_native_build_sources(self) -> None:
         workflow = (ROOT / ".github/workflows/package-master.yml").read_text(
             encoding="utf-8"
         )
         artifact_block = workflow.split("name: eosphoros", 1)[1]
         self.assertIn("!native/**", artifact_block)
-        self.assertIn("!fcitx5/**", artifact_block)
         self.assertIn("!packaging/fcitx5/**", artifact_block)
-        self.assertIn("!eosphoros-fcitx5-*.zip", artifact_block)
+        self.assertNotIn("!fcitx5/**", artifact_block)
+        self.assertNotIn("!eosphoros-fcitx5-*.zip", artifact_block)
 
     def test_master_builds_real_official_table_packages(self) -> None:
         workflow = (ROOT / ".github/workflows/package-master.yml").read_text(
@@ -230,8 +230,9 @@ class PlatformPackageTests(unittest.TestCase):
         self.assertIn("pixi run python tools/build_fcitx5_table.py", workflow)
         self.assertIn('--compiler "$(command -v libime_tabledict)"', workflow)
         for platform in ("linux", "macos", "android"):
-            self.assertIn(f"name: eosphoros-fcitx5-{platform}", workflow)
-            self.assertIn(f"path: eosphoros-fcitx5-{platform}.zip", workflow)
+            self.assertNotIn(f"name: eosphoros-fcitx5-{platform}", workflow)
+        self.assertIn("name: Upload complete build", workflow)
+        self.assertEqual(workflow.count("actions/upload-artifact@v7"), 1)
 
 
 if __name__ == "__main__":

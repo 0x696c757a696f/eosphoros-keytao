@@ -75,22 +75,37 @@ jobs:
         fi
 
   tests:
-    name: Python and Lua tests
+    name: Python tests (${{ matrix.name }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: shard 1/3 + Lua
+            index: 0
+            run_lua: true
+          - name: shard 2/3
+            index: 1
+            run_lua: false
+          - name: shard 3/3
+            index: 2
+            run_lua: false
 
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
-    - name: Run behavior tests
+    - name: Run test shard
+      env:
+        SHARD_INDEX: ${{ matrix.index }}
+        RUN_LUA: ${{ matrix.run_lua }}
       run: |
-        pixi run test
-        pixi run lua tests/run.lua
+        pixi run test-shard --index "$SHARD_INDEX" --count 3
+        if [ "$RUN_LUA" = "true" ]; then
+          pixi run lua tests/run.lua
+        fi
 
   generated-quality:
     name: Generated and quality checks
@@ -100,10 +115,7 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Validate source and generated files
       run: |
@@ -119,22 +131,17 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: prefix-dev/setup-pixi@v0.10.0
-      with:
-        cache: true
-        run-install: true
+    - uses: ./.github/actions/setup-pixi
 
     - name: Install native compilers
       run: |
         sudo apt-get update
         sudo apt-get install -y librime-bin librime-plugin-lua rime-prelude libime-bin
 
-    - name: Download verified OpenCC data
-      run: |
-        pixi run python tools/fetch_opencc.py \
-          --url "$OPENCC_TONGGUI_URL" \
-          --sha256 "$OPENCC_TONGGUI_SHA256" \
-          --destination opencc/eosphoros
+    - uses: ./.github/actions/fetch-opencc
+      with:
+        url: ${{ env.OPENCC_TONGGUI_URL }}
+        sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Build Fcitx5 packages and compile Rime core in parallel
       run: |
@@ -149,53 +156,8 @@ jobs:
         wait "$rime_pid" || status=$?
         exit "$status"
 
-    - uses: actions/upload-artifact@v7
-      with:
-        name: eosphoros-fcitx5-linux
-        path: eosphoros-fcitx5-linux.zip
-        if-no-files-found: error
-        compression-level: 0
-
-    - uses: actions/upload-artifact@v7
-      with:
-        name: eosphoros-fcitx5-macos
-        path: eosphoros-fcitx5-macos.zip
-        if-no-files-found: error
-        compression-level: 0
-
-    - uses: actions/upload-artifact@v7
-      with:
-        name: eosphoros-fcitx5-android
-        path: eosphoros-fcitx5-android.zip
-        if-no-files-found: error
-        compression-level: 0
-
-    - uses: actions/upload-artifact@v7
-      with:
-        name: fcitx5-linux-eosphoros-themes
-        path: fcitx5/linux/themes/**/*
-        if-no-files-found: error
-
-    - uses: actions/upload-artifact@v7
-      with:
-        name: fcitx5-macos-eosphoros-themes
-        path: fcitx5/macos/themes/*.conf
-        if-no-files-found: error
-
-    - uses: actions/upload-artifact@v7
-      with:
-        name: fcitx5-android-eosphoros-themes
-        path: mobile_themes/fcitx5-android/*.zip
-        if-no-files-found: error
-        compression-level: 0
-
-    - uses: actions/upload-artifact@v7
-      with:
-        name: trime-eosphoros-theme
-        path: mobile_themes/trime/*.trime.yaml
-        if-no-files-found: error
-
-    - uses: actions/upload-artifact@v7
+    - name: Upload complete build
+      uses: actions/upload-artifact@v7
       with:
         name: eosphoros
         path: |
@@ -203,13 +165,11 @@ jobs:
           !.git/**
           !.github/**
           !.git*
-          !fcitx5/**
           !native/**
           !packaging/fcitx5/**
-          !mobile_themes/**
-          !eosphoros-fcitx5-*.zip
           !yong*.*
           !tests/**
           !tools/**
           !VERSION
           !requirements*.txt
+        if-no-files-found: error

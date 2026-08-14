@@ -28,10 +28,7 @@ jobs:
       - name: Checkout default branch
         uses: actions/checkout@v7
 
-      - uses: prefix-dev/setup-pixi@v0.10.0
-        with:
-          cache: true
-          run-install: true
+      - uses: ./.github/actions/setup-pixi
 
       - name: Restore upstream Git cache
         uses: actions/cache@v6
