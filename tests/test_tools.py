@@ -724,6 +724,7 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertNotIn("shogo82148/actions-", release)
         self.assertIn('sha256sum "${assets[@]}" > SHA256SUMS', release)
         self.assertIn('gh release create "$RELEASE_TAG" "${assets[@]}"', release)
+        self.assertIn('--repo "$GITHUB_REPOSITORY"', release)
         self.assertIn("GITHUB_RUN_NUMBER", release)
         self.assertIn("GITHUB_RUN_ATTEMPT", release)
         self.assertIn('--target "$GITHUB_SHA"', release)

@@ -504,6 +504,7 @@ jobs:
         assets+=(SHA256SUMS)
         printf '%s\n' "$RELEASE_NOTES" > release-notes.md
         gh release create "$RELEASE_TAG" "${assets[@]}" \
+          --repo "$GITHUB_REPOSITORY" \
           --target "$GITHUB_SHA" \
           --title "$RELEASE_TITLE" \
           --notes-file release-notes.md
