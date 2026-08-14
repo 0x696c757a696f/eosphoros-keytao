@@ -639,9 +639,9 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("python tools/build_platform_packages.py --check", pixi)
         self.assertIn("## 平台与词库版本", release)
         self.assertIn("| 平台 | 输入法 / 引擎 | 下载文件 | 词库档位 |", release)
-        self.assertIn("`eosphoros-rime-full.zip` | 完整版", release)
-        self.assertIn("`eosphoros-rime-standard.zip` | 标准版", release)
-        self.assertIn("`eosphoros-rime-lite.zip` | 精简版", release)
+        self.assertIn("releases/latest/download/eosphoros-rime-full.zip) | 完整版", release)
+        self.assertIn("releases/latest/download/eosphoros-rime-standard.zip) | 标准版", release)
+        self.assertIn("releases/latest/download/eosphoros-rime-lite.zip) | 精简版", release)
         for archive in (
             "eosphoros-rime-full.zip",
             "eosphoros-rime-standard.zip",
