@@ -750,6 +750,9 @@ Release 工作流会在每月 1 日和 15 日的 04:17 UTC 自动检查。只有
 # 推荐：创建锁定环境并执行完整检查
 pixi run check
 
+# 强制重新计算全部上游生成词库（修改生成算法或输入后使用）
+pixi run generated
+
 # 等价的分项检查
 python -m unittest discover -s tests -p 'test_*.py' -v
 python .\tools\validate_repo.py
@@ -766,6 +769,10 @@ python .\tools\build_fcitx5_themes.py --check
 python .\tools\build_mobile_themes.py --check
 git diff --check
 ```
+
+`pixi run check` 会先运行全部回归测试，再通过生成器代码、本地输入、上游 commit、
+Unicode 数据版本和生成物哈希组成的内容指纹验证上游词库。输入未变化时无需重复处理
+数百万条上游记录；指纹变化会立即失败，此时运行 `pixi run generated` 强制完整重算。
 
 主要维护命令：
 

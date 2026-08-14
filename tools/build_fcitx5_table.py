@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import shutil
 import subprocess
 import sys
@@ -12,6 +13,7 @@ import zipfile
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 
@@ -120,11 +122,15 @@ def read_rime_dictionary(
     return entries, order
 
 
-def collect_entries(root: Path = ROOT) -> list[Entry]:
+@lru_cache(maxsize=1)
+def _collect_entries_cached(
+    sources: tuple[DictionarySource, ...],
+    fingerprint: tuple[bytes, ...],
+) -> tuple[Entry, ...]:
     result: list[Entry] = []
     seen: set[tuple[str, str]] = set()
     order = 0
-    for source in read_manifest(root):
+    for source in sources:
         entries, order = read_rime_dictionary(source.path, order, source.namespace)
         for entry in entries:
             key = (entry.code, entry.text)
@@ -132,14 +138,26 @@ def collect_entries(root: Path = ROOT) -> list[Entry]:
                 continue
             seen.add(key)
             result.append(entry)
-    return result
+    return tuple(result)
 
 
-def prefix_fanout(entries: Iterable[Entry]) -> dict[int, int]:
+def _sha256_file(path: Path) -> bytes:
+    with path.open("rb") as source:
+        return hashlib.file_digest(source, "sha256").digest()
+
+
+def collect_entries(root: Path = ROOT) -> list[Entry]:
+    sources = tuple(read_manifest(root.resolve()))
+    fingerprint = tuple(_sha256_file(source.path) for source in sources)
+    return list(_collect_entries_cached(sources, fingerprint))
+
+
+def prefix_fanout(
+    entries: Iterable[Entry],
+    lengths: Iterable[int] = range(1, 7),
+) -> dict[int, int]:
     """Return the largest subtree size at each prefix length."""
-    counters: dict[int, Counter[str]] = {
-        length: Counter() for length in range(1, 7)
-    }
+    counters = {length: Counter() for length in lengths}
     for entry in entries:
         for length in counters:
             if len(entry.code) >= length:
@@ -210,11 +228,16 @@ CandidateLayoutHint=Vertical
 """
 
 
-def _zip_write(archive: zipfile.ZipFile, name: str, data: bytes) -> None:
+def _zip_write(
+    archive: zipfile.ZipFile,
+    name: str,
+    data: bytes,
+    compresslevel: int = 9,
+) -> None:
     info = zipfile.ZipInfo(name, FIXED_ZIP_TIME)
     info.compress_type = zipfile.ZIP_DEFLATED
     info.external_attr = 0o100644 << 16
-    archive.writestr(info, data, compresslevel=9)
+    archive.writestr(info, data, compresslevel=compresslevel)
 
 
 def _theme_files(root: Path, platform: str) -> list[tuple[str, Path]]:
@@ -233,8 +256,10 @@ def build_packages(
     output_dir: Path,
     compiler: str | None = None,
     compiled_dictionary: bytes | None = None,
+    entries: list[Entry] | None = None,
+    compresslevel: int = 9,
 ) -> list[Path]:
-    entries = collect_entries(root)
+    entries = entries if entries is not None else collect_entries(root)
     table = render_table(entries).encode("utf-8")
     config = render_config().encode("utf-8")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -260,18 +285,28 @@ def build_packages(
         destination = output_dir / f"eosphoros-fcitx5-{platform}.zip"
         with zipfile.ZipFile(destination, "w") as archive:
             if platform == "linux":
-                _zip_write(archive, "inputmethod/eosphoros.conf", config)
-                _zip_write(archive, "table/eosphoros.main.dict", binary or b"")
+                _zip_write(
+                    archive,
+                    "inputmethod/eosphoros.conf",
+                    config,
+                    compresslevel,
+                )
+                _zip_write(
+                    archive,
+                    "table/eosphoros.main.dict",
+                    binary or b"",
+                    compresslevel,
+                )
             else:
                 # Both official import UIs accept a .conf plus a libime text
                 # dictionary and compile it inside the application.
-                _zip_write(archive, "eosphoros.conf", config)
-                _zip_write(archive, "eosphoros.txt", table)
+                _zip_write(archive, "eosphoros.conf", config, compresslevel)
+                _zip_write(archive, "eosphoros.txt", table, compresslevel)
             # Android's custom-table ZIP importer expects only the table
             # configuration and dictionary. Themes are published separately.
             if platform != "android":
                 for name, path in _theme_files(root, platform):
-                    _zip_write(archive, name, path.read_bytes())
+                    _zip_write(archive, name, path.read_bytes(), compresslevel)
         archives.append(destination)
     print(f"Fcitx5 Table: {len(entries)} unique rows")
     return archives
@@ -294,10 +329,11 @@ def check(root: Path = ROOT) -> None:
     missing = sorted(expected - actual)
     if missing:
         raise ValueError(f"Fcitx5 Table is missing smoke rows: {missing}")
-    normal_fanout = prefix_fanout(
-        entry for entry in entries if entry.namespace == ""
-    )
     limits = {1: 100_000, 2: 8_000, 3: 600}
+    normal_fanout = prefix_fanout(
+        (entry for entry in entries if entry.namespace == ""),
+        limits,
+    )
     oversized = {
         length: normal_fanout[length]
         for length, limit in limits.items()

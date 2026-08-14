@@ -48,9 +48,14 @@ def argb_int(color: str) -> int:
     return number - (1 << 32) if number >= (1 << 31) else number
 
 
-def zip_bytes(files: dict[str, bytes]) -> bytes:
+def zip_bytes(files: dict[str, bytes], compresslevel: int = 9) -> bytes:
     buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+    with zipfile.ZipFile(
+        buffer,
+        "w",
+        zipfile.ZIP_DEFLATED,
+        compresslevel=compresslevel,
+    ) as archive:
         for name, data in sorted(files.items()):
             info = zipfile.ZipInfo(name.replace("\\", "/"), ZIP_TIME)
             info.compress_type = zipfile.ZIP_DEFLATED
@@ -524,6 +529,7 @@ def adapt_mature_skin(
     license_text: bytes,
     source_repository: str,
     dark_theme: dict[str, Any] | None = None,
+    compresslevel: int = 9,
 ) -> bytes:
     """Rename and lightly restyle a known-working upstream skin archive."""
     files: dict[str, bytes] = {}
@@ -621,7 +627,7 @@ def adapt_mature_skin(
         ).encode("utf-8"),
     )
     files[f"{root_name}/THIRD_PARTY-LICENSE-MIT.txt"] = license_text
-    result = zip_bytes(files)
+    result = zip_bytes(files, compresslevel)
     validate_ios_skin_archive(result, root_name)
     return result
 
@@ -687,6 +693,7 @@ def obtain_ios_templates(config: dict[str, Any]) -> tuple[bytes, bytes, bytes, b
 def build_ios(
     config: dict[str, Any],
     templates: tuple[bytes, bytes, bytes, bytes] | None = None,
+    compresslevel: int = 9,
 ) -> tuple[dict[str, bytes], dict[str, bytes]]:
     yuanshu_source, hamster_source, yuanshu_license, hamster_license = (
         templates or obtain_ios_templates(config)
@@ -707,6 +714,7 @@ def build_ios(
             yuanshu_license,
             "BlackCCCat/ResourceforHamster",
             dark_theme,
+            compresslevel,
         )
         hamster[f"{root_name}.hskin"] = adapt_mature_skin(
             hamster_source,
@@ -715,6 +723,7 @@ def build_ios(
             hamster_license,
             "BlackCCCat/ResourceforHamster",
             dark_theme,
+            compresslevel,
         )
     return yuanshu, hamster
 
@@ -760,8 +769,12 @@ def check_committed(config: dict[str, Any]) -> bool:
         return expected_files == actual_files
 
 
-def embed_ios_skins(config: dict[str, Any], destination: Path) -> None:
-    yuanshu, hamster = build_ios(config)
+def embed_ios_skins(
+    config: dict[str, Any],
+    destination: Path,
+    compresslevel: int = 9,
+) -> None:
+    yuanshu, hamster = build_ios(config, compresslevel=compresslevel)
     targets = {
         "eosphoros-yuanshu-ios-rime.zip": (
             yuanshu,
@@ -784,7 +797,7 @@ def embed_ios_skins(config: dict[str, Any], destination: Path) -> None:
             files = {name: archive.read(name) for name in archive.namelist()}
         files.update({f"skins/{name}": data for name, data in skins.items()})
         files["README-MOBILE-SKINS.txt"] = readme(title, instructions)
-        write_if_changed(archive_path, zip_bytes(files))
+        write_if_changed(archive_path, zip_bytes(files, compresslevel))
 
 
 def main() -> int:

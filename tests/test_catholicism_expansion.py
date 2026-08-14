@@ -8,10 +8,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class CatholicismExpansionTests(unittest.TestCase):
-    def test_builds_a_large_expansion_without_unreviewed_collisions(self) -> None:
-        from tools.build_catholicism_expansion import build_entries
+    @classmethod
+    def setUpClass(cls) -> None:
+        from tools.build_catholicism_expansion import expected_dictionary_text
 
-        result = build_entries(ROOT)
+        cls.expected, cls.result = expected_dictionary_text(ROOT)
+
+    def test_builds_a_large_expansion_without_unreviewed_collisions(self) -> None:
+        result = self.result
         words = {entry.word for entry in result.entries}
         codes = [entry.code for entry in result.entries]
 
@@ -39,9 +43,9 @@ class CatholicismExpansionTests(unittest.TestCase):
         self.assertEqual(codes_by_word["赞主曲"], "zqquo")
 
     def test_renders_a_visible_divider_before_dictionary_rows(self) -> None:
-        from tools.build_catholicism_expansion import build_entries, render_section
+        from tools.build_catholicism_expansion import render_section
 
-        section = render_section(build_entries(ROOT).entries)
+        section = render_section(self.result.entries)
         divider = section.index("# 2026-08-04 天主教词汇扩建")
         first_row = next(
             index
@@ -53,23 +57,16 @@ class CatholicismExpansionTests(unittest.TestCase):
         self.assertGreater(first_row, 2)
 
     def test_committed_expansion_is_current(self) -> None:
-        from tools.build_catholicism_expansion import expected_dictionary_text
-
-        expected, _ = expected_dictionary_text(ROOT)
         actual = (ROOT / "dicts" / "eosphoros" / "eosphoros.catholicism.dict.yaml").read_text(
             encoding="utf-8-sig"
         ).replace("\r\n", "\n")
 
-        self.assertEqual(actual, expected)
+        self.assertEqual(actual, self.expected)
 
     def test_includes_requested_devotions_and_eastern_catholic_terms(self) -> None:
-        from tools.build_catholicism_expansion import (
-            expected_dictionary_text,
-            iter_rows_from_text,
-        )
+        from tools.build_catholicism_expansion import iter_rows_from_text
 
-        expected, _ = expected_dictionary_text(ROOT)
-        words = {word for word, _ in iter_rows_from_text(expected)}
+        words = {word for word, _ in iter_rows_from_text(self.expected)}
 
         self.assertTrue(
             {

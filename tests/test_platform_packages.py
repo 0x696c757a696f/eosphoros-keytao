@@ -43,7 +43,7 @@ class PlatformPackageTests(unittest.TestCase):
         from tools.build_platform_packages import build_packages
 
         with tempfile.TemporaryDirectory() as temp_dir:
-            archives = build_packages(ROOT, Path(temp_dir))
+            archives = build_packages(ROOT, Path(temp_dir), compresslevel=0)
             members = {}
             for archive in archives:
                 with zipfile.ZipFile(archive) as package:

@@ -52,6 +52,13 @@ TARGETS = (
     EMOJI_EXTRA_PHRASES_TARGET,
 )
 
+GENERATOR_DEPENDENCIES = (
+    "tools/sync_upstream_dictionaries.py",
+    "tools/clean_dictionary_quality.py",
+    "tools/eosphoros_codes.py",
+    "tools/upstream_sources.py",
+)
+
 LOCAL_WORD_DICTIONARIES = (
     "eosphoros.user.dict.yaml",
     "eosphoros.zzc.dict.yaml",
@@ -282,6 +289,38 @@ class BuildResult:
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def generator_input_sha256(root: Path, lock: dict[str, Any]) -> str:
+    relative_paths = {
+        *GENERATOR_DEPENDENCIES,
+        "VERSION",
+        "dicts/eosphoros/pinyin_simp.dict.yaml",
+        *(f"dicts/eosphoros/{name}" for name in LOCAL_WORD_DICTIONARIES),
+        "opencc/eosphoros/eosphoros_emoji_chars.lua",
+        *(
+            f"opencc/eosphoros/eosphoros_emoji_phrases_{suffix}.lua"
+            for suffix in "0123456789abcdef"
+        ),
+    }
+    descriptor = {
+        "generated_on": lock["generated_on"],
+        "sources": lock["sources"],
+        "unicode_version": unicodedata.unidata_version,
+    }
+    digest = hashlib.sha256(
+        json.dumps(
+            descriptor,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    )
+    for relative in sorted(relative_paths):
+        path = root / relative
+        digest.update(b"\0" + relative.encode("utf-8") + b"\0")
+        digest.update(path.read_bytes() if path.is_file() else b"<missing>")
+    return digest.hexdigest()
 
 
 def load_lock(path: Path = LOCK_PATH) -> dict[str, Any]:
@@ -1124,6 +1163,7 @@ def update_generated_metadata(
             "rows": result.stats[f"wanxiang_generated_{source_name}"],
         }
     lock["statistics"] = dict(sorted(result.stats.items()))
+    lock["generator_input_sha256"] = generator_input_sha256(ROOT, lock)
     return lock
 
 
@@ -1141,10 +1181,35 @@ def verify_generated_hashes(root: Path = ROOT, lock_path: Path = LOCK_PATH) -> l
     return errors
 
 
+def verify_generated_state(root: Path, lock: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    expected_input = lock.get("generator_input_sha256")
+    actual_input = generator_input_sha256(root, lock)
+    if expected_input != actual_input:
+        errors.append(
+            "upstream generator inputs differ from lock; run "
+            "tools/sync_upstream_dictionaries.py --check"
+        )
+    for filename, metadata in lock.get("generated", {}).items():
+        path = root / filename
+        if not path.is_file():
+            errors.append(f"missing generated dictionary {filename}")
+            continue
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != metadata["sha256"]:
+            errors.append(f"generated dictionary differs from lock: {filename}")
+    return errors
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true", help="write dictionaries and lock")
     parser.add_argument("--check", action="store_true", help="fail when regeneration differs")
+    parser.add_argument(
+        "--quick-check",
+        action="store_true",
+        help="verify content-addressed generator inputs and committed output hashes",
+    )
     parser.add_argument(
         "--refresh",
         action="store_true",
@@ -1175,6 +1240,20 @@ def main() -> int:
     # VERSION is the single date source. A plain --write after changing the
     # repository version must not restore an older generated_on from the lock.
     lock["generated_on"] = repository_version
+    if args.quick_check:
+        if args.check or args.write or args.refresh or args.refresh_source or any(
+            (args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root)
+        ):
+            raise SystemExit(
+                "--quick-check cannot be combined with full check, write, refresh, or local roots"
+            )
+        errors = verify_generated_state(ROOT, lock)
+        if errors:
+            for error in errors:
+                print(error)
+            return 1
+        print("Upstream generator inputs and outputs match the content-addressed lock")
+        return 0
     sources_to_refresh = (
         set(lock["sources"]) if args.refresh else set(args.refresh_source)
     )

@@ -144,25 +144,36 @@ def _archive_name(root: Path, archive_name: str, path: Path) -> str:
 
 
 def _write_zip(
-    root: Path, destination: Path, archive_name: str, files: list[Path]
+    root: Path,
+    destination: Path,
+    archive_name: str,
+    files: list[Path],
+    compresslevel: int = 9,
 ) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(
-        destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
+        destination,
+        "w",
+        compression=zipfile.ZIP_DEFLATED,
+        compresslevel=compresslevel,
     ) as archive:
         for path in files:
             relative = _archive_name(root, archive_name, path)
             info = zipfile.ZipInfo(relative, FIXED_ZIP_TIME)
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes(), compresslevel=9)
+            archive.writestr(info, path.read_bytes(), compresslevel=compresslevel)
 
 
-def build_packages(root: Path = ROOT, output_dir: Path = ROOT) -> list[Path]:
+def build_packages(
+    root: Path = ROOT,
+    output_dir: Path = ROOT,
+    compresslevel: int = 9,
+) -> list[Path]:
     archives = []
     for archive_name, files in package_files(root).items():
         destination = output_dir / archive_name
-        _write_zip(root, destination, archive_name, files)
+        _write_zip(root, destination, archive_name, files, compresslevel)
         archives.append(destination)
     return archives
 

@@ -16,7 +16,6 @@ from tools.build_christian_traditions import (
     FORCED_WORD_CODES,
     PREFERRED_PREFIXES,
     TARGET_SPECS,
-    build_entries,
     coding_word,
     expected_dictionary_texts,
     load_manifest,
@@ -25,10 +24,13 @@ from tools.eosphoros_codes import code_candidates, iter_dictionary_rows, load_ch
 
 
 class ChristianTraditionDictionaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.expected, cls.result = expected_dictionary_texts(ROOT)
+
     def test_generated_dictionaries_are_current_and_separate(self) -> None:
-        expected, _ = expected_dictionary_texts(ROOT)
         self.assertEqual(
-            {path.name for path in expected},
+            {path.name for path in self.expected},
             {
                 "eosphoros.protestantism.dict.yaml",
                 "eosphoros.orthodoxy.dict.yaml",
@@ -36,13 +38,12 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
                 "eosphoros.assyrian.dict.yaml",
             },
         )
-        for path, text in expected.items():
+        for path, text in self.expected.items():
             self.assertEqual(path.read_text(encoding="utf-8-sig"), text)
 
     def test_generated_headers_use_repository_version(self) -> None:
-        expected, _ = expected_dictionary_texts(ROOT)
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-        for text in expected.values():
+        for text in self.expected.values():
             self.assertIn(f'version: "{version}"', text)
 
     def test_each_tradition_has_distinctive_terms(self) -> None:
@@ -225,7 +226,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         )
 
     def test_fixed_dictionary_conflicts_are_skipped(self) -> None:
-        result = build_entries(ROOT)
+        result = self.result
         generated_names = {spec[1] for spec in TARGET_SPECS}
         occupied: dict[str, set[str]] = defaultdict(set)
         for path in DICT_DIR.glob("*.dict.yaml"):

@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 import tempfile
 import unittest
+from copy import deepcopy
 from collections import defaultdict
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from tools.sync_upstream_dictionaries import (
     build_emoji_extra,
     build_ice_rows,
     build_wanxiang_rows,
+    generator_input_sha256,
     ice_low_value_reason,
     is_likely_medicine_name,
     wanxiang_low_value_reason,
@@ -23,6 +25,7 @@ from tools.sync_upstream_dictionaries import (
     prune_ice_collisions,
     render_danzi,
     verify_generated_hashes,
+    verify_generated_state,
 )
 from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
 from tools.upstream_sources import raw_url, read_source
@@ -427,7 +430,16 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(stats["english_skipped_local_code_collision"], 1)
 
     def test_generated_files_match_locked_checksums(self) -> None:
+        lock = load_lock()
         self.assertEqual(verify_generated_hashes(ROOT), [])
+        self.assertEqual(verify_generated_state(ROOT, lock), [])
+
+        changed_lock = deepcopy(lock)
+        changed_lock["sources"]["rime_ice"]["commit"] = "0" * 40
+        self.assertNotEqual(
+            generator_input_sha256(ROOT, changed_lock),
+            lock["generator_input_sha256"],
+        )
 
     def test_ice_dictionary_is_imported_after_local_wordlists(self) -> None:
         text = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")

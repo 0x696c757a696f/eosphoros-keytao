@@ -64,6 +64,14 @@ class FetchOpenCCTests(unittest.TestCase):
 
 
 class RepositoryValidationTests(unittest.TestCase):
+    @classmethod
+    def ios_skins(cls) -> tuple[dict[str, bytes], dict[str, bytes]]:
+        if not hasattr(cls, "_ios_skins"):
+            from tools.build_mobile_themes import build_ios, load_config
+
+            cls._ios_skins = build_ios(load_config(), compresslevel=0)
+        return cls._ios_skins
+
     def test_current_project_uses_eosphoros_names_without_legacy_paths(self) -> None:
         root = Path(__file__).resolve().parents[1]
         main_schema_path = root / "eosphoros.schema.yaml"
@@ -395,7 +403,11 @@ class RepositoryValidationTests(unittest.TestCase):
                 with zipfile.ZipFile(root / archive_name, "w") as archive:
                     archive.writestr("eosphoros.schema.yaml", "schema:\n")
 
-            embed_ios_skins(load_config(), root)
+            with patch(
+                "tools.build_mobile_themes.build_ios",
+                return_value=self.ios_skins(),
+            ):
+                embed_ios_skins(load_config(), root, compresslevel=0)
 
             expected = {
                 "eosphoros-yuanshu-ios-rime.zip": ".cskin",
@@ -567,9 +579,7 @@ class RepositoryValidationTests(unittest.TestCase):
                             self.assertNotIn("26键-万象", pinyin_text)
 
     def test_yuanshu_skins_import_as_two_named_themes_with_uniform_toolbar(self) -> None:
-        from tools.build_mobile_themes import build_ios, load_config
-
-        yuanshu, _ = build_ios(load_config())
+        yuanshu, _ = self.ios_skins()
         self.assertEqual(set(yuanshu), {"eosphoros.cskin", "eosphoros-mono.cskin"})
         expected_names = {
             "eosphoros.cskin": "晨星·昼夜／Eosphoros Adaptive",

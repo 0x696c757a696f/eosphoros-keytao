@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import tempfile
 import unittest
 import zipfile
@@ -7,6 +8,26 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class CollectEntriesCacheTests(unittest.TestCase):
+    def test_cache_invalidates_for_same_size_and_timestamp_content_change(self) -> None:
+        from tools.build_fcitx5_table import collect_entries
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            manifest = root / "packaging/fcitx5/table/production-dictionaries.tsv"
+            dictionary = root / "fixture.dict.yaml"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text("fixture.dict.yaml\n", encoding="utf-8")
+            dictionary.write_text("---\nsort: original\n...\n甲\ta\n", encoding="utf-8")
+            before = dictionary.stat()
+
+            self.assertEqual(collect_entries(root)[0].text, "甲")
+            dictionary.write_text("---\nsort: original\n...\n乙\ta\n", encoding="utf-8")
+            os.utime(dictionary, ns=(before.st_atime_ns, before.st_mtime_ns))
+
+            self.assertEqual(collect_entries(root)[0].text, "乙")
 
 
 class Fcitx5TableTests(unittest.TestCase):
@@ -60,26 +81,31 @@ class Fcitx5TableTests(unittest.TestCase):
         from tools.build_fcitx5_table import KEY_CODE
 
         codes = {entry.code for entry in self.entries if entry.namespace == ""}
-        prefixes = {code[:length] for code in codes for length in range(1, len(code) + 1)}
+        prefixes = {
+            candidate[:length]
+            for candidate in codes
+            for length in range(2, len(candidate) + 1)
+        }
         topup_keys = set("avuio;")
-        conflicts: list[tuple[str, str]] = []
-        for code in codes:
-            if len(code) >= 6:
+        conflicts: set[tuple[str, str]] = set()
+        for prefix in prefixes:
+            code, key = prefix[:-1], prefix[-1]
+            if code not in codes or key not in KEY_CODE:
                 continue
-            for key in KEY_CODE:
-                fixed = (
-                    (code[-1] in topup_keys and key not in topup_keys)
-                    or (len(code) >= 4 and code[-1] not in topup_keys and key not in topup_keys)
-                )
-                if fixed and code + key in prefixes:
-                    conflicts.append((code, key))
+            fixed = (
+                (code[-1] in topup_keys and key not in topup_keys)
+                or (len(code) >= 4 and code[-1] not in topup_keys and key not in topup_keys)
+            )
+            if fixed:
+                conflicts.add((code, key))
         self.assertLessEqual(len(conflicts), 50)
 
     def test_normal_prefix_fanout_has_regression_limits(self) -> None:
         from tools.build_fcitx5_table import prefix_fanout
 
         fanout = prefix_fanout(
-            entry for entry in self.entries if entry.namespace == ""
+            (entry for entry in self.entries if entry.namespace == ""),
+            (1, 2, 3),
         )
         self.assertLessEqual(fanout[1], 100_000)
         self.assertLessEqual(fanout[2], 8_000)
@@ -90,7 +116,11 @@ class Fcitx5TableTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as temp_dir:
             archives = build_packages(
-                ROOT, Path(temp_dir), compiled_dictionary=b"LIBIME-DICT-TEST"
+                ROOT,
+                Path(temp_dir),
+                compiled_dictionary=b"LIBIME-DICT-TEST",
+                entries=self.entries,
+                compresslevel=0,
             )
             members = {}
             for archive in archives:
