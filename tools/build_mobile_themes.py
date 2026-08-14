@@ -32,6 +32,7 @@ OUTPUT = ROOT / "mobile_themes"
 PALETTES = OUTPUT / "palettes.yaml"
 TRIME_TEMPLATE_DIR = ROOT / "tools" / "templates" / "trime" / "mytrime-3.3.10"
 ZIP_TIME = (1980, 1, 1, 0, 0, 0)
+FCITX5_ANDROID_THEME_ARCHIVE = "eosphoros-fcitx5-android-themes.zip"
 HASH_COLOR_RE = re.compile(r"#(?P<rgb>[0-9A-Fa-f]{6})(?P<alpha>[0-9A-Fa-f]{2})?")
 BARE_COLOR_RE = re.compile(
     r"(?m)(?P<head>:\s*['\"]?)(?P<rgb>[0-9A-Fa-f]{6})(?P<alpha>[0-9A-Fa-f]{2})?"
@@ -749,6 +750,21 @@ def build_committed(config: dict[str, Any], destination: Path) -> None:
         write_if_changed(destination / "trime" / name, data)
 
 
+def build_fcitx_android_theme_bundle(
+    config: dict[str, Any], destination: Path
+) -> Path:
+    themes = build_fcitx(config)
+    files = dict(themes)
+    files["README-FCITX5-ANDROID-THEMES.txt"] = readme(
+        "Fcitx5 for Android 晨星主题",
+        "在小企鹅输入法5中打开“主题 → 导入主题”，逐个选择本压缩包内的主题 ZIP；"
+        "请勿先解压主题 ZIP，也不要把本聚合包作为码表导入。",
+    )
+    archive = destination / FCITX5_ANDROID_THEME_ARCHIVE
+    write_if_changed(archive, zip_bytes(files))
+    return archive
+
+
 def artifact_contents(path: Path) -> bytes | dict[str, bytes]:
     """Compare generated ZIP payloads independently of the host zlib build."""
     if path.suffix.lower() != ".zip":
@@ -828,8 +844,9 @@ def main() -> int:
         return 0
     build_committed(config, OUTPUT)
     if args.platform_dir:
+        theme_archive = build_fcitx_android_theme_bundle(config, args.platform_dir)
         embed_ios_skins(config, args.platform_dir)
-        print(f"Embedded iOS skins in platform archives at {args.platform_dir}")
+        print(f"Built {theme_archive} and embedded iOS skins at {args.platform_dir}")
     else:
         print("Built committed Fcitx5 Android and Trime themes")
     return 0

@@ -584,6 +584,29 @@ class RepositoryValidationTests(unittest.TestCase):
                             self.assertNotIn("万象键盘", pinyin_text)
                             self.assertNotIn("26键-万象", pinyin_text)
 
+    def test_fcitx_android_themes_are_published_as_an_importable_bundle(self) -> None:
+        from tools.build_mobile_themes import (
+            FCITX5_ANDROID_THEME_ARCHIVE,
+            build_fcitx_android_theme_bundle,
+            load_config,
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            archive_path = build_fcitx_android_theme_bundle(
+                load_config(), Path(temp_dir)
+            )
+            self.assertEqual(archive_path.name, FCITX5_ANDROID_THEME_ARCHIVE)
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertEqual(
+                    set(archive.namelist()),
+                    {
+                        "README-FCITX5-ANDROID-THEMES.txt",
+                        "eosphoros-dawn.zip",
+                        "eosphoros-mono.zip",
+                        "eosphoros-night.zip",
+                    },
+                )
+
     def test_yuanshu_skins_import_as_two_named_themes_with_uniform_toolbar(self) -> None:
         yuanshu, _ = self.ios_skins()
         self.assertEqual(set(yuanshu), {"eosphoros.cskin", "eosphoros-mono.cskin"})
@@ -642,7 +665,17 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn("pixi run generated-quick", package)
         self.assertIn("python tools/build_platform_packages.py --check", pixi)
         self.assertIn("## 平台与词库版本", release)
-        self.assertIn("| 平台 | 输入法 / 引擎 | 完整版 | 标准版 | 精简版 |", release)
+        self.assertIn(
+            "| 平台 | 输入法 / 引擎 | 完整版 | 标准版 | 精简版 | 主题 / 皮肤 |",
+            release,
+        )
+        self.assertIn("eosphoros-fcitx5-android-themes.zip", release)
+        self.assertIn("eosphoros-yong-desktop-skins.zip", release)
+        for platform in ("macOS", "Android", "Linux"):
+            self.assertLess(
+                release.index(f"| {platform} | Fcitx5 + Rime |"),
+                release.index(f"| {platform} | Fcitx5 原生 Table |"),
+            )
         bases = (
             "eosphoros-rime",
             "eosphoros-weasel-windows-rime",
@@ -775,7 +808,7 @@ class RepositoryValidationTests(unittest.TestCase):
         from tools.build_release_manifest import build_manifest, expected_assets
 
         expected = expected_assets()
-        self.assertEqual(len(expected), 52)
+        self.assertEqual(len(expected), 53)
         with tempfile.TemporaryDirectory() as temp_dir:
             directory = Path(temp_dir)
             output = directory / "release-assets.txt"

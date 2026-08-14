@@ -27,6 +27,7 @@ def expected_assets() -> tuple[str, ...]:
         for profile in PROFILES:
             assets.add(archive_name(f"eosphoros-yong-{platform}.zip", profile))
     assets.add("eosphoros-yong-desktop-skins.zip")
+    assets.add("eosphoros-fcitx5-android-themes.zip")
     return tuple(sorted(assets))
 
 
