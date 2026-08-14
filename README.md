@@ -336,11 +336,11 @@ Fcitx5 配方；Fcitx5 用户应直接使用对应系统的官方 Table Release 
 
 | 平台 | 推荐客户端 | 安装方式 | 更新后必须做的操作 |
 | --- | --- | --- | --- |
-| Windows | [小狼毫](https://github.com/rime/weasel/releases/latest)、[水龙月 Fork](https://github.com/Techince/weasel/releases/latest)、玉兔毫、小小输入法 | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
-| macOS | 鼠须管、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 鼠须管解压到 Rime 目录；Fcitx5 在应用内导入码表 | 重新部署 Rime，或重启 Fcitx5 |
-| Android | 同文、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) | 同文导入方案；Fcitx5 在码表管理导入 ZIP | 部署同文，或添加晨星 Table |
+| Windows | [小狼毫](https://github.com/rime/weasel/releases/latest)、[水龙月 Fork](https://github.com/Techince/weasel/releases/latest)、[玉兔毫 Rabbit](https://github.com/rimeinn/rabbit/releases/latest)、[小小输入法 Yong](https://yong.dgod.net/) | 解压到用户目录，或下载对应便携包 | 重新部署；便携版按说明启动 |
+| macOS | [鼠须管 Squirrel](https://github.com/rime/squirrel/releases/latest)、[Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md) | 鼠须管解压到 Rime 目录；Fcitx5 在应用内导入码表 | 重新部署 Rime，或重启 Fcitx5 |
+| Android | [同文 Trime](https://github.com/osfans/trime/releases/latest)、[Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android)、[小小输入法 Yong](https://yong.dgod.net/read.php?fid=2&tid=1) | 同文导入方案；Fcitx5 在码表管理导入 ZIP；Yong 导入晨星配置包 | 部署同文、添加晨星 Table，或重启 Yong |
 | iOS | [元书](https://apps.apple.com/app/id6744464701)、[仓输入法](https://apps.apple.com/app/id6446617683) | 手动下载对应平台包，再通过应用的本地导入功能安装；仓输入法不能在线下载方案 | 切换到新方案目录并重新部署 |
-| Linux | [Fcitx5](https://github.com/fcitx/fcitx5) 官方 Table，或小小输入法 | 将码表、配置、主题放入 Fcitx5 同名用户目录 | 重启输入法 |
+| Linux | [Fcitx5 官方 Table](https://github.com/fcitx/fcitx5-chinese-addons)、[小小输入法 Yong](https://yong.dgod.net/read.php?fid=7&tid=6) | 将码表、配置、主题放入 Fcitx5 同名用户目录，或使用 Yong 便携包 | 重启输入法 |
 
 Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lua/eosphoros/`、
 `opencc/eosphoros/`。Fcitx5 平台包是独立的官方 Table 码表，不使用这些 Rime 目录。
