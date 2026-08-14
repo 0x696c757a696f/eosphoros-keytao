@@ -123,6 +123,8 @@ jobs:
         pixi run generated-quick
         git diff --check
 
+    - uses: ./.github/actions/check-workflows
+
   build-native:
     name: Build native packages
     runs-on: ubuntu-latest
@@ -131,19 +133,35 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-    - uses: ./.github/actions/setup-pixi
+    - name: Compute native package fingerprint
+      id: native-fingerprint
+      shell: bash
+      run: echo "value=$(python tools/native_ci_fingerprint.py)" >> "$GITHUB_OUTPUT"
+
+    - name: Restore exact native package cache
+      id: native-cache
+      uses: actions/cache@v6
+      with:
+        path: eosphoros-fcitx5-*.zip
+        key: native-packages-v1-${{ runner.os }}-${{ steps.native-fingerprint.outputs.value }}
+
+    - if: steps.native-cache.outputs.cache-hit != 'true'
+      uses: ./.github/actions/setup-pixi
 
     - name: Install native compilers
+      if: steps.native-cache.outputs.cache-hit != 'true'
       run: |
         sudo apt-get update
         sudo apt-get install -y librime-bin librime-plugin-lua rime-prelude libime-bin
 
-    - uses: ./.github/actions/fetch-opencc
+    - if: steps.native-cache.outputs.cache-hit != 'true'
+      uses: ./.github/actions/fetch-opencc
       with:
         url: ${{ env.OPENCC_TONGGUI_URL }}
         sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Build Fcitx5 packages and compile Rime core in parallel
+      if: steps.native-cache.outputs.cache-hit != 'true'
       run: |
         pixi run python tools/build_fcitx5_table.py \
           --compiler "$(command -v libime_tabledict)" &

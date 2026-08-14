@@ -1,0 +1,17 @@
+name: Check GitHub Actions workflows
+description: Run a checksum-pinned actionlint binary against every workflow.
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        ACTIONLINT_URL: https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+        ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+      run: |
+        mkdir -p .tmp/actionlint
+        curl --retry 3 --retry-all-errors --fail --location \
+          --output .tmp/actionlint.tar.gz "$ACTIONLINT_URL"
+        echo "$ACTIONLINT_SHA256  .tmp/actionlint.tar.gz" | sha256sum --check --strict
+        tar -xzf .tmp/actionlint.tar.gz -C .tmp/actionlint
+        .tmp/actionlint/actionlint -no-color

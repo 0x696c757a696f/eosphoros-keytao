@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "17 4 1,15 * *"
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Build and verify every asset without publishing a GitHub Release
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: create-release
@@ -371,10 +377,10 @@ jobs:
       contents: write
 
     steps:
-    - name: Set up release metadata
+    - name: Set up unique release metadata
       run: |
-        echo "CURRENT_DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
-        echo "RELEASE_TITLE=$(date +'%Y.%m.%d') 词库更新" >> $GITHUB_ENV
+        echo "RELEASE_TAG=$(date +'%Y%m%d')-r${GITHUB_RUN_NUMBER}-a${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_ENV"
+        echo "RELEASE_TITLE=$(date +'%Y.%m.%d') 词库更新 #${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}" >> "$GITHUB_ENV"
 
     - name: Download all release assets
       uses: actions/download-artifact@v8
@@ -417,15 +423,7 @@ jobs:
           }
           core.setOutput('changelog', changelog);
 
-    - name: Create checksums and publish Release
-      env:
-        GH_TOKEN: ${{ github.token }}
-        RELEASE_NOTES: |
-          ## Changelog
-          ${{ steps.changelog.outputs.changelog }}
-
-          ## Release Notes
-          - [如何使用](${{ github.server_url }}/${{ github.repository }}#如何使用)
+    - name: Create release asset manifest and checksums
       run: |
         assets=(
           eosphoros-rabbit-windows-rime.zip
@@ -447,14 +445,38 @@ jobs:
           eosphoros-hamster-ios-rime.zip
           dazhu.txt
         )
+        printf '%s\n' "${assets[@]}" > release-assets.txt
         sha256sum "${assets[@]}" > SHA256SUMS
+
+    - name: Upload dry-run release bundle
+      if: github.event_name == 'workflow_dispatch' && inputs.dry_run == true
+      uses: actions/upload-artifact@v7
+      with:
+        name: release-dry-run-${{ github.run_number }}-${{ github.run_attempt }}
+        path: |
+          eosphoros-*.zip
+          dazhu.txt
+          SHA256SUMS
+          release-assets.txt
+        if-no-files-found: error
+        retention-days: 7
+
+    - name: Publish unique Release
+      if: github.event_name != 'workflow_dispatch' || inputs.dry_run != true
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RELEASE_NOTES: |
+          ## Changelog
+          ${{ steps.changelog.outputs.changelog }}
+
+          ## Release Notes
+          - [如何使用](${{ github.server_url }}/${{ github.repository }}#如何使用)
+          - 构建：[${{ github.run_number }}.${{ github.run_attempt }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+      run: |
+        mapfile -t assets < release-assets.txt
         assets+=(SHA256SUMS)
         printf '%s\n' "$RELEASE_NOTES" > release-notes.md
-        if gh release view "$CURRENT_DATE" >/dev/null 2>&1; then
-          gh release upload "$CURRENT_DATE" "${assets[@]}" --clobber
-          gh release edit "$CURRENT_DATE" --title "$RELEASE_TITLE" --notes-file release-notes.md
-        else
-          gh release create "$CURRENT_DATE" "${assets[@]}" \
-            --title "$RELEASE_TITLE" \
-            --notes-file release-notes.md
-        fi
+        gh release create "$RELEASE_TAG" "${assets[@]}" \
+          --target "$GITHUB_SHA" \
+          --title "$RELEASE_TITLE" \
+          --notes-file release-notes.md
