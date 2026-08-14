@@ -1748,10 +1748,14 @@ columns:
             self.assertNotIn(release_only, package)
             self.assertIn(release_only, release)
 
-        self.assertIn("python-version: '3.14'", package)
         self.assertIn("python-version: '3.14'", release)
-        self.assertIn("check-latest: true", package)
         self.assertIn("check-latest: true", release)
+        self.assertNotIn("actions/setup-python", package)
+        self.assertNotIn("python -m pip install", package)
+        self.assertIn("pixi run check", package)
+        self.assertIn("validate:", package)
+        self.assertIn("build-native:", package)
+        self.assertIn("cancel-in-progress: true", package)
 
         for executable_check in (
             "test_windows_merge_executable_runs_current_eosphoros_behavior",

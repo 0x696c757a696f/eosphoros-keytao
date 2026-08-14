@@ -8,6 +8,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: package-master-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
@@ -66,56 +70,58 @@ jobs:
           exit "$status"
         fi
 
-  build:
+  validate:
+    name: Validate repository
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v7
-
-    - uses: actions/setup-python@v7
-      with:
-        python-version: '3.14'
-        check-latest: true
 
     - uses: prefix-dev/setup-pixi@v0.10.0
       with:
         cache: true
         run-install: true
 
-    - name: Validate source tree
+    - name: Run repository checks
+      run: |
+        pixi run check
+        pixi run lua tests/run.lua
+        git diff --check
+
+  build-native:
+    name: Build native packages
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - uses: prefix-dev/setup-pixi@v0.10.0
+      with:
+        cache: true
+        run-install: true
+
+    - name: Install native compilers
       run: |
         sudo apt-get update
-        sudo apt-get install -y lua5.4 librime-bin librime-plugin-lua rime-prelude libime-bin
-        python -m pip install --upgrade -r requirements-ci.txt
-        python -m pip install -r requirements-dev.txt
-        python tools/validate_repo.py
-        python tools/audit_long_dictionary_entries.py --check
-        lua5.4 tests/run.lua
-        pixi run python -m unittest discover -s tests -p 'test_*.py' -v
+        sudo apt-get install -y librime-bin librime-plugin-lua rime-prelude libime-bin
 
     - name: Download verified OpenCC data
       run: |
-        python tools/fetch_opencc.py \
+        pixi run python tools/fetch_opencc.py \
           --url "$OPENCC_TONGGUI_URL" \
           --sha256 "$OPENCC_TONGGUI_SHA256" \
           --destination opencc/eosphoros
 
     - name: Validate platform package manifests
       run: |
-        python tools/build_platform_packages.py --check
-        python tools/build_fcitx5_table.py --check
+        pixi run python tools/build_platform_packages.py --check
+        pixi run python tools/build_fcitx5_table.py --check
 
     - name: Build Fcitx5 built-in Table packages
-      run: python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
+      run: pixi run python tools/build_fcitx5_table.py --compiler "$(command -v libime_tabledict)"
 
     - name: Compile packaged core with librime and Lua
-      run: python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
-
-    - name: Validate Fcitx5 themes
-      run: python tools/build_fcitx5_themes.py --check
-
-    - name: Validate native mobile themes
-      run: pixi run python tools/build_mobile_themes.py --check
+      run: pixi run python tools/smoke_test_rime_deployment.py --shared-data-dir /usr/share/rime-data
 
     - uses: actions/upload-artifact@v7
       with:
