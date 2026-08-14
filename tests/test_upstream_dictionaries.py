@@ -16,6 +16,7 @@ from tools.sync_upstream_dictionaries import (
     build_emoji_extra,
     build_ice_rows,
     build_wanxiang_rows,
+    canonical_generator_input_bytes,
     generator_input_sha256,
     ice_low_value_reason,
     is_likely_medicine_name,
@@ -40,6 +41,12 @@ def source_text(*rows: str) -> str:
 
 
 class UpstreamDictionaryTests(unittest.TestCase):
+    def test_generator_input_fingerprint_normalizes_platform_line_endings(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "input.txt"
+            path.write_bytes(b"first\r\nsecond\r")
+            self.assertEqual(canonical_generator_input_bytes(path), b"first\nsecond\n")
+
     def test_upstream_lock_date_matches_the_repository_version(self) -> None:
         lock = load_lock()
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()

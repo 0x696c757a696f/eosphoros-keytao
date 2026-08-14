@@ -291,6 +291,10 @@ def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def canonical_generator_input_bytes(path: Path) -> bytes:
+    return path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
 def generator_input_sha256(root: Path, lock: dict[str, Any]) -> str:
     relative_paths = {
         *GENERATOR_DEPENDENCIES,
@@ -319,7 +323,9 @@ def generator_input_sha256(root: Path, lock: dict[str, Any]) -> str:
     for relative in sorted(relative_paths):
         path = root / relative
         digest.update(b"\0" + relative.encode("utf-8") + b"\0")
-        digest.update(path.read_bytes() if path.is_file() else b"<missing>")
+        digest.update(
+            canonical_generator_input_bytes(path) if path.is_file() else b"<missing>"
+        )
     return digest.hexdigest()
 
 
