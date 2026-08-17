@@ -52,6 +52,8 @@ jobs:
             VERSION `
             *.yaml `
             dicts/eosphoros `
+            fcitx5 `
+            mobile_themes `
             opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `
@@ -84,6 +86,8 @@ jobs:
             VERSION `
             *.yaml `
             dicts/eosphoros `
+            fcitx5 `
+            mobile_themes `
             opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `

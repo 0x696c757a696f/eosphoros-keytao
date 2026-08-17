@@ -565,8 +565,18 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertIn('"diff", "--name-only"', script)
         self.assertIn('"--refresh-source"', script)
         self.assertIn("update_versions.py", script)
+        self.assertIn("build_fcitx5_themes.py", script)
+        self.assertIn("build_mobile_themes.py", script)
         self.assertIn("Get-Command python", script)
         self.assertNotIn("D:\\", script)
+
+        version_script = (ROOT / "tools" / "update_versions.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('ROOT / "fcitx5" / "themes.yaml"', version_script)
+        self.assertIn(
+            'ROOT / "mobile_themes" / "palettes.yaml"', version_script
+        )
 
     def test_scheduled_sync_opens_a_validated_pull_request(self) -> None:
         workflow = (
@@ -579,6 +589,8 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertIn("gh pr create", workflow)
         self.assertIn("VERSION", workflow)
         self.assertIn("*.yaml", workflow)
+        self.assertEqual(workflow.count("            fcitx5 `"), 2)
+        self.assertEqual(workflow.count("            mobile_themes `"), 2)
 
 
 if __name__ == "__main__":

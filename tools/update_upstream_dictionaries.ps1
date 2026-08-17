@@ -17,6 +17,8 @@ $RepoRoot = Split-Path -Parent $PSScriptRoot
 $LockPath = Join-Path $PSScriptRoot "upstream_dictionaries.lock.json"
 $SyncScript = Join-Path $PSScriptRoot "sync_upstream_dictionaries.py"
 $VersionScript = Join-Path $PSScriptRoot "update_versions.py"
+$Fcitx5ThemesScript = Join-Path $PSScriptRoot "build_fcitx5_themes.py"
+$MobileThemesScript = Join-Path $PSScriptRoot "build_mobile_themes.py"
 
 if (-not $Python) {
     $Python = (Get-Command python -ErrorAction Stop).Source
@@ -136,6 +138,8 @@ try {
         $Arguments.Add($SourceName)
     }
     Invoke-Checked $Python $Arguments.ToArray()
+    Invoke-Checked $Python @($Fcitx5ThemesScript)
+    Invoke-Checked $Python @($MobileThemesScript)
     Invoke-Checked $Python @($SyncScript, "--check")
 }
 finally {
