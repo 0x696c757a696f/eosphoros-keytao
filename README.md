@@ -882,7 +882,7 @@ python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 
 对应工作流 `.github/workflows/check-txjx-upstream.yml` 每周执行：已登记且无冲突的修改会进入固定的自动化分支并创建或更新 PR；若同一区域被本地和上游同时修改、上游新增未登记源码、删除已映射文件，或变更会要求重建 Windows EXE，则不改本地文件、不推进锁，只创建或更新人工审查 Issue。Windows EXE 仍只在 Release 工作流编译。工作流不包含任何本机绝对仓库路径，在 GitHub Actions 的 checkout 目录中运行。
 
-直接上游 [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) 另用 [`tools/legacy_upstream.lock.json`](tools/legacy_upstream.lock.json) 记录人工审校点。当前已审校至 `6cbc3620f7c6046dd0f646c1265329c701e81664`：日期不补月／日虚位与 `eo` 时间候选在本地已有对应实现；词库更新只择取固定术语，并按本地单字表重新计算合法飞键、检查全库占码。`.github/workflows/check-reference-upstreams.yml` 把旧上游周检与基督教术语来源月检合并管理；旧上游仍只创建审校 Issue，不自动覆盖已更名的目录、Lua、Schema 或本地词库。
+直接上游 [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) 另用 [`tools/legacy_upstream.lock.json`](tools/legacy_upstream.lock.json) 记录人工审校点。当前已审校至 `056f250e42dc9f42d72d336bca7f56807669235f`：已合入 `/jq` 的简体节气名称；本地保留精确天文节气实现与命名空间化 Emoji 流程，不引入固定平均日期倒计时、旧 `xmjd6` 路径或整库覆盖。词库更新只择取固定术语，并按本地单字表重新计算合法飞键、检查全库占码。`.github/workflows/check-reference-upstreams.yml` 把旧上游周检与基督教术语来源月检合并管理；旧上游仍只创建审校 Issue，不自动覆盖已更名的目录、Lua、Schema 或本地词库。
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 与 [`licenses/`](licenses/)。
 
