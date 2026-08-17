@@ -22,8 +22,6 @@ env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
   PYTHONNOUSERSITE: "1"
-  OPENCC_TONGGUI_URL: https://github.com/amorphobia/opencc-tonggui/releases/download/latest/opencc-tonggui.zip
-  OPENCC_TONGGUI_SHA256: 1b76a1028669b89d55a9055400e8be628014ea6f3b200b34b5e8a7d88f04e018
   YONG_WIN_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-win.7z
   YONG_LINUX_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-lin.7z
 jobs:
@@ -38,7 +36,7 @@ jobs:
     steps:
     - name: Check for commits since the latest Release
       id: gate
-      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+      uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
       with:
         script: |
           if (context.eventName === 'workflow_dispatch') {
@@ -93,16 +91,6 @@ jobs:
 
     - name: Run rebuilt Windows executable checks
       run: pixi run python -m unittest tests.test_tools.RepositoryValidationTests.test_windows_merge_executable_runs_current_eosphoros_behavior tests.test_tools.RepositoryValidationTests.test_windows_rollback_executable_restores_latest_merge tests.test_tools.RepositoryValidationTests.test_committed_windows_executables_match_sources_and_lock -v
-
-    - name: Upload rebuilt Windows executables
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
-      with:
-        name: zzc-windows-executables
-        path: |
-          zzc/Win_词库合并.exe
-          zzc/Win_撤回合并.exe
-        if-no-files-found: error
-        retention-days: 1
 
     - name: Build Weasel packages with rebuilt executables
       run: >-
@@ -185,9 +173,21 @@ jobs:
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
+    - name: Compute native package fingerprint
+      id: native-fingerprint
+      run: echo "value=$(python tools/native_ci_fingerprint.py)" >> "$GITHUB_OUTPUT"
+
+    - name: Restore exact native package cache
+      id: native-cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      with:
+        path: eosphoros-fcitx5-*.zip
+        key: native-packages-v1-${{ runner.os }}-${{ steps.native-fingerprint.outputs.value }}
+
     - uses: ./.github/actions/setup-pixi
 
     - name: Install native compilers
+      if: steps.native-cache.outputs.cache-hit != 'true'
       run: |
         sudo apt-get update
         sudo apt-get install -y librime-bin librime-plugin-lua rime-prelude \
@@ -198,11 +198,9 @@ jobs:
         mkdir -p Rime
 
     - uses: ./.github/actions/fetch-opencc
-      with:
-        url: ${{ env.OPENCC_TONGGUI_URL }}
-        sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Build Fcitx5 packages and compile Rime core in parallel
+      if: steps.native-cache.outputs.cache-hit != 'true'
       run: |
         pixi run python tools/build_fcitx5_table.py \
           --compiler "$(command -v libime_tabledict)" &
@@ -234,9 +232,7 @@ jobs:
         compression-level: 0
 
   build-rabbit-release:
-    needs:
-      - check_release_needed
-      - build-windows-executables
+    needs: check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -248,20 +244,11 @@ jobs:
 
     - uses: ./.github/actions/setup-pixi
 
-    - name: Use Windows executables rebuilt by CI
-      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-      with:
-        name: zzc-windows-executables
-        path: zzc
-
     - uses: ./.github/actions/fetch-opencc
-      with:
-        url: ${{ env.OPENCC_TONGGUI_URL }}
-        sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Resolve latest Rabbit x64 release
       id: rabbit
-      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+      uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
       with:
         script: |
           const release = await github.rest.repos.getLatestRelease({
@@ -426,6 +413,7 @@ jobs:
       - validate-source
       - validate-generated
       - build-native-release
+      - build-windows-executables
       - build-rabbit-release
       - build-yong-release
     if: needs.check_release_needed.outputs.should_release == 'true'
@@ -450,7 +438,7 @@ jobs:
 
     - name: Generate changelog from last release
       id: changelog
-      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+      uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
       with:
         script: |
           let changelog = '';

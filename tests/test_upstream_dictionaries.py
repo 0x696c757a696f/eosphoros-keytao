@@ -72,7 +72,10 @@ class UpstreamDictionaryTests(unittest.TestCase):
         workflow = (ROOT / ".github/workflows/sync-upstream-dictionaries.yml").read_text(
             encoding="utf-8"
         )
-        self.assertIn("uses: actions/cache@v6", workflow)
+        self.assertRegex(
+            workflow,
+            r"uses: actions/cache@[0-9a-f]{40} # v6",
+        )
         self.assertIn("path: .tmp/upstream-git-cache", workflow)
         self.assertIn("-CacheDirectory .tmp/upstream-git-cache", workflow)
 

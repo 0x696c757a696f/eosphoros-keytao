@@ -19,9 +19,6 @@ env:
   PYTHONUTF8: "1"
   PYTHONIOENCODING: "utf-8"
   PYTHONNOUSERSITE: "1"
-  OPENCC_TONGGUI_URL: https://github.com/amorphobia/opencc-tonggui/releases/download/latest/opencc-tonggui.zip
-  OPENCC_TONGGUI_SHA256: 1b76a1028669b89d55a9055400e8be628014ea6f3b200b34b5e8a7d88f04e018
-
 jobs:
   input-behavior:
     name: Rime behavior (${{ matrix.name }})
@@ -38,7 +35,7 @@ jobs:
             binary: mira-rime1.13.1-luajit
             sha256: 70080e5e01ed6a6c31040ba8c64aa7a3faaaa64e1d3eb0dbcbbee3fffa9a4754
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
     - name: Install Rime Prelude for the isolated test workspace
       run: |
@@ -93,7 +90,7 @@ jobs:
             run_lua: false
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
     - uses: ./.github/actions/setup-pixi
 
@@ -113,7 +110,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
     - uses: ./.github/actions/setup-pixi
 
@@ -131,7 +128,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
     - name: Compute native package fingerprint
       id: native-fingerprint
@@ -140,7 +137,7 @@ jobs:
 
     - name: Restore exact native package cache
       id: native-cache
-      uses: actions/cache@v6
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
       with:
         path: eosphoros-fcitx5-*.zip
         key: native-packages-v1-${{ runner.os }}-${{ steps.native-fingerprint.outputs.value }}
@@ -156,9 +153,6 @@ jobs:
 
     - if: steps.native-cache.outputs.cache-hit != 'true'
       uses: ./.github/actions/fetch-opencc
-      with:
-        url: ${{ env.OPENCC_TONGGUI_URL }}
-        sha256: ${{ env.OPENCC_TONGGUI_SHA256 }}
 
     - name: Build Fcitx5 packages and compile Rime core in parallel
       if: steps.native-cache.outputs.cache-hit != 'true'
@@ -175,7 +169,7 @@ jobs:
         exit "$status"
 
     - name: Upload complete build
-      uses: actions/upload-artifact@v7
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: eosphoros
         path: |

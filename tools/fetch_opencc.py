@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import os
 import shutil
 import stat
@@ -15,6 +16,7 @@ from pathlib import Path, PurePosixPath
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_LOCK = ROOT / "tools" / "opencc.lock.json"
 ALLOWED_SUFFIXES = {".json", ".ocd2"}
 
 
@@ -65,25 +67,47 @@ def extract_opencc_archive(archive: Path, destination: Path) -> int:
 
 
 def download(url: str, destination: Path) -> None:
-    request = urllib.request.Request(url, headers={"User-Agent": "eosphoros-release-builder"})
+    headers = {"User-Agent": "eosphoros-release-builder"}
+    if url.startswith("https://api.github.com/"):
+        headers.update(
+            {
+                "Accept": "application/octet-stream",
+                "X-GitHub-Api-Version": "2022-11-28",
+            }
+        )
+    request = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as output:
         shutil.copyfileobj(response, output)
 
 
+def load_lock(path: Path = DEFAULT_LOCK) -> tuple[str, str]:
+    lock = json.loads(path.read_text(encoding="utf-8"))
+    return str(lock["url"]), str(lock["sha256"])
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url", required=True)
-    parser.add_argument("--sha256", required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--lock", type=Path)
+    source.add_argument("--url")
+    parser.add_argument("--sha256")
     parser.add_argument("--destination", type=Path, default=ROOT / "opencc" / "eosphoros")
     args = parser.parse_args()
 
-    expected = args.sha256.lower().removeprefix("sha256:")
+    if args.lock:
+        url, sha256 = load_lock(args.lock)
+    else:
+        if not args.sha256:
+            parser.error("--sha256 is required with --url")
+        url, sha256 = args.url, args.sha256
+
+    expected = sha256.lower().removeprefix("sha256:")
     if len(expected) != 64 or any(char not in "0123456789abcdef" for char in expected):
         parser.error("--sha256 must be a 64-character SHA-256 digest")
 
     with tempfile.TemporaryDirectory(prefix="eosphoros-opencc-") as temp_dir:
         archive = Path(temp_dir) / "opencc.zip"
-        download(args.url, archive)
+        download(url, archive)
         actual = sha256_file(archive)
         if actual != expected:
             raise SystemExit(f"OpenCC SHA-256 mismatch: expected {expected}, got {actual}")

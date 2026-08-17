@@ -271,7 +271,7 @@ class PlatformPackageTests(unittest.TestCase):
         for platform in ("linux", "macos", "android"):
             self.assertNotIn(f"name: eosphoros-fcitx5-{platform}", workflow)
         self.assertIn("name: Upload complete build", workflow)
-        self.assertEqual(workflow.count("actions/upload-artifact@v7"), 1)
+        self.assertEqual(workflow.count("actions/upload-artifact@"), 1)
 
 
 if __name__ == "__main__":

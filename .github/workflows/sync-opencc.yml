@@ -1,0 +1,66 @@
+name: Sync OpenCC release dependency
+
+on:
+  schedule:
+    - cron: "47 3 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-opencc
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: "utf-8"
+  PYTHONNOUSERSITE: "1"
+  BASE_BRANCH: ${{ github.event.repository.default_branch }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: ./.github/actions/setup-pixi
+
+      - name: Refresh immutable OpenCC asset metadata
+        run: pixi run python tools/update_opencc_lock.py --write
+
+      - name: Detect changes
+        id: changes
+        shell: pwsh
+        run: |
+          $Changed = -not [string]::IsNullOrWhiteSpace((git status --short -- tools/opencc.lock.json))
+          "changed=$($Changed.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+
+      - name: Verify refreshed OpenCC asset
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          pixi run python tools/fetch_opencc.py \
+            --lock tools/opencc.lock.json \
+            --destination .tmp/opencc-check
+          git diff --check
+
+      - name: Commit and open pull request
+        if: steps.changes.outputs.changed == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $Branch = "automation/opencc-$env:GITHUB_RUN_ID"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c $Branch
+          git add -- tools/opencc.lock.json
+          git commit -m "chore: update OpenCC release dependency"
+          git push origin "HEAD:refs/heads/$Branch"
+          gh pr create `
+            --base $env:BASE_BRANCH `
+            --head $Branch `
+            --title "chore: update OpenCC release dependency" `
+            --body "Updates the immutable OpenCC release asset ID and its GitHub-provided SHA-256 digest. The downloaded archive was verified before this pull request was opened."

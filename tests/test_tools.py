@@ -28,6 +28,21 @@ def dict_path(root: Path, name: str) -> Path:
 
 
 class FetchOpenCCTests(unittest.TestCase):
+    def test_lock_uses_immutable_github_asset_with_digest(self) -> None:
+        from tools.fetch_opencc import load_lock
+
+        root = Path(__file__).resolve().parents[1]
+        lock_path = root / "tools" / "opencc.lock.json"
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+        url, sha256 = load_lock(lock_path)
+
+        self.assertEqual(
+            url,
+            f"https://api.github.com/repos/{lock['repository']}/releases/assets/{lock['asset_id']}",
+        )
+        self.assertRegex(sha256, r"^[0-9a-f]{64}$")
+        self.assertNotIn("/releases/download/latest/", url)
+
     def test_extracts_only_opencc_data_into_namespaced_directory(self) -> None:
         from tools.fetch_opencc import extract_opencc_archive
 
@@ -522,8 +537,11 @@ class RepositoryValidationTests(unittest.TestCase):
                                 self.assertIn("#三选上屏", pinyin_text)
                                 self.assertIn("temp_pinyin", config)
                                 self.assertIn("panel", config)
-                                self.assertIn(
-                                    f"{skin_root}/jsonnet/main.jsonnet", skin_names
+                                self.assertFalse(
+                                    any(
+                                        name.startswith(f"{skin_root}/jsonnet/")
+                                        for name in skin_names
+                                    )
                                 )
                             else:
                                 self.assertIn("toolbar", pinyin)
@@ -631,11 +649,20 @@ class RepositoryValidationTests(unittest.TestCase):
                 self.assertNotIn("config.yaml", names)
                 self.assertIn(f"{skin_root}/config.yaml", names)
                 self.assertIn(f"{skin_root}/demo.png", names)
+                self.assertFalse(
+                    any(name.startswith(f"{skin_root}/jsonnet/") for name in names)
+                )
                 self.assertTrue(any(name.startswith(f"{skin_root}/light/") for name in names))
                 self.assertTrue(any(name.startswith(f"{skin_root}/dark/") for name in names))
                 config = yaml.safe_load(skin.read(f"{skin_root}/config.yaml"))
                 self.assertEqual(config["name"], expected_names[archive_name])
                 actual_names.add(config["name"])
+                for name in names:
+                    try:
+                        text = skin.read(name).decode("utf-8")
+                    except UnicodeDecodeError:
+                        continue
+                    self.assertNotIn("晨星键道", text, name)
 
                 pinyin_name = config["pinyin"]["iPhone"]["portrait"]
                 for appearance in ("light", "dark"):
@@ -656,6 +683,77 @@ class RepositoryValidationTests(unittest.TestCase):
                         0,
                     )
         self.assertEqual(len(actual_names), 2)
+
+    def test_hamster_skins_remove_glass_and_keep_spacebar_schema_name(self) -> None:
+        _, hamster = self.ios_skins()
+        opaque_sections = {
+            "alphabeticButtonBackgroundStyle",
+            "backgroundOriginalStyle",
+            "blueSystemButtonBackgroundStyle",
+            "systemButtonBackgroundStyle",
+        }
+        color_pattern = re.compile(
+            r"(?<![0-9A-Fa-f])#?([0-9A-Fa-f]{8})(?![0-9A-Fa-f])"
+        )
+        spacebar_styles = (
+            (
+                "spaceButtonPinyinForegroundStyle",
+                "spacepreeditStateForegroundStyle",
+            ),
+            (
+                "rightspaceButtonPinyinForegroundStyle",
+                "rightspacepreeditStateForegroundStyle",
+            ),
+        )
+        for archive_name, skin_data in hamster.items():
+            with zipfile.ZipFile(io.BytesIO(skin_data)) as skin:
+                skin_root = Path(archive_name).stem
+                checked_spacebars = 0
+                for name in skin.namelist():
+                    if not name.endswith((".yaml", ".yml")):
+                        continue
+                    text = skin.read(name).decode("utf-8")
+                    if not any(
+                        re.search(rf"(?m)^{re.escape(foreground_style)}:", text)
+                        for foreground_style, _ in spacebar_styles
+                    ):
+                        continue
+                    keyboard = yaml.safe_load(text)
+                    checked_yaml_spacebar = False
+                    for foreground_style, preedit_style in spacebar_styles:
+                        if foreground_style not in keyboard:
+                            continue
+                        self.assertEqual(
+                            keyboard[foreground_style]["text"],
+                            "晨星键道",
+                        )
+                        self.assertNotIn(
+                            "systemImageName",
+                            keyboard[foreground_style],
+                        )
+                        self.assertEqual(
+                            keyboard[preedit_style]["text"],
+                            "晨星键道",
+                        )
+                        checked_spacebars += 1
+                        checked_yaml_spacebar = True
+                    if checked_yaml_spacebar:
+                        self.assertNotIn("$getRimeCandidates", text)
+
+                    section = ""
+                    for line in text.splitlines():
+                        section_match = re.match(r"^([^\s#][^:]*):", line)
+                        if section_match:
+                            section = section_match.group(1)
+                        if section not in opaque_sections:
+                            continue
+                        value_text = line.split(" #", 1)[0]
+                        for color in color_pattern.findall(value_text):
+                            self.assertTrue(
+                                color.upper().endswith("FF"),
+                                f"transparent iOS 26 color in {name}: {line}",
+                            )
+                self.assertGreaterEqual(checked_spacebars, 8, skin_root)
 
     def test_release_publishes_platform_packages(self) -> None:
         from tools.build_release_notes import build_release_notes
@@ -837,14 +935,20 @@ class RepositoryValidationTests(unittest.TestCase):
                 "validate-source",
                 "validate-generated",
                 "build-native-release",
+                "build-windows-executables",
                 "build-rabbit-release",
                 "build-yong-release",
             },
         )
         self.assertEqual(jobs["build-native-release"]["needs"], "check_release_needed")
+        self.assertEqual(jobs["build-rabbit-release"]["needs"], "check_release_needed")
         self.assertEqual(len(jobs["validate-source"]["strategy"]["matrix"]["include"]), 3)
         self.assertIn("pixi run quality", release)
         self.assertIn("pixi run generated-quick", release)
+        self.assertIn("Restore exact native package cache", release)
+        self.assertIn("native-packages-v1-", release)
+        self.assertIn("steps.native-cache.outputs.cache-hit != 'true'", release)
+        self.assertNotIn("zzc-windows-executables", release)
         self.assertIn("--only-base eosphoros-weasel-windows-rime.zip", release)
         self.assertIn("--exclude-base eosphoros-weasel-windows-rime.zip", release)
 
@@ -1900,10 +2004,10 @@ columns:
             "build-windows-executables:",
             "windows-latest",
             "pixi run python tools/build_zzc_windows_exe.py",
-            "name: zzc-windows-executables",
         ):
             self.assertNotIn(release_only, package)
             self.assertIn(release_only, release)
+        self.assertNotIn("name: zzc-windows-executables", release)
 
         self.assertNotIn("actions/setup-python", release)
         self.assertNotIn("python -m pip install", release)
@@ -1987,6 +2091,12 @@ columns:
         self.assertIn("pixi update", sync)
         self.assertIn("pixi run check", sync)
         self.assertIn("gh pr create", sync)
+        opencc_sync = (
+            root / ".github/workflows/sync-opencc.yml"
+        ).read_text(encoding="utf-8")
+        self.assertIn("tools/update_opencc_lock.py --write", opencc_sync)
+        self.assertIn("tools/fetch_opencc.py", opencc_sync)
+        self.assertIn("gh pr create", opencc_sync)
 
     def test_heavy_automation_reuses_pixi_without_pip_bootstrap(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -2016,7 +2126,7 @@ columns:
         self.assertIn("generated-quality:", package)
         self.assertIn("pixi run test-shard", package)
         self.assertEqual(package.count("index:"), 3)
-        self.assertEqual(package.count("actions/upload-artifact@v7"), 1)
+        self.assertEqual(package.count("actions/upload-artifact@"), 1)
         self.assertIn("./.github/actions/check-workflows", package)
         self.assertIn("tools/native_ci_fingerprint.py", package)
         self.assertIn("native-packages-v1-", package)
@@ -2206,12 +2316,9 @@ print("撤回完成", file=sys.stderr)
             r"prefix-dev/setup-pixi@[0-9a-f]{40} # v0\.10\.0",
         )
 
-        release = (root / ".github/workflows/create-release.yml").read_text(
-            encoding="utf-8"
-        )
         remote_uses = re.findall(
             r"uses:\s+([^./\s][^@\s]+)@([^\s#]+)(?:\s+#\s*(\S+))?",
-            release,
+            workflows,
         )
         self.assertGreater(len(remote_uses), 0)
         for action, reference, version in remote_uses:

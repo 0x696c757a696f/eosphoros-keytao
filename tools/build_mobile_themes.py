@@ -9,6 +9,7 @@ import http.client
 import io
 import json
 import re
+import shutil
 import subprocess
 import tempfile
 import time
@@ -310,6 +311,75 @@ HAMSTER_COLOR_ROLES = {
     },
 }
 
+HAMSTER_OPAQUE_STYLE_SECTIONS = {
+    "alphabeticButtonBackgroundStyle",
+    "backgroundOriginalStyle",
+    "blueSystemButtonBackgroundStyle",
+    "systemButtonBackgroundStyle",
+}
+
+HAMSTER_SPACE_FOREGROUND_SECTIONS = {
+    "rightspaceButtonPinyinForegroundStyle",
+    "spaceButtonPinyinForegroundStyle",
+}
+
+HAMSTER_SPACE_PREEDIT_SECTIONS = {
+    "rightspacepreeditStateForegroundStyle",
+    "spacepreeditStateForegroundStyle",
+}
+
+
+def restyle_hamster_yaml(text: str) -> str:
+    """Remove glass transparency and keep the space bar label stable."""
+    lines = text.splitlines(keepends=True)
+    output: list[str] = []
+    current_section = ""
+    skipping_preedit_script = False
+    for line in lines:
+        section_match = re.match(r"^([^\s#][^:]*):", line)
+        if section_match:
+            current_section = section_match.group(1)
+            skipping_preedit_script = False
+
+        if skipping_preedit_script:
+            if line.strip() and len(line) - len(line.lstrip()) <= 2:
+                skipping_preedit_script = False
+            else:
+                continue
+
+        if (
+            current_section in HAMSTER_SPACE_PREEDIT_SECTIONS
+            and re.match(r"^\s{2}text:\s*\|-\s*$", line)
+        ):
+            output.append("  text: 晨星键道\n")
+            skipping_preedit_script = True
+            continue
+        if (
+            current_section in HAMSTER_SPACE_FOREGROUND_SECTIONS
+            and re.match(r'^\s{2}systemImageName:\s*["\']?space["\']?\s*$', line)
+        ):
+            output.append("  text: 晨星键道\n")
+            continue
+        if (
+            current_section in HAMSTER_OPAQUE_STYLE_SECTIONS
+            and not line.lstrip().startswith("#")
+        ):
+            line = HASH_COLOR_RE.sub(
+                lambda match: "#"
+                + match.group("rgb")
+                + ("FF" if match.group("alpha") else ""),
+                line,
+            )
+            line = BARE_COLOR_RE.sub(
+                lambda match: match.group("head")
+                + match.group("rgb")
+                + ("FF" if match.group("alpha") else "")
+                + match.group("tail"),
+                line,
+            )
+        output.append(line)
+    return "".join(output)
+
 
 def recolor_template_text(
     text: str,
@@ -363,14 +433,17 @@ def recolor_template_text(
                 line,
             )
         output.append(line)
-    return (
+    result = (
         "".join(output)
-        .replace("万象键盘", "晨星键道")
-        .replace("26键-万象", "晨星键道")
-        .replace("“万象”", "“晨星”")
-        .replace("'万象'", "'晨星'")
+        .replace("万象键盘", theme["name"])
+        .replace("26键-万象", theme["name"])
+        .replace("“万象”", f"“{theme['name']}”")
+        .replace("'万象'", f"'{theme['name']}'")
         .replace("author: 'BlackCCCat'", "author: 'eosphoros-keytao'")
     )
+    if semantic_hamster_colors and relative.endswith((".yaml", ".yml")):
+        result = restyle_hamster_yaml(result)
+    return result
 
 
 WANXIANG_COLOR_KEYS = {
@@ -606,6 +679,7 @@ def adapt_mature_skin(
                     target = skin_root / relative
                     target.parent.mkdir(parents=True, exist_ok=True)
                     target.write_bytes(generated_file.read_bytes())
+            shutil.rmtree(skin_root / "jsonnet")
 
         config_path = skin_root / "config.yaml"
         config_value = yaml.safe_load(config_path.read_text(encoding="utf-8"))
@@ -826,7 +900,11 @@ def embed_ios_skins(
         for base_name, value in base_targets.items()
         for profile in PROFILES
     }
-    for target_name, (skins, title, instructions) in targets.items():
+
+    def embed_target(
+        target: tuple[str, tuple[dict[str, bytes], str, str]],
+    ) -> None:
+        target_name, (skins, title, instructions) = target
         archive_path = destination / target_name
         if not archive_path.is_file():
             raise FileNotFoundError(
@@ -837,6 +915,9 @@ def embed_ios_skins(
         files.update({f"skins/{name}": data for name, data in skins.items()})
         files["README-MOBILE-SKINS.txt"] = readme(title, instructions)
         write_if_changed(archive_path, zip_bytes(files, compresslevel))
+
+    with ThreadPoolExecutor(max_workers=min(4, len(targets))) as executor:
+        list(executor.map(embed_target, targets.items()))
 
 
 def main() -> int:
