@@ -9,7 +9,7 @@
 
 ---
 name: liangfen
-version: "2026-08-13"
+version: "2026-08-17"
 sort: by_weight
 use_preset_vocabulary: true
 max_phrase_length: 7

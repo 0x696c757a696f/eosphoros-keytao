@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: cf1a3510bec5392c61c0002e60f1953af3ffabe8
+# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
 # Selected source: dicts/taifeng.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
@@ -11,7 +11,7 @@
 # Generated rows in category: 190
 ---
 name: eosphoros.wanxiang.taifeng
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 ...
 

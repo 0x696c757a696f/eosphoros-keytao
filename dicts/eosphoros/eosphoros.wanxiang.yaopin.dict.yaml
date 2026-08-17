@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: cf1a3510bec5392c61c0002e60f1953af3ffabe8
+# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 11180
-# Generated rows in category: 9367
+# Source rows in category: 11373
+# Generated rows in category: 9546
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 ...
 
@@ -107,10 +107,12 @@ sort: original
 薄芝菌注射液	bfjy
 被折磨者的血液	bfmy
 柏栀祛湿喷雾剂	bfqjvv
+贝伐珠单抗	bfqka
 吡呋青霉素	bfqsoo
 冰矾清毒生肌散	bfqsov
 柏栀祛湿洗液	bfqyv
 苄氟噻嗪片	bfspi
+贝福替尼	bftn
 编织填料垫片	bftpa
 苯酚伪麻片	bfwpiv
 吡呋氨卡西林	bfxloo
@@ -126,6 +128,8 @@ sort: original
 保肝口服液	bgkyi
 吡格列酮胶囊	bgln
 布桂嗪注射液	bgqyv
+吡咯替尼	bgtn
+布格替尼	bgtnv
 补骨续断胶囊	bgxn
 百花定喘片	bhdpvi
 百花定喘丸	bhdwvi
@@ -231,6 +235,7 @@ sort: original
 槟榔四消蜜丸	blswvv
 玻璃酸酶注射液	blsyv
 玻璃酸钠注射液	blsyvv
+贝林妥欧单抗	bltkav
 吡硫翁锌气雾剂	blwjo
 荜铃胃痛颗粒	blwlii
 布洛伪麻颗粒	blwlv
@@ -242,7 +247,8 @@ sort: original
 布洛伪麻混悬液	blwyva
 吡罗昔康软膏	blxgoi
 吡罗昔康搽剂	blxjo
-吡拉西坦颗粒	blxlo
+吡洛西利	blxlo
+吡拉西坦颗粒	blxloi
 保利尔胶囊	blxniu
 吡拉西坦胶囊	blxnoi
 吡拉西坦片	blxpo
@@ -269,6 +275,7 @@ sort: original
 保目明眼液	bmmy
 斑蝥素乳膏	bmsgv
 班蝥素乳膏	bmsgva
+贝莫苏拜单抗	bmskai
 斑蝥酸钠片	bmsp
 吡嘧司特钾片	bmspo
 吡嘧司特钾滴眼液	bmsyoo
@@ -335,6 +342,7 @@ sort: original
 表柔比星注射液	brbyv
 白绒止咳糖浆	brfju
 表热清颗粒	brqlv
+伯瑞替尼	brtn
 巴斯净消毒液	bsjya
 比索洛尔片	bslpv
 巴桑母酥油丸	bsmwa
@@ -471,6 +479,7 @@ sort: original
 补益资生丸	byzw
 八子补肾胶囊	bzbnua
 苯佐卡因糊剂	bzkji
+贝组替凡	bztfa
 苯唑西林钠胶囊	bzxni
 苯唑西林钠片	bzxp
 柏子养心胶囊	bzyn
@@ -702,6 +711,7 @@ sort: original
 跌打丸大蜜丸	ddwwoi
 跌打按摩药膏	ddxgoi
 低毒性压裂液	ddxyi
+地舒单抗	dedkv
 东圣止咳灵糖浆	defjva
 东圣止泻灵颗粒	defl
 大山楂咀嚼片	defpv
@@ -717,8 +727,9 @@ sort: original
 荡石片	depiv
 多沙普仑注射液	depy
 丹参注射液	deqyua
-胆石通胶囊	detn
-胆石通利胶囊	detnu
+达沙替尼	detn
+胆石通胶囊	detnu
+胆石通利胶囊	detnuv
 丹参川芎嗪注射液	dewyua
 地芍消渴颗粒	dexlv
 丹参益心胶囊	deyn
@@ -738,6 +749,7 @@ sort: original
 杜仲颗粒无糖型	dfkxv
 丹栀口服液	dfkyu
 达芬霖喷雾剂	dfljv
+度伐利尤单抗	dflkoi
 当飞利肝宁胶囊	dflni
 当飞利肝宁片	dflpi
 递法明片	dfmpoa
@@ -855,6 +867,7 @@ sort: original
 大颗粒细胞型	dklxvi
 癫狂马宝散	dkmsou
 胆康片	dkpu
+达可替尼	dktn
 豆蔻五味散	dkwsvi
 冻可消搽剂	dkxjov
 丁卡因滴眼液	dkyyvi
@@ -867,7 +880,7 @@ sort: original
 东莨菪碱贴片	dldpvi
 东莨菪碱注射液	dldyv
 得力生注射液	dley
-地拉卓胶囊	dlfnvi
+达拉非尼	dlfnvi
 单氯芬那酸片	dlfpo
 单氯芬钠酸片	dlfpou
 胆龙止喘片	dlfpuv
@@ -876,8 +889,10 @@ sort: original
 地拉普利片	dlppv
 丹蒌片	dlpuiu
 丹仑注射液	dlqyui
+达雷妥尤单抗	dltkv
 达立通颗粒	dltlv
 丹鹿通督片	dltpuo
+达罗他胺	dltx
 丹羚心舒胶囊	dlxnuo
 东梅止咳颗粒	dmflv
 度米芬喉片	dmfpoo
@@ -895,6 +910,7 @@ sort: original
 得每通肠溶胶囊	dmtn
 地麦消渴胶囊	dmxn
 电免疫扩散	dmysiu
+多纳非尼	dnfn
 多奈哌齐片	dnpp
 丁硼漱口液	dpey
 单片复方制剂	dpfjo
@@ -923,6 +939,7 @@ sort: original
 碘曲伦注射液	dqly
 丹芪偏瘫胶囊	dqpn
 丹七软胶囊	dqrnuv
+德曲妥珠单抗	dqtk
 丹珍头痛胶囊	dqtn
 灯盏细辛浸膏	dqxgo
 达氢锌糊剂	dqxjv
@@ -970,6 +987,7 @@ sort: original
 定喘止嗽丸	dwfwo
 第五福龙丸	dwfwu
 胆胃康胶囊	dwknui
+度维利塞	dwlso
 定喘疗肺丸	dwlw
 胆胃宁胶囊	dwnn
 多维铁口服液	dwtyu
@@ -1012,7 +1030,7 @@ sort: original
 丹芎通脉颗粒	dxtl
 多西他赛注射液	dxty
 地奥心血康软膏	dxxg
-地奥心血康颗粒	dxxlvu
+达尔西利	dxxlvu
 地奥心血康胶囊	dxxn
 地奥心血康片	dxxp
 丹溪玉屏风颗粒	dxylu
@@ -1174,6 +1192,7 @@ sort: original
 舒肝快胃丸水丸	egkwi
 舒肝颗粒低糖型	egkx
 生桂口服液	egky
+舒格利单抗	eglkiv
 疏肝理脾片	eglp
 参桂鹿茸丸	eglwa
 舒肝理气丸	eglwi
@@ -1304,6 +1323,7 @@ sort: original
 山莨菪碱片	eldpi
 闪亮的名片	eldpoo
 伤拦跌打丸	eldwi
+沙利度胺	eldxa
 舒洛地特注射液	eldyi
 闪亮滴眼液	eldyoo
 少林风湿跌打膏	elfg
@@ -1384,6 +1404,7 @@ sort: original
 生脉增液通胶囊	emzn
 水牛角解毒丸	enjwau
 肾宁散胶囊	ensn
+舒尼替尼	entn
 舍尼通薄膜衣片	entpi
 神农茶颗粒	enwloo
 舒脑欣滴丸	enxwi
@@ -1527,6 +1548,7 @@ sort: original
 十味乳香胶囊	ewrnuo
 十味乳香散	ewrs
 十味乳香丸	ewrw
+舒沃替尼	ewtn
 十维铁咀嚼片	ewtpu
 十味铁粉散	ewtsuo
 十五味黑药胶囊	ewwn
@@ -2189,6 +2211,7 @@ sort: original
 妇科千金胶囊	fkqnau
 脂可清胶囊	fkqnuv
 妇科千金洗液	fkqyau
+呋喹替尼	fktn
 妇科调经片	fktpa
 妇科通经丸	fktw
 妇科万应膏	fkwg
@@ -2227,6 +2250,7 @@ sort: original
 蝮龙抗栓丸	flkw
 肺力咳口服液	flkyu
 枫苓口服液	flkyvi
+伏罗尼布	flnb
 妇良片	flpao
 扎来普隆胶囊	flpn
 扎莱普隆胶囊	flpni
@@ -2269,7 +2293,10 @@ sort: original
 富马酸喹硫平片	fmspoa
 制霉素片	fmspu
 法莫替丁颗粒	fmtla
-法莫替丁胶囊	fmtn
+法米替尼	fmtn
+法莫替丁胶囊	fmtna
+伏美替尼	fmtni
+氟马替尼	fmtnu
 法莫替丁片	fmtpa
 法莫替丁分散片	fmtpai
 福莫特罗片	fmtpoi
@@ -2295,6 +2322,7 @@ sort: original
 奋乃静片	fnjpva
 奋乃静注射液	fnjy
 肺宁口服液	fnkyuo
+菲诺利单抗	fnlkio
 非诺洛芬钙胶囊	fnln
 非奈利酮片	fnlpi
 非诺洛芬钙片	fnlpio
@@ -2406,6 +2434,7 @@ sort: original
 复胃散胶囊	fwsnu
 复胃散片	fwsp
 脂维他注射液	fwtyu
+伏维西利	fwxlia
 止血宝颗粒	fxbli
 止泻保童颗粒	fxblia
 肥儿宝颗粒	fxblu
@@ -2519,10 +2548,12 @@ sort: original
 呋咱甲氢龙片	fzjpoo
 栀子金花丸	fzjwva
 附子理中片	fzlpa
+氟泽雷塞	fzlsu
 附子理中丸	fzlwa
 附子理中浓缩丸	fzlwaa
 附子理中液	fzlya
 附子理中口服液	fzlyaa
+氟唑帕利	fzplu
 种子三达丸	fzsw
 固本止咳膏	gbfg
 肝必复胶囊	gbfnu
@@ -2602,6 +2633,7 @@ sort: original
 肝舒乐颗粒	gellu
 肝舒宁颗粒	genlu
 高渗葡萄糖溶液	gepy
+戈沙妥珠单抗	getkva
 瓜霜退热灵胶囊	getn
 归芍调经片	getpii
 归芍调经丸	getwi
@@ -2732,6 +2764,7 @@ sort: original
 桂龙咳喘宁片	glkpvv
 甘氯林气雾剂	glljvu
 甘露六烟酯片	gllpv
+戈来雷塞	gllsvv
 格列美脲胶囊	glmnvv
 格列美脲片	glmpv
 格鲁米特片	glmpvu
@@ -2762,7 +2795,8 @@ sort: original
 骨剌消痛胶囊	glxniv
 宫瘤消胶囊	glxno
 肝乐欣胶囊	glxnu
-甘露消渴胶囊	glxnv
+戈利昔替尼	glxnv
+甘露消渴胶囊	glxnvv
 甘磷酰芥片	glxpv
 格隆溴铵片	glxpva
 甘罗溴铵片	glxpvi
@@ -2808,6 +2842,7 @@ sort: original
 高锰酸钾片	gmsp
 高锰酸钾外用片	gmspo
 感冒退热冲剂	gmtjv
+谷美替尼	gmtn
 感冒退烧片	gmtpv
 国木田花丸	gmtwi
 感冒退热口服液	gmtyv
@@ -2854,6 +2889,7 @@ sort: original
 肝速康胶囊	gsknu
 肝苏颗粒无糖型	gskx
 骨松康口服液	gskyi
+格索雷塞	gslsv
 肝素钠维乳膏	gsng
 肝素钠注射液	gsny
 铬酸钠注射液	gsnyi
@@ -3490,8 +3526,9 @@ sort: original
 久芝清心丸	jfqwu
 柴枳四逆散	jfss
 角质透明颗粒	jftluu
-降脂通脉胶囊	jftn
-降脂通络软胶囊	jftna
+吉非替尼	jftn
+降脂通脉胶囊	jftna
+降脂通络软胶囊	jftnau
 减肥通圣片	jftpou
 吉非替尼片	jftpv
 甲状腺素制剂	jfxjio
@@ -3668,6 +3705,7 @@ sort: original
 洁康宁喷雾剂	jknjao
 金咳息颗粒	jkxlio
 金咳息胶囊	jkxni
+吉卡昔替尼	jkxnvi
 金龙补肾口服液	jlby
 津力达颗粒	jldla
 金龙丹颗粒	jldli
@@ -3828,6 +3866,7 @@ sort: original
 肠溶空心胶囊	jrknua
 肠溶控释片	jrkpu
 巨仁三宝胶囊	jrsnv
+吉瑞替尼	jrtn
 吉如心肠溶片	jrxp
 进入抑制剂	jryj
 常松八味沉香散	jsbsiv
@@ -4156,6 +4195,7 @@ sort: original
 苦丁降压胶囊	kdjni
 溃得康颗粒	kdkla
 卡地洛尔滴眼液	kdlyi
+卡度尼利单抗	kdnkio
 苦碟注射液	kdqy
 卡达二氏液	kdxyi
 可待因桔梗片	kdypv
@@ -4200,6 +4240,7 @@ sort: original
 康妇炎胶囊	kfyn
 抗妇炎胶囊	kfyni
 口中有津液	kfyyo
+卡非佐米	kfzm
 抗骨质增生胶囊	kgfni
 抗骨质增生片	kgfpi
 抗骨质增生丸	kgfwi
@@ -4310,6 +4351,7 @@ sort: original
 苦木注射液	kmqy
 克霉素软膏	kmsg
 卡莫司汀注射液	kmsy
+卡马替尼	kmtn
 可米替林片	kmtp
 卡马西平糖浆	kmxj
 卡马西平胶囊	kmxn
@@ -4337,6 +4379,7 @@ sort: original
 溃平宁颗粒	kpnla
 卡泊三醇软膏	kpsg
 卡泊三醇搽剂	kpsji
+卡匹色替	kpstiv
 卡培他滨片	kptp
 卡普托利片	kptpi
 开普拓注射液	kptyv
@@ -4347,6 +4390,7 @@ sort: original
 口腔炎喷雾剂	kqyj
 口腔愈疡颗粒	kqylo
 可溶颗粒剂	krkj
+卡瑞利珠单抗	krlki
 髋人字石膏	krzg
 快速多酶清洗液	ksdy
 克赛注射液	ksqy
@@ -4412,6 +4456,7 @@ sort: original
 坤元通乳口服液	kytyvv
 坤月安颗粒	kyxlvu
 坤月安胶囊	kyxnv
+克唑替尼	kztn
 鳞柄白鹅膏	lbbgu
 联苯苄唑软膏	lbbgvi
 联苯苄唑霜剂	lbbjvi
@@ -4451,6 +4496,7 @@ sort: original
 洛布桑胶囊	lbsna
 氯贝酸铝片	lbspu
 洛布桑口服液	lbsya
+芦比替定	lbtdiv
 癃闭通胶囊	lbtn
 棱贝通鼻片	lbtpv
 利巴韦林眼膏	lbwg
@@ -4553,10 +4599,12 @@ sort: original
 利福平胶丸	lfpwu
 利福平滴眼液	lfpy
 利福平注射液	lfpyu
+氯法齐明软胶囊	lfqnu
 励志情色片	lfqpvv
 洛伐他汀颗粒	lftla
-拉呋替丁胶囊	lftn
+仑伐替尼	lftn
 洛伐他汀胶囊	lftna
+拉呋替丁胶囊	lftni
 洛伐他汀片	lftpa
 洛伐他汀分散片	lftpai
 励志题材影片	lftpv
@@ -4669,6 +4717,7 @@ sort: original
 林可霉素滴眼液	lkmyvv
 雷卡注射液	lkqy
 利口清含漱液	lkqyu
+芦可替尼	lktn
 罗库溴铵注射液	lkxyi
 六氯苯乳剂	llbjou
 亮丽的名片	lldpov
@@ -4685,11 +4734,14 @@ sort: original
 氯膦酸二钠胶囊	llsnu
 氯膦酸二钠片	llspu
 路路通益母膏	lltgoo
-氯雷他定胶囊	lltn
+拉罗替尼	lltn
+洛拉替尼	lltna
+氯雷他定胶囊	lltnu
 氯雷他定片	lltpu
 氯雷他定分散片	lltpuv
 路路通注射液	lltyoo
 氯雷伪麻缓释片	llwpu
+来罗西利	llxlv
 劳拉西泮片	llxpi
 六六消炎丸	llxwo
 铝镁颠茄片	lmdpi
@@ -4733,9 +4785,11 @@ sort: original
 氯霉素滴耳液	lmsyu
 氯霉素注射液	lmsyuv
 卤美他松软膏	lmtgio
+雷莫西尤单抗	lmxkvi
 灵猫香解毒丸	lmxwau
 利尿八味散	lnbs
 铝钠颠茄片	lndp
+来那度胺	lndx
 绿脓杆菌制剂	lngj
 龙脑鸡苏丸	lnjw
 老年咳喘片	lnkp
@@ -4763,9 +4817,11 @@ sort: original
 蓝蒲解毒片	lpjpi
 罗哌卡因注射液	lpky
 硫普罗宁片	lplpvo
+林普利塞	lplsv
 硫普罗宁注射液	lplyv
 氯普噻吨片	lpsp
 氯普噻吨注射液	lpsyu
+拉帕替尼	lptn
 利培酮口服液	lpty
 硫喷妥钠注射液	lptyv
 卵泡冲洗液	lpwyu
@@ -4870,6 +4926,7 @@ sort: original
 铝碳酸镁混悬剂	ltsji
 铝碳酸镁片	ltsp
 铝碳酸镁咀嚼片	ltspi
+利妥昔单抗	ltxkuu
 萝藤安神片	ltxp
 六味补血颗粒	lwblo
 鹿尾补肾丸	lwbwoa
@@ -4936,6 +4993,7 @@ sort: original
 赖氨酸锌片	lxspvu
 硫辛酸注射液	lxsyvo
 赖氨酸注射液	lxsyvu
+利厄替尼	lxtn
 络欣通舒血宁片	lxtpa
 凉血退热排毒丸	lxtwo
 氯胺酮注射液	lxtyu
@@ -5174,6 +5232,7 @@ sort: original
 美托洛尔缓释片	mtlpo
 美托洛尔注射液	mtly
 吗替麦考酚酯片	mtmp
+莫妥珠单抗	mtqk
 脉通注射液	mtqy
 米托蒽醌注射液	mtxy
 秘传抱龙丸	mwbwui
@@ -5323,6 +5382,7 @@ sort: original
 诺佳注射液	njqyo
 女金丸大蜜丸	njwwa
 女金丸水蜜丸	njwwai
+纳基奥仑赛	njxsa
 浓甲硝唑含漱液	njxy
 萘甲唑啉滴鼻液	njzy
 萘甲唑啉滴眼液	njzyi
@@ -5343,12 +5403,15 @@ sort: original
 脑力静胶囊	nljn
 脑乐静口服液	nljy
 尿路康颗粒	nlkl
+尼拉帕利	nlpl
 尿路排石口服液	nlpy
 脑立清胶囊	nlqnu
 脑立清丸水丸	nlqwu
 脑灵素胶囊	nlsnu
 脑灵素片	nlspu
-脑络通胶囊	nltn
+奈拉替尼	nltn
+尼洛替尼	nltna
+脑络通胶囊	nltnu
 尿路通片	nltpa
 纳洛酮注射液	nltyaa
 脑乐饮口服液	nlyyu
@@ -5429,6 +5492,7 @@ sort: original
 脑塞安胶囊	nsxnu
 浓缩养荣丸	nsywaa
 奈替米星注射液	ntmy
+尼妥珠单抗	ntqka
 浓替硝唑含漱液	ntxya
 暖胃舒乐颗粒	nwel
 暖胃舒乐片	nwepo
@@ -5436,6 +5500,7 @@ sort: original
 牛尾蒿油滴丸	nwhw
 粘虫颗粒体病毒	nwkdo
 浓维磷糖浆	nwlja
+纳武利尤单抗	nwlka
 奈韦拉平胶囊	nwln
 奈韦拉平片	nwlp
 奈韦拉平分散片	nwlpv
@@ -5473,6 +5538,8 @@ sort: original
 内异理气化瘀丸	nylw
 内异清热化瘀丸	nyqwi
 尿液通用质控液	nytya
+帕博利珠单抗	pblkiu
+哌柏西利	pbxlov
 平痤祛斑灵胶囊	pcqn
 排毒降脂胶囊	pdjni
 蒲地蓝消炎胶囊	pdln
@@ -5554,13 +5621,17 @@ sort: original
 普罗托醇	pltjo
 普鲁托醇	pltjou
 普罗替林	pltlo
+普拉替尼	pltn
 普乐安胶囊	plxn
 普乐安片	plxp
 帕罗西汀片	plxpi
 哌仑西平片	plxpo
 普罗新希	plxxo
 哌拉西林注射液	plxyo
+泊马度胺	pmdx
 普美拉泰	pmlto
+帕米帕利	pmpli
+佩米替尼	pmtn
 扑美伪麻片	pmwpio
 皮敏消胶囊	pmxn
 普奈洛尔片	pnlp
@@ -5573,6 +5644,7 @@ sort: original
 泼尼松龙片	pnsp
 泼尼松滴眼液	pnsy
 泼尼松龙注射液	pnsya
+泊那替尼	pntn
 平疟养脾丸	pnyw
 哌泊塞嗪注射液	ppsy
 疱疹净滴眼液	pqjy
@@ -5593,15 +5665,18 @@ sort: original
 硼酸氧化锌软膏	psygv
 帕司烟肼胶囊	psyn
 帕司烟肼片	psypia
+匹妥布替尼	ptbn
 哌替啶注射液	ptdyo
 培他啶口服液	ptdyv
 偏瘫复原丸	ptfw
 胚胎解冻液	ptjyu
 泡腾颗粒剂	ptkj
 偏瘫康复丸	ptkw
+普特利单抗	ptlk
 泮托拉唑钠胶囊	ptln
 泮托拉唑片	ptlp
 泮托拉唑注射液	ptly
+帕妥珠单抗	ptqk
 培他司汀片	ptsp
 培他司汀注射液	ptsy
 葡萄糖酸钙口服	pttf
@@ -5618,6 +5693,7 @@ sort: original
 喷托维林片	ptwp
 喷托维林滴丸	ptww
 泡腾性冲剂	ptxja
+硼替佐米	ptzm
 喷他佐辛注射液	ptzy
 脾胃健口服液	pwjy
 匹维溴铵片	pwxp
@@ -5627,6 +5703,7 @@ sort: original
 扑尔敏控释胶囊	pxmni
 扑尔敏滴丸	pxmw
 扑尔敏注射液	pxmy
+派安普利单抗	pxpk
 皮下注射用片	pxqp
 匹氨青霉素	pxqs
 脾氨肽口服液	pxty
@@ -5640,6 +5717,7 @@ sort: original
 盆炎灵口服液	pyly
 杷叶润肺止咳膏	pyrg
 培元通脑胶囊	pytn
+培唑帕尼	pzpnv
 千柏鼻炎颗粒	qbblu
 千柏鼻炎胶囊	qbbnu
 驱白巴布期片	qbbpa
@@ -5954,6 +6032,7 @@ sort: original
 强力天麻杜仲丸	qltw
 强力铁口服液	qltya
 芩连丸微丸	qlwwiv
+曲拉西利	qlxli
 前列消胶囊	qlxno
 前列欣胶囊	qlxnov
 珍龙醒脑胶囊	qlxnv
@@ -5976,6 +6055,7 @@ sort: original
 青霉素钾分散片	qmspvv
 青霉素钾盐	qmsyv
 青霉素皮试液	qmsyvv
+曲美替尼	qmtn
 青霉胺片	qmxp
 去南白药膏	qnbgv
 清脑复神液	qnfyau
@@ -6236,6 +6316,7 @@ sort: original
 人白介素注射液	rbjy
 乳必宁颗粒	rbnlu
 瑞巴派特片	rbpp
+瑞波西利	rbxlv
 茸参补肾胶囊	rcbn
 热藏胎盘组织液	rcty
 绒促性素注射液	rcxya
@@ -6287,6 +6368,7 @@ sort: original
 乳浊液型液	rfyyu
 茸桂补肾口服液	rgby
 柔肝顺气丸	rgew
+瑞戈非尼	rgfnv
 人工智能芯片	rgfp
 乳杆菌活菌胶囊	rgjn
 柔肝健脾口服液	rgjy
@@ -6322,10 +6404,12 @@ sort: original
 软胶囊剂胶丸	rjnwvu
 润肌皮肤膏	rjpgau
 润肠丸浓缩丸	rjwwau
+瑞基奥仑赛	rjxsv
 乳康口服液	rkkyu
 润可明滴眼液	rkmy
 乳康片	rkp
 热可平注射液	rkpy
+瑞康曲妥珠单抗	rkqkv
 乳康软胶囊	rkrnu
 肉蔻五味丸	rkwwi
 乳康丸浓缩丸	rkwwu
@@ -6351,6 +6435,9 @@ sort: original
 乳癖舒胶囊	rpenu
 乳癖清胶囊	rpqnu
 乳癖散结胶囊	rpsn
+瑞帕妥单抗	rptkv
+瑞派替尼	rptn
+瑞普替尼	rptnv
 乳癖安消胶囊	rpxnu
 乳癖安消口服液	rpxy
 茸杞补肾健脾茶	rqbw
@@ -6358,6 +6445,7 @@ sort: original
 人脐带组织液	rqdy
 润清护理液	rqhy
 乳泉颗粒无糖型	rqkx
+瑞齐替尼	rqtn
 茸芪益肾口服液	rqyyi
 茸蓉补肾口服液	rrby
 鞣酸蛋白片	rsdp
@@ -6381,6 +6469,7 @@ sort: original
 人胎盘片	rtpp
 人胎盘组织液	rtpy
 乳痛软坚片	rtrp
+瑞维鲁胺	rwlx
 茸血补心丸	rxbw
 茸血补脑液	rxby
 榕消得生片	rxdp
@@ -6389,6 +6478,7 @@ sort: original
 乳腺康注射液	rxkyu
 人血清蛋白液	rxqy
 乳安散结胶囊	rxsn
+瑞厄替尼	rxtn
 荣心丸大蜜丸	rxwwi
 乳癣消胶囊	rxxn
 茸血安神丸	rxxw
@@ -6459,6 +6549,7 @@ sort: original
 三分三浸膏	sfsg
 三分三浸膏片	sfsp
 散风透热颗粒	sftlvu
+索凡替尼	sftn
 四方胃胶囊	sfwni
 散发性斑疹伤寒	sfxhva
 四制香附丸	sfxwiu
@@ -6535,17 +6626,22 @@ sort: original
 塞克硝唑胶囊	skxno
 塞克硝唑片	skxp
 塞克硝唑分散片	skxpo
+索卡佐利单抗	skzku
 四两拔干片	slbpiv
+索立德吉	sldjuo
 塞隆风湿酒	slfjo
 塑料复合剂	slfjoo
 塞隆风湿胶囊	slfnoa
+索拉非尼	slfnui
 三勒浆口服液	sljyv
 饲料颗粒机	slkju
 苏乐康胶囊	slkn
+斯鲁利单抗	sllkvu
 桑龙利肝颗粒	slllav
 塞利洛尔胶囊	slln
 塞利洛尔片	sllpou
 丝裂霉素注射液	slmy
+塞利尼索	slnso
 噻氯匹啶胶囊	slpn
 噻氯匹定胶囊	slpno
 塞氯匹定胶囊	slpnou
@@ -6562,6 +6658,7 @@ sort: original
 噻吗洛尔注射液	smlyoo
 司莫司汀胶囊	smsn
 苏木素染色液	smsy
+索米妥昔单抗	smtk
 四磨汤口服液	smty
 四妙丸水丸	smww
 赛霉安乳膏	smxg
@@ -6569,6 +6666,7 @@ sort: original
 赛美欣颗粒	smxl
 噻吗心安滴眼液	smxy
 苏南山肚痛丸	snew
+塞纳帕利	snpl
 噻奈普汀钠片	snpp
 四逆注射液	snqy
 苏诺注射液	snqyi
@@ -6579,7 +6677,9 @@ sort: original
 司帕沙星分散片	spepa
 桑螵蛸酒调散	spesa
 司帕沙星	spex
+赛帕利单抗	splko
 斯皮仁诺胶囊	sprnv
+塞普替尼	sptn
 三七补血丸	sqbw
 色羟丙钠滴鼻液	sqby
 色羟丙钠滴眼液	sqbyu
@@ -6616,6 +6716,7 @@ sort: original
 萨热大鹏丸	srdw
 速溶金钙颗粒	srjl
 三仁口服液	srky
+塞瑞替尼	srtn
 速溶阿胶冲剂	srxjv
 四色断痫丸	ssdwiu
 散痛舒胶囊	sten
@@ -6627,6 +6728,7 @@ sort: original
 森铁能注射液	stnyv
 塞替派注射液	stpy
 赛替派注射液	stpyo
+司妥昔单抗	stxka
 司坦唑醇片	stzp
 四物补肝散	swbsi
 三物备急丸	swbwv
@@ -6647,13 +6749,15 @@ sort: original
 四维葡锌胶丸	swpwi
 三味蔷薇散	swqs
 三味檀香颗粒	swtl
-四维他胶囊	swtn
-四味通络胶囊	swtni
+赛沃替尼	swtn
+四维他胶囊	swtni
+四味通络胶囊	swtnio
 三味檀香胶囊	swtnv
 四味土木香散	swtsio
 三味檀香汤散	swtsv
 三味檀香口服液	swtyv
 四物五子丸	swwwi
+苏维西塔单抗	swxki
 三味泻痢颗粒	swxlv
 四味香连丸	swxwi
 四味益气胶囊	swyn
@@ -6908,14 +7012,19 @@ sort: original
 通络抗栓丸	tlkwaa
 通灵口服液	tlkya
 通络口服液	tlkyaa
+替雷利珠单抗	tllkvv
+妥拉美替尼	tlmnui
 藤络宁胶囊	tlnn
 通络祛痛膏	tlqga
 托拉塞米胶囊	tlsni
 托拉塞米片	tlsp
-糖络通胶囊	tltn
+特立妥单抗	tltku
+他雷替尼	tltn
+糖络通胶囊	tltno
 妥洛特罗片	tltpua
 特洛伪麻胶囊	tlwnu
 天龙熄风颗粒	tlxlvv
+他拉唑帕利	tlzli
 特拉唑嗪胶囊	tlzn
 特拉唑嗪片	tlzpu
 妥拉唑林片	tlzpui
@@ -6956,7 +7065,8 @@ sort: original
 铁皮枫斗颗粒	tpfl
 铁皮枫斗胶囊	tpfni
 替普瑞酮胶囊	tprnv
-托哌酮胶囊	tptn
+特泊替尼	tptn
+托哌酮胶囊	tptni
 胎盘组织注射液	tpzyu
 天杞补肾胶囊	tqbnv
 通窃鼻炎片	tqbp
@@ -6980,10 +7090,12 @@ sort: original
 天茸双子颗粒	trelv
 同仁复明丸	trfwi
 退热解毒注射液	trjy
+特瑞普利单抗	trpku
 退热清咽颗粒	trqla
 天然气凝液	trqy
 痰热清注射液	trqyo
 天然维生素丸	trwwv
+泰瑞西利	trxlvv
 同仁安神丸	trxwi
 钛酸酯偶联剂	tsfjiv
 碳酸钙干混悬剂	tsgjv
@@ -7027,6 +7139,7 @@ sort: original
 弹性酶肠溶胶囊	txmn
 弹性酶肠溶片	txmp
 痛安注射液	txqyo
+坦昔妥单抗	txtkv
 特效新肤松乳膏	txxg
 同性爱情片	txxp
 调小儿脾胃	txxwo
@@ -7045,6 +7158,7 @@ sort: original
 铁亚铁混合液	tytyiv
 太子保心口服液	tzby
 太子开胃口服液	tzkyva
+他泽司他	tzsti
 戊巴比妥钠片	wbbpva
 川贝半夏液	wbby
 五柏参洗液	wbcy
@@ -7063,6 +7177,7 @@ sort: original
 胃病宁胶囊	wbnn
 川贝枇杷片	wbpp
 温补气血口服液	wbqy
+维布妥昔单抗	wbtka
 川贝雪梨膏	wbxgu
 川贝雪梨糖浆	wbxju
 维丙胺胶囊	wbxna
@@ -7097,6 +7212,7 @@ sort: original
 维颠茄铝胶囊	wdqna
 维颠茄铝镁片	wdqpa
 赤丹退黄颗粒	wdtlv
+维迪西妥单抗	wdxkai
 胃得安胶囊	wdxn
 王氏保赤丸	webwvu
 创伤止痛乳膏	wefgi
@@ -7238,6 +7354,7 @@ sort: original
 胃乐新冲剂	wlxji
 胃乐新颗粒	wlxli
 胃乐新胶囊	wlxni
+维莫非尼	wmfna
 伪麻黄碱片	wmhp
 胃盲刻宁片	wmkpi
 威麦宁胶囊	wmnn
@@ -7246,6 +7363,7 @@ sort: original
 乌梅排石丸	wmpw
 维酶素片	wmspa
 魑魅魍魉退散	wmws
+维奈克拉	wnkla
 胃逆康胶囊	wnkni
 万乃洛韦胶囊	wnln
 维脑路通片	wnlpau
@@ -7253,6 +7371,7 @@ sort: original
 胃逆安胶囊	wnxni
 温脾止泻丸	wpfwa
 温脾固肠散	wpgsa
+维泊妥珠单抗	wptka
 骛芪口服液	wqkya
 豉翘清热颗粒	wqql
 微乳化制剂	wrhju
@@ -7352,6 +7471,7 @@ sort: original
 川芎清脑颗粒	wxqlui
 川芎嗪注射液	wxqyu
 戊二醛消毒液	wxqyv
+维恩妥尤单抗	wxtka
 维锌铁钙胶囊	wxtn
 无锡透平叶片	wxtp
 川芎茶调颗粒	wxwlu
@@ -7387,6 +7507,7 @@ sort: original
 五子补肾丸	wzbwva
 五子降脂胶囊	wzjnva
 五子口服液	wzkyva
+重组人血管内皮抑制素	wzrs
 五子衍宗颗粒	wzylva
 五子衍宗胶囊	wzyn
 五子衍宗片	wzypva
@@ -7423,9 +7544,12 @@ sort: original
 溴吡斯的明片	xbspa
 细胞色素肠溶片	xbspau
 细胞色素注射液	xbsya
+阿比特龙	xbtla
+奥布替尼	xbtn
 新碧桃仙片	xbtpov
 氨苯伪麻片	xbwpu
 氨苄西林栓	xbxeui
+阿贝西利	xbxla
 氨苄西林颗粒	xbxlui
 氨苄西林钠	xbxnu
 氨苄西林胶囊	xbxnui
@@ -7436,7 +7560,9 @@ sort: original
 苋菜黄连素胶囊	xchni
 耳聪口服液	xckyv
 阿草洛韦片	xclpai
+阿得贝利单抗	xdbka
 艾地苯醌片	xdbpi
+西达本胺	xdbxvv
 熊胆跌打膏	xddga
 消毒定痛散	xddsav
 熊胆痔灵膏	xdfga
@@ -7453,6 +7579,7 @@ sort: original
 熊胆开明片	xdkpa
 心达康片	xdkpo
 心达康分散片	xdkpov
+信迪利单抗	xdlkii
 安多霖胶囊	xdln
 安达美注射液	xdmy
 西地那非片	xdnp
@@ -7470,6 +7597,7 @@ sort: original
 厄多司坦片	xdspv
 昂丹司琼注射液	xdsyou
 氨丁三醇注射液	xdsyu
+厄达替尼	xdtn
 氨碘肽滴眼液	xdtyuv
 熊胆丸胶囊	xdwna
 雪胆胃肠丸	xdwwvu
@@ -7551,9 +7679,11 @@ sort: original
 消伤痛搽剂	xetja
 消食退热糖浆	xetjai
 消栓通冲剂	xetjav
+艾沙妥昔单抗	xetki
 消栓通颗粒	xetla
 消栓通络颗粒	xetlav
-消栓通络胶囊	xetn
+恩沙替尼	xetn
+消栓通络胶囊	xetna
 消栓通络片	xetpa
 缬沙坦分散片	xetpaa
 血栓通注射液	xetyu
@@ -7625,6 +7755,7 @@ sort: original
 氨酚拉明片	xflpu
 氨酚氯汀伪麻片	xflpuv
 型蝮龙抗栓丸	xflwv
+恩扎卢胺	xflxii
 消痔灵注射液	xflya
 阿法罗定注射液	xflyaa
 新福林滴眼液	xflyoo
@@ -7633,6 +7764,7 @@ sort: original
 氨酚麻美糖浆	xfmju
 限制酶断片	xfmpa
 氨酚美伪麻片	xfmpu
+艾伏尼布	xfnbi
 氨酚那敏颗粒	xfnlu
 二氟尼柳胶囊	xfnn
 二氟尼柳片	xfnpv
@@ -7655,8 +7787,10 @@ sort: original
 血府逐瘀口服液	xfqyuo
 先锋四号胶囊	xfsnu
 消肿痛醋膏	xftga
-血滞通胶囊	xftn
+阿法替尼	xftn
+阿伐替尼	xftna
 辛伐他汀胶囊	xftno
+血滞通胶囊	xftnu
 熄风通络头痛片	xftpou
 硝呋太尔片	xftpv
 硝呋太尔阴道片	xftpvo
@@ -7779,6 +7913,7 @@ sort: original
 消积洁白丸	xjjwau
 氨基己酸注射液	xjjyuv
 心肌康颗粒	xjklo
+阿基仑赛	xjlsa
 阿胶牡蛎口服液	xjmyau
 二陈浓缩丸	xjnwva
 二甲哌替啶	xjpd
@@ -7816,6 +7951,7 @@ sort: original
 心可舒胶囊	xkenov
 心可舒咀嚼片	xkepov
 消咳止咳糖浆	xkfjao
+恩考芬尼	xkfni
 氨咖黄敏口服液	xkhyuo
 消渴降糖胶囊	xkjna
 消渴降糖片	xkjpaa
@@ -7824,6 +7960,7 @@ sort: original
 消渴灵胶囊	xkln
 虚空裂蹄腿甲片	xklpi
 氨咖柳胺片	xklpu
+阿克拉霉素	xklsau
 儿咳灵口服液	xklyuo
 氨咖麻敏胶囊	xkmnu
 心可宁胶囊	xknno
@@ -7832,8 +7969,10 @@ sort: original
 安坤片	xkpovu
 消渴平片	xkppaa
 消咳平喘口服液	xkpy
-消渴停胶囊	xktn
-消葵通络胶囊	xktna
+阿可替尼	xktn
+消渴停胶囊	xktna
+消葵通络胶囊	xktnai
+埃克替尼	xktnv
 阿克他利片	xktpau
 消咳喘糖浆	xkwjao
 消咳喘颗粒	xkwlao
@@ -7843,6 +7982,7 @@ sort: original
 奥卡西平片	xkxpu
 安坤益母草膏	xkygov
 安坤赞育丸	xkzwo
+奥雷巴替尼	xlbnuv
 西利宾胺片	xlbpv
 消淋败毒散	xlbsaa
 消瘤碧玉散	xlbsao
@@ -7879,19 +8019,24 @@ sort: original
 奥拉米特片	xlmpu
 心律宁片	xlnp
 氨力农注射液	xlnyu
+奥拉帕利	xlpl
 阿立哌唑片	xlppa
 仙灵脾片	xlppi
 西拉普利片	xlppv
 新力正骨喷雾剂	xlqjoa
 艾洛松软膏	xlsg
 氨酪酸调节剂	xlsjuv
+恩朗苏拜单抗	xlski
 奥利司他胶囊	xlsnuu
 二磷酸果糖钠片	xlsp
 安络痛浸膏	xltgoa
-安络痛胶囊	xltn
+阿来替尼	xltn
 消络痛胶囊	xltna
+安罗替尼	xltno
+安络痛胶囊	xltnoa
 血络通胶囊	xltnu
-西洛他唑胶囊	xltnv
+厄洛替尼	xltnv
+西洛他唑胶囊	xltnva
 消络痛片	xltpa
 安络痛片	xltpoa
 厄洛替尼片	xltpv
@@ -7932,7 +8077,8 @@ sort: original
 二母清肺丸	xmqwv
 新霉素滴眼剂	xmsjo
 新霉素滴眼液	xmsyov
-心脉通胶囊	xmtn
+阿美替尼	xmtn
+心脉通胶囊	xmtno
 西咪替丁胶囊	xmtnv
 阿米替林片	xmtpao
 心脉通片	xmtpo
@@ -7967,7 +8113,8 @@ sort: original
 安乃近灌肠液	xnjyo
 安乃近注射液	xnjyoa
 醒脑静注射液	xnjyv
-醒脑康胶囊	xnkn
+安奈克替尼	xnkn
+醒脑康胶囊	xnknv
 醒脑库克亚片	xnkp
 安钠咖注射液	xnky
 血尿灵合剂	xnljua
@@ -7989,6 +8136,7 @@ sort: original
 欧乃派克注射液	xnpy
 心脑清软胶囊	xnqn
 阿那曲唑片	xnqp
+埃纳妥单抗	xntk
 安尿通胶囊	xntn
 心脑通口服液	xntyo
 安脑丸小蜜丸	xnwwo
@@ -8007,13 +8155,17 @@ sort: original
 象皮生肌膏	xpegu
 消痞和胃胶囊	xphn
 消癖口服液	xpky
+艾帕洛利托沃瑞利单抗	xplki
 消疲灵颗粒	xpll
 阿普林定片	xplp
 爱普列特片	xplpu
 安普莱士注射液	xply
 阿扑吗啡注射液	xpmy
+埃普奈明	xpnm
 硝普钠注射液	xpny
 血平片	xppuv
+阿帕替尼	xptn
+阿帕他胺	xptxa
 儿脾醒颗粒	xpxlu
 消痞阿魏丸	xpxw
 醒脾养儿颗粒	xpyl
@@ -8050,7 +8202,8 @@ sort: original
 辛芩片	xqpoiu
 血球清洗液	xqqyuv
 新氢松软膏	xqsg
-恩曲他滨胶囊	xqtn
+恩曲替尼	xqtn
+恩曲他滨胶囊	xqtni
 玄七通痹胶囊	xqtno
 玄气痛痹胶囊	xqtnou
 恩曲他滨片	xqtpi
@@ -8096,6 +8249,7 @@ sort: original
 硝酸咪康唑软膏	xsmgvv
 硝酸咪康唑胶囊	xsmnvv
 阿司咪唑片	xsmpaa
+阿思尼布	xsnba
 心速宁胶囊	xsnn
 阿司匹林锌胶囊	xspna
 阿司匹林片	xsppaa
@@ -8132,6 +8286,7 @@ sort: original
 恩他卡朋片	xtkp
 恩替卡韦片	xtkpi
 心通口服液	xtkyoa
+阿替利珠单抗	xtlka
 澳泰乐颗粒	xtlla
 澳泰乐胶囊	xtln
 消糖灵胶囊	xtlna
@@ -8144,13 +8299,16 @@ sort: original
 心痛宁滴丸	xtnwoo
 阿托品滴眼液	xtpy
 阿托品注射液	xtpya
+奥妥珠单抗	xtqkuu
 安特镇脑宁颗粒	xtqlou
 儿童七珍丸	xtqwuo
 儿童清肺口服液	xtqyu
 儿童清热口服液	xtqyuo
 氨肽素硫酸锌片	xtsp
+恩替司他	xtsti
 夏天无滴眼液	xtwyv
 夏天无注射液	xtwyvv
+西妥昔单抗	xtxkv
 安特尔胶丸	xtxwo
 线头影测量片	xtypa
 安胎益母丸	xtywou
@@ -8167,12 +8325,14 @@ sort: original
 氨茶缓控释片	xwhpu
 氨茶碱注射液	xwjyu
 消疮口服液	xwkyao
+恩沃利单抗	xwlki
 哮喘宁颗粒	xwnlo
 二维葡钙片	xwppv
 二维葡醛内酯片	xwppva
 阿魏酸钠片	xwsp
 阿魏酸哌嗪片	xwspa
 阿魏酸钠注射液	xwsy
+埃万妥单抗	xwtkv
 哮喘贴敷散	xwtsoo
 爱维心口服液	xwxyu
 二维亚铁颗粒	xwylva
@@ -8220,6 +8380,7 @@ sort: original
 小儿酚氨咖敏	xxfmiu
 小儿肺闭宁	xxfni
 小儿腹泻宁	xxfniu
+安欣福宁	xxfnou
 消眩止晕片	xxfpai
 小儿肺热平	xxfpiu
 奥昔非君片	xxfpuv
@@ -8353,9 +8514,11 @@ sort: original
 儿泻停糖浆	xxtju
 小儿退热口	xxtki
 儿泻停颗粒	xxtlua
-小儿吐泻宁	xxtn
-小儿退热宁	xxtni
-胸腺肽肠溶胶囊	xxtnu
+阿昔替尼	xxtn
+小儿吐泻宁	xxtni
+小儿退热宁	xxtniu
+奥希替尼	xxtnu
+胸腺肽肠溶胶囊	xxtnuu
 豨莶通栓胶囊	xxtnv
 杏香兔耳风胶囊	xxtnvu
 小儿退热片	xxtpiu
@@ -8482,7 +8645,8 @@ sort: original
 异丙嗪注射液	ybqya
 阴必清消毒液	ybqyao
 依巴斯汀片	ybspi
-腰痹通胶囊	ybtn
+伊布替尼	ybtn
+腰痹通胶囊	ybtnu
 右苄替米特片	ybtpv
 右苄替米特	ybttv
 茵白冲剂	ybwjiu
@@ -8602,6 +8766,7 @@ sort: original
 益肾养元合剂	yeyjo
 乙水杨胺片	yeypaa
 益肾养元口服液	yeyyoi
+伊沙佐米	yezm
 盐酯苯环壬酯片	yfbpv
 云芝胞内糖肽片	yfbpvi
 腰椎痹痕丸	yfbwu
@@ -8766,6 +8931,7 @@ sort: original
 茵陈五疸丸	yjww
 茵陈五疽丸	yjwwi
 茵陈五苓丸	yjwwia
+伊基奥仑赛	yjxsi
 越菊二陈丸	yjxw
 越鞠二陈丸	yjxwv
 郁金银屑片	yjypv
@@ -8805,6 +8971,7 @@ sort: original
 叶绿素铜片	ylspo
 叶绿素铜钠片	ylspoa
 友来特颗粒	yltlvv
+伊鲁阿克	ylxkiu
 炎立消胶囊	ylxno
 伊来西胺片	ylxpi
 炎立消片	ylxpo
@@ -8846,6 +9013,7 @@ sort: original
 银蜜片	ympio
 伊木萨克片	ymsp
 一日丧命散	ymss
+伊马替尼	ymtn
 益母调经丸	ymtw
 依诺沙星乳膏	yneg
 依诺沙星软膏	ynegi
@@ -8860,12 +9028,14 @@ sort: original
 益脑晶睛口服液	ynjy
 夜宁口服液	ynky
 晕宁口服液	ynkyo
+伊那利塞	ynls
 硬脑膜下积水液	ynmy
 益脑宁胶囊	ynnn
 益脑宁片	ynnp
 依那普利胶囊	ynpn
 炎宁片	ynpoo
 依那普利片	ynpp
+伊尼妥单抗	yntk
 遗尿停胶囊	yntn
 益脑心颗粒	ynxl
 鱼嫖补肾丸	ypbwu
@@ -8880,6 +9050,7 @@ sort: original
 鹰牌灵芝冲剂	ypljou
 乙哌立松片	yplpa
 依普拉酮片	yplpi
+伊匹木单抗	ypmki
 异帕米星注液	ypmy
 益脾镇惊散	ypqso
 氧哌嗪青霉素	ypqsu
@@ -9067,10 +9238,12 @@ sort: original
 养胃颗粒无糖型	ywkxo
 益胃口服液	ywkyo
 愈创蓝油烃软膏	ywlgi
+依维莫司	ywmsi
 养胃宁胶囊	ywnn
 益胃宁胶囊	ywnno
 云胃宁胶囊	ywnnv
 愈创维林那敏片	ywwpi
+依沃西单抗	ywxkia
 药物液体制剂	ywyji
 右旋布洛芬栓	yxbe
 右旋布洛芬	yxbfv
@@ -9265,6 +9438,8 @@ sort: original
 滋补肝肾丸	zbgwa
 滋补健身丸	zbjwa
 滋补酥油丸	zbswa
+泽贝妥单抗	zbtka
+泽布替尼	zbtn
 枣参口服液	zcky
 枣参安神胶囊	zcxn
 总胆固醇试剂	zdgj
@@ -9327,11 +9502,13 @@ sort: original
 左卡尼汀注射液	zknyv
 棕榈氯霉素片	zllpv
 唑来膦酸注射液	zlly
+佐利替尼	zltn
 紫楼胃康胶囊	zlwniv
 足利茶茶丸	zlwwou
 增力再生丸	zlzwv
 佐米曲普坦胶囊	zmqn
 佐米曲普坦片	zmqp
+泽尼达妥单抗	zndka
 佐匹克隆胶囊	zpkn
 佐匹克隆片	zpkp
 左羟丙哌嗪颗粒	zqblv
@@ -9356,7 +9533,9 @@ sort: original
 紫色石蕊试液	zsey
 紫苏降脂软胶囊	zsjni
 紫松皮炎膏	zspgi
+佐妥昔单抗	ztxkiu
 紫铜消白片	ztxp
+泽沃基奥仑赛	zwjsa
 藏王鹿鞭胶囊	zwln
 左旋多巴胶囊	zxdn
 左旋多巴片	zxdp

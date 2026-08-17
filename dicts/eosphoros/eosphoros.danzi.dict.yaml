@@ -2,12 +2,12 @@
 # encoding: utf-8
 #
 # Generated from amorphobia/rime-jiandao; do not edit by hand.
-# Source commit: 675fae1ffeaf2a4eb8cca376e055926777db3810
+# Source commit: 350c0683b9c813efa4db519c07df1d57d9ef8cda
 # Source file: dicts/01.danzi.txt
 # Header/concatenation behavior follows scripts/make_dicts.sh.
 ---
 name: eosphoros.danzi
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 ...
 
@@ -1579,7 +1579,6 @@ sort: original
 粋	cbouua	#日本汉字
 瘁	cbov
 啛	cbova
-𮕩	cbovai
 啛	cbovav
 衰	cbovi
 凗	cbovia
@@ -1589,6 +1588,7 @@ sort: original
 疩	cbovua
 𱂯	cbovv
 𱂯	cbovvu
+𮕩	cbovvv
 脆	cbu
 獕	cbua
 獕	cbuaia
@@ -4548,12 +4548,12 @@ sort: original
 咰	egou
 咰	egouao
 衰	egov
-𮕩	egova
 率	egovaa
-𮕩	egovai
 衰	egovia
 䢦	egovo
 䢦	egovoa
+𮕩	egovv
+𮕩	egovvv
 甩	egu
 甩	eguavv
 晒	eh
@@ -19806,7 +19806,9 @@ sort: original
 隉	ndaiui
 櫱	ndaiv
 櫱	ndaivv
+𣵀	ndao
 涅	ndaoiv
+𣵀	ndaoiv
 湼	ndau
 湼	ndauiv
 帇	ndav
