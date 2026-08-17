@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: cf1a3510bec5392c61c0002e60f1953af3ffabe8
+# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
 # Selected source: dicts/diming.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 84839
-# Generated rows in category: 5281
+# Source rows in category: 84829
+# Generated rows in category: 5276
 ---
 name: eosphoros.wanxiang.diming
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 ...
 
@@ -38,7 +38,6 @@ sort: original
 白沙村	becuav
 白山村	becui
 白石村	becuv
-不少村	becviv
 白沙社区	beeq
 北市社区	beeqi
 北山社区	beeqii
@@ -67,7 +66,6 @@ sort: original
 白中镇	bfquii
 白寨镇	bfquoi
 巴中县	bfxai
-部分县	bfxoui
 白扎乡	bfxuia
 白果村	bgcui
 北关社区	bgeqi
@@ -93,7 +91,7 @@ sort: original
 白河乡	bhxuaa
 白鹤乡	bhxuo
 白桦乡	bhxuva
-不回乡	bhxvia
+百合乡	bhxvia
 百和乡	bhxvua
 北京北站	bjbqi
 北极村	bjciv
@@ -120,7 +118,7 @@ sort: original
 北京西站	bjxqio
 八江乡	bjxuaa
 八家乡	bjxuoa
-不出县	bjxvai
+碧江县	bjxvai
 北加油站	bjyqia
 博克图站	bktq
 伯克县	bkxiui
@@ -131,7 +129,6 @@ sort: original
 白鹿村	blcuo
 白鹭村	blcuov
 白龙村	blcuv
-不老村	blcvuv
 北里社区	bleqi
 北岭社区	bleqii
 宝龙社区	bleqo
@@ -1330,7 +1327,6 @@ sort: original
 贵溪站	gxqiao
 高新站	gxqooo
 高新区站	gxqqo
-各乡镇	gxquai
 公兴镇	gxquoi
 干休所站	gxsqv
 贵溪县	gxxiai
@@ -3314,7 +3310,6 @@ sort: original
 牛王庙站	nwmq
 南充站	nwquo
 南川站	nwquuo
-南充县	nwxuoi
 南川县	nwxuu
 努瓦耶站	nwyqa
 努维永站	nwyqaa

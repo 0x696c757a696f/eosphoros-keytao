@@ -5,7 +5,7 @@
 # 收录经审核的传统专有词；新教词库另含《和合本》标准译语。
 ---
 name: eosphoros.protestantism
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 use_preset_vocabulary: false
 columns:

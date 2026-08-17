@@ -4,7 +4,7 @@
 schema:
   schema_id: eosphoros.cx
   name: 晨星键道反查辅助方案·勿选
-  version: "2026-08-13"
+  version: "2026-08-17"
 
 engine:
   processors:

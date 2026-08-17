@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: cf1a3510bec5392c61c0002e60f1953af3ffabe8
+# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
 # Selected source: dicts/huaxue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17503
-# Generated rows in category: 10892
+# Generated rows in category: 10893
 ---
 name: eosphoros.wanxiang.huaxue
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 ...
 
@@ -2324,7 +2324,7 @@ sort: original
 富马酸亚铁胶丸	fmswo
 仲钼酸铵	fmsxi
 富马酸比索洛尔	fmsxo
-法莫替丁氯化钠	fmtna
+法莫替丁氯化钠	fmtnai
 氟美瞳滴眼液	fmtyuo
 富马酰氯	fmxlo
 富马酰乙酰乙酸	fmxsoa
@@ -4772,6 +4772,8 @@ sort: original
 硫质喷气孔	lfpkv
 氯氟氰菊酯	lfqfu
 氯氟氰菊	lfqjuu
+氯法齐明	lfqmu
+氯法齐明胶丸	lfqwu
 螺粉蕊黄杨碱	lfrjio
 氯氟三氟甲苯	lfsbu
 磷脂丝胺酸	lfssv
@@ -6329,7 +6331,7 @@ sort: original
 普通硅酸盐水泥	ptgn
 葡糖苷酸睾酮	ptgt
 葡萄酒中的酸	ptjs
-普通硫锑铅矿	ptlk
+普通硫锑铅矿	ptlko
 葡糖磷酸钡盐	ptlyi
 葡糖醛酸内酯	ptqfi
 葡萄醛酸内酯	ptqfii
@@ -8269,7 +8271,7 @@ sort: original
 洗必太氯己定	xbtdao
 溴丙酮酸乙酯	xbtfa
 二苯碳酰二肼	xbtjv
-氨吡酮氨力农	xbtn
+氨吡酮氨力农	xbtnu
 二丙酮葡萄糖	xbttv
 二苯酮	xbtviv
 溴丙烷	xbwav
@@ -8332,7 +8334,6 @@ sort: original
 溴代苯丙酮	xdbt
 溴代苯乙酮	xdbta
 二碘苯	xdbvv
-二碘苯胺	xdbxvv
 溴滴定	xddaa
 溴代丁二酸	xddsai
 硒代蛋氨酸	xddsvi
@@ -8749,7 +8750,7 @@ sort: original
 氨基氯苯甲腈	xjljuv
 硝基邻苯二腈	xjljvv
 氨基氯嘌呤	xjlluv
-细交链孢菌酮酸	xjlsa
+细交链孢菌酮酸	xjlsao
 氨基磷丁酸	xjlsuv
 硒甲硫氨酸	xjlsv
 硒甲硫胺酸	xjlsvi

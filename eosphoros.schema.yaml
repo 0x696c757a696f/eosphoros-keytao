@@ -27,7 +27,7 @@ schema:
     u键开启全拼反查功能拼音查全码，新增笔画提示。
     i键开启英文单词输入；继续输入后隐藏入口字母 i。
     反斜杠键（\）开启自造词模式。
-  version: "2026-08-13"
+  version: "2026-08-17"
   dependencies:
     - eosphoros.cx
     - pinyin_simp

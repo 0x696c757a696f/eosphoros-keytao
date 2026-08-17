@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: cf1a3510bec5392c61c0002e60f1953af3ffabe8
+# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
 # Selected source: dicts/yixue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
@@ -11,7 +11,7 @@
 # Generated rows in category: 12441
 ---
 name: eosphoros.wanxiang.yixue
-version: "2026-08-13"
+version: "2026-08-17"
 sort: original
 ...
 
@@ -6432,7 +6432,7 @@ sort: original
 颅内动脉瘤手术	lnde
 颅内动脉吻合术	lndei
 颅内低压综合征	lndq
-颅内动静脉畸形	lndx
+颅内动静脉畸形	lndxi
 雷诺氏综合征	lneq
 泪囊肿物切除术	lnfe
 颅内肿瘤切除术	lnfei
@@ -9916,7 +9916,7 @@ sort: original
 阿贝埃二氏手术	xbxea
 胸壁修补术	xbxeua
 腭瓣修复术	xbxeuo
-细胞性平滑肌瘤	xbxla
+细胞性平滑肌瘤	xbxlau
 胸壁恶性肿瘤	xbxlua
 耳部恶性肿瘤	xbxlv
 艾比二氏综合征	xbxqiv
