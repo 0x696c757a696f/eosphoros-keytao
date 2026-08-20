@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 84829
-# Generated rows in category: 5276
+# Generated rows in category: 5275
 ---
 name: eosphoros.wanxiang.diming
 version: "2026-08-17"
@@ -774,6 +774,7 @@ sort: original
 石家营乡	ejyxvo
 狩场泽站	ejzqu
 沙口路站	eklqao
+山口站	ekq
 水口镇	ekqaoi
 山科站	ekqiu
 蛇口县	ekxioi
@@ -1414,7 +1415,6 @@ sort: original
 鹤山站	heqoio
 怀朔镇	heqooi
 韩山镇	hequii
-衡山站	hequio
 黄沙站	heqva
 黄水镇	heqvai
 黄山镇	heqvii
@@ -2760,7 +2760,7 @@ sort: original
 罗桥村	lqcivv
 李振村	lqcviv
 李桥村	lqcvv
-刘村	lqcwo
+刘村	lqcwov
 林泉社区	lqeqv
 陆清河	lqhaaa
 刘湖	lqhjoa
@@ -3259,6 +3259,7 @@ sort: original
 南京车站	njjqu
 嫩江路站	njlq
 南京南站	njnqu
+南昌站	njq
 泥井镇	njqavi
 牛街站	njquuo
 农讲所站	njsq
@@ -3294,8 +3295,8 @@ sort: original
 鸟取县	nqxuvi
 聂荣镇	nrqvi
 聂斯特河	nsthv
+努斯县	nsx
 纳苏县	nsxaii
-努斯县	nsxavi
 南三县	nsxu
 牛头山站	nteq
 牛田社区	ntequ
@@ -3485,7 +3486,7 @@ sort: original
 汽发社区	qfeqaa
 千佛山站	qfequi
 青州市站	qfeqv
-竹之冢站	qffqu
+竹之冢站	qffq
 乔治湖	qfhuaa
 轻纺城站	qfjqv
 张庄路	qflaoo
@@ -3739,7 +3740,7 @@ sort: original
 张湾镇	qwqaa
 张汪镇	qwqaai
 浅川站	qwqauo
-荃湾站	qwqiao
+荃湾站	qwqi
 朱湾镇	qwquai
 桥湾站	qwqva
 秦川镇	qwqvui
@@ -3983,7 +3984,7 @@ sort: original
 三明站	smqvoo
 孙庙乡	smxaoa
 苏孟乡	smxiaa
-苏木乡	smxiva
+苏木乡	smxiv
 肃宁北站	snbq
 苏内社区	sneq
 肃南县	snxau
@@ -4809,7 +4810,7 @@ sort: original
 浔美社区	xmeqao
 新门社区	xmeqoo
 下马坊站	xmfqva
-西门口站	xmkqv
+西门口站	xmkq
 阿弥岭站	xmlqaa
 洗马站	xmqaa
 夏茂镇	xmqvii
@@ -4972,7 +4973,6 @@ sort: original
 玉带社区	ydeqvv
 银都路站	ydlqiu
 意大利站	ydlqov
-杨东路	ydlvvo
 移动站	ydquvo
 阳东县	ydxavi
 英德县	ydxiui
@@ -5025,7 +5025,6 @@ sort: original
 永丰乡	yfxova
 杨闸西站	yfxqvo
 云浮县	yfxvai
-杨庄乡	yfxvoa
 杨沟村	ygcva
 杨岗村	ygcviv
 杨官村	ygcvov
@@ -5256,7 +5255,7 @@ sort: original
 渊泽站	yzqaa
 银座站	yzqioo
 淄博北站	zbbq
-资本市场上市	zbeeo
+资本市场上市	zbeeov
 泽当镇	zdqaii
 钻石山站	zeeq
 在丰镇	zfqvvi

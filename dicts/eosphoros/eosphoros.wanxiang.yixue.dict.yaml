@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 15399
-# Generated rows in category: 12441
+# Generated rows in category: 12433
 ---
 name: eosphoros.wanxiang.yixue
 version: "2026-08-17"
@@ -205,8 +205,8 @@ sort: original
 瘢痕疙瘩切除术	bhgeoo
 瘢痕疙瘩性痤疮	bhgwo
 别赫捷列夫氏病	bhjbo
-瓣环成形术	bhjeo
 瘢痕畸形矫正术	bhjeoo
+瓣环成形术	bhjeov
 鼻后孔良性肿瘤	bhklu
 博霍纳综合征	bhnquv
 瘢痕旁肺气肿	bhpfo
@@ -440,8 +440,7 @@ sort: original
 痹气郁结证	bqyq
 鼻腔原位癌	bqyx
 病征综合征	bqzq
-髌韧带成形术	brdei
-髌韧带内移术	brdeiv
+髌韧带成形术	brdeiv
 鼻软骨恶性肿瘤	brglu
 贝热隆氏病	brlb
 胞肉粘轮病	brqb
@@ -769,9 +768,7 @@ sort: original
 导水管扩张术	degea
 骶神经松解术	dejeio
 端式结肠造口术	dejeo
-第神经病症	dejquo
 杜氏肌肉萎缩症	dejqv
-第神经病损	dejsuo
 多神经系统变性	dejxuo
 电生理检查术	deleiu
 单输卵管结扎术	deleo
@@ -2793,7 +2790,7 @@ sort: original
 中缅油气管道	fmydi
 腹膜增生症	fmzq
 中脑导水管畸形	fndx
-跖内收内翻畸形	fnexo
+跖内收内翻畸形	fnexoi
 肺脓肿引流术	fnfeuu
 肺囊肿切除术	fnfeuv
 肺诺卡菌病	fnkbu
@@ -3133,7 +3130,6 @@ sort: original
 福埃二氏综合征	fxxqov
 肺虚邪滞证	fxxqu
 风邪袭表证	fxxquv
-中心型肺癌	fxxxio
 肺小血管炎	fxxyu
 腹泻性肠炎	fxxyua
 匐行性皮炎	fxxyuu
@@ -3204,7 +3200,6 @@ sort: original
 肺燥伤阴证	fzequ
 分子束磁共振	fzequa
 风燥伤肺证	fzequo
-份子神经科学	fzexia
 分子神经生物学	fzexu
 肺组织胞浆菌病	fzfbu
 肺组织活检术	fzfeu
@@ -4035,7 +4030,7 @@ sort: original
 寒湿入络证	herq
 患上乳腺癌	herx
 患上糖尿病	hetbii
-环枢椎融合术	hewev
+环枢椎融合术	hewe
 亨舍二氏综合征	hexqoi
 胡射二氏综合征	hexquu
 昏睡性脑炎	hexyu
@@ -4464,8 +4459,8 @@ sort: original
 寒饮射肺证	hyeq
 后遗神经痛	hyet
 很严重的病	hyfb
+会厌肿物切除术	hyfei
 会阴直切缝合术	hyfeia
-会厌肿物切除术	hyfeiv
 红眼分流综合征	hyfqa
 寒饮伏肺证	hyfqo
 患有高血压病	hygbi
@@ -5595,7 +5590,6 @@ sort: original
 急性精神分裂症	jxjquo
 急性脊髓梗塞	jxjsu
 急性经口毒性	jxjxu
-急性脊髓炎	jxjyuo
 假性结肠梗阻	jxjzi
 经行口糜病	jxkba
 急性阔韧带脓肿	jxkfuo
@@ -6008,8 +6002,7 @@ sort: original
 口腔厚上症	kqhqo
 口腔成形手术	kqjeou
 口腔开放性伤口	kqkk
-口腔黏膜病	kqnbo
-口腔念珠菌病	kqnbou
+口腔黏膜病	kqnbou
 昆琼尼斯二氏病	kqnbov
 口腔内活检术	kqne
 口腔囊肿摘除术	kqneo
@@ -6701,8 +6694,7 @@ sort: original
 毛发神经膜瘤	mfelu
 马凡氏综合征	mfeqa
 拇指植骨延长术	mffei
-拇指功能重建术	mfgei
-拇指关节离断术	mfgeii
+拇指功能重建术	mfgeii
 毛发红色角化病	mfhbu
 麻风后遗症	mfhqou
 毛发红糠疹	mfhqua
@@ -9408,7 +9400,6 @@ sort: original
 尺神经交通支	wejfao
 蜗神经交通支	wejfi
 胃神经官能症	wejqio
-无神经节症	wejqvo
 无时冷泪病	welbvo
 纹饰美容术	wemea
 外伤目络证	wemq
@@ -9756,7 +9747,7 @@ sort: original
 外耳活组织检查	wxhwu
 外耳开放性伤口	wxkk
 维尔姆斯瘤	wxmla
-微小囊性腺瘤	wxnlu
+微小囊性腺瘤	wxnlui
 温邪内陷证	wxnq
 温邪侵袭肺卫证	wxqqa
 胃虚气逆痞证	wxqqi
@@ -10490,8 +10481,8 @@ sort: original
 胸膜瘘闭合术	xmleuu
 胸膜摩擦术	xmmeu
 下泌尿道结石	xmnev
-羞明怕热症	xmpqo
-心面皮肤综合征	xmpqov
+羞明怕热症	xmpq
+心面皮肤综合征	xmpqo
 荨麻疹型药疹	xmqqio
 荨麻疹性痤疮	xmqwi
 荨麻疹性血管炎	xmqyio
@@ -10767,7 +10758,7 @@ sort: original
 二维核磁共振波谱学	xwhxva
 穴位结扎疗法	xwjfo
 纤维结肠镜检查	xwjwaa
-纤维结缔组织炎	xwjya
+纤维结缔组织炎	xwjyaa
 奥韦郎三氏病	xwlbu
 纤维毛囊瘤	xwmlaa
 纤维黏液脂肪瘤	xwnla
@@ -11142,7 +11133,8 @@ sort: original
 腰骶椎间盘变性	ydfxu
 胰胆管造影术	ydgeu
 余毒攻窜证	ydgqi
-疫毒攻窜证	ydgqov
+疫毒攻窜证	ydgqo
+疫毒攻喉证	ydgqov
 阴蒂截断术	ydjeai
 腰大肌脓肿	ydjfu
 腋动静脉瘘	ydjlu

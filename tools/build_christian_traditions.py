@@ -86,6 +86,14 @@ PREFERRED_PREFIXES = {
     "谷": "gj",  # gǔ（哈巴谷）
     "重": "wy",  # chóng（四重）
     "艾": "xh",  # ài（艾德门）
+    "勒": "le",  # lè（巴勒、迦勒）
+    "单": "df",  # dān（约拿单）
+    "摩": "ml",  # mó（拔摩）
+    "泊": "bl",  # bó（他泊山）
+    "种": "fy",  # zhǒng（芥菜种子）
+    "罢": "bs",  # bà（细罢特月）
+    "芥": "jd",  # jiè
+    "说": "el",  # shuō（幻影说）
 }
 
 # These three canonical Chinese Union Version book names cannot be represented

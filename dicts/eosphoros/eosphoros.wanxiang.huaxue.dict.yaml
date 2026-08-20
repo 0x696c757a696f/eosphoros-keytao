@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17503
-# Generated rows in category: 10893
+# Generated rows in category: 10883
 ---
 name: eosphoros.wanxiang.huaxue
 version: "2026-08-17"
@@ -194,7 +194,6 @@ sort: original
 苯酚软膏	bfrgi
 苯酚溶液	bfryi
 苯扎托品	bftpi
-苯扎溴铵酊	bfxdii
 苯扎溴氨溶液	bfxyi
 苯扎溴铵溶液	bfxyii
 苯酚乙酸	bfysiv
@@ -2123,7 +2122,6 @@ sort: original
 复方醋酸炔诺酮	ffct
 复方刺五加硫胺	ffcx
 丰富的叶酸	ffdsv
-复方十一烯酸锌	ffexuo
 复方氟尿嘧啶乳	fffruo
 腐殖质碳酸盐土	fffto
 脂质过氧化	ffghuu
@@ -2525,8 +2523,7 @@ sort: original
 高锝酸亚铊	gdsto
 高碘酸甲烷氨银	gdsyov
 鿔的同位素	gdtsi
-钙的氧化物	gdywi
-铬的氧化物	gdywiu
+钙的氧化物	gdywiu
 汞的氧化物	gdywv
 硅的氧化物	gdywvu
 谷树箭毒碱	gejjuv
@@ -2907,8 +2904,7 @@ sort: original
 含砷矿物	hekwiv
 环十六烯酮	heltvu
 环十七烯酮	heqtv
-花生三烯酸	hessi
-花生四烯酸	hessiu
+花生三烯酸	hessiu
 花生四烯乙醇胺	hesx
 花生五烯酸	hewsiu
 环十五烷酮	hewtv
@@ -2961,7 +2957,7 @@ sort: original
 呼出的二氧化碳	hjdto
 黄常山碱甲	hjejvi
 磺基水杨酸钠	hjenvv
-磺基水杨酸	hjesv
+磺基水杨酸	hjesvv
 合成寡核甘酸	hjgs
 磺甲基酚醛树脂	hjjfv
 环己基异丁醇	hjjjva
@@ -3369,7 +3365,6 @@ sort: original
 碱式碳酸铅	jetqv
 碱式碳酸铜	jettv
 碱式碳酸锌	jetxv
-碱式碳酸盐	jetyvv
 碱式硝酸铋	jexbvv
 碱式硝酸苯汞	jexgvv
 碱式硝酸钠	jexnv
@@ -3431,7 +3426,7 @@ sort: original
 聚磺苯乙烯	jhbxv
 聚核苷酸酶	jhgm
 聚核苷酸磷酸酶	jhgmv
-除茴蒿油内醚	jhhm
+除茴蒿油内醚	jhhma
 聚合氯化铝价格	jhlgv
 锦化氯碱	jhljii
 精环氯素	jhlso
@@ -3602,7 +3597,6 @@ sort: original
 甲基硫酸盐	jjlyi
 甲基硫四氮唑	jjlziv
 甲基母育酚	jjmfiv
-甲基醚	jjmivv
 甲基麻黄碱	jjmji
 甲基麦角新碱	jjmjiv
 甲基麻黄碱颗粒	jjmli
@@ -3844,7 +3838,7 @@ sort: original
 碱正辉长岩	jqhyvv
 聚羟基丁酸酯	jqjfv
 聚羟基烷酸酯	jqjfvo
-加氢甲酰基化	jqjha
+加氢甲酰基化	jqjhau
 间羟基苯甲酸	jqjsoo
 聚羟基丁酸	jqjsvo
 间羟基苯丙酮	jqjtoo
@@ -5630,7 +5624,6 @@ sort: original
 硫羰代硫羰酸	ltdsv
 氯铜矾	ltfuiv
 六酮环己烷	lthwo
-氯替含漱液	lthyuv
 氯羰基化	ltjhuo
 硫羰基化合物	ltjwv
 氯铜矿	ltku
@@ -5664,7 +5657,7 @@ sort: original
 轮烷命名法	lwmfvo
 硫钨铅矿	lwqkvi
 磷钨酸钙	lwsg
-磷钨酸钠	lwsnv
+磷钨酸钠	lwsnvi
 氯戊酸	lwsuv
 磷钨酸铵	lwsx
 磷钨酸盐	lwsyv
@@ -5758,8 +5751,9 @@ sort: original
 氯溴甲烷	lxjwu
 氯硝基丙烷	lxjwuv
 赖氨肌醇维	lxjwvu
+邻硝基苯胺	lxjxi
 邻氨基乙酰苯胺	lxjxiu
-邻硝基苯胺	lxjxiv
+邻硝基二苯胺	lxjxiv
 氯硝基苯胺	lxjxu
 氯硝基溴苯胺	lxjxuv
 邻氨基苯甲酸盐	lxjyi
@@ -6470,6 +6464,7 @@ sort: original
 氢氟碳化物	qftw
 全氟碳化物	qftwi
 全氟戊二酸	qfwsiu
+全氟辛基碘	qfxd
 全氟辛磺酸	qfxsiu
 轻质氧化镁	qfym
 全氟异丁烯	qfyx
@@ -7841,7 +7836,7 @@ sort: original
 同型半胱氨酸	txbs
 萜烯酚树脂	txffi
 酮烯醇互变异构	txjgv
-铜芯聚氯乙烯	txjxi
+铜芯聚氯乙烯	txjx
 萜烯七脂酸	txqsi
 托西酸舒他西林	txsl
 脱酰氨基酶	txxm
@@ -8363,7 +8358,6 @@ sort: original
 硒等矿物质	xdkfv
 恩地氯氨碘	xdldiv
 溴代邻苯三酚红	xdlha
-硒代硫酸钾	xdljvi
 硒代硫酸钠	xdlnv
 二碘酪氨酸	xdlsvv
 硒代硫酸盐	xdlyvi
@@ -8433,7 +8427,6 @@ sort: original
 二水氯化钙	xelgv
 奥沙利铂甘露醇	xelju
 锡砷硫钒铜矿	xelkiv
-二十六烷酸	xelsvu
 吸食氯胺酮	xelto
 二十酸甲酯	xesfv
 二十酸内酯	xesfvu
@@ -9189,7 +9182,7 @@ sort: original
 硒氰酸亚铜	xqstv
 溴氢酸联氨	xqsx
 血清唾液酸测定	xqtdua
-二羟酮环戊烯	xqtx
+二羟酮环戊烯	xqtxv
 二氢沃密夫醇	xqwjvu
 二氢查耳酮	xqwtv
 二氢溴酸肼	xqxjv
@@ -9219,7 +9212,7 @@ sort: original
 溴酸钡	xsbav
 硝酸苯汞	xsbgvv
 锡酸钡	xsbivi
-阿酸不是阿轩	xsbxa
+阿酸不是阿轩	xsbx
 心酸的感觉	xsdjo
 心酸的遇见	xsdjov
 心酸的浪漫	xsdmo
@@ -9352,7 +9345,6 @@ sort: original
 溴溴苄	xxbaa
 二溴苯酚	xxbfva
 二溴丙醇	xxbjva
-二烯丙基乙醇	xxbjvo
 二溴丙酰氯	xxblva
 二溴丙酸	xxbsva
 二溴苯乙酮	xxbt
@@ -10385,7 +10377,6 @@ sort: original
 盐酸特比萘酚	ystfvv
 盐酸脱氧胞苷	ystgvv
 盐酸托泊替康	ystkvv
-盐酸替洛隆	ystlvv
 盐酸他洛昔明	ystmv
 盐酸头孢他美	ystmvv
 盐酸特拉唑嗪	ystq
@@ -10500,7 +10491,6 @@ sort: original
 乙位萘甲醚	ywnma
 乙位萘乙醚	ywnmai
 乙烷配合物	ywpw
-乙烷正离子	ywqzao
 异戊酸苄酯	ywsfa
 异戊酸丁酯	ywsfav
 异戊酸睾酮	ywsta

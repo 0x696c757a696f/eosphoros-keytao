@@ -738,29 +738,29 @@ python .\zzc\Windows_词库合并.py
 - 英文长码不会触发中文的 4～6 码顶功。
 - 支持大小写输出和常见技术词别名，例如 `C++ → icpp`、`C# → icsharp`、`.NET → idotnet`。
 - 英文编码统一为 `i[a-z]+`，生成时会排除与现有中文码冲突的条目。
-- 英文词库来自 Rime-Ice 的 `en.dict.yaml` 与 `en_ext.dict.yaml`，当前生成 23,610 条记录。
+- 英文词库来自 Rime-Ice 的 `en.dict.yaml` 与 `en_ext.dict.yaml`，当前生成 23,615 条记录。
 
 <a id="词库组成"></a>
 
 ## 📚 词库组成
 
-以下为 2026-08-10 版本的内置记录数；自造词和个人用户词库不计入统计。
+以下为 2026-08-20 版本的内置记录数；自造词和个人用户词库不计入统计。
 
 | 词库 | 记录数 | 用途 |
 | --- | ---: | --- |
-| `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,214 | 上游键道单字表 |
-| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 191,002 | 本地基础词组 |
-| `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,514 | 天主教、礼仪、神学与东方礼词汇 |
-| `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 433 | 传统新教宗派、信条、人物、日常教会用语及《和合本》词汇 |
+| `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,216 | 上游键道单字表 |
+| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 190,681 | 本地基础词组 |
+| `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,552 | 天主教、礼仪、神学与东方礼词汇 |
+| `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 542 | 传统新教宗派、信条、人物、日常教会用语及《和合本》词汇 |
 | `dicts/eosphoros/eosphoros.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
 | `dicts/eosphoros/eosphoros.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
 | `dicts/eosphoros/eosphoros.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
-| `dicts/eosphoros/eosphoros.core.dict.yaml` | 920 | 630 规则、快符和核心候选 |
-| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,033 | 附加扩展词组 |
-| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 362,647 | Rime-Ice 中文精简补充词库 |
-| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 40,561 | 七个万象分类补充词库 |
-| `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,610 | Rime-Ice 英文词库 |
-| **合计** | **1,173,161** | 不含动态自造词和个人词库 |
+| `dicts/eosphoros/eosphoros.core.dict.yaml` | 921 | 630 规则、快符和核心候选 |
+| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,032 | 附加扩展词组 |
+| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 361,637 | Rime-Ice 中文精简补充词库 |
+| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 41,155 | 七个万象分类补充词库 |
+| `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,615 | Rime-Ice 英文词库 |
+| **合计** | **1,172,578** | 不含动态自造词和个人词库 |
 
 四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，并补充基督徒实际常打的崇拜、团契、查经、祷告和服事用语；不把“宗派名＋通用活动”机械拼成长词凑量。`eosphoros.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；传统宗派部分覆盖信义宗、改革宗／长老宗、公理宗、圣公宗、浸信宗、循道卫理宗、再洗礼派／门诺会、贵格会、摩拉维亚弟兄会、弟兄会和救世军，五旬节派保留既有条目但不是本轮扩建重点。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
 
@@ -938,6 +938,10 @@ python .\tools\dedupe_dictionaries.py
 
 # 检查或修复词库质量（单字表不在清理范围内）
 python .\tools\clean_dictionary_quality.py --check
+
+# 删除“同一词已有合法码”的重复错码，并保守迁移低优先级本地重码
+python .\tools\clean_invalid_duplicate_codes.py --check
+python .\tools\optimize_local_collisions.py --check
 
 # 审计全库异常长词；确需保留的固定术语写入专用白名单
 python .\tools\audit_long_dictionary_entries.py --check

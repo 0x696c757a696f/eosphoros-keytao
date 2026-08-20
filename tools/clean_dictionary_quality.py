@@ -61,6 +61,15 @@ ROW_REMOVALS = {
     "eosphoros.cizu.dict.yaml": {
         "不必这样\tbbfq",
         "练但三等分\tlmdx",
+        # High-confidence typo/variant duplicates with a correct local row.
+        "板本龙一\tbblyvv",
+        "不过份\tbgfvvi",
+        "佰万\tbhwfiv",
+        "不著\tbjqzvi",
+        "曾今\tcrjgo",
+        # A pasted slogan and an abusive sentence fragment are not lexical rows.
+        "办法总比困难多\tbfzdoa",
+        "你妈死了\tnmsli",
         # Keep the standard JianDao 6 code jdng; this duplicate mnemonic code
         # is neither a legal word code nor useful as a second candidate.
         "京都念慈庵蜜炼川贝枇杷膏\tkesd",

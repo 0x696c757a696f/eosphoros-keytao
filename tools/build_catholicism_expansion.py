@@ -63,6 +63,7 @@ PREFERRED_PHONETIC_PREFIXES = {
     "腊": "ls",  # là
     "豁": "hl",  # huò
     "降": "jx",  # jiàng
+    "露": "ld",  # lù（露德）
 }
 
 # Keep the conventional five-key code even though an obscure general-dictionary

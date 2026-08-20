@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 11373
-# Generated rows in category: 9546
+# Generated rows in category: 9538
 ---
 name: eosphoros.wanxiang.yaopin
 version: "2026-08-17"
@@ -340,7 +340,7 @@ sort: original
 包醛氧淀粉散	bqys
 吡柔比星注射液	brbyo
 表柔比星注射液	brbyv
-白绒止咳糖浆	brfju
+白绒止咳糖浆	brfj
 表热清颗粒	brqlv
 伯瑞替尼	brtn
 巴斯净消毒液	bsjya
@@ -686,8 +686,7 @@ sort: original
 丁苯酞软胶囊	dbtn
 多巴胺注射液	dbxyu
 蛋白抑制剂	dbyj
-大补元煎丸	dbywv
-大补阴丸水蜜丸	dbywvo
+大补元煎丸	dbywvo
 地巴唑滴眼液	dbzyv
 跌打促愈片	ddcpo
 跌打生骨颗粒	ddelo
@@ -719,7 +718,6 @@ sort: original
 冻伤护肤膏	dehgo
 独圣活血片	dehpua
 东圣护肝片	dehpv
-德胜金钢感冒片	dejpuu
 丹参颗粒无糖型	dekxua
 丹参口服液	dekyua
 跌伤灵贴膏	delgo
@@ -1168,7 +1166,6 @@ sort: original
 舒脂软胶囊	efrniu
 疏风散热胶囊	efsn
 伤风停胶囊	eftn
-舒芬太尼注射液	eftyii
 双酚伪麻糖浆	efwja
 双分伪麻胶囊	efwnau
 双酚伪麻胶囊	efwnav
@@ -1619,7 +1616,7 @@ sort: original
 舒心宁口服液	exnyi
 舒血宁注射液	exnyiu
 舒胸片	expiu
-双香排石颗粒	expla
+双香排石颗粒	explau
 麝香正骨酊	exqdou
 麝香正骨水	exqeo
 麝香祛风湿膏	exqgo
@@ -1863,7 +1860,7 @@ sort: original
 复方双肼酞嗪	ffequo
 复方石淋通	ffet
 复方手参丸	ffewuo
-复方水杨酰胺	ffexu
+复方水杨酰胺	ffexuo
 复方沙棘籽油	ffey
 扶芳参芪口服液	ffeyi
 复方首乌补液	ffeyu
@@ -2793,7 +2790,7 @@ sort: original
 龟鹿二仙膏	glxgu
 葛兰心宁软胶囊	glxnio
 骨剌消痛胶囊	glxniv
-宫瘤消胶囊	glxno
+宫瘤消胶囊	glxnoo
 肝乐欣胶囊	glxnu
 戈利昔替尼	glxnv
 甘露消渴胶囊	glxnvv
@@ -2930,8 +2927,7 @@ sort: original
 谷维素注射液	gwsyu
 冠心丹参颗粒	gxdl
 冠心丹参胶囊	gxdn
-冠心丹芍片	gxdpo
-冠心丹参片	gxdpoo
+冠心丹芍片	gxdpoo
 冠心丹参滴丸	gxdwo
 冠心舒通胶囊	gxenoo
 冠心生脉丸	gxewo
@@ -5382,7 +5378,6 @@ sort: original
 诺佳注射液	njqyo
 女金丸大蜜丸	njwwa
 女金丸水蜜丸	njwwai
-纳基奥仑赛	njxsa
 浓甲硝唑含漱液	njxy
 萘甲唑啉滴鼻液	njzy
 萘甲唑啉滴眼液	njzyi
@@ -5479,8 +5474,7 @@ sort: original
 那如三味丸水丸	nrswa
 尼索地平胶囊	nsdn
 尼索地平软胶囊	nsdna
-尼索地平片	nsdpa
-尼索地平缓释片	nsdpau
+尼索地平片	nsdpau
 尼索地平胶丸	nsdwa
 浓缩水牛角颗粒	nselaa
 浓缩水牛角片	nsepaa
@@ -5831,7 +5825,7 @@ sort: original
 驱风苏合丸	qfswau
 祛风痛解搽剂	qftj
 芪蛭通络胶囊	qftn
-芪蛭通络口服液	qftyii
+芪蛭通络口服液	qfty
 气滞胃痛冲剂	qfwju
 气滞胃痛颗粒	qfwlu
 气滞胃痛胶囊	qfwnua
@@ -6228,7 +6222,7 @@ sort: original
 气血双补口服液	qxeyu
 气血双生口服液	qxeyuu
 清宣止咳颗粒	qxfla
-七香止痛丸	qxfwv
+七香止痛丸	qxfwvu
 清心滚痰丸	qxgwao
 气血固本口服液	qxgyu
 气血和胶囊	qxhnu
@@ -7316,7 +7310,6 @@ sort: original
 喘可治注射液	wkfyov
 外颗粒层纹	wklwu
 胃可安胶囊	wkxn
-维库溴铵注射液	wkxyao
 武力拔寒散	wlbsv
 乌苓苁蓉合剂	wlcjui
 五羚丹胶囊	wldn
@@ -7661,7 +7654,7 @@ sort: original
 消石利胆胶囊	xelna
 奥沙拉秦钠胶囊	xelnu
 香砂六君片	xelpuv
-二十六味通经散	xelsv
+二十六味通经散	xelsvu
 香砂理中丸	xelwu
 香砂六君丸	xelwuv
 奥沙利铂注射液	xelyua
@@ -7689,8 +7682,7 @@ sort: original
 血栓通注射液	xetyu
 二十味疏肝胶囊	xewnvu
 香砂胃痛散	xewsu
-二十味金汤散	xewsv
-二十味肉豆蔻散	xewsvu
+二十味金汤散	xewsvu
 香砂胃苓丸	xewwu
 雪山胃宝丸	xewwv
 二十味沉香丸	xewwvu
@@ -9243,7 +9235,7 @@ sort: original
 益胃宁胶囊	ywnno
 云胃宁胶囊	ywnnv
 愈创维林那敏片	ywwpi
-依沃西单抗	ywxkia
+依沃西单抗	ywxk
 药物液体制剂	ywyji
 右旋布洛芬栓	yxbe
 右旋布洛芬	yxbfv

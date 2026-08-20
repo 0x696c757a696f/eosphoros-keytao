@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_from": "tools/christian_traditions_sources.md",
-  "guide_sha256": "f8b1bae0c795e06cf0c359a380a5f36456e2bc8917afae20ef8fca64d981dae8",
+  "guide_sha256": "a3c9f78e48c7e97a5478dedd3890ecbc1edb4182cca98013a1b5e0d20c50f904",
   "sources": [
     {
       "id": "d0e88b0a11dd",
@@ -49,6 +49,18 @@
       "id": "47d3fa2da8e5",
       "section": "天主教与东方礼天主教会",
       "url": "https://www.newadvent.org/cathen/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "73f564f955ea",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://pinyin.sogou.com/dict/cate/index/69/default/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "b00b78135306",
+      "section": "天主教与东方礼天主教会",
+      "url": "https://shurufa.baidu.com/dict_list?cid=238",
       "use": "人工核对词目；不抓取或再分发释义与正文"
     },
     {
@@ -205,6 +217,18 @@
       "id": "210ca88d6cbf",
       "section": "新教与《和合本》",
       "url": "https://www.umc.org/en/content/organization-church-as-connection",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "319b178973e2",
+      "section": "新教与《和合本》",
+      "url": "https://d.iqt.ai/sw/going/%E5%9F%BA%E7%9D%A3%E6%95%99%E5%B8%B8%E7%94%A8%E5%90%8D%E8%A9%9E%E8%A9%9E%E5%BA%AB.zip",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "6194385ae99a",
+      "section": "新教与《和合本》",
+      "url": "https://github.com/studyzy/imewlconverter",
       "use": "人工核对词目；不抓取或再分发释义与正文"
     },
     {

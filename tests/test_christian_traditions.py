@@ -52,6 +52,21 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
             for _, filename, _, _ in TARGET_SPECS
         }
         self.assertTrue({"五个唯独", "奥格斯堡信纲"} <= rows["eosphoros.protestantism.dict.yaml"])
+        self.assertTrue(
+            {
+                "亚基帕",
+                "亚舍拉",
+                "本丢彼拉多",
+                "耶和华以勒",
+                "革尼撒勒湖",
+                "三一神",
+                "圣经无错谬",
+                "代上",
+                "帖前",
+                "约二",
+            }
+            <= rows["eosphoros.protestantism.dict.yaml"]
+        )
         self.assertTrue({"金口若望礼仪", "圣像屏"} <= rows["eosphoros.orthodoxy.dict.yaml"])
         self.assertTrue(
             {"东方正统教会", "台瓦西多"} <= rows["eosphoros.oriental.dict.yaml"]
@@ -208,6 +223,9 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         for url in (
             "https://www.vatican.va/chinese/ccc_zh.htm",
             "https://baptistworld.org/beliefs/",
+            "https://pinyin.sogou.com/dict/cate/index/69/default/",
+            "https://shurufa.baidu.com/dict_list?cid=238",
+            "https://github.com/studyzy/imewlconverter",
             "https://www.goarch.org/-/a-dictionary-of-orthodox-terminology-part-1",
             "https://syriaca.org/",
         ):

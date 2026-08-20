@@ -16,6 +16,14 @@ theological and Bible dictionaries whose redistribution terms are unclear are
 manual verification sources only. The complete review policy and links are in
 `tools/christian_traditions_sources.md`.
 
+Additional short-term candidates were reviewed from the user-supplied iqt.ai
+CSV archive and the Sogou/Baidu Christian dictionary category pages. Their
+binary dictionaries, frequencies, definitions, scripture sentences, lyrics,
+and long phrases are not redistributed. Temporary SCEL/BDICT conversions were
+cross-checked with `studyzy/imewlconverter`; only independently reviewed lexical
+items are retained, normalized to simplified Chinese, and deduplicated against
+all local dictionaries.
+
 ## `dicts/eosphoros/eosphoros.danzi.dict.yaml`
 
 - Upstream: <https://github.com/amorphobia/rime-jiandao>

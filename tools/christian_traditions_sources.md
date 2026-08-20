@@ -1,6 +1,6 @@
 # 基督宗派专题词库来源与取词原则
 
-更新日期：2026-08-10
+更新日期：2026-08-20
 
 本文件记录 `catholicism_expansion_2026.txt` 与 `christian_traditions_2026.txt`
 的核对来源，覆盖天主教、新教、东正教、东方正统教会和东方亚述教会。
@@ -51,6 +51,14 @@
 `eosphoros.catholicism` 的既有大表还含早期人工整理词目；新增部分必须先进入
 `catholicism_expansion_2026.txt`，通过编码、重码和跨库去重测试后再生成，不能
 根据在线词典直接批量灌入。
+
+下列输入法词库只用于发现候选短词目；不复制词频、拼音、释义、分类结构、
+经文、歌词或长句。候选词还须按天主教译名规范复核，并与全库按文本去重：
+
+- 搜狗输入法“基督教”分类中的“天主教综合”等短词型词库。
+  https://pinyin.sogou.com/dict/cate/index/69/default/
+- 百度输入法“宗教学”分类中的“天主教常用词库”等短词型词库。
+  https://shurufa.baidu.com/dict_list?cid=238
 
 ## 新教与《和合本》
 
@@ -120,6 +128,20 @@
 《和合本》是 `eosphoros.protestantism` 的圣经中文基准；不用《思高本》或俄国
 正教会汉译本替换其人名、地名和书卷名。书卷、人地名若已在本地基础词典中，
 生成器只做去重，不在专题词库重复占码。
+
+输入法词库补充采用以下三个发现来源。台湾繁体 CSV 先规范转为简体；搜狗与
+百度二进制词库用 `studyzy/imewlconverter` 转为 UTF-8 临时文本并交叉核对。
+只人工选取非长句的专名、地名、书卷简称和固定神学术语；明显乱码、OCR 残片、
+歌词、经文句子及含义不明的条目全部排除。转换后的临时全表不随项目分发：
+
+- “基督教常用名词词库”CSV 压缩包（繁体候选来源）。
+  https://d.iqt.ai/sw/going/%E5%9F%BA%E7%9D%A3%E6%95%99%E5%B8%B8%E7%94%A8%E5%90%8D%E8%A9%9E%E8%A9%9E%E5%BA%AB.zip
+- 搜狗输入法“基督教”分类中的圣经专用词、《和合本》人地名、神学等短词型词库。
+  https://pinyin.sogou.com/dict/cate/index/69/default/
+- 百度输入法“宗教学”分类中的基督教常用词汇、神学专业词库等短词型词库。
+  https://shurufa.baidu.com/dict_list?cid=238
+- 深蓝词库转换（IME WL Converter），仅作本地格式转换工具。
+  https://github.com/studyzy/imewlconverter
 
 ## 东正教
 
