@@ -2,12 +2,12 @@
 # encoding: utf-8
 #
 # Generated from amorphobia/rime-jiandao; do not edit by hand.
-# Source commit: 350c0683b9c813efa4db519c07df1d57d9ef8cda
+# Source commit: 72eca2cf92adb40b7363cfb81307f5f213585d2f
 # Source file: dicts/01.danzi.txt
 # Header/concatenation behavior follows scripts/make_dicts.sh.
 ---
 name: eosphoros.danzi
-version: "2026-08-17"
+version: "2026-08-24"
 sort: original
 ...
 
@@ -11700,6 +11700,8 @@ sort: original
 曒	jcoiui
 暞	jcoiui
 㬭	jcoiuo
+踋	jcoiv
+踋	jcoivo
 觉	jcoo
 嘂	jcooa
 嘂	jcooai

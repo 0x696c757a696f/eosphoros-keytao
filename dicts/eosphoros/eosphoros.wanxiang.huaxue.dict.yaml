@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
+# Source commit: e7f08f64f48076a07df265289d7beb401fd9fd34
 # Selected source: dicts/huaxue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17503
-# Generated rows in category: 10883
+# Generated rows in category: 10884
 ---
 name: eosphoros.wanxiang.huaxue
-version: "2026-08-17"
+version: "2026-08-24"
 sort: original
 ...
 
@@ -10830,6 +10830,7 @@ sort: original
 饮用碳酸饮料	yytlu
 异孕烷醇酮	yywta
 厌氧氨氧化	yyxhv
+椰油酰胺丙基甜菜碱	yyxjva
 厌氧氨氧化菌	yyxjvu
 异亚硝基丙酮	yyxt
 一乙胺盐酸盐	yyxyva

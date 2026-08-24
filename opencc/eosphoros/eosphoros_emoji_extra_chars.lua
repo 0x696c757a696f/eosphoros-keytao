@@ -1,7 +1,7 @@
 -- eosphoros Rime-Ice Emoji 增补数据
 -- Generated from iDvel/rime-ice; do not edit by hand.
--- Source commit: c398c0d4526b012cb3b306f792089abed13e0413
--- 更新：2026-08-17
+-- Source commit: 75e6572bebc05b49021e842949ce947882e3e4b2
+-- 更新：2026-08-24
 
 return {
   ["A"] = "A 🅰️",
