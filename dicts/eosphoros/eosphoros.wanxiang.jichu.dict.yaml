@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
+# Source commit: e7f08f64f48076a07df265289d7beb401fd9fd34
 # Selected source: dicts/jichu.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 1418408
+# Source rows in category: 1418354
 # Generated rows in category: 151
 ---
 name: eosphoros.wanxiang.jichu
-version: "2026-08-17"
+version: "2026-08-24"
 sort: original
 ...
 

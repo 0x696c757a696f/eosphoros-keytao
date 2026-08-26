@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
+# Source commit: e7f08f64f48076a07df265289d7beb401fd9fd34
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 11373
-# Generated rows in category: 9538
+# Generated rows in category: 9540
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-08-17"
+version: "2026-08-24"
 sort: original
 ...
 
@@ -4810,6 +4810,7 @@ sort: original
 洛哌丁胺片	lpdpao
 连蒲双清胶囊	lpenv
 连蒲双清片	lpep
+罗培干扰素	lpgs
 蓝蒲解毒片	lpjpi
 罗哌卡因注射液	lpky
 硫普罗宁片	lplpvo
@@ -5671,6 +5672,7 @@ sort: original
 泮托拉唑片	ptlp
 泮托拉唑注射液	ptly
 帕妥珠单抗	ptqk
+帕妥珠曲妥珠单抗	ptqki
 培他司汀片	ptsp
 培他司汀注射液	ptsy
 葡萄糖酸钙口服	pttf
@@ -5682,8 +5684,7 @@ sort: original
 葡萄糖酸钙片	pttp
 葡萄糖酸锌片	pttpi
 葡萄糖酸钙含片	pttpii
-葡萄溏注射液	ptty
-葡萄糖注射液	pttyi
+葡萄糖注射液	ptty
 喷托维林片	ptwp
 喷托维林滴丸	ptww
 泡腾性冲剂	ptxja
@@ -7208,6 +7209,7 @@ sort: original
 赤丹退黄颗粒	wdtlv
 维迪西妥单抗	wdxkai
 胃得安胶囊	wdxn
+文迪雅片	wdypo
 王氏保赤丸	webwvu
 创伤止痛乳膏	wefgi
 胃舒止痛片	wefpii

@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
+# Source commit: e7f08f64f48076a07df265289d7beb401fd9fd34
 # Selected source: dicts/yixue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 15399
-# Generated rows in category: 12433
+# Source rows in category: 15401
+# Generated rows in category: 12434
 ---
 name: eosphoros.wanxiang.yixue
-version: "2026-08-17"
+version: "2026-08-24"
 sort: original
 ...
 
@@ -7818,7 +7818,8 @@ sort: original
 葡萄胎刮宫术	ptte
 葡萄胎吸宫术	pttei
 葡萄糖鱼肝油乳	pttr
-葡萄糖耐量试验	pttyii
+葡萄糖耐量试验	pttyi
+葡萄糖抑制试验	pttyii
 脾套网缩小术	ptwe
 胚胎性肉瘤	ptxl
 胚胎性腺瘤	ptxlu

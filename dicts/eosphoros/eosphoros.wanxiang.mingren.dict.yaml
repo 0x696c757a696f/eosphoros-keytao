@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 1b5dcac61c1b098d862f95f7995bbf2288684c9d
+# Source commit: e7f08f64f48076a07df265289d7beb401fd9fd34
 # Selected source: dicts/mingren.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 7799
-# Generated rows in category: 2685
+# Source rows in category: 8027
+# Generated rows in category: 2811
 ---
 name: eosphoros.wanxiang.mingren
-version: "2026-08-17"
+version: "2026-08-24"
 sort: original
 ...
 
@@ -316,6 +316,7 @@ sort: original
 邓显鹤	dxhaoo
 董小海	dxhiia
 杜先杰	dxjvuv
+大熊朝秀	dxjxv
 戴晓莲	dxluoi
 邓晓芒	dxmao
 董小宁	dxnii
@@ -1211,8 +1212,10 @@ sort: original
 林超	lbjzvv
 罗保铭	lbmii
 刘伯明	lbmoio
+柳比契奇	lbqqv
 林全	lbqtvi
 林涛	lbtzv
+柳比歇夫	lbxfvv
 陆伯言	lbyai
 林璎	lbygvv
 刘病已	lbyooa
@@ -1253,10 +1256,13 @@ sort: original
 李叔同	letvii
 林书纬	lewvaa
 陆士谔	lexavo
+柳生友矩	leyjv
 刘士余	leyovi
 林书宇	leyvao
 林尚义	leyvio
+柳生宗矩	lezjv
 黎圣宗	lezuao
+柳生宗严	lezyv
 罗芳伯	lfbii
 林中斌	lfbvio
 刘志丹	lfdovu
@@ -1344,6 +1350,7 @@ sort: original
 吕尚	llepoi
 刘兰芝	llfooi
 李立国	llgvoi
+柳濑敬之	lljfv
 吕嘉	lljsov
 李隆基	lljvav
 刘姥姥	llloaa
@@ -1353,6 +1360,7 @@ sort: original
 李立三	llsvov
 陆令萱	llxaii
 陆兰秀	llxaou
+吕媭	llxlo
 李莲英	llyvii
 洛伦兹	llzai
 李明博	lmbvou
@@ -1443,6 +1451,7 @@ sort: original
 李嗣业	lsyvo
 李嗣源	lsyvoa
 李太白	ltbvvu
+柳田圣山	lteev
 林挺生	lteviu
 李铁拐	ltgvii
 刘铁男	ltnoii
@@ -1511,6 +1520,7 @@ sort: original
 李元昊	lyhvvo
 李元吉	lyjvvv
 陆渊雷	lylaav
+立耶律淳	lyljo
 刘亚楼	lylovv
 李云龙	lylvvv
 梁乙埋	lymaav
@@ -1526,12 +1536,14 @@ sort: original
 卢彦勋	lyxioo
 刘语熙	lyxoov
 吕永岩	lyyooi
+柳原烨子	lyyzvv
 李总兵	lzbvo
 卢子枢	lzeiav
 吕祖善	lzeoo
 陆子刚	lzga
 陆子冈	lzgaa
 李泽厚	lzhvav
+柳泽吉保	lzjbv
 吕紫剑	lzjoi
 黎泽潮	lzjuaa
 李泽楷	lzkva
@@ -1807,6 +1819,7 @@ sort: original
 潘小莲	pxlai
 潘小平	pxpaiv
 潘晓彤	pxtao
+蒲鲜万奴	pxwn
 潘显璇	pxxaov
 潘晓颖	pxyaou
 裴行俨	pxyiui
@@ -1824,6 +1837,7 @@ sort: original
 裴荫森	pysiiv
 朴泳孝	pyxvau
 朴元宗	pyzvvo
+浦泽直树	pzfeaa
 潘赞化	pzhau
 潘梓年	pzna
 裴子野	pzyia
@@ -2159,6 +2173,34 @@ sort: original
 宋子文	szwoa
 孙滋溪	szxa
 宋子安	szxoa
+拓跋道符	tbdfio
+拓跋绍	tbeioa
+拓跋寔	tbeioo
+拓跋寔君	tbejio
+拓跋范	tbfioi
+拓跋怀光	tbhgi
+拓跋长寿	tbjei
+拓跋濬	tbjioa
+拓跋健	tbjioi
+拓跋处文	tbjwi
+拓跋廓	tbkio
+拓跋丕	tbpio
+拓跋平原	tbpy
+拓跋虔	tbqioi
+拓跋祯	tbqioo
+拓跋桢	tbqiov
+拓跋思恭	tbsgi
+拓跋素	tbsiov
+拓跋天赐	tbtci
+拓跋提	tbtio
+拓跋谭	tbtioo
+拓跋太洛	tbtlio
+拓跋英	tbyioi
+拓跋曜	tbyioo
+拓跋猗卢	tbylio
+唐炳源	tbyooa
+拓跋遵	tbzio
+拓跋子推	tbzt
 佟石头	tetiv
 塔法里	tflvai
 塔菲尔	tfxvi
@@ -2173,7 +2215,22 @@ sort: original
 塔列朗	tllvvo
 塔拉特	tltviu
 塔齐布	tqbvov
+谭天度	ttdov
 塔特林	ttlvuv
+谭惕吾	ttwoov
+谭廷襄	ttxou
+覃卫国	twgva
+谭文瑞	twroov
+谭伟洋	twyoi
+谭晓林	txloo
+谈锡永	txyoi
+覃异之	tyfvao
+谭玉玲	tylov
+谭玉龄	tylovi
+谭右铭	tymovi
+谭雅婷	tytova
+覃子豪	tzhvao
+谭泽闿	tzkoa
 王保保	wbbvii
 吴伯雄	wbxoiv
 温宝裕	wbyao
@@ -2384,6 +2441,7 @@ sort: original
 许皇后	xhhouu
 夏侯徽	xhhviu
 薛举	xhjlio
+萧韩家奴	xhjni
 谢惠连	xhlovv
 薛讷	xhneio
 夏后启	xhqvuo
@@ -2409,6 +2467,7 @@ sort: original
 相良忠房	xlffvo
 谢罗夫	xlfoiv
 徐妃	xlfwua
+小濑甫庵	xlfxia
 许靖	xljgo
 徐晨	xljnu
 小栗康平	xlkpi
@@ -2538,14 +2597,81 @@ sort: original
 杨开慧	ykhvvv
 袁可立	yklvvo
 严凯泰	yktviv
+耶律跋芹	ylbqv
+耶律大石	yldev
+耶律敌烈	yldlvu
+耶律铎轸	yldq
+耶律铎臻	yldqv
+耶律善补	ylebvu
+耶律槊古	ylegvu
+耶律庶成	ylejvu
+耶律释鲁	ylelvu
+耶律庶箴	yleqvu
+耶律沙	ylevua
+耶律氏	ylevuu
+耶律寿远	yleyvu
+耶律只没	ylfmvu
+耶律昭	ylfvu
+耶律弘古	ylhgvu
+耶律洪基	ylhjvu
+耶律曷鲁	ylhlvu
+耶律合住	ylhqvu
+耶律吼	ylhvuo
 俞浩	ylhzia
+耶律嘲瑰	yljgvu
+耶律解里	yljlvu
+耶律淳	yljvua
+耶律金	yljvui
+耶律璟	yljvuv
 俞军	yljwio
+耶律留哥	yllgvu
+耶律李胡	yllhvu
 叶隆礼	ylloao
+耶律隆	yllvua
+耶律隆绪	yllxvu
+耶律隆运	yllyvu
 姚立明	ylmao
+耶律抹只	ylmfvu
+耶律马六	ylmlvu
+耶律奴瓜	ylngvu
+耶律涅鲁	ylnlvu
+耶律南仙	ylnxv
+耶律盆都	ylpd
+耶律蒲鲁	ylplvu
+耶律盆奴	ylpnvu
+耶律铸	ylqvui
+耶律仁先	ylrxv
 姚良松	ylsao
+耶律厮不	ylsbvu
+耶律赛哥	ylsgvu
+耶律撒合	ylshvu
+耶律贴不	yltbvu
+耶律天德	yltdvu
+耶律涂山	yltevu
+耶律棠古	yltgvu
+耶律挞烈	yltlvu
+耶律题子	yltzvu
+耶律屋质	ylwfvu
+耶律察割	ylwg
+耶律吴哥	ylwgv
+耶律斡腊	ylwlvu
+耶律洼	ylwvua
+耶律辖底	ylxdvu
+耶律贤适	ylxevu
+耶律安礼	ylxlvu
+耶律雄奴	ylxnvu
+耶律安抟	ylxtvu
+耶律喜隐	ylxyvu
 姚令言	ylyaio
+耶律余睹	ylydvu
+耶律燕哥	ylygvu
 俞樾	ylyhiv
+耶律引吉	ylyjvu
 叶澜依	ylyoai
+耶律资忠	ylzfvu
+耶律宗霖	ylzlvu
+耶律宗真	ylzq
+耶律宗愿	ylzyvu
 叶梦鼎	ymdovi
 姚明高	ymgaoo
 姚木兰	ymlavo
