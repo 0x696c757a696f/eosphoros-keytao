@@ -911,7 +911,16 @@ def embed_ios_skins(
                 f"platform archive is missing; run build_platform_packages.py first: {archive_path}"
             )
         with zipfile.ZipFile(archive_path) as archive:
-            files = {name: archive.read(name) for name in archive.namelist()}
+            legacy_skins = {
+                f"skins/eosphoros-{theme}.{extension}"
+                for theme in ("dawn", "night")
+                for extension in ("cskin", "hskin")
+            }
+            files = {
+                name: archive.read(name)
+                for name in archive.namelist()
+                if name not in legacy_skins
+            }
         files.update({f"skins/{name}": data for name, data in skins.items()})
         files["README-MOBILE-SKINS.txt"] = readme(title, instructions)
         write_if_changed(archive_path, zip_bytes(files, compresslevel))
