@@ -451,12 +451,20 @@ class UpstreamDictionaryTests(unittest.TestCase):
             lock["generator_input_sha256"],
         )
 
-    def test_ice_dictionary_is_imported_after_local_wordlists(self) -> None:
+    def test_ice_dictionary_is_imported_before_specialty_and_long_tail_wordlists(self) -> None:
         text = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
         self.assertIn("  - dicts/eosphoros/eosphoros.ice", text)
         self.assertLess(
-            text.index("  - dicts/eosphoros/eosphoros.fjcy"),
             text.index("  - dicts/eosphoros/eosphoros.ice"),
+            text.index("  - dicts/eosphoros/eosphoros.catholicism"),
+        )
+        self.assertLess(
+            text.index("  - dicts/eosphoros/eosphoros.ice"),
+            text.index("  - dicts/eosphoros/eosphoros.fjcy"),
+        )
+        self.assertLess(
+            text.index("  - dicts/eosphoros/eosphoros.wanxiang.jichu"),
+            text.index("  - dicts/eosphoros/eosphoros.fjcy"),
         )
 
     def test_wanxiang_dictionaries_are_split_below_dicts_eosphoros_after_ice(self) -> None:

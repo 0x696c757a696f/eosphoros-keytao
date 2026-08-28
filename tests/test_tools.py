@@ -855,6 +855,7 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual(merged["style"]["color_scheme_dark"], "EosphorosDark")
         self.assertEqual(merged["style"]["label_format"], "{:s}. ")
         self.assertEqual(merged["style"]["font_face"], "Microsoft YaHei UI")
+        self.assertEqual(merged["style"]["preedit_font_face"], "Microsoft YaHei UI")
         self.assertEqual(merged["style"]["font_point"], 16)
         self.assertEqual(merged["style"]["layout"]["min_width"], 220)
         self.assertEqual(
@@ -869,11 +870,16 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual(custom["patch"]["style/color_scheme"], "EosphorosLight")
         self.assertEqual(custom["patch"]["style/color_scheme_dark"], "EosphorosDark")
 
+        weasel_config = yaml.safe_load((root / "weasel.yaml").read_text(encoding="utf-8"))
+        self.assertFalse(weasel_config["style"]["display_tray_icon"])
+
         release = (root / ".github/workflows/create-release.yml").read_text(encoding="utf-8")
         self.assertIn("tools/prepare_rabbit_release.py", release)
         self.assertIn('--rabbit-dir "rabbit-profiles/$profile/Rabbit"', release)
         self.assertIn('--profile "$profile"', release)
         self.assertIn("github.rest.repos.getLatestRelease", release)
+        self.assertIn("owner: 'rimeinn'", release)
+        self.assertIn("repo: 'rabbit'", release)
         self.assertIn("`rabbit-${tag}-x64.zip`", release)
         self.assertIn("asset.digest", release)
         self.assertIn("sha256sum --check --strict", release)
@@ -1243,12 +1249,13 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_plum_recipes_install_frontend_specific_runtime_files(self) -> None:
         root = Path(__file__).resolve().parents[1]
+        recipe_root = root / "recipe" / "eosphoros"
         recipe_files = {
-            "core": root / "recipe.yaml",
-            "weasel": root / "weasel.recipe.yaml",
-            "rabbit": root / "rabbit.recipe.yaml",
-            "squirrel": root / "squirrel.recipe.yaml",
-            "mobile": root / "mobile.recipe.yaml",
+            "core": recipe_root / "rime-full.recipe.yaml",
+            "weasel": recipe_root / "weasel-windows-rime-full.recipe.yaml",
+            "rabbit": recipe_root / "rabbit-windows-rime-full.recipe.yaml",
+            "squirrel": recipe_root / "squirrel-macos-rime-full.recipe.yaml",
+            "mobile": recipe_root / "yuanshu-ios-rime-full.recipe.yaml",
         }
         recipes = {
             name: path.read_text(encoding="utf-8")
@@ -1392,11 +1399,11 @@ class RepositoryValidationTests(unittest.TestCase):
         custom = (root / "eosphoros.custom.yaml").read_text(encoding="utf-8")
 
         for name in (
-            "recipe.yaml",
-            "weasel.recipe.yaml",
-            "rabbit.recipe.yaml",
-            "squirrel.recipe.yaml",
-            "mobile.recipe.yaml",
+            "recipe/eosphoros/rime-full.recipe.yaml",
+            "recipe/eosphoros/weasel-windows-rime-full.recipe.yaml",
+            "recipe/eosphoros/rabbit-windows-rime-full.recipe.yaml",
+            "recipe/eosphoros/squirrel-macos-rime-full.recipe.yaml",
+            "recipe/eosphoros/yuanshu-ios-rime-full.recipe.yaml",
         ):
             recipe = (root / name).read_text(encoding="utf-8")
             install_block = recipe.split("install_files: >-", 1)[1].split(
@@ -1413,6 +1420,72 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn('  icon: ""', schema)
         self.assertIn('schema/icon: "eosphoros.ico"', custom)
         self.assertIn('schema/ascii_icon: "eosphoros-ascii.ico"', custom)
+
+    def test_plum_profile_recipes_match_release_dictionary_profiles(self) -> None:
+        from tools.build_plum_recipes import PLATFORMS, expected_recipes
+        from tools.dictionary_profiles import PROFILES, excluded_dictionaries
+
+        root = Path(__file__).resolve().parents[1]
+        all_dictionaries = {
+            path.relative_to(root).as_posix()
+            for path in (root / "dicts" / "eosphoros").glob("*.dict.yaml")
+        }
+        auxiliary = {
+            "dicts/eosphoros/eosphoros.cx.dict.yaml",
+            "dicts/eosphoros/eosphoros.gbk.dict.yaml",
+            "dicts/eosphoros/liangfen.dict.yaml",
+            "dicts/eosphoros/pinyin_simp.dict.yaml",
+        }
+        base_imports = [
+            line.strip().removeprefix("- ") + ".dict.yaml"
+            for line in (root / "eosphoros.extended.dict.yaml")
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip().startswith("- dicts/eosphoros/")
+        ]
+        generated = expected_recipes(root)
+        self.assertEqual(len(generated), len(PLATFORMS) * len(PROFILES))
+        self.assertTrue(all(path.read_text(encoding="utf-8") == text for path, text in generated.items()))
+
+        for profile in PROFILES:
+            recipe = (
+                root / "recipe" / "eosphoros" / f"rime-{profile}.recipe.yaml"
+            ).read_text(encoding="utf-8")
+            install_patterns = (
+                recipe.split("install_files: >-", 1)[1]
+                .split("patch_files:", 1)[0]
+                .split()
+            )
+            installed = {
+                relative
+                for relative in all_dictionaries
+                if any(fnmatch.fnmatchcase(relative, pattern) for pattern in install_patterns)
+            }
+            expected = all_dictionaries - set(excluded_dictionaries(profile))
+            self.assertEqual(installed, expected, profile)
+            self.assertTrue(auxiliary <= installed, profile)
+            self.assertIn(f"Rx: recipe/eosphoros/rime-{profile}", recipe)
+            recipe_imports = [
+                line.strip().removeprefix("- ") + ".dict.yaml"
+                for line in recipe.splitlines()
+                if line.strip().startswith("- dicts/eosphoros/")
+                and not line.strip().endswith(".dict.yaml")
+            ]
+            self.assertEqual(
+                recipe_imports,
+                [
+                    relative
+                    for relative in base_imports
+                    if relative not in excluded_dictionaries(profile)
+                ],
+                profile,
+            )
+            for relative in excluded_dictionaries(profile):
+                self.assertNotIn(
+                    f"          - {relative.removesuffix('.dict.yaml')}",
+                    recipe,
+                    profile,
+                )
 
     def test_icon_check_ignores_equivalent_ico_container_bytes(self) -> None:
         from tools.build_eosphoros_icons import icons_visually_equal

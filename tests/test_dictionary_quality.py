@@ -5,6 +5,7 @@ from pathlib import Path
 
 from tools import clean_dictionary_quality as quality
 from tools.audit_long_dictionary_entries import audit, suspicious_reason
+from tools.eosphoros_codes import iter_dictionary_rows
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,6 +75,22 @@ class DictionaryQualityTests(unittest.TestCase):
     def test_repository_is_already_clean(self) -> None:
         remaining = [result.path.name for result in quality.process(ROOT) if result.changed]
         self.assertEqual(remaining, [])
+
+    def test_main_dictionary_has_no_exact_cross_file_duplicates(self) -> None:
+        seen: set[tuple[str, str]] = set()
+        duplicates: list[tuple[str, str]] = []
+        for line in (ROOT / "eosphoros.extended.dict.yaml").read_text(
+            encoding="utf-8"
+        ).splitlines():
+            import_name = line.strip().removeprefix("- ")
+            if not import_name.startswith("dicts/eosphoros/"):
+                continue
+            path = ROOT / f"{import_name}.dict.yaml"
+            for row in iter_dictionary_rows(path):
+                if row in seen:
+                    duplicates.append(row)
+                seen.add(row)
+        self.assertEqual(duplicates, [])
 
     def test_global_long_entry_audit_protects_terms_and_flags_sentences(self) -> None:
         self.assertIsNone(

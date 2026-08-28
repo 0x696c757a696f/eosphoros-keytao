@@ -125,6 +125,14 @@ Fcitx5 Android 原生 Table 需要另行导入 [晨星主题包](https://github.
 - **Standard 标准版**：仅省略约 51 万行的 `fjcy`，保留 ICE 与专业词库，兼顾覆盖率和部署速度。
 - **Lite 精简版**：保留基础单字、常用词组、核心词和英文入口，省略大型及专题扩展，适合低内存移动设备。
 
+| 档位 | 当前记录数 | 同码记录数 | 同码记录率 | 实际组成 |
+| --- | ---: | ---: | ---: | --- |
+| Full | 1,172,262 | 57,290 | 4.887% | Lite + 宗派专题 + ICE + 万象专业 + `fjcy` |
+| Standard | 658,247 | 21,480 | 3.263% | Lite + 宗派专题 + ICE + 万象专业 |
+| Lite | 251,383 | 12,012 | 4.778% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
+
+同码记录率是“最终编码与其他不同词条共用”的静态记录数占本档位总记录数的比例。上表为 2026-08-28 词库快照，不计入用户后续添加的动态词和客户端词频调整；该指标适合比较本项目的三个档位，不建议与统计口径不同的其他方案直接对比。
+
 不确定时选择 **Full**；同一设备只安装一个档位，切换档位后需重新部署或重新导入码表。
 
 | 平台 | 常见前端 | 默认用户目录 |
@@ -202,30 +210,47 @@ Release 中的元书 `.cskin` 与仓 `.hskin` 都以 [ResourceforHamster](https:
 
 ### 🌱 东风破（plum）安装与更新
 
-仓库根目录提供通用配方和各前端配方，可由东风破直接安装或更新。macOS、Linux 以及其他带 Bash 的环境可执行：
+东风破配方位于 `recipe/eosphoros/`，按 Release 的 Rime 平台和
+`full`／`standard`／`lite` 三档生成。命令格式为：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bash -s -- 0x696c757a696f/eosphoros-keytao
+curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bash -s -- \
+  0x696c757a696f/eosphoros-keytao:recipe/eosphoros/weasel-windows-rime-standard
 ```
 
 Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案”，输入：
 
 ```text
-0x696c757a696f/eosphoros-keytao:weasel
+0x696c757a696f/eosphoros-keytao:recipe/eosphoros/weasel-windows-rime-standard
 ```
 
-也可以在已经安装东风破的命令行中按前端选择：
+第一步，选择平台对应的配方名称主体：
 
-```bash
-rime-install 0x696c757a696f/eosphoros-keytao:weasel
-rime-install 0x696c757a696f/eosphoros-keytao:rabbit
-rime-install 0x696c757a696f/eosphoros-keytao:squirrel
-rime-install 0x696c757a696f/eosphoros-keytao:mobile
-```
+| Release Rime 平台 | 配方名称主体 |
+| --- | --- |
+| 通用 Rime | `rime` |
+| Windows 小狼毫 | `weasel-windows-rime` |
+| Windows 玉兔毫 | `rabbit-windows-rime` |
+| macOS 鼠须管 | `squirrel-macos-rime` |
+| macOS Fcitx5 + Rime | `fcitx5-macos-rime` |
+| Android 同文 | `trime-android` |
+| Android Fcitx5 + Rime | `fcitx5-android-rime` |
+| iOS 元书输入法 | `yuanshu-ios-rime` |
+| iOS 仓输入法 | `hamster-ios-rime` |
+| Linux Fcitx5 + Rime | `fcitx5-linux-rime` |
 
-不带后缀的命令安装通用 Rime 核心。东风破只部署 Rime 方案，因此不再提供
-Fcitx5 配方；Fcitx5 用户应直接使用对应系统的官方 Table Release 包。其余配方会
-复制对应前端所需 YAML、Lua、OpenCC 和 ZZZC 工具，并安全加入晨星方案列表。
+第二步，选择词库档位后缀：
+
+| 词库档位 | 配方后缀 | 包含范围 | 适用场景 |
+| --- | --- | --- | --- |
+| Full | `-full` | 全部词库，含 ICE、万象、宗派专题和 `fjcy` | 桌面与存储充足设备 |
+| Standard | `-standard` | Full 去掉大型 `fjcy` | 覆盖率与部署速度均衡 |
+| Lite | `-lite` | 基础单字、常用词组、核心码和英文 | 低内存或移动设备 |
+
+将平台名称主体与档位后缀组合即得到完整配方路径；例如
+`recipe/eosphoros/trime-android-lite`。共生成 30 份配方，并与 Release 使用同一份
+词库分档定义。东风破只负责 Rime 用户目录，Fcitx5 原生 Table、Yong 程序以及必须
+安装到客户端专用目录的主题／皮肤仍应使用对应 Release 包。
 
 ### 🔧 中州韵助手（rimetool）兼容性
 
@@ -378,7 +403,7 @@ Rime 客户端不要只复制根目录 YAML，需保留 `dicts/eosphoros/`、`lu
 
 **玉兔毫 Rabbit**
 
-1. 玉兔毫项目见 [amorphobia/rabbit](https://github.com/amorphobia/rabbit)；直接使用本方案可下载 [`eosphoros-rabbit-windows-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime-full.zip)（或所需档位）。
+1. 玉兔毫项目已迁移至 [rimeinn/rabbit](https://github.com/rimeinn/rabbit)；直接使用本方案可下载 [`eosphoros-rabbit-windows-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime-full.zip)（或所需档位）。
 2. 解压到路径中不含空格的目录。
 3. 运行玉兔毫并选择晨星键道；该包已经带入方案文件，不需要再复制 `eosphoros-rime-full.zip`。
 4. 包内 `rabbit.yaml` 已合入 `weasel.yaml` 的主题和兼容样式，`rabbit.custom.yaml` 默认启用“晨星·黎明”，并随 Windows 黑暗模式自动切换“晨星·夜色”。候选序号使用 Rabbit 所需的 AutoHotkey v2 格式 `{:s}. `。
@@ -744,41 +769,41 @@ python .\zzc\Windows_词库合并.py
 
 ## 📚 词库组成
 
-以下为 2026-08-20 版本的内置记录数；自造词和个人用户词库不计入统计。
+以下为 2026-08-28 版本的内置记录数；自造词和个人用户词库不计入统计。
 
 | 词库 | 记录数 | 用途 |
 | --- | ---: | --- |
-| `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,216 | 上游键道单字表 |
-| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 190,681 | 本地基础词组 |
-| `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,552 | 天主教、礼仪、神学与东方礼词汇 |
+| `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,218 | 上游键道单字表 |
+| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 190,649 | 本地基础词组 |
+| `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,132 | 天主教、礼仪、神学与东方礼词汇 |
 | `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 542 | 传统新教宗派、信条、人物、日常教会用语及《和合本》词汇 |
 | `dicts/eosphoros/eosphoros.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
 | `dicts/eosphoros/eosphoros.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
 | `dicts/eosphoros/eosphoros.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
-| `dicts/eosphoros/eosphoros.core.dict.yaml` | 921 | 630 规则、快符和核心候选 |
-| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,032 | 附加扩展词组 |
-| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 361,637 | Rime-Ice 中文精简补充词库 |
-| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 41,155 | 七个万象分类补充词库 |
+| `dicts/eosphoros/eosphoros.core.dict.yaml` | 901 | 630 规则、快符和核心候选 |
+| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,015 | 附加扩展词组 |
+| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 361,678 | Rime-Ice 中文精简补充词库 |
+| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 41,285 | 七个万象分类补充词库 |
 | `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,615 | Rime-Ice 英文词库 |
-| **合计** | **1,172,578** | 不含动态自造词和个人词库 |
+| **合计** | **1,172,262** | 不含动态自造词和个人词库 |
 
 四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，并补充基督徒实际常打的崇拜、团契、查经、祷告和服事用语；不把“宗派名＋通用活动”机械拼成长词凑量。`eosphoros.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；传统宗派部分覆盖信义宗、改革宗／长老宗、公理宗、圣公宗、浸信宗、循道卫理宗、再洗礼派／门诺会、贵格会、摩拉维亚弟兄会、弟兄会和救世军，五旬节派保留既有条目但不是本轮扩建重点。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
 
-天主教新增词由 [`tools/catholicism_expansion_2026.txt`](tools/catholicism_expansion_2026.txt) 审核；四个非天主教专题词库由 [`tools/christian_traditions_2026.txt`](tools/christian_traditions_2026.txt) 审核。生成器依次尝试键道六码的基础码和首笔辅助码。固定本地词典没有空闲合法码时通常不收录；专题词确定后再重建低优先级 `eosphoros.ice`，让 ICE 词移到更长的合法码或按既有重码预算淘汰。唯一例外是“哥林多后书”“帖撒罗尼迦后书”“雅各书”三卷《和合本》正式书名：前两组的前书与后书在标准规则下拥有完全相同的全部候选，后一卷的全部候选已被固定旧词占用，因此人工审核后使用最终六码并保持专题词优先。除此三项外，四个非天主教专题词库没有新增异词同码。
+天主教新增词由 [`tools/catholicism_expansion_2026.txt`](tools/catholicism_expansion_2026.txt) 审核；四个非天主教专题词库由 [`tools/christian_traditions_2026.txt`](tools/christian_traditions_2026.txt) 审核。生成器依次尝试键道六码的基础码和首笔辅助码。固定本地词典没有空闲合法码时通常不收录；专题词确定后会重建 `eosphoros.ice` 以尽量避码，但实际加载时基础常用词和 ICE 均排在宗派专题之前。唯一例外是“哥林多后书”“帖撒罗尼迦后书”“雅各书”三卷《和合本》正式书名：前两组的前书与后书在标准规则下拥有完全相同的全部候选，后一卷的全部候选已被固定旧词占用，因此人工审核后使用最终六码。除此三项外，四个非天主教专题词库没有新增异词同码。
 
 `eosphoros.ice` 定位为本地词库之后的精简补充库。同步过滤器不会直接删除 2～3 字词；它会排除上游低权重长尾、批量数字/年份模板、8 字以上 `ext` 整句、12 字以上普通超长词，以及已审核的古文整句、口号和法律句式片段。药品名称是例外：片、胶囊、颗粒、注射液、口服液、滴眼液、喷雾剂等剂型词不会因词频低或名称过长被过滤，并在重码预算中优先保留。编码时短词优先占用基础码，长词和低频同码词尽量追加笔画码；随后再按照 `base → ext → others` 和上游权重排序。低优先级重码词会被删减，合并后的中文重码率不会高于同步前的本地基准；新增词在同一码下最多保留 8 个候选。这些过滤规则写在同步器中，因此以后拉取上游时不会重新混入。
 
-`eosphoros.wanxiang` 不直接导入万象的拼音码和词频，只吸收药品 9,367 条、医学 12,441 条、化学 10,892 条、地名 5,281 条、名人 2,239 条、台风名 190 条和高频基础词 151 条。联想句、批量普通人名、错音/多音纠错、英文、单字和方言库均不导入。带声调拼音先规范化（保留 `ü → v`），再按键道6飞键和首笔规则重新编码；本地已有词先去重，所有合法码都冲突的条目直接跳过。通过筛选的码会先受保护，再重建低优先级 ICE，因此不会新增异词同码。
+`eosphoros.wanxiang` 不直接导入万象的拼音码和词频，只吸收药品 9,540 条、医学 12,434 条、化学 10,884 条、地名 5,275 条、名人 2,811 条、台风名 190 条和高频基础词 151 条。联想句、批量普通人名、错音/多音纠错、英文、单字和方言库均不导入。带声调拼音先规范化（保留 `ü → v`），再按键道6飞键和首笔规则重新编码；本地已有词先去重，所有合法码都冲突的条目直接跳过。通过筛选的码会先受保护，再重建低优先级 ICE，因此不会新增异词同码。
 
 ### 📑 词库加载顺序
 
 [`eosphoros.extended.dict.yaml`](eosphoros.extended.dict.yaml) 控制词库导入。当前主要顺序为：
 
 ```text
-user → zzc → danzi → cizu → catholicism → protestantism → orthodoxy → oriental → assyrian → core → fjcy → ice → wanxiang → en
+user → zzc → danzi → cizu → core → ice → catholicism → protestantism → orthodoxy → oriental → assyrian → wanxiang → fjcy → en
 ```
 
-本地词库优先于自动生成的上游词库。`dicts/eosphoros/eosphoros.user.dict.yaml` 权限最高，适合保存个人常用词；加入大量通用词前应优先考虑对应的专题或基础词库。
+个人词库和基础常用词优先于自动生成的 ICE，ICE 又优先于宗派专题与其他长尾扩展。`dicts/eosphoros/eosphoros.user.dict.yaml` 权限最高，适合保存姓名、地址和个人常用词。
 
 ### 👤 个人用户词库
 
@@ -974,7 +999,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 │  ├─ input/                         模块化按键、顶功、标点和快符处理
 │  └─ zzc/                           自造词运行时、候选和操作链
 ├─ opencc/eosphoros/                     OpenCC 命名空间数据
-├─ *.recipe.yaml                     各桌面前端与移动端东风破配方
+├─ recipe/eosphoros/                    10 个 Rime 平台 × 3 个词库档位的东风破配方
 ├─ tools/                             生成、同步、清理和验证工具
 ├─ tests/                             Python 与 Lua 回归测试
 ├─ licenses/                          第三方许可证副本
@@ -1019,8 +1044,8 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [同文输入法 Trime](https://github.com/osfans/trime)、[chwt163/mytrime](https://github.com/chwt163/mytrime/tree/main/3.3.10) | Android Rime 前端；mytrime 在 GPL-3.0-or-later 下提供晨星同文皮肤采用的“格调”完整布局母版 |
 | [仓输入法](https://apps.apple.com/app/id6446617683)、[元书输入法](https://apps.apple.com/app/id6744464701)及其[官方文档](https://ihsiao.com/apps/hamster/) | iOS Rime 前端、方案导入、自造词同步和键盘皮肤格式支持 |
 | [小小输入法 Yong](https://yong.dgod.net/)（[dgod/yong 源码](https://github.com/dgod/yong)） | Windows、Linux 与 Android 输入平台；本仓库为桌面端提供便携整合包，为 Android 提供不含程序本体、但内置可直接选择皮肤的晨星配置包 |
-| [rimeinn/rabbit](https://github.com/rimeinn/rabbit)、[amorphobia/rabbit](https://github.com/amorphobia/rabbit) | 玉兔毫运行环境、便携包及相关实现 |
-| [东风破 plum](https://github.com/rime/plum) | `recipe.yaml` 安装与更新机制 |
+| [rimeinn/rabbit](https://github.com/rimeinn/rabbit) | 玉兔毫运行环境、便携包及相关实现 |
+| [东风破 plum](https://github.com/rime/plum) | `recipe/eosphoros/*.recipe.yaml` 安装与更新机制 |
 | [中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)及其[使用文档](https://github.com/yanhuacuo/rimetool/wiki) | Rime 方案管理工具及“薄荷解析模板”兼容结构参考 |
 | [薄荷输入法（Mintimate/oh-my-rime）](https://github.com/Mintimate/oh-my-rime) | 薄荷解析模板的方案结构与开关命名，以及 Android DocumentsUI 操作说明参考 |
 | [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster)、[hamster-skin-skill](https://github.com/imfuxiao/hamster-skin-skill)、[空山素影](https://github.com/luozikuan/kongshan-suying) | ResourceforHamster 在 MIT 许可下提供晨星元书与仓皮肤采用的成熟完整底稿；hamster-skin-skill 提供格式与校验规则参考；空山素影作为仍在维护的元书外部皮肤参考 |

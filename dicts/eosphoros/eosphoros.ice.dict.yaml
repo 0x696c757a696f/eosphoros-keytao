@@ -10,7 +10,7 @@
 # Slim fallback profile: never directly filter 2-3 character words.
 # Unaligned, unencodable, rejected, and low-value entries are skipped.
 # Source rows: 882796
-# Generated rows: 361688
+# Generated rows: 361678
 # Rows before collision pruning: 489306
 # Deduplicated against local dictionaries: 278286
 # Deduplicated inside upstream: 2603
@@ -24,11 +24,11 @@
 # Skipped long ext entries: 5828
 # Skipped overlong entries: 2163
 # Full-code collisions before pruning: 136560
-# Skipped by collision-rate budget: 127582
+# Skipped by collision-rate budget: 127592
 # Skipped by per-code candidate cap: 36
 # Collision target: no higher than the existing local dictionaries.
-# Local collision rows: 33762 / 750801
-# Combined collision rows: 50026 / 1112489
+# Local collision rows: 33726 / 750751
+# Combined collision rows: 49973 / 1112429
 ---
 name: eosphoros.ice
 version: "2026-08-24"
@@ -33542,7 +33542,6 @@ sort: original
 淡黄绿色	dhlsa
 德衡律师事务所	dhlsuu
 多欢乐	dhluau
-等化了	dhluia
 等花落	dhluii
 都喝了	dhluoa
 都很累	dhluui
@@ -33731,7 +33730,6 @@ sort: original
 电话骚扰	dhsr
 东海桑田	dhstv
 都会死	dhsui
-大红色	dhsvau
 东华三院	dhsyvi
 都会提到	dhtdui
 都会提升	dhteui
@@ -42426,7 +42424,6 @@ sort: original
 大团长	dtqviu
 埭头镇	dtqvoi
 丁塘镇	dtqvvi
-堆填区	dtqvvv
 低头亲吻	dtqwi
 低碳骑行	dtqxi
 地铁七号线	dtqxv
@@ -83653,7 +83650,6 @@ sort: original
 福利彩票发行	flcxou
 智力测验	flcy
 赚了点	fldaai
-坠落的	fldaiu
 费率低	fldaoi
 发亮的	fldaou
 法律的	fldauu
@@ -145941,7 +145937,6 @@ sort: original
 及处理	jjluuv
 长春路	jjluvo
 检出率	jjlvao
-车间里	jjlvoi
 机场路	jjlvvo
 经常来玩	jjlwai
 拒绝了我	jjlwia
@@ -171213,7 +171208,6 @@ sort: original
 考完了没	kwlmu
 昆纬路	kwloao
 看穿了一切	kwlqio
-考完了	kwluoa
 开悟了	kwlvoa
 课外练习	kwlx
 看完了电影	kwlyio
@@ -327478,7 +327472,6 @@ sort: original
 用数据	yejuoi
 殷盛超	yejuvv
 燕山街	yejviu
-有手机	yejviv
 与实际	yejvoa
 有实际	yejvoa
 有数据	yejvoi
@@ -336732,7 +336725,6 @@ sort: original
 用两个	ylguvi
 云拉歌	ylgvi
 杨柳沟	ylgvva
-与两个	ylgvvi
 娱乐购物	ylgwa
 娱乐广播网	ylgwau
 阎罗鬼王	ylgwo
@@ -340794,7 +340786,6 @@ sort: original
 一整瓶儿	yqpxv
 纡青佩紫	yqpz
 油漆券	yqqaao
-以争取	yqqauv
 院桥镇	yqqavi
 一起去吧	yqqb
 眼睁睁被	yqqbi
@@ -357589,7 +357580,6 @@ sort: original
 自助服务系统	zqftu
 在绽放	zqfvao
 在郑州	zqfvoo
-在前方	zqfvoo
 自助服务	zqfw
 早阙之舞	zqfwo
 作战方案	zqfxi

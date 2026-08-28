@@ -28,6 +28,7 @@ RABBIT_STYLE = {
     # Rabbit passes this value directly to AutoHotkey/CreateFont.  Unlike
     # Weasel, it does not accept a comma-separated fallback chain.
     "font_face": "Microsoft YaHei UI",
+    "preedit_font_face": "Microsoft YaHei UI",
     "label_font_face": "Microsoft YaHei UI",
     "comment_font_face": "Microsoft YaHei UI",
     "font_point": 16,

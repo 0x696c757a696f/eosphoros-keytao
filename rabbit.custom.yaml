@@ -5,6 +5,7 @@ patch:
   style/color_scheme: EosphorosLight
   style/color_scheme_dark: EosphorosDark
   style/font_face: "Microsoft YaHei UI"
+  style/preedit_font_face: "Microsoft YaHei UI"
   style/label_font_face: "Microsoft YaHei UI"
   style/comment_font_face: "Microsoft YaHei UI"
   style/font_point: 16

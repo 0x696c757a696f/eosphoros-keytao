@@ -1,0 +1,80 @@
+# encoding: utf-8
+---
+recipe:
+  Rx: recipe/eosphoros/squirrel-macos-rime-full
+  description: >-
+    为 macOS 鼠须管 安装或更新晨星键道 Full 词库档位。
+install_files: >-
+  default.yaml
+  liangfen*.yaml
+  pinyin_simp*.yaml
+  eosphoros*.ico
+  eosphoros.*.dict.yaml
+  eosphoros.*.schema.yaml
+  eosphoros.schema.yaml
+  eosphoros.symbols.yaml
+  eosphoros.custom.yaml
+  lua/eosphoros/*.lua
+  lua/eosphoros/*/*.lua
+  opencc/eosphoros/*.lua
+  zzc_state/char_parts.tsv
+  zzc/README.md
+  zzc/自造词使用教程.md
+  zzc/自造词使用教程.png
+  zzc/eosphoros_词库合并.py
+  zzc/eosphoros_撤回合并.py
+  dicts/eosphoros/eosphoros.assyrian.dict.yaml
+  dicts/eosphoros/eosphoros.catholicism.dict.yaml
+  dicts/eosphoros/eosphoros.cizu.dict.yaml
+  dicts/eosphoros/eosphoros.core.dict.yaml
+  dicts/eosphoros/eosphoros.cx.dict.yaml
+  dicts/eosphoros/eosphoros.danzi.dict.yaml
+  dicts/eosphoros/eosphoros.en.dict.yaml
+  dicts/eosphoros/eosphoros.fjcy.dict.yaml
+  dicts/eosphoros/eosphoros.gbk.dict.yaml
+  dicts/eosphoros/eosphoros.ice.dict.yaml
+  dicts/eosphoros/eosphoros.oriental.dict.yaml
+  dicts/eosphoros/eosphoros.orthodoxy.dict.yaml
+  dicts/eosphoros/eosphoros.protestantism.dict.yaml
+  dicts/eosphoros/eosphoros.user.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml
+  dicts/eosphoros/eosphoros.zzc.dict.yaml
+  dicts/eosphoros/liangfen.dict.yaml
+  dicts/eosphoros/pinyin_simp.dict.yaml
+  squirrel.yaml
+  zzc/Mac_词库合并
+  zzc/Mac_撤回合并
+patch_files:
+  default.custom.yaml:
+    - patch/+:
+        schema_list/+/+:
+          - schema: eosphoros
+  eosphoros.extended.dict.yaml:
+    - patch/+:
+        import_tables:
+          - dicts/eosphoros/eosphoros.user
+          - dicts/eosphoros/eosphoros.zzc
+          - dicts/eosphoros/eosphoros.danzi
+          - dicts/eosphoros/eosphoros.cizu
+          - dicts/eosphoros/eosphoros.core
+          - dicts/eosphoros/eosphoros.ice
+          - dicts/eosphoros/eosphoros.catholicism
+          - dicts/eosphoros/eosphoros.protestantism
+          - dicts/eosphoros/eosphoros.orthodoxy
+          - dicts/eosphoros/eosphoros.oriental
+          - dicts/eosphoros/eosphoros.assyrian
+          - dicts/eosphoros/eosphoros.wanxiang.yaopin
+          - dicts/eosphoros/eosphoros.wanxiang.yixue
+          - dicts/eosphoros/eosphoros.wanxiang.huaxue
+          - dicts/eosphoros/eosphoros.wanxiang.diming
+          - dicts/eosphoros/eosphoros.wanxiang.mingren
+          - dicts/eosphoros/eosphoros.wanxiang.taifeng
+          - dicts/eosphoros/eosphoros.wanxiang.jichu
+          - dicts/eosphoros/eosphoros.fjcy
+          - dicts/eosphoros/eosphoros.en
