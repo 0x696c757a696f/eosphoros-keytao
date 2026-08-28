@@ -39,7 +39,7 @@ def main() -> int:
     dictionary_dir = ROOT / "dicts" / "eosphoros"
     imported = [
         ROOT / f"{line.strip().removeprefix('- ')}.dict.yaml"
-        for line in (ROOT / "eosphoros.extended.dict.yaml")
+        for line in (ROOT / "eosphoros.full.dict.yaml")
         .read_text(encoding="utf-8-sig")
         .splitlines()
         if line.strip().startswith("- dicts/eosphoros/")

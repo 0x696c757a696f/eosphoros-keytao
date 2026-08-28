@@ -1280,6 +1280,11 @@ class RepositoryValidationTests(unittest.TestCase):
             if not path.name.endswith("recipe.yaml")
             and not path.name.endswith(".custom.yaml")
         }
+        runtime_names -= {
+            "eosphoros.full.dict.yaml",
+            "eosphoros.lite.dict.yaml",
+            "eosphoros.standard.dict.yaml",
+        }
         installed_names = {
             name
             for name in runtime_names
@@ -1422,8 +1427,16 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertIn('schema/ascii_icon: "eosphoros-ascii.ico"', custom)
 
     def test_plum_profile_recipes_match_release_dictionary_profiles(self) -> None:
-        from tools.build_plum_recipes import PLATFORMS, expected_recipes
-        from tools.dictionary_profiles import PROFILES, excluded_dictionaries
+        from tools.build_plum_recipes import (
+            PLATFORMS,
+            expected_profile_indexes,
+            expected_recipes,
+        )
+        from tools.dictionary_profiles import (
+            PROFILES,
+            excluded_dictionaries,
+            profile_dictionary_name,
+        )
 
         root = Path(__file__).resolve().parents[1]
         all_dictionaries = {
@@ -1438,7 +1451,7 @@ class RepositoryValidationTests(unittest.TestCase):
         }
         base_imports = [
             line.strip().removeprefix("- ") + ".dict.yaml"
-            for line in (root / "eosphoros.extended.dict.yaml")
+            for line in (root / "eosphoros.full.dict.yaml")
             .read_text(encoding="utf-8")
             .splitlines()
             if line.strip().startswith("- dicts/eosphoros/")
@@ -1446,6 +1459,11 @@ class RepositoryValidationTests(unittest.TestCase):
         generated = expected_recipes(root)
         self.assertEqual(len(generated), len(PLATFORMS) * len(PROFILES))
         self.assertTrue(all(path.read_text(encoding="utf-8") == text for path, text in generated.items()))
+        indexes = expected_profile_indexes(root)
+        self.assertEqual(len(indexes), len(PROFILES) - 1)
+        self.assertTrue(
+            all(path.read_text(encoding="utf-8") == text for path, text in indexes.items())
+        )
 
         for profile in PROFILES:
             recipe = (
@@ -1465,9 +1483,20 @@ class RepositoryValidationTests(unittest.TestCase):
             self.assertEqual(installed, expected, profile)
             self.assertTrue(auxiliary <= installed, profile)
             self.assertIn(f"Rx: recipe/eosphoros/rime-{profile}", recipe)
+            dictionary_name = profile_dictionary_name(profile)
+            self.assertIn(f"  {dictionary_name}.dict.yaml", recipe)
+            self.assertIn(
+                f"translator/dictionary: {dictionary_name}",
+                recipe,
+            )
+            self.assertIn("  eosphoros.custom.yaml:", recipe)
+            self.assertNotIn("  eosphoros.schema.yaml:", recipe)
+            profile_index = (root / f"{dictionary_name}.dict.yaml").read_text(
+                encoding="utf-8"
+            )
             recipe_imports = [
                 line.strip().removeprefix("- ") + ".dict.yaml"
-                for line in recipe.splitlines()
+                for line in profile_index.splitlines()
                 if line.strip().startswith("- dicts/eosphoros/")
                 and not line.strip().endswith(".dict.yaml")
             ]
@@ -2215,7 +2244,7 @@ columns:
     def test_core_dictionary_prioritizes_project_name(self) -> None:
         root = Path(__file__).resolve().parents[1]
         core = dict_path(root, "eosphoros.core.dict.yaml").read_text(encoding="utf-8")
-        imports = (root / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        imports = (root / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
         self.assertIn("晨星键道\tjxjdoo\n", core)
         self.assertLess(
             imports.index("dicts/eosphoros/eosphoros.core"),

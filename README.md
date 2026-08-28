@@ -125,13 +125,15 @@ Fcitx5 Android 原生 Table 需要另行导入 [晨星主题包](https://github.
 - **Standard 标准版**：仅省略约 51 万行的 `fjcy`，保留 ICE 与专业词库，兼顾覆盖率和部署速度。
 - **Lite 精简版**：保留基础单字、常用词组、核心词和英文入口，省略大型及专题扩展，适合低内存移动设备。
 
+<!-- dictionary-profile-stats:start -->
 | 档位 | 当前记录数 | 同码记录数 | 同码记录率 | 实际组成 |
 | --- | ---: | ---: | ---: | --- |
-| Full | 1,172,262 | 57,290 | 4.887% | Lite + 宗派专题 + ICE + 万象专业 + `fjcy` |
-| Standard | 658,247 | 21,480 | 3.263% | Lite + 宗派专题 + ICE + 万象专业 |
-| Lite | 251,383 | 12,012 | 4.778% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
+| Full | 1,172,257 | 57,290 | 4.887% | Lite + 宗派专题 + ICE + 万象专业 + `fjcy` |
+| Standard | 658,246 | 21,480 | 3.263% | Lite + 宗派专题 + ICE + 万象专业 |
+| Lite | 251,382 | 12,012 | 4.778% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
 
-同码记录率是“最终编码与其他不同词条共用”的静态记录数占本档位总记录数的比例。上表为 2026-08-28 词库快照，不计入用户后续添加的动态词和客户端词频调整；该指标适合比较本项目的三个档位，不建议与统计口径不同的其他方案直接对比。
+同码记录率是“最终编码与其他不同词条共用”的静态记录数占本档位总记录数的比例。上表为当前词库快照，不计入用户后续添加的动态词和客户端词频调整；该指标适合比较本项目的三个档位，不建议与统计口径不同的其他方案直接对比。
+<!-- dictionary-profile-stats:end -->
 
 不确定时选择 **Full**；同一设备只安装一个档位，切换档位后需重新部署或重新导入码表。
 
@@ -254,7 +256,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 ### 🔧 中州韵助手（rimetool）兼容性
 
-本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `eosphoros`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`；根目录保留 RimeTool 会按固定路径查找的 `eosphoros.extended.dict.yaml` 兼容索引，实际词条统一位于 `dicts/eosphoros/`。索引首项为 `dicts/eosphoros/eosphoros.user`，可供薄荷模板定位个人主词库。
+本方案已补齐[中州韵助手 rimetool](https://gitee.com/wubi98/rimetool)用于识别和编辑方案的主要结构：`default.yaml` 与 `default.custom.yaml` 都列出 `eosphoros`，schema 内有方案名、完整开关状态及显式 `reset`、本方案快捷键和 `menu/page_size`。RimeTool 会按 `translator/dictionary` 动态查找当前档位的 `eosphoros.full/standard/lite.dict.yaml`，实际词条统一位于 `dicts/eosphoros/`；索引首项为 `dicts/eosphoros/eosphoros.user`，可供薄荷模板定位个人主词库。
 
 可在 rimetool 选择“薄荷解析模板”。模板要求的 `transcription`、`emoji`、`ascii_punct` 和 `melt_eng` 都已提供：`transcription` 与原有 `jffh` 都会触发简繁转换，`emoji` 与原有 `emoji_cn` 都会触发表情候选，`melt_eng/prefix` 实际参与 `i` 英文入口的识别，`ascii_punct` 与 `full_shape` 则使用 Rime 原生开关。
 
@@ -312,7 +314,7 @@ Windows 可从小狼毫菜单打开“输入法设定／获取更多输入方案
 
 ### 3. 词组取码
 
-词组编码规则由 `eosphoros.extended.dict.yaml` 的 encoder 与本仓库生成器共同约束。`A1/A2` 表示某字音码的第一、第二键，`a` 表示该字单字全码中的首个形码：
+词组编码规则由 `eosphoros.full.dict.yaml` 的 encoder 与本仓库生成器共同约束。`A1/A2` 表示某字音码的第一、第二键，`a` 表示该字单字全码中的首个形码：
 
 | 词长 | 基础音码 | 需要避重时追加 |
 | --- | --- | --- |
@@ -769,23 +771,25 @@ python .\zzc\Windows_词库合并.py
 
 ## 📚 词库组成
 
-以下为 2026-08-28 版本的内置记录数；自造词和个人用户词库不计入统计。
+以下为当前提交的内置记录数；自造词和个人用户词库不计入统计。
 
+<!-- dictionary-file-stats:start -->
 | 词库 | 记录数 | 用途 |
 | --- | ---: | --- |
 | `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,218 | 上游键道单字表 |
-| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 190,649 | 本地基础词组 |
+| `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 190,648 | 本地基础词组 |
 | `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,132 | 天主教、礼仪、神学与东方礼词汇 |
 | `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 542 | 传统新教宗派、信条、人物、日常教会用语及《和合本》词汇 |
 | `dicts/eosphoros/eosphoros.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
 | `dicts/eosphoros/eosphoros.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
 | `dicts/eosphoros/eosphoros.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
 | `dicts/eosphoros/eosphoros.core.dict.yaml` | 901 | 630 规则、快符和核心候选 |
-| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,015 | 附加扩展词组 |
+| `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,011 | 附加扩展词组 |
 | `dicts/eosphoros/eosphoros.ice.dict.yaml` | 361,678 | Rime-Ice 中文精简补充词库 |
 | `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 41,285 | 七个万象分类补充词库 |
 | `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,615 | Rime-Ice 英文词库 |
-| **合计** | **1,172,262** | 不含动态自造词和个人词库 |
+| **合计** | **1,172,257** | 不含动态自造词和个人词库 |
+<!-- dictionary-file-stats:end -->
 
 四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，并补充基督徒实际常打的崇拜、团契、查经、祷告和服事用语；不把“宗派名＋通用活动”机械拼成长词凑量。`eosphoros.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；传统宗派部分覆盖信义宗、改革宗／长老宗、公理宗、圣公宗、浸信宗、循道卫理宗、再洗礼派／门诺会、贵格会、摩拉维亚弟兄会、弟兄会和救世军，五旬节派保留既有条目但不是本轮扩建重点。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
 
@@ -797,7 +801,7 @@ python .\zzc\Windows_词库合并.py
 
 ### 📑 词库加载顺序
 
-[`eosphoros.extended.dict.yaml`](eosphoros.extended.dict.yaml) 控制词库导入。当前主要顺序为：
+[`eosphoros.full.dict.yaml`](eosphoros.full.dict.yaml) 是完整词库索引，Standard 和 Lite 索引由它自动生成。当前主要顺序为：
 
 ```text
 user → zzc → danzi → cizu → core → ice → catholicism → protestantism → orthodoxy → oriental → assyrian → wanxiang → fjcy → en
@@ -826,7 +830,7 @@ user → zzc → danzi → cizu → core → ice → catholicism → protestanti
 | --- | --- |
 | `eosphoros.schema.yaml` | 主方案、引擎、翻译器、反查和快捷键 |
 | `eosphoros.custom.yaml` | 用户推荐修改的开关、候选数和流式输入配置 |
-| `eosphoros.extended.dict.yaml` | 词库导入顺序与开关 |
+| `eosphoros.{full,standard,lite}.dict.yaml` | 三个档位的词库导入顺序 |
 | `default.custom.yaml` | 默认方案列表及全局选项 |
 | `weasel.yaml` / `weasel.custom.yaml` | Windows 小狼毫候选窗样式与明暗配色 |
 | `squirrel.yaml` / `squirrel.custom.yaml` | macOS 鼠须管候选窗样式与明暗配色 |
@@ -992,7 +996,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 ```text
 .
 ├─ eosphoros.schema.yaml                 主方案
-├─ eosphoros.extended.dict.yaml          RimeTool 兼容词库索引（无词条正文）
+├─ eosphoros.{full,standard,lite}.dict.yaml  三档共用词库索引（无词条正文）
 ├─ dicts/eosphoros/                      本地、上游生成和个人词条数据
 │  └─ eosphoros.wanxiang.*.dict.yaml     万象七个分类词库
 ├─ lua/eosphoros/                        Lua 处理器、翻译器和过滤器

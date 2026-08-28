@@ -298,7 +298,7 @@ class ChristianTraditionDictionaryTests(unittest.TestCase):
         )
 
     def test_release_and_import_lists_include_all_four_dictionaries(self) -> None:
-        extended = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        extended = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
         release = (ROOT / ".github/workflows/create-release.yml").read_text(
             encoding="utf-8"
         )

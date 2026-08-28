@@ -20,8 +20,8 @@ from tools.build_platform_packages import common_runtime_files
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_BUILD_OUTPUTS = (
     "eosphoros.schema.yaml",
-    "eosphoros.extended.table.bin",
-    "eosphoros.extended.prism.bin",
+    "eosphoros.full.table.bin",
+    "eosphoros.full.prism.bin",
     "eosphoros.cx.table.bin",
     "eosphoros.cx.reverse.bin",
     "eosphoros.gbk.table.bin",

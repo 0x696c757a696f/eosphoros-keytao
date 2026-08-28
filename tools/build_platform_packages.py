@@ -12,21 +12,25 @@ from pathlib import Path
 
 try:
     from tools.dictionary_profiles import (
+        PROFILE_INDEX_FILENAMES,
         LITE_EXCLUDED_DICTIONARIES,
         PROFILES,
         STANDARD_EXCLUDED_DICTIONARIES,
         archive_name,
         excluded_dictionaries,
-        profiled_dictionary_index,
+        profile_dictionary_name,
+        profiled_custom_config,
     )
 except ModuleNotFoundError:
     from dictionary_profiles import (
+        PROFILE_INDEX_FILENAMES,
         LITE_EXCLUDED_DICTIONARIES,
         PROFILES,
         STANDARD_EXCLUDED_DICTIONARIES,
         archive_name,
         excluded_dictionaries,
-        profiled_dictionary_index,
+        profile_dictionary_name,
+        profiled_custom_config,
     )
 
 
@@ -139,8 +143,16 @@ def common_runtime_files(root: Path) -> list[Path]:
         root / "zzc" / "eosphoros_词库合并.py",
         root / "zzc" / "eosphoros_撤回合并.py",
     ]
-    files.extend(sorted(root.glob("eosphoros*.yaml")))
-    files.extend(sorted(root.glob("*.dict.yaml")))
+    files.extend(
+        path
+        for path in sorted(root.glob("eosphoros*.yaml"))
+        if path.name not in PROFILE_INDEX_FILENAMES or path.name == "eosphoros.full.dict.yaml"
+    )
+    files.extend(
+        path
+        for path in sorted(root.glob("*.dict.yaml"))
+        if path.name not in PROFILE_INDEX_FILENAMES or path.name == "eosphoros.full.dict.yaml"
+    )
     files.extend(_files_below(root, "dicts/eosphoros"))
     files.extend(_files_below(root, "lua/eosphoros"))
     files.extend(_files_below(root, "opencc/eosphoros"))
@@ -193,11 +205,14 @@ def _package_files_for_archive(
         else:
             extra_files.append(path)
     excluded = set(excluded_dictionaries(package_profile(archive_name_value)))
+    profile_index = root / f"{profile_dictionary_name(package_profile(archive_name_value))}.dict.yaml"
     files = [
         path
         for path in common + extra_files
         if path.relative_to(root).as_posix() not in excluded
+        and path.name not in PROFILE_INDEX_FILENAMES
     ]
+    files.append(profile_index)
     return _validate_files(root, files)
 
 
@@ -230,8 +245,8 @@ def _write_zip(
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             content = (
-                profiled_dictionary_index(path, profile)
-                if relative == "eosphoros.extended.dict.yaml" and profile != "full"
+                profiled_custom_config(path, profile)
+                if relative == "eosphoros.custom.yaml"
                 else path.read_bytes()
             )
             archive.writestr(info, content, compresslevel=compresslevel)

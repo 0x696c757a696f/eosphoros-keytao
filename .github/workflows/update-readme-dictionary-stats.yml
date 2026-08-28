@@ -1,0 +1,45 @@
+name: Update README dictionary statistics
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: update-readme-dictionary-stats
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: "utf-8"
+  PYTHONNOUSERSITE: "1"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: master
+
+      - uses: ./.github/actions/setup-pixi
+
+      - name: Refresh README statistics
+        run: pixi run python tools/update_readme_dictionary_stats.py --write
+
+      - name: Commit updated README
+        shell: pwsh
+        run: |
+          if (-not (git status --porcelain -- README.md)) {
+            exit 0
+          }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: update dictionary statistics"
+          git push origin HEAD:master

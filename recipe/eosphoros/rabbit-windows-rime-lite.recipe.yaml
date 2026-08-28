@@ -9,7 +9,10 @@ install_files: >-
   liangfen*.yaml
   pinyin_simp*.yaml
   eosphoros*.ico
-  eosphoros.*.dict.yaml
+  eosphoros.cx.dict.yaml
+  eosphoros.gbk.dict.yaml
+  liangfen.dict.yaml
+  pinyin_simp.dict.yaml
   eosphoros.*.schema.yaml
   eosphoros.schema.yaml
   eosphoros.symbols.yaml
@@ -23,6 +26,7 @@ install_files: >-
   zzc/自造词使用教程.png
   zzc/eosphoros_词库合并.py
   zzc/eosphoros_撤回合并.py
+  eosphoros.lite.dict.yaml
   dicts/eosphoros/eosphoros.cizu.dict.yaml
   dicts/eosphoros/eosphoros.core.dict.yaml
   dicts/eosphoros/eosphoros.cx.dict.yaml
@@ -43,15 +47,9 @@ patch_files:
     - patch/+:
         schema_list/+/+:
           - schema: eosphoros
-  eosphoros.extended.dict.yaml:
+  eosphoros.custom.yaml:
     - patch/+:
-        import_tables:
-          - dicts/eosphoros/eosphoros.user
-          - dicts/eosphoros/eosphoros.zzc
-          - dicts/eosphoros/eosphoros.danzi
-          - dicts/eosphoros/eosphoros.cizu
-          - dicts/eosphoros/eosphoros.core
-          - dicts/eosphoros/eosphoros.en
+        translator/dictionary: eosphoros.lite
   rabbit.custom.yaml:
     - patch/+:
         style/color_scheme: EosphorosLight

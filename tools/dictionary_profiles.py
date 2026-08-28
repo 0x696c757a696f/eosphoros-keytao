@@ -33,6 +33,7 @@ PROFILE_EXCLUDED_DICTIONARIES = {
     "standard": STANDARD_EXCLUDED_DICTIONARIES,
     "lite": LITE_EXCLUDED_DICTIONARIES,
 }
+PROFILE_INDEX_FILENAMES = tuple(f"eosphoros.{profile}.dict.yaml" for profile in PROFILES)
 
 
 def validate_profile(profile: str) -> str:
@@ -43,6 +44,23 @@ def validate_profile(profile: str) -> str:
 
 def excluded_dictionaries(profile: str) -> tuple[str, ...]:
     return PROFILE_EXCLUDED_DICTIONARIES[validate_profile(profile)]
+
+
+def profile_dictionary_name(profile: str) -> str:
+    return f"eosphoros.{validate_profile(profile)}"
+
+
+def profiled_custom_config(path: Path, profile: str) -> bytes:
+    dictionary = profile_dictionary_name(profile)
+    text = path.read_text(encoding="utf-8-sig")
+    marker = "patch:\n"
+    if marker not in text:
+        raise ValueError(f"custom config has no patch node: {path}")
+    return text.replace(
+        marker,
+        f"{marker}  translator/dictionary: {dictionary}\n",
+        1,
+    ).encode("utf-8")
 
 
 def includes_dictionary(relative: str | Path, profile: str) -> bool:

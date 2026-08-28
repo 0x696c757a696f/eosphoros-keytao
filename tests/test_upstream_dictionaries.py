@@ -84,8 +84,10 @@ class UpstreamDictionaryTests(unittest.TestCase):
             {path.name for path in ROOT.glob("*.dict.yaml")},
             {
                 "eosphoros.cx.dict.yaml",
-                "eosphoros.extended.dict.yaml",
+                "eosphoros.full.dict.yaml",
                 "eosphoros.gbk.dict.yaml",
+                "eosphoros.lite.dict.yaml",
+                "eosphoros.standard.dict.yaml",
                 "liangfen.dict.yaml",
                 "pinyin_simp.dict.yaml",
             },
@@ -94,7 +96,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertTrue((dictionary_dir / "pinyin_simp.dict.yaml").is_file())
         self.assertTrue((dictionary_dir / "liangfen.dict.yaml").is_file())
         main_schema = (ROOT / "eosphoros.schema.yaml").read_text(encoding="utf-8")
-        self.assertIn("dictionary: eosphoros.extended", main_schema)
+        self.assertIn("dictionary: eosphoros.full", main_schema)
         for schema_name in (
             "eosphoros.cx.schema.yaml",
             "eosphoros.gbk.schema.yaml",
@@ -109,7 +111,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
                 encoding="utf-8"
             )
             self.assertIn(f"dictionary: {dictionary}", helper_schema)
-        root_index = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        root_index = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
         import_block = root_index.split("import_tables:", 1)[1]
         first_import = next(
             line.strip() for line in import_block.splitlines() if line.startswith("  - ")
@@ -452,7 +454,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         )
 
     def test_ice_dictionary_is_imported_before_specialty_and_long_tail_wordlists(self) -> None:
-        text = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        text = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
         self.assertIn("  - dicts/eosphoros/eosphoros.ice", text)
         self.assertLess(
             text.index("  - dicts/eosphoros/eosphoros.ice"),
@@ -468,7 +470,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         )
 
     def test_wanxiang_dictionaries_are_split_below_dicts_eosphoros_after_ice(self) -> None:
-        text = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        text = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
         names = [name for name, _ in RIME_WANXIANG_FILES]
         paths = [
             ROOT / "dicts" / "eosphoros" / f"eosphoros.wanxiang.{name}.dict.yaml"
@@ -498,7 +500,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(lock["sources"]["rime_wanxiang"]["license"], "CC-BY-4.0")
 
     def test_english_dictionary_uses_main_schema_i_namespace(self) -> None:
-        extended = (ROOT / "eosphoros.extended.dict.yaml").read_text(encoding="utf-8")
+        extended = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
         schema = (ROOT / "eosphoros.schema.yaml").read_text(encoding="utf-8")
         self.assertIn("  - dicts/eosphoros/eosphoros.en", extended)
         self.assertIn("xform/^i(.+)$/$1/", schema)

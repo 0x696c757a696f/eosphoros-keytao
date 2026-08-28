@@ -79,7 +79,7 @@ class DictionaryQualityTests(unittest.TestCase):
     def test_main_dictionary_has_no_exact_cross_file_duplicates(self) -> None:
         seen: set[tuple[str, str]] = set()
         duplicates: list[tuple[str, str]] = []
-        for line in (ROOT / "eosphoros.extended.dict.yaml").read_text(
+        for line in (ROOT / "eosphoros.full.dict.yaml").read_text(
             encoding="utf-8"
         ).splitlines():
             import_name = line.strip().removeprefix("- ")

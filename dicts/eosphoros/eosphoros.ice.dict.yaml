@@ -27,8 +27,8 @@
 # Skipped by collision-rate budget: 127592
 # Skipped by per-code candidate cap: 36
 # Collision target: no higher than the existing local dictionaries.
-# Local collision rows: 33726 / 750751
-# Combined collision rows: 49973 / 1112429
+# Local collision rows: 33726 / 750746
+# Combined collision rows: 49973 / 1112424
 ---
 name: eosphoros.ice
 version: "2026-08-24"
@@ -269136,7 +269136,7 @@ sort: original
 太热情了	trqlvi
 突然站起	trqqo
 突如其然	trqro
-天然雀	trqvui
+天然雀	trqvu
 天然气地球科学	trqx
 突然注意	trqyou
 天然气资源	trqyv

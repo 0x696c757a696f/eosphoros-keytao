@@ -68,17 +68,25 @@ class PlatformPackageTests(unittest.TestCase):
             build_packages,
             package_profile,
         )
-        from tools.dictionary_profiles import excluded_dictionaries
+        from tools.dictionary_profiles import (
+            PROFILE_INDEX_FILENAMES,
+            excluded_dictionaries,
+            profile_dictionary_name,
+        )
 
         with tempfile.TemporaryDirectory() as temp_dir:
             archives = build_packages(ROOT, Path(temp_dir), compresslevel=0)
             members = {}
             dictionary_indexes = {}
+            custom_configs = {}
             for archive in archives:
                 with zipfile.ZipFile(archive) as package:
                     members[archive.name] = set(package.namelist())
                     dictionary_indexes[archive.name] = package.read(
-                        "eosphoros.extended.dict.yaml"
+                        f"{profile_dictionary_name(package_profile(archive.name))}.dict.yaml"
+                    ).decode("utf-8")
+                    custom_configs[archive.name] = package.read(
+                        "eosphoros.custom.yaml"
                     ).decode("utf-8")
 
         self.assertEqual(set(members), set(PACKAGE_EXTRAS))
@@ -124,6 +132,13 @@ class PlatformPackageTests(unittest.TestCase):
             self.assertTrue(excluded.isdisjoint(files), name)
             self.assertNotIn("zzc_state/runtime_ops.tsv", files, name)
             self.assertNotIn("tools/build_platform_packages.py", files, name)
+            expected_index = f"{profile_dictionary_name(package_profile(name))}.dict.yaml"
+            self.assertEqual(set(PROFILE_INDEX_FILENAMES) & files, {expected_index}, name)
+            self.assertIn(
+                f"translator/dictionary: {profile_dictionary_name(package_profile(name))}",
+                custom_configs[name],
+                name,
+            )
             self.assertFalse(
                 any(path.startswith("native/") for path in files),
                 f"{name} must not contain the native Fcitx5 source tree",

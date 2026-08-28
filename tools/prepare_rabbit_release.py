@@ -12,12 +12,20 @@ import yaml
 
 try:
     from tools.dictionary_profiles import (
+        PROFILE_INDEX_FILENAMES,
         PROFILES,
         excluded_dictionaries,
-        profiled_dictionary_index,
+        profile_dictionary_name,
+        profiled_custom_config,
     )
 except ModuleNotFoundError:
-    from dictionary_profiles import PROFILES, excluded_dictionaries, profiled_dictionary_index
+    from dictionary_profiles import (
+        PROFILE_INDEX_FILENAMES,
+        PROFILES,
+        excluded_dictionaries,
+        profile_dictionary_name,
+        profiled_custom_config,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -121,8 +129,16 @@ def runtime_files(root: Path, profile: str = "full") -> list[Path]:
         root / "eosphoros.ico",
         root / "eosphoros-ascii.ico",
     ]
-    files.extend(path for path in root.glob("eosphoros*.yaml") if not path.name.endswith(".custom.yaml"))
-    files.extend(root.glob("*.dict.yaml"))
+    files.extend(
+        path
+        for path in root.glob("eosphoros*.yaml")
+        if not path.name.endswith(".custom.yaml")
+        and path.name not in PROFILE_INDEX_FILENAMES
+    )
+    files.extend(
+        path for path in root.glob("*.dict.yaml") if path.name not in PROFILE_INDEX_FILENAMES
+    )
+    files.append(root / f"{profile_dictionary_name(profile)}.dict.yaml")
     for folder in ("dicts/eosphoros", "lua/eosphoros", "opencc/eosphoros"):
         files.extend(path for path in (root / folder).rglob("*") if path.is_file())
     files.append(root / "zzc_state" / "char_parts.tsv")
@@ -162,10 +178,7 @@ def prepare(rabbit_dir: Path, root: Path = ROOT, profile: str = "full") -> None:
             raise FileNotFoundError(f"required runtime file missing: {source}")
         target = data_dir / source.relative_to(root)
         target.parent.mkdir(parents=True, exist_ok=True)
-        if source == root / "eosphoros.extended.dict.yaml" and profile != "full":
-            target.write_bytes(profiled_dictionary_index(source, profile))
-        else:
-            shutil.copy2(source, target)
+        shutil.copy2(source, target)
 
     shutil.rmtree(user_dir, ignore_errors=True)
     (user_dir / "dicts" / "eosphoros").mkdir(parents=True)
@@ -177,7 +190,10 @@ def prepare(rabbit_dir: Path, root: Path = ROOT, profile: str = "full") -> None:
         "eosphoros.ico",
         "eosphoros-ascii.ico",
     ):
-        shutil.copy2(root / name, user_dir / name)
+        if name == "eosphoros.custom.yaml":
+            (user_dir / name).write_bytes(profiled_custom_config(root / name, profile))
+        else:
+            shutil.copy2(root / name, user_dir / name)
     shutil.copy2(
         root / "dicts" / "eosphoros" / "eosphoros.user.dict.yaml",
         user_dir / "dicts" / "eosphoros" / "eosphoros.user.dict.yaml",

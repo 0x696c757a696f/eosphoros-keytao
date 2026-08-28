@@ -1,6 +1,6 @@
 {
   "generated_on": "2026-08-24",
-  "generator_input_sha256": "f2669a6c379c79cd7c033ef9fce9c0d41460ccd4b59ba9c883cb04c58a3e2be2",
+  "generator_input_sha256": "a1a6a06a116bf98bb3278e34221a8b3c295b6a07abdf5b2da9fd386abbc73c3a",
   "sources": {
     "rime_jiandao": {
       "repository": "amorphobia/rime-jiandao",
@@ -48,7 +48,7 @@
       "rows": 36218
     },
     "dicts/eosphoros/eosphoros.ice.dict.yaml": {
-      "sha256": "3a040f0b087e6de5ba74cc0159b27aaa574ea8403a7abafd8f6b3ba1ff2dc89a",
+      "sha256": "a6bfdedd9a71a407090ff04bddad9a478efa83e2d4f6d0b6a0f68e5f70241f08",
       "rows": 361678
     },
     "dicts/eosphoros/eosphoros.en.dict.yaml": {
@@ -98,7 +98,7 @@
   },
   "statistics": {
     "combined_collision_rows": 49973,
-    "combined_rows": 1112429,
+    "combined_rows": 1112424,
     "deduplicated_local": 278286,
     "deduplicated_upstream": 2603,
     "emoji_deduplicated_local": 2340,
@@ -116,7 +116,7 @@
     "generated_rows": 361678,
     "ice_collision_rows": 2288,
     "local_collision_rows": 33726,
-    "local_rows": 750751,
+    "local_rows": 750746,
     "recognized_medicine_names": 1985,
     "skipped_candidate_cap": 36,
     "skipped_collision_budget": 127592,

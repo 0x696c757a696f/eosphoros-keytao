@@ -160,7 +160,7 @@ punctuator:
 
 # ============ 主词典 ============
 translator:
-  dictionary: eosphoros.extended
+  dictionary: eosphoros.full
   db_class: tabledb
   enable_charset_filter: false
   enable_completion: true   # 提示码开关；建议在 eosphoros.custom.yaml 中按需覆盖

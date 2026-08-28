@@ -2,7 +2,7 @@
 # location: dicts/eosphoros/eosphoros.fjcy.dict.yaml
 # encoding: utf-8
 # 词库内容以外挂文件形式导入
-# 请看eosphoros.extended.dict.yaml内容
+# 请看 eosphoros.full.dict.yaml 内容
 ---
 name: eosphoros.fjcy
 version: "2026-08-24"
@@ -355717,7 +355717,6 @@ sort: original
 染起	rfqka
 冉启	rfqki
 燃脐	rfqkou
-然气	rfqku
 然起	rfqkuv
 冉倩	rfqm
 日之泉	rfqo
@@ -462840,7 +462839,6 @@ sort: original
 音感	ybgfo
 银盖	ybgh
 因改	ybghi
-因该	ybghio
 园博馆	ybgi
 由博格	ybgiu
 耀白鲑	ybgiuu
@@ -478779,7 +478777,6 @@ sort: original
 一产	ykjfvo
 一刬	ykjfvv
 以靓	ykjga
-以经	ykjgaa
 翼镜	ykjgai
 以晶	ykjgao
 异腈	ykjgau
@@ -502289,7 +502286,6 @@ sort: original
 再采	zhchvu
 再促	zhcjv
 栽刺	zhcku
-在次	zhckvo
 再辞	zhckvu
 再刺	zhckvv
 在搓	zhclv

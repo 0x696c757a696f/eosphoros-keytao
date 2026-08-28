@@ -3,7 +3,7 @@
 #
 # 键道6 扩展词库控制
 ---
-name: eosphoros.extended
+name: eosphoros.full
 version: "2026-08-24"
 sort: original 
 use_preset_vocabulary: false

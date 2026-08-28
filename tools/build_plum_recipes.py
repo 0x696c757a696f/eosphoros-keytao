@@ -7,9 +7,19 @@ import argparse
 from pathlib import Path
 
 try:
-    from tools.dictionary_profiles import PROFILES, excluded_dictionaries
+    from tools.dictionary_profiles import (
+        PROFILES,
+        excluded_dictionaries,
+        profile_dictionary_name,
+        profiled_dictionary_index,
+    )
 except ModuleNotFoundError:
-    from dictionary_profiles import PROFILES, excluded_dictionaries
+    from dictionary_profiles import (
+        PROFILES,
+        excluded_dictionaries,
+        profile_dictionary_name,
+        profiled_dictionary_index,
+    )
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,7 +30,10 @@ COMMON_FILES = (
     "liangfen*.yaml",
     "pinyin_simp*.yaml",
     "eosphoros*.ico",
-    "eosphoros.*.dict.yaml",
+    "eosphoros.cx.dict.yaml",
+    "eosphoros.gbk.dict.yaml",
+    "liangfen.dict.yaml",
+    "pinyin_simp.dict.yaml",
     "eosphoros.*.schema.yaml",
     "eosphoros.schema.yaml",
     "eosphoros.symbols.yaml",
@@ -93,16 +106,6 @@ PLATFORMS: dict[str, tuple[str, tuple[str, ...]]] = {
 }
 
 
-def dictionary_imports(root: Path = ROOT) -> list[str]:
-    return [
-        line.strip().removeprefix("- ")
-        for line in (root / "eosphoros.extended.dict.yaml")
-        .read_text(encoding="utf-8-sig")
-        .splitlines()
-        if line.strip().startswith("- dicts/eosphoros/")
-    ]
-
-
 def dictionary_files(profile: str, root: Path = ROOT) -> list[str]:
     excluded = set(excluded_dictionaries(profile))
     return [
@@ -112,14 +115,21 @@ def dictionary_files(profile: str, root: Path = ROOT) -> list[str]:
     ]
 
 
+def render_profile_index(profile: str, root: Path = ROOT) -> str:
+    name = profile_dictionary_name(profile)
+    text = profiled_dictionary_index(root / "eosphoros.full.dict.yaml", profile).decode()
+    return text.replace("name: eosphoros.full", f"name: {name}", 1)
+
+
 def render_recipe(platform: str, profile: str, root: Path = ROOT) -> str:
     label, extras = PLATFORMS[platform]
     rx = f"recipe/eosphoros/{platform}-{profile}"
-    files = (*COMMON_FILES, *dictionary_files(profile, root), *extras)
-    excluded_imports = {
-        path.removesuffix(".dict.yaml") for path in excluded_dictionaries(profile)
-    }
-    imports = [item for item in dictionary_imports(root) if item not in excluded_imports]
+    files = (
+        *COMMON_FILES,
+        f"{profile_dictionary_name(profile)}.dict.yaml",
+        *dictionary_files(profile, root),
+        *extras,
+    )
     lines = [
         "# encoding: utf-8",
         "---",
@@ -134,10 +144,9 @@ def render_recipe(platform: str, profile: str, root: Path = ROOT) -> str:
         "    - patch/+:",
         "        schema_list/+/+:",
         "          - schema: eosphoros",
-        "  eosphoros.extended.dict.yaml:",
+        "  eosphoros.custom.yaml:",
         "    - patch/+:",
-        "        import_tables:",
-        *(f"          - {item}" for item in imports),
+        f"        translator/dictionary: {profile_dictionary_name(profile)}",
     ]
     if platform == "rabbit-windows-rime":
         lines.extend(
@@ -178,6 +187,16 @@ def expected_recipes(root: Path = ROOT) -> dict[Path, str]:
     }
 
 
+def expected_profile_indexes(root: Path = ROOT) -> dict[Path, str]:
+    return {
+        root / f"{profile_dictionary_name(profile)}.dict.yaml": render_profile_index(
+            profile, root
+        )
+        for profile in PROFILES
+        if profile != "full"
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     action = parser.add_mutually_exclusive_group(required=True)
@@ -185,7 +204,7 @@ def main() -> int:
     action.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    expected = expected_recipes(ROOT)
+    expected = {**expected_recipes(ROOT), **expected_profile_indexes(ROOT)}
     stale = [path for path, text in expected.items() if not path.is_file() or path.read_text(encoding="utf-8-sig") != text]
     unexpected = sorted(OUTPUT_DIR.glob("*.recipe.yaml")) if OUTPUT_DIR.is_dir() else []
     unexpected = [path for path in unexpected if path not in expected]
@@ -199,7 +218,10 @@ def main() -> int:
         path.write_text(text, encoding="utf-8", newline="\n")
     for path in unexpected:
         path.unlink()
-    print(f"Generated {len(expected)} Plum recipes in {OUTPUT_DIR.relative_to(ROOT).as_posix()}")
+    print(
+        f"Generated {len(expected_recipes(ROOT))} Plum recipes and "
+        f"{len(expected_profile_indexes(ROOT))} derived profile indexes"
+    )
     return 0
 
 
