@@ -19,6 +19,7 @@ $SyncScript = Join-Path $PSScriptRoot "sync_upstream_dictionaries.py"
 $VersionScript = Join-Path $PSScriptRoot "update_versions.py"
 $Fcitx5ThemesScript = Join-Path $PSScriptRoot "build_fcitx5_themes.py"
 $MobileThemesScript = Join-Path $PSScriptRoot "build_mobile_themes.py"
+$ReadmeStatsScript = Join-Path $PSScriptRoot "update_readme_dictionary_stats.py"
 
 if (-not $Python) {
     $Python = (Get-Command python -ErrorAction Stop).Source
@@ -141,6 +142,7 @@ try {
     Invoke-Checked $Python @($Fcitx5ThemesScript)
     Invoke-Checked $Python @($MobileThemesScript)
     Invoke-Checked $Python @($SyncScript, "--check")
+    Invoke-Checked $Python @($ReadmeStatsScript, "--write")
 }
 finally {
     Pop-Location

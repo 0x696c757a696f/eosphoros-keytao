@@ -577,6 +577,7 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertIn("update_versions.py", script)
         self.assertIn("build_fcitx5_themes.py", script)
         self.assertIn("build_mobile_themes.py", script)
+        self.assertIn("update_readme_dictionary_stats.py", script)
         self.assertIn("Get-Command python", script)
         self.assertNotIn("D:\\", script)
 

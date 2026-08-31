@@ -5,6 +5,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import call, patch
 
 
 class TxjxAdapterTests(unittest.TestCase):
@@ -154,6 +155,29 @@ return { core = core, config = config, ext = ext, id = "txjx" }
 
         self.assertTrue(result.conflicted)
         self.assertIn("<<<<<<<", result.text)
+
+    def test_missing_commit_fetches_the_tracked_ref(self) -> None:
+        from tools import adapt_txjx_upstream
+
+        root = Path("fixture")
+        with patch.object(
+            adapt_txjx_upstream,
+            "_git",
+            side_effect=[
+                subprocess.CompletedProcess([], 1),
+                subprocess.CompletedProcess([], 0),
+                subprocess.CompletedProcess([], 0),
+            ],
+        ) as git:
+            adapt_txjx_upstream._ensure_commit(root, "repository", "ref", "commit")
+
+        git.assert_has_calls(
+            [
+                call(root, "cat-file", "-e", "commit^{commit}", check=False),
+                call(root, "fetch", "--no-tags", "repository", "ref"),
+                call(root, "cat-file", "-e", "commit^{commit}", check=False),
+            ]
+        )
 
     def test_repository_adapter_merges_and_advances_lock_atomically(self) -> None:
         from tools.adapt_txjx_upstream import adapt_repository

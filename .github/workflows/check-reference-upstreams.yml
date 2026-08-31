@@ -36,7 +36,7 @@ jobs:
         id: upstream
         shell: pwsh
         run: |
-          python tools/check_xmjd6_upstream.py --json > xmjd6-upstream-report.json
+          python tools/check_legacy_upstream.py --json > xmjd6-upstream-report.json
           $Report = Get-Content xmjd6-upstream-report.json -Raw -Encoding utf8 | ConvertFrom-Json
           "update=$($Report.update_available.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
           "reviewed=$($Report.reviewed_commit)" >> $env:GITHUB_OUTPUT

@@ -129,11 +129,14 @@ def _remote_commit(repository: str, ref: str) -> str:
     return rows[0][0]
 
 
-def _ensure_commit(root: Path, repository: str, commit: str) -> None:
+def _ensure_commit(root: Path, repository: str, ref: str, commit: str) -> None:
     found = _git(root, "cat-file", "-e", f"{commit}^{{commit}}", check=False)
     if found.returncode == 0:
         return
-    _git(root, "fetch", "--no-tags", "--depth=1", repository, commit)
+    _git(root, "fetch", "--no-tags", repository, ref)
+    found = _git(root, "cat-file", "-e", f"{commit}^{{commit}}", check=False)
+    if found.returncode != 0:
+        raise RuntimeError(f"cannot fetch {commit} from {repository} via {ref}")
 
 
 def _try_show_text(root: Path, commit: str, path: str) -> str | None:
@@ -220,8 +223,8 @@ def adapt_repository(
     if base == target:
         return report
 
-    _ensure_commit(root, repository, base)
-    _ensure_commit(root, repository, target)
+    _ensure_commit(root, repository, source["ref"], base)
+    _ensure_commit(root, repository, source["ref"], target)
     ancestry = _git(root, "merge-base", "--is-ancestor", base, target, check=False)
     if ancestry.returncode != 0:
         report["conflicts"].append(
