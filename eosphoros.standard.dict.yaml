@@ -4,7 +4,7 @@
 # 键道6 扩展词库控制
 ---
 name: eosphoros.standard
-version: "2026-08-24"
+version: "2026-09-07"
 sort: original 
 use_preset_vocabulary: false
 columns:

@@ -2,12 +2,12 @@
 # encoding: utf-8
 #
 # Generated from amorphobia/rime-jiandao; do not edit by hand.
-# Source commit: 72eca2cf92adb40b7363cfb81307f5f213585d2f
+# Source commit: c9d4badf9d1298ab7021078f22ce5d156a456745
 # Source file: dicts/01.danzi.txt
 # Header/concatenation behavior follows scripts/make_dicts.sh.
 ---
 name: eosphoros.danzi
-version: "2026-08-24"
+version: "2026-09-07"
 sort: original
 ...
 
@@ -1726,6 +1726,8 @@ sort: original
 惨	cfooao
 𠻝	cfooi
 𠻝	cfooiu
+㦧	cfoou
+㦧	cfoouv
 憯	cfoov
 惭	cfoova
 憯	cfoova
@@ -1755,6 +1757,7 @@ sort: original
 璨	cfvvi
 䗞	cfvvia
 䘉	cfvvia
+蝅	cfvvia
 蚕	cfvvia
 璨	cfvviv
 菜	ch
@@ -6792,8 +6795,12 @@ sort: original
 缴	flaaui
 斲	flaauu
 淖	flai
+𫜼	flaia	#无读音
+𫜼	flaiao	#无读音
 浊	flaiav
+𱂢	flaiv
 淖	flaivo
+𱂢	flaivu
 浞	flao
 叕	flaoa
 叕	flaoao
@@ -6808,7 +6815,10 @@ sort: original
 涿	flavua
 捉	fli
 佛	flia
+䖦	fliaa
+䖦	fliaai
 劅	fliai
+㑁	fliaii
 劅	fliaii
 斀	fliaiv
 仏	fliao
@@ -6883,12 +6893,15 @@ sort: original
 彴	fluu
 彴	fluuua
 䵵	fluv
+䂐	fluva
+䂐	fluvai
 䵵	fluvia
 酌	flv
 棳	flva
 棳	flvaoa
 棹	flvi
-梻	flvia	#日本汉字
+聉	flvia
+聉	flviai
 梻	flviav	#日本汉字
 斮	flviu
 酌	flviua
@@ -12500,11 +12513,14 @@ sort: original
 觉	jho
 诀	jhoa
 谲	jhoaa
+袦	jhoaai
 谲	jhoaao
 诀	jhoaav
 吷	jhoav
 吷	jhoavu
 蹶	jhoi
+𧿺	jhoia
+𧿺	jhoiai
 𫏋	jhoiu
 𫏋	jhoiuv
 噱	jhoiv
@@ -12620,6 +12636,8 @@ sort: original
 滀	jjao
 滀	jjaova
 娕	jjau
+㔘	jjaua
+㔘	jjauai
 㛀	jjauu
 㛀	jjauua
 𡝈	jjauv
@@ -12688,6 +12706,8 @@ sort: original
 蹰	jjoiv
 蹰	jjoivu
 怵	jjoo
+㤕	jjooa
+㤕	jjooai
 慉	jjooo
 慉	jjooov
 㤘	jjoou
@@ -15325,6 +15345,8 @@ sort: original
 㗄	kjoi
 㗄	kjoiai
 窟	kjoo
+窋	kjooa
+窋	kjooai
 窟	kjooav
 喾	kjoou
 喾	kjoouv
@@ -16261,6 +16283,8 @@ sort: original
 叻	leoauu
 忇	leoo
 忇	leooau
+韷	leov
+韷	leovai
 嘞	leovii
 肋	leu
 饹	leua
@@ -16738,6 +16762,7 @@ sort: original
 禄	ljoa
 祿	ljoaa
 祿	ljoaaa
+䘵	ljoaav
 禄	ljoaav
 鹭	ljoi
 㫽	ljoia
@@ -16790,6 +16815,7 @@ sort: original
 𬙎	ljuvi
 𬙎	ljuviv
 簏	ljuvo
+簶	ljuvoa
 簏	ljuvov
 氇	ljuvua
 稑	ljuvv
@@ -18459,6 +18485,7 @@ sort: original
 眸	mdiaao
 蛑	mdiaao
 幭	mdiai
+䁾	mdiaii
 蠛	mdiaii
 幭	mdiaii
 侔	mdiao
@@ -19721,6 +19748,8 @@ sort: original
 夘	mzuaai
 卯	mzuaai
 贸	mzuaao
+䀤	mzuai
+䀤	mzuaia
 猫	mzuaii
 皃	mzui
 㒵	mzuiu
@@ -20535,6 +20564,8 @@ sort: original
 㧱	nsiviu
 哪	nso
 衲	nsoa
+袦	nsoaa
+袦	nsoaai
 衲	nsoaia
 𠸎	nsoau
 𠸎	nsoauv
@@ -20554,6 +20585,8 @@ sort: original
 䶺	nsuia
 肭	nsuiau
 䶺	nsuiau
+貀	nsuo
+貀	nsuoai
 南	nsuoia
 䏧	nsuu
 䏧	nsuuao
@@ -22755,6 +22788,8 @@ sort: original
 𠴫	qjoiv
 𠴫	qjoivv
 丶	qjoo	#全码
+窋	qjooa
+窋	qjooai
 㿾	qjooi	#繁體 ⿱㝉皿
 㿾	qjooia	#繁體 ⿱㝉皿
 宔	qjooo
@@ -22798,6 +22833,7 @@ sort: original
 舳	qjuuia
 竹	qjuv
 邾	qjuva
+笜	qjuvai
 邾	qjuvai
 筯	qjuvi
 筯	qjuvia
@@ -23178,6 +23214,7 @@ sort: original
 曲	qli
 瞿	qlia
 黢	qliaa
+䖦	qliaai
 黢	qliaao
 蛆	qliai
 蛐	qliaia
@@ -26050,6 +26087,8 @@ sort: original
 頺	tbuvvu	#繁体 ⿰秀页
 忒	tbv
 𱰥	tbvi
+聉	tbvia
+聉	tbviai
 𱰥	tbviav
 墤	tbvo	#繁体 ⿰土贵
 忒	tbvoao
@@ -26752,6 +26791,8 @@ sort: original
 䴘	tkuuua
 朑	tkuv
 朑	tkuvii
+㬱	tkuvo
+㬱	tkuvoi
 笹	tkuvv	#日本汉字
 笹	tkuvvi	#日本汉字
 替	tkv
@@ -27211,6 +27252,8 @@ sort: original
 㛥	tsau
 她	tsauai
 㛥	tsauao
+㳫	tsaui
+㳫	tsauiv
 㳠	tsav
 㳠	tsavuo
 挞	tsi
@@ -28968,6 +29011,7 @@ sort: original
 杈	wsvaoo
 査	wsvi
 靫	wsvia
+聉	wsviai
 靫	wsviao
 査	wsviav
 韈	wsvii
@@ -29601,6 +29645,8 @@ sort: original
 馨	xbv
 軐	xbva	#繁体 ⿰车卂
 軐	xbvaav	#繁体 ⿰车卂
+鬵	xbvav
+鬵	xbvavo
 枔	xbvi
 枔	xbvioa
 杺	xbvo
@@ -35471,6 +35517,8 @@ sort: original
 责	zevvao
 樍	zevvvi	#繁体 ⿰木责
 𪷽	zfa
+㳫	zfau
+㳫	zfauiv
 𪷽	zfauvi
 濽	zfav	#繁体 ⿰氵𰷣
 濽	zfavvu	#繁体 ⿰氵𰷣
@@ -35947,6 +35995,8 @@ sort: original
 𭦌	zruaoi
 矰	zruvou
 増	zrv
+鬵	zrva
+鬵	zrvavo
 橧	zrvo
 䰝	zrvoo
 增	zrvoou

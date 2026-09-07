@@ -5,7 +5,7 @@
 # 请看 eosphoros.full.dict.yaml 内容
 ---
 name: eosphoros.fjcy
-version: "2026-08-24"
+version: "2026-09-07"
 sort: original
 #有需要请自行修改,修改请遵循键道6拆字规则
 #词组→bmmso
