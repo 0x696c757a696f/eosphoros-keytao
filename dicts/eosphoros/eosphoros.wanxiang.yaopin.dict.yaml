@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: e7f08f64f48076a07df265289d7beb401fd9fd34
+# Source commit: 97844f1ea0c8245dbb7de51fded10a19fe63aa27
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 11373
-# Generated rows in category: 9540
+# Source rows in category: 11371
+# Generated rows in category: 9538
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-08-24"
+version: "2026-09-07"
 sort: original
 ...
 
@@ -4716,9 +4716,7 @@ sort: original
 芦可替尼	lktn
 罗库溴铵注射液	lkxyi
 六氯苯乳剂	llbjou
-亮丽的名片	lldpov
-靓丽的名片	lldpv
-硫利哒嗪片	lldpvu
+硫利哒嗪片	lldpv
 卵磷脂片	llfpuv
 硫柳汞防腐剂	llgjv
 灵龙感冒胶囊	llgna

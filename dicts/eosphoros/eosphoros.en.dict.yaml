@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Generated from iDvel/rime-ice; do not edit by hand.
-# Source commit: 75e6572bebc05b49021e842949ce947882e3e4b2
+# Source commit: fbb516b2786e4d5444383706d13c31c2e4d10c08
 # Sources: en_dicts/en.dict.yaml, en_dicts/en_ext.dict.yaml
 # Codes are normalized to lowercase letters and prefixed with i.
 # Imported by the main eosphoros table; no auxiliary schema is needed.
@@ -13,7 +13,7 @@
 # Skipped local code collisions: 2
 ---
 name: eosphoros.en
-version: "2026-08-24"
+version: "2026-09-07"
 sort: original
 ...
 

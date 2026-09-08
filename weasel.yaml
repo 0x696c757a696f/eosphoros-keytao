@@ -1,7 +1,7 @@
 # Weasel settings
 # encoding: utf-8
 
-config_version: "2026-08-24"
+config_version: "2026-09-07"
 
 app_options:
   WindowsTerminal.exe: {ascii_mode: true}
