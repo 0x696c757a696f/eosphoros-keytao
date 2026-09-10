@@ -1,7 +1,7 @@
 ---
 # location: dicts/eosphoros/eosphoros.cizu.dict.yaml
 name: eosphoros.cizu
-version: "2026-09-07"
+version: "2026-09-10"
 sort: original
 ...
 #region 核心词库
@@ -102520,6 +102520,7 @@ mua~	mjms
 模量	mllx
 摸了摸	mlm
 没礼貌	mlma
+命令面板	mlmbi
 磨灭	mlmd
 莫名	mlmg
 莫明	mlmgi
@@ -117610,6 +117611,7 @@ LosslessScaling	phqia
 乔装打扮	qfdbu
 战斗	qfdd
 沾都	qfdda
+强制对等	qfddau
 战痘	qfddi
 蘸豆	qfddiv
 起伏跌宕	qfddv
@@ -140058,6 +140060,7 @@ LosslessScaling	phqia
 投其所好	tqsh
 抬起头	tqt
 铜墙铁壁	tqtb
+提前退出	tqtji
 抬起头来	tqtl
 拓展坞	tqw
 提取物	tqwiv

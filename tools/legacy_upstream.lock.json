@@ -14,13 +14,16 @@
       "玻尔效应",
       "诊断试剂盒",
       "买量市场",
-      "控制技能"
+      "控制技能",
+      "命令面板",
+      "强制对等",
+      "提前退出"
     ],
     "collision_policy": "derive valid JianDao 6 candidates from local single-character codes and choose the first unoccupied suffix",
     "symbols": "integrated the simplified Chinese /jq labels",
     "jieqi_countdown": "not integrated because the local astronomical implementation is more accurate than fixed average dates",
     "anniversary_countdown": "not integrated because the legacy translator and schema paths no longer exist locally",
     "emoji_policy": "retain the local namespaced OpenCC and Rime-Ice emoji pipeline",
-    "latest_review": "Reviewed through 3691ef5: retain local implementations for date/time, reverse lookup, English input, dynamic phrases, and backticks; do not import the incompatible O-mode schema or bulk cizu/fjcy/emoji tables. No additional fixed terms selected."
+    "latest_review": "Reviewed through 3691ef5: retain local implementations for date/time, reverse lookup, English input, dynamic phrases, and backticks; do not import the incompatible O-mode schema or bulk cizu/fjcy/emoji tables. Added the fixed terms 命令面板, 强制对等, and 提前退出."
   }
 }
