@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "updated": "2026-08-17",
+  "updated": "2026-09-10",
   "repository": "https://github.com/hugh7007/xmjd6-rere.git",
   "ref": "refs/heads/main",
-  "reviewed_commit": "056f250e42dc9f42d72d336bca7f56807669235f",
+  "reviewed_commit": "3691ef576371432ed733b5a3c1c941eca067dcbb",
   "review_base": "39717e178bd1ad6e49f6cb8b24e2e1a39a7f4710",
   "review": {
     "date_and_time": "already implemented locally with non-padded Chinese month/day and richer eo candidates",
@@ -20,6 +20,7 @@
     "symbols": "integrated the simplified Chinese /jq labels",
     "jieqi_countdown": "not integrated because the local astronomical implementation is more accurate than fixed average dates",
     "anniversary_countdown": "not integrated because the legacy translator and schema paths no longer exist locally",
-    "emoji_policy": "retain the local namespaced OpenCC and Rime-Ice emoji pipeline"
+    "emoji_policy": "retain the local namespaced OpenCC and Rime-Ice emoji pipeline",
+    "latest_review": "Reviewed through 3691ef5: retain local implementations for date/time, reverse lookup, English input, dynamic phrases, and backticks; do not import the incompatible O-mode schema or bulk cizu/fjcy/emoji tables. No additional fixed terms selected."
   }
 }
