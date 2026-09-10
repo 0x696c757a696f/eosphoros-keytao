@@ -119,6 +119,15 @@ test("Chinese Gregorian dates do not pad month or day", function()
     assert_equal(yielded[1] and yielded[1].text, "2026年1月4日", "official Chinese date")
 end)
 
+test("ancient time candidates use two-hour watches and quarter-hours", function()
+    unload("eosphoros.eosphoros_time_core")
+    local translator = require("eosphoros.eosphoros_time_core")
+
+    assert_equal(translator.format_sichen_ke(11, 36), "午初二刻", "11:36")
+    assert_equal(translator.format_sichen_ke(11, 45), "午初三刻", "11:45")
+    assert_equal(translator.format_sichen_ke(12, 0), "午正初刻", "12:00")
+end)
+
 test("ZZC candidates stay ahead of ordinary multi-character candidates", function()
     unload("eosphoros.eosphoros_completion")
     package.loaded["eosphoros.zzc.eosphoros_zzc_core"] = {

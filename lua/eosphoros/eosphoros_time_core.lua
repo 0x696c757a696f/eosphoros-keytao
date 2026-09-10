@@ -32,6 +32,24 @@ local function format_chinese_gregorian_date(year, month, day)
     return string_format("%04d年%d月%d日", tonumber(year), tonumber(month), tonumber(day))
 end
 
+local function format_sichen_ke(hour, minute)
+    local names = { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥" }
+    local ke_names = { "初", "一", "二", "三" }
+    hour = tonumber(hour) or 0
+    minute = tonumber(minute) or 0
+
+    local index = math_floor((hour + 1) / 2) + 1
+    if index > 12 then index = index - 12 end
+
+    local start_hour = (23 + (index - 1) * 2) % 24
+    local elapsed = ((hour - start_hour) * 60 + minute) % 1440
+    local ke_index = math_floor(elapsed / 15)
+    if ke_index < 4 then
+        return names[index] .. "初" .. ke_names[ke_index + 1] .. "刻"
+    end
+    return names[index] .. "正" .. ke_names[ke_index - 3] .. "刻"
+end
+
 -- 全局计算缓存：以“分钟”为 Key
 local _G_CACHE = {
     key = nil,
@@ -1465,8 +1483,15 @@ local function translator(input, seg)
         local t = os_date("*t")
         local time = string_format("%d:%02d:%02d", t.hour, t.min, t.sec)
         local iso = string_format("%04d-%02d-%02d", t.year, t.month, t.day)
+        local ymd = string_format("%04d%02d%02d", t.year, t.month, t.day)
         yield(Candidate("date", seg.start, seg._end, iso.." "..time, ""))
         yield(Candidate("time", seg.start, seg._end, time, ""))
+        InitAstro()
+        local ok, lunar = pcall(Date2LunarDate, ymd)
+        FreeAstro()
+        if ok and type(lunar) == "string" and lunar ~= "" then
+            yield(Candidate("date", seg.start, seg._end, lunar .. format_sichen_ke(t.hour, t.min), "古代时刻"))
+        end
 
     -- 绝控代码 (jkdm)
     elseif (input == "jkdm") then
@@ -1517,6 +1542,7 @@ end
 
 M.func = translator
 M.fini = fini
+M.format_sichen_ke = format_sichen_ke
 
 registry.register("time", function()
     fini()
