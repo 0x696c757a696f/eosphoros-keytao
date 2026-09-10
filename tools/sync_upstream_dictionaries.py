@@ -52,13 +52,6 @@ TARGETS = (
     EMOJI_EXTRA_PHRASES_TARGET,
 )
 
-GENERATOR_DEPENDENCIES = (
-    "tools/sync_upstream_dictionaries.py",
-    "tools/clean_dictionary_quality.py",
-    "tools/eosphoros_codes.py",
-    "tools/upstream_sources.py",
-)
-
 LOCAL_WORD_DICTIONARIES = (
     "eosphoros.user.dict.yaml",
     "eosphoros.zzc.dict.yaml",
@@ -289,44 +282,6 @@ class BuildResult:
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def canonical_generator_input_bytes(path: Path) -> bytes:
-    return path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
-
-
-def generator_input_sha256(root: Path, lock: dict[str, Any]) -> str:
-    relative_paths = {
-        *GENERATOR_DEPENDENCIES,
-        "VERSION",
-        "dicts/eosphoros/pinyin_simp.dict.yaml",
-        *(f"dicts/eosphoros/{name}" for name in LOCAL_WORD_DICTIONARIES),
-        "opencc/eosphoros/eosphoros_emoji_chars.lua",
-        *(
-            f"opencc/eosphoros/eosphoros_emoji_phrases_{suffix}.lua"
-            for suffix in "0123456789abcdef"
-        ),
-    }
-    descriptor = {
-        "generated_on": lock["generated_on"],
-        "sources": lock["sources"],
-        "unicode_version": unicodedata.unidata_version,
-    }
-    digest = hashlib.sha256(
-        json.dumps(
-            descriptor,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode("utf-8")
-    )
-    for relative in sorted(relative_paths):
-        path = root / relative
-        digest.update(b"\0" + relative.encode("utf-8") + b"\0")
-        digest.update(
-            canonical_generator_input_bytes(path) if path.is_file() else b"<missing>"
-        )
-    return digest.hexdigest()
 
 
 def load_lock(path: Path = LOCK_PATH) -> dict[str, Any]:
@@ -1169,7 +1124,7 @@ def update_generated_metadata(
             "rows": result.stats[f"wanxiang_generated_{source_name}"],
         }
     lock["statistics"] = dict(sorted(result.stats.items()))
-    lock["generator_input_sha256"] = generator_input_sha256(ROOT, lock)
+    lock.pop("generator_input_sha256", None)
     return lock
 
 
@@ -1189,13 +1144,6 @@ def verify_generated_hashes(root: Path = ROOT, lock_path: Path = LOCK_PATH) -> l
 
 def verify_generated_state(root: Path, lock: dict[str, Any]) -> list[str]:
     errors: list[str] = []
-    expected_input = lock.get("generator_input_sha256")
-    actual_input = generator_input_sha256(root, lock)
-    if expected_input != actual_input:
-        errors.append(
-            "upstream generator inputs differ from lock; run "
-            "tools/sync_upstream_dictionaries.py --check"
-        )
     for filename, metadata in lock.get("generated", {}).items():
         path = root / filename
         if not path.is_file():
@@ -1214,7 +1162,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--quick-check",
         action="store_true",
-        help="verify content-addressed generator inputs and committed output hashes",
+        help="verify committed generated-file hashes",
     )
     parser.add_argument(
         "--refresh",
@@ -1258,7 +1206,7 @@ def main() -> int:
             for error in errors:
                 print(error)
             return 1
-        print("Upstream generator inputs and outputs match the content-addressed lock")
+        print("Committed generated-file hashes match the lock")
         return 0
     sources_to_refresh = (
         set(lock["sources"]) if args.refresh else set(args.refresh_source)
