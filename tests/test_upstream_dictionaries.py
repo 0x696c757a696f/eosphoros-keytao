@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import tempfile
 import unittest
 from copy import deepcopy
 from collections import defaultdict
