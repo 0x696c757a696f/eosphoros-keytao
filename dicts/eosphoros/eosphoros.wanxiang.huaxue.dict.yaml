@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 97844f1ea0c8245dbb7de51fded10a19fe63aa27
+# Source commit: bbd5081adfbcf88cd6754ee12f1aa95c4200af16
 # Selected source: dicts/huaxue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 17503
-# Generated rows in category: 10884
+# Source rows in category: 17501
+# Generated rows in category: 10883
 ---
 name: eosphoros.wanxiang.huaxue
-version: "2026-09-07"
+version: "2026-09-14"
 sort: original
 ...
 
@@ -1806,8 +1806,7 @@ sort: original
 水里的硫化侣	eldla
 水磷铈矿	eleka
 十六十八酸	elesu
-双氯芬酸钾栓	elfea
-双氯芬酸钠栓	elfeau
+双氯芬	elfaui
 双氯芬酸钠乳膏	elfgau
 双氯芬酸钾	elfjau
 双氯芬酸钾颗粒	elfl

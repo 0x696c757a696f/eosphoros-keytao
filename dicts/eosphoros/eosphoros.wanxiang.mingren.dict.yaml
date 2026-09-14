@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 97844f1ea0c8245dbb7de51fded10a19fe63aa27
+# Source commit: bbd5081adfbcf88cd6754ee12f1aa95c4200af16
 # Selected source: dicts/mingren.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 18366
+# Source rows in category: 18392
 # Generated rows in category: 7472
 ---
 name: eosphoros.wanxiang.mingren
-version: "2026-09-07"
+version: "2026-09-14"
 sort: original
 ...
 

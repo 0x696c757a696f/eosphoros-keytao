@@ -2,12 +2,12 @@
 # encoding: utf-8
 #
 # Generated from amorphobia/rime-jiandao; do not edit by hand.
-# Source commit: c9d4badf9d1298ab7021078f22ce5d156a456745
+# Source commit: d816ebabccc29f193cc679e70a2928b4e8621011
 # Source file: dicts/01.danzi.txt
 # Header/concatenation behavior follows scripts/make_dicts.sh.
 ---
 name: eosphoros.danzi
-version: "2026-09-07"
+version: "2026-09-14"
 sort: original
 ...
 
@@ -14406,6 +14406,7 @@ sort: original
 呟	jtoova
 鹃	jtou
 勌	jtoua
+絭	jtouaa
 卷	jtouaa
 劵	jtouau
 勬	jtouau
@@ -14413,14 +14414,18 @@ sort: original
 巻	jtouav
 蠲	jtoui
 帣	jtouia
+䖭	jtouia
 眷	jtouia
 蠲	jtouia
 焆	jtouo
 焆	jtouou
+觠	jtouu
 鹃	jtouua
+觠	jtouua
 桊	jtouv
 瓹	jtouva
 灷	jtouvu
+䄅	jtouvv
 桊	jtouvv
 狷	jtu
 朘	jtua
@@ -15234,6 +15239,8 @@ sort: original
 屷	kgiaa
 㞧	kgiaau
 屷	kgiaau
+𩩈	kgiai
+𩩈	kgiaiv
 侩	kgii
 蒯	kgiii
 蒉	kgiiia
@@ -15262,6 +15269,8 @@ sort: original
 𫞷	kguviv
 筷	kguvoo
 块	kgv
+𫘽	kgvi
+𫘽	kgviiv
 凷	kgvo
 凷	kgvoai
 块	kgvoav
@@ -15417,9 +15426,14 @@ sort: original
 籗	kluvvo
 栝	klv
 鞟	klvi
+𫘽	klvii
+𫘽	klviiv
 鞹	klvio
 鞟	klviov
 鞹	klviov
+䯺	klviu
+䯺	klviua
+髺	klviuv
 䩹	klviv
 䩹	klvivo
 霩	klvo
@@ -24187,12 +24201,14 @@ sort: original
 啳	qtoouv
 拳	qtou
 弮	qtoua
+絭	qtouaa
 券	qtouau
 弮	qtouav
 烇	qtoui
 拳	qtouiu
 烇	qtouiv
 牶	qtouu
+觠	qtouua
 牶	qtouuv
 痊	qtov
 痊	qtoviv
@@ -25874,6 +25890,8 @@ sort: original
 𮅕	stuvi
 算	stuvia
 𮅕	stuvia
+笇	stuvo
+笇	stuvov
 筭	stuvvv
 酸	stv
 酸	stviao
@@ -33614,6 +33632,8 @@ sort: original
 戉	yhvaau
 𫐄	yhvav
 𫐄	yhvavu
+髺	yhvi
+髺	yhviuv
 䟑	yhvo
 䟑	yhvoiv
 越	yhvova
