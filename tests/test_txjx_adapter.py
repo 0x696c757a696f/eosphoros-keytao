@@ -16,6 +16,7 @@ class TxjxAdapterTests(unittest.TestCase):
         base_text: str,
         upstream_text: str,
         mapping: dict[str, object] | None,
+        ignored_paths: list[str] | None = None,
     ) -> tuple[Path, str, str]:
         temp = tempfile.TemporaryDirectory(prefix="eosphoros-txjx-adapter-test-")
         self.addCleanup(temp.cleanup)
@@ -67,11 +68,19 @@ class TxjxAdapterTests(unittest.TestCase):
             json.dumps(lock), encoding="utf-8"
         )
         (root / "tools" / "txjx_adaptation_manifest.json").write_text(
-            json.dumps({"schema": 1, "mappings": [mapping] if mapping else []}),
+            json.dumps(
+                {
+                    "schema": 1,
+                    "ignored_paths": ignored_paths or [],
+                    "mappings": [mapping] if mapping else [],
+                }
+            ),
             encoding="utf-8",
         )
         (root / "THIRD_PARTY.md").write_text(
-            f"- Integrated commit: `{base}`\n", encoding="utf-8"
+            "- Upstream: <https://github.com/wzxmer/rime-txjx>\n"
+            f"- Integrated commit: `{base}`\n",
+            encoding="utf-8",
         )
         return root, base, target
 
@@ -228,6 +237,63 @@ return { core = core, config = config, ext = ext, id = "txjx" }
         self.assertTrue(report["blocked"])
         self.assertFalse(report["written"])
         self.assertFalse(report["lock_updated"])
+        lock = json.loads(
+            (root / "tools" / "upstream_code.lock.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(lock["upstreams"]["rime-txjx"]["commit"], base)
+
+    def test_ignored_source_does_not_block_or_update_local_files(self) -> None:
+        from tools.adapt_txjx_upstream import adapt_repository
+
+        root, _, target = self.make_upstream_fixture(
+            source_path="lua/equivalent_upstream_module.lua",
+            base_text="return false\n",
+            upstream_text="return true\n",
+            mapping=None,
+            ignored_paths=["lua/equivalent_upstream_module.lua"],
+        )
+
+        report = adapt_repository(
+            root, target=target, write=True, update_lock=True
+        )
+
+        self.assertFalse(report["blocked"])
+        self.assertEqual(
+            report["ignored_paths"], ["lua/equivalent_upstream_module.lua"]
+        )
+        self.assertFalse(report["written"])
+        self.assertTrue(report["lock_updated"])
+
+    def test_invalid_attribution_does_not_write_partial_adaptation(self) -> None:
+        from tools import adapt_txjx_upstream
+
+        root, base, target = self.make_upstream_fixture(
+            source_path="lua/txjx_core.lua",
+            base_text='local behavior = "old"\n',
+            upstream_text='local behavior = "fixed"\n',
+            mapping={
+                "source": "lua/txjx_core.lua",
+                "target": "lua/eosphoros/eosphoros_core.lua",
+                "transform": "lua_namespace",
+            },
+        )
+        local = root / "lua" / "eosphoros" / "eosphoros_core.lua"
+        local.parent.mkdir(parents=True)
+        local.write_text('local behavior = "old"\n', encoding="utf-8")
+        (root / "THIRD_PARTY.md").write_text("no attribution\n", encoding="utf-8")
+
+        with patch.object(
+            adapt_txjx_upstream,
+            "merge_adapted_text",
+            return_value=adapt_txjx_upstream.MergeResult(
+                'local behavior = "fixed"\n', False
+            ),
+        ), self.assertRaisesRegex(RuntimeError, "cannot update rime-txjx"):
+            adapt_txjx_upstream.adapt_repository(
+                root, target=target, write=True, update_lock=True
+            )
+
+        self.assertEqual(local.read_text(encoding="utf-8"), 'local behavior = "old"\n')
         lock = json.loads(
             (root / "tools" / "upstream_code.lock.json").read_text(encoding="utf-8")
         )

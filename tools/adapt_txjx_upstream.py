@@ -19,7 +19,6 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCK_PATH = ROOT / "tools" / "upstream_code.lock.json"
 MANIFEST_PATH = ROOT / "tools" / "txjx_adaptation_manifest.json"
 THIRD_PARTY_PATH = ROOT / "THIRD_PARTY.md"
-BLOCKED_EXIT = 20
 
 
 @dataclass(frozen=True)
@@ -168,25 +167,26 @@ def _is_critical_unmapped(path: str) -> bool:
     return path.endswith(".py") or name.startswith(("Linux_", "Mac_", "iOS_"))
 
 
-def _update_metadata(root: Path, lock: dict[str, Any], target: str) -> None:
+def _metadata_updates(root: Path, lock: dict[str, Any], target: str) -> dict[Path, str]:
     source = lock["upstreams"]["rime-txjx"]
     source["commit"] = target
     lock["updated"] = date.today().isoformat()
-    (root / LOCK_PATH.relative_to(ROOT)).write_text(
-        json.dumps(lock, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-        newline="\n",
-    )
     third_party_path = root / THIRD_PARTY_PATH.relative_to(ROOT)
     third_party = third_party_path.read_text(encoding="utf-8")
     third_party, count = re.subn(
-        r"(?m)^- Integrated commit: `[0-9a-f]{40}`$",
-        f"- Integrated commit: `{target}`",
+        r"(?m)(^- Upstream: <https://github.com/wzxmer/rime-txjx>\n- Integrated commit: `)[0-9a-f]{40}(`)$",
+        rf"\g<1>{target}\g<2>",
         third_party,
     )
     if count != 1:
         raise RuntimeError("cannot update rime-txjx commit in THIRD_PARTY.md")
-    third_party_path.write_text(third_party, encoding="utf-8", newline="\n")
+    return {
+        root / LOCK_PATH.relative_to(ROOT): json.dumps(
+            lock, ensure_ascii=False, indent=2
+        )
+        + "\n",
+        third_party_path: third_party,
+    }
 
 
 def adapt_repository(
@@ -213,6 +213,7 @@ def adapt_repository(
         "adapted_targets": [],
         "unchanged_targets": [],
         "conflicts": [],
+        "ignored_paths": [],
         "unmapped_paths": [],
         "critical_unmapped_paths": [],
         "windows_exe_rebuild_required": False,
@@ -239,7 +240,13 @@ def adapt_repository(
     changed_paths = _changed_paths(root, base, target)
     report["changed_upstream_paths"] = changed_paths
     mappings = {item["source"]: item for item in manifest["mappings"]}
-    report["unmapped_paths"] = [path for path in changed_paths if path not in mappings]
+    ignored_paths = set(manifest.get("ignored_paths", []))
+    report["ignored_paths"] = [
+        path for path in changed_paths if path in ignored_paths
+    ]
+    report["unmapped_paths"] = [
+        path for path in changed_paths if path not in mappings and path not in ignored_paths
+    ]
     report["critical_unmapped_paths"] = [
         path for path in report["unmapped_paths"] if _is_critical_unmapped(path)
     ]
@@ -303,11 +310,13 @@ def adapt_repository(
     blocked = bool(report["conflicts"] or report["critical_unmapped_paths"])
     report["blocked"] = blocked
     if write and not blocked:
-        for path, content in pending.items():
+        updates = dict(pending)
+        if update_lock:
+            updates.update(_metadata_updates(root, lock, target))
+        for path, content in updates.items():
             path.write_text(content, encoding="utf-8", newline="\n")
         report["written"] = bool(pending)
         if update_lock:
-            _update_metadata(root, lock, target)
             report["lock_updated"] = True
     return report
 
@@ -346,7 +355,7 @@ def main() -> int:
         print(f"adapted targets: {len(report['adapted_targets'])}")
         print(f"conflicts: {len(report['conflicts'])}")
         print(f"critical unmapped paths: {len(report['critical_unmapped_paths'])}")
-    return BLOCKED_EXIT if report.get("blocked") else 0
+    return 0
 
 
 if __name__ == "__main__":

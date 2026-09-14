@@ -1,11 +1,11 @@
 {
   "schema": 1,
-  "updated": "2026-08-09",
+  "updated": "2026-09-14",
   "upstreams": {
     "rime-txjx": {
       "repository": "https://github.com/wzxmer/rime-txjx.git",
       "ref": "refs/heads/main",
-      "commit": "377001a70e73727b4e3d8cb7b6de9ee401ab3a98",
+      "commit": "a8769140e4d74342123c1dd7fc67e8e433b0c87d",
       "license": "MIT",
       "license_file": "licenses/rime-txjx-MIT.txt",
       "integration": "adapted",

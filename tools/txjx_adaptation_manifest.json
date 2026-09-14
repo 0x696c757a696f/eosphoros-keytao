@@ -1,5 +1,8 @@
 {
   "schema": 1,
+  "ignored_paths": [
+    "lua/txjx_candidate_overflow_processor.lua"
+  ],
   "mappings": [
     {"source": "lua/common/txjx_cache_registry.lua", "target": "lua/eosphoros/common/eosphoros_cache_registry.lua", "transform": "lua_namespace"},
     {"source": "lua/common/txjx_candidate.lua", "target": "lua/eosphoros/common/eosphoros_candidate.lua", "transform": "lua_namespace"},

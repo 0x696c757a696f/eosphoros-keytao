@@ -38,7 +38,7 @@ jobs:
         run: |
           pixi run python tools/adapt_txjx_upstream.py --write --update-lock --json > txjx-adaptation-report.json
           $Status = $LASTEXITCODE
-          if ($Status -ne 0 -and $Status -ne 20) {
+          if ($Status -ne 0) {
             exit $Status
           }
           $Report = Get-Content txjx-adaptation-report.json -Raw -Encoding utf8 | ConvertFrom-Json
