@@ -45,6 +45,7 @@ engine:
     - key_binder
     - speller              # 拼写处理
     - punctuator           # 标点处理
+    - lua_processor@*eosphoros/eosphoros_candidate_overflow_processor
     - selector             # 候选选择
     - navigator            # 导航键
     - express_editor       # 快速编辑

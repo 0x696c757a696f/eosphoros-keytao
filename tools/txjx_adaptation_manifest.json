@@ -1,8 +1,6 @@
 {
   "schema": 1,
-  "ignored_paths": [
-    "lua/txjx_candidate_overflow_processor.lua"
-  ],
+  "ignored_paths": [],
   "mappings": [
     {"source": "lua/common/txjx_cache_registry.lua", "target": "lua/eosphoros/common/eosphoros_cache_registry.lua", "transform": "lua_namespace"},
     {"source": "lua/common/txjx_candidate.lua", "target": "lua/eosphoros/common/eosphoros_candidate.lua", "transform": "lua_namespace"},
@@ -18,6 +16,7 @@
     {"source": "lua/input/txjx_punctuation.lua", "target": "lua/eosphoros/input/eosphoros_punctuation.lua", "transform": "lua_namespace"},
     {"source": "lua/input/txjx_topup.lua", "target": "lua/eosphoros/input/eosphoros_topup.lua", "transform": "lua_namespace"},
     {"source": "lua/txjx_calculator_core.lua", "target": "lua/eosphoros/eosphoros_calculator_core.lua", "transform": "lua_namespace"},
+    {"source": "lua/txjx_candidate_overflow_processor.lua", "target": "lua/eosphoros/eosphoros_candidate_overflow_processor.lua", "transform": "lua_namespace"},
     {"source": "lua/txjx_completion.lua", "target": "lua/eosphoros/eosphoros_completion.lua", "transform": "lua_namespace"},
     {"source": "lua/txjx_core.lua", "target": "lua/eosphoros/eosphoros_core.lua", "transform": "lua_namespace"},
     {"source": "lua/txjx_core_hint_data.lua", "target": "lua/eosphoros/eosphoros_core_hint_data.lua", "transform": "lua_namespace"},
