@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 97844f1ea0c8245dbb7de51fded10a19fe63aa27
+# Source commit: bbd5081adfbcf88cd6754ee12f1aa95c4200af16
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 11371
-# Generated rows in category: 9538
+# Source rows in category: 11380
+# Generated rows in category: 9544
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-09-07"
+version: "2026-09-14"
 sort: original
 ...
 
@@ -1323,6 +1323,8 @@ sort: original
 沙利度胺	eldxa
 舒洛地特注射液	eldyi
 闪亮滴眼液	eldyoo
+双氯芬酸钾栓	elfea
+双氯芬酸钠栓	elfeau
 少林风湿跌打膏	elfg
 双龙风湿跌打膏	elfga
 双氯芬酸钠搽剂	elfja
@@ -5891,6 +5893,7 @@ sort: original
 芪黄消渴胶囊	qhxn
 珍黄安宫片	qhxp
 竺黄安宁丸	qhxwu
+清化饮	qhyai
 清喉咽合剂	qhyj
 清喉咽颗粒冲剂	qhyja
 清喉咽颗粒	qhyla
@@ -7876,6 +7879,7 @@ sort: original
 消积肥儿丸	xjfwa
 消洁防疤液	xjfya
 小建中口服液	xjfyi
+小接骨丹	xjgdi
 香菊感冒颗粒	xjglui
 二甲硅油片	xjgpvi
 二甲硅油散	xjgsv
@@ -8451,8 +8455,10 @@ sort: original
 小儿麦枣片	xxmpi
 小儿磨积片	xxmpiu
 小儿麻痹症	xxmqi
+阿昔莫司	xxmsa
 小儿明目丸	xxmwi
 小儿麻痹糖丸	xxmwiu
+阿西美辛	xxmx
 小儿秘通口服液	xxmy
 小儿暖脐膏	xxngi
 安儿宁颗粒	xxnlou

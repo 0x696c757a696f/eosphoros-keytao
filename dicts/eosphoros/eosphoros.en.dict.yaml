@@ -2,18 +2,18 @@
 # encoding: utf-8
 #
 # Generated from iDvel/rime-ice; do not edit by hand.
-# Source commit: fbb516b2786e4d5444383706d13c31c2e4d10c08
+# Source commit: 859e3b5300e0ea01334a627b15db101e94312a75
 # Sources: en_dicts/en.dict.yaml, en_dicts/en_ext.dict.yaml
 # Codes are normalized to lowercase letters and prefixed with i.
 # Imported by the main eosphoros table; no auxiliary schema is needed.
-# Source rows: 23866
-# Generated rows: 23615
+# Source rows: 23890
+# Generated rows: 23639
 # Deduplicated inside upstream: 249
 # Skipped unreachable rows: 0
 # Skipped local code collisions: 2
 ---
 name: eosphoros.en
-version: "2026-09-07"
+version: "2026-09-14"
 sort: original
 ...
 
@@ -781,6 +781,7 @@ angle	iangle
 angles	iangles
 Anglican	ianglican
 Anglo	ianglo
+anglophone	ianglophone
 Angola	iangola
 angry	iangry
 Anguilla	ianguilla
@@ -2693,6 +2694,7 @@ Calgary	icalgary
 Calhoun	icalhoun
 caliber	icaliber
 calibration	icalibration
+calico	icalico
 California	icalifornia
 call	icall
 Callaway	icallaway
@@ -4097,6 +4099,10 @@ conscience	iconscience
 conscientious	iconscientious
 conscious	iconscious
 consciousness	iconsciousness
+consecrate	iconsecrate
+consecrated	iconsecrated
+consecrates	iconsecrates
+consecrating	iconsecrating
 consecutive	iconsecutive
 consensus	iconsensus
 consent	iconsent
@@ -5104,6 +5110,11 @@ demand	idemand
 demanded	idemanded
 demanding	idemanding
 demands	idemands
+demarcate	idemarcate
+demarcated	idemarcated
+demarcates	idemarcates
+demarcating	idemarcating
+demarcation	idemarcation
 dementia	idementia
 demise	idemise
 demo	idemo
@@ -5597,6 +5608,9 @@ diseases	idiseases
 disgrace	idisgrace
 disguise	idisguise
 disgust	idisgust
+disgusted	idisgusted
+disgusting	idisgusting
+disgusts	idisgusts
 dish	idish
 Dish Network	idishnetwork
 dishes	idishes
@@ -9302,6 +9316,7 @@ ibn	iibn
 ICANN	iicann
 ice	iice
 iceberg	iiceberg
+iced	iiced
 Iceland	iiceland
 Icelander	iicelander
 Icelandic	iicelandic
@@ -9887,6 +9902,7 @@ interconnect	iinterconnect
 interconnection	iinterconnection
 intercontinental	iintercontinental
 intercourse	iintercourse
+interdict	iinterdict
 interdisciplinary	iinterdisciplinary
 interest	iinterest
 interested	iinterested
@@ -10402,6 +10418,7 @@ Keller	ikeller
 kelley	ikelley
 Kellogg	ikellogg
 Kelly	ikelly
+kelp	ikelp
 Kendall	ikendall
 Kennedy	ikennedy
 kennel	ikennel
@@ -10638,6 +10655,7 @@ lands	ilands
 landscape	ilandscape
 landscapes	ilandscapes
 landscaping	ilandscaping
+landslide	ilandslide
 lane	ilane
 lanes	ilanes
 lang	ilang
@@ -14018,7 +14036,11 @@ philosophy	iphilosophy
 phishing	iphishing
 phoenix	iphoenix
 phone	iphone
+phoneme	iphoneme
+phonemic	iphonemic
 phones	iphones
+phonetic	iphonetic
+phonetics	iphonetics
 phoney	iphoney
 phoneys	iphoneys
 phonier	iphonier
@@ -17250,6 +17272,7 @@ siege	isiege
 siemens	isiemens
 Siena	isiena
 sierra	isierra
+sieve	isieve
 sig	isig
 sigh	isigh
 sight	isight
@@ -19712,6 +19735,7 @@ trojan	itrojan
 trojans	itrojans
 troll	itroll
 trolley	itrolley
+trombone	itrombone
 troop	itroop
 troops	itroops
 trophy	itrophy
