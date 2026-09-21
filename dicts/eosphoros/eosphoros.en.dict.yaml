@@ -2,18 +2,18 @@
 # encoding: utf-8
 #
 # Generated from iDvel/rime-ice; do not edit by hand.
-# Source commit: 859e3b5300e0ea01334a627b15db101e94312a75
+# Source commit: 9e66b0729083b37d217312294f6d516c8d7234be
 # Sources: en_dicts/en.dict.yaml, en_dicts/en_ext.dict.yaml
 # Codes are normalized to lowercase letters and prefixed with i.
 # Imported by the main eosphoros table; no auxiliary schema is needed.
-# Source rows: 23890
-# Generated rows: 23639
-# Deduplicated inside upstream: 249
+# Source rows: 23898
+# Generated rows: 23648
+# Deduplicated inside upstream: 248
 # Skipped unreachable rows: 0
 # Skipped local code collisions: 2
 ---
 name: eosphoros.en
-version: "2026-09-14"
+version: "2026-09-21"
 sort: original
 ...
 
@@ -21353,10 +21353,9 @@ she'd	ished
 .NET	inet
 .NET	idotnet
 iPhone	iiphone
-iPhone 17	iiphone
-iPhone 17 Pro	iiphone
-iPhone 17 Pro Max	iiphone
-iPhone 17e	iiphone
+iPhone 18 Pro	iiphone
+iPhone 18 Pro Max	iiphone
+iPhone Duo	iiphone
 Mac OS X	imacosx
 Mac OS X Cheetah	imacosx
 Mac OS X Puma	imacosx
@@ -21438,10 +21437,14 @@ iPhone 16e	iiphonee
 iPhone 16 Plus	iiphoneplus
 iPhone 16 Pro	iiphonepro
 iPhone 16 Pro Max	iiphonepromax
+iPhone 17	iiphone
 iPhone 17e	iiphonee
 iPhone Air	iiphoneair
 iPhone 17 Pro	iiphonepro
 iPhone 17 Pro Max	iiphonepromax
+iPhone 18 Pro	iiphonepro
+iPhone 18 Pro Max	iiphonepromax
+iPhone Duo	iiphoneduo
 Mac OS X Cheetah	imacosxcheetah
 Mac OS X Puma	imacosxpuma
 Mac OS X Jaguar	imacosxjaguar
@@ -21554,6 +21557,9 @@ Grand Theft Auto	igrandtheftauto
 GTAV	igtav
 Grand Theft Auto V	igtav
 Grand Theft Auto V	igrandtheftautov
+GTAVI	igtavi
+Grand Theft Auto VI	igtavi
+Grand Theft Auto VI	igrandtheftautovi
 LGBT	ilgbt
 automated teller machine	iatm
 automated teller machine	iautomatedtellermachine
@@ -22390,6 +22396,9 @@ GitHub Copilot CLI	igithubcopilotcli
 GitHub Copilot chat	igithubcopilotchat
 iPadOS	iipados
 Apple Pencil	iapplepencil
+Apple Pencil Pro	iapplepencilpro
+Magic Mouse	imagicmouse
+Magic Keyboard	imagickeyboard
 Reddit	ireddit
 HHKB	ihhkb
 Happy Hacking Keyboard	ihhkb
