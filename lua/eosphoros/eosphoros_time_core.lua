@@ -512,17 +512,24 @@ local jqB={ --节气表
 "春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露",
 "秋分","寒露","霜降","立冬","小雪","大雪","冬至","小寒","大寒","立春","雨水","惊蛰"}
 
-local function JQtest(y)
-	local i,q,s1,s2,jqData  y=tostring(y)
-	local jd=365.2422*(tonumber(string_sub(y,1,4))-2000)
+local jq_day_cache = {}
+
+local function getDayJQ(y)
+	local key = tostring(y)
+	local cached = jq_day_cache[key]
+	if cached ~= nil then return cached end
+	local i,q,s1,s2,jqData
+	local jd=365.2422*(tonumber(string_sub(key,1,4))-2000)
+	local result = ""
 	for i=0,23 do
 		q=jiaoCal(jd+i*15.2,i*15,0)+J2000+8/24  --计算第i个节气(i=0是春分),结果转为北京时
 		JDate:setFromJD(q,1)  s1=JDate:toStr()  --将儒略日转成世界时
 		JDate:setFromJD(q,0)  s2=JDate:toStr()  --将儒略日转成日期格式(输出日期形式的力学时)
 		jqData=string_sub(string_gsub(s1, "^( )", ""),1,10)  jqData=string_gsub(jqData, "-", "")
-		if (jqData == y) then return "-" .. jqB[i+1] end
+		if (jqData == key) then result = "-" .. jqB[i+1] break end
 	end
-	return ""
+	jq_day_cache[key] = result
+	return result
 end
 
 local function GetNextJQ(y)
@@ -554,10 +561,17 @@ local function getJQ(y) --返回一年中各个节气的时间表，从春分开
 	return jq
 end
 
+local jq_year_cache = {}
+
+local function get_jq_times(y)
+	if not jq_year_cache[y] then jq_year_cache[y] = getJQ(y) end
+	return jq_year_cache[y]
+end
+
 --返回一年的二十四个节气,从立春开始
 local function getYearJQ(y)
-	local jq1 = getJQ(y-1) --上一年
-	local jq2 = getJQ(y) -- 当年
+	local jq1 = get_jq_times(y-1) --上一年
+	local jq2 = get_jq_times(y) -- 当年
 	local jq = {}
 	for i=1,3 do jq[i] = jq1[i+21] end
 	for i=1,21 do jq[i+3] = jq2[i] end
@@ -1441,7 +1455,7 @@ local function translator(input, seg)
             table_insert(data, {chn, ""})
             table_insert(data, {ymd, ""})
             table_insert(data, {CnDate_translator(ymd), ""})
-            table_insert(data, {Date2LunarDate(ymd) .. JQtest(ymd), num_year})
+            table_insert(data, {Date2LunarDate(ymd) .. getDayJQ(ymd), num_year})
         end)
         FreeAstro()
         
@@ -1457,7 +1471,7 @@ local function translator(input, seg)
             local t = os_date("*t")
             local ymd = string_format("%04d%02d%02d", t.year, t.month, t.day)
             local hour = string_format("%02d", t.hour)
-            local res1 = Date2LunarDate(ymd) .. JQtest(ymd)
+            local res1 = Date2LunarDate(ymd) .. getDayJQ(ymd)
             local res2 = lunarJzl(ymd..hour)
             local res3 = Date2LunarDate(ymd) .. GetLunarSichen(hour, 1)
 

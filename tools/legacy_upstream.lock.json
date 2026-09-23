@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "updated": "2026-09-10",
+  "updated": "2026-09-23",
   "repository": "https://github.com/hugh7007/xmjd6-rere.git",
-  "ref": "refs/heads/main",
-  "reviewed_commit": "3691ef576371432ed733b5a3c1c941eca067dcbb",
+  "ref": "refs/heads/xmjd6",
+  "reviewed_commit": "2c2842441fd190f855d87780edf08d335c386ba2",
   "review_base": "39717e178bd1ad6e49f6cb8b24e2e1a39a7f4710",
   "review": {
     "date_and_time": "retains local non-padded Chinese month/day and richer eo candidates; adapts the upstream ancient-time candidate for eo",
@@ -24,6 +24,6 @@
     "jieqi_countdown": "not integrated because the local astronomical implementation is more accurate than fixed average dates",
     "anniversary_countdown": "not integrated because the legacy translator and schema paths no longer exist locally",
     "emoji_policy": "retain the local namespaced OpenCC and Rime-Ice emoji pipeline",
-    "latest_review": "Reviewed through 3691ef5: retain local implementations for date/time, reverse lookup, English input, dynamic phrases, and backticks; do not import the incompatible O-mode schema or bulk cizu/fjcy/emoji tables. Added the fixed terms 命令面板, 强制对等, and 提前退出, plus an adapted ancient-time candidate for eo."
+    "latest_review": "Reviewed through 2c28424: ported upstream daily and yearly jieqi calculation caches; kept local O/GBK key behavior and local dictionary pipeline. Skipped bulk cizu/fjcy reordering, personal words, help/statistics UI, unrelated emoji phrase shards, and upstream-only schema/CI changes."
   }
 }

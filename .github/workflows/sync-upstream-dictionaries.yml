@@ -54,6 +54,7 @@ jobs:
             dicts/eosphoros `
             fcitx5 `
             mobile_themes `
+            README.md `
             opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `
@@ -88,6 +89,7 @@ jobs:
             dicts/eosphoros `
             fcitx5 `
             mobile_themes `
+            README.md `
             opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
             opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `

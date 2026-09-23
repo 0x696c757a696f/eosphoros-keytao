@@ -37,6 +37,19 @@ jobs:
         shell: pwsh
         run: |
           python tools/check_legacy_upstream.py --json > xmjd6-upstream-report.json
+          if ($LASTEXITCODE -ne 0) {
+            @{
+              repository = "https://github.com/hugh7007/xmjd6-rere"
+              ref = "unavailable"
+              reviewed_commit = "unknown"
+              current_commit = "unknown"
+              update_available = $false
+              compare_url = ""
+              unavailable = $true
+            } | ConvertTo-Json | Set-Content xmjd6-upstream-report.json -Encoding utf8
+            "update=false" >> $env:GITHUB_OUTPUT
+            exit 0
+          }
           $Report = Get-Content xmjd6-upstream-report.json -Raw -Encoding utf8 | ConvertFrom-Json
           "update=$($Report.update_available.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
           "reviewed=$($Report.reviewed_commit)" >> $env:GITHUB_OUTPUT
@@ -47,6 +60,10 @@ jobs:
         shell: pwsh
         run: |
           $Report = Get-Content xmjd6-upstream-report.json -Raw -Encoding utf8 | ConvertFrom-Json
+          if ($Report.unavailable) {
+            "## xmjd6-rere upstream review`n`nThe upstream check is temporarily unavailable; it will retry on the next schedule." | Out-File $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8
+            exit 0
+          }
           @"
           ## xmjd6-rere upstream review
 
