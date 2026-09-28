@@ -12,7 +12,7 @@
 # Source rows: 882735
 # Generated rows: 360435
 # Rows before collision pruning: 488145
-# Deduplicated against local dictionaries: 279183
+# Deduplicated against local dictionaries: 279184
 # Deduplicated inside upstream: 2608
 # Skipped unaligned: 693
 # Skipped unencodable: 677
@@ -20,18 +20,18 @@
 # Recognized medicine names kept: 1984
 # Generated medicine names: 1475
 # Skipped low-value numeric templates: 18153
-# Skipped low-weight base entries: 77328
+# Skipped low-weight base entries: 77327
 # Skipped long ext entries: 5811
 # Skipped overlong entries: 2143
 # Full-code collisions before pruning: 136552
 # Skipped by collision-rate budget: 127674
 # Skipped by per-code candidate cap: 36
 # Collision target: no higher than the existing local dictionaries.
-# Local collision rows: 33726 / 755413
-# Combined collision rows: 49817 / 1115848
+# Local collision rows: 33726 / 755414
+# Combined collision rows: 49817 / 1115849
 ---
 name: eosphoros.ice
-version: "2026-09-21"
+version: "2026-09-28"
 sort: original
 ...
 

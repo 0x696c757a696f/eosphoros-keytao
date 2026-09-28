@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 663370a8f9824e0cd0d2df4f2014f1dcf1295286
+# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 11380
-# Generated rows in category: 9544
+# Generated rows in category: 9545
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-09-21"
+version: "2026-09-28"
 sort: original
 ...
 
@@ -5387,6 +5387,7 @@ sort: original
 尼卡地平缓释片	nkdpai
 尼可地尔片	nkdpav
 尼卡地平注射液	nkdyai
+尼可刹米	nkema
 女科十珍丸	nkewa
 尼可刹米注射液	nkey
 内颗粒层纹	nklwii
