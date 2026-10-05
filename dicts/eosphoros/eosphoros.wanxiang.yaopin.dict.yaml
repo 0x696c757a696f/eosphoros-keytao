@@ -2,7 +2,7 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
+# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
@@ -11,7 +11,7 @@
 # Generated rows in category: 9545
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-09-28"
+version: "2026-10-05"
 sort: original
 ...
 

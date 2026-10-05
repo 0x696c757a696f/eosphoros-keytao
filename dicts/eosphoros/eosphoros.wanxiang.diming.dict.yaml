@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
+# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
 # Selected source: dicts/diming.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 84888
-# Generated rows in category: 5275
+# Source rows in category: 85967
+# Generated rows in category: 5274
 ---
 name: eosphoros.wanxiang.diming
-version: "2026-09-28"
+version: "2026-10-05"
 sort: original
 ...
 
@@ -669,7 +669,7 @@ sort: original
 石埠站	ebqvvo
 石板滩站	ebtq
 石坝乡	ebxvva
-上村社区	eceq
+上村社区	eceqi
 狮慈社区	ecequ
 沈村镇	ecqavi
 师大社区	edeqiv
@@ -2284,7 +2284,6 @@ sort: original
 金星社区	jxeqi
 锦祥社区	jxeqio
 景新社区	jxeqoo
-长安社区	jxequo
 街西社区	jxequv
 城乡社区	jxeqva
 吉祥社区	jxeqvo

@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
+# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
 # Selected source: dicts/yixue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 15403
-# Generated rows in category: 12435
+# Source rows in category: 15613
+# Generated rows in category: 12603
 ---
 name: eosphoros.wanxiang.yixue
-version: "2026-09-28"
+version: "2026-10-05"
 sort: original
 ...
 
@@ -1258,18 +1258,22 @@ sort: original
 上臂再植术	ebzei
 肾病灶清除术	ebzeio
 双侧肾切除术	ecee
+双侧肾发育不全	eceq
 双侧肺移植术	ecfe
 双侧附件切除术	ecfea
 顺磁共振吸收	ecge
 双侧睾丸复位术	ecgea
 双侧睾丸切除术	ecgeai
 肾错构瘤切除术	ecgei
+双侧股疝伴坏疽	ecgj
+双侧股疝伴梗阻	ecgz
 尚茨截骨术	ecje
 双侧髋关节病	eckb
 双侧卵巢切除术	ecle
 双侧乳腺根治术	ecre
 双侧外阴切除术	ecwe
 双侧膝关节病	ecxb
+双侧腭裂伴唇裂	ecxl
 声带剥离术	edbe
 筛窦病损切除术	edbeu
 筛窦部分切除术	edbeuo
@@ -1462,6 +1466,7 @@ sort: original
 手指外伤清创术	efweii
 肾周围活检术	efweiu
 肾周围囊肿	efwfiu
+肾周围粘连松解	efwjiu
 上支持筋膜	efwmiu
 湿浊冲心证	efwqa
 食滞胃肠证	efwqi
@@ -1493,7 +1498,7 @@ sort: original
 食管上神经节	egejiu
 食管神经官能症	egeq
 上工治未病	egfb
-食管肿瘤切除术	egfeiu
+食管腐蚀性灼伤	egfeiu
 肾根治切除术	egfeiv
 舌根治性切除术	egfeu
 食管支气管瘘	egfli
@@ -1513,6 +1518,7 @@ sort: original
 舍格伦综合征	eglq
 食管鳞状细胞癌	eglxi
 室管膜母细胞瘤	egml
+食管内压力测定	egnd
 食管囊肿切除术	egne
 食管逆行扩张术	egnei
 食管黏膜撕裂症	egnq
@@ -1530,11 +1536,13 @@ sort: original
 舌骨下淋巴结	egxju
 食管恶性肿瘤	egxli
 嗜铬细胞瘤	egxlo
+嗜铬细胞瘤危象	egxxo
 试管婴儿手术	egye
 食管原位癌	egyxi
 食管再造术	egze
 食管造口术	egzei
 食管造口闭合术	egzeiu
+食管自发性破裂	egzl
 身患白血病	ehbb
 声核磁共振	ehcq
 上颌窦曲菌病	ehdb
@@ -1751,6 +1759,7 @@ sort: original
 水轮痰湿证	eltq
 水轮头风痰火证	eltqa
 肾瘘修补术	elxei
+生理性眼球震颤	elxju
 肾良性肿瘤	elxli
 舌良性肿瘤	elxlu
 生理性飞蚊症	elxqu
@@ -1988,8 +1997,10 @@ sort: original
 肾癌根治术	exgei
 肾血管重建术	exgeiu
 舌血管瘤切除术	exgeu
-肾血管肌脂肪瘤	exgli
+肾性骨营养不良	exgli
+肾血管肌脂肪瘤	exgliu
 舌腭弓恶性肿瘤	exglu
+肾小管性蛋白尿	exgni
 肾虚肝亢证	exgq
 肾虚骨弱证	exgqi
 肾血管畸形	exgxi
@@ -2015,7 +2026,9 @@ sort: original
 湿邪偏盛证	expq
 肾小球囊肿病	exqbi
 麝香祛风湿	exqeou
+肾小球功能异常	exqji
 麝香祛痛搽剂	exqjou
+肾小球性蛋白尿	exqni
 双相情绪障碍症	exqqa
 肾性侏儒症	exqqi
 湿遏热伏证	exrq
@@ -2135,9 +2148,12 @@ sort: original
 剩余组织瘤	eyzl
 失盐综合征	eyzq
 手足疔疮病	ezdbio
+肾脏淀粉样变性	ezdx
 上子宫段剖腹产	ezgjia
 双子宫畸形	ezgxaa
+肾综合征出血热	ezhria
 湿阻肠道证	ezjqaa
+肾造口导管置换	ezkhi
 肾造瘘管复通术	ezleiu
 湿阻脾胃证	ezpq
 湿阻气分证	ezqqa
@@ -2684,8 +2700,10 @@ sort: original
 治疗骨质疏松症	flgq
 直流感应电检查	flgwu
 治疗黑色素瘤	flhla
+肿瘤坏死因子	flhzu
 副卵巢囊肿	fljfv
 治疗精神分裂症	fljqa
+肿瘤基因组学	fljxu
 非淋菌性尿道炎	fljyi
 富兰克林病	flkb
 冯雷克林豪森病	flkbo
@@ -2694,6 +2712,7 @@ sort: original
 粉瘤切除术	flqeo
 脂类贮积症	flqqu
 治疗前列腺炎	flqya
+肿瘤起始因子	flqzu
 肿瘤溶解综合征	flrq
 法鲁四联症	flsq
 法洛四联症	flsqa
@@ -3272,13 +3291,17 @@ sort: original
 鼓室胆脂瘤	gedlvo
 膈神经麻痹术	gejeuo
 鼓室成形术	gejevo
+鼓室成形术二型	gejxvo
 骨伤科瘤病	gekbi
 肝肾亏损证	gekq
 高沙可夫氏症	gekqo
 肝肾亏虚证	gekqu
 腘深淋巴结	geljua
 肝肾两亏证	gelqui
+骨水泥长股骨柄	genbia
 骨水泥充填术	geneia
+骨水泥固定配件	genji
+骨水泥套管组件	genjia
 肝输注泵安置术	geqeu
 鼓室切开术	geqevo
 鼓室探查术	getev
@@ -3303,9 +3326,11 @@ sort: original
 弓中断矫治术	gfdea
 冠状动脉术	gfdeo
 冠状动脉成形术	gfdeoo
+冠状窦标测电极	gfdjo
 冠状动脉瘤	gfdloo
 管状动脉瘤	gfdlu
 高脂蛋血症	gfdqo
+冠状动脉分流器	gfdqoo
 高脂蛋白血症	gfdqou
 冠状动脉炎	gfdyoo
 骨折石膏固定术	gfeei
@@ -3356,6 +3381,7 @@ sort: original
 肝管置管引流术	ggfeuu
 肛管直肠癌	ggfxu
 股骨骨软骨病	gggbu
+肱骨关节突骨折	gggf
 肝管梗阻综合征	gggqu
 肝管蛔虫病	gghbu
 股绀红皮病	gghbua
@@ -3375,6 +3401,7 @@ sort: original
 肱骨良性肿瘤	ggllui
 股骨麦氏截骨术	ggmeu
 根管内固定术	ggnev
+肱骨内上髁骨折	ggnfu
 肱骨内上髁炎	ggnyu
 肛管皮肤移植术	ggpe
 骨骼牵引术	ggqeii
@@ -3387,6 +3414,7 @@ sort: original
 股骨头切除术	ggteui
 股骨头骨软骨炎	ggtyu
 肝管胃吻合术	ggweu
+肱骨外科颈骨折	ggwfu
 肱骨外上髁炎	ggwyu
 股骨下端截骨术	ggxeu
 肱骨恶性肿瘤	ggxlui
@@ -3439,11 +3467,13 @@ sort: original
 宫颈病害切除术	gjbeo
 宫颈部分切除术	gjbeoa
 关节病害切除术	gjbeoi
+关节病理性脱位	gjbwo
 关节错缝术	gjceo
 宫颈残端切除术	gjceoa
 宫颈滴虫病	gjdbo
 跟腱断裂修补术	gjdeou
 工程地质特征	gjdqvu
+宫颈上皮内瘤变	gjeboa
 疳积上目病	gjebou
 宫颈上皮内肿瘤	gjelo
 肝巨噬细胞肉瘤	gjeluv
@@ -3454,6 +3484,8 @@ sort: original
 宫颈锥切术	gjfeoa
 跟腱转位术	gjfeou
 根尖周囊肿	gjffvi
+宫颈非炎性疾患	gjfho
+宫颈肥大性延长	gjfjo
 骨继发恶性肿瘤	gjflia
 肝继发恶性肿瘤	gjflua
 肝经风热证	gjfqu
@@ -3467,6 +3499,7 @@ sort: original
 宫颈活检术	gjheoa
 关节滑膜切除术	gjheoi
 骨间后神经	gjhji
+关节活动度测量	gjhlo
 骨间后静脉	gjhm
 肝经火盛证	gjhqua
 宫颈成形术	gjjeoa
@@ -3474,18 +3507,23 @@ sort: original
 关节腱鞘囊肿	gjjfo
 骨交界恶性肿瘤	gjjlio
 宫颈间质瘤	gjjlo
+关节镜手术治疗	gjjloi
 钩甲脊髓空洞症	gjjqii
 光接触性皮炎	gjjyi
 汞接触性皮炎	gjjyv
 宫颈扩张术	gjkeoa
+宫颈扩张术产科	gjkk
 宫颈冷刀切除术	gjleo
 宫颈冷冻治疗术	gjleoa
 肝静脉闭塞性病	gjmbuv
 宫颈糜烂手术	gjmeoa
 肱静脉缝合术	gjmeuv
+宫颈糜烂的症状	gjmfo
+宫颈糜烂的治疗	gjmloa
 肝静脉静脉瘤	gjmluv
 国际贸易单证	gjmqi
 骨筋膜室综合征	gjmqiu
+宫颈糜烂的原因	gjmyo
 关节囊成形术	gjneo
 宫颈内口探查术	gjneoa
 关节囊缝合术	gjneoi
@@ -3497,12 +3535,15 @@ sort: original
 宫颈剖腹产术	gjpe
 宫颈剖宫产术	gjpeo
 宫颈胚胎性囊肿	gjpfo
+关节腔压力测定	gjqdo
 骨棘切除术	gjqeiv
 宫颈切除术	gjqeoa
 关节切开复位术	gjqeoi
 根尖切除术	gjqevi
 根尖区黏膜红肿	gjqfv
 骨间前神经	gjqjio
+关节腔灌洗治疗	gjqlo
+关节腔灌注治疗	gjqloi
 骨间前静脉	gjqmi
 国朝耆献类征	gjqqiu
 肝经热盛证	gjrq
@@ -3514,6 +3555,7 @@ sort: original
 宫颈椎形切除术	gjweoa
 关节穿刺术	gjweoi
 宫颈外膜原位癌	gjwxo
+宫颈癌前期病变	gjxbo
 感觉性多神经病	gjxbv
 杆菌性血管瘤病	gjxbvi
 宫颈息肉切除术	gjxeo
@@ -3522,10 +3564,12 @@ sort: original
 宫颈腺囊肿	gjxfo
 弓假性动脉瘤	gjxlai
 骨巨细胞瘤	gjxliv
+宫颈癌的发病率	gjxloa
 古加二氏综合征	gjxqua
 古今姓氏书辨证	gjxqui
 感觉相连症	gjxqv
 宫颈细胞学检查	gjxwoa
+关节习惯性脱位	gjxwoi
 宫颈腺鳞癌	gjxxo
 宫颈癌和乳腺癌	gjxxoa
 根尖诱导成形术	gjyev
@@ -3533,6 +3577,7 @@ sort: original
 肝经郁火证	gjyq
 肝经郁热证	gjyqu
 根尖牙周炎	gjyyv
+关节自发性脱位	gjzwo
 骨开窗引流术	gkwe
 格库二氏征	gkxq
 肛瘘闭合术	glbe
@@ -3567,13 +3612,16 @@ sort: original
 巩膜病害切除术	gmbevu
 巩膜电解放液术	gmdev
 肛门湿疡病	gmebu
+鼓膜上鼓室穿孔	gmekv
 肛门生殖器疱疹	gmequ
+骨膜上浸润麻醉	gmezi
 肛门直肠疾病	gmfbu
 骨膜封闭术	gmfeiu
 肛门肿瘤切除术	gmfeu
 肛门肿物切除术	gmfeuo
 巩膜缝合术	gmfevu
 肛门直肠脓肿	gmffu
+鼓膜中央部穿孔	gmfkv
 肝木犯胃证	gmfq
 巩膜黑变病	gmhbv
 肛门环箍术	gmheu
@@ -3604,6 +3652,7 @@ sort: original
 肛门皮肤原位癌	gmpx
 巩膜切除术	gmqev
 鼓膜切开术	gmqevu
+鼓膜切开伴置管	gmqgv
 鼓膜张肌神经	gmqjvu
 巩膜球筋膜炎	gmqyv
 巩膜肉芽肿	gmrf
@@ -3631,6 +3680,7 @@ sort: original
 戈麦二氏综合征	gmxqvv
 肝门血管畸形	gmxxu
 过敏性口炎	gmxyvu
+骨膜下浸润麻醉	gmxzi
 骨膜移植术	gmyeiu
 巩膜咬切术	gmyev
 巩膜移植术	gmyevu
@@ -3648,6 +3698,7 @@ sort: original
 肝囊肿开窗术	gnfeu
 肝脓肿引流术	gnfeuu
 肝囊肿切除术	gnfeuv
+骨脓肿病灶清除	gnfji
 高粘滞血症	gnfq
 肝囊管综合征	gngqu
 硅凝胶肉芽肿	gnjf
@@ -3679,6 +3730,7 @@ sort: original
 骨盆活检术	gpheiu
 骨盆截骨延长术	gpjei
 骨盆结核刮除术	gpjeiu
+骨片胫甲的原料	gpjliu
 骨盆静脉曲张	gpjqiu
 骨盆开放性骨折	gpkfiu
 肝脾亏虚证	gpkqu
@@ -3840,6 +3892,8 @@ sort: original
 骨性关节病	gxgbio
 肝血管瘤病	gxgbu
 肝血管结扎术	gxgeuu
+肱二关肌内侧沟	gxggu
+肱二关肌外侧沟	gxgguv
 骨性关节炎	gxgyi
 高血钙性胰腺炎	gxgyo
 肝性脊髓病	gxjbuo
@@ -3857,7 +3911,9 @@ sort: original
 肝性糖尿病	gxtbu
 肱二头肌缝合术	gxte
 股二头肌转前术	gxteu
+肱二头肌长头腱	gxtjuv
 高血糖素瘤	gxtlou
+肱二头肌桡骨囊	gxtnu
 膈先天性畸形	gxtx
 弓形体病肝炎	gxtya
 弓形体属肌炎	gxtyav
@@ -4132,13 +4188,16 @@ sort: original
 喉和气管烧伤	hhqeou
 汉怀斯三氏征	hhsq
 核黄素缺乏症	hhsqv
+混和外固定支架	hhwjau
 黑黑二氏病	hhxbi
 亨胡二氏病	hhxbou
 赫霍二氏病	hhxbvv
 混合性牙瘤	hhxlai
-混合性高脂血症	hhxqai
+混合性呼吸困难	hhxnai
+混合细胞型霍奇	hhxqai
 黑哈二氏综合征	hhxqi
 混合细胞腺癌	hhxxai
+混合性情感发作	hhxzai
 颌含牙囊肿	hhyfi
 回肠部分切除术	hjbei
 回肠侧侧吻合术	hjcei
@@ -4379,10 +4438,16 @@ sort: original
 霍韦二氏综合征	hwxqvv
 红外线乳腺检查	hwxwa
 蛔虫性腹膜炎	hwxyii
+红细胞比积测定	hxbda
+红细胞电泳测定	hxbdaa
 化学剥脱术	hxbei
 化学剥脱除皱术	hxbeio
 颌下病损切除术	hxbeiv
 红细胞增多症	hxbqa
+红细胞发育不全	hxbqaa
+红细胞抗体补体	hxbta
+红细胞滚动试验	hxbya
+红细胞花环试验	hxbyaa
 呼吸道传染病	hxdbo
 呼吸道硬结病	hxdboo
 害羞的膀胱	hxdgo
@@ -4508,8 +4573,10 @@ sort: original
 颈部病损切除术	jbbea
 颊部病害切除术	jbbev
 颊部病损切除术	jbbevo
+颈部擦伤伴异物	jbcwa
 颈部窦道切除术	jbdeao
 唇瓣带蒂移植术	jbdevo
+颈部多发性脱位	jbdwa
 肠病毒性脑膜炎	jbdyuo
 颈部食管挫伤	jbeea
 颈部食管损伤	jbeeao
@@ -4526,6 +4593,7 @@ sort: original
 颈部肌肉扭伤	jbjea
 颈部脊髓损伤	jbjeao
 颊部成形术	jbjevo
+颈部假性皮萎缩	jbjsao
 长鼻镜检查	jbjwu
 颈部廓清术	jbkeao
 肩部开放性伤口	jbkk
@@ -4534,6 +4602,7 @@ sort: original
 颈部淋巴结结核	jblha
 居布勒综合征	jblqa
 局部淋巴显像	jblxao
+颈部梅毒性白斑	jbmbao
 颈部脓肿引流术	jbnea
 唇部黏液腺炎	jbnyv
 拒不配合检查	jbpwiv
@@ -4542,6 +4611,7 @@ sort: original
 颊部切开引流术	jbqevo
 经鼻气管内插管	jbqgau
 经闭乳溢综合征	jbrq
+颈部软组织感染	jbrra
 唇病损切除术	jbsevo
 吉伯特氏病	jbtbvi
 颈部纤维瘤病	jbxbao
@@ -4667,6 +4737,7 @@ sort: original
 肩手综合征	jezqo
 酒渣鼻切割术	jfbea
 颈椎病灶清除术	jfbeav
+颈椎病推拿治疗	jfbl
 酒渣鼻样结核疹	jfbq
 截肢残端修整术	jfce
 睫状短神经	jfdji
@@ -4694,17 +4765,20 @@ sort: original
 胫腓骨截骨术	jfgeuu
 脊椎骨腰椎骨	jfggov
 颈椎管狭窄症	jfgqa
+颈椎骨折伴截瘫	jfgtav
 胫腓骨畸形	jfgxuu
 甲状骨上缘	jfgyi
 甲状会厌部	jfhbio
 甲状会厌韧带	jfhdio
 睑缝合后切开术	jfheia
 甲状会厌肌	jfhj
+颈椎后路椎板夹	jfhja
 睫状后长动脉	jfhm
 睫状后短动脉	jfhmi
 接种后败血症	jfhqiu
 脊椎滑脱症	jfhqov
 棘状角化病	jfjbv
+颈椎棘突间韧带	jfjdav
 颈椎间盘切除术	jfjea
 肩峰成形术	jfjeoi
 肠粪结石取出术	jfjeu
@@ -4713,12 +4787,14 @@ sort: original
 颈椎间盘疾患	jfjha
 颈椎间盘脱出	jfjjav
 睫状长神经	jfjjio
+脊椎计算机扫描	jfjmov
 颈椎间盘突出症	jfjqa
 经直肠超检查	jfjwa
 颈椎间盘变性	jfjxav
 唇肿块冷冻术	jfkev
 颈椎开放性骨折	jfkfa
 睑肿瘤切除术	jfleiu
+脊椎裂伴脑积水	jfleov
 唇肿瘤切除术	jflev
 棘状毛囊角化病	jfmbv
 唇粉膜移植术	jfmev
@@ -4730,12 +4806,15 @@ sort: original
 甲状旁腺切除术	jfpeio
 甲状旁腺囊肿	jfpfi
 甲状旁腺移植	jfpfio
+脊椎疲痨性骨折	jfpfo
 甲状旁腺素	jfpsi
 甲状旁腺激素	jfpsio
 甲状旁腺激素肽	jfpti
 甲状旁腺出血	jfpx
 甲状旁腺显像	jfpxi
 甲状旁腺炎	jfpyi
+颈椎前路纯钛板	jfqba
+颈椎前路普通板	jfqbav
 颈椎牵引术	jfqea
 经腹腔镜取环术	jfqeau
 颈椎前方减压术	jfqeav
@@ -4765,6 +4844,7 @@ sort: original
 经腹胃镜检查术	jfwea
 疖肿穿刺术	jfweo
 唇肿物切除术	jfwevu
+颈椎椎间融合器	jfwqa
 肩蜂窝织炎	jfwyo
 唇蜂窝织炎	jfwyv
 继发性疾病	jfxba
@@ -5153,6 +5233,7 @@ sort: original
 结膜囊探查术	jmneau
 角膜胬肉切除术	jmneu
 静脉内氧合	jmnhv
+角膜内皮失代偿	jmnjuu
 结膜囊取材检查	jmnwa
 角膜内皮镜检查	jmnwuu
 结膜囊畸形	jmnxau
@@ -5163,6 +5244,7 @@ sort: original
 角膜皮样囊肿	jmpfuu
 角膜皮样瘤	jmplu
 角膜葡萄膜炎	jmpy
+角膜粘连性白斑	jmqbuu
 结膜切除术	jmqea
 结膜切开术	jmqeau
 腱膜切除术	jmqeu
@@ -5171,6 +5253,7 @@ sort: original
 静脉注射硬化剂	jmqjv
 静脉曲张破裂	jmqlvu
 静脉贮血器	jmqqvu
+角膜切开取异物	jmqwuu
 静脉曲张袜	jmqwv
 浆膜腔积液	jmqy
 静脉曲张性溃疡	jmqyv
@@ -5181,6 +5264,7 @@ sort: original
 结膜撕裂修补术	jmsea
 角膜塑形术	jmseu
 结膜色素异常	jmsjau
+角膜色素沉着物	jmswu
 筋膜条悬吊术	jmteuu
 静脉穿刺置管术	jmwevu
 静脉插管输液	jmwyv
@@ -5307,6 +5391,7 @@ sort: original
 经气管镜活检术	jqgeau
 脊柱过度后伸	jqgeov
 巨气管支气管症	jqgqv
+脊柱骨折伴截瘫	jqgtov
 脊柱关节镜检查	jqgwov
 产气杆菌肠炎	jqgyou
 脊柱关节强硬	jqgyov
@@ -5323,6 +5408,7 @@ sort: original
 肠腔静脉分流术	jqjeuu
 脊柱结核性脓肿	jqjfov
 经前焦虑症	jqjqao
+脊柱矫正固定器	jqjqov
 肠切除后综合征	jqjquv
 脊柱开放性骨折	jqkfov
 颊区开放性伤口	jqkk
@@ -5338,6 +5424,7 @@ sort: original
 脊柱囊肿刮除术	jqneov
 腱鞘囊肿切除术	jqneu
 胫前黏液水肿	jqnfuo
+脊柱配件或组件	jqpjo
 脊柱前路钢板	jqqbov
 睑球粘连分离术	jqqeiv
 脊柱前路松解术	jqqeov
@@ -5351,8 +5438,10 @@ sort: original
 脊柱松解术	jqseov
 腱鞘松解术	jqseu
 唇缺损修复术	jqsev
+脊柱瘫痪矫形器	jqtq
 脊柱外科手术	jqweo
 脊柱椎板减压术	jqweov
+脊柱旋转复位法	jqxfov
 卷曲细胞淋巴瘤	jqxloi
 脊柱恶性肿瘤	jqxlov
 腱鞘纤维瘤	jqxluv
@@ -5368,11 +5457,13 @@ sort: original
 间区综合征	jqzqov
 胫前综合征	jqzqu
 肌肉病损切除术	jrbe
+肌肉不随意收缩	jrbsui
 肌肉失养症	jreq
 肌肉衰减症	jrequ
 成人肺透明膜病	jrfbv
 肌肉转移术	jrfeui
 肌肉骨骼病	jrgbu
+肌肉钙化和骨化	jrghui
 肌肉和神经	jrhjui
 成人金伯克病	jrjbvi
 肌肉筋膜减压术	jrjeu
@@ -5383,6 +5474,7 @@ sort: original
 肌肉囊虫病	jrnbu
 肌肉切开活检术	jrqeui
 产褥期败血症	jrqqoo
+肌肉缺血性梗死	jrqs
 产褥期腹膜炎	jrqyo
 产褥期静脉炎	jrqyoo
 肌肉肉芽肿	jrrfu
@@ -5391,6 +5483,7 @@ sort: original
 巨乳头状结膜炎	jrtyvu
 肌肉萎缩症	jrwq
 成人细胞淋巴瘤	jrxlvi
+肌肉消瘦和萎缩	jrxsui
 浸润性导管癌	jrxxaa
 肌肉营养不良症	jryq
 成人早老症	jrzq
@@ -5399,6 +5492,7 @@ sort: original
 精索病损切除术	jsbeo
 脊髓半切综合征	jsbq
 脊髓动脉栓塞术	jsdeoi
+脊髓多发性硬化	jsdho
 脊髓神经病	jseboi
 脊髓神经切断术	jseeoi
 肠损伤修补术	jseeu
@@ -5410,8 +5504,13 @@ sort: original
 脊髓终丝切断术	jsfeo
 精索肿物切除术	jsfeou
 精索睾丸切除术	jsgeou
+脊髓灰质炎监测	jshc
+脊髓灰质炎病毒	jshdoi
 脊髓活检术	jsheoi
+脊髓横贯性损害	jshhoi
+脊髓灰质炎病例	jshloi
 脊髓后静脉	jshm
+脊髓灰质炎疫苗	jshmo
 脊髓灰质炎	jshyoi
 脊髓结核病	jsjboi
 脊髓减压术	jsjeoi
@@ -5422,6 +5521,7 @@ sort: original
 脊髓空洞症	jskq
 唇撕裂缝合术	jslevi
 脊髓良性肿瘤	jslloi
+脊髓痨性眼危象	jslxoi
 脊索裂畸形	jslxou
 脊髓膜清创术	jsmeo
 脊髓膜修补术	jsmeoi
@@ -5430,10 +5530,12 @@ sort: original
 脊髓内囊肿	jsnfoi
 脊髓膨出切除术	jspe
 精索皮样囊肿	jspfo
+脊髓占位性病变	jsqboi
 脊髓切断术	jsqeo
 脊髓清创术	jsqeoi
 精索粘连松懈术	jsqeou
 精索鞘膜囊肿	jsqfo
+脊髓蛛网膜粘连	jsqloi
 脊髓前静脉	jsqmo
 脊髓蛛网膜炎	jsqyo
 脊髓前角灰质炎	jsqyoi
@@ -5544,8 +5646,12 @@ sort: original
 急性胆管炎	jxdyu
 急性胆囊炎	jxdyuo
 急性时相蛋白	jxebu
+急性肾功能衰竭	jxejuo
 急性肾盂积脓	jxenu
-急性肾炎综合征	jxequ
+急性肾功能不全	jxequ
+急性肾炎综合征	jxequo
+急性肾皮质坏死	jxesu
+急性肾小管坏死	jxesuo
 急性筛窦炎	jxey
 急性肾盂炎	jxeyu
 急性上颌窦炎	jxeyuo
@@ -5562,6 +5668,7 @@ sort: original
 急性放射综合征	jxfqu
 急性辐射综合征	jxfquo
 急性风湿热	jxfru
+急性肺动脉栓塞	jxfsu
 聚氨酯泡沫体	jxftv
 聚氨酯弹性体	jxftvu
 急性附睾炎	jxfyu
@@ -5571,6 +5678,8 @@ sort: original
 结性过早搏动	jxgda
 经胸膈疝修补术	jxgeau
 唇血管瘤切除术	jxgev
+急性骨髓纤维化	jxghu
+急性肝功能衰竭	jxgju
 急性高山症	jxgqu
 急性高钾血症	jxgquo
 肠血管畸形	jxgxu
@@ -5579,17 +5688,21 @@ sort: original
 假性黑棘皮病	jxhbio
 急性呼吸衰竭	jxhju
 急性呼吸窘迫症	jxhqu
+急性呼吸道感染	jxhru
+急性黄色肝萎缩	jxhs
 急性会厌炎	jxhyu
 急性喉气管炎	jxhyuo
 颈型颈椎病	jxjbav
 甲癣甲真菌病	jxjbio
 甲下角化病	jxjbiv
+急性肌炎性斜视	jxjeu
 急性精神错乱	jxjluo
 畸形精子症	jxjqi
 急性结膜炎期	jxjqu
 急性精神分裂症	jxjquo
 急性脊髓梗塞	jxjsu
 急性经口毒性	jxjxu
+急性出血后贫血	jxjxuo
 假性结肠梗阻	jxjzi
 经行口糜病	jxkba
 急性阔韧带脓肿	jxkfuo
@@ -5629,10 +5742,13 @@ sort: original
 急性膀胱炎	jxpyu
 急性盆腔炎	jxpyuo
 经行情志异常病	jxqba
+急性缺血性卒中	jxqfu
 急性气管炎	jxqyu
 急性前列腺炎	jxqyuo
 经行乳房胀痛病	jxrb
+急性软组织损伤	jxreu
 出血热肾综合征	jxrq
+急性溶血性贫血	jxrx
 急性乳突炎	jxryuo
 急性髓性白血病	jxsbu
 急性髓样白血病	jxsbuo
@@ -5648,6 +5764,7 @@ sort: original
 经额垂体活检术	jxwea
 睑下垂矫正术	jxwei
 睑下垂矫治术	jxweiv
+急性驰缓性瘫痪	jxwhu
 肠纤维脂肪瘤	jxwlu
 急性外阴炎	jxwyu
 肌纤维腱鞘炎	jxwyua
@@ -5664,6 +5781,7 @@ sort: original
 饥饿性水肿	jxxfu
 颈下心神经	jxxjav
 急性心力衰竭	jxxju
+急性阿米巴痢疾	jxxjuo
 局限性淋巴管瘤	jxxlaa
 级星形细胞瘤	jxxlao
 甲下血管球瘤	jxxliv
@@ -5673,6 +5791,7 @@ sort: original
 结性心律不齐	jxxqao
 间歇性暴怒症	jxxqoo
 急性荨麻疹	jxxqu
+急性心功能不全	jxxquo
 基阿二氏综合征	jxxqva
 进行性种痘症	jxxqvu
 急性心包填塞	jxxsu
@@ -5701,6 +5820,7 @@ sort: original
 畸形足矫正术	jxzei
 急性子宫旁脓肿	jxzfu
 急性左心衰竭	jxzju
+急性左心室衰竭	jxzjuo
 超雄综合征	jxzq
 畸形综合征	jxzqi
 急性子宫炎	jxzyu
@@ -5761,6 +5881,7 @@ sort: original
 肌营养不良症	jyyq
 酒瘾综合征	jyzqa
 颈总动脉结扎术	jzdeao
+精子顶体蛋白酶	jzdmoa
 颈总动脉造影	jzdyao
 经足中部截断术	jzfea
 精子活力低下症	jzhqoa
@@ -8882,8 +9003,10 @@ sort: original
 死骨切除术	sgqe
 松果体区肿瘤	sgtlv
 松果体细胞瘤	sgtlvi
-锁骨下静脉损伤	sgxei
-锁骨下甲状腺肿	sgxf
+锁骨下动脉损伤	sgxei
+锁骨下静脉损伤	sgxeii
+锁骨下动脉狭窄	sgxf
+锁骨下甲状腺肿	sgxfi
 锁骨下静脉沟	sgxg
 锁骨下动静脉沟	sgxgi
 锁骨下肌神经	sgxj
@@ -8892,6 +9015,7 @@ sort: original
 锁骨下动静脉瘘	sgxli
 锁骨下静脉	sgxm
 锁骨下动静脉	sgxmi
+锁骨下动脉闭塞	sgxs
 锁骨下动脉畸形	sgxx
 髓管引流术	sgye
 鳃弓综合征	sgzq
@@ -9021,6 +9145,7 @@ sort: original
 泰必氏综合征	tbeq
 钛板植入术	tbfeiv
 头部蜂窝织炎	tbfyo
+头部后天性缺陷	tbhxo
 臀部肌肉松解术	tbjea
 腿部肌腱松解术	tbjeu
 腿部肌肉切断术	tbjeuo
@@ -9032,7 +9157,9 @@ sort: original
 头部皮肤脓肿	tbpfoo
 涂布起泡纸病	tbqbav
 头部乳头状皮炎	tbryo
+头部创伤性切断	tbwd
 体被系统手术	tbxei
+透壁性心肌梗死	tbxsu
 退变性关节炎	tbxy
 体表异物取出术	tbyeiv
 泰比综合征	tbzqv
@@ -9146,6 +9273,7 @@ sort: original
 瞳孔闭锁分离术	tkbe
 瞳孔粘连分离术	tkqeia
 图雷特综合征	tltqiv
+铁粒幼细胞贫血	tlyx
 痰蒙神窍证	tmeq
 透明隔后静脉	tmgmu
 透明隔前静脉	tmgmuo
@@ -9168,10 +9296,14 @@ sort: original
 头皮部痒疹	tpbq
 胎盘输血综合征	tpeq
 头皮肿块切除术	tpfeoa
+胎盘滞留伴出血	tpfxu
+胎盘植入伴出血	tpfxuu
+胎盘成熟度检测	tpjcu
 太平军西征	tpjqv
 头皮静脉输液	tpjy
 头皮取皮术	tpqeoa
 胎盘钳夹术	tpqeu
+胎盘粘连伴出血	tpqxu
 头皮外伤清创术	tpweoa
 头皮血肿抽吸术	tpxeoa
 头皮再植术	tpzeo
@@ -9223,6 +9355,11 @@ sort: original
 臀位牵引术	twqe
 体外循环术	twxe
 唐武宗李炎	twzy
+体细胞高频突变	txbbi
+体细胞突变学说	txbei
+体细胞基因治疗	txbl
+体细胞减数分裂	txbli
+体细胞克隆变异	txby
 痛性挫伤综合征	txcq
 胎儿断颈术	txdeu
 体虚毒恋证	txdq
@@ -9308,11 +9445,15 @@ sort: original
 唾液腺切除术	tyxeo
 唾液腺造影术	tyxeoa
 凸眼性甲状腺肿	tyxfii
+唾液腺分泌抑制	tyxfoa
 突眼性甲状腺肿	tyxfoi
+唾液腺导管扩张	tyxqo
 特应性湿疹	tyxqu
 太阳蓄水证	tyxqv
 太阳蓄血证	tyxqva
+唾液腺导管闭锁	tyxsoa
 唾液腺导管癌	tyxxo
+唾液腺动态显像	tyxxoa
 太阳阴阳俱虚证	tyyq
 太阳阴阳两虚证	tyyqv
 太阳脏结证	tyzq
@@ -9432,7 +9573,13 @@ sort: original
 槌状指修补术	wffevo
 未分化型白血病	wfhbvu
 胃中寒冷证	wfhqi
+外周化学感受器	wfhqu
+外周介入微导管	wfjguu
 胃中积热证	wfjqi
+外周介入微导丝	wfjsuu
+外周局部性缺血	wfjxuu
+外周介入长鞘组	wfjzu
+外周可撕开鞘组	wfkzu
 胃肿瘤切除术	wflei
 网状色素皮病	wfsbi
 网状色素性皮病	wfsbio
@@ -9441,6 +9588,7 @@ sort: original
 纹状体综合征	wftq
 午饭同伴综合征	wftqu
 腕蜂窝织炎	wfwyu
+外周血单核细胞	wfxbuu
 外痔血栓剥离术	wfxeu
 网织细胞肉瘤	wfxli
 外周细胞淋巴瘤	wfxlu
@@ -9463,13 +9611,18 @@ sort: original
 尺骨骨干骨折	wggf
 尺肱关节脱位	wggw
 尺骨滑车切迹	wghj
+腕骨间背侧韧带	wgjdu
+腕骨间骨间韧带	wgjdui
 尺骨截骨术	wgje
 腕关节固定术	wgjeu
 腕关节截骨术	wgjeuo
 椎管减压术	wgjev
 尺骨近端骨折	wgjfa
 尺骨茎突骨折	wgjfai
+腕关节全部置换	wgjhu
 腕关节恶性肿瘤	wgjl
+腕关节面关节盘	wgjpu
+腕关节屈曲挛缩	wgjs
 腕关节镜检查	wgjw
 腕关节周围炎	wgjyu
 椎管扩大术	wgke
@@ -9508,6 +9661,7 @@ sort: original
 椎管探查术	wgte
 尺骨小头切除术	wgxe
 尺骨下端骨折	wgxfa
+顽固性心力衰竭	wgxj
 尺骨恶性肿瘤	wgxl
 耻骨恶性肿瘤	wgxlv
 椎管狭窄症	wgxq
@@ -9520,6 +9674,7 @@ sort: original
 椎管钻孔减压术	wgzev
 腕管综合征	wgzq
 文化的象征	whdq
+腕和手度腐蚀伤	wheeuu
 胃火上逆证	wheq
 吻合术并发症	wheqo
 文化束缚综合征	wheqoi
@@ -9537,10 +9692,12 @@ sort: original
 胃肠道恶性肿瘤	wjdliu
 胃肠道炎症	wjdqi
 胃肠道过敏症	wjdqiu
+胃肠道黏膜变色	wjdsi
 胃肠道畸形	wjdxi
 虫积伤脾证	wjeqi
 胃肠神经官能症	wjeqiu
 冲击伤综合征	wjeqo
+胃肠手术后呕吐	wjet
 无结石胆囊炎	wjeyva
 胃肠放线菌病	wjfbi
 胃间质瘤切除术	wjfeio
@@ -9559,11 +9716,14 @@ sort: original
 胃巨黏膜症	wjnqi
 微晶皮肤磨削术	wjpe
 虫寄皮下证	wjpq
+胃肠切开取异物	wjqwi
 胃肠土拉菌病	wjtbi
 胃肠穿孔修补术	wjwei
 胃肠吻合口水肿	wjwfiu
 胃肠吻合口炎	wjwyi
+胃肠吻合口溃疡	wjwyiu
 瓦解性精神病	wjxbvu
+胃肠型食物中毒	wjxdi
 胃假性淋巴瘤	wjxlii
 椎假性动脉瘤	wjxlvi
 胃肠型荨麻疹	wjxqi
@@ -9825,6 +9985,7 @@ sort: original
 外阴原位癌	wyyx
 外阴阴道炎	wyyyu
 外眦部成形术	wzbe
+外眦部瘢痕切除	wzbju
 胃左动静脉	wzdmiv
 外眦成形术	wzjeu
 胃燥津伤证	wzjqi
@@ -10731,6 +10892,7 @@ sort: original
 安托二氏征	xtxqoi
 系统性硬皮症	xtxqua
 先天性风疹	xtxquv
+先天性鼻咽闭锁	xtxsuv
 系统性红斑狼疮	xtxwu
 系统性血管炎	xtxyua
 儿童牙周组织病	xtybuo
@@ -10744,7 +10906,13 @@ sort: original
 下齿槽撕脱术	xwcev
 胸外侧神经	xwcju
 胸外侧静脉	xwcm
+纤维蛋白性血栓	xwdeaa
+纤维蛋白原缺乏	xwdfa
+纤维蛋白溶解酶	xwdmaa
 纤维蛋白溶解症	xwdqa
+纤维蛋白样坏死	xwdsa
+纤维蛋白样变性	xwdx
+纤维蛋白原牛血	xwdxa
 纤维蛋白性炎	xwdyaa
 显微摄影术	xwee
 耳外伤清创术	xweev

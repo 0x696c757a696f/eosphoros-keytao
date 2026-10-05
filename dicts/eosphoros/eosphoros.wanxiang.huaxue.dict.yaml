@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
+# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
 # Selected source: dicts/huaxue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17502
-# Generated rows in category: 10883
+# Generated rows in category: 10882
 ---
 name: eosphoros.wanxiang.huaxue
-version: "2026-09-28"
+version: "2026-10-05"
 sort: original
 ...
 
@@ -1845,7 +1845,7 @@ sort: original
 十六烷二酸	elwsu
 双氯喘通	elwta
 顺氯铵铂	elxbu
-十六酰胺乙醇	elxju
+十六酰胺乙醇	elxjuo
 双氯西林	elxla
 双氯西林钠	elxn
 水磷铀矿	elyka
@@ -3377,7 +3377,7 @@ sort: original
 碱式乙酸锌	jeyxv
 碱式乙酸盐	jeyyv
 金属氧化膜电阻	jeyzi
-间氟苯甲酰氯	jfbl
+间氟苯甲酰氯	jfblo
 间氟苯甲醚	jfbmo
 间氟苯甲醛	jfbqo
 间氟苯硼酸	jfbso
@@ -3880,7 +3880,6 @@ sort: original
 甲酸铍	jspivi
 金酸萍糖浆	jspjiv
 金酸萍颗粒	jspliv
-间四氢氯苯	jsqboi
 己酸正丙酯	jsqfav
 甲四氢罂粟碱	jsqji
 均三嗪三甲酸	jsqsv
@@ -3992,7 +3991,7 @@ sort: original
 碱性干电池	jxgwv
 聚腺苷酸钾盐	jxgyvu
 间溴茴香硫醚	jxhmo
-精氨琥珀酸	jxhs
+精氨琥珀酸	jxhso
 九溴合二铋酸铯	jxhsu
 碱性化合物	jxhwv
 碱性花岗岩	jxhyv
