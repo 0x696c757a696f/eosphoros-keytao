@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
+# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
 # Selected source: dicts/jichu.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 1425265
-# Generated rows in category: 150
+# Source rows in category: 1424279
+# Generated rows in category: 147
 ---
 name: eosphoros.wanxiang.jichu
-version: "2026-09-28"
+version: "2026-10-05"
 sort: original
 ...
 
@@ -69,7 +69,6 @@ sort: original
 个人能力	grnli
 更新一下	gxyx
 工作内容	gznrv
-回说	hbeli
 和别人	hbruo
 很多人都	hdrduu
 回答一下	hdyxi
@@ -122,7 +121,6 @@ sort: original
 你如果	nrgia
 真的很	qdhuuu
 整个过程	qggjv
-瞿麦	qlmhi
 强烈推荐	qltjav
 主要就是	qyjeov
 去医院	qyyvva
@@ -149,7 +147,6 @@ sort: original
 下面这个	xmfg
 学长学姐	xqxjo
 希望能够	xwng
-象拔	xxbsui
 需要在	xyzvvv
 夜斗	yeddoo
 有很多人	yhdrvu

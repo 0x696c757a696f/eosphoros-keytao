@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 396310cbc68cd9ac2f97a377ae262962b8bc9306
+# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
 # Selected source: dicts/mingren.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 18394
-# Generated rows in category: 7472
+# Source rows in category: 18411
+# Generated rows in category: 7477
 ---
 name: eosphoros.wanxiang.mingren
-version: "2026-09-28"
+version: "2026-10-05"
 sort: original
 ...
 
@@ -934,7 +934,6 @@ sort: original
 德瓦莱拉	dwllu
 大卫里恩	dwlxva
 董卫民	dwmia
-东吴孙权	dwsq
 赌王四太	dwst
 董文涛	dwtioa
 邓伟雄	dwxaiv
@@ -1110,10 +1109,13 @@ sort: original
 深津一成	ejyja
 圣空法师	ekfeao
 施可汗	ekhov
+山口教继	ekjjio
 射匮可汗	ekkhu
 士郎	eklpv
 圣克鲁瓦	eklwa
 圣克莱尔	eklxau
+山口瑞凤	ekrfio
+山口素臣	eksjio
 沙克尔顿	ekxdau
 山口祐司	ekysio
 莎拉波娃	elbwi
@@ -1775,8 +1777,13 @@ sort: original
 高润霖	grloa
 高若讷	grnoio
 耿弇	gryfvi
+公孙表	gsbuav
+公孙段	gsduau
+公孙丁	gsduav
 贡斯当	gsdvv
 公孙舍之	gsefu
+公孙申	gseuai
+公孙周	gsfuau
 公孙敬声	gsje
 公孙景茂	gsjm
 公孙昆邪	gskxu
@@ -1789,7 +1796,7 @@ sort: original
 公孙无知	gswfu
 公孙相如	gsxr
 高松信司	gsxso
-公孙鞅	gsyuav
+公孙越	gsyuav
 公孙子都	gszd
 格桑泽仁	gszr
 公孙瓒	gszuav
@@ -4928,7 +4935,7 @@ sort: original
 孙光宪	sgxaio
 桑格尔	sgxav
 森高夕次	sgxc
-寺冈贤司	sgxs
+寺冈贤司	sgxsv
 三谷幸喜	sgxxv
 孙宏斌	shbao
 苏赫巴托	shbti
@@ -5062,7 +5069,6 @@ sort: original
 苏帕雅莱	spyli
 松前道广	sqdg
 宋前废帝	sqfd
-孙权仲谋	sqfm
 宋秦观	sqgov
 宿勤明达	sqmd
 松前庆广	sqqgvo
@@ -5368,7 +5374,7 @@ sort: original
 特鲁希略	tlxlu
 唐李延寿	tlyeo
 特雷杨	tlyuv
-唐拉雅秀	tlyx
+唐拉雅秀	tlyxo
 特雷泽盖	tlzg
 提姆波顿	tmbdi
 铁木迭儿	tmdxi
@@ -5858,7 +5864,6 @@ sort: original
 韦启美	wqmvoo
 无著菩萨	wqps
 川崎正藏	wqqc
-吴主孙权	wqsq
 武切维奇	wqwqv
 王镇恶	wqxviv
 吴清源	wqyoa
