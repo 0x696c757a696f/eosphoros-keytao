@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
+# Source commit: dc0d8f7a279b87165f712f65d5dcd62f0b28820a
 # Selected source: dicts/yaopin.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 11380
-# Generated rows in category: 9545
+# Source rows in category: 11894
+# Generated rows in category: 9985
 ---
 name: eosphoros.wanxiang.yaopin
-version: "2026-10-05"
+version: "2026-10-12"
 sort: original
 ...
 
@@ -99,6 +99,8 @@ sort: original
 苯扎贝特片	bfbpi
 冰栀伤痛气雾剂	bfejov
 白纸扇感冒颗粒	bfelu
+白芷升麻汤	bfetu
+白芷石膏汤	bfetui
 贝复舒滴眼液	bfey
 苯乍缓释胶囊	bfhni
 补肺活血胶囊	bfhno
@@ -116,9 +118,11 @@ sort: original
 编织填料垫片	bftpa
 苯酚伪麻片	bfwpiv
 吡呋氨卡西林	bfxloo
+补肺阿胶汤	bfxtou
 补肺消肿丸	bfxwou
 补中益气膏	bfygoi
 补中益气合剂	bfyjo
+补中益气汤	bfytoi
 补中益气口服液	bfyyo
 豹骨追风膏	bgfg
 驳骨风湿酒	bgfja
@@ -135,15 +139,20 @@ sort: original
 百花定喘丸	bhdwvi
 冰黄肤乐软膏	bhfg
 疤痕止痒软化膏	bhfgoo
+百合知母汤	bhftvi
 百合更年安颗粒	bhglvi
 百合固金片	bhgpv
+百合固金汤	bhgtv
 百合固金丸	bhgwv
 百合固金浓缩丸	bhgwvi
 百合固金口服液	bhgyvi
 白虎活络膏	bhhgu
 百花活血跌打膏	bhhgv
+白虎化癍汤	bhhtui
 保和咀嚼片	bhjpiu
 半合成青霉素	bhjso
+白虎加仓术汤	bhjtui
+百合鸡子汤	bhjtvi
 柏黄静神丸	bhjwvv
 保和口服液	bhkyi
 苯海拉明片	bhlpi
@@ -316,7 +325,10 @@ sort: original
 补气升提片	bqep
 白术芍药散	bqes
 白术芍药汤	bqetu
+白术附子汤	bqft
 补气和血胶囊	bqhn
+白术和中汤	bqht
+白术黄芩汤	bqhtu
 苯羟甲胺片	bqjp
 北芪精口服液	bqjy
 八珍颗粒无糖型	bqkx
@@ -338,6 +350,7 @@ sort: original
 包醛氧淀粉胶囊	bqynu
 八珍益母片	bqyp
 包醛氧淀粉散	bqys
+白术苡仁汤	bqytu
 吡柔比星注射液	brbyo
 表柔比星注射液	brbyv
 白绒止咳糖浆	brfj
@@ -351,6 +364,7 @@ sort: original
 宝田氏增肥丸	btew
 巴特芬搽剂	btfja
 保童化痰丸	bthw
+白通加猪胆汁汤	btjt
 保胎灵片	btlp
 倍他乐克片	btlpi
 苯替酪胺口服液	btlyi
@@ -369,6 +383,7 @@ sort: original
 保胎无忧片	btwp
 白头翁止痢片	btwpu
 保胎无忧散	btws
+白头翁加甘草阿胶汤	btwt
 斑秃丸水蜜丸	btww
 补体抑制剂	btyjo
 苯妥英钠片	btyp
@@ -403,15 +418,21 @@ sort: original
 八味安宁散	bwxsuo
 八味野牛血散	bwysu
 白细胞颗粒异常	bxbjua
+半夏白术天麻汤	bxbto
 补血催生丸	bxcw
 补血生乳颗粒	bxel
+半夏秫米汤	bxet
 倍恩分散片	bxfp
 半夏茯神散	bxfs
 萆薢分清丸	bxfw
 萆薢分清丸水丸	bxfwi
 表虚感冒颗粒	bxgl
 半夏干姜散	bxgso
+半夏桂枝甘草汤	bxgto
+半夏厚朴汤	bxhto
+半夏藿香汤	bxhtov
 苯酰甲硝唑胶囊	bxjn
+必小柴胡汤	bxjt
 八仙长寿丸	bxjw
 宝儿康糖浆	bxkj
 半夏露冲剂	bxlj
@@ -429,10 +450,12 @@ sort: original
 苄星青霉素钠	bxqn
 苄星青霉素	bxqs
 补心气口服液	bxqyo
+半夏散及汤	bxst
 苯胺凸版印刷凝聚剂	bxtj
 补心通脉颗粒	bxtl
 补虚通瘀颗粒	bxtlo
 补血调经片	bxtp
+半夏温肺汤	bxwt
 保安万灵丸	bxww
 保安万灵丹丸	bxwwi
 保儿安冲剂	bxxji
@@ -443,6 +466,7 @@ sort: original
 百癣夏塔热片	bxxpv
 白消安注射液	bxxy
 补血益母颗粒	bxyl
+半夏左经汤	bxzto
 搏延补肾斑龙片	bybp
 保婴夺命散	byds
 补益地黄丸	bydwo
@@ -452,6 +476,7 @@ sort: original
 苯乙双胍片	byep
 鼻渊舒口服液	byeyu
 拔云复光散	byfs
+补阳还五汤	byht
 白玉化痰丸	byhw
 补益活络丸	byhwo
 鼻咽解毒胶囊	byjn
@@ -484,6 +509,7 @@ sort: original
 苯唑西林钠片	bzxp
 柏子养心胶囊	bzyn
 柏子养心片	bzypv
+柏子养心汤	bzytv
 柏子养心丸	bzywva
 柏子滋心丸	bzzwv
 柏子滋心浓缩丸	bzzwva
@@ -522,6 +548,7 @@ sort: original
 草果四味汤散	cgss
 参桂调经丸	cgtw
 参归养血片	cgyp
+菜干鸭肾蜜枣汤	cgyt
 参桂养荣丸	cgyw
 参归养血口服液	cgyy
 参桂再造丸	cgzw
@@ -688,6 +715,7 @@ sort: original
 蛋白抑制剂	dbyj
 大补元煎丸	dbywvo
 地巴唑滴眼液	dbzyv
+淡菜紫菜瘦肉汤	dczta
 跌打促愈片	ddcpo
 跌打生骨颗粒	ddelo
 跌打生骨胶囊	ddenoi
@@ -700,9 +728,12 @@ sort: original
 大豆磷脂散	ddlsvv
 多动宁胶囊	ddnnuv
 跌打扭伤散	ddnso
+胆道排石汤	ddptu
 跌打七厘片	ddqpoi
+胆道驱蛔汤	ddqtuo
 跌打三七胶囊	ddsno
 地丁三味汤散	ddssv
+冬地三黄汤	ddstuv
 跌打损伤丸	ddswoi
 丹灯通脑胶囊	ddtn
 丹灯通脑软胶囊	ddtnu
@@ -735,6 +766,7 @@ sort: original
 杜仲补天素片	dfbpv
 杜仲补天素丸	dfbwv
 杜仲补腰口服液	dfbyv
+杜仲山楂猪肚汤	dfetv
 丹中止咳糖浆	dffjui
 定风止痛胶囊	dffnou
 杜仲壮骨胶囊	dffnv
@@ -772,6 +804,7 @@ sort: original
 碘苷滴眼液	dgdyvi
 丁咯地尔注射液	dgdyvo
 当归芍药散	dgesi
+当归生姜羊肉汤	dget
 冻干蜂王浆胶囊	dgfnov
 冻干蜂王浆散	dgfsov
 当归腹痛宁滴丸	dgfwii
@@ -780,14 +813,18 @@ sort: original
 丹葛颈舒胶囊	dgjnu
 地骨降糖胶囊	dgjnv
 当归浸膏片	dgjpii
+当归鸡血藤汤	dgjti
 当归寄生注射液	dgjyi
 当归苦参丸	dgkwi
 当归龙荟片	dglpi
+当归六黄汤	dglti
 当归龙荟丸	dglwi
 当归拈痛颗粒	dgnli
 当归南枣片	dgnpi
+当归拈痛汤	dgnt
 当归拈痛丸	dgnwi
 当归拈痛口服液	dgny
+当归四逆加吴茱萸生姜汤	dgsti
 达肝素钠注射液	dgsyv
 丁公藤注射液	dgtyvu
 丁桂温胃散	dgwsvv
@@ -812,6 +849,7 @@ sort: original
 丹红化瘀口服液	dhhyua
 地黄菖龙颗粒	dhjlvv
 大黄降脂素	dhjsvv
+独活寄生汤	dhjtu
 独活寄生丸	dhjwua
 碘海醇注射液	dhjy
 独活寄生口服液	dhjyu
@@ -948,6 +986,7 @@ sort: original
 地屈孕酮片	dqypv
 冬茸补肾胶囊	drbnui
 多柔比星注射液	drby
+调荣通脉汤	drtto
 第三代制剂	dsdju
 第四代制剂	dsdjui
 胆酸止咳片	dsfpuv
@@ -984,6 +1023,7 @@ sort: original
 冬菀止咳颗粒	dwflui
 定喘止嗽丸	dwfwo
 第五福龙丸	dwfwu
+调胃承气汤	dwjt
 胆胃康胶囊	dwknui
 度维利塞	dwlso
 定喘疗肺丸	dwlw
@@ -1004,12 +1044,14 @@ sort: original
 胆香鼻炎片	dxbp
 丹芎跌打膏	dxdg
 第二代制剂	dxdj
+丁香柿蒂汤	dxetv
 丹莪妇康煎膏	dxfg
 灯心止血糖浆	dxfjo
 毒性中药饮片	dxfpv
 丹香冠心注射液	dxgy
 多西环素胶囊	dxhn
 多西环素片	dxhp
+丁香胶艾汤	dxjtv
 癫痫康胶囊	dxkn
 丁香罗勒乳膏	dxlg
 丁香罗勒油乳膏	dxlgv
@@ -1037,6 +1079,7 @@ sort: original
 第一代制剂	dydju
 丹叶大黄素	dydsu
 地榆升白片	dyepvv
+东垣神秘汤	dyet
 貂胰防裂膏	dyfgu
 貂油治裂软膏	dyfgua
 貂胰防裂软膏	dyfguu
@@ -1061,6 +1104,7 @@ sort: original
 生白口服液	ebkyuu
 施保利通片	eblpo
 舒必利注射液	eblyio
+双补气血八珍汤	ebqtao
 诗碧脱毛膏	ebtgov
 舒巴坦钠注射液	ebtyi
 十八味牛黄散	ebwsu
@@ -1082,9 +1126,11 @@ sort: original
 善存银片	ecyp
 蛇胆半夏片	edbpiu
 蛇胆贝母散	edbsiu
+生地八物汤	edbt
 十滴水软胶囊	edenua
 十滴水胶丸	edewu
 蛇胆追风丸	edfwiu
+生地黄黄连汤	edhtuv
 沙丁醇雾剂	edjjav
 蛇胆陈皮片	edjpiu
 蛇胆陈皮散	edjsiu
@@ -1112,6 +1158,7 @@ sort: original
 烧伤止痛药膏	eefgo
 双释放肠溶胶囊	eefna
 沙参止咳汤散	eefsaa
+沙参止咳汤	eefta
 烧伤肤康液	eefyoi
 暑湿感冒颗粒	eegloa
 神衰果素片	eegpoo
@@ -1125,17 +1172,22 @@ sort: original
 肾舒颗粒无糖型	eekxi
 肾衰康灌肠液	eekyi
 舒神灵胶囊	eeln
+沙参麦冬汤	eemt
+沙参麦门冬汤	eemta
 肾衰宁片	eenpi
 肾衰宁薄膜衣片	eenpio
 肾衰宁灌肠液	eenyi
 伤湿祛痛膏	eeqgi
 史诗战争片	eeqpio
+生熟三黄汤	eest
 肾石通冲剂	eetjiv
 肾石通颗粒	eetl
 史诗爱情片	eexp
 肾上腺色腙片	eexpi
 手术消毒擦手液	eexyiv
 双水杨酯片	eeypa
+沙参玉竹老鸭汤	eeyta
+沙参玉竹猪皮汤	eeytaa
 疏风定痛丸	efdwa
 舒风定痛丸	efdwi
 神州跌打丸	efdwoo
@@ -1145,6 +1197,7 @@ sort: original
 伤风感冒冲剂	efgji
 伤风感冒颗粒	efgliu
 疏风活络片	efhpau
+疏风活血汤	efhta
 疏风活络丸	efhwa
 山楂化滞丸	efhwi
 伤风净喷雾剂	efjjiu
@@ -1161,10 +1214,12 @@ sort: original
 少腹逐瘀颗粒	efqliu
 疏风清热胶囊	efqna
 少腹逐瘀胶囊	efqniu
+少腹逐瘀汤	efqtiu
 少腹祛瘀丸	efqwi
 少腹逐瘀丸	efqwiu
 舒脂软胶囊	efrniu
 疏风散热胶囊	efsn
+生附四君子汤	efstu
 伤风停胶囊	eftn
 双酚伪麻糖浆	efwja
 双分伪麻胶囊	efwnau
@@ -1174,9 +1229,11 @@ sort: original
 伤复欣喷雾剂	efxji
 疏风再造丸	efzwa
 舒肝保坤丸	egbwiu
+石膏葱白汤	egct
 生干地黄散	egdsu
 生干地黄丸	egdwu
 舒肝顺气丸	egew
+石膏知母汤	egftv
 舒肝止痛丸	egfwi
 疏肝活血颗粒	eghla
 舒肝化滞胶囊	eghn
@@ -1191,6 +1248,8 @@ sort: original
 生桂口服液	egky
 舒格利单抗	eglkiv
 疏肝理脾片	eglp
+疏肝理脾汤	eglta
+石膏六合汤	egltv
 参桂鹿茸丸	eglwa
 舒肝理气丸	eglwi
 舒肝明目丸	egmwi
@@ -1221,6 +1280,7 @@ sort: original
 麝蚝解痛膏	ehjgo
 山花晶颗粒	ehjl
 双磺甲氧苄啶散	ehjs
+圣惠荆芥地黄汤	ehjt
 胜红抗炎素胶囊	ehkn
 石黄抗菌片	ehkpv
 山荷口服液	ehkyi
@@ -1232,6 +1292,7 @@ sort: original
 双黄连软胶囊	ehln
 双黄连片	ehlpa
 双黄连咀嚼片	ehlpav
+生化六和汤	ehlt
 水合氯醛口服液	ehlyai
 双黄连滴眼液	ehlyav
 手绘明信片	ehmp
@@ -1267,9 +1328,12 @@ sort: original
 杀菌止痒洗剂	ejfjui
 双解止泻颗粒	ejflau
 生肌干脓散	ejgs
+生姜甘草汤	ejgtu
+生津葛根汤	ejgtua
 舒筋活血胶囊	ejhni
 舒筋活血片	ejhpi
 舒筋活血定痛散	ejhs
+疏筋活血汤	ejhtau
 伸筋活络丸	ejhwi
 舒筋琥珀丸	ejhwiu
 山菊降压片	ejjpi
@@ -1278,6 +1342,7 @@ sort: original
 舒肠口服液	ejkyiu
 双金连口服液	ejlyai
 双肼屈嗪片	ejqpau
+生津四物汤	ejstu
 神机四枢丸	ejswo
 舒筋通络颗粒	ejtli
 双金胃疡胶囊	ejwnai
@@ -1287,6 +1352,7 @@ sort: original
 生姜泄心片	ejxpu
 生肌愈创膏	ejygu
 生肌玉红膏	ejyguu
+生津养血汤	ejytu
 沙棘籽油软胶囊	ejzn
 沙棘籽油胶丸	ejzwa
 水基钻井液	ejzya
@@ -1362,6 +1428,7 @@ sort: original
 石龙清血颗粒	elqlv
 双氯青霉素钠片	elqpa
 少林祛风止痛散	elqs
+生料四物汤	elst
 石淋通冲剂	eltjv
 石淋通颗粒	eltlv
 石淋通胶囊	eltn
@@ -1374,10 +1441,13 @@ sort: original
 十六味冬青丸	elwwu
 十六味杜鹃花丸	elwwuo
 水陆二味片	elxpa
+水陆二仙汤	elxta
 水陆二味丸	elxwa
 参苓益肾酒	elyja
 湿了一大片	elypa
 舒络养肝丸	elywi
+升麻鳖甲汤	embt
+生脉补精汤	embtu
 双嘧啶颗粒	emdlao
 山牡丹胶囊	emdn
 双嘧达膜片	emdpa
@@ -1422,6 +1492,7 @@ sort: original
 十全大补糖浆	eqdju
 十全大补颗粒	eqdlu
 十全大补片	eqdp
+十全大补汤	eqdtu
 十全大补丸	eqdw
 十全大补口服液	eqdyu
 参芪山药膏	eqegai
@@ -1520,6 +1591,8 @@ sort: original
 烧烫宁喷雾剂	etnj
 伤痛宁胶囊	etnn
 嗜天青颗粒	etqlo
+身痛逐瘀汤	etqt
+身痛逐淤汤	etqtu
 渗透消增散	etxsa
 参味补肾口服液	ewby
 十味丛菔散	ewcs
@@ -1553,6 +1626,7 @@ sort: original
 十五味黑药胶囊	ewwn
 十五味乳鹏胶囊	ewwnu
 十五味雏凤散	ewwsuv
+十味温胆汤	ewwtuo
 十五味沉香丸	ewwwu
 十五味黑药丸	ewwwuv
 首乌消渴颗粒	ewxlo
@@ -1564,6 +1638,7 @@ sort: original
 生血宝合剂	exbju
 双辛鼻窦炎颗粒	exblao
 生血宝颗粒	exblu
+生血补髓汤	exbtu
 麝香保心丸	exbwo
 麝香保心丸水丸	exbwou
 生血宝口服液	exbyu
@@ -1585,6 +1660,7 @@ sort: original
 麝香风湿胶囊	exfno
 麝香风湿片	exfpo
 麝香止痛贴	exfto
+生血止崩汤	exftu
 麝雄至宝丸	exfwo
 十香止痛丸	exfwu
 生血复元口服液	exfyu
@@ -1632,6 +1708,7 @@ sort: original
 舒心通脉胶囊	extn
 石杏痰咳片	extpv
 神效托里散	extso
+升血调元汤	exttu
 麝香通心滴丸	extwo
 十二太保丸	extwu
 疏血通注射液	extyau
@@ -1655,6 +1732,7 @@ sort: original
 麝香熊羚丸	exxwo
 舒心安神口服液	exxyi
 疝修预裁补片	exypo
+单县羊肉汤	exyto
 舒尔阴洗液	exyyi
 输血用抗凝液	exyyv
 双异丙酚注射液	eybya
@@ -1669,6 +1747,7 @@ sort: original
 双羊喉痹通颗粒	eyhl
 舒阴洁洗剂	eyjji
 肾炎解热片	eyjp
+是以陈涉不用汤	eyjto
 痧药蟾酥丸	eyjw
 舒郁九宝丸	eyjwi
 时疫救急丸	eyjwo
@@ -1713,6 +1792,7 @@ sort: original
 肾炎消肿片	eyxp
 食欲抑制剂中毒	eyydi
 食欲抑制剂	eyyji
+升阳益胃汤	eyyt
 双阳益肾口服液	eyyya
 薯蓣皂苷片	eyzp
 双子参洗液	ezcya
@@ -1722,6 +1802,7 @@ sort: original
 知柏地黄颗粒	fbdlu
 知柏地黄胶囊	fbdnu
 知柏地黄片	fbdp
+知柏地黄汤	fbdt
 知柏地黄丸	fbdw
 知柏地黄口服液	fbdy
 妇必舒胶囊	fbena
@@ -1767,6 +1848,7 @@ sort: original
 痔舒适洗液	feey
 风伤止痛膏	fefgu
 肤舒止痒膏	fefgui
+枳实栀子鼓汤	feftv
 风湿福音丸	fefwu
 风湿止痛丸	fefwua
 风湿关节酒	fegju
@@ -1776,6 +1858,7 @@ sort: original
 风湿骨痛宁胶囊	fegnua
 风湿骨康片	fegpu
 风湿骨痛片	fegpua
+枳实栝楼桂枝汤	fegtv
 风湿骨痛丸	fegwu
 风湿关节炎丸	fegwua
 风湿寒痛片	fehpu
@@ -1786,6 +1869,7 @@ sort: original
 蝮蛇抗风湿胶囊	fekni
 枳术宽中胶囊	feknv
 蝮蛇康乐液	feky
+法式龙虾浓汤	felta
 枳实理中丸	felwv
 风湿灵仙液	felyu
 风湿马钱片	fempu
@@ -1799,6 +1883,7 @@ sort: original
 风湿速效丸	feswu
 风湿安泰片	fexp
 风湿豨桐片	fexpu
+枳实薤白桂枝汤	fext
 治伤消瘀丸	fexw
 治伤消瘀丸水丸	fexwa
 风湿二十五味	fexwu
@@ -2149,12 +2234,14 @@ sort: original
 酚磺乙胺注射液	fhyy
 氟基表面活性剂	fjbjuv
 支架包埋液	fjbyu
+防己地黄汤	fjdta
 肿节风浸膏	fjfg
 肿节风软胶囊	fjfnui
 肿节风片	fjfpui
 非均质旋转色散	fjfsiv
 防己茯苓汤	fjfta
 防己茯苓丸	fjfwaa
+防己黄芪汤	fjhtaa
 妇洁康喷雾剂	fjkja
 肤净康洗剂	fjkju
 粉尘螨注射液	fjmyo
@@ -2270,6 +2357,7 @@ sort: original
 卓玛丹鬼臼丸	fmdw
 呋麻滴鼻液	fmdyo
 呋嘛滴鼻液	fmdyoo
+中满分消汤	fmft
 中满分消丸	fmfwia
 指迷茯苓丸	fmfwio
 楂麦健脾颗粒	fmjlv
@@ -2352,6 +2440,7 @@ sort: original
 氟哌利多注射液	fplyu
 治偏痛颗粒	fptla
 治偏痛胶囊	fptn
+浮萍银翘汤	fpytai
 肤芪止痒洗剂	fqfju
 复芪止汗颗粒	fqflu
 扶正固本颗粒	fqgli
@@ -2496,6 +2585,7 @@ sort: original
 妇阴舒泡腾片	fyepaa
 浮翳坠翳丸	fyfwav
 复元固精温肾散	fygsu
+复元活血汤	fyhtuv
 妇炎净胶囊	fyjna
 壮阳春胶囊	fyjno
 壮元健肾胶囊	fyjnov
@@ -2542,21 +2632,30 @@ sort: original
 转移因子胶囊	fyyn
 转移因子溶液	fyyyv
 转移因子口服液	fyyyvu
+栀子柏皮汤	fzbtv
 栀子大黄汤方	fzdfva
 栀子大黄汤	fzdtva
+栀子生姜豉汤	fzet
+栀子干姜汤	fzgtva
+栀子厚朴汤	fzhtva
 呋咱甲氢龙片	fzjpoo
+附子粳米汤	fzjt
+栀子金花汤	fzjtv
 栀子金花丸	fzjwva
 附子理中片	fzlpa
 氟泽雷塞	fzlsu
+附子理中汤	fzlta
 附子理中丸	fzlwa
 附子理中浓缩丸	fzlwaa
 附子理中液	fzlya
 附子理中口服液	fzlyaa
 氟唑帕利	fzplu
 种子三达丸	fzsw
+附子泻心汤	fzxta
 固本止咳膏	gbfg
 肝必复胶囊	gbfnu
 肝必复软胶囊	gbfnuo
+固本止崩汤	gbfti
 谷丙甘氨酸胶囊	gbgnu
 谷丙甘氨酸片	gbgpu
 固本回元口服液	gbhyi
@@ -2573,9 +2672,12 @@ sort: original
 固本益肠片	gbypiv
 固本延龄丸	gbywiv
 归参补血片	gcbp
+甘草粉蜜汤	gcft
 骨刺止痛丸	gcfw
-甘草干姜茯苓白术汤	gcgt
+甘草干姜汤	gcgt
+甘草干姜茯苓白术汤	gcgtv
 甘草麻黄碱片	gcmp
+甘草麻桂汤	gcmt
 骨刺宁胶囊	gcnn
 骨刺宁片	gcnp
 骨刺平糖衣片	gcpp
@@ -2593,6 +2695,8 @@ sort: original
 骨刺消痛胶囊	gcxni
 甘草锌胶囊	gcxnv
 骨刺消痛片	gcxp
+甘草小麦大枣汤	gcxt
+甘草小麦红枣汤	gcxtv
 骨刺消痛液	gcxy
 骨刺消症口服液	gcxyi
 钙蛋白酶抑制剂	gdbjia
@@ -2615,6 +2719,7 @@ sort: original
 肝肾补糖浆	gebjui
 固肾补气散	gebsii
 骨伤挫伤胶囊	gecn
+归芍地黄汤	gedti
 固肾定喘丸	gedwii
 固肾生发丸	geewi
 骨伤止痛散	gefsii
@@ -2645,6 +2750,8 @@ sort: original
 骨伤消肿口服液	gexyii
 归芍异功散	geysii
 光致变色镜片	gfbpi
+桂枝白虎汤	gfbtv
+桂枝半夏汤	gfbtvv
 硅氟催化剂	gfcjvu
 骨折挫伤胶囊	gfcn
 桂附地黄颗粒	gfdlva
@@ -2653,24 +2760,38 @@ sort: original
 桂附地黄丸	gfdwva
 高折射率镜片	gfepoi
 桂枝芍药汤	gfet
-桂枝芍药知母汤	gfetv
+桂枝石膏汤	gfetv
+桂枝芍药知母汤	gfetvv
 桂枝茯苓片	gffpvv
+桂枝防风汤	gfftvv
 桂枝茯苓丸	gffwvv
 贯防感冒片	gfgpa
-桂枝加大黄汤	gfjtv
-桂枝加芍药汤	gfjtvv
+桂枝甘草汤	gfgtvv
+桂枝黄芪汤	gfhtvv
+桂枝柴胡汤	gfjtv
+桂枝加桂汤	gfjtvv
 桂枝口服液	gfky
 肝复乐胶囊	gfln
 肝复乐片	gflpu
+桂枝龙骨牡蛎汤	gfltvv
 桂附理中丸	gflwva
+桂枝麻黄汤	gfmt
+桂枝麻黄各半汤	gfmtv
 骨质宁搽剂	gfnji
 骨风宁胶囊	gfnn
-桂枝去芍药汤	gfqtvv
+桂枝羌活汤	gfqtvv
+桂枝人参汤	gfrtv
+桂枝四七汤	gfstv
+桂枝桃仁汤	gfttv
+桂枝新加汤	gfxtvv
 骨折再生丸	gfzwi
 骨质增生导入液	gfzyi
 葛根岑连胶囊	ggcn
 骨骼风痛片	ggfpi
 葛根黄豆苷元片	gghp
+归桂化逆汤	gght
+葛根黄芩黄连汤	gghti
+葛根加半夏汤	ggjti
 过岗龙片	gglpv
 葛根芩连颗粒	ggqliv
 葛根芩连胶囊	ggqniv
@@ -2708,6 +2829,8 @@ sort: original
 蛤蚧大补丸	gjdwii
 固精参茸丸	gjewi
 甘桔止咳糖浆	gjfjvv
+干姜附子汤	gjftv
+甘桔防风汤	gjftvv
 固肠止泻丸	gjfwiu
 关节风痛丸	gjfwo
 干金止带丸	gjfwv
@@ -2715,9 +2838,12 @@ sort: original
 杆菌活菌制剂	gjhjv
 胍甲环素胶囊	gjhn
 关节解痛膏	gjjgo
+甘菊荆芥汤	gjjtvi
 感昌咳嗽颗粒	gjkl
 关节克痹丸	gjkwo
 龟甲拉颗粒	gjllui
+古今录验续命汤	gjltu
+甘姜苓术汤	gjltvo
 固精麦斯哈胶囊	gjmni
 固精麦斯哈片	gjmpi
 关节镇痛巴布膏	gjqgo
@@ -2731,6 +2857,7 @@ sort: original
 肝加欣片	gjxpu
 龟胶养阴颗粒	gjyluu
 龟甲养阴片	gjypui
+甘桔射干汤	gjytvv
 蛤蚧养肺丸	gjywi
 固精养元口服液	gjyyio
 感咳双清胶囊	gken
@@ -2746,13 +2873,17 @@ sort: original
 龟鹿补肾丸	glbwu
 龟鹿补肾口服液	glbyu
 骨痨敌注射液	gldyio
+桂苓神术汤	glet
 古楼山跌打丸	glewu
 革兰氏染液	gley
 革兰氏染色液	gleyv
 功劳止泻颗粒	glflvi
 股蓝蜂花胶囊	glfnu
+瓜蒌枳实汤	glftu
+栝蒌枳实汤	glftv
 龟龙中风丸	glfwu
 桂苓甘露散	glgs
+栝蒌桂枝汤	glgtvi
 橄榄晶冲剂	gljjvv
 橄榄晶颗粒	gljlvv
 甘露聚糖肽胶囊	gljnv
@@ -2771,6 +2902,7 @@ sort: original
 格列美脲滴丸	glmwvv
 宫瘤宁颗粒	glnlo
 宫瘤宁胶囊	glnno
+栝蒌牛蒡汤	glntv
 龟鹿宁神丸	glnwu
 瓜蒌皮注射液	glpy
 宫瘤清胶囊	glqnoo
@@ -2778,6 +2910,7 @@ sort: original
 格列齐特胶囊	glqnvv
 功劳去火片	glqpvi
 格列齐特片	glqpvv
+蛤蜊巧达汤	glqti
 高丽清心丸	glqwo
 高力清心丸	glqwoa
 栝蒌青黛丸	glqwv
@@ -2789,6 +2922,7 @@ sort: original
 甘露特钠胶囊	gltn
 骨苓通痹丸	gltwi
 咖喱味的牙膏	glwg
+桂苓五味甘草汤	glwtvi
 龟鹿二仙膏	glxgu
 葛兰心宁软胶囊	glxnio
 骨剌消痛胶囊	glxniv
@@ -2799,6 +2933,9 @@ sort: original
 甘磷酰芥片	glxpv
 格隆溴铵片	glxpva
 甘罗溴铵片	glxpvi
+瓜蒌薤白白酒汤	glxtu
+瓜蒌薤白半夏汤	glxtui
+栝蒌薤白白酒汤	glxtvi
 龟鹿二胶丸	glxwu
 甘露消毒丸	glxwv
 栝蒌杏连丸	glxwvi
@@ -2809,6 +2946,7 @@ sort: original
 甘露月晶丸	glywvv
 龟鹿滋肾丸	glzwu
 甘镁颠茄片	gmdpv
+甘麦大枣汤	gmdtv
 嘎日迪五味丸	gmdw
 感冒舒颗粒	gmelv
 感冒疏风颗粒	gmelvi
@@ -2830,6 +2968,7 @@ sort: original
 骨膜灵颗粒	gmlli
 感冒灵片	gmlpv
 感冒灵薄膜衣片	gmlpvi
+顾母理脏汤	gmlt
 冠脉宁胶囊	gmnno
 更美宁胶囊	gmnnv
 冠脉宁片	gmnp
@@ -2849,6 +2988,7 @@ sort: original
 感冒炎咳灵糖浆	gmyj
 光明盐四味胶囊	gmyn
 感冒炎咳灵片	gmypv
+归麦榆草汤	gmytiv
 更年灵胶囊	gnln
 更年乐片	gnlpv
 更年宁心胶囊	gnnn
@@ -2876,11 +3016,13 @@ sort: original
 枸杞消渴胶囊	gqxnv
 归芪养血糖浆	gqyj
 枸杞益肾胶囊	gqyn
+枸杞羊肉汤	gqytv
 龟茸壮骨片	grfpu
 桂茸固本丸	grgwv
 干扰素注射液	grsyvi
 骨松宝颗粒	gsbli
 骨松宝胶囊	gsbn
+甘遂半夏汤	gsbt
 骨髓蛋白口服液	gsdy
 骨髓蛋白营养液	gsdyi
 肝素钙注射液	gsgyu
@@ -2895,6 +3037,7 @@ sort: original
 肝苏片	gspui
 肝苏软胶囊	gsrnu
 钙羧酸指示剂	gssj
+甘遂通结汤	gstt
 宫缩抑制剂	gsyj
 硅酸盐粘固剂	gsyjv
 睾酮雌酮注射剂	gtcjuv
@@ -2927,6 +3070,7 @@ sort: original
 肝维康片	gwkp
 肝胃气痛片	gwqpu
 谷维素注射液	gwsyu
+归尾泽兰汤	gwzt
 冠心丹参颗粒	gxdl
 冠心丹参胶囊	gxdn
 冠心丹芍片	gxdpoo
@@ -2951,6 +3095,8 @@ sort: original
 冠心七味片	gxqpo
 桂香祛暑散	gxqs
 桂香祛署散	gxqsv
+膈下逐瘀汤	gxqtu
+膈下逐淤汤	gxqtuv
 肝安注射液	gxqyu
 冠心苏合胶囊	gxsn
 冠心苏合软胶囊	gxsno
@@ -2993,6 +3139,7 @@ sort: original
 宫炎平分散片	gypp
 桂圆琼玉颗粒	gyqlvi
 给药系统制剂	gyxjai
+故曰二加龙骨汤	gyxtuo
 骨增生痛膏	gzegiv
 谷甾醇复合剂	gzjjua
 干燥颗粒状制剂	gzkjv
@@ -3024,6 +3171,7 @@ sort: original
 海藏当归丸	hcdw
 红草止鼾颗粒	hcfl
 环仓特罗片	hctp
+海藏五饮汤	hcwt
 海藏紫菀散	hczs
 藿胆鼻炎胶囊	hdbni
 磺啶冰黄片	hdbp
@@ -3039,9 +3187,11 @@ sort: original
 护肾保元口服液	hebyi
 回生第一丹胶囊	hedn
 回生第一散	hedsiu
+花生大枣猪蹄汤	hedti
 回生第一丹丸	hedwiu
 黑首生发颗粒	heeli
 寒水石小灰散	heesoa
+花生沙参汤	heet
 华山参滴丸	heewii
 回生甘露丸	hegwi
 花蛇解痒胶囊	hejnii
@@ -3057,6 +3207,7 @@ sort: original
 喉舒宁薄膜衣片	henpoi
 黄氏响声含片	hexp
 黄氏响声丸	hexwv
+花生枣蜜汤	hezt
 回生再造丸	hezwiu
 郝智巴氯芬片	hfbpv
 海浮石滑石散	hfesaa
@@ -3149,6 +3300,7 @@ sort: original
 活络止痛丸	hlfwaa
 蒿蓝感冒颗粒	hlglii
 海龙蛤蚧口服液	hlgya
+黄苓滑石汤	hlhtvi
 活络健身液	hljy
 海龙胶口服液	hljya
 黄龙咳喘胶囊	hlknvv
@@ -3166,6 +3318,7 @@ sort: original
 活络消痛片	hlxpa
 茴拉西坦片	hlxpi
 茴拉西坦分散片	hlxpii
+活络效灵汤	hlxtaa
 环磷酰胺注射液	hlxyv
 环磷腺苷注射液	hlxyvv
 活力源片	hlypaa
@@ -3192,6 +3345,7 @@ sort: original
 厚朴大黄汤方	hpdf
 厚朴大黄汤	hpdtv
 琥珀多寐丸	hpdw
+厚朴生姜半夏甘草人参汤	hpet
 琥珀还睛丸	hphw
 琥珀化痰镇惊丸	hphwv
 黄蒲洁肤洗剂	hpjjv
@@ -3199,15 +3353,23 @@ sort: original
 海普宁注射液	hpny
 厚朴排气合剂	hppj
 厚朴排气口服液	hppy
+厚朴七物汤	hpqtv
 琥珀酸亚铁片	hpsp
+厚朴三物汤	hpst
+厚朴温中汤	hpwtvv
 厚朴温中丸	hpwwv
 琥珀消石颗粒	hpxl
+厚朴夏苓汤	hpxt
+藿朴夏苓汤	hpxti
+霍朴夏苓汤	hpxtv
 琥珀酰明注射液	hpxy
 海麒舒肝胶囊	hqena
 黄芪芍药桂枝苦酒汤	hqet
 海珠神滴眼液	hqey
+黄芪桂枝五物汤	hqgtv
 槐杞黄颗粒	hqhlv
 化症回生片	hqhpi
+黄芩滑石汤	hqhtv
 黄芪健胃膏	hqjgvi
 黄芪降糖胶囊	hqjnv
 黄芪建中丸	hqjwv
@@ -3243,6 +3405,7 @@ sort: original
 猴头健胃灵胶囊	htjnuo
 猴头菌片	htjpu
 猴头菌糖衣片	htjpuo
+红糖姜枣汤	htjta
 喉痛灵颗粒	htllo
 喉痛灵片	htlpo
 核糖霉素注射液	htmy
@@ -3276,6 +3439,7 @@ sort: original
 和胃丸胶囊	hwwnu
 和胃安眠丸	hwxwu
 汗为心之液	hwxya
+回味鸭血粉丝汤	hwytio
 寒喘祖帕颗粒	hwzlo
 红细胞保存液	hxby
 磺胺多辛片	hxdpv
@@ -3344,6 +3508,8 @@ sort: original
 琥乙红霉素颗粒	hyhlv
 琥乙红霉素胶囊	hyhnv
 琥乙红霉素片	hyhp
+回阳救急汤	hyjti
+回阳救逆汤	hyjtia
 黄英咳喘糖浆	hykjv
 还原酶抑制剂	hymjv
 黄杨宁片	hynp
@@ -3384,11 +3550,14 @@ sort: original
 救必应胃痛片	jbypvo
 柴磁地黄丸	jcdwi
 金刺参九正合剂	jcejiv
+加参生化汤	jceta
 金参润喉合剂	jcrji
 金参润喉口服液	jcryi
+加参安肺生化汤	jcxta
 景参益气颗粒	jcyloa
 金胆薄膜衣片	jdbpiu
 假单胞菌注射液	jdbyi
+柴独苍术汤	jdct
 解毒痤疮丸	jdcwu
 经典动画长片	jddpai
 解毒烧伤膏	jdegu
@@ -3460,6 +3629,7 @@ sort: original
 柴石退热颗粒	jetliv
 碱式碳酸铋片	jetpv
 鸡矢藤注射液	jetyau
+除湿胃苓汤	jewta
 金沙五淋丸	jewwia
 健身消导颗粒	jexliu
 金水鲜胶囊	jexni
@@ -3542,6 +3712,7 @@ sort: original
 精制银翘解毒片	jfypou
 甲酚皂消毒液	jfzyi
 桔梗八味颗粒	jgblvv
+柴梗半夏汤	jgbt
 鸡骨草肝炎冲剂	jgcja
 鸡骨草肝炎颗粒	jgcla
 鸡骨草肝炎丸	jgcwa
@@ -3552,9 +3723,12 @@ sort: original
 筋骨伤喷雾剂	jgejui
 筋骨止痛膏	jgfgu
 金龟痔速宁片	jgfpiu
+桔梗枳壳汤	jgftv
+柴葛桂枝汤	jggti
 接骨活血颗粒	jghli
 筋骨活天麻胶囊	jghnu
 金刚健骨片	jgjpii
+柴葛解肌汤	jgjti
 秸秆颗粒机	jgkj
 结构控制剂	jgkja
 金感康胶囊	jgkniv
@@ -3574,6 +3748,7 @@ sort: original
 接骨七厘胶囊	jgqnii
 接骨七厘片	jgqpi
 接骨七厘散	jgqsi
+柴葛芩连汤	jgqtii
 健骨注射液	jgqyi
 肌甘注射液	jgqyu
 肌苷注射液	jgqyui
@@ -3590,30 +3765,44 @@ sort: original
 甲钴胺片	jgxp
 接骨续筋片	jgxpi
 甲钴胺分散片	jgxpii
+桔梗二陈汤	jgxtv
 甲钴胺注射液	jgxyii
 金果饮咽喉片	jgypii
 酒国英雄口服液	jgyyai
 金果饮口服液	jgyyii
+柴胡白虎汤	jhbt
+柴胡鳖甲汤	jhbti
 金黄抱龙丸	jhbwiv
 结合雌激素乳膏	jhcg
 结合雌激素软膏	jhcga
 结合雌激素片	jhcpa
+柴胡参术汤	jhct
 金花烧烫伤膏	jheg
+柴胡升麻汤	jhet
+柴胡胜湿汤	jheti
 橘红疝气丸	jhewv
 嘉恒妇康片	jhfpv
 柴胡栀子散	jhfsiu
+柴胡防风汤	jhfti
+柴胡复生汤	jhftiu
 金槐冠心片	jhgp
+柴胡桂枝干姜汤	jhgti
 桔红化痰片	jhhpv
 橘红化痰片	jhhpva
+柴胡厚朴汤	jhhtiu
 橘红化痰丸	jhhwv
 金喉健喷雾剂	jhjjio
 金蒿解热颗粒	jhjlii
 柴胡健肝胶囊	jhjni
 聚合剂加入器	jhjqv
+柴胡加桂汤	jhjti
+柴胡姜桂汤	jhjtiu
 橘红颗粒冲剂	jhkjv
 结核康欣片	jhkp
 柴黄口服液	jhkyi
 金黄利胆胶囊	jhln
+柴胡羚角汤	jhlti
+柴胡六合汤	jhltiu
 柴胡麦冬散	jhmsi
 柴胡梅连散	jhmsiu
 金花明目丸	jhmwii
@@ -3629,12 +3818,14 @@ sort: original
 产后逐瘀片	jhqpou
 姜黄清脂片	jhqpov
 柴胡清肝散	jhqs
+柴胡羌活汤	jhqtiu
 柴黄软胶囊	jhrniv
 酒花素搽剂	jhsja
 甲磺酸溴隐亭片	jhspi
 橘红痰咳煎膏	jhtgv
 橘红痰咳颗粒	jhtl
 橘红痰咳泡腾片	jhtpv
+柴胡通经汤	jhtti
 柴胡退翳丸	jhtwi
 橘红痰咳液	jhtyv
 桔红痰咳液	jhtyva
@@ -3644,20 +3835,28 @@ sort: original
 姜黄消痤搽剂	jhxjov
 金花消痤颗粒	jhxli
 金花消痤胶囊	jhxn
+柴胡陷胸汤	jhxti
+柴胡芎归汤	jhxtiu
 金花消痤丸	jhxwi
 交换抑制剂	jhyjo
 聚合抑制剂	jhyjv
 嘉恒咽炎片	jhypv
+柴胡养营汤	jhyti
+柴胡抑肝汤	jhytiu
 甲基苯丙胺片剂	jjbjiv
 甲基斑蝥胺片	jjbpi
+加减补中益气汤	jjbta
 加减补筋丸	jjbwao
 姜竭补血口服液	jjbyo
 长春宝口服液	jjbyu
 聚肌胞注射液	jjbyv
 甲基多巴片	jjdpi
 加减丹栀逍遥散	jjdsa
+加减大柴胡汤	jjdtao
 金橘胆胃丸	jjdw
 加减神术散	jjesao
+加减生地黄汤	jjeta
+加减升麻葛根汤	jjetao
 长城止咳喘糖浆	jjfjuv
 聚甲酚磺醛溶液	jjfyv
 金菊感冒片	jjgpi
@@ -3665,15 +3864,20 @@ sort: original
 金鸡化瘀颗粒	jjhlia
 金鸡虎补片	jjhpi
 长春红药片	jjhpu
+加减黄芩知母汤	jjhtao
+甲己化土汤	jjhti
 金鸡虎补丸	jjhwi
 吉春抗骨增生片	jjkpv
 结肠灵胶囊	jjln
 金菌灵胶囊	jjlni
 甲基硫氧嘧啶片	jjlp
 金菊利咽口含片	jjlpi
+加减六君汤	jjltao
 加减六味地黄丸	jjlwao
 己椒苈黄丸	jjlwav
 金菊利咽丸	jjlwi
+加减木防己汤	jjmta
+加减麻杏甘石汤	jjmtao
 解肌宁嗽片	jjnp
 加减内固丸	jjnwa
 酒浸牛膝丸	jjnwaa
@@ -3682,16 +3886,21 @@ sort: original
 金甲排石胶囊	jjpn
 解肌清肺丸	jjqwuu
 长春瑞滨软胶囊	jjrnuv
+加减人参泻心汤	jjrt
 长春瑞滨注射液	jjryu
 加减桑螵蛸散	jjss
 加减三黄二香散	jjssa
+加减三奇汤	jjstao
 加减三黄丸	jjswao
+加减桃仁承气汤	jjtta
 金菊五花茶颗粒	jjwli
 九胶丸胶囊	jjwnu
+加减冲和汤	jjwtao
 结肠消颗粒	jjxlau
 长春胺缓释胶囊	jjxn
 长春西汀片	jjxp
 救急稀涎散	jjxsvu
+加减小柴胡汤	jjxtao
 长春西汀注射液	jjxyu
 长春益寿膏	jjyguv
 甲基异炔诺酮片	jjypiv
@@ -3744,7 +3953,10 @@ sort: original
 金莲胃舒片	jlwpii
 甲硫氨酸片	jlxp
 金利油软胶囊	jlyn
+金陵鸭血粉丝汤	jlytia
 睫毛打底膏	jmdgiu
+家秘神术汤	jmeto
+家秘枳壳黄连汤	jmftou
 金马肝泰颗粒	jmglia
 金牡感冒片	jmgpiu
 金梅感冒片	jmgpiv
@@ -3753,6 +3965,7 @@ sort: original
 金明和胃胶囊	jmhni
 甲麻黄碱片	jmhpi
 假密环菌甲素片	jmhpio
+家秘黄芩汤	jmhtou
 菊明降压片	jmjpio
 决明降脂片	jmjpo
 家秘加味枳术丸	jmjwou
@@ -3760,12 +3973,16 @@ sort: original
 聚明胶肽注射液	jmjyv
 降酶灵胶囊	jmlna
 菊梅利咽含片	jmlpiv
+家秘木通羌活汤	jmmt
 决明平脂胶囊	jmpn
 甲麻芩苷那敏片	jmqpio
+家秘清胃汤	jmqtou
 甲灭酸胶囊	jmsni
 吉姆萨染液	jmsyva
+家秘温肺汤	jmwtou
 金日心源素胶囊	jmxni
 家秘泻白散	jmxsou
+家秘消滞汤	jmxto
 激酶抑制剂	jmyj
 金日洋参胶囊	jmyn
 健民咽喉片	jmypia
@@ -3797,10 +4014,12 @@ sort: original
 健脾颗粒无糖型	jpkxiu
 健脾理肠片	jplpiu
 甲哌力复霉素	jplsio
+健脾利水生化汤	jplti
 甲泼尼龙制剂	jpnji
 甲泼尼龙片	jpnp
 甲泼尼松龙片	jpnpi
 甲泼尼龙注射液	jpnyia
+橘皮竹茹汤	jpqtv
 甲哌四环素	jpssio
 金葡素注射液	jpsyii
 经皮吸收制剂	jpxja
@@ -3835,6 +4054,7 @@ sort: original
 金荞麦薄膜衣片	jqmpii
 甲氰咪胍片	jqmpiu
 柴前梅连散	jqmsio
+及其日中如探汤	jqmt
 金荞麦口服液	jqmy
 甲炔诺酮埋植剂	jqnj
 九气拈痛胶囊	jqnn
@@ -3853,6 +4073,7 @@ sort: original
 甲羟孕酮胶囊	jqyn
 甲羟孕酮片	jqypi
 甲羟孕酮分散片	jqypio
+脚气宜风引汤	jqytuu
 甲羟孕酮注射液	jqyyio
 除障则海甫胶囊	jqzn
 除障则海甫片	jqzpa
@@ -3922,6 +4143,9 @@ sort: original
 加味板蓝根颗粒	jwbla
 加味败毒散	jwbsa
 加味补肝散	jwbsao
+加味保元汤	jwbt
+加味补血汤	jwbta
+加味白头翁汤	jwbtao
 加味白药丸	jwbwa
 加味保和丸	jwbwao
 九味补血口服液	jwby
@@ -3929,6 +4153,8 @@ sort: original
 加味苍柏散	jwcs
 九味藏紫菀花散	jwcsu
 加味丹参片	jwdpa
+加味导痰汤	jwdta
+加味地黄汤	jwdtao
 加味地黄丸	jwdw
 加味定志丸	jwdwa
 加味生化颗粒	jwela
@@ -3936,6 +4162,9 @@ sort: original
 肠胃舒胶囊	jwenui
 加味蛇胆陈皮片	jwepao
 九味石灰华散	jwesu
+加味肾热汤	jwet
+加味生化汤	jweta
+加味胜湿汤	jwetao
 加味肾气丸	jwew
 健胃十味丸	jwewi
 九味石榴丸	jwewu
@@ -3944,12 +4173,15 @@ sort: original
 健胃止痛片	jwfpii
 加味佛手散	jwfsao
 加味茯苓汤	jwfta
+加味枳术汤	jwftao
 加味枳术丸	jwfwao
 九味渣驯丸	jwfwu
 金乌骨通胶囊	jwgniu
 九味肝泰胶囊	jwgnu
 加味归芪片	jwgpa
 健胃固肠散	jwgs
+加味甘桔汤	jwgta
+加味归芍汤	jwgtao
 加味感冒丸	jwgwao
 京万红痔疮膏	jwhgo
 加味活命散	jwhs
@@ -3958,6 +4190,8 @@ sort: original
 健胃化积口服液	jwhyii
 肠胃健胶囊	jwjnu
 九味沉香胶囊	jwjnuo
+加味柴胡汤	jwjta
+加味建中汤	jwjtao
 加味健步虎潜丸	jwjwao
 加味葵子散	jwksa
 加味葵子茯苓散	jwksao
@@ -3967,8 +4201,11 @@ sort: original
 健胃口服液	jwkyi
 加味灵芝菌片	jwlpao
 加味凉膈散	jwlsao
+加味连草汤	jwlta
+加味六君子汤	jwltao
 加味烂积丸	jwlwa
 加味连理丸	jwlwao
+加味麻黄汤	jwmt
 肠胃宁胶囊	jwnnu
 肠胃宁片	jwnp
 九味牛黄丸	jwnwu
@@ -3985,12 +4222,15 @@ sort: original
 加味珠黄散	jwqsao
 九味青鹏散	jwqsu
 九味竺黄散	jwqsuo
+加味清胃汤	jwqtao
+九味羌活汤	jwqtu
 加味青娥丸	jwqwa
 九味羌活丸	jwqwu
 九味獐牙菜丸	jwqwuo
 唇齿清胃丸	jwqwvi
 九味羌活口服液	jwqy
 加味四苓散	jwss
+加味三拗汤	jwstao
 加味四斤丸	jwswao
 加味四物口服液	jwsya
 聚维酮碘软膏	jwtgva
@@ -3998,12 +4238,17 @@ sort: original
 金胃泰胶囊	jwtn
 加味天麻胶囊	jwtna
 聚维酮碘泡腾片	jwtpva
+加味调中益气汤	jwtta
+加味胃苓汤	jwwta
+加味温胆汤	jwwtao
 加味逍遥颗粒	jwxlao
 健胃消食颗粒	jwxlii
 加味逍遥胶囊	jwxna
 加味逍遥片	jwxpa
 加味香苏散	jwxsao
 减味小儿化痰散	jwxsoo
+加味二陈汤	jwxta
+加味二妙汤	jwxtao
 减味小儿化痰	jwxto
 加味二妙丸	jwxwa
 加味二母丸	jwxwao
@@ -4016,8 +4261,10 @@ sort: original
 健胃愈疡胶囊	jwyn
 加味银翘片	jwypao
 健胃愈疡片	jwypi
+加味养心汤	jwytao
 加味养荣丸	jwywa
 加味易黄丸	jwywao
+加味左金汤	jwztao
 加味左金丸	jwzwa
 加味左金丸水丸	jwzwao
 减味紫雪口服液	jwzyo
@@ -4050,6 +4297,7 @@ sort: original
 精氨洛芬颗粒	jxllou
 陈香露白露胶囊	jxln
 陈香露白露片	jxlpau
+胶艾六合汤	jxltu
 沉香利气丸	jxlwa
 沉香理气丸	jxlwau
 陈夏六君子丸	jxlwav
@@ -4068,6 +4316,7 @@ sort: original
 健儿素冲剂	jxsji
 健儿素颗粒	jxsliu
 鸡血散藤片	jxspa
+胶艾四物汤	jxstu
 沉香四宝丸	jxswau
 精氨酸注射液	jxsyou
 鸡血腾糖浆	jxtjau
@@ -4103,6 +4352,7 @@ sort: original
 经悦白凤口服液	jybya
 甲氧苄啶注射液	jybyi
 金叶滴眼剂	jydj
+鲫鱼豆腐汤	jydt
 甲氧沙林片	jyepi
 洁阴舒洗液	jyeya
 甲氧沙林溶液	jyeyi
@@ -4176,6 +4426,7 @@ sort: original
 卡巴克络注射液	kbkyia
 狂飚龙力壮胶囊	kbln
 卡波罗孟片	kblp
+可保立苏汤	kbltv
 卡比马唑片	kbmp
 卡波姆滴眼液	kbmy
 卡巴匹林钙颗粒	kbpli
@@ -4543,6 +4794,7 @@ sort: original
 莲胆消炎片	ldxpi
 蓝迪氨酚伪麻片	ldxpii
 龙胆泻肝片	ldxpv
+龙胆泻肝汤	ldxtvu
 龙胆泻肝蜜丸	ldxw
 龙胆泻肝水丸	ldxwv
 龙胆泻肝浓缩丸	ldxwvu
@@ -4554,6 +4806,8 @@ sort: original
 利舒康胶囊	lekn
 利湿口服液	lekyua
 癃疏清颗粒	leqlo
+雷氏清凉涤暑汤	leqtv
+李氏清暑益气汤	leqtvu
 陆氏润字丸	lerwa
 芦沙坦钾片	letpi
 氯沙坦钾片	letpu
@@ -4569,6 +4823,7 @@ sort: original
 氯芬待因片	lfdpu
 氯芬待因复方片	lfdpui
 氯酚待因复方片	lfdpuv
+荔枝大枣汤	lfdti
 氯氟舒松软膏	lfeg
 氯氟舒松涂剂	lfeju
 罗浮山凉茶颗粒	lfelia
@@ -4577,6 +4832,7 @@ sort: original
 灵芝双参口服液	lfey
 罗浮山风湿膏药	lfeyi
 氯芬黄敏片	lfhpu
+理中化痰汤	lfhtv
 灵芝浸膏片	lfjpa
 灵芝菌口服液	lfjy
 利夫康洗剂	lfkju
@@ -4617,10 +4873,14 @@ sort: original
 洛非西定片	lfxpa
 莲芝消炎片	lfxpi
 罗非昔布片	lfxpii
+理中安蛔汤	lfxtv
 灵芝益寿胶囊	lfyn
 灵芝茵陈胶囊	lfyna
+凉膈白虎汤	lgbto
+凉肝导赤汤	lgdt
 鹿瓜多肽注射液	lgdyou
 炉甘石洗剂	lgejov
+苓桂术甘汤	lget
 利肝和胃丸	lghwu
 苓桂咳喘宁胶囊	lgkn
 利肝康片	lgkpu
@@ -4638,6 +4898,8 @@ sort: original
 雷公藤内酯软膏	lgtgv
 利肝糖衣片	lgtpu
 雷公藤多甙片	lgtpvu
+苓甘五味姜辛汤	lgwti
+苓甘五味加姜辛半夏杏仁汤	lgwtiv
 利肝消脂颗粒	lgxlu
 荔花鼻窦炎片	lhbpi
 氯磺丙脲片	lhbpu
@@ -4651,6 +4913,7 @@ sort: original
 氯化钙试剂	lhgju
 罗汉果菊花颗粒	lhglia
 罗汉果止咳片	lhgpia
+罗汉果柿饼汤	lhgti
 氯化钙注射液	lhgyu
 联磺甲氧苄啶	lhjdvv
 罗黄降压片	lhjpi
@@ -4661,6 +4924,7 @@ sort: original
 芦荟康排毒胶囊	lhknii
 兰花咳宁片	lhkpo
 氯环利嗪片	lhlpu
+龙蚝理痰汤	lhltvi
 罗红霉素颗粒	lhmlia
 罗红霉素片	lhmpi
 罗红霉素分散片	lhmpia
@@ -4675,6 +4939,7 @@ sort: original
 氯化铵合剂	lhxju
 龙琥醒脑颗粒	lhxlvv
 羚黄氨咖敏片	lhxpo
+龙虎二仙汤	lhxtvi
 硫化延迟剂	lhyj
 蓝花药水丸	lhywi
 氯化亚铊注射液	lhyyu
@@ -4722,6 +4987,9 @@ sort: original
 卵磷脂片	llfpuv
 硫柳汞防腐剂	llgjv
 灵龙感冒胶囊	llgna
+藜芦甘草汤	llgtii
+乐令黄芪汤	llhtu
+乐令建中汤	lljtu
 六灵解毒丸	lljwo
 龙苓春口服液	lljyv
 蓝苓口服液	llkyii
@@ -4753,6 +5021,7 @@ sort: original
 拉米呋定片	lmfpio
 氯美扎酮片	lmfpu
 龙牡壮骨咀嚼片	lmfpvu
+龙牡复脉汤	lmftvu
 勒马回胶囊	lmhnv
 炼蜜合为四丸	lmhwoo
 铝镁混悬液	lmhyii
@@ -4782,6 +5051,7 @@ sort: original
 氯霉素注射液	lmsyuv
 卤美他松软膏	lmtgio
 雷莫西尤单抗	lmxkvi
+连梅安蛔汤	lmxtv
 灵猫香解毒丸	lmxwau
 利尿八味散	lnbs
 铝钠颠茄片	lndp
@@ -4822,6 +5092,7 @@ sort: original
 利培酮口服液	lpty
 硫喷妥钠注射液	lptyv
 卵泡冲洗液	lpwyu
+乱喷鱼头汤	lpytu
 连翘败毒片	lqbpv
 连翘败毒丸	lqbwvv
 理气定喘丸	lqdwv
@@ -4882,6 +5153,7 @@ sort: original
 磷酸萘酚喹片	lsnp
 硫酸粘菌素片	lsnpv
 硫酸黏菌素片	lsnpvv
+芦笋奶油汤	lsnt
 磷酸钠口服液	lsnyv
 磷酸钠注射液	lsnyvv
 利司扑兰	lsplu
@@ -4933,6 +5205,7 @@ sort: original
 六味地黄胶囊	lwdno
 六味地黄软胶囊	lwdnoo
 六味地黄片	lwdpoo
+六味地黄汤	lwdto
 六味丁香丸	lwdwoo
 六味地黄口服液	lwdyo
 六味石榴胶囊	lwenoo
@@ -4943,6 +5216,7 @@ sort: original
 六味枸杞糖浆	lwgjoo
 六味甘草丸	lwgwo
 六味寒水石散	lwhso
+阑尾化瘀汤	lwhto
 阑尾灵颗粒	lwllo
 六味木香胶囊	lwmno
 六味木香散	lwmsoo
@@ -4950,6 +5224,7 @@ sort: original
 六味能消胶囊	lwnn
 六味能消丸	lwnwo
 六味能消丸水丸	lwnwoo
+阑尾清化汤	lwqtoa
 六味头痛片	lwtpo
 螺纹安全标识膏	lwxgi
 六味安消胶囊	lwxno
@@ -4986,6 +5261,7 @@ sort: original
 赖氨匹林散	lxpsv
 利血平注射液	lxpy
 凉血祛风糖浆	lxqjou
+凉心清肝汤	lxqtoo
 龙心素胶囊	lxsnv
 赖氨酸锌片	lxspvu
 硫辛酸注射液	lxsyvo
@@ -5023,7 +5299,9 @@ sort: original
 羚羊清肺片	lyqpo
 辽源七厘散	lyqs
 羚羊清肺散	lyqso
+凉营清气汤	lyqto
 羚羊清肺丸	lyqwo
+立应四物汤	lyst
 拉氧头孢钠	lytn
 络瘀通胶囊	lytna
 蜡样芽胞杆菌片	lyypi
@@ -5117,17 +5395,25 @@ sort: original
 梅花点舌胶囊	mhdn
 梅花点舌片	mhdpv
 梅花点舌丸	mhdwvi
+麻黄升麻汤	mhet
+麻黄附子甘草汤	mhfto
+麻黄附子细辛汤	mhftov
 麻黄止嗽丸	mhfwo
 明藿降脂颗粒	mhjlo
+麻黄加术汤	mhjto
 麻黄碱注射液	mhjy
+麻黄连翘赤豆汤	mhlto
 蒙花锚肝宁片	mhmpi
 麻黄素滴鼻液	mhsyo
 麻黄素注射液	mhsyov
+麻黄细辛附子汤	mhxto
+麻黄杏仁甘草石膏汤	mhxtov
 明睛地黄丸	mjdwo
 满金止咳片	mjfpai
 明菊口服液	mjky
 秘诀清凉散	mjqs
 莫家清宁丸	mjqwio
+民间瓦罐煨汤	mjwtao
 麦角胺咖啡因片	mjxp
 麦角新碱注射液	mjxyv
 煤焦油洗剂	mjyj
@@ -5144,6 +5430,7 @@ sort: original
 脉络舒通颗粒	mlelu
 马兰感寒胶囊	mlgna
 吗啉胍片	mlgpo
+米勒海顿肉汤	mlhtov
 摩罗口服液	mlkyo
 梅苓口服液	mlkyv
 脉络宁口康片	mlnpua
@@ -5243,6 +5530,7 @@ sort: original
 木香槟榔丸	mxbw
 木香顺气颗粒	mxel
 莫西沙星片	mxep
+麻杏石甘汤	mxet
 木香顺气丸	mxew
 木香顺气丸水丸	mxewv
 莫西沙星注射液	mxey
@@ -5253,6 +5541,7 @@ sort: original
 美尔福血塞通片	mxfpou
 麻杏止咳糖丸	mxfw
 麻杏甘石软胶囊	mxgn
+麻杏甘石汤	mxgt
 麻杏甘石口服液	mxgyo
 木屑颗粒机	mxkj
 脉血康胶囊	mxkn
@@ -5273,10 +5562,14 @@ sort: original
 美尔伪麻溶液	mxwyo
 麻杏宣肺颗粒	mxxl
 迈尔欣注射液	mxxy
+麻杏苡甘汤	mxyt
+麻杏薏甘汤	mxyto
 毛叶草芍药	mycyu
 慢咽舒宁冲剂	myejo
 蚂蚁双参通痹丸	myewi
 镁氧混合剂	myhj
+名曰黄芪建中汤	myht
+麦芽浸膏肉汤	myjtv
 马应龙痔疮膏	mylga
 马应龙八宝眼膏	mylgao
 美愈伪麻颗粒	mywlo
@@ -5290,8 +5583,10 @@ sort: original
 咪唑斯汀缓释片	mzspo
 慢阻通气丸	mztw
 内部参考片	nbcp
+内补黄芪汤	nbhtio
 南板蓝根颗粒	nbll
 浓柏灵口服液	nbly
+南北杏仁鹌鹑汤	nbxtu
 内补养荣丸	nbyw
 纳催离缓释片	nclp
 脑蛋白水解物片	ndbp
@@ -5480,6 +5775,7 @@ sort: original
 尼索地平胶丸	nsdwa
 浓缩水牛角颗粒	nselaa
 浓缩水牛角片	nsepaa
+宁嗽化痰汤	nshto
 宁嗽化痰丸	nshwo
 宁嗽露糖浆	nsljoo
 尿塞通胶囊	nstn
@@ -5531,6 +5827,7 @@ sort: original
 宁心益肾口服液	nxyyo
 宁心益智口服液	nxyyoo
 诺孕酯三相片	nyfpoa
+奶油芦笋汤	nylta
 内异理气化瘀丸	nylw
 内异清热化瘀丸	nyqwi
 尿液通用质控液	nytya
@@ -5570,9 +5867,11 @@ sort: original
 平肝舒络丸	pgewv
 盘骨止痛膏	pgfg
 葡甘聚糖胶囊	pgjniv
+平肝开郁止血汤	pgktv
 培高利特片	pglp
 平肝潜阳口服液	pgqy
 帕歌斯片	pgsp
+苹果雪梨瘦肉汤	pgxti
 破积导饮丸	pjdwvu
 啤酒花浸膏	pjhg
 朴沉化郁丸	pjhw
@@ -5653,6 +5952,7 @@ sort: original
 葡醛酸钠注射液	pqsy
 盆腔炎口服液	pqyy
 普瑞博思片	prbp
+扑热息痛	prxt
 硼酸冰片滴耳液	psby
 硼酸滴耳液	psdyv
 硼酸甘油滴耳液	psgyv
@@ -5691,8 +5991,11 @@ sort: original
 泡腾性冲剂	ptxja
 硼替佐米	ptzm
 喷他佐辛注射液	ptzy
+平胃导痰汤	pwdtv
+平胃地榆汤	pwdtvi
 脾胃健口服液	pwjy
 匹维溴铵片	pwxp
+平胃二陈汤	pwxtv
 破血红花散	pxhs
 朴雪口服液	pxky
 喷昔洛韦乳膏	pxlg
@@ -5702,6 +6005,7 @@ sort: original
 派安普利单抗	pxpk
 皮下注射用片	pxqp
 匹氨青霉素	pxqs
+破血散瘀汤	pxst
 脾氨肽口服液	pxty
 扑尔伪麻片	pxwp
 平安万应丸	pxww
@@ -5765,11 +6069,13 @@ sort: original
 张大宁精昂胶囊	qdnn
 羟丁酸钠注射液	qdsyo
 前德安参阳胶囊	qdxno
+清胆泻火汤	qdxt
 芪冬颐心颗粒	qdyliu
 芪冬养血胶囊	qdyn
 驱毒养颜口服液	qdyya
 芪冬颐心口服液	qdyyiu
 珍石烧伤膏	qeeg
+清湿化痰汤	qehta
 清暑解毒颗粒	qejla
 强身健脑片	qejpa
 轻身减肥片	qejpv
@@ -5791,6 +6097,7 @@ sort: original
 注射液尼麦角林	qeylau
 强肾养心胶囊	qeyn
 强身益肾胶囊	qeyna
+清暑益气汤	qeyta
 清暑益气丸	qeywa
 芪参益气滴丸	qeywia
 祛风湿骨痛酒	qfejou
@@ -5818,6 +6125,7 @@ sort: original
 珍凤口服液	qfkyv
 猪肺磷脂注射液	qflyu
 清肺宁嗽丸	qfnwa
+清肺排毒汤	qfpt
 芪芳气血颗粒	qfqlii
 清浊祛毒丸	qfqwa
 全脂然美态片	qfrp
@@ -5853,6 +6161,7 @@ sort: original
 清肝降压胶囊	qgjnau
 羟癸甲氧醌片	qgjpoa
 清肝九味散	qgjsa
+去桂加白术汤	qgjtv
 清肝健脾口服液	qgjy
 强肝口服液	qgkyau
 清肝利胆颗粒	qgllau
@@ -5867,15 +6176,19 @@ sort: original
 去感热注射液	qgryvv
 清感穿心莲胶囊	qgwnav
 清感穿心莲片	qgwpav
+镇肝熄风汤	qgxti
 清肝二十七味丸	qgxwa
 气管炎橡胶膏	qgygu
 芪贯养肝颗粒	qgylia
 正骨紫金丸	qgzwv
 青蒿鳖甲片	qhbp
 珠黄八宝散	qhbsvv
+青蒿鳖甲汤	qhbt
 氢化催化剂	qhcju
 切好的姜片	qhdpva
+逐寒荡惊汤	qhdtv
 噙化上清片	qhepoi
+羌活胜湿汤	qhet
 噙化上清丸	qhewo
 芪斛楂颗粒	qhfli
 清火栀麦胶囊	qhfna
@@ -5884,6 +6197,7 @@ sort: original
 青蒿琥脂片	qhhpv
 青蒿琥酯片	qhhpvi
 竹红菌素软膏	qhjgua
+祛寒娇耳汤	qhjtoo
 氢化可的松软膏	qhkgui
 清喉利咽颗粒	qhlla
 清火明目丸	qhmwa
@@ -5906,17 +6220,24 @@ sort: original
 全鸡拔毒膏	qjbgi
 去甲斑蝥素片	qjbpv
 秦艽鳖甲散	qjbsv
+秦艽苍术汤	qjct
 杞菊地黄胶囊	qjdn
 杞菊地黄片	qjdpvi
 羟基大黄素	qjdsov
+秦艽当归汤	qjdtv
+秦艽地黄汤	qjdtvi
 杞菊地黄丸	qjdwv
 杞菊地黄浓缩丸	qjdwvi
 羟甲淀粉钠溶液	qjdyoi
 杞菊地黄口服液	qjdyvi
 芪胶升白胶囊	qjeni
 千斤肾安宁胶囊	qjenuu
+秦艽升麻汤	qjet
 清金止嗽西瓜膏	qjfga
 正精风痛宁片	qjfpvo
+秦艽防风汤	qjft
+清经止血汤	qjfta
+秦艽扶羸汤	qjftv
 清金止嗽化痰丸	qjfwa
 千金止带丸	qjfwui
 正柴胡饮冲剂	qjhjvi
@@ -5929,14 +6250,17 @@ sort: original
 强筋健骨片	qjjpau
 旗舰级芯片	qjjpou
 珍菊降压片	qjjpvi
+清金降火汤	qjjta
 强筋健骨丸	qjjwa
 芪甲利肺胶囊	qjln
 清金理嗽丸	qjlwa
 真君妙贴散	qjmsua
+秦艽牛蒡汤	qjnt
 清金宁肺丸	qjnwa
 清解片	qjpau
 去甲哌替啶	qjpd
 真菌竹黄胶囊	qjqnui
+秦艽羌活汤	qjqtvi
 杞菊润目颗粒	qjrlv
 羟甲司坦颗粒	qjsloi
 羟甲司坦片	qjspo
@@ -6020,6 +6344,7 @@ sort: original
 强力珍珠眼液	qlqya
 耆鹿逐痹口服液	qlqyu
 氢氯噻嗪片	qlspu
+芩连四物汤	qlsti
 前列泰颗粒	qltlo
 前列泰胶囊	qltn
 芪龙通络胶囊	qltni
@@ -6083,6 +6408,7 @@ sort: original
 贞芪扶正胶囊	qqfnii
 正清风痛宁胶囊	qqfnv
 正清风痛宁片	qqfpva
+珍珠翡翠白玉汤	qqft
 清气化痰丸	qqhwa
 清气化痰浓缩丸	qqhwau
 去羟肌苷颗粒	qqjlvo
@@ -6111,6 +6437,7 @@ sort: original
 清热止痒洗剂	qrfja
 清热止消胶囊	qrfna
 清热止咳散	qrfsa
+清热止崩汤	qrfta
 清热治痢丸	qrfwa
 清热感昌颗粒	qrgla
 清热化滞颗粒	qrhla
@@ -6174,6 +6501,7 @@ sort: original
 七味槟榔散	qwbsvo
 七味都气丸	qwdwv
 七味沙参汤散	qwesv
+七味沙参汤	qwet
 清胃止痛微丸	qwfwai
 七味肝胆清胶囊	qwgn
 七味广枣丸	qwgwv
@@ -6252,6 +6580,7 @@ sort: original
 曲昔派特胶囊	qxpni
 曲昔匹特胶囊	qxpniv
 曲昔匹特片	qxppi
+去恶清心汤	qxqtvv
 千新注射液	qxqyuo
 去纤软肝胶囊	qxrnva
 求偶素软膏	qxsg
@@ -6267,11 +6596,13 @@ sort: original
 强阳保肾丸	qybwa
 青叶胆提取物片	qydp
 七叶神安片	qyep
+竹叶石膏汤	qyetu
 七叶神安滴丸	qyewv
 强腰壮骨膏	qyfg
 祛瘀止痛膏	qyfgo
 去氧氟尿苷胶囊	qyfnv
 去氧氟尿苷片	qyfpv
+逐瘀止血汤	qyft
 七叶诃子散	qyhsv
 清咽解毒散	qyjsa
 清咽口服液	qykya
@@ -6281,6 +6612,7 @@ sort: original
 羟乙磷酸钠片	qylp
 羟乙膦酸钠片	qylpo
 清咽六味散	qylsa
+竹叶柳蒡汤	qylt
 清咽利膈丸	qylwa
 障眼明胶囊	qymn
 张艺谋新片	qympa
@@ -6292,6 +6624,7 @@ sort: original
 去炎松尿素软膏	qysgv
 祛瘀散结胶囊	qysno
 逐瘀通脉胶囊	qytn
+炔孕酮片	qytp
 清咽丸清音丸	qyww
 逐瘀消肿膏	qyxgv
 杞药消渴口服液	qyxyv
@@ -6305,6 +6638,7 @@ sort: original
 珠子肝泰胶囊	qzgnva
 千紫红颗粒	qzhlu
 千紫红胶囊	qzhnu
+清燥救肺汤	qzjt
 杞枣口服液	qzkyv
 清燥润肺合剂	qzrj
 清燥润肺口服液	qzrya
@@ -6342,6 +6676,7 @@ sort: original
 人参归睥丸	regwi
 人参固本口服液	regyia
 人参黄芪散	rehs
+人参胡桃汤	reht
 人参健脾片	rejpia
 茸术口服液	rekyi
 瑞氏快速染色液	rekyv
@@ -6354,12 +6689,15 @@ sort: original
 人参五味子冲剂	rewjia
 人参五味子颗粒	rewlia
 人参养荣膏	reygia
+人参养荣汤	reytia
 人参养荣丸	reywia
 润肺止嗽丸	rffw
 润肺止咳口服液	rffya
 润肺化核膏	rfhg
+润肺化炎汤	rfhta
 润肺化痰丸	rfhwa
 人知降糖胶囊	rfjn
+润肺降气汤	rfjt
 忍者茶茶丸	rfwwa
 蓉芝益肾口服液	rfyyi
 乳浊液型液	rfyyu
@@ -6462,10 +6800,13 @@ sort: original
 乳酸亚铁口服	rsyf
 乳酸亚铁胶囊	rsyn
 乳酸亚铁口服液	rsyy
+乳糖胆盐肉汤	rtdtu
 热痛净糖丸	rtjwi
 人胎盘片	rtpp
 人胎盘组织液	rtpy
 乳痛软坚片	rtrp
+肉丸胡辣汤	rwht
+肉丸糊辣汤	rwhti
 瑞维鲁胺	rwlx
 茸血补心丸	rxbw
 茸血补脑液	rxby
@@ -6496,6 +6837,8 @@ sort: original
 乳增宁胶囊	rznnu
 乳增宁片	rznp
 人字形石膏	rzxgi
+润燥安胎汤	rzxta
+润燥泻肺汤	rzxtao
 乳增愈胶囊	rzyn
 三便百胜软胶囊	sbbn
 三白草肝炎糖浆	sbcj
@@ -6519,6 +6862,7 @@ sort: original
 三参通脉口服液	scty
 三参益气口服液	scyy
 三丁酸钠注射液	sdsy
+桑丹泻白汤	sdxt
 松胆元胡搽剂	sdyjv
 三氮唑核甘口胶	sdzj
 三氮唑核苷片	sdzp
@@ -6576,6 +6920,7 @@ sort: original
 三合激素注射液	shjyv
 三黄清解片	shqpv
 四黄清心丸	shqw
+四黄三子汤	shst
 四黄泻火片	shxpi
 三黄益血胶囊	shyn
 四季菜糖浆	sjcji
@@ -6584,6 +6929,7 @@ sort: original
 散结止痛膏	sjfg
 三金妇科调经片	sjfpvi
 涩肠止泻散	sjfsa
+三甲复脉汤	sjftvi
 桑菊感冒冲剂	sjgja
 桑菊感昌颗粒	sjgla
 三九感冒灵颗粒	sjglvu
@@ -6630,6 +6976,7 @@ sort: original
 塑料复合剂	slfjoo
 塞隆风湿胶囊	slfnoa
 索拉非尼	slfnui
+四苓合芩芍汤	slhtii
 三勒浆口服液	sljyv
 饲料颗粒机	slkju
 苏乐康胶囊	slkn
@@ -6662,7 +7009,9 @@ sort: original
 赛霉胺乳膏	smxgo
 赛美欣颗粒	smxl
 噻吗心安滴眼液	smxy
+四妙勇安汤	smyt
 苏南山肚痛丸	snew
+四逆加人参汤	snjt
 塞纳帕利	snpl
 噻奈普汀钠片	snpp
 四逆注射液	snqy
@@ -6734,13 +7083,17 @@ sort: original
 四味肥儿丸	swfwi
 三味干姜散	swgs
 三味甘露散	swgsv
+四味光明盐汤	swgtio
 三味红汤散	swhs
+四物化郁汤	swhti
 三维肌醇片	swjp
 四味姜黄汤散	swjsi
 三味蒺藜散	swjsv
 三味蒺黎散	swjsvo
+四物绛覆汤	swjt
 三乌胶丸包衣丸	swjwv
 四物口服液	swky
+四物龙胆汤	swlt
 三味龙胆花丸	swlwv
 四维葡萄糖散	swps
 四维葡锌胶丸	swpwi
@@ -6756,10 +7109,14 @@ sort: original
 四物五子丸	swwwi
 苏维西塔单抗	swxki
 三味泻痢颗粒	swxlv
+四物安神汤	swxt
+四物二连汤	swxti
+四物消风汤	swxtiu
 四味香连丸	swxwi
 四味益气胶囊	swyn
 三维亚铁咀嚼片	swypv
 四味异功散	swysi
+四物延胡汤	swyti
 四味萸连丸	swywi
 四物益母丸	swywiu
 三维亚铁口服液	swyyv
@@ -6779,6 +7136,7 @@ sort: original
 速效感冒胶囊	sxgnv
 速效感冒片	sxgp
 腮腺混合瘤恶变	sxhb
+三鲜木樨汤	sxmt
 散血明目丸	sxmw
 速效牛黄丸	sxnw
 四香祛湿丸	sxqw
@@ -6797,6 +7155,7 @@ sort: original
 三益酞丁安软膏	sytgv
 三益新脚气膏	syxgv
 三子止咳膏	szfg
+苏子降气汤	szjt
 苏子降气丸	szjw
 色腙注射液	szqyu
 酸枣仁合剂	szrjv
@@ -6804,6 +7163,7 @@ sort: original
 酸枣仁口服液	szry
 三子茸肾口服液	szryv
 四子填精胶囊	sztn
+三子养亲汤	szyt
 头孢丙烯颗	tbbko
 头孢布烯钠	tbbno
 头孢丙烯片	tbbpo
@@ -6911,6 +7271,7 @@ sort: original
 陶氏再造散	tezs
 天芝草胶囊	tfcn
 痛风定胶囊	tfdn
+调中大成汤	tfdt
 通之舒胶囊	tfena
 痛风舒胶囊	tfenou
 调中顺气丸	tfew
@@ -6933,6 +7294,8 @@ sort: original
 天凤胃痛散	tfwsv
 泰脂安胶囊	tfxnvu
 同志爱情片	tfxp
+调中益气汤	tfytoi
+通肝生乳汤	tget
 天癸口服液	tgkyv
 透骨灵橡胶膏	tglgu
 跳骨片	tgpoi
@@ -6942,9 +7305,12 @@ sort: original
 天和追风膏	thfgv
 天和骨通贴膏	thggvu
 天黄猴枣散	thhs
+桃花化浊汤	thhtvi
+桃核承气汤	thjtv
 藤黄健骨丸	thjwi
 太和妙灵丸	thmwvu
 桃红清血丸	thqwv
+调和荣卫汤	thrto
 天胡荽愈肝片	thsp
 酞磺胺噻唑片	thxp
 添精补肾膏	tjbgao
@@ -6953,13 +7319,17 @@ sort: original
 调经补血丸	tjbwoa
 啼甲多肽片	tjdpo
 蹄甲多肽片	tjdpoi
+通经导滞汤	tjdta
+调经升阳除湿汤	tjet
 太极升降丸	tjew
 调经至宝丸	tjfwoa
 替加氟注射液	tjfyva
 通经甘露丸	tjgwa
 调经活血片	tjhp
+调经琥珀汤	tjhtoa
 调经化瘀丸	tjhwoa
 田基黄注射液	tjhyi
+通肠解毒汤	tjjta
 调经健胃丸	tjjwo
 痛经灵颗粒	tjlloa
 痛经宁糖浆	tjnjo
@@ -6991,6 +7361,7 @@ sort: original
 酮康唑洗剂	tkzjv
 葶苈草颗粒	tlclii
 头颅侧位定位片	tlcp
+葶苈大枣泻肺汤	tldti
 通络生乳糖浆	tleja
 通淋舒颗粒	tlela
 通络生骨胶囊	tlena
@@ -7010,6 +7381,7 @@ sort: original
 通灵口服液	tlkya
 通络口服液	tlkyaa
 替雷利珠单抗	tllkvv
+通络利湿汤	tllta
 妥拉美替尼	tlmnui
 藤络宁胶囊	tlnn
 通络祛痛膏	tlqga
@@ -7044,6 +7416,8 @@ sort: original
 天麻祛风补片	tmqpvo
 托姆斯颗粒层	tmsc
 通脉四逆散	tmssa
+通脉四逆汤	tmsta
+通脉四逆加猪胆汁汤	tmstau
 天麻素注射液	tmsyvo
 天麻头痛片	tmtpvo
 天麻醒脑胶囊	tmxnv
@@ -7064,16 +7438,19 @@ sort: original
 替普瑞酮胶囊	tprnv
 特泊替尼	tptn
 托哌酮胶囊	tptni
+通脾泻胃汤	tpxta
 胎盘组织注射液	tpzyu
 天杞补肾胶囊	tqbnv
 通窃鼻炎片	tqbp
 田七跌打丸	tqdw
 天珠生乳颗粒	tqel
 桃芪生血胶囊	tqen
+通气防风汤	tqft
 田七花叶颗粒	tqhl
 天芪降糖胶囊	tqjn
 肽杞口服液	tqkyu
 天杞口服液	tqkyv
+透疹凉解汤	tqlt
 通气利中丸	tqlw
 天强女宝胶囊	tqnn
 萄醛内酯片	tqnp
@@ -7086,6 +7463,7 @@ sort: original
 同仁大活络丸	trdw
 天茸双子颗粒	trelv
 同仁复明丸	trfwi
+桃仁红花汤	trhtv
 退热解毒注射液	trjy
 特瑞普利单抗	trpku
 退热清咽颗粒	trqla
@@ -7112,6 +7490,7 @@ sort: original
 头痛宁胶囊	ttnn
 天台乌药散	ttwsv
 头痛眩晕膏	ttxgo
+通天愈风汤	ttyta
 通天再造散	ttzs
 天王补心片	twbp
 天王补心丸	twbw
@@ -7149,6 +7528,7 @@ sort: original
 天一止咳糖浆	tyfjv
 脱氧核苷酸钠片	tyhpu
 椭圆环形垫片	tyhpv
+通幽化浊汤	tyhta
 天郁老蔻丸	tylwvv
 退翳明目丸	tymwav
 通幽润燥丸	tyrwai
@@ -7215,6 +7595,7 @@ sort: original
 王氏保赤丸	webwvu
 创伤止痛乳膏	wefgi
 胃舒止痛片	wefpii
+赤石脂禹余粮汤	weftvv
 乌蛇止痒丸	wefwu
 喘舒口服液	wekyo
 胃舒灵颗粒	welli
@@ -7245,6 +7626,7 @@ sort: original
 维妇康洗液	wfky
 疮肿灵软膏	wflgou
 五氟利多片	wflpvu
+五指毛桃炖汤	wfmt
 胃复宁胶囊	wfnn
 五酯片	wfpvvu
 五酯软胶囊	wfrnvv
@@ -7351,6 +7733,7 @@ sort: original
 胃乐新冲剂	wlxji
 胃乐新颗粒	wlxli
 胃乐新胶囊	wlxni
+温里宜四逆汤	wlytai
 维莫非尼	wmfna
 伪麻黄碱片	wmhp
 胃盲刻宁片	wmkpi
@@ -7392,6 +7775,7 @@ sort: original
 维他参颗粒	wtcla
 胃痛定胶囊	wtdn
 外台茯苓饮	wtfyua
+乌头桂枝汤	wtgtuo
 胃泰和胶囊	wthn
 维铁缓释片	wthpa
 垂体后叶粉散	wths
@@ -7413,6 +7797,7 @@ sort: original
 胃痛安口服液	wtxyi
 吴太咽炎片	wtypov
 万通炎康片	wtypv
+外台走马汤	wtzt
 蚊虫叮咬软膏	wwdgii
 温胃舒颗粒	wwelai
 胃脘舒颗粒	wweliu
@@ -7447,6 +7832,7 @@ sort: original
 顽癣敌软膏	wxdgv
 维尔蛋白胶囊	wxdn
 胃欣舒胶囊	wxeni
+五行蔬菜汤	wxetv
 维胺酯维乳膏	wxfg
 维胺酯胶丸	wxfwa
 顽癣浮萍丸	wxfwvo
@@ -7562,6 +7948,7 @@ sort: original
 西达本胺	xdbxvv
 熊胆跌打膏	xddga
 消毒定痛散	xddsav
+消毒圣神汤	xdet
 熊胆痔灵膏	xdfga
 安达芬乳膏	xdfgo
 阿德福韦酯片	xdfpau
@@ -7570,6 +7957,7 @@ sort: original
 熊胆粉滴眼液	xdfyau
 安达芬滴眼液	xdfyov
 吓得魂飞魄散	xdhs
+消毒化癍汤	xdht
 熊胆黄芩滴眼液	xdhyau
 熊胆救心丹丸	xdjwa
 心达康胶囊	xdkn
@@ -7601,6 +7989,7 @@ sort: original
 熊胆川贝口服液	xdwya
 恩丹西酮胶囊	xdxniu
 恩丹西酮片	xdxp
+消导二陈汤	xdxta
 恩丹西酮注射液	xdxyi
 现代药物制剂	xdyjv
 熊胆茵陈口服液	xdyyau
@@ -7625,6 +8014,7 @@ sort: original
 消食十味胶囊	xeena
 消食顺气片	xeepa
 消暑十全散	xeesa
+玄参升麻汤	xeet
 消食十味丸	xeewa
 消石矾石散	xefsa
 硝石矾石散	xefsvv
@@ -7659,6 +8049,7 @@ sort: original
 奥沙拉秦钠胶囊	xelnu
 香砂六君片	xelpuv
 二十六味通经散	xelsvu
+香砂六君子汤	xeltu
 香砂理中丸	xelwu
 香砂六君丸	xelwuv
 奥沙利铂注射液	xelyua
@@ -7673,6 +8064,7 @@ sort: original
 香砂平胃丸	xepw
 香砂平胃丸水丸	xepwu
 消石素颗粒	xesla
+二十四味润喉糖	xestv
 消伤痛搽剂	xetja
 消食退热糖浆	xetjai
 消栓通冲剂	xetjav
@@ -7706,6 +8098,7 @@ sort: original
 香砂养胃丸	xeywuv
 安神养血口服液	xeyyoo
 香砂养胃口服液	xeyyu
+洗手做羹汤	xezt
 消栓再造丸	xezwa
 消栓再造丸水丸	xezwav
 辛芳鼻炎胶囊	xfbno
@@ -7718,6 +8111,9 @@ sort: original
 泻肺定喘片	xfdpa
 氨酚待因片	xfdpu
 氨酚待因号片	xfdpuv
+消风导赤汤	xfdta
+旋复代赭汤	xfdtou
+旋覆代赭汤	xfdtov
 新肤蛇脂软膏	xfegou
 血复生胶囊	xfenu
 血复生片	xfepu
@@ -7734,9 +8130,13 @@ sort: original
 阿法骨化醇片	xfgpa
 仙方活命片	xfhpi
 氨酚黄那敏片	xfhpu
+消风豁痰汤	xfhta
 消肿接骨胶囊	xfjna
 安置精华散胶囊	xfjnoi
 消肿九味散	xfjsa
+消肿健脾汤	xfjta
+仙方救命汤	xfjtio
+新制橘皮竹茹汤	xfjtou
 氨酚柴胡注射液	xfjyu
 儿肤康搽剂	xfkju
 阿酚咖敏片	xfkpa
@@ -7764,6 +8164,7 @@ sort: original
 氨酚那敏颗粒	xfnlu
 二氟尼柳胶囊	xfnn
 二氟尼柳片	xfnpv
+消风宁嗽汤	xfnta
 艾附暖宫丸	xfnwia
 二至浓缩丸	xfnwv
 血脂平胶囊	xfpnu
@@ -7776,6 +8177,8 @@ sort: original
 血府逐瘀片	xfqpuo
 氨酚羟考酮片	xfqpuv
 消痔千金散	xfqsa
+血府逐瘀汤	xfqtu
+血府逐淤汤	xfqtuo
 血府逐瘀丸	xfqwu
 血府逐瘀丸水丸	xfqwuo
 消痔注射液	xfqyao
@@ -7798,6 +8201,7 @@ sort: original
 香附丸水丸	xfwwu
 消肿橡胶膏	xfxga
 奥芬溴铵片	xfxp
+息焚安胎汤	xfxtu
 奥芬溴铵注射液	xfxyu
 消风玉容散	xfysa
 像浮云聚又散	xfysia
@@ -7838,8 +8242,10 @@ sort: original
 溴化钙注射液	xhgya
 泻火解毒片	xhjpa
 溴环己胺醇片	xhjpav
+西湖莼菜汤	xhjtva
 消火解毒丸	xhjwa
 消核灵胶囊	xhln
+玄胡六合汤	xhlto
 小活络丸大蜜丸	xhlwia
 爱活尿通肠溶片	xhnpu
 消核片	xhpav
@@ -7863,6 +8269,7 @@ sort: original
 氨基丁酸激动剂	xjdjuv
 溴甲东莨菪碱片	xjdpa
 氨基蝶呤片	xjdpuv
+犀角地黄汤	xjdta
 犀角地黄丸	xjdwa
 阿胶当归口服液	xjdya
 血浆代用液	xjdyuo
@@ -7897,6 +8304,7 @@ sort: original
 氨甲环酸片	xjhpu
 氨钾环酸片	xjhpui
 消积化虫散	xjhsa
+新加黄龙汤	xjhto
 犀角化毒丸	xjhwa
 小柴胡汤丸	xjhwii
 香菊活血丸	xjhwu
@@ -7906,6 +8314,7 @@ sort: original
 消积健儿片	xjjpa
 氨基己酸片	xjjpu
 氨基己磺酸片	xjjpuv
+阿胶鸡子黄汤	xjjta
 消积集香丸	xjjwa
 消积洁白丸	xjjwau
 氨基己酸注射液	xjjyuv
@@ -8185,6 +8594,7 @@ sort: original
 氨杞康口服液	xqkyu
 小青龙合剂	xqlji
 鲜竹沥合剂	xqlju
+小青龙加石膏汤	xqlti
 鲜竹沥口服液	xqlyu
 阿奇霉素糖浆	xqmja
 阿奇霉素混悬剂	xqmjav
@@ -8222,6 +8632,7 @@ sort: original
 仙茸壮阳口服液	xrfy
 杏仁止咳口服液	xrfyv
 仙茸护肾胶囊	xrhn
+杏仁滑石汤	xrht
 泻热口服液	xrky
 心荣口服液	xrkyo
 纤溶酶注射液	xrmy
@@ -8320,6 +8731,7 @@ sort: original
 二维钙赖氨酸片	xwgp
 阿魏化痞膏	xwhg
 氨茶缓控释片	xwhpu
+仙传化毒汤	xwhti
 氨茶碱注射液	xwjyu
 消疮口服液	xwkyao
 恩沃利单抗	xwlki
@@ -8418,6 +8830,7 @@ sort: original
 小儿健身片	xxjpiu
 小儿柴桂退热	xxjriu
 小儿急惊散	xxjsiu
+陷胸承气汤	xxjta
 小儿解热丸	xxjwi
 小儿惊安丸	xxjwiu
 小儿健脾止泻	xxjxiu
@@ -8474,6 +8887,7 @@ sort: original
 新雪片	xxpovu
 消癌平片	xxppa
 消癌平咀嚼片	xxppao
+消下破血汤	xxpt
 消癌平口服液	xxpy
 消癌平注射液	xxpya
 小儿清热解毒	xxqdiu
@@ -8550,6 +8964,7 @@ sort: original
 小儿喜食片	xxxpi
 小儿消咳片	xxxpiu
 小儿泻止散	xxxsiu
+陷胸泻心汤	xxxtau
 小儿泻痢停	xxxti
 小儿泻速停	xxxtiu
 小儿香橘丸	xxxwi
@@ -8572,6 +8987,7 @@ sort: original
 二氧丙嗪片	xybpv
 辛夷鼻炎丸	xybwo
 消瘀定痛膏	xydg
+消瘀荡秽汤	xydta
 消炎生肌膏	xyegao
 西洋参口服液	xyeyv
 消炎治脓膏	xyfg
@@ -8587,6 +9003,7 @@ sort: original
 心益好胶囊	xyhno
 狭叶红景天片	xyhp
 西园喉药散	xyhs
+消炎化毒汤	xyhtao
 安阳精制膏	xyjgo
 香叶醇软胶囊	xyjn
 消瘀康胶囊	xykn
@@ -8613,6 +9030,7 @@ sort: original
 血压平胶囊	xypn
 喜炎平注射液	xypy
 消瘿气瘰丸	xyqw
+消痈散毒汤	xysta
 消痈提毒膏	xytg
 血瘀通颗粒	xytl
 香药胃安颗粒	xywl
@@ -8662,6 +9080,7 @@ sort: original
 吲哚布芬	ydbfo
 胰蛋白酶抑制剂	ydbju
 吲哚布芬片	ydbpo
+胰蛋白示肉汤	ydbt
 胰胆舒颗粒	ydelu
 羊胆水胶囊	ydeno
 胰岛生胶囊	ydenu
@@ -8673,6 +9092,8 @@ sort: original
 宜大黄附子汤	ydhtov
 鸢都寒痹液	ydhyvu
 吲哚菁绿	ydjloo
+宜大柴胡汤	ydjto
+宜大承气汤	ydjtov
 吲哚拉明	ydlmo
 吲哚洛尔片	ydlpoo
 吲哚洛尔	ydlxo
@@ -8711,6 +9132,7 @@ sort: original
 益肾补骨液	yeby
 洋参保肺口服液	yebya
 益肾补骨口服液	yebyo
+洋参炖鸡汤	yedtaa
 益肾生发丸	yeewo
 益肾十七味丸	yeewoi
 益肾壮阳膏	yefgo
@@ -8787,6 +9209,7 @@ sort: original
 茵栀黄软胶囊	yfhni
 益肺化痰胶囊	yfhno
 茵栀黄泡腾片	yfhpi
+益智和中汤	yfhtou
 茵栀黄口服液	yfhyi
 茵栀黄注射液	yfhyiv
 益肺健脾颗粒	yfjlou
@@ -8824,7 +9247,9 @@ sort: original
 一洲洋参胶囊	yfynv
 异种移植片	yfypau
 月光宝鹏丸	ygbwu
+射干兜铃汤	ygdtu
 乙肝舒康胶囊	ygena
+射干鼠粘子汤	yget
 岩果止咳液	ygfyii
 养肝还睛丸	yghwo
 益肝活血明目丸	yghwou
@@ -8843,6 +9268,7 @@ sort: original
 益肝灵滴丸	yglwou
 射干利咽口服液	yglyu
 养肝明目片	ygmpou
+射干麻黄汤	ygmt
 益肝明目口服液	ygmyo
 乙肝宁冲剂	ygnja
 乙肝宁颗粒	ygnla
@@ -8897,6 +9323,8 @@ sort: original
 月见草油胶丸	yjcw
 烟肼丁醇片	yjdp
 鱼精蛋白注射液	yjdyu
+茵陈术附汤	yjet
+一甲复脉汤	yjft
 银菊感冒片	yjgp
 益肠灌肠液	yjgy
 蚁陈固涩口服液	yjgyi
@@ -8923,6 +9351,7 @@ sort: original
 夜激情口服液	yjqyo
 莹肌如玉散	yjrs
 茵陈四逆散	yjss
+茵陈四逆汤	yjst
 茵陈退黄胶囊	yjtn
 茵陈五苓糖浆	yjwji
 怡常维颠茄胶囊	yjwn
@@ -8983,6 +9412,7 @@ sort: original
 益母草口服液	ymcy
 益母草注射液	ymcyo
 野牡丹止痢片	ymdp
+胰酶大豆肉汤	ymdt
 依米丁注射液	ymdy
 右美沙芬糖浆	ymej
 右美沙芬颗粒	ymel
@@ -8996,6 +9426,7 @@ sort: original
 愈美分散片	ymfp
 野木瓜注射液	ymgy
 愈美缓释片	ymhp
+宜麻黄附子汤	ymht
 愈美甲麻敏糖浆	ymjj
 胰酶肠溶胶囊	ymjn
 胰酶肠溶片	ymjp
@@ -9062,10 +9493,13 @@ sort: original
 益气补肾胶囊	yqbno
 益气补血片	yqbp
 银翘败毒散	yqbs
+益气补肺汤	yqbto
+益气聪明汤	yqct
 益气聪明丸	yqcw
 养真生发颗粒	yqel
 银翘伤风胶囊	yqen
 益气舒肝片	yqep
+益气疏风汤	yqet
 益气生血口服液	yqey
 益气复脉颗粒	yqfl
 益气止血颗粒	yqflo
@@ -9101,6 +9535,7 @@ sort: original
 益贞女金片	yqnp
 益气强身颗粒	yqqlo
 益气强身胶囊	yqqn
+益气清金汤	yqqto
 益气逐瘀丸	yqqw
 益气祛痰口服液	yqqy
 益气润肠膏	yqrg
@@ -9114,6 +9549,7 @@ sort: original
 益气消渴颗粒	yqxl
 养正消积胶囊	yqxn
 益气安神片	yqxp
+益气安神汤	yqxto
 益气消渴丸	yqxw
 银盏心脉滴丸	yqxwi
 益气养血糖浆	yqyjou
@@ -9226,6 +9662,7 @@ sort: original
 蛹虫草菌粉胶囊	ywcni
 养胃舒颗粒	ywelo
 养胃舒胶囊	ywenoi
+益胃升阳汤	yweto
 药物制剂稳定性	ywfxi
 药物制剂专业	ywfyiu
 愈创甘油醚片	ywgpi
@@ -9416,6 +9853,7 @@ sort: original
 养阴清肺颗粒	yyqlo
 养阴清胃颗粒	yyqloa
 玉叶清火片	yyqpv
+养阴清肺汤	yyqtoa
 养阴清肺丸	yyqwo
 养阴清肺口服液	yyqy
 养阴润肺口服液	yyryoa
@@ -9450,6 +9888,7 @@ sort: original
 钻山风糖浆	zefji
 钻山风风湿油	zefyi
 滋肾健脑颗粒	zejla
+资寿解语汤	zejt
 资生健脾丸	zejw
 滋肾健脑液	zejy
 紫杉醇注射液	zejyi
@@ -9551,6 +9990,7 @@ sort: original
 左氧氟沙星胶囊	zyfnv
 左氧氟沙星片	zyfpv
 滋阴虎潜丸	zyhwa
+增液承气汤	zyjt
 增液口服液	zykyv
 左乙拉西坦片	zylpv
 滋阴明目丸	zymwa

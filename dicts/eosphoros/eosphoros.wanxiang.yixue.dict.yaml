@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
+# Source commit: dc0d8f7a279b87165f712f65d5dcd62f0b28820a
 # Selected source: dicts/yixue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 15613
-# Generated rows in category: 12603
+# Source rows in category: 15626
+# Generated rows in category: 12613
 ---
 name: eosphoros.wanxiang.yixue
-version: "2026-10-05"
+version: "2026-10-12"
 sort: original
 ...
 
@@ -1988,8 +1988,7 @@ sort: original
 十二指肠上动脉	exfmuv
 十二指肠空肠曲	exfq
 十二指肠郁滞症	exfqu
-十二指肠大乳头	exftu
-十二指肠小乳头	exftuv
+十二指肠大乳头	exftuv
 十二指肠后隐窝	exfwuv
 十二指肠炎	exfyuv
 肾性佝偻病	exgbi
@@ -2372,7 +2371,7 @@ sort: original
 肺上下静脉	fexmu
 风水相搏证	fexqua
 风盛血燥证	fexquv
-风湿性多肌痛	fext
+风湿性多肌痛	fextu
 放射性口炎	fexyou
 风湿性肌炎	fexyua
 肺上叶恶性肿瘤	feylui
@@ -4518,6 +4517,7 @@ sort: original
 会厌部肉芽肿	hybfiv
 会阴部恶性肿瘤	hybli
 会阴部良性肿瘤	hyblia
+会阴部炎性肿物	hybwi
 会阴侧切缝合术	hycei
 黄液上冲病	hyebv
 会阴疝修补术	hyeei
@@ -4526,6 +4526,8 @@ sort: original
 很严重的病	hyfb
 会厌肿物切除术	hyfei
 会阴直切缝合术	hyfeia
+会阴非炎性疾患	hyfhi
+会阴缝合术产科	hyfki
 红眼分流综合征	hyfqa
 寒饮伏肺证	hyfqo
 患有高血压病	hygbi
@@ -4552,6 +4554,7 @@ sort: original
 会阴切开术	hyqeia
 会厌切除术	hyqeiv
 喉咽切除术	hyqeoo
+会阴切开术产科	hyqki
 会阴浅筋膜	hyqmi
 患有前列腺炎	hyqyi
 会厌软骨切除术	hyrei
@@ -4561,6 +4564,7 @@ sort: original
 会阴修补术	hyxei
 会阴血肿清除术	hyxeia
 会厌恶性肿瘤	hyxli
+会阴型尿道下裂	hyxlia
 喉咽恶性肿瘤	hyxloo
 会阴下降综合征	hyxqi
 患有严重抑郁症	hyyq
@@ -5050,7 +5054,7 @@ sort: original
 颈静脉上球	jjmq
 颈静脉下球	jjmqa
 经静脉起搏器	jjmqav
-颈静脉孔内突	jjmta
+颈静脉孔内突	jjmtav
 肌间囊肿切除术	jjneuo
 肌腱内移术	jjneuu
 结肠睥曲切除术	jjpea
@@ -10448,11 +10452,17 @@ sort: original
 消化系统内异物	xhxwa
 消化性溃疡出血	xhxxa
 虚寒阴水效堪夸	xhykio
+二尖瓣退行性变	xjbbvi
 额肌瓣悬吊术	xjbe
 小肠钡灌造影术	xjbei
 小肠病害切除术	xjbeiu
 二尖瓣成形术	xjbev
 二尖瓣环缩术	xjbevi
+二尖瓣术后狭窄	xjbfvi
+二尖瓣腱索断裂	xjblvi
+二尖瓣闭式扩张	xjbq
+二尖瓣闭锁不全	xjbqv
+二尖瓣关闭不全	xjbqvi
 小肠侧侧吻合术	xjcei
 嗅觉参照综合征	xjcq
 氨基多糖病	xjdbu
@@ -11906,7 +11916,7 @@ sort: original
 阳气虚衰证	yqxq
 眼缺血综合征	yqxqi
 癔症性缄默症	yqxqo
-癔症性睡梦状态	yqxto
+癔症性睡梦状态	yqxtoo
 阳气欲脱证	yqyqau
 乙醛综合征	yqzqa
 孕期综合征	yqzqav

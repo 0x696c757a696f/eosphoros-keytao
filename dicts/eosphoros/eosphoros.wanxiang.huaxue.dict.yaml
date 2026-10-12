@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
+# Source commit: dc0d8f7a279b87165f712f65d5dcd62f0b28820a
 # Selected source: dicts/huaxue.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17502
-# Generated rows in category: 10882
+# Generated rows in category: 10872
 ---
 name: eosphoros.wanxiang.huaxue
-version: "2026-10-05"
+version: "2026-10-12"
 sort: original
 ...
 
@@ -565,7 +565,7 @@ sort: original
 冰糖葫芦酸	bths
 丙酮肌酸酶	btjm
 补糖醇酸奶	btjn
-丙酮基丙酮	btjt
+丙酮基丙酮	btjtv
 丙酮氯仿	btlf
 苯替酪胺	btlx
 倍他米松戊酸酯	btmf
@@ -661,7 +661,7 @@ sort: original
 苯胺基醋酸	bxjs
 苯氨基萘磺酸	bxjsi
 苯胺基萘磺酸	bxjsiu
-苯酰基哌啶酮	bxjt
+苯酰基哌啶酮	bxjti
 丙烯基羟吗啡烃	bxjtv
 八硝基立方烷	bxjwu
 苯酰菌胺	bxjx
@@ -709,10 +709,9 @@ sort: original
 白氨酸丙氨酸	bxss
 丙烯酸酯填塞	bxssv
 丙烯酸树脂乳酸	bxssvo
-丙二酸铊	bxst
-丙二酸亚铊	bxstv
+丙二酸铊	bxstv
 丙烯酸胺晶体	bxstvo
-丙二酸盐肉汤	bxstvv
+丙二酸亚铊	bxstvv
 丙烯三氯矽烷	bxsw
 丙烯酸酯类聚合物	bxswv
 丙烯酸锌	bxsx
@@ -1501,7 +1500,7 @@ sort: original
 对戊基苯甲醚	dwjmav
 丁烷醇脱氢酶	dwjmv
 对戊基苯甲酸	dwjsa
-对戊基苯乙酮	dwjt
+对戊基苯乙酮	dwjta
 多吃碱性食物	dwjwu
 对位甲氧苯丙胺	dwjxa
 多维赖氨酸	dwlsu
@@ -1584,7 +1583,7 @@ sort: original
 锝二甲苯双酸	dxjsi
 碘酰基苯甲酸	dxjsv
 对氨基苯乙酮	dxjta
-毒蕈碱受体	dxjtv
+毒蕈碱受体	dxjtvi
 丁烯腈	dxjvou
 丁烯基化合物	dxjwv
 对硝基苄溴	dxjxa
@@ -1748,7 +1747,7 @@ sort: original
 顺式氯氰菊酯	eelfuv
 叔十六硫醇	eelji
 十水硫酸钠	eelnu
-顺式茉莉酮	eemt
+顺式茉莉酮	eemtu
 失水苹果酸酐	eepgu
 肾嗜酸细胞瘤	eeslio
 十水四硼酸钠	eesn
@@ -2024,7 +2023,7 @@ sort: original
 十一烯酸锌	eyxxu
 双亚硝酸盐	eyxyav
 十一氧化六镨	eyyp
-刷牙遇冷水酸痛	eyyt
+刷牙遇冷水酸痛	eyyta
 砷杂苯	ezbvu
 砷杂环戊二烯	ezhxv
 氟苯丙酸	fbbsui
@@ -3051,9 +3050,8 @@ sort: original
 琥珀酸氧化酶	hpsmvv
 琥珀酸半醛	hpsq
 环硼酸肾上腺素	hpss
-琥珀酸亚铁	hpst
-琥珀酸羟孕酮	hpstv
-琥珀酸舒马普坦	hpstvv
+琥珀酸亚铁	hpstv
+琥珀酸羟孕酮	hpstvv
 琥珀酸亚胺	hpsx
 琥珀酸连接酶型	hpsxv
 琥珀酸美托洛尔	hpsxvv
@@ -3061,7 +3059,7 @@ sort: original
 琥珀酰胆碱	hpxjv
 琥珀酰氯	hpxlv
 环匹阿尼酸	hpxsv
-琥珀酰丙酮	hpxt
+琥珀酰丙酮	hpxtvv
 红羟基烷腺苷	hqjgao
 花青酸性蓝	hqsliv
 黄染料母醇	hrljva
@@ -3541,8 +3539,7 @@ sort: original
 甲基磺酸钠	jjhni
 甲基磺酸铅	jjhqiv
 甲基磺酸	jjhs
-甲基槲皮酮	jjhti
-甲基化黄酮	jjhtiv
+甲基槲皮酮	jjhtiv
 己基环己烷	jjhwav
 甲基化物	jjhwiv
 甲基环丙烯	jjhxiv
@@ -3944,7 +3941,6 @@ sort: original
 己烷磺酸钠盐	jwhya
 甲烷醇	jwjiov
 聚烷撑二醇	jwjjv
-己烷基康二酮	jwjta
 甲烷氯代物	jwlwio
 甲烷硫醇筛析	jwlxio
 长网牛硫酸盐纸板	jwnb
@@ -5468,7 +5464,7 @@ sort: original
 硫酸耐而蓝	lsnlv
 硫酸粘菌素	lsnsv
 硫酸黏菌素	lsnsvv
-磷酸尿苷葡萄糖	lsnt
+磷酸尿苷葡萄糖	lsntv
 氯酸镍	lsnuvi
 硫酸镍铵	lsnxv
 硫酸萘胺	lsnxvv
@@ -5978,7 +5974,7 @@ sort: original
 毛果芸香碱	mgyju
 麻黄碱无水	mhjeo
 麻黄碱苯海拉明	mhjmo
-麻黄醇酒汤	mhjto
+麻黄醇酒汤	mhjtov
 麻黄碱滴鼻液	mhjyo
 醚化作用排出气体	mhztv
 醚键水解酶类	mjelv
@@ -6434,7 +6430,7 @@ sort: original
 注射用硫酸镁	qeyma
 注射用烟酸	qeysa
 注射用叶酸	qeysau
-注射用氯胺酮	qeyta
+注射用氯胺酮	qeytau
 注射用氟康唑	qeyzau
 全氟并五苯	qfbb
 七氟丙氧基	qfbjvu
@@ -6572,7 +6568,7 @@ sort: original
 去甲美沙酮	qjmt
 针碱铌石	qjneiv
 羟基萘甲酸	qjnso
-羟基萘二酮	qjnt
+羟基萘二酮	qjnto
 羟基脯氨酸	qjpso
 去甲猪毛菜碱	qjqjvi
 羟基犬尿氨酸	qjqs
@@ -8386,7 +8382,7 @@ sort: original
 溴丁烯	xdxavo
 偶氮二氰基戊酸	xdxsiu
 二丁氨基酮酸	xdxsv
-溴代烯烃	xdxta
+溴代烯烃	xdxtai
 溴代辛烷	xdxwa
 二碘二氟甲烷	xdxwvv
 溴代乙基苯	xdybai
@@ -8497,8 +8493,7 @@ sort: original
 二氟氰基苯酚	xfqfv
 澳洲茄边碱	xfqja
 新制氢氧化铜	xfqtou
-氨酚羟考酮	xfqtu
-氨酚氢可酮	xfqtuv
+氨酚羟考酮	xfqtuv
 新制氢氧化铜悬浊液	xfqyo
 溴氟三氟甲苯	xfsba
 二氟苏氨酸	xfssv
@@ -8608,11 +8603,9 @@ sort: original
 硝基苯基哌啶	xjbdv
 溴间苯三酚	xjbfa
 氨基苯酚	xjbfuv
-二甲苯酚	xjbfvi
 氨甲苯酸冻干	xjbgu
 氨基苯甲	xjbjuv
 氨基苯甲酸类	xjbluv
-二甲苯蓝	xjblvi
 硝基苯类	xjblvv
 氨基苯甲醚	xjbmuv
 硝基苯甲醚	xjbmvv
@@ -8620,7 +8613,6 @@ sort: original
 氨基苯甲酸钠	xjbnuv
 二甲苯磺酸钠	xjbnvi
 硝基苯酚钠	xjbnvv
-二甲苯青	xjbq
 氨基苯甲醛	xjbqu
 氨基苯乙炔	xjbquv
 氨甲苯酸	xjbsui
@@ -8717,7 +8709,7 @@ sort: original
 溴甲基苯硼酸	xjjsai
 氨基己二酸	xjjsuv
 硝基甲苯磺酸	xjjsvv
-溴甲基苯基甲酮	xjjta
+溴甲基苯基甲酮	xjjtai
 二甲基睾酮	xjjtv
 二甲基庚酮	xjjtvi
 硝基甲喹酮	xjjtvv
@@ -9400,8 +9392,7 @@ sort: original
 二硝基苯甲醛	xxjqvv
 二氨基丙酸	xxjsvu
 二硝基苯甲酸	xxjsvv
-溴硝基苯丙酮	xxjta
-溴硝基苯乙酮	xxjtav
+溴硝基苯丙酮	xxjtav
 消旋甲啡烷	xxjwao
 二溴甲烷	xxjwva
 二氨基丁烷	xxjwvu
@@ -9797,8 +9788,7 @@ sort: original
 一氟乙酸	yfysvu
 乙酯乙烯酯共聚物	yfywav
 异甘草酸镁	ygcm
-月桂氮草酮	ygdtu
-月桂氮卓酮	ygdtuv
+月桂氮草酮	ygdtuv
 以高氯性	yglxao
 月桂酸钡	ygsbu
 月桂酸丁酯	ygsf
@@ -9999,7 +9989,7 @@ sort: original
 原甲酸二乙酯	yjsfv
 原甲酸三甲酯	yjsfvi
 有机酸尿症	yjsqv
-异己酸睾酮	yjst
+异己酸睾酮	yjsta
 乙基三氯硅烷	yjsw
 有机酸钾盐	yjsyv
 有机酸铜盐	yjsyvv
@@ -10852,7 +10842,7 @@ sort: original
 总胆汁酸试剂盒	zdfho
 总胆固醇试剂盒	zdgh
 杂多酸及其盐	zdsy
-紫杉醇脂质体	zejt
+紫杉醇脂质体	zejti
 棕闪碱长岩	zejyv
 紫杉二烯酮	zexti
 杂质脂肪醇	zffjuu
