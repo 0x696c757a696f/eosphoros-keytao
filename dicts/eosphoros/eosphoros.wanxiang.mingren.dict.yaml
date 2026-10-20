@@ -2,16 +2,16 @@
 # encoding: utf-8
 #
 # Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: 5d8463b54438f639fdaf97959601d11a2e3be5ad
+# Source commit: dc0d8f7a279b87165f712f65d5dcd62f0b28820a
 # Selected source: dicts/mingren.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 18411
+# Source rows in category: 18412
 # Generated rows in category: 7477
 ---
 name: eosphoros.wanxiang.mingren
-version: "2026-10-05"
+version: "2026-10-12"
 sort: original
 ...
 
@@ -191,7 +191,6 @@ sort: original
 布伦格尔	blgxvi
 布吕格尔	blgxvo
 布柳赫尔	blhxv
-柏郎嘉宾	bljbv
 博勒吉德	bljduv
 北濑佳范	bljfia
 布里吉特	bljtv
@@ -432,7 +431,7 @@ sort: original
 博尔迪埃	bxdxu
 布尔迪厄	bxdxv
 布恩迪亚	bxdyv
-伯恩施坦	bxet
+伯恩施坦	bxeti
 波尔菲里	bxfla
 布尔芬奇	bxfqv
 贝尔冈扎	bxgfa
@@ -1955,6 +1954,7 @@ sort: original
 黄志达	hfdvv
 韩烁	hfeluo
 洪忠中	hffai
+皇夫菲腊	hffluv
 黄仲昭	hffvio
 后周恭帝	hfgdu
 慧忠国师	hfgevi
@@ -2804,7 +2804,7 @@ sort: original
 今川氏辉	jweh
 蒋渭水	jweiaa
 今川氏真	jweqiu
-近卫尚通	jwet
+近卫尚通	jwetu
 江川卓	jwfaui
 景王赵杞	jwfqo
 金维刚	jwgiai
@@ -2872,7 +2872,7 @@ sort: original
 陈晓卿	jxqaou
 陈孝正	jxqauv
 蒋蓉	jxryii
-简奥斯汀	jxstu
+简奥斯汀	jxstuu
 加尔特曼	jxtmau
 姜涛	jxtzoa
 蒋川	jxwti
@@ -4032,7 +4032,7 @@ sort: original
 梅原大吾	mydwv
 牧野忠恭	myfgu
 日野之彦	myfyoi
-名医华佗	myht
+名医华佗	myhtu
 梦野久作	myjz
 米原康正	mykq
 马悦凌	mylaoo
