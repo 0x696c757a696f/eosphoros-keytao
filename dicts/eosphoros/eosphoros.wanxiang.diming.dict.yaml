@@ -629,6 +629,7 @@ sort: original
 大歇镇	dxqvoi
 丁香镇	dxqvui
 洞溪乡	dxxaaa
+都安县	dxxuo
 到湘乡	dxxvaa
 大锡乡	dxxvia
 到新乡	dxxvoa
@@ -960,7 +961,7 @@ sort: original
 凤山社区	feequ
 范石湖	fehiva
 中山路站	felqii
-沣水镇	feqaai
+沣水镇	feqaa
 浮石站	feqavo
 中山镇	feqiii
 峰市镇	feqioi
@@ -994,7 +995,7 @@ sort: original
 赵堌堆乡	fgdxv
 赵固堆乡	fgdxvi
 范公路	fgliuo
-直沽站	fgquao
+直沽站	fgqu
 丰冈站	fgqvio
 直管县	fgxuui
 丰冈县	fgxvi
@@ -1040,7 +1041,7 @@ sort: original
 赵城镇	fjqvvi
 冯家屯	fjtoov
 赵家屯	fjtvov
-范家湾	fjwioa
+范家湾	fjwio
 冯家湾	fjwooa
 周家湾	fjwuoa
 赵家湾	fjwvoa
@@ -2378,8 +2379,8 @@ sort: original
 柯士甸站	kedqv
 孔氏乡	kexau
 昆山县	kexoi
-孔寨村	kfca
-孔庄村	kfcao
+孔寨村	kfc
+孔庄村	kfca
 葵芳站	kfqii
 开封县	kfxvv
 坎乡	kfxxva
@@ -2609,7 +2610,6 @@ sort: original
 林湖路	lhlvao
 浏河镇	lhqaai
 梁化镇	lhqaii
-罗洪镇	lhqiai
 罗湖站	lhqiao
 莲花站	lhqiio
 罗宏镇	lhqioi
@@ -4309,7 +4309,7 @@ sort: original
 王庄路	wflvoo
 梧州南站	wfnqv
 卫庄镇	wfqaoi
-魏庄镇	wfquoi
+魏庄镇	wfquo
 五峰镇	wfqvii
 王庄镇	wfqvoi
 赤冢站	wfqvoo
@@ -4429,6 +4429,7 @@ sort: original
 湾里乡	wlxaia
 温岭县	wlxaii
 崇礼县	wlxioi
+魏岭乡	wlxui
 万隆乡	wlxvaa
 武隆县	wlxvai
 五里乡	wlxvia
@@ -5002,9 +5003,9 @@ sort: original
 野市乡	yexioa
 应山县	yexoii
 玉树县	yexvvi
-岳庄村	yfcu
 岳峰村	yfcui
-岳寨村	yfcuo
+岳庄村	yfcuo
+岳寨村	yfcuov
 杨畈村	yfcviv
 杨庄村	yfcvov
 闫村	yfcw
@@ -5125,7 +5126,6 @@ sort: original
 移民社区	ymequ
 雁鸣湖站	ymhqv
 衙门口站	ymkq
-杨梅路	ymlvvo
 杨庙镇	ymqvoi
 杨梅镇	ymqvvi
 杨梅区	ymqvvv

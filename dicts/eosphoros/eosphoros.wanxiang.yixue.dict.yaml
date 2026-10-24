@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 15626
-# Generated rows in category: 12613
+# Generated rows in category: 12612
 ---
 name: eosphoros.wanxiang.yixue
 version: "2026-10-12"
@@ -1168,10 +1168,10 @@ sort: original
 电吸人流术	dxrei
 低血容量症	dxrq
 低血糖症病	dxtb
+杜阿二氏病	dxxb
 代谢性脊髓病	dxxbi
 代谢性心肌病	dxxbio
 癫痫性精神病	dxxbo
-杜阿二氏病	dxxbv
 多尔心室成形术	dxxeu
 多形性肉芽肿	dxxf
 单形性腺瘤	dxxlo
@@ -1283,7 +1283,7 @@ sort: original
 水痘并败血症	edbqa
 肾断层造影	edcyio
 深度烧伤截肢术	edeeao
-食道疝修补术	edeeio
+食道疝修补术	edeei
 水毒上扰证	edeqa
 蛇毒上攻证	edeqi
 痧毒上攻证	edeqo
@@ -1968,7 +1968,7 @@ sort: original
 舌下神经吻合术	exeeuv
 舌下神经交通支	exefu
 舌下神经管	exegu
-舌下神经核	exehu
+舌下神经核	exeh
 舌下神经三角	exejuv
 舌下神经管内口	exeku
 舌下神经管外口	exekuv
@@ -2061,7 +2061,7 @@ sort: original
 肾元不足证	eybqiv
 上牙槽神经	eycj
 水硬度测量术	eyde
-舌咽神经切断术	eyeeuo
+舌咽神经切断术	eyeeu
 舌咽神经交通支	eyefu
 沙伊氏综合征	eyeqa
 肾阳衰惫证	eyeqi
@@ -3240,7 +3240,8 @@ sort: original
 肝包膜下血肿	gbmfu
 肝包囊虫切除术	gbneu
 高丙球蛋白血症	gbqqo
-干板线摄影术	gbxevv
+干板线摄影术	gbxe
+干板线照像术	gbxevv
 古布二氏综合征	gbxquv
 格巴二氏综合征	gbxqv
 光变应性药疹	gbyqi
@@ -3476,7 +3477,6 @@ sort: original
 疳积上目病	gjebou
 宫颈上皮内肿瘤	gjelo
 肝巨噬细胞肉瘤	gjeluv
-感觉神经上皮瘤	gjelvo
 肝经湿热证	gjequ
 共济失调综合征	gjeqv
 肛肠痔瘘病	gjfbu
@@ -4460,7 +4460,7 @@ sort: original
 寒邪犯胃证	hxfq
 寒邪直中证	hxfqo
 颌下蜂窝织炎	hxfyiv
-化学感受器瘤	hxgli
+化学感受器瘤	hxglio
 化学换肤术	hxhei
 汗腺汗孔瘤	hxhla
 汗腺汗囊瘤	hxhlau
@@ -5830,7 +5830,7 @@ sort: original
 急性子宫炎	jxzyu
 急性纵隔炎	jxzyuo
 胶原病性神经炎	jybyu
-经阴道超检查	jydw
+经阴道超检查	jydwa
 厥阴上热下寒证	jyeq
 睑缘缝合术	jyfe
 浆液反应器	jyfqo
@@ -8341,7 +8341,6 @@ sort: original
 疹出热退证	qjrq
 前交通动脉瘤	qjtlo
 真菌涂片检查	qjtwu
-切除性清创术	qjxeva
 真菌性主动脉瘤	qjxlui
 气结血瘀证	qjxqua
 缺钾性低钾血症	qjxqui
@@ -11019,7 +11018,8 @@ sort: original
 心小静脉血流	xxjloi
 星形胶质细胞瘤	xxjlov
 恶性甲状腺瘤	xxjlvo
-行销近视症	xxjqui
+行销近视症	xxjqu
+血虚肠燥证	xxjqui
 心血亏虚证	xxkqou
 涎腺瘘管闭合术	xxlea
 胸腺瘤摘除术	xxleuu
@@ -11807,7 +11807,7 @@ sort: original
 硬膜下血肿	ymxfv
 硬膜下脑脓肿	ymxfvu
 幽门下淋巴结	ymxji
-幽门恶性肿瘤	ymxli
+幽门恶性肿瘤	ymxlio
 硬膜下恶性肿瘤	ymxlv
 阳明血热证	ymxqa
 硬膜下积液	ymxy
@@ -12514,8 +12514,7 @@ sort: original
 纵膈恶性淋巴瘤	zgxlau
 纵隔心包炎	zgxy
 纵膈引流术	zgye
-纵隔引流术	zgyea
-纵隔异物取出术	zgyeaa
+纵隔引流术	zgyeaa
 左硅油取出术	zgyev
 子宫圆韧带动脉	zgym
 子宫纵隔切除术	zgze

@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 18412
-# Generated rows in category: 7477
+# Generated rows in category: 7473
 ---
 name: eosphoros.wanxiang.mingren
 version: "2026-10-12"
@@ -761,7 +761,6 @@ sort: original
 董海涛	dhtiaa
 邓涵文	dhwaao
 邓惠文	dhwav
-德皇威廉	dhwluu
 东海王越	dhwyv
 东汉献帝	dhxdva
 段浩雨	dhyuav
@@ -1577,6 +1576,7 @@ sort: original
 法演禅师	fyjeaa
 佛印禅师	fyjeiu
 仲景	fyjgio
+傅以渐	fyjia
 范允临	fyliai
 傅衣凌	fylioo
 庄炎林	fyloov
@@ -1706,7 +1706,6 @@ sort: original
 戈雷茨卡	glckvv
 格里菲斯	glfsvi
 格里高利	glglvi
-格列高利	glglvv
 格里高尔	glgxv
 郭槐	glhgov
 葛勒可汗	glkhiv
@@ -3284,7 +3283,6 @@ sort: original
 老将颜妮	ljyn
 吕纯阳	ljyoaa
 陆云	ljywav
-林昶佐	ljzvoi
 洛克菲勒	lkflau
 莱库格斯	lkgs
 黎桓	lkhtu
@@ -3579,7 +3577,6 @@ sort: original
 兰溪道隆	lxdloa
 林铣十郎	lxelvi
 陆小凤	lxfai
-林贤治	lxfvia
 梁红	lxhyaa
 列昂节夫	lxjfvo
 梁建	lxjmaa
@@ -4185,7 +4182,7 @@ sort: original
 潘绍周	pefaau
 片山恭一	pegyu
 潘世璜	pehavv
-潘仕成	pejaiv
+潘仕成	pej
 婆什迦罗	pejl
 普什卡什	peke
 普什科夫	pekfo
@@ -4841,7 +4838,7 @@ sort: original
 钱颖一	qyyiuv
 章莹颖	qyyoiu
 浅野一二	qyyxa
-朱彝尊	qyzuao
+朱彝尊	qyzua
 祝总斌	qzbooo
 张择端	qzdai
 卿子冠军	qzgjua
@@ -5664,7 +5661,6 @@ sort: original
 毋昭裔	wfyao
 汪兆镛	wfyau
 汪志伊	wfyavi
-翁照垣	wfyuov
 武昭仪	wfyvo
 王凤仪	wfyvui
 汪凤藻	wfzau
@@ -6631,7 +6627,7 @@ sort: original
 阿瓦库姆	xwkm
 安察洛堤	xwldo
 相王李旦	xwldv
-谢无量	xwlovo
+谢无量	xwlov
 萧兀纳	xwniv
 许文强	xwqooa
 香川真司	xwqs

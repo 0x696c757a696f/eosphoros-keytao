@@ -47,8 +47,8 @@
       "rows": 36292
     },
     "dicts/eosphoros/eosphoros.ice.dict.yaml": {
-      "sha256": "c248e8642eb89f1f114d668a019f33a5d6adb26df29ee44704b4f5fa9a09253d",
-      "rows": 360412
+      "sha256": "d41f5b92f643257d88cba369c640dd859b3c1f1327e62c9d73d52825f4ce2291",
+      "rows": 360403
     },
     "dicts/eosphoros/eosphoros.en.dict.yaml": {
       "sha256": "a4feef5113ac450fe4518318c72b262b6ed8c80bccedb9661c8ef9184766c797",
@@ -67,24 +67,24 @@
       "rows": 2483
     },
     "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml": {
-      "sha256": "ee614d31aba72ef4a2671284f04855b9bf55295399e6cf30996703f9aed8fe19",
-      "rows": 9985
+      "sha256": "e9ba83961e48469a43e936504ed87adc4a0852aad4c0ef0a6da73d3526f3ef93",
+      "rows": 9984
     },
     "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml": {
-      "sha256": "1306a934773b14fc17d2fa5b5bad48c452373784dfb141182e849a7612f5b5fe",
-      "rows": 12613
+      "sha256": "5800d23da67940012ca2a894ccc6ebecac90429c9f32fb4febbf21d3db28fb47",
+      "rows": 12612
     },
     "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml": {
-      "sha256": "26e59418dd01475848c5570ed2018d4056144195edffa47c970c45cefe5d7eb6",
-      "rows": 10872
+      "sha256": "d4814963bf500695e29689f0b607fe7fae963c0ee3fbdfebb030a7a6d02e3e80",
+      "rows": 10874
     },
     "dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml": {
-      "sha256": "67123fe7fd1b2b22ea2cb6c2859a7470b60508bcc1562c7b4d666bd30d0f1c66",
+      "sha256": "799145eaa48cb6192a9dd61492a5591cb20cbdd4850c5161c1eea7f883f2596f",
       "rows": 5274
     },
     "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml": {
-      "sha256": "bb8f0b0ddca0d4f4cb63473f82b1c5031177e060db03de3a4fbd627c31cc3127",
-      "rows": 7477
+      "sha256": "16f610c8f96a3ea2c2a89d28ed86c1cc61e15b0ad86b1b79a66cb82d4917ad82",
+      "rows": 7473
     },
     "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml": {
       "sha256": "d2f19fcf8fdcde4d452724ef01006ffa3518f665bce157347178411e590f2d14",
@@ -96,9 +96,9 @@
     }
   },
   "statistics": {
-    "combined_collision_rows": 49803,
-    "combined_rows": 1116434,
-    "deduplicated_local": 279306,
+    "combined_collision_rows": 49779,
+    "combined_rows": 1116359,
+    "deduplicated_local": 279309,
     "deduplicated_upstream": 2608,
     "emoji_deduplicated_local": 2340,
     "emoji_extra_char_rows": 34,
@@ -110,36 +110,36 @@
     "english_generated_rows": 23648,
     "english_skipped_local_code_collision": 2,
     "english_source_rows": 23898,
-    "generated_before_collision_pruning": 488154,
-    "generated_medicine_names": 1468,
-    "generated_rows": 360412,
+    "generated_before_collision_pruning": 488161,
+    "generated_medicine_names": 1475,
+    "generated_rows": 360403,
     "ice_collision_rows": 2240,
-    "local_collision_rows": 33726,
-    "local_rows": 756022,
-    "recognized_medicine_names": 1984,
+    "local_collision_rows": 33709,
+    "local_rows": 755956,
+    "recognized_medicine_names": 1983,
     "skipped_candidate_cap": 32,
-    "skipped_collision_budget": 127710,
+    "skipped_collision_budget": 127726,
     "skipped_low_value_long_ext": 5810,
     "skipped_low_value_numeric_template": 18153,
     "skipped_low_value_overlong": 2143,
     "skipped_low_value_rare_base": 77290,
-    "skipped_protected_local_collision": 7756,
+    "skipped_protected_local_collision": 7746,
     "skipped_rejected": 346,
     "skipped_unaligned": 693,
     "skipped_unencodable": 678,
     "source_rows": 882937,
-    "unavoidable_code_collisions": 136575,
+    "unavoidable_code_collisions": 136587,
     "wanxiang_deduplicated_local": 318650,
     "wanxiang_deduplicated_upstream": 333,
     "wanxiang_generated_diming": 5274,
-    "wanxiang_generated_huaxue": 10872,
+    "wanxiang_generated_huaxue": 10874,
     "wanxiang_generated_jichu": 147,
-    "wanxiang_generated_mingren": 7477,
-    "wanxiang_generated_rows": 46558,
+    "wanxiang_generated_mingren": 7473,
+    "wanxiang_generated_rows": 46554,
     "wanxiang_generated_taifeng": 190,
-    "wanxiang_generated_yaopin": 9985,
-    "wanxiang_generated_yixue": 12613,
-    "wanxiang_skipped_collision": 13921,
+    "wanxiang_generated_yaopin": 9984,
+    "wanxiang_generated_yixue": 12612,
+    "wanxiang_skipped_collision": 13925,
     "wanxiang_skipped_low_value_general_long_tail": 1016530,
     "wanxiang_skipped_low_value_incomplete": 86364,
     "wanxiang_skipped_low_value_non_han_or_length": 460,
