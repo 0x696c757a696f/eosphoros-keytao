@@ -1,0 +1,7 @@
+{
+  "release": "https://github.com/rimeinn/mira/releases/download/latest/",
+  "binaries": {
+    "mira-rimemaster-lua5.4": "62c7141ce1613ba46b5bed87ce7c6018374dc4a9c6f3037c5109e524a76168dc",
+    "mira-rime1.13.1-luajit": "70080e5e01ed6a6c31040ba8c64aa7a3faaaa64e1d3eb0dbcbbee3fffa9a4754"
+  }
+}
