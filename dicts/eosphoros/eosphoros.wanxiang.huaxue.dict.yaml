@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17502
-# Generated rows in category: 10874
+# Generated rows in category: 10873
 ---
 name: eosphoros.wanxiang.huaxue
 version: "2026-10-12"
@@ -113,7 +113,6 @@ sort: original
 冰醋酸冰染染料	bcsl
 吡啶苯甲醛	bdbqo
 吡啶氮氧化物	bddwo
-吡啶生物碱	bdejoo
 不对称二苯肼	bdjjv
 吡哆醇内酯酶	bdjmoo
 吡哆基色氨酸	bdjsoo
@@ -157,7 +156,6 @@ sort: original
 苯等有害气体	bdyti
 钡的氧化物	bdywi
 铂的氧化物	bdywiu
-吡啶氧化物	bdywoo
 倍水半芹烯	bebxi
 苯肾上腺素	bees
 表山芝烯二醇	befjv
@@ -230,8 +228,8 @@ sort: original
 苯磺酸钙	bhsg
 苯磺酸左旋氨氯	bhsli
 苯磺酸钠	bhsniv
-苯海索片	bhspi
-苯磺酸氨氯地平	bhspiv
+苯海索片	bhsp
+苯磺酸氨氯地平	bhspi
 苯磺酸阿曲库铵	bhsx
 苯磺酸盐	bhsyiv
 不喝碳酸饮料	bhtlv
@@ -699,8 +697,8 @@ sort: original
 丙烯酸橡胶	bxsj
 丙氨酸聚连接	bxsjv
 丙二酸酯合成	bxsjvv
-丙烯酸酯类	bxslv
-丙烯酸树脂类	bxslvo
+丙烯酸酯类	bxsl
+丙烯酸树脂类	bxslv
 丙氨酸硫醚	bxsm
 丙氨酸连接酶	bxsmv
 丙烯酸树脂贴面	bxsmvo
@@ -1345,8 +1343,8 @@ sort: original
 对氯苯基	dlbja
 对氯苄硫醇	dlbjau
 单氯丙二醇	dlbjou
-对氯苯甲酰氯	dlbl
-对氯苯磺酰氯	dlbla
+对氯苯甲酰氯	dlbla
+对氯苯磺酰氯	dlblau
 对氯苯甲醛	dlbq
 对氯苯异氰	dlbqa
 对氯苯甲酸	dlbsa
@@ -2125,8 +2123,8 @@ sort: original
 复方氟尿嘧啶乳	fffruo
 腐殖质碳酸盐土	fffto
 脂质过氧化	ffghuu
-反反癸二烯醛	ffgq
 复方甘草酸胺针	ffgquo
+反反癸二烯醛	ffgquu
 脂质过氧化物	ffgwuu
 脂质过氧化作用	ffgyuu
 脂肪和胆固醇	ffhjuu
@@ -2801,8 +2799,7 @@ sort: original
 甘氨酸尿症	gxsq
 谷氨酸半醛	gxsqu
 胱氨酸尿症	gxsquu
-谷氨酸红霉素	gxssu
-谷氨酸赖氨酸	gxssuu
+谷氨酸红霉素	gxssuu
 谷氨酸受体	gxstuu
 甘氨酸二肽	gxstv
 甘氨酸受体	gxstvu
@@ -2813,7 +2810,7 @@ sort: original
 甘氨酸冲洗液	gxsyvu
 甘氨脱氧胆酸	gxts
 甘鹅脱氧胆酸	gxtsv
-高辛烷值汽油	gxwyoo
+高辛烷值汽油	gxwy
 改性氨基甲酸酯	gxxfa
 谷氨酰基	gxxju
 庚二酰氯	gxxlov
@@ -3354,7 +3351,7 @@ sort: original
 酒石酸氢亚铊	jesta
 酒石酸唑吡坦	jestav
 焦砷酸铜	jesti
-酒石酸钠铵	jesxa
+酒石酸钠铵	jesx
 酒石酸氢铵	jesxav
 酒石酸氢盐	jesya
 碱式碳酸铋	jetbv
@@ -3488,8 +3485,7 @@ sort: original
 甲基苯三唑	jjbziv
 甲基雌二醇	jjcji
 甲基丁酯	jjdfiv
-甲基丁醇	jjdji
-甲基胆碱	jjdjiv
+甲基丁醇	jjdjiv
 甲基对苯醌	jjdkiv
 甲基对硫磷	jjdliv
 甲基碘化镁	jjdmi
@@ -3513,7 +3509,7 @@ sort: original
 甲基水杨醛	jjeqiv
 甲基十八酸	jjesi
 甲基十四酸	jjesiv
-碱金属元素	jjesv
+碱金属元素	jjesvi
 甲基双丙酮	jjeti
 甲基十二烷	jjewi
 甲基十三烷	jjewiv
@@ -3723,7 +3719,7 @@ sort: original
 甲基组胺	jjzx
 拮抗剂酮色林	jkjlii
 加拉苯砜	jlbfai
-间氯苯酚	jlbfo
+间氯苯酚	jlbfou
 间氯苯甲腈	jlbjou
 间氯苯甲醛	jlbqo
 间氯苯基哌嗪	jlbqou
@@ -4312,6 +4308,7 @@ sort: original
 糠酸二氯尼特	ksxto
 喹喔啉二氧化物	kwlwo
 苦味酸胭脂红	kwsh
+莰烷酰氯	kwxlio
 糠酰氯	kxlovu
 喹恶啉氧化物	kxlwov
 糠酰脱氢酶	kxtmo
@@ -5430,7 +5427,8 @@ sort: original
 氯三氯甲基吡啶	lsldu
 磷酸硫代尿核苷	lslgv
 硫酸铝钾	lsljv
-磷酸氯喹	lslkvv
+磷酸氯喹	lslkv
+硫酸氯喹	lslkvv
 硫酸氯吡格雷	lsllv
 利塞膦酸钠	lslnu
 连四硫酸钠	lslnv
@@ -6075,7 +6073,7 @@ sort: original
 萘碘酸右丙氧芬	ndsfi
 铌的同位素	ndtsiu
 萘啶酮酸钠盐	ndtyio
-尿甙二磷酸葡糖甙	ndxd
+尿甙二磷酸葡糖甙	ndxda
 钠的氧化物	ndyw
 萘酚苯甲醇	nfbji
 萘酚苯基甲醇	nfbjiv
@@ -6695,7 +6693,7 @@ sort: original
 正辛基异噻唑啉酮	qxjtv
 七硝基立方烷	qxjwvv
 曲安奈德氯霉素	qxnsio
-氢溴酸烯丙吗啡	qxsfu
+氢溴酸烯丙吗啡	qxsf
 氢溴酸槟榔碱	qxsju
 氢溴酸樟柳碱	qxsjua
 氢溴酸非诺特罗	qxslu
@@ -7059,7 +7057,7 @@ sort: original
 四氟硼酸硝酰	sfpxi
 四氟硼酸盐	sfpy
 四氟硼酸银	sfpyi
-三氟三氯乙烷	sfswvu
+三氟三氯乙烷	sfsw
 四氟锑酸铵	sftx
 三氟硝基苯	sfxbvu
 三氟胸苷	sfxgvu
@@ -7754,8 +7752,7 @@ sort: original
 土壤酸度探测器	trsq
 碳酸钡矿	tsbkvv
 酞酸丁苄酯	tsdfv
-碳酸铈	tse
-碳酸钐	tsevvi
+碳酸铈	tsevvi
 锑酸酐	tsgi
 碳酸钙钡矿	tsgk
 碳酸钙镁矿	tsgkv
@@ -7771,9 +7768,10 @@ sort: original
 碳酸甲酯肉桂酯	tsjfvv
 钽酸钾	tsjivi
 甜酸苦辣鲜	tskx
+钽酸锂	tsl
 碳酸氯乙叉酯	tslfvv
 碳酸六氨合钴	tslgvv
-钽酸锂	tslivi
+钽酸镥	tslivi
 碳酸类饮料	tsllvv
 碳酸六氨合镍	tslnv
 碳酸利多卡因	tslyvv
@@ -8562,8 +8560,8 @@ sort: original
 溴化钒	xhfaii
 硝化甘露醇	xhgjvi
 二核苷酸水解酶	xhgmvv
-溴化钬	xhh
-溴化铪	xhhai
+溴化钬	xhhai
+溴化铪	xhhaii
 溴化琥珀胆碱	xhhja
 小核核糖核酸	xhhsiv
 溴化合物	xhhwa
@@ -9027,8 +9025,8 @@ sort: original
 二氯二乙硫醚神	xlxevu
 二氯二苯砜	xlxfvu
 二氯二氧化铬	xlxgvu
-二氯二丙醇	xlxj
-二氯硝基苯腈	xlxjv
+二氯二丙醇	xlxjv
+二氯硝基苯腈	xlxjvu
 锌硫锡铅矿	xlxkiv
 二氯二氰苯醌	xlxkv
 二氯二氧化硫	xlxlvu
@@ -9408,6 +9406,7 @@ sort: original
 杏芎氯化钠	xxlnv
 二溴酪氨酸	xxlsva
 小儿硫酸亚铁	xxlti
+溴二氯甲烷	xxlwav
 二溴氯丙烷	xxlwva
 溴烯尿苷	xxngao
 细辛脑氯化钠	xxnna
@@ -9442,7 +9441,6 @@ sort: original
 雄二烯二酮	xxxtv
 二溴二苯丙酮	xxxtva
 安息香酸铵	xxxxou
-二溴硝基苯胺	xxxxva
 二烯酰胺	xxxxvo
 二溴乙苯	xxybva
 二烯烟碱	xxyjvo
@@ -10690,9 +10688,10 @@ sort: original
 亚硒酸钍	yxstvv
 亚硝酸甲烷	yxsw
 一溴三氟乙烷	yxswv
-乙二酸二	yxsxa
+乙二酸二	yxsx
+乙酰色胺	yxsxa
 异辛酸亚锡	yxsxao
-乙酰色胺	yxsxav
+乙二酸四乙胺	yxsxav
 亚硒酸锌	yxsxv
 亚硒酸铀酰	yxsxvv
 亚硒酸盐	yxsyvv

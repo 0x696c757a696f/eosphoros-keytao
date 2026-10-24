@@ -16,6 +16,7 @@ from tools.sync_upstream_dictionaries import (
     build_emoji_extra,
     build_ice_rows,
     build_wanxiang_rows,
+    build_xmjd6_rows,
     ice_low_value_reason,
     is_likely_medicine_name,
     wanxiang_low_value_reason,
@@ -165,6 +166,43 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(stats["wanxiang_deduplicated_local"], 1)
         self.assertEqual(stats["wanxiang_skipped_low_value_incomplete"], 1)
         self.assertTrue(all(4 <= len(row.code) <= 6 for row in rows))
+
+    def test_xmjd6_takes_only_new_upstream_words_on_free_codes(self) -> None:
+        chars = {
+            "甲": ("jsa", "jsav"), "乙": ("yka",), "丙": ("bgo",),
+            "丁": ("dgu",), "戊": ("wve",), "己": ("jki",),
+        }
+        baseline = {
+            "cizu": source_text("甲乙\tjsyk"),
+            "fjcy": source_text("丁戊\tdgwv"),
+        }
+        current = {
+            "cizu": source_text("甲乙\tjsyk", "丙丁\tbgdg", "甲丙\tjsbg", "本地\tbddk"),
+            "fjcy": source_text("丁戊\tdgwv", "戊己\twvjke", "丙丁\tbgdg"),
+        }
+        rows, stats = build_xmjd6_rows(
+            current, baseline, chars, {"本地"}, {"jsbg": {"已有词"}}
+        )
+        self.assertEqual(rows["cizu"], [("丙丁", "bgdg"), ("甲丙", "jsbga")])
+        self.assertEqual(rows["fjcy"], [("戊己", "wvjke")])
+        self.assertEqual(stats["xmjd6_added_upstream_cizu"], 3)
+        self.assertEqual(stats["xmjd6_deduplicated"], 2)
+
+    def test_xmjd6_dictionaries_are_lowest_priority_and_profiled(self) -> None:
+        full = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
+        standard = (ROOT / "eosphoros.standard.dict.yaml").read_text(encoding="utf-8")
+        lite = (ROOT / "eosphoros.lite.dict.yaml").read_text(encoding="utf-8")
+        self.assertLess(
+            full.index("  - dicts/eosphoros/eosphoros.fjcy\n"),
+            full.index("  - dicts/eosphoros/eosphoros.rere.cizu"),
+        )
+        self.assertLess(
+            full.index("  - dicts/eosphoros/eosphoros.rere.cizu"),
+            full.index("  - dicts/eosphoros/eosphoros.rere.fjcy"),
+        )
+        self.assertIn("  - dicts/eosphoros/eosphoros.rere.cizu", standard)
+        self.assertNotIn("eosphoros.rere.fjcy", standard)
+        self.assertNotIn("eosphoros.rere", lite)
 
     def test_emoji_extra_adds_rime_ice_rows_without_overwriting_local_data(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

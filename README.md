@@ -128,9 +128,9 @@ Fcitx5 Android 原生 Table 需要另行导入 [晨星主题包](https://github.
 <!-- dictionary-profile-stats:start -->
 | 档位 | 当前记录数 | 同码记录数 | 同码记录率 | 实际组成 |
 | --- | ---: | ---: | ---: | --- |
-| Full | 1,176,299 | 57,106 | 4.855% | Lite + 宗派专题 + ICE + 万象专业 + `fjcy` |
-| Standard | 662,289 | 21,366 | 3.226% | Lite + 宗派专题 + ICE + 万象专业 |
-| Lite | 251,430 | 11,944 | 4.750% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
+| Full | 1,176,793 | 57,019 | 4.845% | Lite + 宗派专题 + ICE + 万象专业 + `fjcy` |
+| Standard | 662,680 | 21,362 | 3.224% | Lite + 宗派专题 + ICE + 万象专业 |
+| Lite | 251,430 | 11,931 | 4.745% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
 
 同码记录率是“最终编码与其他不同词条共用”的静态记录数占本档位总记录数的比例。上表为当前词库快照，不计入用户后续添加的动态词和客户端词频调整；该指标适合比较本项目的三个档位，不建议与统计口径不同的其他方案直接对比。
 <!-- dictionary-profile-stats:end -->
@@ -779,16 +779,18 @@ python .\zzc\Windows_词库合并.py
 | `dicts/eosphoros/eosphoros.danzi.dict.yaml` | 36,292 | 上游键道单字表 |
 | `dicts/eosphoros/eosphoros.cizu.dict.yaml` | 190,589 | 本地基础词组 |
 | `dicts/eosphoros/eosphoros.catholicism.dict.yaml` | 3,131 | 天主教、礼仪、神学与东方礼词汇 |
-| `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 543 | 传统新教宗派、信条、人物、日常教会用语及《和合本》词汇 |
-| `dicts/eosphoros/eosphoros.orthodoxy.dict.yaml` | 89 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
+| `dicts/eosphoros/eosphoros.protestantism.dict.yaml` | 541 | 传统新教宗派、信条、人物、日常教会用语及《和合本》词汇 |
+| `dicts/eosphoros/eosphoros.orthodoxy.dict.yaml` | 88 | 东正教礼仪、圣像、灵修与教会制度专有词汇 |
 | `dicts/eosphoros/eosphoros.oriental.dict.yaml` | 68 | 东方正统教会、合性论传统与成员教会专有词汇 |
 | `dicts/eosphoros/eosphoros.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
 | `dicts/eosphoros/eosphoros.core.dict.yaml` | 901 | 630 规则、快符和核心候选 |
 | `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,010 | 附加扩展词组 |
-| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 360,403 | Rime-Ice 中文精简补充词库 |
-| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 46,554 | 七个万象分类补充词库 |
+| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 360,404 | Rime-Ice 中文精简补充词库 |
+| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 46,561 | 七个万象分类补充词库 |
+| `dicts/eosphoros/eosphoros.rere.cizu.dict.yaml` | 386 | xmjd6-rere 上游新增基础词组（仅占空闲码位） |
+| `dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml` | 103 | xmjd6-rere 上游新增扩展词组（仅占空闲码位） |
 | `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,648 | Rime-Ice 英文词库 |
-| **合计** | **1,176,299** | 不含动态自造词和个人词库 |
+| **合计** | **1,176,793** | 不含动态自造词和个人词库 |
 <!-- dictionary-file-stats:end -->
 
 四个非天主教传统词库以具有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主体，并补充基督徒实际常打的崇拜、团契、查经、祷告和服事用语；不把“宗派名＋通用活动”机械拼成长词凑量。`eosphoros.protestantism` 另收经审核的《和合本》书卷名、人地名和固定译语，以《和合本》的“马太、约翰、使徒行传、启示录”等新教译名为准，不混入《思高本》译名；传统宗派部分覆盖信义宗、改革宗／长老宗、公理宗、圣公宗、浸信宗、循道卫理宗、再洗礼派／门诺会、贵格会、摩拉维亚弟兄会、弟兄会和救世军，五旬节派保留既有条目但不是本轮扩建重点。东正教、东方正统教会、东方亚述教会和东方礼天主教会分别维护，避免把相近的叙利亚礼、圣像或牧首制度词汇混错归属；东方正统部分不用不准确的“一性论”作为自称。多段人名使用间隔号显示，例如“马丁·路德”，编码时不计间隔号。核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。
@@ -872,6 +874,9 @@ patch:
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `en_dicts/en`、`en_ext` | `dicts/eosphoros/eosphoros.en.dict.yaml` |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `opencc/emoji.txt` | `opencc/eosphoros/eosphoros_emoji_extra_*` |
 | [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`diming`、`mingren`、`taifeng`、`jichu` | `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` |
+| [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | `xmjd6.cizu`、`xmjd6.fjcy` 中 `baseline_commit` 之后新增的词 | `dicts/eosphoros/eosphoros.rere.*.dict.yaml` |
+
+xmjd6-rere 是本地 `cizu`、`fjcy` 的来源，但两边已各自整理多年，所以不整体覆盖：只取上游在锁文件 `baseline_commit` 之后新增、且本方案各词库都没有的词，按本方案单字表重新编码，并且只占用没有任何词条使用的码位，排在导入顺序最后，不会挤掉现有候选。`xmjd6.cizu` 的新增词进入标准版和完整版，`xmjd6.fjcy` 的只进入完整版。
 
 同步器不会盲目追踪浮动的 `main`/`master` 内容。锁文件保存已经整合的 Git commit 和生成文件 SHA-256；更新器比较“上次 commit → 当前 HEAD”，只有目标源文件变化时才按最新完整快照重建，避免长期累积补丁造成漂移。
 

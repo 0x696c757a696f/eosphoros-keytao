@@ -12,6 +12,7 @@ PROFILE_LABELS = {
 
 STANDARD_EXCLUDED_DICTIONARIES = (
     "dicts/eosphoros/eosphoros.fjcy.dict.yaml",
+    "dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml",
 )
 LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
     "dicts/eosphoros/eosphoros.ice.dict.yaml",
@@ -27,6 +28,7 @@ LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
     "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml",
+    "dicts/eosphoros/eosphoros.rere.cizu.dict.yaml",
 )
 PROFILE_EXCLUDED_DICTIONARIES = {
     "full": (),

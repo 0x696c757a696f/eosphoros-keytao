@@ -11,6 +11,7 @@ import sys
 import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+from itertools import islice, product
 from pathlib import Path
 from typing import Any
 
@@ -34,6 +35,14 @@ WANXIANG_TARGETS = {
     source_name: DICTIONARY_DIR / f"eosphoros.wanxiang.{source_name}.dict.yaml"
     for source_name in WANXIANG_SOURCE_NAMES
 }
+XMJD6_SOURCE_FILES = (
+    ("cizu", "xmjd6.cizu.dict.yaml"),
+    ("fjcy", "xmjd6.fjcy.dict.yaml"),
+)
+XMJD6_TARGETS = {
+    source_name: DICTIONARY_DIR / f"eosphoros.rere.{source_name}.dict.yaml"
+    for source_name, _ in XMJD6_SOURCE_FILES
+}
 ENGLISH_TARGET = DICTIONARY_DIR / "eosphoros.en.dict.yaml"
 EMOJI_EXTRA_CHARS_TARGET = ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_chars.lua"
 EMOJI_EXTRA_INDEX_TARGET = (
@@ -46,6 +55,7 @@ TARGETS = (
     DANZI_TARGET,
     ICE_TARGET,
     *WANXIANG_TARGETS.values(),
+    *XMJD6_TARGETS.values(),
     ENGLISH_TARGET,
     EMOJI_EXTRA_CHARS_TARGET,
     EMOJI_EXTRA_INDEX_TARGET,
@@ -93,6 +103,12 @@ RIME_WANXIANG_FILES = tuple(
     for source_name in WANXIANG_SOURCE_NAMES
 )
 
+
+# xmjd6-rere is the legacy upstream of the local cizu/fjcy dictionaries. Only
+# words it added after ``baseline_commit`` are considered, so vocabulary that
+# was deliberately pruned locally before that point never returns.
+XMJD6_HAN_RE = re.compile(r"^[\u3400-\u9fff]{2,11}$")
+XMJD6_MAX_READING_COMBINATIONS = 64
 
 # Keep pathological template families from filling a candidate menu even when
 # the aggregate collision budget has room. Existing local rows are never
@@ -273,6 +289,7 @@ class BuildResult:
     danzi_text: str
     ice_text: str
     wanxiang_texts: dict[str, str]
+    xmjd6_texts: dict[str, str]
     english_text: str
     emoji_extra_chars_text: str
     emoji_extra_index_text: str
@@ -1000,16 +1017,134 @@ def render_wanxiang(
     return "\n".join(header + [f"{row.word}\t{row.code}" for row in rows]) + "\n"
 
 
+def xmjd6_code_candidates(
+    word: str,
+    upstream_code: str,
+    character_codes: dict[str, tuple[str, ...]],
+) -> tuple[str, ...]:
+    """Return eosphoros codes for the reading the upstream code points at."""
+    options = [character_codes.get(character, ()) for character in word]
+    if not all(options):
+        return ()
+    readings = [
+        tuple(code_candidates_from_full_codes(full_codes))
+        for full_codes in islice(product(*options), XMJD6_MAX_READING_COMBINATIONS + 1)
+    ]
+    if len(readings) > XMJD6_MAX_READING_COMBINATIONS:
+        return ()
+    matching = [
+        candidates for candidates in readings if upstream_code.startswith(candidates[0])
+    ]
+    ordered: list[str] = []
+    for candidates in matching or readings:
+        for code in candidates:
+            if code not in ordered:
+                ordered.append(code)
+    return tuple(sorted(ordered, key=lambda code: (code != upstream_code, len(code))))
+
+
+def build_xmjd6_rows(
+    source_texts: dict[str, str],
+    baseline_texts: dict[str, str],
+    character_codes: dict[str, tuple[str, ...]],
+    higher_priority_words: set[str],
+    occupied: dict[str, set[str]],
+) -> tuple[dict[str, list[tuple[str, str]]], Counter[str]]:
+    """Encode words added upstream since the baseline into free codes only."""
+    stats: Counter[str] = Counter()
+    baseline_words = {
+        word
+        for text in baseline_texts.values()
+        for word, _ in iter_rime_ice_rows_raw(text)
+    }
+    taken_codes = {code for code, words in occupied.items() if words}
+    seen: set[str] = set(higher_priority_words)
+    rows: dict[str, list[tuple[str, str]]] = {}
+    for source_name, _ in XMJD6_SOURCE_FILES:
+        generated: list[tuple[str, str]] = []
+        for word, upstream_code in iter_rime_ice_rows_raw(source_texts[source_name]):
+            stats[f"xmjd6_source_{source_name}"] += 1
+            if word in baseline_words:
+                continue
+            stats[f"xmjd6_added_upstream_{source_name}"] += 1
+            if word in seen:
+                stats["xmjd6_deduplicated"] += 1
+                continue
+            if not XMJD6_HAN_RE.fullmatch(word) or is_rejected(word, upstream_code):
+                stats["xmjd6_skipped_rejected"] += 1
+                continue
+            candidates = xmjd6_code_candidates(word, upstream_code, character_codes)
+            if not candidates:
+                stats["xmjd6_skipped_unencodable"] += 1
+                continue
+            selected = next((code for code in candidates if code not in taken_codes), None)
+            if selected is None:
+                stats["xmjd6_skipped_collision"] += 1
+                continue
+            seen.add(word)
+            taken_codes.add(selected)
+            generated.append((word, selected))
+        generated.sort(key=lambda row: (row[1], row[0]))
+        rows[source_name] = generated
+        stats[f"xmjd6_generated_{source_name}"] = len(generated)
+    return rows, stats
+
+
+def iter_rime_ice_rows_raw(text: str):
+    in_data = False
+    for line in text.splitlines():
+        if line.strip() == "...":
+            in_data = True
+            continue
+        if not in_data or not line.strip() or line.lstrip().startswith("#"):
+            continue
+        fields = line.split("\t")
+        if len(fields) >= 2 and fields[0] and fields[1]:
+            yield fields[0], fields[1].strip()
+
+
+def render_xmjd6(
+    source_name: str,
+    rows: list[tuple[str, str]],
+    stats: Counter[str],
+    lock: dict[str, Any],
+) -> str:
+    source = lock["sources"]["xmjd6_rere"]
+    file_name = dict(XMJD6_SOURCE_FILES)[source_name]
+    header = [
+        "# Rime dictionary",
+        "# encoding: utf-8",
+        "#",
+        "# Generated from hugh7007/xmjd6-rere; do not edit by hand.",
+        f"# Source commit: {source['commit']}",
+        f"# Baseline commit: {source['baseline_commit']}",
+        f"# Selected source: {file_name}, words added after the baseline commit only.",
+        "# Codes are regenerated from the eosphoros single-character table.",
+        "# Only codes unused by every other dictionary are taken; colliding rows are omitted.",
+        f"# Words added upstream: {stats[f'xmjd6_added_upstream_{source_name}']}",
+        f"# Generated rows: {stats[f'xmjd6_generated_{source_name}']}",
+        "---",
+        f"name: eosphoros.rere.{source_name}",
+        f"version: \"{lock['generated_on']}\"",
+        "sort: original",
+        "...",
+        "",
+    ]
+    return "\n".join(header + [f"{word}\t{code}" for word, code in rows]) + "\n"
+
+
 def build(
     root: Path,
     lock: dict[str, Any],
     jiandao_root: Path | None = None,
     rime_ice_root: Path | None = None,
     rime_wanxiang_root: Path | None = None,
+    xmjd6_root: Path | None = None,
 ) -> BuildResult:
     jiandao_source = lock["sources"]["rime_jiandao"]
     ice_source = lock["sources"]["rime_ice"]
     wanxiang_source = lock["sources"]["rime_wanxiang"]
+    xmjd6_source = lock["sources"]["xmjd6_rere"]
     danzi_source_text = read_source(
         jiandao_source, "dicts/01.danzi.txt", jiandao_root
     )
@@ -1022,6 +1157,15 @@ def build(
     wanxiang_source_texts = {
         source_name: read_source(wanxiang_source, relative_path, rime_wanxiang_root)
         for source_name, relative_path in RIME_WANXIANG_FILES
+    }
+    xmjd6_source_texts = {
+        source_name: read_source(xmjd6_source, relative_path, xmjd6_root)
+        for source_name, relative_path in XMJD6_SOURCE_FILES
+    }
+    xmjd6_baseline = dict(xmjd6_source, commit=xmjd6_source["baseline_commit"])
+    xmjd6_baseline_texts = {
+        source_name: read_source(xmjd6_baseline, relative_path, None)
+        for source_name, relative_path in XMJD6_SOURCE_FILES
     }
 
     character_codes = parse_danzi_rows(danzi_source_text)
@@ -1056,6 +1200,17 @@ def build(
         protected_local_codes,
     )
     stats.update(wanxiang_stats)
+    for row in ice_rows:
+        augmented_words.add(row.word)
+        augmented_occupied.setdefault(row.code, set()).add(row.word)
+    xmjd6_rows, xmjd6_stats = build_xmjd6_rows(
+        xmjd6_source_texts,
+        xmjd6_baseline_texts,
+        character_codes,
+        augmented_words,
+        augmented_occupied,
+    )
+    stats.update(xmjd6_stats)
     english_occupied = set(occupied)
     english_occupied.update(row.code for row in ice_rows)
     english_occupied.update(row.code for row in wanxiang_rows)
@@ -1079,6 +1234,10 @@ def build(
                 lock,
             )
             for priority, (source_name, _) in enumerate(RIME_WANXIANG_FILES)
+        },
+        xmjd6_texts={
+            source_name: render_xmjd6(source_name, xmjd6_rows[source_name], stats, lock)
+            for source_name, _ in XMJD6_SOURCE_FILES
         },
         english_text=render_english(english_rows, stats, lock),
         emoji_extra_chars_text=emoji_extra_chars_text,
@@ -1122,6 +1281,11 @@ def update_generated_metadata(
         lock["generated"][target.relative_to(ROOT).as_posix()] = {
             "sha256": sha256_text(result.wanxiang_texts[source_name]),
             "rows": result.stats[f"wanxiang_generated_{source_name}"],
+        }
+    for source_name, target in XMJD6_TARGETS.items():
+        lock["generated"][target.relative_to(ROOT).as_posix()] = {
+            "sha256": sha256_text(result.xmjd6_texts[source_name]),
+            "rows": result.stats[f"xmjd6_generated_{source_name}"],
         }
     lock["statistics"] = dict(sorted(result.stats.items()))
     lock.pop("generator_input_sha256", None)
@@ -1172,13 +1336,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--refresh-source",
         action="append",
-        choices=tuple(sorted(("rime_jiandao", "rime_ice", "rime_wanxiang"))),
+        choices=tuple(sorted(("rime_jiandao", "rime_ice", "rime_wanxiang", "xmjd6_rere"))),
         default=[],
         help="refresh only one named source; may be repeated",
     )
     parser.add_argument("--jiandao-root", type=Path, help="use a local rime-jiandao checkout")
     parser.add_argument("--rime-ice-root", type=Path, help="use a local rime-ice checkout")
     parser.add_argument("--rime-wanxiang-root", type=Path, help="use a local rime-wanxiang checkout")
+    parser.add_argument("--xmjd6-root", type=Path, help="use a local xmjd6-rere checkout")
     return parser.parse_args()
 
 
@@ -1196,7 +1361,7 @@ def main() -> int:
     lock["generated_on"] = repository_version
     if args.quick_check:
         if args.check or args.write or args.refresh or args.refresh_source or any(
-            (args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root)
+            (args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root, args.xmjd6_root)
         ):
             raise SystemExit(
                 "--quick-check cannot be combined with full check, write, refresh, or local roots"
@@ -1217,7 +1382,12 @@ def main() -> int:
             source["commit"] = resolve_ref(source["repository"], source["branch"])
 
     result = build(
-        ROOT, lock, args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root
+        ROOT,
+        lock,
+        args.jiandao_root,
+        args.rime_ice_root,
+        args.rime_wanxiang_root,
+        args.xmjd6_root,
     )
     expected = {
         DANZI_TARGET: result.danzi_text,
@@ -1231,6 +1401,12 @@ def main() -> int:
         {
             WANXIANG_TARGETS[source_name]: text
             for source_name, text in result.wanxiang_texts.items()
+        }
+    )
+    expected.update(
+        {
+            XMJD6_TARGETS[source_name]: text
+            for source_name, text in result.xmjd6_texts.items()
         }
     )
     changed = [

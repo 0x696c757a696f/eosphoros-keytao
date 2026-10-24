@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 18412
-# Generated rows in category: 7473
+# Generated rows in category: 7478
 ---
 name: eosphoros.wanxiang.mingren
 version: "2026-10-12"
@@ -761,6 +761,7 @@ sort: original
 董海涛	dhtiaa
 邓涵文	dhwaao
 邓惠文	dhwav
+德皇威廉	dhwluu
 东海王越	dhwyv
 东汉献帝	dhxdva
 段浩雨	dhyuav
@@ -1686,7 +1687,7 @@ sort: original
 高弘图	ghtoai
 高鸿业	ghyoai
 宫城道雄	gjdx
-耿家盛	gjevov
+耿家盛	gjevo
 高建国	gjgoai
 高建军	gjjoao
 宫城良田	gjltov
@@ -1706,6 +1707,7 @@ sort: original
 戈雷茨卡	glckvv
 格里菲斯	glfsvi
 格里高利	glglvi
+格列高利	glglvv
 格里高尔	glgxv
 郭槐	glhgov
 葛勒可汗	glkhiv
@@ -3399,7 +3401,7 @@ sort: original
 李普赛特	lpstv
 洛佩特吉	lptja
 洛皮塔尔	lptx
-利普希茨	lpxcuo
+利普希茨	lpxc
 李瓶儿	lpxvo
 陆平原	lpyav
 刘濞	lqbkoa
@@ -3577,6 +3579,7 @@ sort: original
 兰溪道隆	lxdloa
 林铣十郎	lxelvi
 陆小凤	lxfai
+林贤治	lxfvia
 梁红	lxhyaa
 列昂节夫	lxjfvo
 梁建	lxjmaa
@@ -4838,7 +4841,7 @@ sort: original
 钱颖一	qyyiuv
 章莹颖	qyyoiu
 浅野一二	qyyxa
-朱彝尊	qyzua
+朱彝尊	qyzuao
 祝总斌	qzbooo
 张择端	qzdai
 卿子冠军	qzgjua
@@ -5661,6 +5664,7 @@ sort: original
 毋昭裔	wfyao
 汪兆镛	wfyau
 汪志伊	wfyavi
+乌重胤	wfyu
 武昭仪	wfyvo
 王凤仪	wfyvui
 汪凤藻	wfzau
@@ -6243,7 +6247,7 @@ sort: original
 萧国健	xgjiii
 谢国城	xgjoiv
 阿格里巴	xglbav
-萧国梁	xgliia
+萧国梁	xglii
 阿格里帕	xglpav
 阿格里奇	xglqav
 阿伽门农	xgmna
@@ -6627,7 +6631,8 @@ sort: original
 阿瓦库姆	xwkm
 安察洛堤	xwldo
 相王李旦	xwldv
-谢无量	xwlov
+辛伟廉	xwloi
+谢无量	xwlovo
 萧兀纳	xwniv
 许文强	xwqooa
 香川真司	xwqs
