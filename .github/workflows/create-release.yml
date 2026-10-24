@@ -26,7 +26,7 @@ env:
   YONG_LINUX_URL: https://github.com/hugh7007/xmjd6-rere/releases/download/20231115/yong-lin.7z
 jobs:
   check_release_needed:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
       contents: read
@@ -109,7 +109,7 @@ jobs:
   validate-source:
     needs: check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -146,7 +146,7 @@ jobs:
   validate-generated:
     needs: check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -165,7 +165,7 @@ jobs:
   build-native-release:
     needs: check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
       contents: read
@@ -234,7 +234,7 @@ jobs:
   build-rabbit-release:
     needs: check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -317,7 +317,7 @@ jobs:
     needs:
       - check_release_needed
     if: needs.check_release_needed.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -417,7 +417,7 @@ jobs:
       - build-rabbit-release
       - build-yong-release
     if: needs.check_release_needed.outputs.should_release == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: write
