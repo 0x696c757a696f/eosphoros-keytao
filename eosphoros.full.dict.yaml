@@ -77,6 +77,8 @@ import_tables:
 # ---------------------------------------
 ## 扩展：附加词语----兰佬提供（Full 长尾兜底）
   - dicts/eosphoros/eosphoros.fjcy
+  - dicts/eosphoros/eosphoros.rere.cizu
+  - dicts/eosphoros/eosphoros.rere.fjcy
 # ---------------------------------------
 ## 扩展：雾凇英文词库（i 键引导，编码已加命名空间前缀）
   - dicts/eosphoros/eosphoros.en

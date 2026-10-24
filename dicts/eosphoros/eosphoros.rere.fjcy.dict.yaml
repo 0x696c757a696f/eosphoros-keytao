@@ -1,0 +1,120 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# Generated from hugh7007/xmjd6-rere; do not edit by hand.
+# Source commit: 0ee017678716be9778be710c260ee37160cd3704
+# Baseline commit: 2c2842441fd190f855d87780edf08d335c386ba2
+# Selected source: xmjd6.fjcy.dict.yaml, words added after the baseline commit only.
+# Codes are regenerated from the eosphoros single-character table.
+# Only codes unused by every other dictionary are taken; colliding rows are omitted.
+# Words added upstream: 178
+# Generated rows: 103
+---
+name: eosphoros.rere.fjcy
+version: "2026-10-12"
+sort: original
+...
+
+暴打柠檬	bdnmoi
+暴打鲜果	bdxgoi
+棒打鲜橙	bdxjvi
+不舒服吧	befbvi
+半钩	bfgdoi
+半勾	bfgdou
+不另外加糖	blwtv
+霸气系列	bqxlvu
+百香芒芒绿	bxmlvu
+大块鲜果	dkxgvv
+东亚父母	dyfmvv
+弹药效率	dyxlai
+手捣鲜果	edxgii
+声声乌龙	eewlvv
+世上无难事只要肯放弃	eewqvi
+山楂奶绿	efnliv
+翡翠柠檬	fcnmi
+胄衣	fdykio
+芝士奶霜	feneiv
+粉粿奶乌	fgnwo
+蜂蜜锦鲤红	fmjhi
+粉条奶乌	ftnwo
+风味糖浆	fwtjuo
+归寮	gblcio
+国风茶叙	gfwxiu
+贵人多忙	grdmii
+果糖粉粿	gtfgi
+谷物鲜乳	gwxru
+狗熊哆嗦毛	gxdmua
+高撩	gzlcoi
+高聊	gzlcov
+还得是佬	hdelv
+悔婚另嫁	hhljoa
+黑糖粉粿	htfgi
+黑调	hwdcio
+花香拿铁	hxnti
+黄油拿铁	hyntv
+就不基础	jbjjov
+金桔柠檬	jjnmiv
+锦鲤红茶	jlhwiu
+今日取关	jrqgi
+金色山脉	jsemiu
+焦糖海盐奶茶	jthwio
+可卷曲云顶	kjqdvo
+况形	kxxgo
+里损	lkswii
+蓝莓果粒	lmgli
+良品铺子	lppz
+老叟戏顽童	lsxtu
+老坛酸菜面	ltsmu
+裂隙熔接器	lxrqv
+茉莉奶绿	mlnlii
+梅占摇红	mqyhv
+摩天脆脆	mtcc
+蜜桃四季春	mtsjo
+蜜桃四季	mtsjov
+你生我梦	newmiu
+你真是饿了	nqeli
+你真是饿	nqexi
+牛乳红茶	nrhwu
+牛乳抹茶	nrmwu
+苹果茉莉	pgmli
+拼配咖啡	ppkfi
+葡萄冰萃	ptbc
+长安茶饮	qxwyuo
+齐韵观音	qygyo
+奇淫巧技	qyqjva
+燃抄	rfjz
+任务签到	rwqdi
+熔岩奶盖	ryng
+三观不正	sgbq
+四季奶青	sjnq
+三相交流电源	sxjyvv
+他干甚去了	tgeliv
+炭火烤香	thkxio
+同码占位	tmqwi
+糖尿病足	tnbzo
+听者有意	tqyyou
+腾站	trqfu
+茶冻芒果青	wdmqi
+我说实话	weehuo
+五福奶青	wfnqvo
+无关大雅	wgdyvo
+查看草稿	wkcg
+万里木兰	wlmlv
+晚年不祥	wnbxo
+重要通知	wytfuv
+仙草奶冻	xcndii
+先叠个甲	xdgjua
+鲜活鲜果	xhxgua
+爱了老己	xlljua
+现蒸血糯米	xqxmvi
+恶意玩梗	xywg
+夜不归寮	ybglo
+云深幽兰	yeylva
+烟火易冷	yhyloo
+燕麦牛乳四季春	ymnjvv
+云雾栀子	ywfzvv
+隐形弟弟	yxddav
+摇摇奶昔	yynxi
+原叶鲜奶茶	yyxwvo
+左公千古	zgqgv
+最强法务部	zqfbo

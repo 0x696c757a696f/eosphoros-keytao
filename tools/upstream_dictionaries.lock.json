@@ -39,6 +39,17 @@
         "dicts/taifeng.dict.yaml",
         "dicts/jichu.dict.yaml"
       ]
+    },
+    "xmjd6_rere": {
+      "repository": "hugh7007/xmjd6-rere",
+      "branch": "xmjd6",
+      "commit": "0ee017678716be9778be710c260ee37160cd3704",
+      "baseline_commit": "2c2842441fd190f855d87780edf08d335c386ba2",
+      "license": "Authorized upstream (see THIRD_PARTY.md)",
+      "files": [
+        "xmjd6.cizu.dict.yaml",
+        "xmjd6.fjcy.dict.yaml"
+      ]
     }
   },
   "generated": {
@@ -47,8 +58,8 @@
       "rows": 36292
     },
     "dicts/eosphoros/eosphoros.ice.dict.yaml": {
-      "sha256": "c248e8642eb89f1f114d668a019f33a5d6adb26df29ee44704b4f5fa9a09253d",
-      "rows": 360412
+      "sha256": "5aeacbf4b56992db11d78e56ddd3e19f7b024ae2849bcb8b2ed5967aa4b174e9",
+      "rows": 360404
     },
     "dicts/eosphoros/eosphoros.en.dict.yaml": {
       "sha256": "a4feef5113ac450fe4518318c72b262b6ed8c80bccedb9661c8ef9184766c797",
@@ -67,24 +78,24 @@
       "rows": 2483
     },
     "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml": {
-      "sha256": "ee614d31aba72ef4a2671284f04855b9bf55295399e6cf30996703f9aed8fe19",
-      "rows": 9985
+      "sha256": "b27ad25f70792ebab133f91904e9561af58dc51b8dd187d1764f019aa703b3f2",
+      "rows": 9986
     },
     "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml": {
-      "sha256": "1306a934773b14fc17d2fa5b5bad48c452373784dfb141182e849a7612f5b5fe",
+      "sha256": "e2decfee7a9021fdb2dd858bf551510359f035222713d0643324e51dc95e3b13",
       "rows": 12613
     },
     "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml": {
-      "sha256": "26e59418dd01475848c5570ed2018d4056144195edffa47c970c45cefe5d7eb6",
-      "rows": 10872
+      "sha256": "451ba9cbc97535d5153d3f931c866322137c288fd495a53a546351f0bd6f1784",
+      "rows": 10873
     },
     "dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml": {
-      "sha256": "67123fe7fd1b2b22ea2cb6c2859a7470b60508bcc1562c7b4d666bd30d0f1c66",
+      "sha256": "649fb0b62e2b12ef1be7e343afcf4f62380be9fe2e26c52226f254ce3bd6ae44",
       "rows": 5274
     },
     "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml": {
-      "sha256": "bb8f0b0ddca0d4f4cb63473f82b1c5031177e060db03de3a4fbd627c31cc3127",
-      "rows": 7477
+      "sha256": "c46cafb0153ca9ad3f992e893a81b94b19d7c40508fae7c5ed04eb2dd1d9c86e",
+      "rows": 7478
     },
     "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml": {
       "sha256": "d2f19fcf8fdcde4d452724ef01006ffa3518f665bce157347178411e590f2d14",
@@ -93,12 +104,20 @@
     "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml": {
       "sha256": "c106941e4b1f4b1cd3067994fd19211b977756e4bca343cd0bfff10436ba1b4d",
       "rows": 147
+    },
+    "dicts/eosphoros/eosphoros.rere.cizu.dict.yaml": {
+      "sha256": "353238afeb0634e1a698046c199811604d910b3a035a646a08f52ccdd631f3ed",
+      "rows": 386
+    },
+    "dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml": {
+      "sha256": "0db2c28edb575b77f02b3f72886bef7fec33b4facf8fa5920833f104dbc2bdfb",
+      "rows": 103
     }
   },
   "statistics": {
-    "combined_collision_rows": 49803,
-    "combined_rows": 1116434,
-    "deduplicated_local": 279306,
+    "combined_collision_rows": 49692,
+    "combined_rows": 1116364,
+    "deduplicated_local": 279307,
     "deduplicated_upstream": 2608,
     "emoji_deduplicated_local": 2340,
     "emoji_extra_char_rows": 34,
@@ -110,36 +129,36 @@
     "english_generated_rows": 23648,
     "english_skipped_local_code_collision": 2,
     "english_source_rows": 23898,
-    "generated_before_collision_pruning": 488154,
-    "generated_medicine_names": 1468,
-    "generated_rows": 360412,
+    "generated_before_collision_pruning": 488162,
+    "generated_medicine_names": 1471,
+    "generated_rows": 360404,
     "ice_collision_rows": 2240,
-    "local_collision_rows": 33726,
-    "local_rows": 756022,
+    "local_collision_rows": 33650,
+    "local_rows": 755960,
     "recognized_medicine_names": 1984,
     "skipped_candidate_cap": 32,
-    "skipped_collision_budget": 127710,
+    "skipped_collision_budget": 127726,
     "skipped_low_value_long_ext": 5810,
     "skipped_low_value_numeric_template": 18153,
     "skipped_low_value_overlong": 2143,
     "skipped_low_value_rare_base": 77290,
-    "skipped_protected_local_collision": 7756,
+    "skipped_protected_local_collision": 7747,
     "skipped_rejected": 346,
     "skipped_unaligned": 693,
     "skipped_unencodable": 678,
     "source_rows": 882937,
-    "unavoidable_code_collisions": 136575,
+    "unavoidable_code_collisions": 136572,
     "wanxiang_deduplicated_local": 318650,
     "wanxiang_deduplicated_upstream": 333,
     "wanxiang_generated_diming": 5274,
-    "wanxiang_generated_huaxue": 10872,
+    "wanxiang_generated_huaxue": 10873,
     "wanxiang_generated_jichu": 147,
-    "wanxiang_generated_mingren": 7477,
-    "wanxiang_generated_rows": 46558,
+    "wanxiang_generated_mingren": 7478,
+    "wanxiang_generated_rows": 46561,
     "wanxiang_generated_taifeng": 190,
-    "wanxiang_generated_yaopin": 9985,
+    "wanxiang_generated_yaopin": 9986,
     "wanxiang_generated_yixue": 12613,
-    "wanxiang_skipped_collision": 13921,
+    "wanxiang_skipped_collision": 13918,
     "wanxiang_skipped_low_value_general_long_tail": 1016530,
     "wanxiang_skipped_low_value_incomplete": 86364,
     "wanxiang_skipped_low_value_non_han_or_length": 460,
@@ -155,6 +174,16 @@
     "wanxiang_source_rows": 1562484,
     "wanxiang_source_taifeng": 217,
     "wanxiang_source_yaopin": 11894,
-    "wanxiang_source_yixue": 15626
+    "wanxiang_source_yixue": 15626,
+    "xmjd6_added_upstream_cizu": 629,
+    "xmjd6_added_upstream_fjcy": 178,
+    "xmjd6_deduplicated": 118,
+    "xmjd6_generated_cizu": 386,
+    "xmjd6_generated_fjcy": 103,
+    "xmjd6_skipped_collision": 184,
+    "xmjd6_skipped_rejected": 6,
+    "xmjd6_skipped_unencodable": 10,
+    "xmjd6_source_cizu": 372960,
+    "xmjd6_source_fjcy": 488282
   }
 }

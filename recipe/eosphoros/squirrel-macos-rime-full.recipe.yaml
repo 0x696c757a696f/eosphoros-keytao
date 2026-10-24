@@ -40,6 +40,8 @@ install_files: >-
   dicts/eosphoros/eosphoros.oriental.dict.yaml
   dicts/eosphoros/eosphoros.orthodoxy.dict.yaml
   dicts/eosphoros/eosphoros.protestantism.dict.yaml
+  dicts/eosphoros/eosphoros.rere.cizu.dict.yaml
+  dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml
   dicts/eosphoros/eosphoros.user.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml

@@ -890,7 +890,8 @@ sort: original
 沈巷镇	exqavi
 上溪镇	exqiai
 石硖尾站	exwqv
-山形县	exxivi
+山形县	exxi
+省辖县	exxivi
 邵阳北站	eybqa
 上营村	eyciiv
 上元村	eycivv
@@ -955,7 +956,7 @@ sort: original
 赵山村	fecv
 丰收村	fecva
 法石社区	feeqa
-福山社区	feeqo
+福山社区	feeqoi
 福盛社区	feeqov
 凤山社区	feequ
 范石湖	fehiva
@@ -1670,7 +1671,7 @@ sort: original
 怀柔县	hrxoa
 桓仁县	hrxvi
 黄丝村	hscv
-河松街站	hsjqa
+河松街站	hsjq
 韩森路	hsluvo
 后三乡	hsxuva
 红色驿站	hsyq
@@ -2378,8 +2379,8 @@ sort: original
 柯士甸站	kedqv
 孔氏乡	kexau
 昆山县	kexoi
-孔寨村	kfca
-孔庄村	kfcao
+孔寨村	kfc
+孔庄村	kfca
 葵芳站	kfqii
 开封县	kfxvv
 坎乡	kfxxva
@@ -5125,7 +5126,6 @@ sort: original
 移民社区	ymequ
 雁鸣湖站	ymhqv
 衙门口站	ymkq
-杨梅路	ymlvvo
 杨庙镇	ymqvoi
 杨梅镇	ymqvvi
 杨梅区	ymqvvv

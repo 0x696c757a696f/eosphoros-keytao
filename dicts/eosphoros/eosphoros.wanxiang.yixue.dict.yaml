@@ -1283,7 +1283,7 @@ sort: original
 水痘并败血症	edbqa
 肾断层造影	edcyio
 深度烧伤截肢术	edeeao
-食道疝修补术	edeeio
+食道疝修补术	edeei
 水毒上扰证	edeqa
 蛇毒上攻证	edeqi
 痧毒上攻证	edeqo
@@ -1352,8 +1352,8 @@ sort: original
 手术后食管炎	eehyiv
 神水将枯病	eejboa
 嗜神经病毒	eejdoo
-烧伤截指术	eejeo
-视神经减压术	eejeoo
+烧伤截指术	eeje
+视神经减压术	eejeo
 视神经盘水肿	eejfo
 视神经乳头水肿	eejfoo
 视神经结核	eejho
@@ -1968,7 +1968,7 @@ sort: original
 舌下神经吻合术	exeeuv
 舌下神经交通支	exefu
 舌下神经管	exegu
-舌下神经核	exehu
+舌下神经核	exeh
 舌下神经三角	exejuv
 舌下神经管内口	exeku
 舌下神经管外口	exekuv
@@ -3303,7 +3303,7 @@ sort: original
 骨水泥套管组件	genjia
 肝输注泵安置术	geqeu
 鼓室切开术	geqevo
-鼓室探查术	getev
+鼓室探查术	getevo
 高渗透性综合征	getq
 鼓室插管术	gewevo
 果筛二氏病	gexbiu
@@ -6361,7 +6361,7 @@ sort: original
 莱夫勒综合征	lflqiv
 吕弗勒综合征	lflqoa
 勒夫勒氏综合征	lflqv
-勒夫勒心内膜炎	lflyv
+勒夫勒心内膜炎	lfly
 鳞状毛囊角化病	lfmbu
 绿风内障病	lfnba
 类脂皮肤关节炎	lfpyo
@@ -8341,7 +8341,7 @@ sort: original
 疹出热退证	qjrq
 前交通动脉瘤	qjtlo
 真菌涂片检查	qjtwu
-切除性清创术	qjxeva
+切除性清创术	qjxev
 真菌性主动脉瘤	qjxlui
 气结血瘀证	qjxqua
 缺钾性低钾血症	qjxqui
@@ -11019,7 +11019,8 @@ sort: original
 心小静脉血流	xxjloi
 星形胶质细胞瘤	xxjlov
 恶性甲状腺瘤	xxjlvo
-行销近视症	xxjqui
+行销近视症	xxjqu
+血虚肠燥证	xxjqui
 心血亏虚证	xxkqou
 涎腺瘘管闭合术	xxlea
 胸腺瘤摘除术	xxleuu
@@ -11807,7 +11808,7 @@ sort: original
 硬膜下血肿	ymxfv
 硬膜下脑脓肿	ymxfvu
 幽门下淋巴结	ymxji
-幽门恶性肿瘤	ymxli
+幽门恶性肿瘤	ymxlio
 硬膜下恶性肿瘤	ymxlv
 阳明血热证	ymxqa
 硬膜下积液	ymxy
@@ -12064,8 +12065,7 @@ sort: original
 有限白发症	yxbqv
 硬性鼻咽镜检查	yxbw
 乙型病毒性肝炎	yxbya
-银屑病关节炎	yxbyi
-银屑病性肾炎	yxbyia
+银屑病关节炎	yxbyia
 乙酰醋胺中毒	yxcd
 婴儿猝死症	yxcq
 婴儿猝死综合征	yxcqa

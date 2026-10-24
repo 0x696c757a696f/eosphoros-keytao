@@ -30,10 +30,8 @@ jobs:
         include:
           - name: current
             binary: mira-rimemaster-lua5.4
-            sha256: 62c7141ce1613ba46b5bed87ce7c6018374dc4a9c6f3037c5109e524a76168dc
           - name: stable
             binary: mira-rime1.13.1-luajit
-            sha256: 70080e5e01ed6a6c31040ba8c64aa7a3faaaa64e1d3eb0dbcbbee3fffa9a4754
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
@@ -46,8 +44,8 @@ jobs:
     - name: Download verified Mira runtime
       env:
         MIRA_BINARY: ${{ matrix.binary }}
-        MIRA_SHA256: ${{ matrix.sha256 }}
       run: |
+        MIRA_SHA256=$(jq -er --arg binary "$MIRA_BINARY" '.binaries[$binary]' tools/mira_runtime.lock.json)
         curl --fail --location --retry 3 \
           --output "$MIRA_BINARY" \
           "https://github.com/rimeinn/mira/releases/download/latest/$MIRA_BINARY"

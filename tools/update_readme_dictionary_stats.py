@@ -31,6 +31,8 @@ DICTIONARIES = (
     ("eosphoros.core.dict.yaml", "630 规则、快符和核心候选"),
     ("eosphoros.fjcy.dict.yaml", "附加扩展词组"),
     ("eosphoros.ice.dict.yaml", "Rime-Ice 中文精简补充词库"),
+    ("eosphoros.rere.cizu.dict.yaml", "xmjd6-rere 上游新增基础词组（仅占空闲码位）"),
+    ("eosphoros.rere.fjcy.dict.yaml", "xmjd6-rere 上游新增扩展词组（仅占空闲码位）"),
     ("eosphoros.en.dict.yaml", "Rime-Ice 英文词库"),
 )
 

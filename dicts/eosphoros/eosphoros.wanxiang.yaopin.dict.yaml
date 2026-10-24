@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 11894
-# Generated rows in category: 9985
+# Generated rows in category: 9986
 ---
 name: eosphoros.wanxiang.yaopin
 version: "2026-10-12"
@@ -1293,8 +1293,8 @@ sort: original
 双黄连片	ehlpa
 双黄连咀嚼片	ehlpav
 生化六和汤	ehlt
+双黄连滴眼液	ehlya
 水合氯醛口服液	ehlyai
-双黄连滴眼液	ehlyav
 手绘明信片	ehmp
 石斛明目丸	ehmwv
 神黄钠铝胶囊	ehnn
@@ -2142,7 +2142,8 @@ sort: original
 复方香薷水	ffxeuo
 复方阿胶浆	ffxjuo
 复方氨酚甲麻	ffxmuo
-复方氨维胶囊	ffxnuo
+复方氨维胶囊	ffxn
+复方儿茶胶囊	ffxnuo
 复方溴咖片	ffxp
 复方矮地茶片	ffxpu
 复方氨茶碱片	ffxpuo
@@ -4264,7 +4265,7 @@ sort: original
 加味养心汤	jwytao
 加味养荣丸	jwywa
 加味易黄丸	jwywao
-加味左金汤	jwztao
+加味左金汤	jwzt
 加味左金丸	jwzwa
 加味左金丸水丸	jwzwao
 减味紫雪口服液	jwzyo
@@ -7184,7 +7185,7 @@ sort: original
 透表回春丸	tbhwu
 头孢克洛颗粒	tbkl
 头孢克洛胶囊	tbkn
-头孢克肟胶囊	tbknoa
+头孢克肟胶囊	tbkno
 头孢克洛片	tbkpo
 头孢克肟片	tbkpoa
 头孢克洛异构体	tbkto
@@ -7280,7 +7281,7 @@ sort: original
 头风口服液	tfkyou
 痛肿灵酊剂	tfljou
 土伏苓颗粒	tfllvi
-土茯苓奇良片	tflpvi
+土茯苓奇良片	tflpv
 特非那丁颗粒	tfnlu
 糖脂宁胶囊	tfnn
 特非那丁胶囊	tfnnu
@@ -8456,7 +8457,7 @@ sort: original
 泻痢消胶囊	xlxna
 奥拉西坦胶囊	xlxnui
 安络血注射液	xlxyoa
-奥拉西坦注射液	xlxyui
+奥拉西坦注射液	xlxyu
 香鹿益阳胶囊	xlyn
 耳聋左慈浓缩丸	xlzw
 安眠补脑糖浆	xmbjoi
@@ -9692,7 +9693,7 @@ sort: original
 右旋布洛芬片	yxbpv
 婴儿保肺散	yxbs
 婴儿保肺宁散	yxbsa
-养血补肾口服液	yxbyo
+养血补肾口服液	yxby
 乙烯雌酚软膏	yxcg
 鱼腥草合剂	yxcj
 鱼腥草滴眼剂	yxcju

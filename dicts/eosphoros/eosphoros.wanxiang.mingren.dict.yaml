@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 18412
-# Generated rows in category: 7477
+# Generated rows in category: 7478
 ---
 name: eosphoros.wanxiang.mingren
 version: "2026-10-12"
@@ -1577,6 +1577,7 @@ sort: original
 法演禅师	fyjeaa
 佛印禅师	fyjeiu
 仲景	fyjgio
+傅以渐	fyjia
 范允临	fyliai
 傅衣凌	fylioo
 庄炎林	fyloov
@@ -1686,7 +1687,7 @@ sort: original
 高弘图	ghtoai
 高鸿业	ghyoai
 宫城道雄	gjdx
-耿家盛	gjevov
+耿家盛	gjevo
 高建国	gjgoai
 高建军	gjjoao
 宫城良田	gjltov
@@ -3284,7 +3285,6 @@ sort: original
 老将颜妮	ljyn
 吕纯阳	ljyoaa
 陆云	ljywav
-林昶佐	ljzvoi
 洛克菲勒	lkflau
 莱库格斯	lkgs
 黎桓	lkhtu
@@ -3401,7 +3401,7 @@ sort: original
 李普赛特	lpstv
 洛佩特吉	lptja
 洛皮塔尔	lptx
-利普希茨	lpxcuo
+利普希茨	lpxc
 李瓶儿	lpxvo
 陆平原	lpyav
 刘濞	lqbkoa
@@ -4185,7 +4185,7 @@ sort: original
 潘绍周	pefaau
 片山恭一	pegyu
 潘世璜	pehavv
-潘仕成	pejaiv
+潘仕成	pej
 婆什迦罗	pejl
 普什卡什	peke
 普什科夫	pekfo
@@ -5664,7 +5664,7 @@ sort: original
 毋昭裔	wfyao
 汪兆镛	wfyau
 汪志伊	wfyavi
-翁照垣	wfyuov
+乌重胤	wfyu
 武昭仪	wfyvo
 王凤仪	wfyvui
 汪凤藻	wfzau
@@ -6247,7 +6247,7 @@ sort: original
 萧国健	xgjiii
 谢国城	xgjoiv
 阿格里巴	xglbav
-萧国梁	xgliia
+萧国梁	xglii
 阿格里帕	xglpav
 阿格里奇	xglqav
 阿伽门农	xgmna
@@ -6631,6 +6631,7 @@ sort: original
 阿瓦库姆	xwkm
 安察洛堤	xwldo
 相王李旦	xwldv
+辛伟廉	xwloi
 谢无量	xwlovo
 萧兀纳	xwniv
 许文强	xwqooa

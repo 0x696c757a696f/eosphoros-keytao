@@ -8,7 +8,7 @@
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
 # Source rows in category: 17502
-# Generated rows in category: 10872
+# Generated rows in category: 10873
 ---
 name: eosphoros.wanxiang.huaxue
 version: "2026-10-12"
@@ -228,8 +228,8 @@ sort: original
 苯磺酸钙	bhsg
 苯磺酸左旋氨氯	bhsli
 苯磺酸钠	bhsniv
-苯海索片	bhspi
-苯磺酸氨氯地平	bhspiv
+苯海索片	bhsp
+苯磺酸氨氯地平	bhspi
 苯磺酸阿曲库铵	bhsx
 苯磺酸盐	bhsyiv
 不喝碳酸饮料	bhtlv
@@ -2810,7 +2810,7 @@ sort: original
 甘氨酸冲洗液	gxsyvu
 甘氨脱氧胆酸	gxts
 甘鹅脱氧胆酸	gxtsv
-高辛烷值汽油	gxwyoo
+高辛烷值汽油	gxwy
 改性氨基甲酸酯	gxxfa
 谷氨酰基	gxxju
 庚二酰氯	gxxlov
@@ -3351,7 +3351,7 @@ sort: original
 酒石酸氢亚铊	jesta
 酒石酸唑吡坦	jestav
 焦砷酸铜	jesti
-酒石酸钠铵	jesxa
+酒石酸钠铵	jesx
 酒石酸氢铵	jesxav
 酒石酸氢盐	jesya
 碱式碳酸铋	jetbv
@@ -3719,7 +3719,7 @@ sort: original
 甲基组胺	jjzx
 拮抗剂酮色林	jkjlii
 加拉苯砜	jlbfai
-间氯苯酚	jlbfo
+间氯苯酚	jlbfou
 间氯苯甲腈	jlbjou
 间氯苯甲醛	jlbqo
 间氯苯基哌嗪	jlbqou
@@ -6693,7 +6693,7 @@ sort: original
 正辛基异噻唑啉酮	qxjtv
 七硝基立方烷	qxjwvv
 曲安奈德氯霉素	qxnsio
-氢溴酸烯丙吗啡	qxsfu
+氢溴酸烯丙吗啡	qxsf
 氢溴酸槟榔碱	qxsju
 氢溴酸樟柳碱	qxsjua
 氢溴酸非诺特罗	qxslu
@@ -7057,7 +7057,7 @@ sort: original
 四氟硼酸硝酰	sfpxi
 四氟硼酸盐	sfpy
 四氟硼酸银	sfpyi
-三氟三氯乙烷	sfswv
+三氟三氯乙烷	sfsw
 四氟锑酸铵	sftx
 三氟硝基苯	sfxbvu
 三氟胸苷	sfxgvu
@@ -7768,9 +7768,10 @@ sort: original
 碳酸甲酯肉桂酯	tsjfvv
 钽酸钾	tsjivi
 甜酸苦辣鲜	tskx
+钽酸锂	tsl
 碳酸氯乙叉酯	tslfvv
 碳酸六氨合钴	tslgvv
-钽酸锂	tslivi
+钽酸镥	tslivi
 碳酸类饮料	tsllvv
 碳酸六氨合镍	tslnv
 碳酸利多卡因	tslyvv
