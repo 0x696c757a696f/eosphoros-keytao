@@ -2223,7 +2223,16 @@ columns:
             r"prefix-dev/setup-pixi@[0-9a-f]{40} # v0\.10\.0",
         )
         self.assertIn("run-install: true", setup_action)
+        self.assertIn("cache-write: ${{ inputs.cache-write }}", setup_action)
         package = (workflows / "package-master.yml").read_text(encoding="utf-8")
+        self.assertEqual(package.count("cache-write:"), 1)
+        self.assertIn("cache-write: ${{ github.event_name == 'push' }}", package)
+        for workflow_path in workflows.glob("*.yml"):
+            self.assertNotIn(
+                "ubuntu-latest",
+                workflow_path.read_text(encoding="utf-8"),
+                workflow_path.name,
+            )
         release = (workflows / "create-release.yml").read_text(encoding="utf-8")
         self.assertIn("generated-quality:", package)
         self.assertIn("pixi run test-shard", package)

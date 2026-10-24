@@ -1,10 +1,17 @@
 name: Set up repository Pixi environment
 description: Install Pixi, restore its cache, and materialize the locked environment.
 
+inputs:
+  cache-write:
+    description: Save the Pixi cache. Only one job per workflow run should write it.
+    required: false
+    default: "false"
+
 runs:
   using: composite
   steps:
     - uses: prefix-dev/setup-pixi@a09b6247153796b190642a2b53fac4241043cf6f # v0.10.0
       with:
         cache: true
+        cache-write: ${{ inputs.cache-write }}
         run-install: true
