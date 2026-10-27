@@ -21,19 +21,19 @@ PROFILE_MARKERS = ("<!-- dictionary-profile-stats:start -->", "<!-- dictionary-p
 DICTIONARY_MARKERS = ("<!-- dictionary-file-stats:start -->", "<!-- dictionary-file-stats:end -->")
 
 DICTIONARIES = (
-    ("eosphoros.danzi.dict.yaml", "上游键道单字表"),
-    ("eosphoros.cizu.dict.yaml", "本地基础词组"),
+    ("eosphoros.danzi.dict.yaml", "单字表，原样取自 rime-jiandao"),
+    ("eosphoros.cizu.dict.yaml", "基础词组，源自 xmjd6-rere，本仓库维护"),
     ("eosphoros.catholicism.dict.yaml", "天主教、礼仪、神学与东方礼词汇"),
     ("eosphoros.protestantism.dict.yaml", "传统新教宗派、信条、人物、日常教会用语及《和合本》词汇"),
     ("eosphoros.orthodoxy.dict.yaml", "东正教礼仪、圣像、灵修与教会制度专有词汇"),
     ("eosphoros.oriental.dict.yaml", "东方正统教会、合性论传统与成员教会专有词汇"),
     ("eosphoros.assyrian.dict.yaml", "东方亚述教会、东叙利亚礼与景教史专有词汇"),
     ("eosphoros.core.dict.yaml", "630 规则、快符和核心候选"),
-    ("eosphoros.fjcy.dict.yaml", "附加扩展词组"),
-    ("eosphoros.ice.dict.yaml", "Rime-Ice 中文精简补充词库"),
-    ("eosphoros.rere.cizu.dict.yaml", "xmjd6-rere 上游新增基础词组（仅占空闲码位）"),
-    ("eosphoros.rere.fjcy.dict.yaml", "xmjd6-rere 上游新增扩展词组（仅占空闲码位）"),
-    ("eosphoros.en.dict.yaml", "Rime-Ice 英文词库"),
+    ("eosphoros.fjcy.dict.yaml", "长尾扩展词组，源自 xmjd6-rere，仅 Full"),
+    ("eosphoros.ice.dict.yaml", "雾凇拼音中文词，重新编码后的补充库"),
+    ("eosphoros.rere.cizu.dict.yaml", "xmjd6-rere 近期新增的基础词，只占空闲码位"),
+    ("eosphoros.rere.fjcy.dict.yaml", "xmjd6-rere 近期新增的扩展词，只占空闲码位，仅 Full"),
+    ("eosphoros.en.dict.yaml", "雾凇拼音英文词，`i` 开头输入"),
 )
 
 
@@ -58,8 +58,8 @@ def row_count(path: Path) -> int:
 
 def render_profiles() -> str:
     compositions = {
-        "full": "Lite + 宗派专题 + ICE + 万象专业 + `fjcy`",
-        "standard": "Lite + 宗派专题 + ICE + 万象专业",
+        "full": "Standard + `fjcy` + 万象药品／医学／化学／台风 + xmjd6-rere 新增扩展词",
+        "standard": "Lite + 宗派专题 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词",
         "lite": "用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文",
     }
     lines = [
@@ -76,9 +76,9 @@ def render_profiles() -> str:
     lines.extend(
         (
             "",
-            "同码记录率是“最终编码与其他不同词条共用”的静态记录数占本档位总记录数的比例。"
-            "上表为当前词库快照，不计入用户后续添加的动态词和客户端词频调整；该指标适合比较"
-            "本项目的三个档位，不建议与统计口径不同的其他方案直接对比。",
+            "同码记录率指最终编码和别的词条相同的记录占该档位全部记录的比例。"
+            "这是当前词库的静态快照，不包括你后来造的词，也不考虑客户端的词频调整。"
+            "它适合拿来比较本项目的三个档位，和统计方法不同的其他方案直接比没有意义。",
             PROFILE_MARKERS[1],
         )
     )
@@ -99,7 +99,7 @@ def render_dictionaries() -> str:
         if filename == "eosphoros.ice.dict.yaml":
             wanxiang = sum(row_count(path) for path in dictionary_dir.glob("eosphoros.wanxiang.*.dict.yaml"))
             lines.append(
-                f"| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | {wanxiang:,} | 七个万象分类补充词库 |"
+                f"| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | {wanxiang:,} | 万象七类专业与常识词，重新编码 |"
             )
     filename, purpose = DICTIONARIES[-1]
     lines.append(
