@@ -12,6 +12,7 @@ concurrency:
 
 permissions:
   contents: write
+  issues: write
   pull-requests: write
 
 env:
@@ -40,9 +41,50 @@ jobs:
 
       - name: Detect and integrate upstream changes
         shell: pwsh
+        env:
+          EOSPHOROS_FROZEN_REPORT: ${{ runner.temp }}/frozen-upstream-files.tsv
         run: |
           $Python = (pixi run python -c "import sys; print(sys.executable)").Trim()
           ./tools/update_upstream_dictionaries.ps1 -Python $Python -CacheDirectory .tmp/upstream-git-cache
+
+      # A file that disappears upstream keeps its last generated dictionary,
+      # so the sync still succeeds. The file has usually moved somewhere
+      # else, which needs a person to look once.
+      - name: Raise upstream files that were frozen
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        env:
+          REPORT: ${{ runner.temp }}/frozen-upstream-files.tsv
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync(process.env.REPORT)) {
+              return;
+            }
+            const rows = fs.readFileSync(process.env.REPORT, 'utf8').trim().split('\n')
+              .map(line => line.split('\t'));
+            const title = '上游词库文件已被移除，需要确认新位置';
+            const list = rows.map(([repository, commit, path]) =>
+              `- [${repository}](https://github.com/${repository}) 的 \`${path}\`（最后一次同步于 \`${commit.slice(0, 12)}\`）`);
+            const body = [
+              '下面这些上游文件在最新提交里找不到了。对应的词库已经保留最后一版并继续参与避让，不会丢词，但也不会再更新：',
+              '',
+              ...list,
+              '',
+              '上游通常是把文件搬到了别的仓库或目录（万象就曾从 rime-wanxiang 搬到 rime-wanxiang-data）。找到新位置后，改 `tools/upstream_dictionaries.lock.json` 里的来源再同步一次即可。',
+            ].join('\n');
+            const { owner, repo } = context.repo;
+            const open = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = open.find(issue => !issue.pull_request && issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body });
+            }
 
       - name: Detect generated changes
         id: changes

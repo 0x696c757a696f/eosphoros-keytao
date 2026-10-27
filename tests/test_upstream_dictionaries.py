@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import os
 import re
 import tempfile
 import unittest
 from copy import deepcopy
 from collections import defaultdict
 from pathlib import Path
+from unittest import mock
 
 from tools.sync_upstream_dictionaries import (
     GeneratedRow,
@@ -26,6 +28,8 @@ from tools.sync_upstream_dictionaries import (
     normalize_pinyin_syllable,
     prune_ice_collisions,
     render_danzi,
+    report_frozen_source,
+    shrunken_outputs,
     verify_generated_hashes,
     verify_generated_state,
 )
@@ -173,6 +177,21 @@ class UpstreamDictionaryTests(unittest.TestCase):
             self.assertIn(target, lock["generated"], name)
             if name not in tracked:
                 self.assertTrue((ROOT / target).is_file(), name)
+
+    def test_frozen_upstream_files_are_reported_for_the_workflow(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / "frozen.tsv"
+            source = {"repository": "owner/names", "commit": "abc123", "files": ["names.tsv"]}
+            self.assertEqual(drop_missing_source_files(source, Path(directory)), ["names.tsv"])
+            self.assertEqual(source["files"], [])
+            with mock.patch.dict(os.environ, {"EOSPHOROS_FROZEN_REPORT": str(report)}):
+                report_frozen_source(source, "names.tsv")
+            self.assertEqual(report.read_text(encoding="utf-8"), "owner/names\tabc123\tnames.tsv\n")
+
+    def test_refresh_refuses_to_silently_empty_a_dictionary(self) -> None:
+        previous = {"a": {"rows": 1000}, "b": {"rows": 1000}, "small": {"rows": 40}}
+        current = {"a": {"rows": 400}, "b": {"rows": 700}, "small": {"rows": 0}}
+        self.assertEqual(shrunken_outputs(previous, current), ["a: 1000 rows -> 400 rows"])
 
     def test_wanxiang_conversion_deduplicates_and_uses_free_stroke_codes(self) -> None:
         sources = {

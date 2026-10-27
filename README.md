@@ -931,6 +931,12 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 
 自动合并的那几项（词库、Pixi 依赖、OpenCC）都用固定的分支名：新一轮检查会直接替换上一轮还没合并的 PR，不会堆一串过期又互相冲突的 PR。合并前工作流自己已经在这个提交上跑过全部检查。如果想改回手动审核，在仓库的 **Settings → Secrets and variables → Actions → Variables** 里新建变量 `AUTOMATION_AUTO_MERGE`，值设为 `false`。这些工作流要能开 PR，需要在 **Settings → Actions → General → Workflow permissions** 里允许 GitHub Actions 创建 Pull Request。
 
+出问题时也不会悄悄坏掉：
+
+- 任何一个定时任务失败（上游仓库改名、删除、搬家，或者网络不通），都会自动开一个“自动任务失败”的 Issue，附上运行日志链接；同一个任务下次跑通时，Issue 会自动关闭。
+- 上游删掉了我们在用的文件时，对应的词库保留最后一版，同步照常进行，同时开 Issue 提醒去找新位置。万象当初就是这样从 rime-wanxiang 搬到了 rime-wanxiang-data。
+- 如果一次同步让某个词库少了一半以上的词，多半是上游改了格式，同步会拒绝写入并报错，而不是把一个空词库合并进来。
+
 需要人来判断的只剩两类：上游的代码改动（Lua 和方案逻辑），以及涉及编码取舍的词库调整。前者由工作流开 PR 或 Issue 提醒，后者在本地改完由 CI 把关。
 
 <details>

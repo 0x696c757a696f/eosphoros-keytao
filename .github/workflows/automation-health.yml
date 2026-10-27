@@ -1,0 +1,88 @@
+name: Automation health
+
+# Scheduled jobs fail quietly unless someone opens the Actions tab. Turn a
+# failed run into an issue and close that issue again once the same workflow
+# succeeds, so a broken upstream (moved, renamed, deleted, or unreachable)
+# always shows up where it will be seen.
+
+on:
+  workflow_run:
+    workflows:
+      - Sync upstream dictionaries
+      - Sync development dependencies
+      - Sync OpenCC release dependency
+      - Adapt rime-txjx implementation upstream
+      - Check reference upstreams
+      - Create Release with Zipped Branch Assets and Date
+    types:
+      - completed
+
+concurrency:
+  group: automation-health-${{ github.event.workflow_run.name }}
+  cancel-in-progress: false
+
+permissions:
+  issues: write
+
+jobs:
+  report:
+    if: >-
+      github.event.workflow_run.head_branch == github.event.repository.default_branch
+      && contains(fromJSON('["failure", "timed_out", "success"]'), github.event.workflow_run.conclusion)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Open, update, or close the failure issue
+        uses: actions/github-script@373c709c69115d41ff229c7e5df9f8788daa9553 # v9
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const title = `自动任务失败：${run.name}`;
+            const { owner, repo } = context.repo;
+            const open = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = open.find(issue => !issue.pull_request && issue.title === title);
+
+            if (run.conclusion === 'success') {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: existing.number,
+                  body: `已在 [这次运行](${run.html_url}) 恢复正常，自动关闭。`,
+                });
+                await github.rest.issues.update({
+                  owner,
+                  repo,
+                  issue_number: existing.number,
+                  state: 'closed',
+                  state_reason: 'completed',
+                });
+              }
+              return;
+            }
+
+            const line = `- ${run.updated_at}：[${run.event} 运行 #${run.run_number}](${run.html_url})，结果 \`${run.conclusion}\``;
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body: `又失败了一次：\n\n${line}`,
+              });
+              return;
+            }
+            const body = [
+              `「${run.name}」这个自动任务没有跑通。`,
+              '',
+              line,
+              '',
+              '常见原因是上游仓库改名、迁移、删除了文件或分支，或者网络暂时不可用。',
+              '先打开上面的运行日志看是哪一步出错；如果只是网络问题，下次定时运行会自己恢复。',
+              '同一个任务下次成功时，这个 Issue 会自动关闭。',
+            ].join('\n');
+            await github.rest.issues.create({ owner, repo, title, body });

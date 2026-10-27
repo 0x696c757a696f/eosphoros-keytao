@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 import unicodedata
@@ -1421,13 +1422,15 @@ def build(
             augmented_words.add(word)
             augmented_occupied.setdefault(code, set()).add(word)
     bible_source = lock["sources"]["bible_names"]
-    bible_rows, bible_stats = build_bible_name_rows(
-        read_source(bible_source, BIBLE_NAME_FILE, bible_names_root),
-        character_codes,
-        augmented_words,
-        augmented_occupied,
-    )
-    stats.update(bible_stats)
+    bible_rows: dict[str, list[tuple[str, str]]] = {}
+    if BIBLE_NAME_FILE in bible_source["files"]:
+        bible_rows, bible_stats = build_bible_name_rows(
+            read_source(bible_source, BIBLE_NAME_FILE, bible_names_root),
+            character_codes,
+            augmented_words,
+            augmented_occupied,
+        )
+        stats.update(bible_stats)
     english_occupied = set(occupied)
     english_occupied.update(row.code for row in ice_rows)
     english_occupied.update(row.code for row in wanxiang_rows)
@@ -1462,7 +1465,7 @@ def build(
         },
         bible_name_texts={
             source_name: render_bible_names(source_name, bible_rows[source_name], stats, lock)
-            for source_name, _ in BIBLE_NAME_COLUMNS
+            for source_name in bible_rows
         },
         english_text=render_english(english_rows, stats, lock),
         emoji_extra_chars_text=emoji_extra_chars_text,
@@ -1518,10 +1521,14 @@ def update_generated_metadata(
             "rows": result.stats[f"xmjd6_generated_{source_name}"],
         }
     for source_name, target in BIBLE_NAME_TARGETS.items():
-        lock["generated"][target.relative_to(ROOT).as_posix()] = {
-            "sha256": sha256_text(result.bible_name_texts[source_name]),
-            "rows": result.stats[f"bible_generated_{source_name}"],
-        }
+        relative_target = target.relative_to(ROOT).as_posix()
+        if source_name in result.bible_name_texts:
+            lock["generated"][relative_target] = {
+                "sha256": sha256_text(result.bible_name_texts[source_name]),
+                "rows": result.stats[f"bible_generated_{source_name}"],
+            }
+        elif relative_target in previous_generated:
+            lock["generated"][relative_target] = previous_generated[relative_target]
     lock["statistics"] = dict(sorted(result.stats.items()))
     lock.pop("generator_input_sha256", None)
     return lock
@@ -1567,6 +1574,33 @@ def drop_missing_source_files(
     return missing
 
 
+# A refresh that loses more than half of a sizable generated file almost always
+# means the upstream changed its format, not that it pruned that much.
+SHRINK_MIN_ROWS = 100
+SHRINK_MAX_LOSS = 0.5
+
+
+def shrunken_outputs(
+    previous: dict[str, dict[str, Any]], current: dict[str, dict[str, Any]]
+) -> list[str]:
+    messages: list[str] = []
+    for filename, metadata in sorted(previous.items()):
+        old_rows = int(metadata.get("rows", 0))
+        new_rows = int(current.get(filename, {}).get("rows", 0))
+        if old_rows >= SHRINK_MIN_ROWS and new_rows < old_rows * (1 - SHRINK_MAX_LOSS):
+            messages.append(f"{filename}: {old_rows} rows -> {new_rows} rows")
+    return messages
+
+
+def report_frozen_source(source: dict[str, Any], relative_path: str) -> None:
+    """Record a newly frozen upstream file for the sync workflow to raise."""
+    report = os.environ.get("EOSPHOROS_FROZEN_REPORT")
+    if not report:
+        return
+    with open(report, "a", encoding="utf-8") as handle:
+        handle.write(f"{source['repository']}\t{source['commit']}\t{relative_path}\n")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true", help="write dictionaries and lock")
@@ -1594,6 +1628,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rime-ice-root", type=Path, help="use a local rime-ice checkout")
     parser.add_argument("--rime-wanxiang-root", type=Path, help="use a local rime-wanxiang-data checkout")
     parser.add_argument("--xmjd6-root", type=Path, help="use a local xmjd6-rere checkout")
+    parser.add_argument(
+        "--allow-shrink",
+        action="store_true",
+        help="write even when a generated dictionary loses more than half its rows",
+    )
     parser.add_argument(
         "--bible-names-root", type=Path, help="use a local cuv-with-sigao-names checkout"
     )
@@ -1639,14 +1678,21 @@ def main() -> int:
         for source_name in sorted(sources_to_refresh):
             source = lock["sources"][source_name]
             source["commit"] = resolve_ref(source["repository"], source["branch"])
-        if "rime_wanxiang" in sources_to_refresh:
+        for source_name, local_root in (
+            ("rime_wanxiang", args.rime_wanxiang_root),
+            ("bible_names", args.bible_names_root),
+        ):
+            if source_name not in sources_to_refresh:
+                continue
             for relative_path in drop_missing_source_files(
-                lock["sources"]["rime_wanxiang"], args.rime_wanxiang_root
+                lock["sources"][source_name], local_root
             ):
-                print(
-                    f"rime_wanxiang no longer provides {relative_path}; "
+                message = (
+                    f"{source_name} no longer provides {relative_path}; "
                     "keeping its last generated dictionary frozen"
                 )
+                print(message)
+                report_frozen_source(lock["sources"][source_name], relative_path)
 
     result = build(
         ROOT,
@@ -1695,10 +1741,20 @@ def main() -> int:
         print(f"{path.name}: {'changed' if path in changed else 'clean'}")
 
     if args.write:
+        updated_lock = update_generated_metadata(lock, result)
+        shrunk = shrunken_outputs(lock.get("generated", {}), updated_lock["generated"])
+        if shrunk and not args.allow_shrink:
+            for message in shrunk:
+                print(message, file=sys.stderr)
+            print(
+                "Refusing to write: an upstream format change can silently empty a "
+                "dictionary. Rerun with --allow-shrink after checking the upstream.",
+                file=sys.stderr,
+            )
+            return 1
         for path, text in expected.items():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8", newline="\n")
-        updated_lock = update_generated_metadata(lock, result)
         LOCK_PATH.write_text(
             json.dumps(updated_lock, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
