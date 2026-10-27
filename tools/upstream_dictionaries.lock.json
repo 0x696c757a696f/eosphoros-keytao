@@ -31,12 +31,8 @@
       "commit": "dc0d8f7a279b87165f712f65d5dcd62f0b28820a",
       "license": "CC-BY-4.0",
       "files": [
-        "dicts/yaopin.dict.yaml",
-        "dicts/yixue.dict.yaml",
-        "dicts/huaxue.dict.yaml",
         "dicts/diming.dict.yaml",
         "dicts/mingren.dict.yaml",
-        "dicts/taifeng.dict.yaml",
         "dicts/jichu.dict.yaml"
       ]
     },

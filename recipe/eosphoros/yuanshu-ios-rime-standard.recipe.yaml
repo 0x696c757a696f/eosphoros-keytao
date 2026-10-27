@@ -42,12 +42,8 @@ install_files: >-
   dicts/eosphoros/eosphoros.rere.cizu.dict.yaml
   dicts/eosphoros/eosphoros.user.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml
-  dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml
-  dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml
-  dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml
-  dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml
   dicts/eosphoros/eosphoros.zzc.dict.yaml
   dicts/eosphoros/liangfen.dict.yaml
   dicts/eosphoros/pinyin_simp.dict.yaml

@@ -13,6 +13,10 @@ PROFILE_LABELS = {
 STANDARD_EXCLUDED_DICTIONARIES = (
     "dicts/eosphoros/eosphoros.fjcy.dict.yaml",
     "dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml",
+    "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml",
+    "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml",
+    "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml",
+    "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml",
 )
 LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
     "dicts/eosphoros/eosphoros.ice.dict.yaml",
@@ -21,12 +25,8 @@ LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
     "dicts/eosphoros/eosphoros.orthodoxy.dict.yaml",
     "dicts/eosphoros/eosphoros.oriental.dict.yaml",
     "dicts/eosphoros/eosphoros.assyrian.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.diming.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml",
-    "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml",
     "dicts/eosphoros/eosphoros.rere.cizu.dict.yaml",
 )

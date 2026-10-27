@@ -141,6 +141,13 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertTrue(all(wanxiang_low_value_reason(row) is None for row in accepted))
         self.assertTrue(all(wanxiang_low_value_reason(row) for row in rejected))
 
+    def test_wanxiang_sync_tracks_only_existing_upstream_files(self) -> None:
+        lock = load_lock()
+        self.assertEqual(
+            lock["sources"]["rime_wanxiang"]["files"],
+            [relative_path for _, relative_path in RIME_WANXIANG_FILES],
+        )
+
     def test_wanxiang_conversion_deduplicates_and_uses_free_stroke_codes(self) -> None:
         sources = {
             "yaopin": source_text("吲哚美辛\tyin duo mei xin\t100", "本地药\tben di yao\t99"),

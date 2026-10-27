@@ -100,7 +100,7 @@ RIME_ICE_EMOJI_FILE = ("emoji", "opencc/emoji.txt")
 
 RIME_WANXIANG_FILES = tuple(
     (source_name, f"dicts/{source_name}.dict.yaml")
-    for source_name in WANXIANG_SOURCE_NAMES
+    for source_name in ("diming", "mingren", "jichu")
 )
 
 
@@ -932,7 +932,9 @@ def build_wanxiang_rows(
     stats: Counter[str] = Counter()
     seen: set[str] = set()
     pending: list[PendingRow] = []
-    for priority, (source_name, _) in enumerate(RIME_WANXIANG_FILES):
+    for priority, source_name in enumerate(WANXIANG_SOURCE_NAMES):
+        if source_name not in source_texts:
+            continue
         for row in iter_rime_ice_rows(source_texts[source_name], source_name, priority):
             stats["wanxiang_source_rows"] += 1
             stats[f"wanxiang_source_{source_name}"] += 1
@@ -1229,11 +1231,15 @@ def build(
         wanxiang_texts={
             source_name: render_wanxiang(
                 source_name,
-                [row for row in wanxiang_rows if row.source_priority == priority],
+                [
+                    row
+                    for row in wanxiang_rows
+                    if row.source_priority == WANXIANG_SOURCE_NAMES.index(source_name)
+                ],
                 stats,
                 lock,
             )
-            for priority, (source_name, _) in enumerate(RIME_WANXIANG_FILES)
+            for source_name, _ in RIME_WANXIANG_FILES
         },
         xmjd6_texts={
             source_name: render_xmjd6(source_name, xmjd6_rows[source_name], stats, lock)
@@ -1251,6 +1257,7 @@ def update_generated_metadata(
     lock: dict[str, Any], result: BuildResult
 ) -> dict[str, Any]:
     lock = json.loads(json.dumps(lock))
+    previous_generated = lock.get("generated", {})
     lock["generated"] = {
         DANZI_TARGET.relative_to(ROOT).as_posix(): {
             "sha256": sha256_text(result.danzi_text),
@@ -1278,10 +1285,14 @@ def update_generated_metadata(
         },
     }
     for source_name, target in WANXIANG_TARGETS.items():
-        lock["generated"][target.relative_to(ROOT).as_posix()] = {
-            "sha256": sha256_text(result.wanxiang_texts[source_name]),
-            "rows": result.stats[f"wanxiang_generated_{source_name}"],
-        }
+        relative_target = target.relative_to(ROOT).as_posix()
+        if source_name in result.wanxiang_texts:
+            lock["generated"][relative_target] = {
+                "sha256": sha256_text(result.wanxiang_texts[source_name]),
+                "rows": result.stats[f"wanxiang_generated_{source_name}"],
+            }
+        elif relative_target in previous_generated:
+            lock["generated"][relative_target] = previous_generated[relative_target]
     for source_name, target in XMJD6_TARGETS.items():
         lock["generated"][target.relative_to(ROOT).as_posix()] = {
             "sha256": sha256_text(result.xmjd6_texts[source_name]),
