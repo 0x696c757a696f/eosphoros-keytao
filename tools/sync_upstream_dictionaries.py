@@ -30,7 +30,7 @@ DICTIONARY_DIR = ROOT / "dicts" / "eosphoros"
 DANZI_TARGET = DICTIONARY_DIR / "eosphoros.danzi.dict.yaml"
 ICE_TARGET = DICTIONARY_DIR / "eosphoros.ice.dict.yaml"
 WANXIANG_SOURCE_NAMES = (
-    "yaopin", "yixue", "huaxue", "diming", "mingren", "taifeng", "jichu"
+    "yaopin", "yixue", "huaxue", "diming", "mingren", "taifeng", "jichu", "wuzhong"
 )
 WANXIANG_TARGETS = {
     source_name: DICTIONARY_DIR / f"eosphoros.wanxiang.{source_name}.dict.yaml"
@@ -504,6 +504,12 @@ def wanxiang_low_value_reason(row: SourceRow) -> str | None:
         return None if word.startswith("台风") else "not_typhoon"
     if row.source == "jichu":
         return None if row.weight >= 10_000 and len(word) <= 6 else "general_long_tail"
+    if row.source == "wuzhong":
+        # Below this weight the species list is mostly obscure taxa; names
+        # ending in 形 are truncated order names such as 雁形 or 鲑形.
+        if row.weight < 100 or len(word) > 6 or word.endswith("形"):
+            return "rare_species"
+        return None
     return "unsupported_source"
 
 
@@ -1071,7 +1077,7 @@ def render_wanxiang(
         "# Rime dictionary",
         "# encoding: utf-8",
         "#",
-        "# Generated from amzxyz/rime-wanxiang; do not edit by hand.",
+        f"# Generated from {source['repository']}; do not edit by hand.",
         f"# Source commit: {source['commit']}",
         f"# Selected source: dicts/{source_name}.dict.yaml.",
         "# Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.",
@@ -1583,7 +1589,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--jiandao-root", type=Path, help="use a local rime-jiandao checkout")
     parser.add_argument("--rime-ice-root", type=Path, help="use a local rime-ice checkout")
-    parser.add_argument("--rime-wanxiang-root", type=Path, help="use a local rime-wanxiang checkout")
+    parser.add_argument("--rime-wanxiang-root", type=Path, help="use a local rime-wanxiang-data checkout")
     parser.add_argument("--xmjd6-root", type=Path, help="use a local xmjd6-rere checkout")
     parser.add_argument(
         "--bible-names-root", type=Path, help="use a local cuv-with-sigao-names checkout"

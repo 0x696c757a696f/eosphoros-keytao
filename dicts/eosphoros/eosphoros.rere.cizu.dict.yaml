@@ -8,7 +8,7 @@
 # Codes are regenerated from the eosphoros single-character table.
 # Only codes unused by every other dictionary are taken; colliding rows are omitted.
 # Words added upstream: 629
-# Generated rows: 386
+# Generated rows: 383
 ---
 name: eosphoros.rere.cizu
 version: "2026-10-12"
@@ -62,7 +62,7 @@ sort: original
 大拧	dsngvi
 打齿	dswkii
 断缘	dtytoa
-都想可以	dxkyu
+都想可以	dxkyuv
 钓鱼佬	dyliui
 多余其事	dyqeui
 导给	dzgwaa
@@ -104,7 +104,6 @@ sort: original
 追精	fbjgu
 只低不高	fdbgoi
 飞沙走奶	fezna
-反喰	ffswuo
 反锤	ffwbui
 犯痴	ffwkuo
 拽门	fgmn
@@ -149,7 +148,6 @@ sort: original
 坏啥	hgesv
 还薄	hhblvi
 还晃	hhhmv
-唬狗	hjgdou
 护亏	hjkbiv
 糊咖	hjkso
 呼奶	hjnho
@@ -265,7 +263,6 @@ sort: original
 破绷	plbr
 陪一根	pygavv
 跑受	pzedou
-敲不死	qbsovv
 珍波椰	qbyvav
 巧技	qcjkvi
 切外	qdwhv

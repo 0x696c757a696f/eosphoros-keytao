@@ -17,6 +17,7 @@ STANDARD_EXCLUDED_DICTIONARIES = (
     "dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.huaxue.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml",
+    "dicts/eosphoros/eosphoros.wanxiang.wuzhong.dict.yaml",
 )
 LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
     "dicts/eosphoros/eosphoros.ice.dict.yaml",
