@@ -29,6 +29,8 @@ LITE_EXCLUDED_DICTIONARIES = STANDARD_EXCLUDED_DICTIONARIES + (
     "dicts/eosphoros/eosphoros.wanxiang.mingren.dict.yaml",
     "dicts/eosphoros/eosphoros.wanxiang.jichu.dict.yaml",
     "dicts/eosphoros/eosphoros.rere.cizu.dict.yaml",
+    "dicts/eosphoros/eosphoros.bible.cuv.dict.yaml",
+    "dicts/eosphoros/eosphoros.bible.sigao.dict.yaml",
 )
 PROFILE_EXCLUDED_DICTIONARIES = {
     "full": (),

@@ -28,6 +28,8 @@ install_files: >-
   zzc/eosphoros_撤回合并.py
   eosphoros.full.dict.yaml
   dicts/eosphoros/eosphoros.assyrian.dict.yaml
+  dicts/eosphoros/eosphoros.bible.cuv.dict.yaml
+  dicts/eosphoros/eosphoros.bible.sigao.dict.yaml
   dicts/eosphoros/eosphoros.catholicism.dict.yaml
   dicts/eosphoros/eosphoros.cizu.dict.yaml
   dicts/eosphoros/eosphoros.core.dict.yaml

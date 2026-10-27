@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -16,7 +17,7 @@ USER_AGENT = "eosphoros-sync/1"
 def raw_url(source: dict[str, Any], relative_path: str) -> str:
     return (
         f"https://raw.githubusercontent.com/{source['repository']}/"
-        f"{source['commit']}/{relative_path}"
+        f"{source['commit']}/{urllib.parse.quote(relative_path)}"
     )
 
 

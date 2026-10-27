@@ -73,6 +73,9 @@ import_tables:
 # ---------------------------------------
 ## 扩展：附加词语----兰佬提供（Full 长尾兜底）
   - dicts/eosphoros/eosphoros.rere.cizu
+## 扩展：圣经人名地名（和合本、思高本译名，只占空闲码位）
+  - dicts/eosphoros/eosphoros.bible.cuv
+  - dicts/eosphoros/eosphoros.bible.sigao
 # ---------------------------------------
 ## 扩展：雾凇英文词库（i 键引导，编码已加命名空间前缀）
   - dicts/eosphoros/eosphoros.en

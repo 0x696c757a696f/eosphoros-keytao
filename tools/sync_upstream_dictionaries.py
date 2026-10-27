@@ -18,6 +18,7 @@ from typing import Any
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools.build_christian_traditions import PREFERRED_PREFIXES
 from tools.clean_dictionary_quality import is_rejected
 from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
 from tools.upstream_sources import read_source, resolve_ref, source_file_exists
@@ -43,6 +44,12 @@ XMJD6_TARGETS = {
     source_name: DICTIONARY_DIR / f"eosphoros.rere.{source_name}.dict.yaml"
     for source_name, _ in XMJD6_SOURCE_FILES
 }
+BIBLE_NAME_FILE = "译名对照.tsv"
+BIBLE_NAME_COLUMNS = (("cuv", 0), ("sigao", 1))
+BIBLE_NAME_TARGETS = {
+    source_name: DICTIONARY_DIR / f"eosphoros.bible.{source_name}.dict.yaml"
+    for source_name, _ in BIBLE_NAME_COLUMNS
+}
 ENGLISH_TARGET = DICTIONARY_DIR / "eosphoros.en.dict.yaml"
 EMOJI_EXTRA_CHARS_TARGET = ROOT / "opencc" / "eosphoros" / "eosphoros_emoji_extra_chars.lua"
 EMOJI_EXTRA_INDEX_TARGET = (
@@ -56,6 +63,7 @@ TARGETS = (
     ICE_TARGET,
     *WANXIANG_TARGETS.values(),
     *XMJD6_TARGETS.values(),
+    *BIBLE_NAME_TARGETS.values(),
     ENGLISH_TARGET,
     EMOJI_EXTRA_CHARS_TARGET,
     EMOJI_EXTRA_INDEX_TARGET,
@@ -123,6 +131,53 @@ RIME_WANXIANG_FILES = wanxiang_files(json.loads(LOCK_PATH.read_text(encoding="ut
 # was deliberately pruned locally before that point never returns.
 XMJD6_HAN_RE = re.compile(r"^[\u3400-\u9fff]{2,11}$")
 XMJD6_MAX_READING_COMBINATIONS = 64
+
+# The Bible name table pairs every Chinese Union Version proper name with its
+# Studium Biblicum (思高) rendering and counts how often it occurs in the CUV
+# text. It is a discovery list: only names used at least this often are taken,
+# compound names joined with a middle dot are left to their parts, and every
+# code comes from the local single-character table.
+BIBLE_NAME_MIN_OCCURRENCES = 3
+BIBLE_NAME_RE = re.compile(r"^[\u3400-\u9fff]{2,11}$")
+
+# Readings for polyphonic characters as they are used in Bible names. The
+# Christian tradition table covers most of them; these fill the rest.
+BIBLE_NAME_PREFERRED_PREFIXES = {
+    "底": "dk",  # dǐ（底波拉）
+    "伯": "bl",  # bó（伯利恒）
+    "得": "de",  # dé
+    "抹": "ml",  # mǒ（抹大拉）
+    "阿": "xs",  # ā
+    "洗": "xk",  # xǐ
+    "顿": "dw",  # dùn
+    "塞": "sh",  # sài
+    "那": "ns",  # nà
+    "什": "ek",  # shí
+    "倘": "tp",  # tǎng
+    "陶": "tz",  # táo
+    "莎": "es",  # shā
+    "地": "dk",  # dì
+    "叶": "ye",  # yè
+    "和": "he",  # hé
+    "绿": "ll",  # lǜ
+    "数": "ej",  # shù
+    "内": "nw",  # nèi
+    "度": "dj",  # dù
+    "扁": "bm",  # biǎn
+    "蛾": "xe",  # é
+    "辟": "pk",  # pì
+    "齐": "qk",  # qí（厄齐约）
+    "红": "hy",  # hóng（红海）
+    "芍": "ez",  # sháo
+    "肋": "lw",  # lèi（肋未）
+    "若": "rl",  # ruò（若望）
+    "盖": "gh",  # gài
+    "能": "nr",  # néng
+    "殷": "yb",  # yīn
+    "曾": "zr",  # zēng
+    "般": "bf",  # bān
+    "雀": "qh",  # què
+}
 
 # Keep pathological template families from filling a candidate menu even when
 # the aggregate collision budget has room. Existing local rows are never
@@ -304,6 +359,7 @@ class BuildResult:
     ice_text: str
     wanxiang_texts: dict[str, str]
     xmjd6_texts: dict[str, str]
+    bible_name_texts: dict[str, str]
     english_text: str
     emoji_extra_chars_text: str
     emoji_extra_index_text: str
@@ -1149,6 +1205,119 @@ def render_xmjd6(
     return "\n".join(header + [f"{word}\t{code}" for word, code in rows]) + "\n"
 
 
+def bible_name_full_codes(
+    word: str,
+    character_codes: dict[str, tuple[str, ...]],
+    preferred_prefixes: dict[str, str],
+) -> list[str] | None:
+    """Pick one full code per character, or None when a reading is unclear."""
+    positions = (
+        set(range(len(word))) if len(word) <= 3 else {0, 1, 2, len(word) - 1}
+    )
+    selected: list[str] = []
+    for position, character in enumerate(word):
+        options = character_codes.get(character, ())
+        if not options:
+            return None
+        prefix = preferred_prefixes.get(character)
+        if prefix is not None:
+            options = tuple(code for code in options if code.startswith(prefix)) or options
+        if position in positions:
+            relevant = {code[:2] if len(word) == 2 else code[0] for code in options}
+            if len(relevant) > 1:
+                return None
+        selected.append(max(options, key=lambda code: (len(code), code)))
+    return selected
+
+
+def build_bible_name_rows(
+    text: str,
+    character_codes: dict[str, tuple[str, ...]],
+    higher_priority_words: set[str],
+    occupied: dict[str, set[str]],
+) -> tuple[dict[str, list[tuple[str, str]]], Counter[str]]:
+    """Encode frequent CUV and Studium Biblicum names into free codes only."""
+    preferred_prefixes = {**PREFERRED_PREFIXES, **BIBLE_NAME_PREFERRED_PREFIXES}
+    stats: Counter[str] = Counter()
+    occurrences: dict[str, Counter[str]] = {
+        source_name: Counter() for source_name, _ in BIBLE_NAME_COLUMNS
+    }
+    for line_number, line in enumerate(text.splitlines()):
+        fields = line.split("\t")
+        if line_number == 0 or len(fields) < 3 or not fields[2].strip().isdigit():
+            continue
+        for source_name, column in BIBLE_NAME_COLUMNS:
+            occurrences[source_name][fields[column].strip()] += int(fields[2])
+    taken_codes = {code for code, words in occupied.items() if words}
+    seen: set[str] = set(higher_priority_words)
+    rows: dict[str, list[tuple[str, str]]] = {}
+    for source_name, _ in BIBLE_NAME_COLUMNS:
+        generated: list[tuple[str, str]] = []
+        for word, count in sorted(
+            occurrences[source_name].items(), key=lambda item: (-item[1], item[0])
+        ):
+            stats[f"bible_source_{source_name}"] += 1
+            if count < BIBLE_NAME_MIN_OCCURRENCES:
+                stats[f"bible_skipped_rare_{source_name}"] += 1
+                continue
+            if word in seen:
+                stats[f"bible_existing_{source_name}"] += 1
+                continue
+            if not BIBLE_NAME_RE.fullmatch(word):
+                stats[f"bible_skipped_compound_{source_name}"] += 1
+                continue
+            full_codes = bible_name_full_codes(word, character_codes, preferred_prefixes)
+            if full_codes is None:
+                stats[f"bible_skipped_unencodable_{source_name}"] += 1
+                continue
+            selected = next(
+                (
+                    code
+                    for code in code_candidates_from_full_codes(full_codes)
+                    if code not in taken_codes
+                ),
+                None,
+            )
+            if selected is None:
+                stats[f"bible_skipped_collision_{source_name}"] += 1
+                continue
+            seen.add(word)
+            taken_codes.add(selected)
+            generated.append((word, selected))
+        rows[source_name] = generated
+        stats[f"bible_generated_{source_name}"] = len(generated)
+    return rows, stats
+
+
+def render_bible_names(
+    source_name: str,
+    rows: list[tuple[str, str]],
+    stats: Counter[str],
+    lock: dict[str, Any],
+) -> str:
+    source = lock["sources"]["bible_names"]
+    label = {"cuv": "和合本", "sigao": "思高本"}[source_name]
+    header = [
+        "# Rime dictionary",
+        "# encoding: utf-8",
+        "#",
+        f"# Generated from {source['repository']}; do not edit by hand.",
+        f"# Source commit: {source['commit']}",
+        f"# Selected source: {BIBLE_NAME_FILE}, {label} names used at least "
+        f"{BIBLE_NAME_MIN_OCCURRENCES} times in the CUV text.",
+        "# Codes are regenerated from the eosphoros single-character table.",
+        "# Only codes unused by every other dictionary are taken; colliding rows are omitted.",
+        f"# Generated rows: {stats[f'bible_generated_{source_name}']}",
+        "---",
+        f"name: eosphoros.bible.{source_name}",
+        f"version: \"{lock['generated_on']}\"",
+        "sort: original",
+        "...",
+        "",
+    ]
+    return "\n".join(header + [f"{word}\t{code}" for word, code in rows]) + "\n"
+
+
 def build(
     root: Path,
     lock: dict[str, Any],
@@ -1156,6 +1325,7 @@ def build(
     rime_ice_root: Path | None = None,
     rime_wanxiang_root: Path | None = None,
     xmjd6_root: Path | None = None,
+    bible_names_root: Path | None = None,
 ) -> BuildResult:
     jiandao_source = lock["sources"]["rime_jiandao"]
     ice_source = lock["sources"]["rime_ice"]
@@ -1237,6 +1407,18 @@ def build(
         augmented_occupied,
     )
     stats.update(xmjd6_stats)
+    for source_rows in xmjd6_rows.values():
+        for word, code in source_rows:
+            augmented_words.add(word)
+            augmented_occupied.setdefault(code, set()).add(word)
+    bible_source = lock["sources"]["bible_names"]
+    bible_rows, bible_stats = build_bible_name_rows(
+        read_source(bible_source, BIBLE_NAME_FILE, bible_names_root),
+        character_codes,
+        augmented_words,
+        augmented_occupied,
+    )
+    stats.update(bible_stats)
     english_occupied = set(occupied)
     english_occupied.update(row.code for row in ice_rows)
     english_occupied.update(row.code for row in wanxiang_rows)
@@ -1268,6 +1450,10 @@ def build(
         xmjd6_texts={
             source_name: render_xmjd6(source_name, xmjd6_rows[source_name], stats, lock)
             for source_name, _ in XMJD6_SOURCE_FILES
+        },
+        bible_name_texts={
+            source_name: render_bible_names(source_name, bible_rows[source_name], stats, lock)
+            for source_name, _ in BIBLE_NAME_COLUMNS
         },
         english_text=render_english(english_rows, stats, lock),
         emoji_extra_chars_text=emoji_extra_chars_text,
@@ -1321,6 +1507,11 @@ def update_generated_metadata(
         lock["generated"][target.relative_to(ROOT).as_posix()] = {
             "sha256": sha256_text(result.xmjd6_texts[source_name]),
             "rows": result.stats[f"xmjd6_generated_{source_name}"],
+        }
+    for source_name, target in BIBLE_NAME_TARGETS.items():
+        lock["generated"][target.relative_to(ROOT).as_posix()] = {
+            "sha256": sha256_text(result.bible_name_texts[source_name]),
+            "rows": result.stats[f"bible_generated_{source_name}"],
         }
     lock["statistics"] = dict(sorted(result.stats.items()))
     lock.pop("generator_input_sha256", None)
@@ -1384,7 +1575,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--refresh-source",
         action="append",
-        choices=tuple(sorted(("rime_jiandao", "rime_ice", "rime_wanxiang", "xmjd6_rere"))),
+        choices=tuple(
+            sorted(("bible_names", "rime_jiandao", "rime_ice", "rime_wanxiang", "xmjd6_rere"))
+        ),
         default=[],
         help="refresh only one named source; may be repeated",
     )
@@ -1392,6 +1585,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rime-ice-root", type=Path, help="use a local rime-ice checkout")
     parser.add_argument("--rime-wanxiang-root", type=Path, help="use a local rime-wanxiang checkout")
     parser.add_argument("--xmjd6-root", type=Path, help="use a local xmjd6-rere checkout")
+    parser.add_argument(
+        "--bible-names-root", type=Path, help="use a local cuv-with-sigao-names checkout"
+    )
     return parser.parse_args()
 
 
@@ -1409,7 +1605,13 @@ def main() -> int:
     lock["generated_on"] = repository_version
     if args.quick_check:
         if args.check or args.write or args.refresh or args.refresh_source or any(
-            (args.jiandao_root, args.rime_ice_root, args.rime_wanxiang_root, args.xmjd6_root)
+            (
+                args.jiandao_root,
+                args.rime_ice_root,
+                args.rime_wanxiang_root,
+                args.xmjd6_root,
+                args.bible_names_root,
+            )
         ):
             raise SystemExit(
                 "--quick-check cannot be combined with full check, write, refresh, or local roots"
@@ -1444,6 +1646,7 @@ def main() -> int:
         args.rime_ice_root,
         args.rime_wanxiang_root,
         args.xmjd6_root,
+        args.bible_names_root,
     )
     expected = {
         DANZI_TARGET: result.danzi_text,
@@ -1463,6 +1666,12 @@ def main() -> int:
         {
             XMJD6_TARGETS[source_name]: text
             for source_name, text in result.xmjd6_texts.items()
+        }
+    )
+    expected.update(
+        {
+            BIBLE_NAME_TARGETS[source_name]: text
+            for source_name, text in result.bible_name_texts.items()
         }
     )
     changed = [

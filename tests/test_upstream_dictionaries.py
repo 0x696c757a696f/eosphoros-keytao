@@ -12,6 +12,7 @@ from tools.sync_upstream_dictionaries import (
     PINYIN_PREFIX_OVERRIDES,
     RIME_WANXIANG_FILES,
     SourceRow,
+    build_bible_name_rows,
     build_english_rows,
     build_emoji_extra,
     build_ice_rows,
@@ -214,6 +215,47 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertEqual(rows["fjcy"], [("戊己", "wvjke")])
         self.assertEqual(stats["xmjd6_added_upstream_cizu"], 3)
         self.assertEqual(stats["xmjd6_deduplicated"], 2)
+
+    def test_bible_names_take_frequent_unknown_names_on_free_codes(self) -> None:
+        chars = {
+            "甲": ("jsa", "jsav"), "乙": ("yka",), "丙": ("bgo",), "丁": ("dgu",),
+            "阿": ("xea", "xsa"), "某": ("mka", "mlb"),
+        }
+        table = "\n".join(
+            (
+                "和合本译名\t思高本译名\t替换次数",
+                "甲‧乙\t丙‧丁\t9",
+                "甲乙\t丙丁\t5",
+                "阿乙\t阿丙\t4",
+                "某乙\t某丙\t4",
+                "本地\t乙丁\t3",
+                "甲丙\t丁乙\t1",
+            )
+        )
+        rows, stats = build_bible_name_rows(
+            table, chars, {"本地"}, {"jsyk": {"已有词"}}
+        )
+        self.assertEqual(rows["cuv"], [("甲乙", "jsyka"), ("阿乙", "xsyk")])
+        self.assertEqual(rows["sigao"], [("丙丁", "bgdg"), ("阿丙", "xsbg"), ("乙丁", "ykdg")])
+        self.assertEqual(stats["bible_skipped_compound_cuv"], 1)
+        self.assertEqual(stats["bible_skipped_unencodable_cuv"], 1)
+        self.assertEqual(stats["bible_skipped_rare_sigao"], 1)
+        self.assertEqual(stats["bible_existing_cuv"], 1)
+
+    def test_bible_names_load_last_and_stay_out_of_lite(self) -> None:
+        full = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")
+        standard = (ROOT / "eosphoros.standard.dict.yaml").read_text(encoding="utf-8")
+        lite = (ROOT / "eosphoros.lite.dict.yaml").read_text(encoding="utf-8")
+        self.assertLess(
+            full.index("  - dicts/eosphoros/eosphoros.rere.fjcy"),
+            full.index("  - dicts/eosphoros/eosphoros.bible.cuv"),
+        )
+        self.assertLess(
+            full.index("  - dicts/eosphoros/eosphoros.bible.sigao"),
+            full.index("  - dicts/eosphoros/eosphoros.en"),
+        )
+        self.assertIn("  - dicts/eosphoros/eosphoros.bible.sigao", standard)
+        self.assertNotIn("  - dicts/eosphoros/eosphoros.bible", lite)
 
     def test_xmjd6_dictionaries_are_lowest_priority_and_profiled(self) -> None:
         full = (ROOT / "eosphoros.full.dict.yaml").read_text(encoding="utf-8")

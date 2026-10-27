@@ -33,6 +33,8 @@ DICTIONARIES = (
     ("eosphoros.ice.dict.yaml", "雾凇拼音中文词，重新编码后的补充库"),
     ("eosphoros.rere.cizu.dict.yaml", "xmjd6-rere 近期新增的基础词，只占空闲码位"),
     ("eosphoros.rere.fjcy.dict.yaml", "xmjd6-rere 近期新增的扩展词，只占空闲码位，仅 Full"),
+    ("eosphoros.bible.cuv.dict.yaml", "和合本圣经人名地名，只占空闲码位"),
+    ("eosphoros.bible.sigao.dict.yaml", "思高本圣经人名地名，只占空闲码位"),
     ("eosphoros.en.dict.yaml", "雾凇拼音英文词，`i` 开头输入"),
 )
 
@@ -59,7 +61,7 @@ def row_count(path: Path) -> int:
 def render_profiles() -> str:
     compositions = {
         "full": "Standard + `fjcy` + 万象药品／医学／化学／台风 + xmjd6-rere 新增扩展词",
-        "standard": "Lite + 宗派专题 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词",
+        "standard": "Lite + 宗派专题 + 圣经人名地名 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词",
         "lite": "用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文",
     }
     lines = [
