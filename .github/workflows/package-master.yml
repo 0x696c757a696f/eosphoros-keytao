@@ -114,6 +114,7 @@ jobs:
 
     - name: Validate source and generated files
       run: |
+        pixi run python tools/update_readme_dictionary_stats.py --write
         pixi run quality
         pixi run generated-quick
         git diff --check
