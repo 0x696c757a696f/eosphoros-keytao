@@ -1,29 +1,96 @@
 <a id="top"></a>
 
-# 晨星键道 · Eosphoros KeyTao
+<div align="center">
 
-<p align="center">
-  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/0x696c757a696f/eosphoros-keytao?display_name=tag"></a>
-  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/actions/workflows/package-master.yml"><img alt="Build and test" src="https://github.com/0x696c757a696f/eosphoros-keytao/actions/workflows/package-master.yml/badge.svg"></a>
-  <img alt="librime 1.9.0 or newer" src="https://img.shields.io/badge/librime-%E2%89%A5%201.9.0-476b9e">
-  <img alt="UTF-8" src="https://img.shields.io/badge/encoding-UTF--8-2ea44f">
-</p>
+# 🌟 晨星键道
 
-<p align="center">
-  <a href="#适合怎样的使用者">适合谁</a> ·
-  <a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip">下载</a> ·
-  <a href="#如何使用">安装与使用</a> ·
-  <a href="#键道6编码概要">编码规则</a> ·
-  <a href="#词库组成">词库</a>
-</p>
+**Eosphoros KeyTao** · 键道6 的 Rime 方案
+
+*循星而行，以键成文。*
+
+<a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/0x696c757a696f/eosphoros-keytao?display_name=tag&style=flat-square&color=f5b301"></a>
+<a href="https://github.com/0x696c757a696f/eosphoros-keytao/actions/workflows/package-master.yml"><img alt="Build and test" src="https://img.shields.io/github/actions/workflow/status/0x696c757a696f/eosphoros-keytao/package-master.yml?branch=master&style=flat-square&label=CI"></a>
+<img alt="librime 1.9.0 or newer" src="https://img.shields.io/badge/librime-%E2%89%A5%201.9.0-476b9e?style=flat-square">
+<img alt="Platforms" src="https://img.shields.io/badge/平台-Windows%20·%20macOS%20·%20Android%20·%20iOS%20·%20Linux-6f42c1?style=flat-square">
+<img alt="Entries" src="https://img.shields.io/badge/词条-约%20117%20万-2ea44f?style=flat-square">
+
+<br>
+
+<a href="https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip"><img alt="下载通用完整版" src="https://img.shields.io/badge/⬇_下载-通用完整版-f5b301?style=for-the-badge"></a>
+<a href="#如何使用"><img alt="安装指南" src="https://img.shields.io/badge/📦_安装-指南-476b9e?style=for-the-badge"></a>
+<a href="https://keytao.rea.ink/practice"><img alt="在线练习" src="https://img.shields.io/badge/⌨️_在线-练习-2ea44f?style=for-the-badge"></a>
+
+<a href="#适合怎样的使用者">适合谁</a> ·
+<a href="#如何使用">下载与安装</a> ·
+<a href="#-各平台皮肤与样式">皮肤</a> ·
+<a href="#键道6编码概要">编码规则</a> ·
+<a href="#词库组成">词库</a> ·
+<a href="#上游来源与自动同步">来源与更新</a>
+
+</div>
+
+<br>
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+**⚡ 顶功盲打**<br>
+双拼定音、笔画选字，下一个字的编码自动把上一个字顶上屏，很少按空格。
+
+</td>
+<td width="33%" valign="top">
+
+**🌍 五个平台**<br>
+小狼毫、鼠须管、同文、Fcitx5、元书、仓、玉兔毫、小小输入法，都有现成的包。
+
+</td>
+<td width="33%" valign="top">
+
+**🔒 完全离线**<br>
+不连云端，不收集输入。词库、Lua、OpenCC 都在本地，出了问题一查就知道。
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+**📚 117 万条词**<br>
+常用词、医药化学、地名人名、基督宗派用语和英文，按需选 Full、Standard、Lite。
+
+</td>
+<td valign="top">
+
+**🧰 工具齐全**<br>
+`i` 英文、`u` 全拼反查、`v` 二分、`o` 生僻字，还有自造词、计算器、Emoji 和简繁。
+
+</td>
+<td valign="top">
+
+**🔄 自动更新**<br>
+上游词库每周自动同步、校验、合并，每月两次自动发布新版。
+
+</td>
+</tr>
+</table>
+
+## ✨ 关于晨星键道
 
 晨星键道是键道6的一个 Rime 方案，Windows、macOS、Android、iOS 和 Linux 上的常见 Rime 前端都能用，另外也提供 Fcitx5 原生码表和小小输入法版本。方案 ID 是 `eosphoros`，仓库名是 `eosphoros-keytao`。
 
+这个方案不是从零写起的。它的脉络是“星空键道 6.2 → 星猫键道 6 → 晨星键道”，大部分编码、词条和使用经验来自历代维护者，本仓库也已获得相关授权。我在这里做的，主要是在不改变键道手感的前提下，把词库理清楚、把各平台的安装包做齐，并让后续更新尽量自动完成。
+
+<details>
+<summary><b>🌅 名字的由来</b></summary>
+
 “晨星”是黎明前最亮的那颗星。《默示录》22:16 里，耶稣自称“明亮的晨星”，这个名字也带着这层意思：光、指引和盼望。“键道”沿用原方案的名字，键是手里的工具，道是要走的路。顶功、音形结合和简单的取码规则，让字顺着熟悉的按键一路打出来。
 
-循星而行，以键成文。
+晨星未必照亮整片长夜，却足以指明将明的方向。
 
-这个方案不是从零写起的。它的脉络是“星空键道 6.2 → 星猫键道 6 → 晨星键道”，大部分编码、词条和使用经验来自历代维护者，本仓库也已获得相关授权。我在这里做的，主要是在不改变键道手感的前提下，把词库理清楚、把各平台的安装包做齐，并让后续更新尽量自动完成。
+</details>
+
+<details>
+<summary><b>🔗 相关链接</b></summary>
 
 - 仓库：[0x696c757a696f/eosphoros-keytao](https://github.com/0x696c757a696f/eosphoros-keytao)
 - 下载：[Releases](https://github.com/0x696c757a696f/eosphoros-keytao/releases/)
@@ -31,9 +98,11 @@
 - 星猫键道6 的使用笔记：[飞书文档](https://hu0w1jn4xq.feishu.cn/docx/ZgQ8deGPlozhWCxOyeucBvHJnPe)（原方案维护者整理，不是本仓库的文档）
 - 键道6 练习：[直连](https://keytao.rea.ink/practice) · [Vercel 镜像（需代理）](https://keytao.vercel.app/practice)
 
+</details>
+
 <a id="适合怎样的使用者"></a>
 
-## 适合谁用
+## 💡 适合谁用
 
 键道6用双拼定音，再用几个笔画和字根区分同音字。打字时下一个字的编码会把上一个字顶上屏，所以很少需要按空格或数字选字。会拼音、愿意花几天记一套双拼键位的人，上手不会太难。遇到不会读的字，可以用二分拆字或 GBK 编码反查。
 
@@ -56,7 +125,7 @@
 <a id="快速安装"></a>
 <a id="如何使用"></a>
 
-## 下载与安装
+## 📦 下载与安装
 
 大致步骤只有三步：下载对应前端的压缩包，解压到 Rime 用户目录，然后重新部署。不确定选哪个就用通用包 [`eosphoros-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rime-full.zip)。前端需要支持 `librime-lua`，librime 建议 1.9.0 或更新。
 
@@ -86,7 +155,7 @@
 
 **Fcitx5 用户选哪个包？** 名字里没有 `-rime` 的是 Fcitx5 官方 Table 码表，装起来最简单，不需要 Rime。带 `-rime` 的保留完整的 Rime 功能，需要装对应平台的 Rime 插件，Linux 上还要有 librime-lua。两种只能选一种，不要放进同一个数据目录。原生 Table 也有 `i` 英文、`u` 全拼、`v` 二分和 `o` 单字四个入口（例如 `ihello`、`uhao`），但模糊音、反查注释、Lua、OpenCC 和自造词只有 Rime 版才有。
 
-### 三个词库档位
+### 🎚️ 三个词库档位
 
 每个平台都有 Full、Standard、Lite 三档。它们的编码、Lua、OpenCC、自造词和主题完全一样，区别只在预装了多少词：
 
@@ -106,7 +175,8 @@
 
 拿不准就选 Full。一台设备只装一个档位，换档位后要重新部署或重新导入码表。
 
-### 用户目录在哪里
+<details>
+<summary><b>📂 各前端的用户目录</b></summary>
 
 | 平台 | 前端 | 用户目录 |
 | --- | --- | --- |
@@ -125,38 +195,58 @@
 
 部署失败，或者更新后候选还是旧的，先确认文件放进了前端真正在用的那个目录，再执行一次“重新部署”。大多数问题到这一步就解决了。
 
-### Windows
+</details>
 
-**小狼毫 Weasel**
+### 🪟 Windows
+
+<details>
+<summary><b>🪟 小狼毫 Weasel</b></summary>
+
 
 1. 安装[小狼毫正式版](https://github.com/rime/weasel/releases/latest)或[测试版](https://github.com/rime/weasel/releases/tag/latest)。也可以用[水龙月 Fork 版](https://github.com/Techince/weasel/releases/latest)，从原版换过去时最好先卸载原版并重启一次。
 2. 下载 `eosphoros-weasel-windows-rime-full.zip`（或其他档位），把里面的文件和目录全部复制到 `%APPDATA%\Rime`。
 3. 在小狼毫菜单里点“重新部署”，然后在方案选单里选“晨星键道”。
 4. 以后更新时直接覆盖同名文件再重新部署。个人词放在 `dicts/eosphoros/eosphoros.user.dict.yaml`，个人设置写在 `*.custom.yaml`，这样更新不会冲掉它们。
 
-**小小输入法便携版**
+</details>
+
+<details>
+<summary><b>🪟 小小输入法便携版</b></summary>
+
 
 1. 下载 [`eosphoros-yong-windows-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-windows-full.zip)（或其他档位）。包里已经有[小小输入法](https://yong.dgod.net/)程序、晨星配置和对应档位的码表，解压就能用，不需要再导入 Rime 方案。
 2. 请解压到自己有写入权限的普通目录，比如 `D:\Apps\Yong`。放进 `Program Files` 的话，设置界面保存不了皮肤等配置。
 3. 默认用 <kbd>Ctrl</kbd>+<kbd>Space</kbd> 激活。
 4. 包里带了“晨星·极简”“晨星·黎明”“晨星·石墨”三套皮肤，初始仍是小小的默认皮肤。可以在设置里换，也可以把 `[IM]/skin` 改成 `skin/Eosphoros-Mono`、`skin/Eosphoros-Dawn` 或 `skin/Eosphoros-Graphite` 后重载。
 
-**玉兔毫 Rabbit**
+</details>
+
+<details>
+<summary><b>🐰 玉兔毫 Rabbit</b></summary>
+
 
 1. 玉兔毫现在在 [rimeinn/rabbit](https://github.com/rimeinn/rabbit) 维护。下载 [`eosphoros-rabbit-windows-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-rabbit-windows-rime-full.zip)（或其他档位），解压到路径里没有空格的目录。
 2. 运行玉兔毫，选晨星键道即可。方案文件已经在包里，不用再复制通用包。
 3. `rabbit.custom.yaml` 默认用“晨星·黎明”，Windows 切到深色模式时自动换成“晨星·夜色”。
 4. 输入 `\` 可以直接造词。想把造的词整理进正式词库，双击包根目录的 `ZZZC-Merge.cmd`；要撤回最近一次合并，运行 `ZZZC-Rollback.cmd`。这两个脚本会自己处理 Rabbit 的 `Data/` 和 `Rime/` 两个目录。
 
-### macOS
+</details>
 
-**鼠须管 Squirrel**
+### 🍎 macOS
+
+<details>
+<summary><b>🍎 鼠须管 Squirrel</b></summary>
+
 
 1. 安装[鼠须管正式版](https://github.com/rime/squirrel/releases/latest)或[测试版](https://github.com/rime/squirrel/releases/tag/latest)。
 2. 解压 `eosphoros-squirrel-macos-rime-full.zip`（或其他档位），把全部内容复制到 `~/Library/Rime`。
 3. 在鼠须管菜单里“重新部署”，再到方案选单选“晨星键道”。
 
-**Fcitx5 for macOS + Rime**
+</details>
+
+<details>
+<summary><b>🐧 Fcitx5 for macOS + Rime</b></summary>
+
 
 1. 安装 [Fcitx5 for macOS](https://github.com/fcitx/fcitx5-macos)，在“系统设置 → 键盘 → 输入法”里加上小企鹅输入法，确认菜单栏能切到 Fcitx5。
 2. 打开 Fcitx5 的 Plugin Manager，安装 **Rime** 插件。这个插件已经带了 librime 和 `librime-lua`。只装主程序的话，列表里不会出现“中州韵／Rime”。
@@ -168,7 +258,11 @@
 8. 不要改共享目录 `~/Library/fcitx5/share/rime-data`，也不要把用户目录链接到鼠须管的 `~/Library/Rime`。两个前端同时读写同一个用户词库可能会把它弄坏。
 9. 排错时可以看 `/tmp/Fcitx5.log`，搜 `rime`、`lua`、`deploy` 或 `error`。更详细的目录说明见 [Fcitx5 macOS 的中州韵文档](https://fcitx-contrib.github.io/docs/im/rime.html)。
 
-**Fcitx5 for macOS 原生 Table**
+</details>
+
+<details>
+<summary><b>🐧 Fcitx5 for macOS 原生 Table</b></summary>
+
 
 1. 安装 [Fcitx5 for macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/blob/master/README.zh-CN.md)，在 Plugin Manager 里装 Chinese Addons。这个版本不需要 Rime 插件。
 2. 解压 [`eosphoros-fcitx5-macos-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-macos-full.zip)（或其他档位）。
@@ -176,15 +270,23 @@
 4. 重启 Fcitx5，添加“晨星键道”。`themes/` 里是 macOS 用的主题，可以在主题编辑器里另外导入。
 5. 更新时重新导入同一档位的这两个文件。原生 Table 不读 Rime 用户目录，也没有 Lua、OpenCC、反查注释和自造词。
 
-### Android
+</details>
 
-**同文输入法 Trime**
+### 🤖 Android
+
+<details>
+<summary><b>🤖 同文输入法 Trime</b></summary>
+
 
 1. 安装[同文输入法](https://github.com/osfans/trime/releases/latest)，在“配置管理 → 用户文件夹”里先选好或初始化默认目录。
 2. 把 [`eosphoros-trime-android-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-trime-android-full.zip)（或其他档位）的全部内容放进 `/storage/emulated/0/rime/`。主题文件已经在包的根目录，不用另外下载。
 3. 回到配置管理执行部署，先选晨星键道方案，再在主题设置里选“晨星键道·格调”。这个主题基于 mytrime 的“格调”布局，默认跟随系统切换黎明和夜色配色，也可以手动选黑白极简。
 
-**Fcitx5 for Android + Rime**
+</details>
+
+<details>
+<summary><b>🐧 Fcitx5 for Android + Rime</b></summary>
+
 
 1. 主程序和 [Rime 插件](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-plugin-rime/)要从同一个渠道安装，比如都从 [Jenkins](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android/) 下载，版本也尽量一致。签名或版本对不上时，系统可能拒装插件，或者 Fcitx5 加载不了它。想自动检查更新可以再装一个[更新器](https://jenkins.fcitx-im.org/job/android/job/fcitx5-android-updater/)。
 2. 在系统设置里启用“小企鹅输入法5”，打开应用完成初始化，然后在“输入法 → 添加输入法”里加上“中州韵／Rime”。列表里没有 Rime，说明插件没装上、被停用了，或者和主程序不匹配。
@@ -196,14 +298,22 @@
 8. 主题和方案分开装：下载 [`eosphoros-fcitx5-android-themes.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-themes.zip)，解开外层压缩包，再在“主题 → 导入主题”里逐个选里面的 ZIP，内层的 ZIP 不要再解压。Rime 包里的 `themes/` 也是同样的文件。
 9. 部署后还是旧词库，先在应用设置里重启 Fcitx5 再部署一次。只有普通候选、`ihello` 和计算器都没反应，就检查 `lua/eosphoros/` 是否完整。Android 受限目录的操作可以参考 [Mintimate/oh-my-rime#96](https://github.com/Mintimate/oh-my-rime/issues/96)。
 
-**Fcitx5 for Android 原生 Table**
+</details>
+
+<details>
+<summary><b>🐧 Fcitx5 for Android 原生 Table</b></summary>
+
 
 1. 只需要安装 [Fcitx5 for Android](https://github.com/fcitx5-android/fcitx5-android) 主程序，码表功能是内置的，不用 Rime 插件。
 2. 下载 [`eosphoros-fcitx5-android-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-full.zip)（或其他档位），在“输入法 → 码表管理 → 导入码表 → 从 ZIP 导入”里直接选这个文件，然后添加“晨星键道”。
 3. 这个 ZIP 故意不带主题，免得导入码表时出错。主题请另外下载 [`eosphoros-fcitx5-android-themes.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-fcitx5-android-themes.zip)，解开外层后在“主题 → 导入主题”里逐个导入 `eosphoros-dawn.zip`、`eosphoros-night.zip` 或 `eosphoros-mono.zip`。
 4. 更新时在码表管理里重新导入同一档位就行，不涉及 Rime 目录和重新部署。
 
-**小小输入法 Yong**
+</details>
+
+<details>
+<summary><b>📦 小小输入法 Yong</b></summary>
+
 
 1. 从[官方下载页](https://yongim.ysepan.com/)或[测试版帖子](https://yong.dgod.net/read.php?fid=2&tid=2)安装 Android 版。
 2. 下载 [`eosphoros-yong-android-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-android-full.zip)（或其他档位）。这个包只有晨星的配置、码表和两套键盘皮肤，不含 APK。
@@ -214,9 +324,13 @@
 > [!NOTE]
 > 本仓库不打包“晨星键道 APK”。公开的 [`dgod/yong`](https://github.com/dgod/yong) 仓库里没有能复现当前 APK 的构建工程和签名流程，重新签名的 APK 也会失去官方更新。单独发配置包，既能继续用官方 APK 更新，每次 Release 又能带上最新码表。
 
-### iOS
+</details>
 
-**元书输入法**
+### 📱 iOS
+
+<details>
+<summary><b>📱 元书输入法</b></summary>
+
 
 1. 在“输入方案”里选“下载方案”，填下面任一地址：
    - <https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yuanshu-ios-rime-full.zip>
@@ -226,7 +340,11 @@
 4. 键盘皮肤在包里的 `skins/` 下，要另外导入：解压后在元书里导入 `.cskin` 文件，不要把整个方案包当皮肤导入。
 5. 想用 iCloud 同步自造词，请看[自造词使用教程](zzc/自造词使用教程.md)。
 
-**仓输入法**
+</details>
+
+<details>
+<summary><b>🐹 仓输入法</b></summary>
+
 
 1. 安装[仓输入法](https://apps.apple.com/app/id6446617683)。
 2. 用浏览器下载 [`eosphoros-hamster-ios-rime-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-hamster-ios-rime-full.zip)（或其他档位），存到“文件”应用里。仓输入法不能直接从在线地址下载这个方案。
@@ -234,9 +352,13 @@
 4. 导入后重新部署，切换到晨星键道。
 5. 需要皮肤的话，先解压，再通过共享菜单逐个打开 `skins/` 里的 `.hskin`。
 
-### Linux
+</details>
 
-**Fcitx5 + Rime**
+### 🐧 Linux
+
+<details>
+<summary><b>🐧 Fcitx5 + Rime</b></summary>
+
 
 1. 先确认桌面用的是 Fcitx5，而不是 Fcitx4 或 IBus。运行 `fcitx5-diagnose`，能看到 Fcitx5 进程和配置目录才算正常。如果 Fcitx5 本身还不能用，先看下面折叠的桌面环境设置。
 2. 安装 [`fcitx5-rime`](https://github.com/fcitx/fcitx5-rime) 和 librime 的 Lua 插件。常见的包名：
@@ -255,7 +377,11 @@
 
 用户目录的标准位置也可以在 [Rime 用户文件夹说明](https://github.com/rime/home/wiki/UserData)里核对。
 
-**Fcitx5 原生 Table**
+</details>
+
+<details>
+<summary><b>🐧 Fcitx5 原生 Table</b></summary>
+
 
 这个版本不需要 Rime，只要 Fcitx5、配置工具和 `fcitx5-chinese-addons`：
 
@@ -274,15 +400,21 @@
 
 原生 Table 版有完整的 1 到 6 码中文码表，候选顺序固定，无匹配或满码时自动上屏。它关闭了学习和自动造词，`i/u/v/o` 四个入口在第一个键就分开，不会和普通编码混在一起。Fcitx5 自带的标点、快捷短语、简繁转换、Emoji 和 Unicode 输入照常可用。
 
-**小小输入法 Yong**
+</details>
+
+<details>
+<summary><b>📦 小小输入法 Yong</b></summary>
+
 
 1. 下载 [`eosphoros-yong-linux-full.zip`](https://github.com/0x696c757a696f/eosphoros-keytao/releases/latest/download/eosphoros-yong-linux-full.zip)（或其他档位），里面已经有小小的 Linux 程序。
 2. 解压后进入 `yong/`，按[官方说明](https://yong.dgod.net/read.php?fid=7&tid=6)运行 `sudo ./yong-tool.sh --install`，再用 `./yong-tool.sh --select` 为当前用户选择输入法。
 3. 包里有“晨星·极简／黎明／石墨”三套纯色皮肤，默认是黑白极简。装完重载或重启小小输入法。
 4. GNOME 下建议通过 IBus 添加 Yong；KDE Plasma Wayland 在“系统设置 → 键盘 → 虚拟键盘”里选 Yong Wayland；wlroots 桌面可以按官方说明用 `yong --wayland`。XIM、IBus 和 Wayland 的环境变量不要全部叠在一起。
 
+</details>
+
 <details>
-<summary><strong>Linux 桌面环境与应用兼容设置</strong></summary>
+<summary><b>🖥️ Linux 桌面环境与应用兼容设置</b></summary>
 
 上面的步骤做完能正常打字的话，这一节可以跳过。下面几套配置按桌面环境选一套，不要全部叠加。Fcitx5 官方也说过，没有一套变量能适合所有 X11 和 Wayland 环境，详见[设置 Fcitx5](https://fcitx-im.org/wiki/Setup_Fcitx_5) 和[在 Wayland 上使用 Fcitx5](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland)。
 
@@ -358,7 +490,7 @@
 
 </details>
 
-### 常见问题
+### ❓ 常见问题
 
 | 现象 | 先检查 |
 | --- | --- |
@@ -370,7 +502,7 @@
 
 <a id="-各平台皮肤与样式"></a>
 
-## 皮肤与主题
+## 🎨 皮肤与主题
 
 皮肤是由各个前端自己画的，不是 Rime 方案的一部分，所以同一份配色文件没法在不同平台之间直接通用。下面是每个平台包里带的东西：
 
@@ -390,7 +522,8 @@
 > [!NOTE]
 > `Hamster.yaml` 只管元书和仓输入法里自造词文件的同步规则，不是皮肤。元书的 `.cskin`、仓的 `.hskin` 和同文的主题 YAML 互不兼容，改扩展名也没用。
 
-### 小企鹅主题
+<details>
+<summary><b>🐧 小企鹅主题怎么装</b></summary>
 
 Fcitx5 的主题颜色是从 `weasel.yaml` 和 `squirrel.yaml` 自动转换来的：Rime 的 BGR／AABBGGRR 色值转成 Fcitx 的 RGBA，候选、首选、序号、注释、预编辑、背景和边框都分别对应。两份配置里同名的配色以鼠须管为准，小狼毫独有的也都保留。改了桌面配色后运行 `python tools/build_fcitx5_themes.py` 重新生成，CI 会拦下过期的主题。
 
@@ -398,7 +531,10 @@ Fcitx5 的主题颜色是从 `weasel.yaml` 和 `squirrel.yaml` 自动转换来�
 
 **Linux**：把压缩包里的 `themes/` 解压到 `~/.local/share/fcitx5/themes/`，应该能看到 `eosphoros-light/theme.conf` 这样的目录。在 `fcitx5-configtool` 的“附加组件 → 经典用户界面”里，亮色选 `eosphoros-light`，暗色选 `eosphoros-dark`，然后重启 Fcitx5。主题只用纯色字段，不依赖 SVG，避开了一些 Wayland/GTK 渲染器的兼容问题。格式见 [Fcitx5 主题文档](https://fcitx-im.org/wiki/Fcitx_5_Theme)。
 
-### 其他皮肤资源
+</details>
+
+<details>
+<summary><b>🧩 其他皮肤资源</b></summary>
 
 元书和仓的皮肤用的是 [ResourceforHamster](https://github.com/BlackCCCat/ResourceforHamster) 的完整布局（MIT 许可），晨星只改了名字、配色、圆角和少量细节。元书包里保留了可编辑的 Jsonnet 源码，构建时重新编译，并固定来源版本和校验值。[hamster-skin-skill](https://github.com/imfuxiao/hamster-skin-skill) 只用来参考格式和校验规则。
 
@@ -416,7 +552,10 @@ Fcitx5 的主题颜色是从 `weasel.yaml` 和 `squirrel.yaml` 自动转换来�
 > [!WARNING]
 > 导入第三方皮肤前先备份现有配置。如果某个皮肤要求替换词典、`eosphoros.schema.yaml`、`lua/eosphoros/` 或 `opencc/eosphoros/`，不要照做，否则晨星的编码、Emoji 或 Lua 功能会坏掉。
 
-### 东风破（plum）
+</details>
+
+<details>
+<summary><b>🌱 用东风破（plum）安装</b></summary>
 
 `recipe/eosphoros/` 里有按平台和档位生成的配方，一共 30 份，和 Release 用的是同一份档位定义。命令是这样：
 
@@ -435,7 +574,10 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 
 东风破只管 Rime 用户目录。Fcitx5 原生 Table、小小输入法，以及要装到前端专用目录的主题和皮肤，还是用 Release 包。
 
-### 中州韵助手（rimetool）
+</details>
+
+<details>
+<summary><b>🔧 中州韵助手（rimetool）兼容性</b></summary>
 
 方案已经补齐了[中州韵助手](https://gitee.com/wubi98/rimetool)识别方案需要的结构：`default.yaml` 和 `default.custom.yaml` 都列出了 `eosphoros`，schema 里有方案名、开关状态和显式 `reset`、快捷键和 `menu/page_size`。它会按 `translator/dictionary` 找到当前档位的词库索引，索引的第一项是 `dicts/eosphoros/eosphoros.user`，薄荷模板可以据此找到个人词库。
 
@@ -444,13 +586,15 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 > [!WARNING]
 > 宗派词库和几个大词库的正文里保留了分类注释，方便人工审阅。rimetool 不建议正文带注释，所以请不要在 rimetool 里对这些大码表做“全库重写”。正常浏览、编译和打字不受影响。
 
+</details>
+
 <a id="键道6编码概要"></a>
 
-## 键道6编码概要
+## ⌨️ 键道6编码概要
 
 键道6的思路是：双拼定音，笔画和字根选字，下一个编码把上一个字顶上屏。单字先打两码音码，需要时再补最多四码形码；词组从每个字的音码里取码，碰到重码再补首笔。完整的键位图和历史规则可以看[键道图谱](https://pingshunhuangalex.gitbook.io/rime-xkjd/learn-xkjd/layouts)、[音码规则](https://pingshunhuangalex.gitbook.io/rime-xkjd/learn-xkjd/phonetics-rules)、[单字规则](https://pingshunhuangalex.gitbook.io/rime-xkjd/start-xkjd/characters)和[顶功说明](https://pingshunhuangalex.gitbook.io/rime-xkjd/advance-in-xkjd/top-up)。实际编码以本仓库的单字表、生成器和 schema 为准。
 
-### 音码
+### 🔊 音码
 
 每个字的读音用两个键表示：声母一个，韵母一个。和普通双拼思路一样，但只用 21 个键，`a`、`i`、`o`、`u`、`v` 留给形码，所以不能套用别的双拼键位。
 
@@ -466,7 +610,8 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 
 飞键能和哪些韵母搭配是固定的，不是随便换。刚开始不用背，看候选就行。
 
-### 形码
+<details>
+<summary><b>✍️ 形码与拆字规则</b></summary>
 
 两码音码后面可以接形码，用来在同音字里挑字。五个基本笔画对应五个键：
 
@@ -481,7 +626,9 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 3. 部件尽量取大，但不能跨过笔画的断开或交叉处；实在拆不稳就按笔顺取笔画。
 4. 有些字根是两码，两码合起来算一个字根；形码不满四码时按规则重复末码补齐。
 
-### 词组
+</details>
+
+### 🧱 词组
 
 词组规则由 `eosphoros.full.dict.yaml` 里的 encoder 和本仓库的生成器共同决定：
 
@@ -500,7 +647,7 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 婚姻圣召    hyef → hyefa → hyefaa
 ```
 
-### 顶功
+### ⚡ 顶功
 
 普通双拼要按空格确认，键道靠音码键和形码键的交替来判断一个字在哪里结束。当前首选已经是一个合法的 4 到 6 码编码时，继续打下一个字，前面的字就会自动上屏。
 
@@ -509,7 +656,8 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 - 中文顶功最长六码。`i`（英文）、`u`（全拼）、`v`（二分）和 `o`（GBK）开头的输入不走中文顶功。
 - 拿不准时照样可以按空格或数字选字。开启整句模式后，中文顶功会自动关闭。
 
-### 学习顺序建议
+<details>
+<summary><b>🎯 学习顺序建议</b></summary>
 
 1. 先熟悉两码音码和常见的零声母，暂时用空格上屏。
 2. 再记五个笔画，候选不在第一位时补一两码。
@@ -518,9 +666,11 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 
 `i` 既是“竖”的形码，也是英文入口：只有在输入开头时才进英文。配合[练习页](https://keytao.rea.ink/practice)慢慢来就好，不用一次全记住。
 
-## 日常使用
+</details>
 
-### 输入入口
+## 🚀 日常使用
+
+### 🔎 输入入口
 
 | 想做什么 | 怎么输 | 说明 |
 | --- | --- | --- |
@@ -537,7 +687,7 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 
 `u`、`v`、`o` 只用来反查，不会出 Emoji。打字统计保存在 `zzc_state/eosphoros_typing_stats.tsv`，第一次运行时会读取旧的根目录 `typing_stats.txt` 并迁移过来，旧文件不会自动删除。手机上只把本机的统计写回应用目录，不会用 iCloud 上的统计覆盖另一台设备。
 
-### 按键
+### ⏩ 按键
 
 | 按键 | 什么时候 | 作用 |
 | --- | --- | --- |
@@ -549,7 +699,8 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 | <kbd>F7</kbd> | 任何时候 | 切换简体和繁体输出 |
 | <kbd>Ctrl</kbd> + <kbd>\</kbd> | 任何时候 | 打开或关闭 Emoji 候选 |
 
-### 功能开关
+<details>
+<summary><b>🎛️ 功能开关和默认值</b></summary>
 
 开关的默认值写在 [`eosphoros.custom.yaml`](eosphoros.custom.yaml) 里，重新部署后生效：
 
@@ -569,7 +720,10 @@ Windows 也可以在小狼毫菜单的“输入法设定／获取更多输入方
 
 Emoji 是按需加载的，在原来 txjx 的映射之外，又从雾凇拼音补了约 2,500 个不重复的关键词，多了很多情绪、手势、人物、动物、食物、交通、旗帜和新版 Emoji。看不到 Emoji 时，依次检查“表情展示”是否开着、打的是不是普通中文编码（不是 `u/v/o` 反查）、`opencc/eosphoros/` 是否完整，然后重新部署。
 
-### 自造词速查
+</details>
+
+<details>
+<summary><b>📝 自造词指令速查</b></summary>
 
 | 指令 | 作用 |
 | --- | --- |
@@ -593,7 +747,10 @@ python .\zzc\Windows_词库合并.py
 
 没装 Python 的话，直接双击 `zzc/Win_词库合并.exe`，撤回最近一次合并用 `zzc/Win_撤回合并.exe`。这两个 EXE 只在发布 Release 时在 Windows 上重新构建，构建后会实际跑一遍合并和撤回测试。构建方法见[合并脚本说明](zzc/README.md#重新构建-windows-exe)。
 
-### 英文
+</details>
+
+<details>
+<summary><b>🔤 英文输入细节</b></summary>
 
 英文词典直接并在主词典里，不需要单独的英文方案，也不用切换：
 
@@ -608,7 +765,10 @@ python .\zzc\Windows_词库合并.py
 - 大小写都能输出，常见技术词有别名，比如 `C++ → icpp`、`C# → icsharp`、`.NET → idotnet`。
 - 英文编码都是 `i` 加小写字母，和中文编码冲突的条目在生成时就去掉了。
 
-### 整句输入
+</details>
+
+<details>
+<summary><b>🌊 开启整句输入</b></summary>
 
 默认是键道的顶功模式。想用整句输入，可以在 `eosphoros.custom.yaml` 里打开：
 
@@ -620,9 +780,11 @@ patch:
 
 打开后中文顶功会自动停用，分号和单引号改作分隔符。相关的按键调整在 `eosphoros.custom.yaml` 的注释里有说明。
 
+</details>
+
 <a id="词库组成"></a>
 
-## 词库
+## 📚 词库
 
 下面是当前提交里各词库的记录数，不含自造词和个人词库。这张表由脚本生成，每次词库变动后自动更新。
 
@@ -646,6 +808,9 @@ patch:
 | **合计** | **1,176,793** | 不含动态自造词和个人词库 |
 <!-- dictionary-file-stats:end -->
 
+<details>
+<summary><b>🗂️ 每个词库是怎么来的</b></summary>
+
 每个词库是怎么来的：
 
 - **单字表 `danzi`**：原样取自 [rime-jiandao](https://github.com/amorphobia/rime-jiandao) 的 `dicts/01.danzi.txt`，本仓库不手工修改。其他所有词的编码都从这张单字表推出来。
@@ -657,11 +822,18 @@ patch:
 - **宗派专题词**：天主教、新教、东正教、东方正统教会和东方亚述教会各一个词库，都是人工审核后生成的，见下一段。
 - **英文 `en`**：取自 rime-ice 的 `en` 和 `en_ext`，加上 `i` 前缀后并入主词典。
 
+</details>
+
+<details>
+<summary><b>⛪ 宗派词库的收词原则</b></summary>
+
 宗派词库以有宗派辨识度的信条、礼仪、制度、正式教会名称和历史术语为主，也收了信徒平时常打的崇拜、团契、查经、祷告、服事用语，但不会把“宗派名＋通用活动”硬拼成长词凑数。`protestantism` 另外收了审核过的《和合本》书卷名、人名、地名和固定译名，统一用和合本的译法（“马太”“约翰”“使徒行传”“启示录”），不混入思高本译名。新教部分覆盖信义宗、改革宗／长老宗、公理宗、圣公宗、浸信宗、循道卫理宗、再洗礼派／门诺会、贵格会、摩拉维亚弟兄会、弟兄会和救世军。东正教、东方正统教会、东方亚述教会和东方礼天主教会分开维护，免得把相近的叙利亚礼、圣像或牧首制度词放错地方；东方正统教会部分不用“一性论”这种不准确的说法。多段人名用间隔号，例如“马丁·路德”，编码时不算间隔号。
 
 天主教新增词的审核清单是 [`tools/catholicism_expansion_2026.txt`](tools/catholicism_expansion_2026.txt)，另外四个宗派的是 [`tools/christian_traditions_2026.txt`](tools/christian_traditions_2026.txt)，核对来源和授权边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)。生成器依次尝试基础码和首笔辅助码，没有空闲编码的词一般不收。只有三个《和合本》书名例外：“哥林多后书”“帖撒罗尼迦后书”在标准规则下和各自的“前书”所有候选码完全相同，“雅各书”的所有候选码都已被旧词占用，所以人工审核后用了最终六码。除此之外，四个非天主教宗派词库没有新增异词同码。
 
-### 加载顺序
+</details>
+
+### 📑 加载顺序
 
 [`eosphoros.full.dict.yaml`](eosphoros.full.dict.yaml) 是完整的词库索引，Standard 和 Lite 的索引都从它自动生成。词库都不带权重，候选顺序就是加载顺序：
 
@@ -671,7 +843,8 @@ user → zzc → danzi → cizu → core → ice → 宗派专题 → wanxiang �
 
 个人词和基础常用词排在最前，自动生成的 ICE 在它们之后，宗派专题和其他扩展再往后。xmjd6-rere 的新增词排在中文词库的最后。
 
-### 个人词库
+<details>
+<summary><b>👤 个人词库怎么加词</b></summary>
 
 [`dicts/eosphoros/eosphoros.user.dict.yaml`](dicts/eosphoros/eosphoros.user.dict.yaml) 是留给你自己的词库，三个档位都有，而且最先加载。姓名、地址、专业术语、常用短语都适合放这里，但不建议塞大量公共词条。
 
@@ -686,7 +859,12 @@ user → zzc → danzi → cizu → core → ice → 宗派专题 → wanxiang �
 
 Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、Fcitx5 + Rime）都会直接读这个文件。Fcitx5 原生 Table 和小小输入法用的是发布时生成的静态码表，改这个 YAML 对它们不起作用，要等下一个 Release 或者自己重新构建。
 
-## 配置文件
+</details>
+
+## ⚙️ 配置文件
+
+<details>
+<summary><b>📄 各配置文件的作用</b></summary>
 
 | 文件 | 作用 |
 | --- | --- |
@@ -709,11 +887,13 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 
 改了 YAML 要重新部署。个人配置尽量写在 `*.custom.yaml` 和个人词库里。`danzi`、`ice`、`wanxiang.*`、`rere.*` 和 `en` 是自动生成的，直接改会在下次同步时被覆盖。
 
+</details>
+
 <a id="上游来源与自动同步"></a>
 
-## 来源与自动更新
+## 🔄 来源与自动更新
 
-### 词库来源
+### 🔗 词库来源
 
 每个上游都锁定在 [`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json) 里的一个具体 commit，生成结果也记录了 SHA-256。所以任何时候都能从锁定的上游原样重建出当前的词库，CI 每次都会这样重建一遍来核对。
 
@@ -731,7 +911,7 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 
 同步器不会去追上游分支的浮动内容。它比较“上次锁定的 commit”和“当前 HEAD”，只有用到的文件变了才按最新的完整快照重建，不会一点点叠补丁导致越走越偏。
 
-### 哪些是自动的
+### 🤖 哪些是自动的
 
 | 内容 | 怎么更新 | 需要人管吗 |
 | --- | --- | --- |
@@ -750,7 +930,8 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 
 需要人来判断的只剩两类：上游的代码改动（Lua 和方案逻辑），以及涉及编码取舍的词库调整。前者由工作流开 PR 或 Issue 提醒，后者在本地改完由 CI 把关。
 
-### 手动同步
+<details>
+<summary><b>🛠️ 手动同步词库</b></summary>
 
 Windows 推荐用 PowerShell 7：
 
@@ -767,7 +948,10 @@ python .\tools\sync_upstream_dictionaries.py --check
 python .\tools\sync_upstream_dictionaries.py --refresh --write
 ```
 
-### Lua 与方案代码的上游
+</details>
+
+<details>
+<summary><b>🧬 Lua 与方案代码的上游</b></summary>
 
 Lua 和自造词的实现参考了 [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx)，已整合到 `a8769140`，记录在 [`tools/upstream_code.lock.json`](tools/upstream_code.lock.json)。[`tools/adapt_txjx_upstream.py`](tools/adapt_txjx_upstream.py) 按 [`tools/txjx_adaptation_manifest.json`](tools/txjx_adaptation_manifest.json) 里登记的“上游路径 → 本地路径”，把 `txjx` 的模块名和方案名换成 `eosphoros`，再以锁定的 commit 为共同祖先做三方合并。所以两边文件名可以不同，本地的修改也不会被整个覆盖：
 
@@ -785,16 +969,18 @@ python .\tools\adapt_txjx_upstream.py --write --update-lock --json
 
 第三方来源、固定版本和许可证见 [`THIRD_PARTY.md`](THIRD_PARTY.md) 和 [`licenses/`](licenses/)。
 
-### 发布
+</details>
+
+### 🏷️ 发布
 
 Release 工作流每月 1 日和 15 日的 04:17 UTC 检查一次。上次发布之后有新提交，才会继续验证、构建 Windows EXE、用真实的 librime 做部署测试、打包各平台并发布；没有新提交就直接结束，不会发空版本。每次发布都附带 `SHA256SUMS`，可以用来核对下载的文件。也可以手动运行 `Create Release with Zipped Branch Assets and Date` 强制发布。
 
-## 维护与验证
+## 🛠️ 维护与验证
 
 Python 工具需要 3.11 或更新。推荐装 [Pixi](https://pixi.sh/)，用仓库锁定的环境：`pixi.lock` 固定了 Python、PyYAML、Pillow、Lua 和 PyInstaller 的版本，本机和 CI 的结果才一致。已经有 Python 环境的话，也可以直接跑下面这些命令。
 
 <details>
-<summary><strong>完整的检查与维护命令</strong></summary>
+<summary><b>🧪 完整的检查与维护命令</b></summary>
 
 在仓库根目录执行：
 
@@ -856,7 +1042,10 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 </details>
 
-## 项目结构
+## 🗂️ 项目结构
+
+<details>
+<summary><b>🌳 展开目录结构</b></summary>
 
 ```text
 .
@@ -875,11 +1064,13 @@ python .\tools\sync_upstream_dictionaries.py --write
 └─ .github/workflows/                        发布和定期同步工作流
 ```
 
-## 致谢与授权
+</details>
+
+## 🙏 致谢与授权
 
 晨星键道的来路是“星空键道 6.2 → 星猫键道 6 → 晨星键道”。最该感谢的是吅吅大山、Proud丶Cat、热热、浮生、千年蟲和历代方案与词库的维护者。没有他们多年整理编码、词库和使用经验，就不会有这个方案。
 
-### 引擎与方案
+### 🌱 引擎与方案
 
 | 项目 | 在本仓库里的作用 |
 | --- | --- |
@@ -889,7 +1080,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | 直接上游：方案、`cizu`／`fjcy` 词库的来源，以及小小输入法打包素材 |
 | [wzxmer/rime-txjx](https://github.com/wzxmer/rime-txjx) | 模块化 Lua、Emoji 查询优化、自造词操作链、合并脚本和测试思路 |
 
-### 词典与资料
+### 📖 词典与资料
 
 | 项目或资料 | 在本仓库里的作用 |
 | --- | --- |
@@ -902,7 +1093,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | [CrossWire SWORD `ChiUns`](https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=ChiUns)、[Digital Bible Society](https://bibles.dbs.org/CMNUNVS/pdf/CMNUNVS.pdf) 和[各教会的官方资料](tools/christian_traditions_sources.md) | 《和合本》书卷、人名、地名和宗派术语的人工核对来源；不转载释义或受版权保护的正文 |
 
 <details>
-<summary><strong>前端、工具、皮肤资源和构建环境</strong></summary>
+<summary><b>🧰 前端、工具、皮肤资源和构建环境</b></summary>
 
 | 项目 | 在本仓库里的作用 |
 | --- | --- |
@@ -925,7 +1116,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 </details>
 
-### 授权
+### ⚖️ 授权
 
 > [!IMPORTANT]
 > 致谢只表示来源、依赖或参考，不代表这些作者和项目为晨星键道提供官方支持，也不改变任何上游的许可证。放了链接不等于取得了皮肤、词典、软件或文章的再分发授权。
@@ -944,4 +1135,4 @@ python .\tools\sync_upstream_dictionaries.py --write
 
 仓库是分层授权的，没有一个许可证能覆盖所有历史词库和第三方数据，总的说明见 [`LICENSE.md`](LICENSE.md)。第三方来源、固定 commit、生成文件的 SHA-256 和许可证副本在 [`THIRD_PARTY.md`](THIRD_PARTY.md)、[`licenses/`](licenses/)、[`tools/upstream_dictionaries.lock.json`](tools/upstream_dictionaries.lock.json) 和 [`tools/upstream_code.lock.json`](tools/upstream_code.lock.json) 里。宗派词库的核对来源和取词边界见 [`tools/christian_traditions_sources.md`](tools/christian_traditions_sources.md)，机器可读的索引是 [`tools/christian_sources.json`](tools/christian_sources.json)。没有特别标注的文件，不要因为出现在致谢里就推定它们用同样的许可证；复用或再分发前请先看对应文件和仓库的授权说明。贡献规则和统一的检查命令见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
 
-<p align="right"><a href="#top">返回顶部</a></p>
+<p align="right"><a href="#top">⬆️ 返回顶部</a></p>
