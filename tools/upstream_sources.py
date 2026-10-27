@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -31,6 +32,25 @@ def resolve_ref(repository: str, branch: str) -> str:
     with urllib.request.urlopen(request, timeout=90) as response:
         payload = json.load(response)
     return str(payload["sha"])
+
+
+def source_file_exists(
+    source: dict[str, Any], relative_path: str, local_root: Path | None
+) -> bool:
+    if local_root is not None:
+        return (local_root / relative_path).is_file()
+    request = urllib.request.Request(
+        raw_url(source, relative_path),
+        headers={"User-Agent": USER_AGENT},
+        method="HEAD",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=90):
+            return True
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
+            return False
+        raise
 
 
 def read_source(
