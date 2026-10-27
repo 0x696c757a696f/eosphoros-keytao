@@ -46,21 +46,15 @@ jobs:
             --destination .tmp/opencc-check
           git diff --check
 
-      - name: Commit and open pull request
+      - name: Publish validated changes
         if: steps.changes.outputs.changed == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          AUTOMATION_AUTO_MERGE: ${{ vars.AUTOMATION_AUTO_MERGE }}
         run: |
-          $Branch = "automation/opencc-$env:GITHUB_RUN_ID"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c $Branch
-          git add -- tools/opencc.lock.json
-          git commit -m "chore: update OpenCC release dependency"
-          git push origin "HEAD:refs/heads/$Branch"
-          gh pr create `
-            --base $env:BASE_BRANCH `
-            --head $Branch `
-            --title "chore: update OpenCC release dependency" `
-            --body "Updates the immutable OpenCC release asset ID and its GitHub-provided SHA-256 digest. The downloaded archive was verified before this pull request was opened."
+          ./tools/publish_automation_pr.ps1 `
+            -Branch "automation/opencc" `
+            -Title "chore: update OpenCC release dependency" `
+            -Body "Updates the immutable OpenCC release asset ID and its GitHub-provided SHA-256 digest. The downloaded archive was verified before this pull request was opened." `
+            -Paths "tools/opencc.lock.json"

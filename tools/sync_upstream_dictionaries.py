@@ -20,7 +20,7 @@ if __package__ in (None, ""):
 
 from tools.clean_dictionary_quality import is_rejected
 from tools.eosphoros_codes import code_candidates_from_full_codes, iter_dictionary_rows
-from tools.upstream_sources import read_source, resolve_ref
+from tools.upstream_sources import read_source, resolve_ref, source_file_exists
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -98,10 +98,24 @@ RIME_ICE_ENGLISH_FILES = (
 
 RIME_ICE_EMOJI_FILE = ("emoji", "opencc/emoji.txt")
 
-RIME_WANXIANG_FILES = tuple(
-    (source_name, f"dicts/{source_name}.dict.yaml")
-    for source_name in ("diming", "mingren", "jichu")
-)
+
+
+def wanxiang_files(lock: dict[str, Any]) -> tuple[tuple[str, str], ...]:
+    """Return the Wanxiang categories that are still tracked upstream.
+
+    A category whose upstream file disappears is dropped from the lock's file
+    list on refresh. Its last generated dictionary then stays in the repository
+    unchanged and is treated as local vocabulary by later rebuilds.
+    """
+    tracked = set(lock["sources"]["rime_wanxiang"]["files"])
+    return tuple(
+        (source_name, f"dicts/{source_name}.dict.yaml")
+        for source_name in WANXIANG_SOURCE_NAMES
+        if f"dicts/{source_name}.dict.yaml" in tracked
+    )
+
+
+RIME_WANXIANG_FILES = wanxiang_files(json.loads(LOCK_PATH.read_text(encoding="utf-8")))
 
 
 # xmjd6-rere is the legacy upstream of the local cizu/fjcy dictionaries. Only
@@ -1156,9 +1170,10 @@ def build(
             RIME_ICE_FILES + RIME_ICE_ENGLISH_FILES + (RIME_ICE_EMOJI_FILE,)
         )
     }
+    tracked_wanxiang_files = wanxiang_files(lock)
     wanxiang_source_texts = {
         source_name: read_source(wanxiang_source, relative_path, rime_wanxiang_root)
-        for source_name, relative_path in RIME_WANXIANG_FILES
+        for source_name, relative_path in tracked_wanxiang_files
     }
     xmjd6_source_texts = {
         source_name: read_source(xmjd6_source, relative_path, xmjd6_root)
@@ -1180,6 +1195,15 @@ def build(
         if (root / "dicts" / "eosphoros" / filename).is_file()
         for _, code in iter_dictionary_rows(root / "dicts" / "eosphoros" / filename)
     }
+    tracked_wanxiang_names = {source_name for source_name, _ in tracked_wanxiang_files}
+    for source_name in WANXIANG_SOURCE_NAMES:
+        frozen = root / WANXIANG_TARGETS[source_name].relative_to(ROOT)
+        if source_name in tracked_wanxiang_names or not frozen.is_file():
+            continue
+        for word, code in iter_dictionary_rows(frozen):
+            local_words.add(word)
+            occupied[code].add(word)
+            protected_local_codes.add(code)
     wanxiang_rows, wanxiang_stats = build_wanxiang_rows(
         wanxiang_source_texts,
         character_codes,
@@ -1239,7 +1263,7 @@ def build(
                 stats,
                 lock,
             )
-            for source_name, _ in RIME_WANXIANG_FILES
+            for source_name, _ in tracked_wanxiang_files
         },
         xmjd6_texts={
             source_name: render_xmjd6(source_name, xmjd6_rows[source_name], stats, lock)
@@ -1330,6 +1354,19 @@ def verify_generated_state(root: Path, lock: dict[str, Any]) -> list[str]:
     return errors
 
 
+def drop_missing_source_files(
+    source: dict[str, Any], local_root: Path | None
+) -> list[str]:
+    """Remove files that no longer exist at the source's current commit."""
+    missing = [
+        relative_path
+        for relative_path in source["files"]
+        if not source_file_exists(source, relative_path, local_root)
+    ]
+    source["files"] = [path for path in source["files"] if path not in missing]
+    return missing
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true", help="write dictionaries and lock")
@@ -1391,6 +1428,14 @@ def main() -> int:
         for source_name in sorted(sources_to_refresh):
             source = lock["sources"][source_name]
             source["commit"] = resolve_ref(source["repository"], source["branch"])
+        if "rime_wanxiang" in sources_to_refresh:
+            for relative_path in drop_missing_source_files(
+                lock["sources"]["rime_wanxiang"], args.rime_wanxiang_root
+            ):
+                print(
+                    f"rime_wanxiang no longer provides {relative_path}; "
+                    "keeping its last generated dictionary frozen"
+                )
 
     result = build(
         ROOT,

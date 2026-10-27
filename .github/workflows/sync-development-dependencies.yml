@@ -53,21 +53,15 @@ jobs:
           $Changed = -not [string]::IsNullOrWhiteSpace((git status --short -- pixi.toml pixi.lock))
           "changed=$($Changed.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
 
-      - name: Commit and open pull request
+      - name: Publish validated changes
         if: steps.changes.outputs.changed == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          AUTOMATION_AUTO_MERGE: ${{ vars.AUTOMATION_AUTO_MERGE }}
         run: |
-          $Branch = "automation/dependencies-$env:GITHUB_RUN_ID"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c $Branch
-          git add -- pixi.toml pixi.lock
-          git commit -m "chore: refresh development dependencies"
-          git push origin "HEAD:refs/heads/$Branch"
-          gh pr create `
-            --base $env:BASE_BRANCH `
-            --head $Branch `
-            --title "chore: refresh development dependencies" `
-            --body "Automated Pixi manifest alignment and lock refresh after Dependabot updates or the weekly dependency check. The full Python test suite passed in the refreshed environment."
+          ./tools/publish_automation_pr.ps1 `
+            -Branch "automation/dependencies" `
+            -Title "chore: refresh development dependencies" `
+            -Body "Automated Pixi manifest alignment and lock refresh after Dependabot updates or the weekly dependency check. pixi run check and the Lua tests passed in the refreshed environment." `
+            -Paths "pixi.toml","pixi.lock"

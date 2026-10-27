@@ -73,31 +73,15 @@ jobs:
           pixi run lua tests/run.lua
           git diff --check
 
-      - name: Commit and open pull request
+      - name: Publish validated changes
         if: steps.changes.outputs.changed == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          AUTOMATION_AUTO_MERGE: ${{ vars.AUTOMATION_AUTO_MERGE }}
         run: |
-          $Branch = "automation/upstream-dictionaries-$env:GITHUB_RUN_ID"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c $Branch
-          git add -- `
-            VERSION `
-            *.yaml `
-            dicts/eosphoros `
-            fcitx5 `
-            mobile_themes `
-            README.md `
-            opencc/eosphoros/eosphoros_emoji_extra_chars.lua `
-            opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua `
-            opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua `
-            tools/upstream_dictionaries.lock.json
-          git commit -m "chore: update upstream dictionaries"
-          git push origin "HEAD:refs/heads/$Branch"
-          gh pr create `
-            --base $env:BASE_BRANCH `
-            --head $Branch `
-            --title "chore: update upstream dictionaries" `
-            --body "Automated rebuild from newly detected upstream dictionary commits. The pinned hashes, generated checksums, deduplication, JianDao 6 priority assignment, and collision-rate cap have all been refreshed and validated."
+          ./tools/publish_automation_pr.ps1 `
+            -Branch "automation/upstream-dictionaries" `
+            -Title "chore: update upstream dictionaries" `
+            -Body "Automated rebuild from newly detected upstream dictionary commits. The pinned hashes, generated checksums, deduplication, JianDao 6 priority assignment, and collision-rate cap have all been refreshed, and pixi run check passed on this commit." `
+            -Paths "VERSION","*.yaml","dicts/eosphoros","fcitx5","mobile_themes","README.md","opencc/eosphoros/eosphoros_emoji_extra_chars.lua","opencc/eosphoros/eosphoros_emoji_extra_phrases_index.lua","opencc/eosphoros/eosphoros_emoji_extra_phrases_0.lua","tools/upstream_dictionaries.lock.json"

@@ -2192,13 +2192,13 @@ columns:
         )
         self.assertIn("pixi update", sync)
         self.assertIn("pixi run check", sync)
-        self.assertIn("gh pr create", sync)
+        self.assertIn("./tools/publish_automation_pr.ps1", sync)
         opencc_sync = (
             root / ".github/workflows/sync-opencc.yml"
         ).read_text(encoding="utf-8")
         self.assertIn("tools/update_opencc_lock.py --write", opencc_sync)
         self.assertIn("tools/fetch_opencc.py", opencc_sync)
-        self.assertIn("gh pr create", opencc_sync)
+        self.assertIn("./tools/publish_automation_pr.ps1", opencc_sync)
 
     def test_heavy_automation_reuses_pixi_without_pip_bootstrap(self) -> None:
         root = Path(__file__).resolve().parents[1]
@@ -2224,6 +2224,18 @@ columns:
         )
         self.assertIn("run-install: true", setup_action)
         self.assertIn("cache-write: ${{ inputs.cache-write }}", setup_action)
+        publisher = (root / "tools/publish_automation_pr.ps1").read_text(encoding="utf-8")
+        self.assertIn('$AutoMerge -eq "false"', publisher)
+        for name, branch in (
+            ("sync-upstream-dictionaries.yml", "automation/upstream-dictionaries"),
+            ("sync-development-dependencies.yml", "automation/dependencies"),
+            ("sync-opencc.yml", "automation/opencc"),
+        ):
+            workflow = (workflows / name).read_text(encoding="utf-8")
+            self.assertIn("./tools/publish_automation_pr.ps1", workflow, name)
+            self.assertIn(f'-Branch "{branch}"', workflow, name)
+            self.assertNotIn("GITHUB_RUN_ID", workflow, name)
+            self.assertNotIn("gh pr create", workflow, name)
         package = (workflows / "package-master.yml").read_text(encoding="utf-8")
         self.assertEqual(package.count("cache-write:"), 1)
         self.assertIn("cache-write: ${{ github.event_name == 'push' }}", package)

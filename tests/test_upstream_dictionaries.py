@@ -17,6 +17,7 @@ from tools.sync_upstream_dictionaries import (
     build_ice_rows,
     build_wanxiang_rows,
     build_xmjd6_rows,
+    drop_missing_source_files,
     ice_low_value_reason,
     is_likely_medicine_name,
     wanxiang_low_value_reason,
@@ -147,6 +148,25 @@ class UpstreamDictionaryTests(unittest.TestCase):
             lock["sources"]["rime_wanxiang"]["files"],
             [relative_path for _, relative_path in RIME_WANXIANG_FILES],
         )
+
+    def test_removed_upstream_files_are_dropped_and_their_output_stays_locked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "dicts").mkdir()
+            (root / "dicts" / "jichu.dict.yaml").write_text("", encoding="utf-8")
+            source = {"files": ["dicts/yaopin.dict.yaml", "dicts/jichu.dict.yaml"]}
+            self.assertEqual(
+                drop_missing_source_files(source, root), ["dicts/yaopin.dict.yaml"]
+            )
+            self.assertEqual(source["files"], ["dicts/jichu.dict.yaml"])
+
+        lock = load_lock()
+        tracked = {name for name, _ in RIME_WANXIANG_FILES}
+        for name in ("yaopin", "yixue", "huaxue", "taifeng", "diming", "mingren", "jichu"):
+            target = f"dicts/eosphoros/eosphoros.wanxiang.{name}.dict.yaml"
+            self.assertIn(target, lock["generated"], name)
+            if name not in tracked:
+                self.assertTrue((ROOT / target).is_file(), name)
 
     def test_wanxiang_conversion_deduplicates_and_uses_free_stroke_codes(self) -> None:
         sources = {
@@ -631,11 +651,13 @@ class UpstreamDictionaryTests(unittest.TestCase):
         self.assertIn("update_upstream_dictionaries.ps1", workflow)
         self.assertIn("pixi run check", workflow)
         self.assertIn("pixi run lua tests/run.lua", workflow)
-        self.assertIn("gh pr create", workflow)
+        self.assertIn("./tools/publish_automation_pr.ps1", workflow)
         self.assertIn("VERSION", workflow)
         self.assertIn("*.yaml", workflow)
-        self.assertEqual(workflow.count("            fcitx5 `"), 2)
-        self.assertEqual(workflow.count("            mobile_themes `"), 2)
+        self.assertEqual(workflow.count("            fcitx5 `"), 1)
+        self.assertEqual(workflow.count('"fcitx5"'), 1)
+        self.assertEqual(workflow.count("            mobile_themes `"), 1)
+        self.assertEqual(workflow.count('"mobile_themes"'), 1)
 
 
 if __name__ == "__main__":

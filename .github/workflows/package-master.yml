@@ -119,6 +119,9 @@ jobs:
         pixi run generated-quick
         git diff --check
 
+    - name: Rebuild upstream dictionaries from their pinned sources
+      run: pixi run python tools/sync_upstream_dictionaries.py --check
+
     - uses: ./.github/actions/check-workflows
 
   build-native:

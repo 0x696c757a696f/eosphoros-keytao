@@ -70,12 +70,14 @@ isolated from JianDao 6 codes.
 ## `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml`
 
 - Upstream: <https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts>
-- Sources: `yaopin`, `yixue`, `huaxue`, `diming`, `mingren`, `taifeng`, and
-  `jichu` dictionaries
+- Sources: `diming`, `mingren`, and `jichu` dictionaries, synchronized weekly;
+  `yaopin`, `yixue`, `huaxue`, and `taifeng`, which upstream has removed, are
+  kept as their last generation from commit
+  `dc0d8f7a279b87165f712f65d5dcd62f0b28820a` and no longer change
 - License: Creative Commons Attribution 4.0 International
 - License text: <https://github.com/amzxyz/rime-wanxiang/blob/wanxiang/LICENSE>
 
-These seven category files are an adapted and filtered vocabulary extract. Tone-marked pinyin is used
+These category files are an adapted and filtered vocabulary extract. Tone-marked pinyin is used
 only to derive native JianDao 6 codes; upstream codes and final candidate
 weights are not copied. Generic names, association sentences, correction
 tables, single characters, English, and dialect sources are excluded. Local
@@ -84,6 +86,20 @@ lower-priority Rime-Ice fallback is rebuilt around it so the addition does not
 introduce new different-text/same-code collisions. Exact source commit,
 generated checksum, filter statistics, and modification date are retained in
 `tools/upstream_dictionaries.lock.json` and the generated dictionary header.
+
+## `dicts/eosphoros/eosphoros.rere.cizu.dict.yaml` and `eosphoros.rere.fjcy.dict.yaml`
+
+- Upstream: <https://github.com/hugh7007/xmjd6-rere>
+- Sources: `xmjd6.cizu.dict.yaml` and `xmjd6.fjcy.dict.yaml`
+- License: authorized upstream of this scheme
+
+xmjd6-rere is also the historical source of the local `cizu` and `fjcy`
+dictionaries, which have since been maintained separately and are never
+replaced wholesale. These two files only take words that upstream added after
+the lock's `baseline_commit` and that no local dictionary contains. Each word
+is re-encoded from the local single-character table and only takes a code that
+no other entry uses; words without a free code are skipped. Both files load
+after every other Chinese dictionary.
 
 ## `opencc/eosphoros/eosphoros_emoji_extra_*`
 
