@@ -1,14 +1,14 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: dc0d8f7a279b87165f712f65d5dcd62f0b28820a
+# Generated from amzxyz/rime-wanxiang-data; do not edit by hand.
+# Source commit: 04b2efa8968ae69e84f7373e7c06057a05c5d7ec
 # Selected source: dicts/jichu.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
 # Accepted codes are protected while the lower-priority Rime-Ice fallback is rebuilt.
-# Source rows in category: 1412469
-# Generated rows in category: 147
+# Source rows in category: 1493718
+# Generated rows in category: 150
 ---
 name: eosphoros.wanxiang.jichu
 version: "2026-10-12"
@@ -67,7 +67,7 @@ sort: original
 感受一下	geyxv
 感觉自己	gjzjv
 个人能力	grnli
-更新一下	gxyx
+更新一下	gxyxv
 工作内容	gznrv
 和别人	hbruo
 很多人都	hdrduu
@@ -92,6 +92,7 @@ sort: original
 成为一个	jwygvo
 就相当于	jxdyo
 进行分析	jxfxvu
+姜科	jxkeou
 建议大家	jydja
 交易系统	jyxto
 看到这个	kdfg
@@ -147,6 +148,8 @@ sort: original
 下面这个	xmfg
 学长学姐	xqxjo
 希望能够	xwng
+新希望六和	xxwho
+新希望乳业	xxwyou
 需要在	xyzvvv
 夜斗	yeddoo
 有很多人	yhdrvu

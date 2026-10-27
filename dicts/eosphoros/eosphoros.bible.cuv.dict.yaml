@@ -6,7 +6,7 @@
 # Selected source: 译名对照.tsv, 和合本 names used at least 3 times in the CUV text.
 # Codes are regenerated from the eosphoros single-character table.
 # Only codes unused by every other dictionary are taken; colliding rows are omitted.
-# Generated rows: 447
+# Generated rows: 441
 ---
 name: eosphoros.bible.cuv
 version: "2026-10-12"
@@ -27,7 +27,6 @@ sort: original
 希实本	xebuov
 米拉利	mlloiu
 耶布斯人	ybsrvv
-革顺	geewvu
 西宏	xkhyvo
 希勒家	xljuvo
 别是巴	bebooa
@@ -85,7 +84,7 @@ sort: original
 提哥亚	tgyivv
 玛他尼	mtnvi
 玛哈念	mhnv
-示法提雅	eftyv
+示法提雅	eftyva
 耶歇	yexdvo
 雅谢	ysxdvo
 利玛利	lmluv
@@ -166,14 +165,13 @@ sort: original
 亭拿	tgnsoi
 以利法列	ylflau
 以实陶	yetaoa
-伯沙撒	besia
 土巴	tjbsva
 拉吴	lswjio
 歌篾	gemdvu
 毘斯迦	psjiv
 玛他提雅	mttyvi
 玛利沙	mlevua
-甲篾	jsmdi
+甲篾	jsmdiu
 示利比	elbvu
 示拿	eknsv
 祭便	jkbmui
@@ -193,7 +191,7 @@ sort: original
 俄立	xelkio
 俄陀聂	xtniav
 古利奈	glnuu
-哈诺	hsnl
+哈诺	hsnlo
 宾内	bbnwo
 巴实抹	bemao
 底顺	dkewou
@@ -223,7 +221,6 @@ sort: original
 以哥念	ygnavi
 以坦	yktfav
 以琳	yklbav
-俄巴底亚	xbdyia
 利法雅	lfyuav
 哈洗录	hxloa
 哈述	hsejo
@@ -253,7 +250,6 @@ sort: original
 亚玛赛	ymsvvo
 亚里达古	yldgvi
 亦施韦	yewoov
-什亭	ektgio
 他泊	tsbli
 以伯莲	yblaii
 以利撒反	ylsfau
@@ -345,7 +341,7 @@ sort: original
 沙麦	esmh
 沽尼	gjnka
 特庇	tebkuo
-玛哈	mshsv
+玛哈	mshsvo
 示尼珥	enxva
 示玛利雅	emlyv
 示米拉末	emlmv
@@ -380,7 +376,6 @@ sort: original
 亚多尼干	ydngvu
 亚实基拿	yejnv
 亚西纳	yxnvva
-以便以谢	ybyxai
 以倘	yktpai
 以利巴力	ylblau
 以利萨巴	ylsbau
@@ -394,9 +389,9 @@ sort: original
 低加坡里	djplia
 低土马	dtmiv
 何巴	hebsi
+俄巴底雅	xbdyia
 俄德	xedeiu
 司提法那	stfnai
-吕西亚	lxyovv
 哈们	hsmn
 哈忽	hshjo
 哈腊	hslsou
@@ -429,7 +424,6 @@ sort: original
 比梭	bkslvv
 毘莱雅	plyiiv
 沙利色	elsauu
-沙比太	ebtavv
 波提乏	btfai
 波提非拉	btfla
 洗玻	xkblav

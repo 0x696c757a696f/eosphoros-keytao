@@ -74,6 +74,8 @@ import_tables:
   - dicts/eosphoros/eosphoros.wanxiang.mingren
   - dicts/eosphoros/eosphoros.wanxiang.taifeng
   - dicts/eosphoros/eosphoros.wanxiang.jichu
+  - dicts/eosphoros/eosphoros.wanxiang.wuzhong
+  - dicts/eosphoros/eosphoros.wanxiang.yiren
 # ---------------------------------------
 ## 扩展：附加词语----兰佬提供（Full 长尾兜底）
   - dicts/eosphoros/eosphoros.fjcy

@@ -6,7 +6,7 @@
 # Selected source: 译名对照.tsv, 思高本 names used at least 3 times in the CUV text.
 # Codes are regenerated from the eosphoros single-character table.
 # Only codes unused by every other dictionary are taken; colliding rows are omitted.
-# Generated rows: 306
+# Generated rows: 305
 ---
 name: eosphoros.bible.sigao
 version: "2026-10-12"
@@ -271,7 +271,7 @@ sort: original
 犹狄	yddkuu
 狄狄摩	ddmuuo
 玛哈赖	mhlvov
-米匝	mkzso
+米匝	mkzsov
 约特巴达	ytbdau
 约舍巴	yebaia
 纳菲士	nfeaiv
@@ -279,7 +279,6 @@ sort: original
 翁尼	wrnk
 耶卡米雅	ykmy
 舍瑟	eesei
-般雀	bfqhui
 色勒得	slduv
 色古布	sgbuu
 色纳阿	snxua

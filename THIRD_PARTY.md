@@ -69,13 +69,11 @@ isolated from JianDao 6 codes.
 
 ## `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml`
 
-- Upstream: <https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts>
-- Sources: `diming`, `mingren`, and `jichu` dictionaries, synchronized weekly;
-  `yaopin`, `yixue`, `huaxue`, and `taifeng`, which upstream has removed, are
-  kept as their last generation from commit
-  `dc0d8f7a279b87165f712f65d5dcd62f0b28820a` and no longer change
+- Upstream: <https://github.com/amzxyz/rime-wanxiang-data/tree/wanxiang/dicts>
+- Sources: `yaopin`, `yixue`, `huaxue`, `diming`, `mingren`, `taifeng`,
+  `jichu`, `wuzhong`, and `yiren` dictionaries, synchronized weekly
 - License: Creative Commons Attribution 4.0 International
-- License text: <https://github.com/amzxyz/rime-wanxiang/blob/wanxiang/LICENSE>
+- License text: <https://github.com/amzxyz/rime-wanxiang-data/blob/wanxiang/LICENSE>
 
 These category files are an adapted and filtered vocabulary extract. Tone-marked pinyin is used
 only to derive native JianDao 6 codes; upstream codes and final candidate

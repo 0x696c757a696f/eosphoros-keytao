@@ -160,14 +160,14 @@
 每个平台都有 Full、Standard、Lite 三档。它们的编码、Lua、OpenCC、自造词和主题完全一样，区别只在预装了多少词：
 
 - **Full**：所有词库都装上，包括 51 万行的长尾扩展 `fjcy`。适合电脑和存储空间充足的手机。
-- **Standard**：去掉 `fjcy` 和几类很专业的万象词（药品、医学、化学、台风），常用词、ICE、宗派词和地名人名都在。部署更快。
+- **Standard**：去掉 `fjcy` 和几类很专业的万象词（药品、医学、化学、台风、动植物、艺人），常用词、ICE、宗派词和地名人名都在。部署更快。
 - **Lite**：只留单字、基础词组、核心短码和英文，适合内存小的手机。
 
 <!-- dictionary-profile-stats:start -->
 | 档位 | 当前记录数 | 同码记录数 | 同码记录率 | 实际组成 |
 | --- | ---: | ---: | ---: | --- |
-| Full | 1,177,546 | 57,019 | 4.842% | Standard + `fjcy` + 万象药品／医学／化学／台风 + xmjd6-rere 新增扩展词 |
-| Standard | 629,771 | 21,362 | 3.392% | Lite + 宗派专题 + 圣经人名地名 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词 |
+| Full | 1,194,218 | 56,352 | 4.719% | Standard + `fjcy` + 万象药品／医学／化学／台风／动植物／艺人 + xmjd6-rere 新增扩展词 |
+| Standard | 627,197 | 21,153 | 3.373% | Lite + 宗派专题 + 圣经人名地名 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词 |
 | Lite | 251,430 | 11,931 | 4.745% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
 
 同码记录率指最终编码和别的词条相同的记录占该档位全部记录的比例。这是当前词库的静态快照，不包括你后来造的词，也不考虑客户端的词频调整。它适合拿来比较本项目的三个档位，和统计方法不同的其他方案直接比没有意义。
@@ -800,14 +800,14 @@ patch:
 | `dicts/eosphoros/eosphoros.assyrian.dict.yaml` | 71 | 东方亚述教会、东叙利亚礼与景教史专有词汇 |
 | `dicts/eosphoros/eosphoros.core.dict.yaml` | 901 | 630 规则、快符和核心候选 |
 | `dicts/eosphoros/eosphoros.fjcy.dict.yaml` | 514,010 | 长尾扩展词组，源自 xmjd6-rere，仅 Full |
-| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 360,404 | 雾凇拼音中文词，重新编码后的补充库 |
-| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 46,561 | 万象七类专业与常识词，重新编码 |
-| `dicts/eosphoros/eosphoros.rere.cizu.dict.yaml` | 386 | xmjd6-rere 近期新增的基础词，只占空闲码位 |
+| `dicts/eosphoros/eosphoros.ice.dict.yaml` | 355,353 | 雾凇拼音中文词，重新编码后的补充库 |
+| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 68,294 | 万象九类专业与常识词，重新编码 |
+| `dicts/eosphoros/eosphoros.rere.cizu.dict.yaml` | 383 | xmjd6-rere 近期新增的基础词，只占空闲码位 |
 | `dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml` | 103 | xmjd6-rere 近期新增的扩展词，只占空闲码位，仅 Full |
-| `dicts/eosphoros/eosphoros.bible.cuv.dict.yaml` | 447 | 和合本圣经人名地名，只占空闲码位 |
-| `dicts/eosphoros/eosphoros.bible.sigao.dict.yaml` | 306 | 思高本圣经人名地名，只占空闲码位 |
+| `dicts/eosphoros/eosphoros.bible.cuv.dict.yaml` | 441 | 和合本圣经人名地名，只占空闲码位 |
+| `dicts/eosphoros/eosphoros.bible.sigao.dict.yaml` | 305 | 思高本圣经人名地名，只占空闲码位 |
 | `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,648 | 雾凇拼音英文词，`i` 开头输入 |
-| **合计** | **1,177,546** | 不含动态自造词和个人词库 |
+| **合计** | **1,194,218** | 不含动态自造词和个人词库 |
 <!-- dictionary-file-stats:end -->
 
 <details>
@@ -820,7 +820,7 @@ patch:
 - **xmjd6-rere 新增词 `rere.cizu`、`rere.fjcy`**：xmjd6-rere 之后陆续加的新词，会自动同步过来，但只收本方案还没有的词，按本地单字表重新编码，而且只用没人占的编码，所以不会挤掉任何现有候选。
 - **核心短码 `core`**：630 规则、快符和最常用的短码。
 - **雾凇补充词 `ice`**：取自 [rime-ice](https://github.com/iDvel/rime-ice) 的 `base`、`ext`、`others`。拼音会转换成键道编码，本地已有的词去掉，再过滤掉低频长尾、数字年份模板、8 字以上的 `ext` 整句、12 字以上的超长词，以及审过的古文整句、口号和法律条文片段。药名例外：片剂、胶囊、注射液、口服液这类剂型词不会因为低频或太长被过滤。编码时短词先占基础码，长词和低频同码词尽量往后补笔画；新加的词在同一个编码下最多 8 个候选，合并后的重码率不会高于同步前。
-- **万象专业词 `wanxiang.*`**：取自 [rime-wanxiang](https://github.com/amzxyz/rime-wanxiang)，只要药品、医学、化学、地名、名人、台风名和一小部分高频基础词，拼音重新编码成键道码，不收联想句、普通人名、纠错、英文、单字和方言。本地已有的词先去掉，所有合法编码都被占的就跳过，所以不会新增异词同码。其中药品、医学、化学和台风四类上游已经删除了，本仓库保留最后一次同步的结果，不再更新；地名、名人和基础词仍然每周同步。
+- **万象专业词 `wanxiang.*`**：取自万象的词库仓库 [rime-wanxiang-data](https://github.com/amzxyz/rime-wanxiang-data)，只要药品、医学、化学、地名、名人、台风名、常见动植物、知名艺人和一小部分高频基础词，拼音重新编码成键道码，不收联想句、普通人名、纠错、英文、单字和方言。本地已有的词先去掉，所有合法编码都被占的就跳过，所以不会新增异词同码。动植物只收上游权重 100 以上的常见名称，去掉“雁形”“鲑形”这类不完整的分类名；艺人只收权重 500 以上的知名姓名。九类都每周同步。
 - **宗派专题词**：天主教、新教、东正教、东方正统教会和东方亚述教会各一个词库，都是人工审核后生成的，见下一段。
 - **圣经人名地名 `bible.cuv`、`bible.sigao`**：取自 [cuv-with-sigao-names](https://github.com/baibanbao/cuv-with-sigao-names) 的 `译名对照.tsv`，这张表把《和合本》每个人名、地名和《思高本》的译法一一对上，还记了在和合本里出现的次数。这里只收出现 3 次以上、本方案还没有的名字，带间隔号的复合名不收。编码按本地单字表重新推，多音字按名字里的读法定，只用空闲编码。Standard 和 Full 都有。
 - **英文 `en`**：取自 rime-ice 的 `en` 和 `en_ext`，加上 `i` 前缀后并入主词典。
@@ -906,12 +906,11 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `cn_dicts/base`、`ext`、`others` | `eosphoros.ice` | 每周同步 |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `en_dicts/en`、`en_ext` | `eosphoros.en` | 每周同步 |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | `opencc/emoji.txt` | `opencc/eosphoros/eosphoros_emoji_extra_*` | 每周同步 |
-| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `diming`、`mingren`、`jichu` | `eosphoros.wanxiang.{diming,mingren,jichu}` | 每周同步 |
-| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`taifeng`（上游已删除） | `eosphoros.wanxiang.{yaopin,yixue,huaxue,taifeng}` | 保留最后一版，不再变化 |
+| [amzxyz/rime-wanxiang-data](https://github.com/amzxyz/rime-wanxiang-data/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`diming`、`mingren`、`taifeng`、`jichu`、`wuzhong`、`yiren` | `eosphoros.wanxiang.*` | 每周同步 |
 | [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | `xmjd6.cizu`、`xmjd6.fjcy` 里 `baseline_commit` 之后新增的词 | `eosphoros.rere.{cizu,fjcy}` | 每周同步 |
 | [baibanbao/cuv-with-sigao-names](https://github.com/baibanbao/cuv-with-sigao-names) | `译名对照.tsv` 里出现 3 次以上的和合本、思高本译名 | `eosphoros.bible.{cuv,sigao}` | 每周同步 |
 
-本地的 `cizu`、`fjcy` 最早也来自 xmjd6-rere，但两边已经各自整理了很多年，所以不会整体覆盖，只按上面说的方式补新词。上游如果删掉了某个文件（就像万象那四类），同步时会自动把它从锁文件里移除，对应的词库保留最后一版，它的词和编码照样会被其他词库避让。
+本地的 `cizu`、`fjcy` 最早也来自 xmjd6-rere，但两边已经各自整理了很多年，所以不会整体覆盖，只按上面说的方式补新词。上游如果删掉了某个文件，同步时会自动把它从锁文件里移除，对应的词库保留最后一版，它的词和编码照样会被其他词库避让。
 
 同步器不会去追上游分支的浮动内容。它比较“上次锁定的 commit”和“当前 HEAD”，只有用到的文件变了才按最新的完整快照重建，不会一点点叠补丁导致越走越偏。
 
@@ -1090,7 +1089,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | --- | --- |
 | [amorphobia/rime-jiandao](https://github.com/amorphobia/rime-jiandao) | 单字表和 `make_dicts.sh` 的生成规则 |
 | [iDvel/rime-ice](https://github.com/iDvel/rime-ice) | 中文补充词、英文词和 Emoji 数据 |
-| [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang) | 药品、医学、化学、地名、名人、台风名和高频基础词，本仓库重新编码、去重并过滤 |
+| [amzxyz/rime-wanxiang-data](https://github.com/amzxyz/rime-wanxiang-data) | 药品、医学、化学、地名、名人、台风名、动植物、艺人和高频基础词，本仓库重新编码、去重并过滤 |
 | [amorphobia/opencc-tonggui](https://github.com/amorphobia/opencc-tonggui) | 发布时下载并校验的 OpenCC 补充数据 |
 | [SCIM Tables](https://github.com/scim-im/scim-tables) 与 LiangFen 作者 TianHeng | `liangfen` 二分反查的历史数据 |
 | [AOSP PinyinIME](https://android.googlesource.com/platform/packages/inputmethods/PinyinIME.git) | `pinyin_simp` 拼音反查的历史数据 |
@@ -1129,7 +1128,7 @@ python .\tools\sync_upstream_dictionaries.py --write
 | --- | --- | --- |
 | rime-jiandao 单字数据 | 锁定上游 commit，按本方案格式原样生成 | AGPL-3.0-or-later |
 | rime-ice 中文、英文和 Emoji 数据 | 去重、转换编码，锁定生成文件的校验值 | GPL-3.0 |
-| rime-wanxiang 分类词 | 重新编码、过滤和去重，只取词条不取编码和权重 | CC-BY-4.0 |
+| rime-wanxiang-data 分类词 | 重新编码、过滤和去重，只取词条不取编码和权重 | CC-BY-4.0 |
 | rime-txjx 参考实现 | 人工审查后适配进 `lua/eosphoros/` 和 `opencc/eosphoros/` | MIT |
 | mytrime 3.3.10“格调”主题 | 锁定上游文件，修正严格 YAML 解析问题，加入晨星名称和配色 | GPL-3.0-or-later |
 | CrossWire `ChiUns`《和合本》 | 只选取并人工复核书卷名、人名、地名和固定译名 | 上游标注 Public Domain |

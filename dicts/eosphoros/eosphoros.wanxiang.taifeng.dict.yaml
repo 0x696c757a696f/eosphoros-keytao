@@ -1,8 +1,8 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# Generated from amzxyz/rime-wanxiang; do not edit by hand.
-# Source commit: dc0d8f7a279b87165f712f65d5dcd62f0b28820a
+# Generated from amzxyz/rime-wanxiang-data; do not edit by hand.
+# Source commit: 04b2efa8968ae69e84f7373e7c06057a05c5d7ec
 # Selected source: dicts/taifeng.dict.yaml.
 # Pinyin weights are used only for filtering/order; codes are regenerated as eosphoros.
 # Curated local vocabulary takes precedence; colliding rows are omitted.
@@ -55,7 +55,7 @@ sort: original
 台风凡亚比	tffb
 台风风神	tffeau
 台风范斯高	tffga
-台风凤凰	tffh
+台风凤凰	tffha
 台风浮莲	tffla
 台风法茜	tffqa
 台风菲特	tffta
@@ -109,7 +109,7 @@ sort: original
 台风苗柏	tfmba
 台风莫兰蒂	tfmda
 台风麦莎	tfmea
-台风莫拉菲	tfmf
+台风莫拉菲	tfmfa
 台风玫瑰	tfmga
 台风梅花	tfmha
 台风鸣蝉	tfmja
@@ -126,8 +126,8 @@ sort: original
 台风木恩	tfmx
 台风马鞍	tfmxa
 台风玛莉亚	tfmy
-台风妮妲	tfnd
-台风南玛都	tfnda
+台风妮妲	tfnda
+台风南玛都	tfndau
 台风纳沙	tfnea
 台风尼格	tfng
 台风娜基莉	tfnla
@@ -181,7 +181,7 @@ sort: original
 台风威马逊	tfwxau
 台风万宜	tfwyau
 台风暹芭	tfxbau
-台风象神	tfxe
+台风象神	tfxea
 台风蝎虎	tfxha
 台风夏浪	tfxlau
 台风艾莎尼	tfxna

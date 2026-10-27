@@ -133,12 +133,17 @@ class UpstreamDictionaryTests(unittest.TestCase):
             SourceRow("乙烯醇", ("yi", "xi", "chun"), 100, "huaxue", 2, 0),
             SourceRow("杭州市", ("hang", "zhou", "shi"), 1000, "diming", 3, 0),
             SourceRow("台风海葵", ("tai", "feng", "hai", "kui"), 100, "taifeng", 4, 0),
+            SourceRow("栗喉蜂虎", ("li", "hou", "feng", "hu"), 150, "wuzhong", 7, 0),
+            SourceRow("周杰伦", ("zhou", "jie", "lun"), 2000, "yiren", 8, 0),
         )
         rejected = (
             SourceRow("氯化亚", ("lv", "hua", "ya"), 100, "huaxue", 2, 0),
             SourceRow("甲基己", ("jia", "ji", "ji"), 100, "huaxue", 2, 0),
             SourceRow("老师的", ("lao", "shi", "de"), 100000, "jichu", 6, 0),
             SourceRow("张伟", ("zhang", "wei"), 10000, "renming", 7, 0),
+            SourceRow("艾蚜", ("ai", "ya"), 97, "wuzhong", 7, 0),
+            SourceRow("雁形", ("yan", "xing"), 160, "wuzhong", 7, 0),
+            SourceRow("李雨轩", ("li", "yu", "xuan"), 110, "yiren", 8, 0),
         )
         self.assertTrue(all(wanxiang_low_value_reason(row) is None for row in accepted))
         self.assertTrue(all(wanxiang_low_value_reason(row) for row in rejected))
