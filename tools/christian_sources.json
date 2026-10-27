@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "generated_from": "tools/christian_traditions_sources.md",
-  "guide_sha256": "a3c9f78e48c7e97a5478dedd3890ecbc1edb4182cca98013a1b5e0d20c50f904",
+  "guide_sha256": "8210a6b23001729c39ded55927afe3c221f6be525dabe1ce93e05540cda6b094",
   "sources": [
     {
       "id": "d0e88b0a11dd",
@@ -349,6 +349,12 @@
       "id": "6b536e11346b",
       "section": "东方亚述教会与东方教会",
       "url": "https://www.vhmml.org/readingRoom/",
+      "use": "人工核对词目；不抓取或再分发释义与正文"
+    },
+    {
+      "id": "22de7a2879e9",
+      "section": "圣经人名地名",
+      "url": "https://github.com/baibanbao/cuv-with-sigao-names",
       "use": "人工核对词目；不抓取或再分发释义与正文"
     },
     {

@@ -195,7 +195,9 @@ def build_entries(root: Path = ROOT) -> BuildResult:
     fixed_dictionary_paths = [
         path
         for path in dictionary_paths
-        if path.name not in generated_fallbacks and ".wanxiang." not in path.name
+        if path.name not in generated_fallbacks
+        and ".wanxiang." not in path.name
+        and not path.name.startswith("eosphoros.bible.")
     ]
     manifest_rows = load_manifest(root / MANIFEST_NAME)
     code_options = load_character_code_options(root / "dicts" / "eosphoros" / "eosphoros.danzi.dict.yaml")

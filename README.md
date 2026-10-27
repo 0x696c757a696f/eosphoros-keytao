@@ -166,8 +166,8 @@
 <!-- dictionary-profile-stats:start -->
 | 档位 | 当前记录数 | 同码记录数 | 同码记录率 | 实际组成 |
 | --- | ---: | ---: | ---: | --- |
-| Full | 1,176,793 | 57,019 | 4.845% | Standard + `fjcy` + 万象药品／医学／化学／台风 + xmjd6-rere 新增扩展词 |
-| Standard | 629,018 | 21,362 | 3.396% | Lite + 宗派专题 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词 |
+| Full | 1,177,546 | 57,019 | 4.842% | Standard + `fjcy` + 万象药品／医学／化学／台风 + xmjd6-rere 新增扩展词 |
+| Standard | 629,771 | 21,362 | 3.392% | Lite + 宗派专题 + 圣经人名地名 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词 |
 | Lite | 251,430 | 11,931 | 4.745% | 用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文 |
 
 同码记录率指最终编码和别的词条相同的记录占该档位全部记录的比例。这是当前词库的静态快照，不包括你后来造的词，也不考虑客户端的词频调整。它适合拿来比较本项目的三个档位，和统计方法不同的其他方案直接比没有意义。
@@ -804,8 +804,10 @@ patch:
 | `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | 46,561 | 万象七类专业与常识词，重新编码 |
 | `dicts/eosphoros/eosphoros.rere.cizu.dict.yaml` | 386 | xmjd6-rere 近期新增的基础词，只占空闲码位 |
 | `dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml` | 103 | xmjd6-rere 近期新增的扩展词，只占空闲码位，仅 Full |
+| `dicts/eosphoros/eosphoros.bible.cuv.dict.yaml` | 447 | 和合本圣经人名地名，只占空闲码位 |
+| `dicts/eosphoros/eosphoros.bible.sigao.dict.yaml` | 306 | 思高本圣经人名地名，只占空闲码位 |
 | `dicts/eosphoros/eosphoros.en.dict.yaml` | 23,648 | 雾凇拼音英文词，`i` 开头输入 |
-| **合计** | **1,176,793** | 不含动态自造词和个人词库 |
+| **合计** | **1,177,546** | 不含动态自造词和个人词库 |
 <!-- dictionary-file-stats:end -->
 
 <details>
@@ -820,6 +822,7 @@ patch:
 - **雾凇补充词 `ice`**：取自 [rime-ice](https://github.com/iDvel/rime-ice) 的 `base`、`ext`、`others`。拼音会转换成键道编码，本地已有的词去掉，再过滤掉低频长尾、数字年份模板、8 字以上的 `ext` 整句、12 字以上的超长词，以及审过的古文整句、口号和法律条文片段。药名例外：片剂、胶囊、注射液、口服液这类剂型词不会因为低频或太长被过滤。编码时短词先占基础码，长词和低频同码词尽量往后补笔画；新加的词在同一个编码下最多 8 个候选，合并后的重码率不会高于同步前。
 - **万象专业词 `wanxiang.*`**：取自 [rime-wanxiang](https://github.com/amzxyz/rime-wanxiang)，只要药品、医学、化学、地名、名人、台风名和一小部分高频基础词，拼音重新编码成键道码，不收联想句、普通人名、纠错、英文、单字和方言。本地已有的词先去掉，所有合法编码都被占的就跳过，所以不会新增异词同码。其中药品、医学、化学和台风四类上游已经删除了，本仓库保留最后一次同步的结果，不再更新；地名、名人和基础词仍然每周同步。
 - **宗派专题词**：天主教、新教、东正教、东方正统教会和东方亚述教会各一个词库，都是人工审核后生成的，见下一段。
+- **圣经人名地名 `bible.cuv`、`bible.sigao`**：取自 [cuv-with-sigao-names](https://github.com/baibanbao/cuv-with-sigao-names) 的 `译名对照.tsv`，这张表把《和合本》每个人名、地名和《思高本》的译法一一对上，还记了在和合本里出现的次数。这里只收出现 3 次以上、本方案还没有的名字，带间隔号的复合名不收。编码按本地单字表重新推，多音字按名字里的读法定，只用空闲编码。Standard 和 Full 都有。
 - **英文 `en`**：取自 rime-ice 的 `en` 和 `en_ext`，加上 `i` 前缀后并入主词典。
 
 </details>
@@ -838,10 +841,10 @@ patch:
 [`eosphoros.full.dict.yaml`](eosphoros.full.dict.yaml) 是完整的词库索引，Standard 和 Lite 的索引都从它自动生成。词库都不带权重，候选顺序就是加载顺序：
 
 ```text
-user → zzc → danzi → cizu → core → ice → 宗派专题 → wanxiang → fjcy → rere.cizu → rere.fjcy → en
+user → zzc → danzi → cizu → core → ice → 宗派专题 → wanxiang → fjcy → rere.cizu → rere.fjcy → bible.cuv → bible.sigao → en
 ```
 
-个人词和基础常用词排在最前，自动生成的 ICE 在它们之后，宗派专题和其他扩展再往后。xmjd6-rere 的新增词排在中文词库的最后。
+个人词和基础常用词排在最前，自动生成的 ICE 在它们之后，宗派专题和其他扩展再往后。xmjd6-rere 的新增词和圣经人名地名排在中文词库的最后。
 
 <details>
 <summary><b>👤 个人词库怎么加词</b></summary>
@@ -885,7 +888,7 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 | `lua/eosphoros/` | Lua 模块 |
 | `opencc/eosphoros/` | 简繁、Emoji、火星文数据 |
 
-改了 YAML 要重新部署。个人配置尽量写在 `*.custom.yaml` 和个人词库里。`danzi`、`ice`、`wanxiang.*`、`rere.*` 和 `en` 是自动生成的，直接改会在下次同步时被覆盖。
+改了 YAML 要重新部署。个人配置尽量写在 `*.custom.yaml` 和个人词库里。`danzi`、`ice`、`wanxiang.*`、`rere.*`、`bible.*` 和 `en` 是自动生成的，直接改会在下次同步时被覆盖。
 
 </details>
 
@@ -906,6 +909,7 @@ Rime 系的前端（小狼毫、鼠须管、同文、玉兔毫、元书、仓、
 | [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `diming`、`mingren`、`jichu` | `eosphoros.wanxiang.{diming,mingren,jichu}` | 每周同步 |
 | [amzxyz/rime-wanxiang](https://github.com/amzxyz/rime-wanxiang/tree/wanxiang/dicts) | `yaopin`、`yixue`、`huaxue`、`taifeng`（上游已删除） | `eosphoros.wanxiang.{yaopin,yixue,huaxue,taifeng}` | 保留最后一版，不再变化 |
 | [hugh7007/xmjd6-rere](https://github.com/hugh7007/xmjd6-rere) | `xmjd6.cizu`、`xmjd6.fjcy` 里 `baseline_commit` 之后新增的词 | `eosphoros.rere.{cizu,fjcy}` | 每周同步 |
+| [baibanbao/cuv-with-sigao-names](https://github.com/baibanbao/cuv-with-sigao-names) | `译名对照.tsv` 里出现 3 次以上的和合本、思高本译名 | `eosphoros.bible.{cuv,sigao}` | 每周同步 |
 
 本地的 `cizu`、`fjcy` 最早也来自 xmjd6-rere，但两边已经各自整理了很多年，所以不会整体覆盖，只按上面说的方式补新词。上游如果删掉了某个文件（就像万象那四类），同步时会自动把它从锁文件里移除，对应的词库保留最后一版，它的词和编码照样会被其他词库避让。
 

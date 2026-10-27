@@ -101,6 +101,23 @@ is re-encoded from the local single-character table and only takes a code that
 no other entry uses; words without a free code are skipped. Both files load
 after every other Chinese dictionary.
 
+## `dicts/eosphoros/eosphoros.bible.cuv.dict.yaml` and `eosphoros.bible.sigao.dict.yaml`
+
+- Upstream: <https://github.com/baibanbao/cuv-with-sigao-names>
+- Source: `译名对照.tsv`
+- Underlying texts: Chinese Union Version (1919, public domain, CrossWire
+  ChiUn via scrollmapper/bible_databases); Studium Biblicum names checked
+  against the Hong Kong Catholic Biblical Institute name list
+
+The upstream table pairs each Chinese Union Version proper name with its
+Studium Biblicum rendering and the number of times it occurs. Only the bare
+names are used, as a vocabulary discovery list: no verse text, notes or table
+structure is copied. Names that occur fewer than three times or are joined
+with a middle dot are skipped. Each name is re-encoded from the local
+single-character table and only takes a code that no other entry uses. The
+source commit and generated checksums are kept in
+`tools/upstream_dictionaries.lock.json`.
+
 ## `opencc/eosphoros/eosphoros_emoji_extra_*`
 
 - Upstream: <https://github.com/iDvel/rime-ice>

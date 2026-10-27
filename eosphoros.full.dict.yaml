@@ -79,6 +79,9 @@ import_tables:
   - dicts/eosphoros/eosphoros.fjcy
   - dicts/eosphoros/eosphoros.rere.cizu
   - dicts/eosphoros/eosphoros.rere.fjcy
+## 扩展：圣经人名地名（和合本、思高本译名，只占空闲码位）
+  - dicts/eosphoros/eosphoros.bible.cuv
+  - dicts/eosphoros/eosphoros.bible.sigao
 # ---------------------------------------
 ## 扩展：雾凇英文词库（i 键引导，编码已加命名空间前缀）
   - dicts/eosphoros/eosphoros.en

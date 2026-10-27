@@ -46,6 +46,15 @@
         "xmjd6.cizu.dict.yaml",
         "xmjd6.fjcy.dict.yaml"
       ]
+    },
+    "bible_names": {
+      "repository": "baibanbao/cuv-with-sigao-names",
+      "branch": "main",
+      "commit": "5a696a6621c06e8b7f4bfaa821d28384a995fe6b",
+      "license": "Name list used for vocabulary discovery only (see THIRD_PARTY.md)",
+      "files": [
+        "译名对照.tsv"
+      ]
     }
   },
   "generated": {
@@ -108,9 +117,29 @@
     "dicts/eosphoros/eosphoros.rere.fjcy.dict.yaml": {
       "sha256": "0db2c28edb575b77f02b3f72886bef7fec33b4facf8fa5920833f104dbc2bdfb",
       "rows": 103
+    },
+    "dicts/eosphoros/eosphoros.bible.cuv.dict.yaml": {
+      "sha256": "d63e88ac4a2af0ec6950ef495cd55f8f2131d27fcfed2d55dd329bac329fd59b",
+      "rows": 447
+    },
+    "dicts/eosphoros/eosphoros.bible.sigao.dict.yaml": {
+      "sha256": "be028c77d0d53057aabfb1b83ffdd3683784294f7ef4dd092d98e92860e11f17",
+      "rows": 306
     }
   },
   "statistics": {
+    "bible_existing_cuv": 324,
+    "bible_existing_sigao": 766,
+    "bible_generated_cuv": 447,
+    "bible_generated_sigao": 306,
+    "bible_skipped_collision_cuv": 358,
+    "bible_skipped_collision_sigao": 114,
+    "bible_skipped_compound_cuv": 61,
+    "bible_skipped_compound_sigao": 6,
+    "bible_skipped_rare_cuv": 1486,
+    "bible_skipped_rare_sigao": 1417,
+    "bible_source_cuv": 2676,
+    "bible_source_sigao": 2609,
     "combined_collision_rows": 49692,
     "combined_rows": 1116364,
     "deduplicated_local": 279307,
@@ -144,33 +173,24 @@
     "skipped_unencodable": 678,
     "source_rows": 882937,
     "unavoidable_code_collisions": 136572,
-    "wanxiang_deduplicated_local": 318650,
-    "wanxiang_deduplicated_upstream": 333,
+    "wanxiang_deduplicated_local": 318536,
+    "wanxiang_deduplicated_upstream": 101,
     "wanxiang_generated_diming": 5274,
-    "wanxiang_generated_huaxue": 10873,
     "wanxiang_generated_jichu": 147,
     "wanxiang_generated_mingren": 7478,
-    "wanxiang_generated_rows": 46561,
-    "wanxiang_generated_taifeng": 190,
-    "wanxiang_generated_yaopin": 9986,
-    "wanxiang_generated_yixue": 12613,
-    "wanxiang_skipped_collision": 13918,
-    "wanxiang_skipped_low_value_general_long_tail": 1016530,
-    "wanxiang_skipped_low_value_incomplete": 86364,
-    "wanxiang_skipped_low_value_non_han_or_length": 460,
-    "wanxiang_skipped_low_value_not_chemical": 1560,
+    "wanxiang_generated_rows": 12899,
+    "wanxiang_skipped_collision": 4343,
+    "wanxiang_skipped_low_value_general_long_tail": 1016542,
+    "wanxiang_skipped_low_value_incomplete": 86343,
+    "wanxiang_skipped_low_value_non_han_or_length": 393,
     "wanxiang_skipped_low_value_rare_famous_name": 3188,
     "wanxiang_skipped_low_value_weak_place": 74891,
     "wanxiang_skipped_rejected": 1,
-    "wanxiang_skipped_unencodable": 28,
+    "wanxiang_skipped_unencodable": 8,
     "wanxiang_source_diming": 86364,
-    "wanxiang_source_huaxue": 17502,
     "wanxiang_source_jichu": 1412469,
     "wanxiang_source_mingren": 18412,
-    "wanxiang_source_rows": 1562484,
-    "wanxiang_source_taifeng": 217,
-    "wanxiang_source_yaopin": 11894,
-    "wanxiang_source_yixue": 15626,
+    "wanxiang_source_rows": 1517245,
     "xmjd6_added_upstream_cizu": 629,
     "xmjd6_added_upstream_fjcy": 178,
     "xmjd6_deduplicated": 118,
