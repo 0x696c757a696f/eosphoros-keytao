@@ -2136,6 +2136,16 @@ columns:
         ):
             self.assertIn(executable_check, release)
 
+    def test_every_scheduled_workflow_reports_failures(self) -> None:
+        workflows = Path(__file__).resolve().parents[1] / ".github" / "workflows"
+        health = (workflows / "automation-health.yml").read_text(encoding="utf-8")
+        for path in workflows.glob("*.yml"):
+            workflow = path.read_text(encoding="utf-8")
+            if "\n  schedule:" not in workflow:
+                continue
+            name = workflow.splitlines()[0].removeprefix("name:").strip()
+            self.assertIn(f"      - {name}\n", health, path.name)
+
     def test_every_python_workflow_forces_utf8_io(self) -> None:
         root = Path(__file__).resolve().parents[1]
         workflows = root / ".github" / "workflows"
