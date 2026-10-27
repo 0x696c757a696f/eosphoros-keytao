@@ -52,6 +52,7 @@ install_files: >-
   dicts/eosphoros/eosphoros.wanxiang.taifeng.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.wuzhong.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.yaopin.dict.yaml
+  dicts/eosphoros/eosphoros.wanxiang.yiren.dict.yaml
   dicts/eosphoros/eosphoros.wanxiang.yixue.dict.yaml
   dicts/eosphoros/eosphoros.zzc.dict.yaml
   dicts/eosphoros/liangfen.dict.yaml

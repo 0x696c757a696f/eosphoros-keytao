@@ -71,7 +71,7 @@ isolated from JianDao 6 codes.
 
 - Upstream: <https://github.com/amzxyz/rime-wanxiang-data/tree/wanxiang/dicts>
 - Sources: `yaopin`, `yixue`, `huaxue`, `diming`, `mingren`, `taifeng`,
-  `jichu`, and `wuzhong` dictionaries, synchronized weekly
+  `jichu`, `wuzhong`, and `yiren` dictionaries, synchronized weekly
 - License: Creative Commons Attribution 4.0 International
 - License text: <https://github.com/amzxyz/rime-wanxiang-data/blob/wanxiang/LICENSE>
 

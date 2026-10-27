@@ -10,9 +10,9 @@
 # Slim fallback profile: never directly filter 2-3 character words.
 # Unaligned, unencodable, rejected, and low-value entries are skipped.
 # Source rows: 882937
-# Generated rows: 355696
-# Rows before collision pruning: 483735
-# Deduplicated against local dictionaries: 282125
+# Generated rows: 355353
+# Rows before collision pruning: 483324
+# Deduplicated against local dictionaries: 282343
 # Deduplicated inside upstream: 2608
 # Skipped unaligned: 693
 # Skipped unencodable: 678
@@ -20,15 +20,15 @@
 # Recognized medicine names kept: 1627
 # Generated medicine names: 1056
 # Skipped low-value numeric templates: 18153
-# Skipped low-weight base entries: 76344
+# Skipped low-weight base entries: 76334
 # Skipped long ext entries: 5810
 # Skipped overlong entries: 2143
-# Full-code collisions before pruning: 136493
-# Skipped by collision-rate budget: 128036
+# Full-code collisions before pruning: 136407
+# Skipped by collision-rate budget: 127968
 # Skipped by per-code candidate cap: 3
 # Collision target: no higher than the existing local dictionaries.
-# Local collision rows: 33650 / 776828
-# Combined collision rows: 49057 / 1132524
+# Local collision rows: 33650 / 777693
+# Combined collision rows: 49025 / 1133046
 ---
 name: eosphoros.ice
 version: "2026-10-12"
@@ -147,10 +147,10 @@ sort: original
 绷巴吊拷	bbdka
 绷扒吊拷	bbdkai
 百变大咖	bbdkv
-被剥夺政治权利	bbdl
 巴布狄伦	bbdla
 步步堕落	bbdli
-宝贝得不得了	bbdlo
+被剥夺政治权利	bbdlo
+宝贝得不得了	bbdloa
 被逼得走投无路	bbdlov
 爸爸的快乐	bbdlu
 白白地浪费了	bbdluu
@@ -2986,9 +2986,8 @@ sort: original
 别墅地下室	bedeoi
 博士导师	bedeu
 八十大寿	bedeuu
-不是对手	bedev
 不舍得删	bedevi
-不是单身	bedevo
+不是对手	bedevo
 不删档测试	bedevu
 百盛大厦	bedevv
 不少地方	bedf
@@ -3604,8 +3603,8 @@ sort: original
 被删了啊	belxou
 百十来号儿	belxv
 半生流光寻剑意	belyo
-白石砬子	belz
 闭上了嘴	belzo
+白石砬子	belzu
 不上路子	belzv
 编什么	bemaiu
 报什么班	bembi
@@ -3827,8 +3826,8 @@ sort: original
 白商素节	besj
 不睡三觉	besjv
 把手松开	besk
-不说酸了	besl
 八十岁的人了	beslu
+不说酸了	beslv
 不是死了吗	besm
 不是所有牛奶	besn
 巴士四汽	besq
@@ -10108,8 +10107,7 @@ sort: original
 保龄球热	blqrii
 巴黎证券交易所	blqsa
 保龄球赛	blqsi
-布里奇斯	blqsv
-柏林墙倒塌	blqtv
+柏林墙倒塌	blqtvv
 白洛竹	blquau
 八楼站	blquvo
 保利蔷薇	blqwiu
@@ -16321,7 +16319,6 @@ sort: original
 白俄罗斯共和国	bxlgu
 表现良好	bxlhv
 北艾路	bxliio
-北安路	bxlioo
 步行路	bxliuo
 搬行李	bxliuv
 北二路	bxlivo
@@ -16619,7 +16616,7 @@ sort: original
 不相调协	bxtxv
 不相违背	bxwb
 不先为备	bxwbv
-把爱传递	bxwd
+把爱传递	bxwdi
 变形温度	bxwdo
 被训斥一顿	bxwdoo
 冰箱温度	bxwdou
@@ -18168,7 +18165,6 @@ sort: original
 百业萧条	byxtvi
 不要爱她	byxtvv
 白依乡	byxuia
-篦夜蛾	byxuoi
 白永祥	byxuoo
 鲍有祥	byxuvo
 包一下	byxuvv
@@ -18966,7 +18962,6 @@ sort: original
 凑不出来	cbjlov
 猜不出来	cbjlu
 参保居民	cbjma
-崔健	cbjmii
 参保缴费凭证	cbjqa
 脆浆	cbjxu
 猜不出啊	cbjxuv
@@ -21707,7 +21702,6 @@ sort: original
 财产信托	cjxta
 参见下图	cjxtai
 仓储系统	cjxtii
-促进消化系统	cjxtiv
 采集系统	cjxtu
 残疾儿童	cjxtv
 存储系统	cjxtvi
@@ -23351,7 +23345,6 @@ sort: original
 参赛包	csba
 彩色缤纷	csbfu
 寸丝不挂	csbgva
-蔡思贝	csbii
 醋酸倍他米松搽剂	csbjv
 粗俗不堪	csbko
 彩色玻璃	csblu
@@ -24196,7 +24189,6 @@ sort: original
 财新传媒	cxwm
 曾希望	cxwou
 磁性传感器	cxwqv
-曹曦文	cxwvo
 曹晓雯	cxwvov
 曹喜蛙	cxwvvi
 彩信相册	cxxc
@@ -24335,7 +24327,6 @@ sort: original
 参与对话	cydha
 蔡侑玎	cydiiv
 藏影灯	cydioo
-蔡宜达	cydiov
 参与打架	cydja
 参演电视剧	cydjaa
 参与对局	cydjav
@@ -25050,7 +25041,6 @@ sort: original
 从自己做起	czjqiu
 曹子俊	czjvai
 才坐车	czjviv
-曹纯	czjwva
 操作程序	czjxii
 存在竞争关系	czjxvv
 操作经验	czjyi
@@ -25112,7 +25102,7 @@ sort: original
 操猪	czqjiu
 草枕	czqni
 曾资助	czqoo
-操作确认	czqr
+操作确认	czqri
 操作权限	czqxi
 存在缺陷	czqxv
 存在争议	czqyv
@@ -29559,7 +29549,6 @@ sort: original
 都市群	dequoa
 第十曲	dequui
 丁双全	deqvai
-大石桥	deqvvv
 董事长职位	deqwi
 董事长职务	deqwiv
 得失球差	deqwuu
@@ -30281,7 +30270,6 @@ sort: original
 多福山	dfeuoi
 的方式	dfeuov
 答复书	dfeuua
-地方上	dfevoi
 大风沙	dfevua
 地风升	dfevuu
 大枫树	dfevvv
@@ -30825,7 +30813,7 @@ sort: original
 打中没打中	dfmfii
 戴着帽子口罩	dfmfu
 戴着帽子和口罩	dfmfuo
-蠹众木折	dfmfv
+蠹众木折	dfmfvi
 东方美术馆	dfmgv
 抵制日货	dfmhi
 戴着面具生活	dfmhuo
@@ -33820,8 +33808,6 @@ sort: original
 低价转让	djfri
 独峰	djfru
 堵缝	djfrva
-毒蜂	djfrvi
-杜锋	djfrvi
 地产中介公司	djfsvo
 冻结状态	djftoa
 大金中央空调	djftvi
@@ -36901,7 +36887,6 @@ sort: original
 独乐乡	dlxuua
 多留些	dlxuui
 都留下	dlxuuv
-德雷尔	dlxuvu
 到了儿	dlxvau
 带领下	dlxviv
 大寮乡	dlxvoa
@@ -37435,7 +37420,7 @@ sort: original
 德明古镇	dmgqu
 都没关注	dmgqua
 大满贯得主	dmgqva
-都没告诉	dmgsu
+都没告诉	dmgsua
 丹麦公开赛	dmgsuv
 都没给	dmguaa
 都没干	dmguav
@@ -37553,7 +37538,7 @@ sort: original
 单模块	dmkovv
 对日抗战	dmkq
 冬日狂想曲	dmkqu
-德米凯利斯	dmksu
+德米凯利斯	dmksuo
 达摩克利斯	dmksv
 动漫卡通	dmktv
 都没空	dmkuao
@@ -39076,7 +39061,7 @@ sort: original
 东迁村	dqcvuv
 地区词	dqcvvo
 短期财务	dqcw
-地球村儿	dqcxv
+地球村儿	dqcxvv
 大气层核试验	dqcy
 多渠道打包	dqdbu
 都长点心吧	dqdbuu
@@ -40416,7 +40401,6 @@ sort: original
 地热系统	drxtv
 德容恩	drxuo
 东汝乡	drxva
-达仁乡	drxvia
 大瑞乡	drxvva
 达瑞安	drxvvo
 大人小孩都爱吃	drxwv
@@ -42193,7 +42177,7 @@ sort: original
 端午之前	dwfqou
 都无法保证	dwfqu
 短网址生成器	dwfqui
-东吴招亲	dwfqv
+东吴招亲	dwfqvo
 黛薇夫人	dwfr
 单位负责人	dwfro
 都无法否认	dwfru
@@ -45621,7 +45605,6 @@ sort: original
 都与你无关	dyngu
 打赢你	dynio
 钓鱼呢	dyniu
-但愿那	dyniva
 电影男主角	dynji
 电影女主角	dynjio
 读一年级	dynjo
@@ -51929,7 +51912,6 @@ sort: original
 失职者	effuvu
 收费服务	effwaa
 深孚众望	effwau
-手冢治虫	effwio
 数值范围	effwoi
 神舟飞船	effwou
 树脂植物	effwvu
@@ -52796,11 +52778,9 @@ sort: original
 山峰一点红	efyhii
 睡着以后	efyhio
 上周央行	efyhiu
-诗中有画	efyho
-数值优化	efyhoi
+诗中有画	efyhoi
 施放烟火	efyhoo
 实质蕴涵	efyhou
-是枝裕和	efyhov
 甚至有些时候	efyhv
 省着用	efyiou
 蜀风园	efyiui
@@ -59407,7 +59387,6 @@ sort: original
 是里寻非	elxfoi
 生了小孩	elxhu
 生了二胎后	elxhua
-省律协	elxiuu
 舍联乡	elxiva
 水利学家	elxja
 水流心不惊	elxjaa
@@ -60960,8 +60939,7 @@ sort: original
 水暖设备	enebao
 室内设备	eneboi
 市南市北	enebou
-少年时代	enedi
-少女时代	enedia
+少年时代	enediu
 时浓时淡	enedoa
 少女杀手	eneeia
 少男杀手	eneeii
@@ -63018,8 +62996,8 @@ sort: original
 失去兴趣	eqxqu
 石桥小区	eqxqv
 声气相求	eqxqvu
-生趣盎然	eqxr
-生气盎然	eqxru
+生趣盎然	eqxru
+生气盎然	eqxruu
 生长迅速	eqxsu
 申请系统	eqxti
 省气象台	eqxtiu
@@ -65843,7 +65821,6 @@ sort: original
 上传相关	ewxgii
 省委巡视整改	ewxgiu
 史瓦辛格	ewxgiv
-施瓦辛格	ewxgo
 生物安全柜	ewxguu
 尚未消化	ewxhi
 商务信函	ewxho
@@ -68545,7 +68522,6 @@ sort: original
 实用科学	eykxo
 商业可行性	eykxoi
 书院路	eylaao
-双拥路	eylaio
 上瘾了吧	eylbi
 失忆了吧	eylbu
 是有利的	eyld
@@ -70416,7 +70392,6 @@ sort: original
 转包合同	fbhtv
 重保护	fbhuii
 周博涵	fbhuua
-周柏豪	fbhuvo
 重磅好消息	fbhxu
 发表回应	fbhy
 钟表行业	fbhyi
@@ -71729,13 +71704,12 @@ sort: original
 重点设防	fdefui
 风度书房	fdefuo
 重大税务案件审理办法	fdefuv
-重大事故	fdeg
 沸点升高	fdega
 中毒事故	fdegi
 找点事干	fdegii
 非都市风光	fdegiu
-重大收购	fdegu
-重大伤亡事故	fdeguv
+重大事故	fdegu
+重大收购	fdeguv
 终端设备用户	fdeh
 反倒是会	fdehu
 重点审核	fdehui
@@ -71743,7 +71717,6 @@ sort: original
 种的什么花	fdehuu
 重大伤害	fdehuv
 罚点啥	fdeiio
-付笛声	fdeiuv
 指动石	fdeivv
 终端市场	fdeja
 法定时间	fdejao
@@ -71990,7 +71963,7 @@ sort: original
 指定仲裁员	fdfyio
 中等职业	fdfyiu
 福鼎庄园	fdfyo
-周中	fdfyu
+周中	fdfyui
 舟中	fdfyui
 釜底之鱼	fdfyuo
 质的飞跃	fdfyuu
@@ -72517,7 +72490,7 @@ sort: original
 指导老师	fdlei
 指导落实	fdleia
 照道理说	fdleo
-反町隆史	fdleui
+重点论述	fdleui
 制度落实	fdleuo
 重大历史	fdleuv
 辅导老师	fdlev
@@ -72694,8 +72667,8 @@ sort: original
 辅导面	fdmva
 饭都没吃	fdmwu
 重点目标任务	fdmwui
-伏地魔啊	fdmx
-值得冒险	fdmxi
+伏地魔啊	fdmxi
+值得冒险	fdmxiu
 指东骂西	fdmxiv
 朝东暮西	fdmxu
 重点名校	fdmxui
@@ -72818,8 +72791,8 @@ sort: original
 福德正神	fdqeou
 重点展示	fdqeui
 质地清爽	fdqeuv
-发动群众	fdqf
-发电权交易监管暂行办法	fdqfa
+发动群众	fdqfa
+发电权交易监管暂行办法	fdqfai
 法定丈夫	fdqfao
 浮雕墙纸	fdqfau
 中毒症状	fdqfi
@@ -72916,7 +72889,7 @@ sort: original
 放胆去做	fdqzo
 犯盗窃罪	fdqzuo
 负得起责	fdqzuu
-重大让步	fdrbu
+重大让步	fdrbuv
 重点人才	fdrc
 重大热点	fdrdu
 重点任务清单	fdrdui
@@ -73295,7 +73268,6 @@ sort: original
 制导系统	fdxtua
 重点选题	fdxtui
 风道系统	fdxtuo
-制动系统	fdxtuv
 转动系统	fdxtv
 知道啊	fdxuoo
 知道下	fdxuov
@@ -73440,10 +73412,10 @@ sort: original
 分担忧愁	fdywui
 奋斗有我	fdywv
 发电有限	fdyxa
-中的一些	fdyxi
 指导一下	fdyxia
 指点一二	fdyxii
 幅度有限	fdyxio
+中的一些	fdyxiu
 装点一新	fdyxo
 壮侗语系	fdyxoi
 这都有人信	fdyxou
@@ -75987,7 +75959,6 @@ sort: original
 反着来	ffluov
 直直落	ffluui
 周转率	ffluvo
-周转量	ffluvo
 转发了	fflvaa
 封斋了	fflvoa
 轧制力	fflvu
@@ -76559,7 +76530,6 @@ sort: original
 眨着眼	ffyioi
 扶着腰	ffyiou
 中辐院	ffyiva
-范志毅	ffyivo
 赋值语句	ffyjai
 眨着眼睛	ffyji
 眨眨眼睛	ffyjii
@@ -77525,12 +77495,12 @@ sort: original
 中国漫画	fgmhii
 中国帽	fgmiii
 中规模	fgmivv
-逢高卖出	fgmj
 中国民航总局	fgmji
 中国民用航空局	fgmjii
 抓革命促生产	fgmjiv
 这哥们能处	fgmjo
-逢高买进	fgmju
+逢高卖出	fgmju
+逢高买进	fgmjuo
 反革命案件	fgmjuv
 中国面孔	fgmk
 反革命暴乱	fgml
@@ -78421,7 +78391,6 @@ sort: original
 符号的	fhduou
 凤凰岛	fhduuu
 智慧的	fhduvu
-赵合德	fhdviu
 转行当	fhdvu
 发货单位	fhdw
 中华地鳖虫	fhdwi
@@ -81802,7 +81771,6 @@ sort: original
 周口路	fkluo
 复康路	fkluoo
 翻开了	fkluva
-扎克拉文	fklwiu
 专科论文查重	fklwvu
 之量	fklxoo
 这块料儿	fklxov
@@ -82474,8 +82442,7 @@ sort: original
 非历史主义	fleyiv
 福利事业	fleyo
 这里是地狱	fleyoi
-氟罗沙星葡萄糖注射液	fleyu
-周梁淑怡	fleyua
+氟罗沙星葡萄糖注射液	fleyui
 专利使用	fleyv
 非利士族	fleziu
 犯了什么罪	flezu
@@ -83328,7 +83295,6 @@ sort: original
 服了软	flruav
 种粮热	flruoi
 风来人	flruv
-赵丽蓉	flrv
 治理任务	flrwa
 分流绕行	flrx
 质量认证体系	flrxu
@@ -83726,7 +83692,7 @@ sort: original
 风烈阳	flyuva
 风雷益	flyuvo
 赵老爷	flyvuu
-专理员	flyvv
+专理员	flyvvo
 治疗药物	flywao
 法律义务	flywau
 捉了一位	flywi
@@ -84487,7 +84453,7 @@ sort: original
 昼日三接	fmsja
 飞沫四溅	fmsjaa
 非穆斯林	fmsli
-这么骚呢	fmsno
+这么骚呢	fmsnou
 这么骚	fmsoua
 腐霉素	fmsovv
 芝麻酥糖	fmsti
@@ -84674,7 +84640,6 @@ sort: original
 这么一丝丝	fmysou
 这么严重的问题	fmytou
 粉面油头	fmytov
-周牧茵	fmyuui
 周梦瑶	fmyuv
 赵明阳	fmyvoa
 赵美延	fmyvou
@@ -86092,7 +86057,6 @@ sort: original
 富强胡同	fqhto
 番茄花园系统	fqhtu
 重症化	fqhuoi
-周启豪	fqhuoo
 周庆和	fqhuou
 负正号	fqhuvo
 分期还	fqhuvv
@@ -86212,7 +86176,6 @@ sort: original
 分切机	fqjuvv
 至清朝	fqjva
 丰庆街	fqjvou
-赵乾景	fqjvu
 值勤警察	fqjwi
 扶倾救危	fqjwii
 仿真局域网	fqjwiu
@@ -86286,7 +86249,6 @@ sort: original
 发展落后	fqlha
 抓住了机会	fqlhi
 止住了	fqliia
-中青旅	fqlivo
 抓起来	fqlivv
 发展历程	fqlja
 非诊疗时间	fqljio
@@ -86470,7 +86432,7 @@ sort: original
 辅助平面	fqpm
 肺主皮毛	fqpmu
 朝气蓬勃的青年	fqpn
-这张牌	fqpoa
+这张牌	fqpoau
 转账凭证	fqpq
 仿真配置服务器	fqpqi
 番茄派	fqpuia
@@ -86521,7 +86483,6 @@ sort: original
 辅助诊断系统	fqqtv
 重亲情	fqquoo
 反请求	fqquov
-反正切	fqquvv
 赵乾乾	fqqvu
 风轻轻吹	fqqwu
 父亲牵着我	fqqwuo
@@ -87018,7 +86979,6 @@ sort: original
 忠人之托	frfti
 灼热之痛	frftoi
 丰乳肥臀	frftv
-周润发	frfua
 防人之心不可无	frfwa
 致人重伤或死亡	frfwvi
 防人之心	frfxa
@@ -87174,7 +87134,6 @@ sort: original
 放入茄子	frqzo
 法人人格	frrg
 芙蓉如面柳如眉	frrm
-赵蕊蕊	frrvi
 灼热如火焰	frryoi
 妇人孺子	frrza
 飞人赛	frsai
@@ -87558,7 +87517,6 @@ sort: original
 粉丝站	fsqoao
 发送请求	fsqqao
 反诉请求	fsqqu
-法正	fsqrav
 周四前	fsquio
 赵所长	fsqvu
 飞速前行	fsqxav
@@ -88039,7 +87997,7 @@ sort: original
 反弹力度	ftldua
 重体力劳动	ftldui
 斧头镰刀	ftlduo
-种田梨沙	ftleu
+种田梨沙	ftleui
 反托拉斯法	ftlfu
 重体力劳动者	ftlfui
 翻台率高	ftlgua
@@ -88690,7 +88648,6 @@ sort: original
 植物状态	fwftvu
 质问着	fwfuoo
 赵伟洲	fwfvi
-赵文忠	fwfvoi
 费费	fwfwaa
 非非	fwfwii
 中文支持	fwfwio
@@ -91037,7 +90994,7 @@ sort: original
 风险投资公司	fxtsu
 折线统计图	fxtti
 中奥陶统	fxttiu
-赵锡田	fxtvi
+赵锡田	fxtvii
 赵玄坛	fxtvov
 赵希抟	fxtvui
 浙西天池	fxtw
@@ -91263,7 +91220,6 @@ sort: original
 风萧萧	fxxuii
 周小璇	fxxuiv
 质询案	fxxuoo
-复星系	fxxuou
 分享下	fxxuov
 赵鑫鑫	fxxvii
 转小写	fxxvio
@@ -92289,9 +92245,7 @@ sort: original
 翻译好	fyhuoa
 周应合	fyhuoi
 周奕宏	fyhuoo
-周艳泓	fyhuva
 反一号	fyhuvo
-赵岩昊	fyhvio
 赵咏华	fyhvoi
 赵雨航	fyhvvu
 中央和省委	fyhwii
@@ -92668,7 +92622,7 @@ sort: original
 逢月日葵	fymkuu
 专用模块	fymkv
 终于明白了	fymlav
-富有魔力	fymlo
+富有魔力	fymlov
 反应慢了	fymluo
 专业目录	fymlv
 封印命中率	fymlvu
@@ -92704,8 +92658,7 @@ sort: original
 复原模型	fymxuv
 专业模型	fymxv
 至于吗你啊	fymxvv
-中央美院	fymyi
-中央美术学院	fymyii
+中央美院	fymyii
 只要没有	fymyov
 重要盟友	fymyu
 翻译没翻译	fymyuo
@@ -93191,7 +93144,6 @@ sort: original
 只以为	fywoao
 房胤池	fywoua
 这一串	fywovi
-这样问	fywovo
 只要我	fywovu
 法院传票	fywpa
 重要物品	fywpuv
@@ -93366,7 +93318,6 @@ sort: original
 复印下	fyxuuv
 风垭乡	fyxuva
 重一些	fyxuvi
-焚翼蛾	fyxvai
 赵优秀	fyxviu
 赵怡贤	fyxvoi
 赵永馨	fyxvov
@@ -93621,7 +93572,6 @@ sort: original
 至于再三	fyzsv
 防御姿态	fyzta
 重要载体	fyztuv
-赵樱子	fyzvv
 中央综治委	fyzwii
 专业咨询	fyzx
 这样子不行	fyzxo
@@ -94036,7 +93986,6 @@ sort: original
 制作栏	fzluiv
 转走了	fzlvva
 房子烂尾	fzlwoa
-赵雷	fzlwvv
 犯罪类型	fzlxui
 负责联系	fzlxuv
 职责履行	fzlxv
@@ -94318,7 +94267,6 @@ sort: original
 放在银行	fzyhov
 负责银行	fzyhu
 制造业深度融合	fzyhuu
-赵月	fzyhvu
 钟梓萓	fzyivi
 追踪研究	fzyju
 制造业厂	fzyjuu
@@ -94338,7 +94286,6 @@ sort: original
 制造有限公司	fzysu
 周子翼	fzyuaa
 种子园	fzyuai
-周子琰	fzyuav
 周祖翼	fzyuo
 丰泽园	fzyva
 赵子易	fzyvao
@@ -94381,7 +94328,6 @@ sort: original
 给爸爸妈妈	gbbma
 改变不了什么	gbbmao
 根本不算什么	gbbmvv
-高宝宝	gbboo
 关闭不全	gbbqo
 关闭标签	gbbqoo
 各班班长	gbbqu
@@ -97898,7 +97844,6 @@ sort: original
 管杀也管埋	geymu
 管杀又管埋	geymuu
 关淑怡	geyoao
-高圣远	geyoav
 高诗岩	geyooi
 冠生园	geyou
 跪射俑	geyoui
@@ -101771,7 +101716,6 @@ sort: original
 攻击技能	gjjnvv
 高姐姐	gjjoaa
 广捷居	gjjoia
-郭晶晶	gjjooo
 高井街	gjjovu
 哏赳赳	gjjovv
 国际机票	gjjpia
@@ -103435,8 +103379,8 @@ sort: original
 格兰德	gldvou
 过老的	gldvu
 管理队伍	gldwu
-功率单位	gldwv
 过了端午	gldwva
+功率单位	gldwvo
 国立大学	gldx
 给力点儿	gldxa
 关联对象	gldxo
@@ -103799,9 +103743,7 @@ sort: original
 古林街	gljuvu
 过了就	gljvao
 工龄长	gljviu
-干辣椒	gljvov
 桂林街	gljvvu
-咖喱鸡翅	gljwoo
 管理家务	gljwu
 古来今往	gljwuv
 过来接我	gljwvv
@@ -103935,7 +103877,6 @@ sort: original
 够了吗	glmuao
 够了么	glmuau
 管理码	glmuvv
-桂纶镁	glmvai
 更鲁莽	glmvui
 概率模型	glmx
 公立名校	glmxu
@@ -108214,7 +108155,6 @@ sort: original
 滚筒洗衣机	gtxjau
 国投新集	gtxjii
 国土安全局	gtxjiv
-高挑修长	gtxjoi
 沟通效率	gtxla
 沟通协调能力	gtxlaa
 个体心理	gtxli
@@ -110047,7 +109987,6 @@ sort: original
 桂小太郎	gxtlvi
 更心疼了	gxtlvo
 更想她了	gxtlvv
-关心她	gxtooa
 高安屯	gxtoov
 该系统	gxtoua
 关系铁	gxtoui
@@ -113558,7 +113497,6 @@ sort: original
 回到地面	hddmiv
 活动等着你	hddn
 好大的官威呐	hddna
-火地岛	hddovu
 海底地震	hddqao
 海东地区	hddqav
 华东地区	hddqi
@@ -113579,7 +113517,6 @@ sort: original
 皇帝的	hdduou
 核电带	hddviv
 黄道带	hddvov
-赫德岛	hddvuu
 弧度单位	hddwa
 好哒大王	hddwao
 好的大王	hddwau
@@ -115489,7 +115426,6 @@ sort: original
 洪山路	helaio
 红升里	helaui
 红石岭	helavi
-花式溜冰	helbiv
 还顺利吧	helbvu
 虎噬狼餐	helcio
 沪深两地	heldaa
@@ -116657,7 +116593,6 @@ sort: original
 厚着脸	hflvou
 黄福林	hflvov
 或质量	hflvuo
-韩磊	hflwuv
 魂之灵瓮	hflwv
 蕙质兰心	hflxi
 华中理工大学	hflxii
@@ -116981,7 +116916,6 @@ sort: original
 恢复性司法	hfxfou
 或者相反	hfxfv
 喊着响亮的口号	hfxhoo
-韩雪	hfxhuv
 杭州安恒	hfxhv
 杭州西湖	hfxhvo
 化州县	hfxioi
@@ -117147,7 +117081,7 @@ sort: original
 烀肘子	hfzoua
 挥之则去	hfzqi
 恢复增长	hfzqo
-很负责任	hfzru
+很负责任	hfzruu
 环法自行车赛	hfzsv
 赫哲族	hfzvi
 还放在	hfzvov
@@ -120080,7 +120014,6 @@ sort: original
 黑籍冤魂	hjyhi
 合唱音乐会	hjyhio
 皇家银行	hjyhuo
-很长一段时间后	hjyhuu
 环境友好	hjyhv
 黑角域	hjyiuv
 汇聚一击	hjyja
@@ -120929,7 +120862,6 @@ sort: original
 混乱状态	hlfta
 后轮转向系统	hlftu
 和乐福	hlfuu
-杭琳峰	hlfvvi
 黄龙府	hlfvvo
 欢乐氛围	hlfwau
 含泪支持	hlfwi
@@ -122220,8 +122152,7 @@ sort: original
 还没开打	hmkdv
 还没看懂	hmkdva
 蛤蟆口束缚术	hmkei
-还没开始	hmkev
-还没考上	hmkeva
+还没开始	hmkeva
 滑模控制	hmkfa
 还没开放	hmkfv
 华媒控股	hmkg
@@ -122299,7 +122230,6 @@ sort: original
 黄篾楼	hmlvu
 画面里	hmlvvi
 海猫络合物	hmlwa
-黄磊	hmlwv
 花明柳暗	hmlxi
 还没来啊	hmlxv
 还没留意	hmlyv
@@ -122596,8 +122526,7 @@ sort: original
 黄米油糕	hmygvo
 侯门一入深如海	hmyhi
 侯门一入深似海	hmyhio
-还没有还	hmyhv
-还没有想好	hmyhva
+还没有还	hmyhva
 华木姚	hmyiva
 会埋怨	hmyivu
 幻瞑妖界	hmyja
@@ -123279,7 +123208,6 @@ sort: original
 黄陂北路	hpblva
 还怕不怕	hpbpv
 横屏版	hpbvau
-侯佩岑	hpci
 护坡草	hpciv
 和铺村	hpcui
 和坪村	hpcuv
@@ -124018,7 +123946,7 @@ sort: original
 后驱车	hqjuav
 很倾城	hqjuiv
 还汽车	hqjva
-黄章晋	hqjvo
+黄章晋	hqjvov
 婚前检查	hqjwa
 很正经地问	hqjwu
 互助加我	hqjwvi
@@ -125407,8 +125335,8 @@ sort: original
 合同公证	htgqii
 花吐古拉镇	htgqio
 黄土高原地区	htgqv
-华通公司	htgs
-回头告诉	htgsi
+华通公司	htgsi
+回头告诉	htgsio
 合同管理系统	htgtii
 后台管理系统	htgtu
 黄桃罐头	htgtvv
@@ -125473,7 +125401,6 @@ sort: original
 海廷加	htjaua
 海泰居	htjava
 贺天举	htjavo
-红天机	htjavv
 汉庭酒店	htjdao
 火腿煎蛋	htjdo
 呼天叫地	htjdov
@@ -125748,7 +125675,6 @@ sort: original
 换它	httsio
 还它	httsvo
 胡婷婷	httua
-黄婷婷	httva
 黄坦糖	httvvo
 海天特级草菇老抽	httwa
 很头疼啊	httx
@@ -126191,7 +126117,6 @@ sort: original
 河池化工	hwhgaa
 或丸或膏	hwhgv
 海湾合作理事会	hwhhaa
-花无痕	hwhi
 化为灰烬	hwhjio
 虎威狐假	hwhjiv
 和差化积	hwhju
@@ -126532,7 +126457,6 @@ sort: original
 还未完全	hwwqv
 海屋筹添	hwwtaa
 毫无问题	hwwto
-黄伟文	hwwvi
 化吾为王	hwwwiv
 还未完全掌握	hwwwv
 货物崇拜科学	hwwxi
@@ -127033,7 +126957,7 @@ sort: original
 回乡之路	hxflia
 化学治疗	hxflio
 火星着陆	hxflo
-好像发现了什么	hxfma
+好像发现了什么	hxfmai
 互相发明	hxfmvv
 红杏枝头春意闹	hxfna
 黑线方形按钮	hxfnia
@@ -127205,8 +127129,8 @@ sort: original
 后续行情	hxhqua
 互爱互助	hxhqvu
 或许还不如	hxhr
-或行或随	hxhs
-或二或三	hxhsv
+或行或随	hxhsv
+或二或三	hxhsvv
 幻象黑兔	hxhta
 好戏还在后头	hxhtaa
 很喜欢他	hxhtu
@@ -129624,8 +129548,7 @@ sort: original
 很有限的	hyxdu
 行业信息发布制度	hyxdui
 很有心得	hyxduv
-寒鸦戏水	hyxeo
-火云邪神	hyxeov
+寒鸦戏水	hyxeov
 和衣而睡	hyxeu
 行业销售	hyxeui
 红岸	hyxfai
@@ -133500,7 +133423,6 @@ sort: original
 交大科技园	jdkyov
 极端考验	jdkyv
 成都宽窄巷子	jdkzv
-出得了	jdlaua
 承德路	jdlauo
 出动率	jdlavo
 惊掉了下巴	jdlbo
@@ -133778,8 +133700,7 @@ sort: original
 触电溺亡	jdnwui
 加德纳尔	jdnxa
 绝地逆袭	jdnxav
-京都念慈庵	jdnxo
-记得那些	jdnxou
+京都念慈庵	jdnxou
 九大内置对象	jdnxu
 系带男鞋	jdnxuv
 吉大南校	jdnxv
@@ -136552,7 +136473,7 @@ sort: original
 巨石柱群	jeqqv
 城市群和都市圈	jeqqvo
 技术主任	jeqriv
-惊世震俗	jeqs
+惊世震俗	jeqso
 车身主动控制系统	jeqtv
 长沙镇	jequai
 长寿镇	jequvi
@@ -136945,7 +136866,6 @@ sort: original
 金属线材	jexcia
 锦盛新材	jexciv
 教师新村	jexcui
-机神新村	jexcvo
 春生夏长秋收冬藏	jexcvu
 建设性的	jexda
 建设项目用地	jexdao
@@ -137116,7 +137036,6 @@ sort: original
 积善新寓	jexyuo
 解释型语言	jexyuu
 长盛兴业	jexyuv
-井上雄彦	jexyv
 技术协作	jexzi
 金属型铸造	jexzia
 技术选择	jexziv
@@ -141615,7 +141534,6 @@ sort: original
 结合性	jhxaio
 忌荤腥	jhxaiu
 江宏恩	jhxaoi
-陈慧娴	jhxava
 巨核细胞	jhxbv
 成红细胞	jhxbva
 建华新村	jhxca
@@ -143547,7 +143465,6 @@ sort: original
 简洁明了	jjmlua
 成绩没出来	jjmlva
 经济命脉	jjmmaa
-今井麻美	jjmmiv
 寂寂寞寞	jjmmo
 超级名模	jjmmv
 静静默默	jjmmvv
@@ -144430,7 +144347,6 @@ sort: original
 近畿小子	jjxzua
 进军西藏	jjxzv
 降价药	jjyaii
-结节影	jjyaio
 陈健颖	jjyaiu
 经常有	jjyaiv
 加酱油	jjyaoa
@@ -145053,7 +144969,6 @@ sort: original
 出口检验	jkjya
 健康教育	jkjyi
 交口称誉	jkjyo
-吉克隽逸	jkjyvu
 出口成脏	jkjzao
 交口称赞	jkjzo
 姬蒯聩	jkka
@@ -145269,7 +145184,6 @@ sort: original
 健康体系	jktxi
 健康同行	jktxio
 疾控体系	jktxo
-江口拓也	jktyao
 卷款逃走	jktzov
 陈楷雯	jkwavv
 健康传播	jkwbi
@@ -145412,8 +145326,7 @@ sort: original
 聚奎园	jkyvvi
 出口业务	jkywao
 就可以吃	jkywov
-健康有序	jkyx
-健康延安	jkyxi
+健康有序	jkyxi
 借看一下	jkyxii
 饥渴游戏	jkyxua
 成考院校	jkyxv
@@ -145818,7 +145731,6 @@ sort: original
 出了什么问题	jletaa
 车辆识别系统	jletv
 吉林省财政厅	jletvv
-程莉莎	jleuii
 灸疗社	jleuoo
 九连胜	jleuvu
 进了山	jlevai
@@ -146069,9 +145981,8 @@ sort: original
 进了宫	jlgvao
 建瓴高屋	jlgwai
 今来古往	jlgwi
-建立关系	jlgxa
 承揽关系	jlgxai
-建立高校	jlgxao
+建立关系	jlgxao
 级联更新	jlgxav
 叽里旮旯儿	jlgxoi
 距离关系	jlgxoo
@@ -146531,7 +146442,6 @@ sort: original
 车里面没有	jlmyvi
 尽量满足	jlmza
 出了年	jlnaau
-陈丽娜	jlnava
 成了你的	jlnd
 出了那么多	jlnda
 讲了那么多	jlndo
@@ -148464,7 +148374,6 @@ sort: original
 纪念活动	jnhdai
 技能获得	jnhdi
 胶囊化的	jnhdu
-陈赫	jnhea
 沉河	jnheaa
 就那回事	jnheoa
 江南化工	jnhga
@@ -148638,7 +148547,6 @@ sort: original
 就那么回事	jnmeoa
 教你魔术	jnmeui
 江南名府	jnmfau
-陈铭	jnmga
 就能瞒天过海	jnmho
 江南名城	jnmjau
 几年没见	jnmju
@@ -148655,7 +148563,7 @@ sort: original
 就你妈	jnmoia
 就你吗	jnmoio
 就你妈离谱	jnmp
-江南美人	jnmr
+江南美人	jnmra
 教你们做人	jnmru
 就那么回事儿	jnmxo
 江南明珠园	jnmy
@@ -148897,7 +148805,6 @@ sort: original
 津南医院	jnyyau
 肠内营养	jnyyui
 救你爷爷	jnyyv
-陈瑶	jnyz
 酒酿圆子	jnyza
 常年在外地	jnzdi
 就能自动	jnzdoa
@@ -150545,7 +150452,6 @@ sort: original
 朝前看	jqkuoi
 长期看	jqkuv
 成长快	jqkvuo
-贾樟柯	jqkvv
 进去看	jqkvvi
 加强科普宣传	jqkwaa
 建筑科技大学	jqkxau
@@ -150626,7 +150532,6 @@ sort: original
 减轻了	jqlova
 举起了	jqlova
 就去了	jqlova
-唱起了	jqlova
 叫起来	jqlovv
 巢倾卵破	jqlpai
 成群连片	jqlpva
@@ -152143,9 +152048,9 @@ sort: original
 金融赤字	jrwzi
 军人违反职责罪	jrwzo
 陈润儿	jrxaau
-陈若曦	jrxai
 江茸乡	jrxaia
 陈仁锡	jrxaii
+陈若曦	jrxaio
 景仁馅饼	jrxboi
 橙心	jrxbvo
 程潇	jrxcu
@@ -152981,7 +152886,7 @@ sort: original
 角色性格	jsxgu
 加速恶化	jsxhav
 急速恶化	jsxhu
-金色系	jsxiu
+金色系	jsxiuu
 加二	jsxjav
 纯色系列	jsxlau
 景色秀丽	jsxlou
@@ -153013,7 +152918,7 @@ sort: original
 绝色仙子	jsxzau
 金丝小枣	jsxzia
 角色选择	jsxzu
-陈思媛	jsyai
+陈思媛	jsyaia
 建索引	jsyau
 陈松勇	jsyava
 假阴	jsybia
@@ -153686,7 +153591,6 @@ sort: original
 家庭结构	jtjgoo
 车体结构	jtjgv
 阶梯计划	jtjha
-集团结婚	jtjhii
 今天几号	jtjhiv
 家庭计划	jtjho
 交通基本靠吼	jtjhoa
@@ -154011,8 +153915,7 @@ sort: original
 集团战略	jtqlii
 今天真冷	jtqliv
 交谈起来	jtqloo
-静态全局变量	jtqlv
-春天真的来了	jtqlvv
+静态全局变量	jtqlvv
 车田正美	jtqmv
 家庭主男	jtqnoo
 脚踏骑行功能	jtqnu
@@ -154634,7 +154537,7 @@ sort: original
 超稳定性	jwdxv
 剑持刀也	jwdyii
 今晚的月	jwdyio
-就完蛋了呀	jwdyo
+就完蛋了呀	jwdyoo
 久违的校园	jwdyu
 成为第一	jwdyvo
 检查调研	jwdyvv
@@ -155064,7 +154967,6 @@ sort: original
 九纬路	jwluao
 脚踒了	jwluoa
 急弯路	jwluoo
-教我了	jwluua
 井湾路	jwlvao
 击穿了	jwlvoa
 辰旺路	jwlvoo
@@ -155462,7 +155364,6 @@ sort: original
 就差一点点	jwydoo
 就我一个人觉得	jwydou
 救亡运动	jwydvo
-劲往一处使	jwyeau
 监察御史	jwyeio
 见我应如是	jwyeiu
 叫我一声	jwyeou
@@ -156711,7 +156612,6 @@ sort: original
 沉性卵	jxlaou
 陈祥龙	jxlaov
 除夕了	jxlaua
-陈爱莲	jxlaui
 酒醒了	jxlava
 出现率	jxlavo
 撤销列表	jxlbi
@@ -157374,7 +157274,6 @@ sort: original
 践行文明	jxwmou
 嘉行传媒	jxwmv
 诚信网	jxwoii
-靖安王	jxwoo
 嘲笑我	jxwouu
 叫醒我	jxwovu
 乘凶完配	jxwpu
@@ -157428,7 +157327,6 @@ sort: original
 陈小霞	jxxaiv
 加兴乡	jxxaoa
 陈晓旭	jxxaou
-建新巷	jxxaov
 蒋欣	jxxbi
 降心相从	jxxcao
 锦绣新村	jxxci
@@ -158223,7 +158121,6 @@ sort: original
 教育设施重大安全事故罪	jyezu
 江洋辙	jyfaav
 陈彦妃	jyfaoa
-陈云峰	jyfavi
 经营指标	jyfba
 降雨分布	jyfbav
 警用装备	jyfbi
@@ -159319,7 +159216,6 @@ sort: original
 朝阳人	jyruai
 几亿人	jyrui
 救援人	jyrvii
-堺雅人	jyrvvi
 出有入无	jyrw
 处于弱势地位	jyrwu
 承运人责任险	jyrx
@@ -159577,7 +159473,6 @@ sort: original
 基因重组	jywzv
 救援物资	jywzvi
 加油啊	jyxaao
-加依乡	jyxaia
 降压线	jyxava
 将以下文本	jyxboa
 产业信息部	jyxboi
@@ -159844,8 +159739,8 @@ sort: original
 简阳羊肉汤	jyytu
 长影乐团	jyytuo
 戒烟一天	jyytv
-解引用	jyyua
 九幺幺	jyyuaa
+解引用	jyyuau
 教养院	jyyuoa
 教育营	jyyuoi
 九月一	jyyuuv
@@ -170546,7 +170441,6 @@ sort: original
 林权	lbqtvv
 老部长	lbquou
 鲁班球	lbquvv
-林伯渠	lbqvia
 李宝章	lbqvoo
 李炳千	lbqvou
 理不清	lbqvva
@@ -170621,7 +170515,6 @@ sort: original
 裂变同位素	lbtsv
 龙不抬头	lbtt
 乐不停	lbtuvi
-李保田	lbtvii
 林霸天	lbtvvv
 力拔头筹	lbtwa
 老半天儿	lbtxu
@@ -170717,7 +170610,6 @@ sort: original
 老白杏	lbxuuv
 老本儿	lbxuvu
 列巴乡	lbxvaa
-勒贝尔	lbxvau
 林堡乡	lbxvia
 联补乡	lbxvoa
 来宾县	lbxvoi
@@ -170746,7 +170638,7 @@ sort: original
 灵璧渔沟	lbyga
 利比亚国	lbygu
 绿鬓云鬟	lbyha
-联邦银行	lbyhv
+联邦银行	lbyhvv
 利比亚国家	lbyj
 六百一十九	lbyjo
 离别已久	lbyjoo
@@ -170877,8 +170769,7 @@ sort: original
 两次核酸	lchsv
 楼层号	lchvao
 李灿赫	lchvo
-李彩虹	lchvu
-李彩桦	lchvuv
+李彩虹	lchvui
 李村河	lchvv
 绿惨红愁	lchwa
 六次会议	lchy
@@ -171285,7 +171176,6 @@ sort: original
 雷电狮	ldeviu
 轮得上	ldevui
 李德生	ldevuu
-两地书	ldevva
 两地时	ldevvo
 陆地生物	ldewa
 李杜诗篇万口传	ldewv
@@ -171843,8 +171733,7 @@ sort: original
 老倒霉蛋了	ldmlui
 狼的末路	ldmluu
 懒得骂你	ldmno
-立冬日	ldmou
-懒得骂	ldmouo
+立冬日	ldmouo
 刘大铭	ldmovi
 刘大美	ldmovo
 离店日期	ldmq
@@ -172380,7 +172269,6 @@ sort: original
 莱德泽普林	ldzliu
 劳动资料	ldzliv
 来得早了	ldzlvu
-刘殿座	ldzoa
 懒得做	ldzoui
 懒得走	ldzouv
 露地栽培	ldzp
@@ -173122,8 +173010,7 @@ sort: original
 来水了吗	lelmv
 龙神联盟	lelmvo
 拉屎拉尿	leln
-庐山路	leloi
-郎山路	leloio
+庐山路	leloio
 刘少林	leloiv
 旅顺路	lelouo
 礼士路	lelovo
@@ -173877,7 +173764,6 @@ sort: original
 拎着水桶	lfet
 脸发烧	lfeuao
 吏治史	lfevai
-李钟奭	lfeviv
 来凤山	lfevui
 流质食物	lfew
 浪费食物	lfewa
@@ -173915,7 +173801,6 @@ sort: original
 龙中之龙	lfflv
 立方分米	lffmoo
 刘治中	lffoai
-刘芳菲	lffoi
 刘仲甫	lffoiv
 兰州府	lffooo
 刘复之	lffouo
@@ -174199,7 +174084,6 @@ sort: original
 鸾凤鸣	lfmouo
 烂吗	lfmsoo
 露锋芒	lfmvii
-李兆明	lfmvuo
 林志美	lfmvvo
 留着没用	lfmyu
 龙凤玫瑰园	lfmyv
@@ -174217,7 +174101,6 @@ sort: original
 冷着呢	lfnooo
 李中南	lfnviu
 李兆年	lfnvuu
-李智楠	lfnvuv
 劣质奶油	lfnyiu
 揽着你的脖子	lfnz
 搂着你的脖子	lfnzi
@@ -174415,7 +174298,6 @@ sort: original
 棱缝儿	lfxvau
 林凤祥	lfxvuo
 李智秀	lfxvuu
-林志炫	lfxvvo
 林志雄	lfxvvv
 浪费现象	lfxxa
 拉着行李箱	lfxxio
@@ -174680,7 +174562,6 @@ sort: original
 两个率先	lgexv
 龙光射牛斗之墟	lgexvi
 栗宫双叶	lgeyv
-洛国富	lgfai
 梁国治	lgfaia
 陆国富	lgfaio
 流官制	lgfao
@@ -174893,7 +174774,6 @@ sort: original
 啷个哩个啷	lgllo
 流感裂解疫苗	lglma
 劳工联盟	lglmi
-刘国梁	lgloia
 路归路	lgloio
 刘国龙	lgloiv
 刘冠麟	lgloo
@@ -175156,7 +175036,6 @@ sort: original
 李国修	lgxvii
 李光曦	lgxvio
 李光秀	lgxviu
-雷光夏	lgxviv
 李裹儿	lgxvou
 李广杏	lgxvov
 林皋乡	lgxvua
@@ -175274,7 +175153,6 @@ sort: original
 刘鸿博	lhboau
 灵魂摆渡黄泉	lhbqa
 轮回币	lhbviu
-李鹤彪	lhbvoi
 连环保	lhbvvi
 落红不是无情物	lhbwia
 联合办学	lhbxv
@@ -175293,7 +175171,6 @@ sort: original
 仑后村	lhciuv
 量化策略	lhclo
 联合参谋	lhcm
-刘浩存	lhcoa
 刘河村	lhcoav
 兰花村	lhcoiv
 刘黄村	lhcovv
@@ -175537,7 +175414,6 @@ sort: original
 落后观念	lhgniu
 联合国粮农	lhgnvi
 离婚瓜	lhgoau
-刘和刚	lhgoui
 来港	lhgpva
 利害关系人	lhgru
 联合公司	lhgs
@@ -175899,7 +175775,6 @@ sort: original
 硫化染料	lhrlv
 两行热泪	lhrlvu
 刘海若	lhroai
-刘昊然	lhroo
 联合人社厅	lhrt
 李浩瑞	lhrvav
 李辉仁	lhrvii
@@ -176106,8 +175981,6 @@ sort: original
 李海洋	lhyvaa
 李红燕	lhyvav
 李虎翼	lhyvia
-李焕英	lhyvoi
-李寒衣	lhyvoo
 李怀远	lhyvov
 柳翰雅	lhyvuv
 来还愿	lhyvvv
@@ -176212,7 +176085,6 @@ sort: original
 李建兵	ljbvau
 连接表	ljbviv
 林家堡	ljbvoi
-连城璧	ljbvva
 李进步	ljbvvi
 轮机兵	ljbvvu
 立脚不稳	ljbwou
@@ -176569,7 +176441,6 @@ sort: original
 梨俱吠陀	ljftu
 黎建飞	ljfuaa
 留驾庄	ljfuao
-李澄中	ljfvai
 李经方	ljfvao
 李淳风	ljfvau
 林承志	ljfvav
@@ -176692,7 +176563,6 @@ sort: original
 卢镐	ljgzi
 裂裳裹足	ljgzv
 梁洁华	ljhaai
-梁家辉	ljhaoi
 梁嘉鸿	ljhav
 梁嘉泓	ljhava
 陆嘉珩	ljhavv
@@ -176728,7 +176598,6 @@ sort: original
 刘俊豪	ljhoio
 刘家河	ljhooa
 刘昌赫	ljhoov
-六春湖	ljhova
 冷春慧	ljhovv
 领结婚证	ljhqia
 炼精化气	ljhqoo
@@ -176745,7 +176614,6 @@ sort: original
 李俊濠	ljhvia
 李金华	ljhvii
 李俊慧	ljhviv
-李家河	ljhvoa
 李家华	ljhvoi
 李长河	ljhvua
 林朝华	ljhvui
@@ -176887,7 +176755,6 @@ sort: original
 李锦记蒸鱼豉油	ljjyv
 卢潮	ljjzia
 廉价出租	ljjzoi
-梁靖崑	ljkaoi
 廉价快餐	ljkc
 里杰卡尔德	ljkdi
 路基宽度	ljkdov
@@ -176954,7 +176821,6 @@ sort: original
 连接良好	ljlhv
 链结螺	ljliai
 链接里	ljliii
-罗俊霖	ljliiv
 罗家路	ljlioo
 拉长了	ljliua
 罗嘉良	ljlivo
@@ -176990,7 +176856,6 @@ sort: original
 刘家林	ljloov
 立春了	ljlova
 凉城路	ljlovo
-刘嘉玲	ljlovv
 流处理器	ljlqau
 连进两球	ljlqvv
 累计利润	ljlri
@@ -177008,7 +176873,6 @@ sort: original
 李佳伦	ljlvii
 李佳乐	ljlviu
 列举了	ljlvoa
-麓景路	ljlvoo
 李家林	ljlvov
 卢伦	ljlwii
 漓江柳岸	ljlxaa
@@ -177064,7 +176928,6 @@ sort: original
 良辰美景奈何天	ljmtov
 柳承敏	ljmva
 李俊民	ljmvia
-李金铭	ljmvii
 林觉民	ljmvoa
 林长民	ljmvua
 流程模型	ljmxa
@@ -177246,7 +177109,6 @@ sort: original
 李劲然	ljrvau
 李俊瑞	ljrvi
 李健仁	ljrvii
-李诚儒	ljrvoi
 来静茹	ljrvvi
 列举如下	ljrx
 路绝人稀	ljrxo
@@ -177505,7 +177367,6 @@ sort: original
 李健熙	ljxviv
 李家峡	ljxvoi
 李长信	ljxvui
-理解下	ljxvuv
 两极性	ljxvvo
 李嘉欣	ljxvvu
 李春熙	ljxvvv
@@ -177545,7 +177406,6 @@ sort: original
 落成仪式	ljyeiv
 类成员函数	ljyeov
 两京一十三省	ljyevo
-卢燕	ljyfiv
 辣椒油树脂	ljyfov
 两件衣服	ljyfvi
 理解与尊重	ljyfvu
@@ -177606,7 +177466,6 @@ sort: original
 老家院	ljyuoa
 丽江苑	ljyvai
 李金羽	ljyvia
-李净洋	ljyvoa
 丽景苑	ljyvoi
 赖家益	ljyvoo
 林景云	ljyvov
@@ -177843,7 +177702,6 @@ sort: original
 力困筋乏	lkjfa
 立镜	lkjgoi
 立井	lkjgov
-李静	lkjgvv
 罗可嘉	lkjivv
 临渴掘井	lkjjia
 兰蔻菁纯	lkjjoi
@@ -177944,7 +177802,6 @@ sort: original
 丽梅	lkmwvv
 乱扣帽子	lkmzui
 离开你以后	lknho
-李念	lknmvi
 离那	lknso
 丽娜	lknsva
 李凯年	lknvi
@@ -177976,7 +177833,6 @@ sort: original
 理政	lkqrvv
 旅客住宿	lkqso
 李科长	lkqvuu
-李克勤	lkqvuv
 力克群雄	lkqxau
 烂柯棋缘	lkqyo
 李琼	lkqyv
@@ -178001,7 +177857,6 @@ sort: original
 牢靠妥当	lktdou
 离开土地	lktdov
 两块土地	lktdvv
-李婷	lktgva
 丽泰	lkthvv
 李田	lktmv
 冷空调	lktoo
@@ -178256,7 +178111,6 @@ sort: original
 笼络到	lldua
 利落地	llduiv
 乱乱的	llduu
-理疗袋	lldvoi
 理论的	lldvou
 龙利得	lldvuu
 两锂电池	lldwv
@@ -178949,7 +178803,6 @@ sort: original
 栗栗危惧	llwjv
 联络我们	llwmv
 碌碌无能	llwnv
-吕良伟	llwoo
 刘丽川	llwovu
 六六无穷	llwq
 流量传感器	llwqa
@@ -179063,8 +178916,6 @@ sort: original
 露了一手	llyev
 绿眼	llyfai
 裸岩	llyfoi
-吕严	llyfov
-吕燕	llyfov
 来了一个	llygva
 流离遇合	llyhao
 落落余晖	llyhii
@@ -179089,7 +178940,6 @@ sort: original
 浏览源代码	llymai
 柳乐优弥	llymv
 来了一年	llyn
-刘力扬	llyoai
 刘乐瑶	llyou
 刘乐妍	llyoua
 利率衍生品	llypuo
@@ -179244,7 +179094,6 @@ sort: original
 龙眠的夏天	lmdtvi
 两米大长腿	lmdtvo
 龙目岛	lmdviu
-李明德	lmdvou
 两面搭	lmdvvi
 罗马帝王	lmdwia
 麓铭大岳丸	lmdwvi
@@ -179663,7 +179512,6 @@ sort: original
 浪漫天降	lmtjaa
 路面拓宽	lmtkov
 老埋汰了	lmtlu
-刘敏涛	lmtoua
 流媒体服务器	lmtqa
 流媒体网站	lmtqaa
 蓝猫淘气	lmtqi
@@ -179750,12 +179598,11 @@ sort: original
 里面写的是什么	lmxmi
 六马乡	lmxoaa
 刘茂恩	lmxoii
-刘明霄	lmxoo
 六门乡	lmxooa
 刘美贤	lmxooi
 吕明星	lmxooo
 裸盲蟹	lmxoou
-凌美雪	lmxoov
+刘明霄	lmxoov
 兰木乡	lmxova
 廖梦雪	lmxovv
 绿盟安全	lmxqa
@@ -179770,8 +179617,6 @@ sort: original
 来马乡	lmxvaa
 李默庵	lmxvio
 李美娥	lmxvoa
-林美秀	lmxvou
-李明雪	lmxvov
 靓名尔	lmxvuu
 李玟娥	lmxvva
 流氓行为	lmxwao
@@ -179802,8 +179647,7 @@ sort: original
 铃木亚美	lmym
 六马仰秣	lmymo
 罗摩衍那	lmyn
-廖美英	lmyoo
-鹿鸣苑	lmyooi
+廖美英	lmyooi
 刘美月	lmyoou
 浪漫言情	lmyq
 两码一证	lmyqv
@@ -180304,7 +180148,6 @@ sort: original
 临濮镇	lpqiai
 落魄千金	lpqji
 零跑汽车	lpqjvo
-刘佩琦	lpqoi
 乐平镇	lpquv
 来破阵	lpqvva
 力排群议	lpqya
@@ -180615,7 +180458,6 @@ sort: original
 理气化痰	lqhtvu
 乐助会	lqhuii
 李绮红	lqhvaa
-李振辉	lqhvii
 李镇赫	lqhviv
 李启汉	lqhvoa
 李青海	lqhvva
@@ -180638,7 +180480,6 @@ sort: original
 六阶	lqjdoa
 六节	lqjdoi
 兰郑长管道	lqjdoo
-离去角度	lqjdov
 篮球场地	lqjduv
 罗雀掘鼠	lqjei
 篮球场上	lqjeu
@@ -180744,7 +180585,6 @@ sort: original
 刘老	lqlzo
 留起了胡子	lqlzuv
 陇珠螨	lqmav
-刘敏	lqmbo
 篮球木地板	lqmbu
 录取名单	lqmda
 临阵磨刀	lqmdi
@@ -180835,7 +180675,7 @@ sort: original
 录取人数	lqre
 两情若是久长时	lqrev
 两情若是长久时	lqrevo
-礼轻人意重	lqrf
+礼轻人意重	lqrfo
 卢主任	lqrioi
 老区人民	lqrm
 刘祝润	lqrooa
@@ -180878,7 +180718,6 @@ sort: original
 雷启泰	lqtvo
 李青桐	lqtvvv
 捋清头绪	lqtxi
-刘涛	lqtzoa
 浪茄湾	lqwai
 梁茜雯	lqwaiv
 浪琴湾	lqwava
@@ -180980,7 +180819,6 @@ sort: original
 莱齐耶三世	lqyeio
 洛奇英雄传	lqyfav
 拎起一个	lqygi
-刘悦	lqyho
 冷战以后	lqyhoi
 另起一行	lqyhov
 罗清宇	lqyiao
@@ -181236,7 +181074,6 @@ sort: original
 利润留成	lrljua
 令人落泪	lrlli
 朗若列眉	lrlmoi
-炼人炉	lrloio
 六榕路	lrlov
 利润率水平	lrlpu
 懔然敛容	lrlrou
@@ -182381,7 +182218,6 @@ sort: original
 论坛贴图	lttto
 李田田	lttvii
 来谈谈	lttvoo
-李特特	lttvuu
 林太太	lttvvv
 立体图像	lttx
 流通体系	lttxa
@@ -182475,7 +182311,6 @@ sort: original
 利天下	ltxuvv
 龙潭乡	ltxvaa
 连同学	ltxvio
-联体儿	ltxviu
 龙头性	ltxvoo
 聊天啊	ltxvvo
 立天下之正位	ltxwo
@@ -182550,7 +182385,6 @@ sort: original
 烂桃子酱	ltzjo
 烙铁嘴	ltzoi
 烂桃子	ltzova
-刘天佐	ltzovi
 力图自强	ltzqa
 连通子图	ltztv
 联通在信	ltzx
@@ -182600,7 +182434,6 @@ sort: original
 李冲聪	lwcvo
 论文参考文献	lwcx
 流传度	lwdaio
-漏网的	lwdaiu
 论文答辩	lwdboo
 流传的故事	lwdeai
 丽湾大厦	lwdeva
@@ -182768,7 +182601,7 @@ sort: original
 刘文华	lwhooi
 腊味合蒸	lwhqu
 劳务合同	lwhti
-李维汉	lwhva
+李维汉	lwhvaa
 李婉华	lwhvai
 连尾𫚔	lwhvau
 李文瀚	lwhvo
@@ -183021,7 +182854,6 @@ sort: original
 龙薇传媒	lwwmv
 诔文	lwwnoo
 刘维伟	lwwoai
-刘威葳	lwwovi
 论文查重要求	lwwq
 两万五千里长征	lwwqv
 论文查重系统	lwwtoo
@@ -183029,7 +182861,6 @@ sort: original
 老问我	lwwuo
 李伟文	lwwvi
 李崇文	lwwvio
-林晚晚	lwwvoo
 来问我	lwwvou
 李文雯	lwwvov
 楼歪歪	lwwvvv
@@ -183188,7 +183019,6 @@ sort: original
 量布	lxbjov
 联系北京	lxbjvu
 流行病学情况	lxbkau
-流行病学资料	lxblau
 敛而不露	lxbli
 类型变量	lxblo
 联系办理	lxblvu
@@ -183442,7 +183272,6 @@ sort: original
 落下神坛	lxeti
 旅行社组团	lxeto
 连休十天	lxetv
-李小双	lxevia
 龙信使	lxevii
 来新生	lxevou
 理学士	lxevov
@@ -183632,7 +183461,6 @@ sort: original
 联系购买	lxgmvu
 灵儿姑娘	lxgna
 留校过年	lxgnu
-刘小光	lxgoii
 立新功	lxgoov
 恋爱瓜	lxgouu
 旅行过	lxgouv
@@ -184072,7 +183900,6 @@ sort: original
 棂星门	lxmvo
 龙新民	lxmvoa
 林晓蜜	lxmvoo
-李秀明	lxmvuo
 䴕形目	lxmvvi
 李西闽	lxmvvo
 魉妹	lxmwu
@@ -184260,7 +184087,7 @@ sort: original
 老乡人	lxrua
 黎晓瑞	lxruov
 李昕融	lxrvov
-李欣燃	lxrvu
+李欣燃	lxrvuo
 履行任务	lxrwau
 例行任务	lxrwi
 联系人王	lxrwv
@@ -184489,7 +184316,6 @@ sort: original
 六安县	lxxooi
 烂学校	lxxoov
 旅行险	lxxoua
-刘熏爱	lxxouu
 刘雪庵	lxxovo
 另行安排	lxxpo
 旅行安排	lxxpou
@@ -184599,8 +184425,8 @@ sort: original
 刘心悠	lxyooi
 刘新云	lxyoov
 刘希媛	lxyoua
-类型域	lxyov
 刘幸义	lxyovo
+类型域	lxyovv
 旅行用品	lxypo
 两性用品	lxypv
 流行乐曲	lxyq
@@ -185075,10 +184901,8 @@ sort: original
 林渝植	lyfvav
 李仪祉	lyfvio
 李寅飞	lyfvoa
-烈焰峰	lyfvoi
 连音符	lyfvou
 零用费	lyfvua
-李毓芬	lyfvui
 李雨霏	lyfvvv
 落叶植物	lyfwio
 虑远防微	lyfwiv
@@ -185202,7 +185026,6 @@ sort: original
 鲁阳挥日	lyhmu
 林原惠美	lyhmv
 利用核能	lyhnuu
-刘晏含	lyhooi
 刘昱晗	lyhooo
 熘腰花	lyhoui
 刘云华	lyhovi
@@ -185303,7 +185126,6 @@ sort: original
 六月见	lyjoui
 六月九	lyjouu
 另一阶	lyjova
-另一场	lyjovv
 蓝牙产品	lyjpi
 旅游产品	lyjpo
 旅游纪念品	lyjpoa
@@ -185422,7 +185244,6 @@ sort: original
 龙阳路	lylvao
 柳营路	lylvio
 联谊路	lylvoo
-李延亮	lylvuo
 连云路	lylvvo
 礼义廉耻	lylwo
 六一礼物	lylwov
@@ -185702,7 +185523,6 @@ sort: original
 李依桐	lytviv
 李云婷	lytvva
 李玉堂	lytvvi
-雷雨天	lytvvv
 粮油调味	lytw
 罗严塔尔	lytx
 蓝牙通信	lytxi
@@ -185767,7 +185587,6 @@ sort: original
 李豫川	lywva
 龙峪湾	lywvia
 李言闻	lywvoo
-李亚伟	lywvvi
 李雅微	lywvvu
 琅邪王	lywvvv
 泪眼汪汪	lywwai
@@ -185829,7 +185648,6 @@ sort: original
 六一儿童节	lyxjov
 腊月二十九	lyxjuu
 留一线生机	lyxjuv
-栗原小卷	lyxjvv
 冷眼相看	lyxkoi
 龙息	lyxkvu
 滥用行政权力	lyxla
@@ -185850,8 +185668,6 @@ sort: original
 刘宇昕	lyxooo
 礼乐乡	lyxoua
 冷月心	lyxouo
-刘玉新	lyxovo
-刘雨欣	lyxovu
 唠一下	lyxovv
 另有安排	lyxp
 阆苑仙葩	lyxpo
@@ -185886,10 +185702,9 @@ sort: original
 林予曦	lyxvao
 李媛希	lyxvau
 李妍熙	lyxvav
-李英爱	lyxvi
 烈屿乡	lyxvia
 李耀新	lyxvio
-露龈笑	lyxviu
+李英爱	lyxviu
 列衣乡	lyxvoa
 龙羊峡	lyxvoi
 李易祥	lyxvoo
@@ -185950,7 +185765,6 @@ sort: original
 腊月一日	lyymu
 两叶掩目	lyymv
 柳阴烟漠漠	lyymva
-鹿野苑	lyyoii
 刘银月	lyyoiu
 鹿呦呦	lyyooo
 刘逸云	lyyou
@@ -185969,7 +185783,6 @@ sort: original
 胧月夜	lyyuuo
 腊月一	lyyuuv
 利牙鱼	lyyuvu
-李媛媛	lyyvaa
 李圆圆	lyyvii
 林尧英	lyyvvi
 蓝腰鹦鹉	lyywi
@@ -186092,7 +185905,6 @@ sort: original
 老婶	lzenua
 廖自升	lzeou
 粒子束武器	lzeqo
-李宗盛	lzevo
 粒子射线	lzex
 罗子山瑶族乡	lzexi
 量子生物学	lzexo
@@ -186227,7 +186039,6 @@ sort: original
 李泽坚	lzjvai
 来组成	lzjvav
 李自健	lzjvui
-李梓嘉	lzjvvv
 路在脚下	lzjxov
 李自成起义	lzjy
 立足长远	lzjyo
@@ -186334,7 +186145,6 @@ sort: original
 莲子猪心汤	lzqtia
 留早镇	lzquo
 老族长	lzquou
-李子柒	lzqvaa
 李作泉	lzqviu
 六字真言	lzqyo
 来自人民	lzrm
@@ -186669,7 +186479,6 @@ sort: original
 没办法工作	mbfzaa
 模板制作	mbfzv
 没办过	mbgaa
-马保国	mbgaii
 没蹦过	mbgaov
 没白过	mbgau
 民不告	mbgavu
@@ -187743,7 +187552,6 @@ sort: original
 民德归厚矣	mdgyau
 没打好	mdhaia
 没电话	mdhaio
-买的花	mdhaui
 没的话	mdhauo
 没大号	mdhavo
 骂得很好吧	mdhb
@@ -188738,7 +188546,6 @@ sort: original
 秘书工作	megz
 没生过孩子	megza
 面试工作	megzv
-马少骅	mehaia
 没审核	mehao
 没说好	mehaoa
 没说谎	mehaoo
@@ -189483,11 +189290,11 @@ sort: original
 埋伏笔	mfbviu
 明知不可为	mfbwo
 没法比啊	mfbx
-麻风病院	mfby
 没这必要	mfbya
 冒着白烟	mfbyi
 冒着暴雨	mfbyio
-日中必移	mfbyo
+麻风病院	mfbyo
+日中必移	mfbyoi
 模范榜样	mfbyv
 靡费不赀	mfbzoa
 民治村	mfcaav
@@ -192747,8 +192554,7 @@ sort: original
 日间行车灯	mjxdoo
 木楔	mjxdvv
 目成心授	mjxei
-明降暗升	mjxeo
-日渐消瘦	mjxeoa
+明降暗升	mjxeoa
 日常行驶	mjxeoi
 日常行为规范	mjxfo
 免除刑罚	mjxfua
@@ -193626,7 +193432,6 @@ sort: original
 没立场	mljaov
 没脸见	mljaui
 马利筋	mljauu
-孟丽君	mljava
 没来及	mljavu
 没理解错吧	mljba
 米兰酒吧	mljboo
@@ -196578,7 +196383,6 @@ sort: original
 没人追求	mrfqai
 明如指掌	mrfqo
 鸣人之死	mrfso
-毛人风	mrfuiu
 名人坊	mrfuiv
 孟飞	mrfwaa
 没人支持	mrfwai
@@ -196974,7 +196778,6 @@ sort: original
 抹搭	msdsi
 梅赛德斯	msdsvo
 麦色的	msdvu
-马东	msdyav
 没损失	mseai
 靡所适从	msec
 莫所适从	mseci
@@ -197092,7 +196895,6 @@ sort: original
 密苏里河	mslhoi
 萌死啦	mslivo
 马莉	mslkai
-马丽	mslkav
 马洛	msllaa
 穆斯莱拉	msllu
 马莲	mslmai
@@ -197286,8 +197088,8 @@ sort: original
 没听错	mtcaoi
 没听错吧	mtcb
 媒体曾报道	mtcd
-摸头村	mtci
-茂亭村	mtcio
+摸头村	mtcio
+茂亭村	mtciov
 明天才出	mtcj
 明天才能	mtcn
 庙头村	mtco
@@ -197347,7 +197149,6 @@ sort: original
 每天都来	mtdlu
 每天都练	mtdluv
 模特的脸	mtdlv
-麦特戴蒙	mtdm
 每天都很忙	mtdmu
 每天都在忙	mtdmuv
 满头大汗呐	mtdna
@@ -198373,7 +198174,7 @@ sort: original
 没问题呀	mwtyao
 磨穿铁砚	mwtyoo
 马齿徒增	mwtzai
-马伍旺	mwwai
+马伍旺	mwwaio
 没问我	mwwao
 没床位	mwwaoi
 没吃完	mwwaoo
@@ -199096,7 +198897,6 @@ sort: original
 美胸模特	mxmto
 明星模特	mxmtoo
 迈阿密海滩	mxmtv
-毛阿敏	mxmua
 名校梦	mxmuv
 日向日差	mxmw
 么西么西	mxmx
@@ -199757,8 +199557,8 @@ sort: original
 没有闪开	myeka
 摩崖石刻	myeko
 密云水库	myekov
-没有什么了	myel
-没优势了	myela
+没有什么了	myela
+没优势了	myelai
 没有事了	myelav
 昧于事理	myelo
 日益衰落	myeloo
@@ -203965,8 +203765,8 @@ sort: original
 你杀了我	nelwi
 女式凉鞋	nelx
 你傻了啊	nelxi
-扭伤了腰	nely
-你睡了没有	nelyi
+扭伤了腰	nelyi
+你睡了没有	nelyii
 南山律宗	nelz
 你什么档次	nemc
 你什么时候来的	nemd
@@ -204177,7 +203977,7 @@ sort: original
 泥水选种	nexfaa
 女生校服	nexfau
 女式西服	nexfav
-女神校花	nexh
+女神校花	nexha
 你刷新	nexia
 念书啊	nexiao
 拿事儿	nexivu
@@ -207113,7 +206913,6 @@ sort: original
 你可真会	nkqhiv
 你煮	nkqjiu
 你卡住了	nkqlii
-倪震	nkqniv
 宁可去	nkqov
 宁可清贫	nkqpo
 你快去死	nkqsi
@@ -214059,7 +213858,6 @@ sort: original
 陪着母亲	pfmq
 品质民宿	pfmso
 朴哲民	pfmvia
-朴智旻	pfmvu
 皮肤模型	pfmx
 屏风马儿	pfmxa
 拼装模型	pfmxi
@@ -217108,7 +216906,6 @@ sort: original
 帕奇利兹	pqlz
 批准日期	pqmq
 攀鼩目	pqmvu
-朴正民	pqmvva
 喷泉模型	pqmx
 盆腔囊肿	pqnfu
 盆腔脓肿	pqnfuu
@@ -217845,7 +217642,6 @@ sort: original
 派传单	pwdai
 颇为低调	pwddao
 培德	pwdevu
-平川大辅	pwdfvu
 陪我度过	pwdg
 平稳度过	pwdgv
 陪我到最后	pwdhau
@@ -219865,11 +219661,11 @@ sort: original
 珠宝业	qbyvoi
 全部义务	qbywi
 七百一十万	qbywvv
-准备一些	qbyx
 清拌腰丝儿	qbyxa
 占卜一下	qbyxi
-准备一下	qbyxo
+准备一些	qbyxo
 情报有误啊	qbyxoi
+准备一下	qbyxou
 请不要着急啊	qbyxov
 七百一十二	qbyxv
 区别与联系	qbyxvo
@@ -220711,9 +220507,9 @@ sort: original
 张殿菲	qdfaa
 张迪哲	qdfaii
 张道中	qdfaoi
-张丹枫	qdfau
 张德芬	qdfaui
 张丹凤	qdfauu
+张丹枫	qdfauv
 驱动值	qdfavi
 驱动着	qdfavo
 张大复	qdfavu
@@ -220963,7 +220759,6 @@ sort: original
 欠的工资	qdgzu
 征地工作	qdgzuv
 整党工作	qdgzv
-强度好	qdhaoa
 涨得好	qdhaua
 强得很	qdhauu
 长得很好吧	qdhbu
@@ -221275,7 +221070,6 @@ sort: original
 真的开心	qdkxuu
 青岛科技大学	qdkxv
 确定可以	qdkyv
-注定了	qdlaoa
 清单里	qdlaoi
 张丹露	qdlau
 张德兰	qdlauo
@@ -222695,7 +222489,6 @@ sort: original
 张舒涵	qehaia
 张少华	qehaii
 张申宏	qehaio
-张韶涵	qehao
 张守恒	qehaoo
 请稍后再拨	qehbou
 确实很棒	qehbvo
@@ -225364,7 +225157,7 @@ sort: original
 政治自由	qfzyv
 政治资源	qfzyva
 起重作业	qfzyvu
-沾个边	qgbai
+沾个边	qgbaia
 千古不变	qgbbu
 庆彪	qgbco
 驻港部队	qgbda
@@ -225914,9 +225707,7 @@ sort: original
 青杠坡	qgpvv
 挣个屁啊	qgpxi
 千工坪乡	qgpxu
-张国强	qgqai
-张国庆	qgqaio
-张国政	qgqaiv
+张国强	qgqaia
 张皋镇	qgqaui
 情感主播	qgqbov
 曲棍球队	qgqdi
@@ -226588,7 +226379,6 @@ sort: original
 期货合约	qhhyvi
 郑合惠子	qhhzo
 张海娇	qhjaaa
-骑河车	qhjaav
 汽化计	qhjaio
 张恒久	qhjaou
 张怀瑾	qhjaov
@@ -226666,7 +226456,6 @@ sort: original
 张洪亮	qhlaao
 张汉林	qhlaav
 张华立	qhlaio
-张鹤龄	qhlaoi
 清晖路	qhlaoo
 瞧好了吧	qhlbi
 缺磷	qhlbuv
@@ -226830,7 +226619,7 @@ sort: original
 真会死人	qhsru
 朱鹤松	qhsuov
 青蒿素的发现	qhsxv
-张海涛	qhtaa
+张海涛	qhtaaa
 强化土地	qhtda
 钱湖天地	qhtdia
 气候特点	qhtdu
@@ -226910,7 +226699,7 @@ sort: original
 张鸿星	qhxaao
 张会祥	qhxaio
 清华系	qhxaiu
-张慧娴	qhxav
+张慧娴	qhxava
 䞍好儿吧	qhxba
 瞧好儿吧	qhxbia
 前后相悖	qhxbou
@@ -226979,16 +226768,12 @@ sort: original
 切合需要	qhxyvi
 其黄而陨	qhxyvv
 奇幻仙踪	qhxzva
-张海鹰	qhyaa
 张涵予	qhyaaa
-张浩宇	qhyaao
 清华源	qhyaia
 清华园	qhyaii
 张含韵	qhyaio
-张怀义	qhyao
 清晖园	qhyaoi
-张煌言	qhyaoo
-张昊玥	qhyaov
+张怀义	qhyaoo
 清和园	qhyau
 张惠言	qhyav
 强还原	qhyavv
@@ -227777,7 +227562,6 @@ sort: original
 张俊浩	qjhaia
 张敬华	qjhaii
 张敬豪	qjhaio
-张家辉	qjhaoi
 强军号	qjhaoo
 张景惠	qjhaov
 张长虹	qjhau
@@ -227999,7 +227783,6 @@ sort: original
 朱辰杰	qjjuvv
 整出剧	qjjvaa
 去出差	qjjvao
-权金城	qjjviv
 球场街	qjjvvu
 主君	qjjwoa
 朱军	qjjwuo
@@ -228028,7 +227811,6 @@ sort: original
 震惊朝野	qjjyvo
 秦城监狱	qjjyvv
 汽车出租	qjjza
-张继科	qjkaa
 赈济款	qjkaav
 清朝康熙皇帝	qjkda
 拯救可怜的	qjkdi
@@ -228250,7 +228032,6 @@ sort: original
 起车没油	qjmyv
 针灸麻醉	qjmziu
 主角名字	qjmzou
-张钧甯	qjnai
 张家弄	qjnaov
 抢纪念币	qjnbia
 驻加拿大	qjnd
@@ -228522,7 +228303,6 @@ sort: original
 正常体重	qjtfvi
 枪决通知	qjtfvo
 主机托管	qjtgov
-朱婷	qjtgua
 逐渐提高	qjtgva
 汽车弹簧	qjthav
 秋季特惠	qjthuu
@@ -228792,17 +228572,14 @@ sort: original
 青春校园	qjxyvv
 正常行走	qjxzv
 正襟安坐	qjxzvo
-张婧仪	qjyaai
 屈居于	qjyaav
 张佳胤	qjyaiu
 张俊一	qjyaiv
-张朝阳	qjyau
 张嘉益	qjyavo
 张嘉元	qjyavv
 全局与局部	qjybia
 弃甲曳兵	qjyboi
 主角一般	qjybou
-朱茵	qjybui
 逐渐演变	qjybv
 前景预测	qjyc
 帧间预测	qjyci
@@ -229928,7 +229705,6 @@ sort: original
 签了个字	qlgzua
 起了个早	qlgzva
 沾了灰	qlhaa
-张凌赫	qlhao
 张老汉	qlhau
 助力红包	qlhbia
 战略伙伴	qlhbii
@@ -230597,7 +230373,6 @@ sort: original
 群里有	qlyaiv
 清冷渊	qlyao
 张老营	qlyau
-张靓颖	qlyav
 清林苑	qlyavi
 张连印	qlyavu
 张琳艳	qlyavv
@@ -232172,7 +231947,6 @@ sort: original
 青苹果乐园	qpgyv
 张鹏翮	qpha
 切片厚度	qphdv
-张翰	qphfa
 前盘后鼓	qphgo
 气派豪华	qphhu
 正品行货	qphhv
@@ -232217,14 +231991,12 @@ sort: original
 张俊	qpjwai
 切片检查	qpjwv
 壳牌机油	qpjy
-张超	qpjza
 张凯	qpkha
 全盘考虑	qpkli
 正品开模	qpkmv
 张佩纶	qplai
 清盘率	qplau
-张林	qplba
-张琳	qplbav
+张林	qplbav
 全频喇叭	qplbi
 涨喽	qplda
 强迫劳动	qpldau
@@ -232345,7 +232117,6 @@ sort: original
 占便宜的是呆	qpydii
 帐篷营地	qpydiu
 珠盘玉敦	qpydvu
-张燕	qpyfav
 张英	qpygai
 张莹	qpygai
 张颖	qpygau
@@ -232365,7 +232136,6 @@ sort: original
 棋牌游戏	qpyx
 棋盘游戏	qpyxv
 枪炮一响	qpyxvo
-张瑶	qpyzav
 张泽	qpzea
 真皮组织	qpzfu
 强迫自己	qpzja
@@ -233006,7 +232776,6 @@ sort: original
 前去看望一下	qqkx
 全球抗疫	qqkyiv
 求亲靠友	qqkyv
-张振朗	qqlaio
 张庆黎	qqlao
 张千里	qqlaui
 清真路	qqlauo
@@ -233145,7 +232914,6 @@ sort: original
 情趣内衣	qqny
 求求你了呀	qqnyv
 崎岖难走	qqnzi
-张庆鹏	qqpao
 全球排行榜	qqpbi
 求聘	qqpbvv
 正确判断	qqpd
@@ -234380,7 +234148,7 @@ sort: original
 请随我来	qswloa
 千思万虑	qswlui
 气死我了你	qswnu
-前四位	qswoi
+前四位	qswoii
 前三万	qswovv
 杞宋无征	qswq
 住宿问题	qswti
@@ -235672,7 +235440,6 @@ sort: original
 主持会议	qwhy
 期望行业	qwhyv
 政务行业	qwhyvu
-张卫健	qwjaa
 展望奖	qwjaoo
 主文件表	qwjboo
 站稳脚步	qwjbou
@@ -236046,7 +235813,6 @@ sort: original
 气冲冲地走	qwwzu
 张卫星	qwxaao
 张婉儿	qwxaau
-张伟欣	qwxai
 清宛县	qwxao
 清完雪	qwxaov
 张午乡	qwxau
@@ -236433,7 +236199,7 @@ sort: original
 全系搭载	qxdziu
 七星电子	qxdzv
 涨薪水	qxeai
-张安顺	qxeao
+张安顺	qxeaou
 骑行时	qxeauo
 张先生	qxeauu
 张现双	qxeava
@@ -236514,10 +236280,8 @@ sort: original
 诛仙手游	qxeyoi
 朱弦疏越	qxeyua
 珍惜水资源	qxeyv
-张信哲	qxfaii
 张晓中	qxfaoi
 张辛庄	qxfaoo
-张雪中	qxfavi
 骑行装备	qxfbau
 强行中断	qxfda
 涨薪幅度	qxfdai
@@ -236709,10 +236473,8 @@ sort: original
 政校合作	qxhzvv
 张小姐	qxjaia
 展信佳	qxjaii
-张艾嘉	qxjaiv
 张晓洁	qxjaoa
 张兴朝	qxjaou
-张心杰	qxjaov
 张秀娟	qxjaua
 清香剂	qxjauo
 张行简	qxjauu
@@ -236865,7 +236627,6 @@ sort: original
 清溪路	qxlaa
 张兴伦	qxlaoi
 展翔路	qxlaoo
-张啸林	qxlaov
 强行拉	qxlaui
 清醒了	qxlava
 强行搂抱	qxlbau
@@ -236938,8 +236699,8 @@ sort: original
 弃瑕录用	qxlyo
 签写留言	qxlyuo
 张小妹	qxmai
-张晓梅	qxmao
 张学敏	qxmaou
+张晓梅	qxmaov
 张爱明	qxmau
 真想明白	qxmbu
 七夕免单	qxmdv
@@ -237579,7 +237340,6 @@ sort: original
 煮一包方便面	qybmu
 七月八日	qybmv
 郑艺彬	qyboi
-郑宇伯	qybooi
 站用变	qybouo
 注音不全	qybqao
 企业标准	qybqi
@@ -237780,7 +237540,6 @@ sort: original
 牵衣顿足	qydzvo
 张艺上	qyeaii
 张玉书	qyeava
-张雨生	qyeavu
 正月十八	qyeb
 七月十八	qyebv
 巧言善辩	qyebvo
@@ -237893,7 +237652,6 @@ sort: original
 张裕钊	qyfaoi
 张亚飞	qyfava
 强压着	qyfavo
-张雨霏	qyfavv
 主要分布	qyfbo
 主要指标	qyfbov
 乾元重宝	qyfbu
@@ -238183,9 +237941,7 @@ sort: original
 张应昌	qyjaoo
 群益街	qyjaou
 张永超	qyjaov
-张颖洁	qyjau
-张元济	qyjava
-张云锦	qyjavi
+张颖洁	qyjaua
 张元举	qyjavo
 清野坚壁	qyjba
 企业成本	qyjbii
@@ -238266,7 +238022,6 @@ sort: original
 千亿级规模	qyjmui
 七月九日	qyjmv
 秋意渐浓	qyjnu
-郑渊洁	qyjoaa
 亲眼见	qyjoii
 郑怡静	qyjoov
 郑延俊	qyjoui
@@ -238377,10 +238132,8 @@ sort: original
 张叶蕾	qylaoi
 张永立	qylaoo
 张月亮	qylauo
-张杨路	qylav
 屈轶龄	qylavi
-清远路	qylavo
-张云龙	qylavv
+张杨路	qylavo
 朱颜绿鬓	qylbu
 区域列表	qylbvv
 企业领导	qyldi
@@ -238482,9 +238235,6 @@ sort: original
 张艺曼	qymai
 张应梅	qymao
 张月铭	qymau
-张艳梅	qymav
-张一鸣	qymavo
-张雅梦	qymavv
 战云密布	qymbi
 企业模板	qymbii
 仗义每多屠狗辈	qymbio
@@ -238897,7 +238647,6 @@ sort: original
 求医问药	qywyvv
 企业重组	qywz
 张翼翔	qyxaao
-张耀翔	qyxaio
 群英巷	qyxaiv
 注意学	qyxaoo
 张宇欣	qyxaou
@@ -239054,7 +238803,6 @@ sort: original
 谦抑性原则	qyxzo
 穷游西藏	qyxzoa
 签一下字	qyxzu
-张媛媛	qyyaaa
 张蕴钰	qyyai
 清逸园	qyyaui
 张一一	qyyav
@@ -239459,9 +239207,9 @@ sort: original
 签字画押	qzhyuo
 榛子还是栗子	qzhzva
 整租合租	qzhzvu
-张子琛	qzjaa
 张子俊	qzjaai
 张泽军	qzjaao
+张子琛	qzjaav
 张祖诚	qzjaoo
 潜在成本	qzjba
 亲子俱乐部	qzjboa
@@ -239722,7 +239470,7 @@ sort: original
 潜在危险	qzwxav
 确凿无疑	qzwyvi
 正在创作	qzwzvv
-张子旭	qzxaa
+张子旭	qzxaau
 张宗祥	qzxao
 张宗逊	qzxaoa
 张自轩	qzxau
@@ -239775,7 +239523,6 @@ sort: original
 住在学校	qzxxiv
 主宰行星	qzxxoo
 住在校园	qzxyi
-张泽禹	qzyaa
 张泽毅	qzyaao
 张祖翼	qzyaoa
 张宰英	qzyaoi
@@ -240964,7 +240711,7 @@ sort: original
 人事行政经理	rexliv
 燃烧效率	rexlo
 人事行政部门	rexmi
-仍深爱你	rexn
+仍深爱你	rexni
 人事安排	rexp
 柔声细气	rexqav
 人事行政	rexqiv
@@ -246802,9 +246549,8 @@ sort: original
 私对私	sdsua
 死的死	sdsvu
 三地同步	sdtb
-四大特点	sdtd
-扫地拖地	sdtdi
-寺岛拓笃	sdtdv
+四大特点	sdtdi
+扫地拖地	sdtdiv
 三点透视	sdtev
 速度提升	sdtevo
 四大天王有五个	sdtgi
@@ -248785,7 +248531,7 @@ sort: original
 塞给我们	sgwmoa
 三国传奇	sgwq
 四顾无人	sgwr
-塞哥维亚	sgwy
+塞哥维亚	sgwyo
 孙国相	sgxaiv
 涩谷系	sgxau
 桑果雪芭	sgxb
@@ -249242,7 +248988,6 @@ sort: original
 三行字	shzvuo
 送孩子上学	shzx
 似乎早就没有	shzy
-孙集斌	sjbaio
 孙敬博	sjbaiu
 孙家埠	sjbao
 司机宝	sjbav
@@ -249477,7 +249222,6 @@ sort: original
 随车甘雨	sjgyav
 塑胶工业	sjgyou
 三军过后尽开颜	sjgyvo
-孙继海	sjhaa
 三角函数表	sjhbvu
 三校合并	sjhbvv
 三级缓存	sjhc
@@ -249506,7 +249250,6 @@ sort: original
 素华	sjhqvi
 速降滑雪赛	sjhsv
 四处横行	sjhxiu
-苏红	sjhyia
 苏虹	sjhyii
 嵩景花园	sjhyio
 塑胶行业	sjhyo
@@ -249713,7 +249456,7 @@ sort: original
 三角柱体	sjqtv
 死精症	sjqvoo
 松城镇	sjqvvi
-四处张望	sjqwi
+四处张望	sjqwiu
 私家侦探调查	sjqwu
 绥靖主义	sjqya
 四季青医院	sjqyi
@@ -249840,7 +249583,7 @@ sort: original
 苏姓	sjxgia
 宿姓	sjxgoa
 随机信号	sjxhav
-思界乡	sjxii
+思界乡	sjxiia
 苏家巷	sjxio
 搜就行	sjxiou
 四进二	sjxivv
@@ -251303,7 +251046,7 @@ sort: original
 三盆儿	spxvu
 三片儿	spxvuu
 撒泼行凶	spxx
-孙培源	spyav
+孙培源	spyava
 酥皮月饼	spybv
 三抛一代	spyd
 三浦友和	spyhv
@@ -252540,7 +252283,7 @@ sort: original
 三维数组	swezv
 四川榨菜	swfc
 死亡之翼台词	swfcv
-丝绸之路经济带	swfda
+丝绸之路经济带	swfdaa
 所问非所答	swfdu
 死亡之地	swfdvo
 死无招对	swfdvv
@@ -252651,7 +252394,6 @@ sort: original
 四重积分	swjfi
 三重积分	swjfv
 三叉戟标志	swjfva
-孙静	swjga
 三维结构	swjgv
 四川长虹	swjhi
 三叉戟河	swjhv
@@ -252673,7 +252415,6 @@ sort: original
 三维建模	swjmv
 四川长宁	swjni
 赛文加	swjooa
-宋文嘉	swjoov
 宋王朝	swjov
 缩微胶片	swjpa
 四川长牌	swjpi
@@ -252688,7 +252429,6 @@ sort: original
 三叉街	swjvau
 三重积	swjvuu
 三王街	swjvv
-孙纯	swjwaa
 四川监狱	swjy
 随插即用	swjya
 孙楷	swkhav
@@ -252721,8 +252461,8 @@ sort: original
 四维路	swliao
 萨乌罗	swliui
 四川路	swliuo
-四川辣子鸡	swlj
-思维逻辑	swlji
+四川辣子鸡	swlji
+思维逻辑	swljia
 三万六千场	swljv
 死亡率下降	swljvo
 三岔路口	swlkv
@@ -252816,7 +252556,7 @@ sort: original
 送我张	swqoua
 思维障碍	swqx
 死亡契约	swqyvo
-孙睿	swrba
+孙睿	swrbai
 死亡人数	swre
 死亡如风	swrfv
 三重人格	swrg
@@ -253660,10 +253400,9 @@ sort: original
 四月十一	syeyiu
 私有深意	syeyu
 三月十一	syeyv
-孙艺洲	syfai
 孙冶方	syfao
 孙逸飞	syfau
-孙亚菲	syfav
+孙亚菲	syfavi
 松筠之操	syfc
 所以这次	syfcu
 所有者的	syfdu
@@ -253995,7 +253734,6 @@ sort: original
 肆意挑衅	sytxv
 孙耀威	sywai
 孙毓汶	sywau
-孙一文	sywavo
 肆意传播	sywbvo
 所以我都	sywd
 所以我都没觉得	sywdu
@@ -254087,7 +253825,7 @@ sort: original
 宋屿安	syxoio
 宋岩欣	syxoiu
 宋永祥	syxooo
-塞一些	syxov
+塞一些	syxovi
 嗍一下	syxovv
 三言二拍	syxp
 四月二十七	syxqi
@@ -254234,7 +253972,7 @@ sort: original
 所在国家或地区	szgquv
 所在高校	szgxu
 送子观音	szgyo
-孙子航	szha
+孙子航	szhaa
 臊秽	szhbu
 松姿鹤骨	szhgv
 所在行业	szhyu
@@ -254912,7 +254650,7 @@ sort: original
 同步算法	tbsfi
 台北松山机场	tbsja
 田贝四路	tbslia
-特别𪨊	tbsu
+特别𪨊	tbsuo
 塔巴斯	tbsva
 特别松弛	tbswu
 逃避虽可耻	tbswua
@@ -255466,7 +255204,6 @@ sort: original
 天大地大	tdddv
 土地登记制度	tdddvv
 铁打的事实	tddeii
-铁道大厦	tddeio
 特定多数	tddeu
 甜点大师	tddeui
 态度大师	tddev
@@ -259433,7 +259170,6 @@ sort: original
 天河客运站	thkq
 桃花口味	thkwvi
 通海路	thlaao
-陶汉林	thlaav
 通航路	thlau
 弹簧力	thlaua
 体会了一把	thlbi
@@ -261160,7 +260896,6 @@ sort: original
 调节油脂分泌	tjymoi
 替嫁医女	tjynva
 唐峻洋	tjyoia
-谭俊彦	tjyoio
 调车员	tjyovo
 汤臣一品	tjypa
 汤城翊品	tjypav
@@ -261802,11 +261537,10 @@ sort: original
 铜陵市人民医院	tleyi
 贪婪是万恶之源	tleyiv
 桶里射鱼	tleyv
-条例实施细则	tlez
 弹力十足	tleza
-藤林圣子	tlezi
-同力杀贼	tlezia
+同力杀贼	tlezi
 调理身子	tlezo
+条例实施细则	tlezu
 通了匪	tlfaav
 太浪费了吧	tlfbv
 吐鲁番盆地	tlfdo
@@ -266400,7 +266134,6 @@ sort: original
 图文无关	twwg
 田雯雯	twwiv
 太无耻了	twwlv
-谭维维	twwoaa
 调味茶	twwoo
 图文传真	twwq
 甜宠文	twwuo
@@ -268200,7 +267933,6 @@ sort: original
 通用功能	tygnau
 天涯歌女	tygnv
 讨因果	tygoi
-谈一个	tygovi
 通港	tygpaa
 同一个屏	tygpiv
 同一个地球	tygqi
@@ -268444,7 +268176,6 @@ sort: original
 桃园怜奈	tyln
 痰液量	tyloao
 谈娱乐	tyloau
-谭咏麟	tyloo
 调音量	tylooo
 唐延路	tylou
 褪鱼鳞	tylouu
@@ -270092,7 +269823,6 @@ sort: original
 臭鼻症	wbquuo
 稳不住	wbquvi
 王步青	wbqviv
-王宝强	wbqvoa
 王部长	wbqvou
 五比丘	wbqvvu
 万别千差	wbqw
@@ -270427,7 +270157,6 @@ sort: original
 我不要他	wbytu
 我不要她	wbytuv
 王冰洋	wbyvoa
-未必有	wbyvov
 外币业务	wbywu
 我本以为	wbywuv
 无斑雨蛙	wbywv
@@ -272928,7 +272657,6 @@ sort: original
 猬实属	weeuoa
 我说啥	weeuoo
 船首饰	weeuou
-王莎莎	weevii
 五省市	weevio
 王顺山	weevui
 雾煞煞	weevuu
@@ -274619,8 +274347,6 @@ sort: original
 重复值	wffuui
 重复着	wffuuo
 我转发	wffuv
-王治郅	wffvav
-王霏霏	wffvvv
 池中之物	wffwai
 位置服务	wffwi
 位置发我	wffwii
@@ -275484,7 +275210,6 @@ sort: original
 我中午	wfwuiu
 危废物	wfwuou
 王中王	wfwviv
-王志文	wfwvvo
 潍坊传媒网	wfwwa
 望着窗外	wfwwoo
 我中午吃	wfwwui
@@ -278137,7 +277862,6 @@ sort: original
 魏家店	wjduoo
 危急的	wjduu
 无尽的	wjdvau
-未见的	wjdviu
 王初冬	wjdvou
 未季调	wjdvuo
 赤脚的	wjdvuu
@@ -278460,7 +278184,6 @@ sort: original
 重见光明	wjgmui
 胃肠功能	wjgni
 我家过年	wjgnuo
-为结果	wjgoai
 吴金贵	wjgoii
 旺柴狗	wjgoiu
 忘记改	wjgooa
@@ -278701,7 +278424,6 @@ sort: original
 五金厂	wjjviv
 王军军	wjjvoo
 武昌街	wjjvou
-王家场	wjjvov
 王长江	wjjvua
 王成家	wjjvvo
 万春街	wjjvvu
@@ -278762,7 +278484,6 @@ sort: original
 舞长空	wjkuuo
 微机课	wjkuv
 未出库	wjkvao
-王俊凯	wjkvii
 吴昆	wjkwoo
 无尽空虚	wjkxva
 无处可寻	wjkxvu
@@ -278945,7 +278666,6 @@ sort: original
 无捻	wjnmvi
 未成年子女	wjnnv
 未成年少女	wjnnvv
-文俊尼	wjnoia
 文件内	wjnoii
 忘记弄	wjnoov
 误解你	wjnou
@@ -279084,8 +278804,6 @@ sort: original
 唯井真寻	wjqxov
 我出去一下	wjqxu
 稳健前行	wjqxui
-武强	wjqxva
-无强	wjqxva
 位居全省第一	wjqyia
 文件迁移	wjqyoi
 外籍球员	wjqyuu
@@ -279114,7 +278832,6 @@ sort: original
 王君如	wjrvaa
 违纪人	wjrvai
 王家瑞	wjrvov
-王楚然	wjrvvu
 我接任务	wjrwu
 我承认我	wjrwua
 我交任务	wjrwuo
@@ -279344,9 +279061,6 @@ sort: original
 维杰辛	wjxavo
 池春雪	wjxavv
 望尘而拜	wjxboi
-悟心	wjxboo
-焐心	wjxboo
-吴昕	wjxboo
 未经宣布	wjxbva
 丑出新高度	wjxdaa
 绾角兄弟	wjxdau
@@ -279532,7 +279246,6 @@ sort: original
 为己有	wjyoav
 吴金印	wjyoiu
 吴家营	wjyooi
-吴家窑	wjyooo
 吴春怡	wjyovo
 文具用品	wjypoi
 文教用品	wjypou
@@ -279560,7 +279273,6 @@ sort: original
 王江元	wjyvav
 王金勇	wjyvia
 玩具业	wjyvii
-王佳宇	wjyvio
 王佳一	wjyviv
 王家堰	wjyvov
 王程远	wjyvuv
@@ -280348,7 +280060,6 @@ sort: original
 乌亮的	wlduou
 外来的	wlduvu
 无礼的	wldvou
-未来的	wldvvu
 网络调查	wldwia
 蛙类动物	wldwio
 齿轮的齿	wldwiv
@@ -281124,7 +280835,6 @@ sort: original
 网络内容	wlnri
 为了女人	wlnro
 我呐	wlnsuo
-王琳娜	wlnvva
 维伦纽瓦	wlnwa
 忘了你忘了我	wlnwoa
 为了女儿	wlnxo
@@ -282259,7 +281969,6 @@ sort: original
 武庙街	wmjvou
 王敏佳	wmjvui
 王敏超	wmjvuv
-王梅君	wmjvva
 吹绵介壳虫	wmjwo
 文明交通宣传	wmjwoo
 我们就得查	wmjwu
@@ -282365,7 +282074,6 @@ sort: original
 我们啦	wmluio
 臭骂了	wmluoa
 五马路	wmlva
-王茂蕾	wmlvii
 王美莲	wmlvoi
 五美路	wmlvoo
 王梦兰	wmlvvo
@@ -283358,7 +283066,6 @@ sort: original
 愁潘病沈	wpbeu
 我凭本事	wpbeui
 王并	wpbgvo
-王博	wpblvu
 我配不上你	wpbnu
 未配表	wpbvv
 歪批百家姓	wpbx
@@ -283481,7 +283188,6 @@ sort: original
 物品类别	wplbu
 王琳	wplbvv
 顽皮雷弹	wpldva
-王陵	wplgva
 王龄	wplgvi
 网盘里	wpliu
 汪璐	wplja
@@ -283567,7 +283273,7 @@ sort: original
 无偏无党	wpwdv
 无凭无据的	wpwdvi
 汪琬	wpwfa
-无牌无照	wpwfv
+无牌无照	wpwfvu
 传票传唤	wpwhiv
 无偏无颇	wpwpvi
 王望	wpwpvo
@@ -283618,10 +283324,8 @@ sort: original
 王应	wpygvo
 王牌冤家	wpyjvu
 吃便宜	wpyo
-王源	wpytv
 王元	wpytvv
 我拍一	wpyui
-王鹏运	wpyv
 王恽	wpywvo
 我朋友啊	wpyx
 王永	wpyyvo
@@ -284253,7 +283957,6 @@ sort: original
 外长会	wqhuui
 王清欢	wqhvaa
 王清华	wqhvai
-王振辉	wqhvii
 重庆合川	wqhw
 传奇后卫	wqhwi
 重振虎威	wqhwu
@@ -285822,7 +285525,6 @@ sort: original
 传送技能	wsjni
 吴淞江	wsjoa
 吴嗣爵	wsjoou
-吴颂今	wsjou
 穿三件	wsjovi
 茶城	wsjriv
 无色界天	wsjtv
@@ -285964,7 +285666,6 @@ sort: original
 威瑟斯彭	wsspv
 我扫扫	wssuii
 我送送	wssuo
-王思思	wssvi
 充塞天地	wstdoo
 畏死贪生	wstei
 乌斯塔沙	wsteu
@@ -286544,7 +286245,6 @@ sort: original
 未添加	wtjvaa
 万廷搢	wtjvui
 五套卷	wtjvvo
-王泰吉	wtjvvv
 传统金融服务	wtjwia
 吴头楚尾	wtjwo
 传统车型	wtjxia
@@ -288205,7 +287905,6 @@ sort: original
 吴晓东	wxdoov
 宠儿队	wxdoua
 吃香的	wxdouu
-吴向东	wxdouv
 妄想当	wxdovi
 文学短评	wxdpoo
 卫星地面站	wxdqa
@@ -288768,7 +288467,6 @@ sort: original
 重新画	wxhuov
 我先喝	wxhuuo
 我想喝	wxhuvo
-王小盒	wxhvii
 未销毁	wxhviu
 王学浩	wxhvoa
 王晓华	wxhvoi
@@ -288915,7 +288613,6 @@ sort: original
 往下降	wxjuva
 我二舅	wxjuvu
 王小姐	wxjvia
-王星记	wxjvoo
 五行剑	wxjvui
 五爱街	wxjvuu
 王雪纯	wxjvva
@@ -288996,7 +288693,6 @@ sort: original
 乌西克	wxkuvu
 王薪凯	wxkvii
 王小恺	wxkvio
-王啸坤	wxkvov
 文学刊物	wxkw
 茶香可寻	wxkxi
 重新开学	wxkxu
@@ -289404,7 +289100,7 @@ sort: original
 王叙然	wxrviu
 王心如	wxrvoa
 无性人	wxrvoi
-王欣如	wxrvu
+王欣如	wxrvua
 王雪柔	wxrvva
 危险人物	wxrw
 串行任务	wxrwi
@@ -289656,7 +289352,6 @@ sort: original
 重新抽	wxwuoi
 魏襄王	wxwuov
 玩偶屋	wxwvia
-王小锤	wxwvii
 王小歪	wxwviv
 无向网	wxwvui
 玩儿我	wxwvuu
@@ -290128,7 +289823,6 @@ sort: original
 重映版	wybuou
 我要把	wybuvi
 五月八	wybvuu
-王一博	wybvvu
 创有宝藏挖	wybwi
 我用不完	wybwuu
 愁云悲雾	wybwuv
@@ -290264,7 +289958,6 @@ sort: original
 我应当	wyduoi
 午夜的	wyduou
 我要的	wyduvu
-王艺迪	wydvii
 万亿的	wydviu
 玩乐队	wydvua
 威严的	wydvvu
@@ -290479,8 +290172,6 @@ sort: original
 无源之水无本之木	wyfmv
 冲分	wyfnou
 吴翌凤	wyfoau
-亡语者	wyfoou
-冲一发	wyfova
 吃一份	wyfovi
 吴远之	wyfovo
 吴雨霏	wyfovv
@@ -290880,7 +290571,6 @@ sort: original
 我阳康	wykuao
 我月考	wykuu
 我一口	wykuvo
-王媛可	wykvav
 五丫口	wykvoo
 无忧考网	wykwv
 唯一可行	wykxo
@@ -291032,7 +290722,6 @@ sort: original
 王一淼	wymvva
 王玉萌	wymvvi
 王雁盟	wymvvo
-王雨檬	wymvvv
 婺源茗眉茶	wymwa
 宠妹	wymwoa
 外圆磨床	wymwu
@@ -291082,7 +290771,6 @@ sort: original
 韦衙内	wynvu
 王一宁	wynvvo
 玩一年	wynvvu
-王亚楠	wynvvv
 握云拿雾	wynwiv
 我要你帮我	wynwu
 维也纳大学	wynx
@@ -291258,7 +290946,6 @@ sort: original
 五月四日	wysm
 五月三日	wysmv
 五月三十日	wysmvu
-吴宇森	wysoo
 忘忧散	wysoov
 网页搜索	wyss
 网易搜索	wyssi
@@ -292205,7 +291892,6 @@ sort: original
 创造奇迹的人	wzqri
 我做主	wzquio
 我再去	wzquvv
-王子清	wzqvaa
 王组长	wzqvau
 稳增长和防风险	wzqxuv
 万紫千红春满园	wzqyvi
@@ -292326,7 +292012,6 @@ sort: original
 船载小艇	wzxtu
 重做系统	wzxtui
 川藏行	wzxui
-王祖贤	wzxvoi
 创造性思维	wzxwi
 文字宣传	wzxwo
 我最喜欢吃	wzxwu
@@ -294191,10 +293876,10 @@ sort: original
 心到神知	xdefov
 相对剩余价值	xdefva
 二的十次方	xdefvu
-现代诗歌	xdeg
 虚度时光	xdegi
 显得十分性感	xdego
 选调生公告	xdegu
+现代诗歌	xdegv
 闲的时候	xdehou
 心毒手狠	xdehov
 饿的时候	xdehu
@@ -295301,7 +294986,6 @@ sort: original
 安道尔公国	xdxgoo
 显得性感	xdxgou
 爱党爱国	xdxgui
-选第二个	xdxguu
 区姓	xdxgva
 区星	xdxgvo
 阿黛尔的生活	xdxha
@@ -298880,8 +298564,7 @@ sort: original
 刑法修正案	xfxxva
 相扶而行	xfxxvi
 相辅而行	xfxxvv
-消费信用	xfxya
-阿飞西雅	xfxyaa
+消费信用	xfxyaa
 挟飞仙以遨游	xfxyia
 宪法宣传教育	xfxyoa
 心非巷议	xfxyoi
@@ -301927,7 +301610,6 @@ sort: original
 新疆广汇	xjgho
 行程规划	xjghu
 小酒柜	xjgiav
-按常规	xjgiiv
 修家沟	xjgioa
 俺教官	xjgiuo
 修长感	xjgiuv
@@ -302033,7 +301715,6 @@ sort: original
 溪柴火软蛮毡暖	xjhnai
 新疆褐牛	xjhnoa
 许佳豪	xjhoio
-许杰辉	xjhovi
 乡级河长	xjhqa
 洗净黑暗的高墙	xjhqao
 肖家河桥	xjhqi
@@ -303072,7 +302753,6 @@ sort: original
 先给予	xjyuaa
 爱建园	xjyuai
 香蕉鱼	xjyuiu
-徐嘉余	xjyuvi
 欧剑宇	xjyvio
 想戒烟	xjyvvo
 细菌遗传	xjywai
@@ -304485,7 +304165,6 @@ sort: original
 小鹿乱撞的感觉	xlljio
 新浪乐居	xlljoa
 心凉了半截	xlljoo
-行李领取处	xlljuv
 欧拉路径	xlljvi
 二〇〇九	xlljvo
 二两粮教	xlljvv
@@ -304544,7 +304223,6 @@ sort: original
 心里明白	xlmbo
 心里美萝卜	xlmboi
 饿了么红包	xlmbua
-徐敏	xlmbuu
 心里迷瞪	xlmdoi
 血流满地	xlmdua
 阿里模式	xlmea
@@ -304723,7 +304401,6 @@ sort: original
 享乐主义者	xlqfou
 阿龙正罡	xlqga
 阿联酋长国	xlqgav
-许晴	xlqgo
 效率奇高	xlqgoo
 消了气后	xlqha
 恶劣气候	xlqhv
@@ -304757,7 +304434,6 @@ sort: original
 安拉真主	xlqqo
 系列齐全	xlqquv
 小笼蒸牛肉	xlqriu
-徐峥	xlqrui
 心理诊所	xlqso
 学龄前儿童	xlqto
 系列主题	xlqtuv
@@ -305024,7 +304700,6 @@ sort: original
 西凉王	xlwvov
 下龙湾	xlwvva
 下来玩	xlwvvv
-许巍	xlwwoi
 须鳂	xlwwuu
 徐玮	xlwwuv
 下流无耻	xlwwva
@@ -306996,7 +306671,6 @@ sort: original
 阿诺斯	xnsao
 二年三班	xnsb
 二年四班	xnsbv
-安妮斯顿	xnsdo
 西南三省	xnse
 校内宿舍	xnsev
 仙女散花	xnsh
@@ -307122,7 +306796,6 @@ sort: original
 二娘啊	xnxvao
 埃内西	xnxvi
 咸宁县	xnxvoi
-欧昵雪	xnxvov
 西南行	xnxvuu
 喜怒哀愁	xnxw
 新年新希望	xnxwo
@@ -310562,7 +310235,6 @@ sort: original
 系统门窗	xtmwua
 系统模型	xtmxu
 奥特曼传奇英雄	xtmxuu
-耳提面训	xtmxvi
 信托贸易	xtmyi
 系统密钥	xtmyua
 相同名字	xtmzv
@@ -315499,8 +315171,8 @@ sort: original
 校园纯爱	xyjxvi
 恶意程序	xyjxvo
 二月初二	xyjxvu
-信用交易	xyjy
 洗衣机行业	xyjya
+信用交易	xyjyi
 新悦家园	xyjyo
 安阳加油	xyjyoa
 闲言长语	xyjyoo
@@ -315907,7 +315579,6 @@ sort: original
 二月七日	xyqmvu
 需要注意什么	xyqmvv
 埃因青年	xyqnvi
-吸引住	xyqoai
 星耀镇	xyqoii
 信用证诈骗	xyqpi
 安于清贫	xyqpo
@@ -316276,8 +315947,8 @@ sort: original
 校园系列	xyxlvi
 二月二十六	xyxlvu
 斜阳巷陌	xyxmi
-暗影恶魔	xyxmo
 星眼蛾眉	xyxmoi
+暗影恶魔	xyxmoo
 奥运项目	xyxmuv
 二月二日	xyxmvu
 喜迎新年	xyxnv
@@ -317461,7 +317132,7 @@ sort: original
 下载用途	xzytvu
 徐子源	xzyua
 行走于	xzyuv
-二子爷	xzyva
+二子爷	xzyvau
 下作业	xzyvii
 下载源	xzyvua
 现在也	xzyvva
@@ -317950,7 +317621,6 @@ sort: original
 一般官员	ybgyvu
 一般规则	ybgzv
 一般共同犯罪	ybgzvu
-已备好	ybhaua
 隐讳	ybhbao
 也不会明白	ybhbav
 一报还一报	ybhbv
@@ -318238,7 +317908,6 @@ sort: original
 原本没这东西	ybmxvv
 一般贸易	ybmyv
 淫猫	ybmzau
-姚贝娜	ybnaa
 也被你	ybnao
 已被你	ybnaoi
 有被暖到	ybnd
@@ -321141,7 +320810,6 @@ sort: original
 月岛萤	ydyuui
 尤渡苑	ydyvai
 远低于	ydyviv
-原定于	ydyvov
 玉带园	ydyvvi
 又打又踹	ydywai
 移动业务	ydywu
@@ -322041,7 +321709,6 @@ sort: original
 用手机上网	yejwu
 医生检查	yejwvu
 以手加额	yejxai
-羽生结弦	yejxau
 演示程序	yejxav
 扬善惩恶	yejxio
 艺术教育中心	yejxiv
@@ -324069,7 +323736,7 @@ sort: original
 一饭千金	yfqjvu
 檐柱	yfqjvv
 应付账款	yfqkoi
-衣着清凉	yfqlo
+衣着清凉	yfqloo
 要放弃了	yfqlvo
 一种巧合吗	yfqmvu
 越发狰狞	yfqnva
@@ -329581,7 +329248,6 @@ sort: original
 晏家乡	yjxooa
 永久乡	yjxoua
 羊角藓	yjxoui
-养成系	yjxovu
 已经安排	yjxp
 液晶显示屏	yjxpa
 邮寄选票	yjxpi
@@ -331544,8 +331210,6 @@ sort: original
 娱乐圈里面	ylqmau
 裕谦	ylqmoo
 榆钱	ylqmvi
-于谦	ylqmvo
-雨前	ylqmvo
 娱乐圈内	ylqnau
 永乐七年	ylqno
 玉珍	ylqnvv
@@ -332647,8 +332311,8 @@ sort: original
 也没留下	ymlxaa
 隐瞒了真相	ymlxai
 英明领袖	ymlxio
-一秒沦陷	ymlxv
 一抹冷笑	ymlxvi
+一秒沦陷	ymlxvu
 野蛮鲈鱼	ymly
 一抹绿意	ymlyv
 已命名	ymmai
@@ -333941,7 +333605,6 @@ sort: original
 一爬起来	ypqlv
 一跑起来	ypqlvo
 一屏展码	ypqmva
-样钱	ypqmvi
 有脾气吗	ypqmvu
 阳镇	ypqna
 义蓬镇	ypqoi
@@ -334084,7 +333747,6 @@ sort: original
 养羊	ypypoo
 羊羊	ypypoo
 怏怏	ypypoo
-杨洋	ypypva
 一篇一篇	ypypvu
 药品有效期	ypyqi
 有牌有证	ypyqv
@@ -335275,7 +334937,6 @@ sort: original
 一切为了人民	yqwmv
 一起吃吗	yqwmvv
 一起玩闹	yqwnv
-叶蒨文	yqwoi
 颜仟汶	yqwoia
 意千重	yqwouu
 有情无情	yqwq
@@ -337704,9 +337365,9 @@ sort: original
 遗传身高	ywegi
 意外事故	ywegou
 牙齿上有个	ywegv
-意外伤害	yweh
 因为生活	ywehi
-意外收获	yweho
+意外伤害	yweho
+意外收获	ywehou
 一尾守鹤	ywehv
 游玩时长	yweja
 幼齿少年家	ywejai
@@ -343540,7 +343201,6 @@ sort: original
 要传	yzwtvi
 严子伟	yzwvai
 要揍我	yzwviu
-杨宗纬	yzwvoa
 原子物理学	yzwxva
 有嘴无心	yzwxvo
 由左往右	yzwyi
@@ -349108,7 +348768,7 @@ sort: original
 在经贸	zjmvau
 在节目	zjmvi
 走城门	zjmvvo
-做紧咩啊	zjmx
+做紧咩啊	zjmxi
 最近忙不忙啊	zjmxo
 咋就没有	zjmyo
 早就没有	zjmyoo
@@ -352359,7 +352019,6 @@ sort: original
 自然意志	zryfu
 自然语言理解	zryju
 自然语言生成	zryjuu
-曾毅	zryko
 自然语言处理	zrylu
 自然也就能	zryn
 最容易长胖	zrypo
@@ -353338,7 +352997,7 @@ sort: original
 在玩儿我	zwxwv
 作为学校	zwxxi
 自我形象	zwxxuu
-昨晚下雨	zwxyo
+昨晚下雨	zwxyoo
 自我修养	zwxyu
 赠我予白	zwyb
 再传一遍	zwybv
@@ -354434,7 +354093,6 @@ sort: original
 自行组织招标	zxzbuu
 自行组队	zxzd
 在线自习室	zxze
-左小祖咒	zxzf
 自爱自重	zxzfu
 自行组织	zxzfuu
 再小再窄	zxzfv
@@ -355113,7 +354771,6 @@ sort: original
 曾益其所不能	zyqno
 在一起那	zyqnv
 总园长	zyqoiu
-曾毓群	zyqou
 总要求	zyqovv
 咱一起去	zyqqo
 自有主张	zyqqu

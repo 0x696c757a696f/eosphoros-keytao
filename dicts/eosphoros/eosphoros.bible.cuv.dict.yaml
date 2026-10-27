@@ -6,7 +6,7 @@
 # Selected source: 译名对照.tsv, 和合本 names used at least 3 times in the CUV text.
 # Codes are regenerated from the eosphoros single-character table.
 # Only codes unused by every other dictionary are taken; colliding rows are omitted.
-# Generated rows: 442
+# Generated rows: 441
 ---
 name: eosphoros.bible.cuv
 version: "2026-10-12"
@@ -392,7 +392,6 @@ sort: original
 俄巴底雅	xbdyia
 俄德	xedeiu
 司提法那	stfnai
-吕西亚	lxyovv
 哈们	hsmn
 哈忽	hshjo
 哈腊	hslsou

@@ -30,7 +30,7 @@ DICTIONARY_DIR = ROOT / "dicts" / "eosphoros"
 DANZI_TARGET = DICTIONARY_DIR / "eosphoros.danzi.dict.yaml"
 ICE_TARGET = DICTIONARY_DIR / "eosphoros.ice.dict.yaml"
 WANXIANG_SOURCE_NAMES = (
-    "yaopin", "yixue", "huaxue", "diming", "mingren", "taifeng", "jichu", "wuzhong"
+    "yaopin", "yixue", "huaxue", "diming", "mingren", "taifeng", "jichu", "wuzhong", "yiren"
 )
 WANXIANG_TARGETS = {
     source_name: DICTIONARY_DIR / f"eosphoros.wanxiang.{source_name}.dict.yaml"
@@ -510,6 +510,9 @@ def wanxiang_low_value_reason(row: SourceRow) -> str | None:
         if row.weight < 100 or len(word) > 6 or word.endswith("形"):
             return "rare_species"
         return None
+    if row.source == "yiren":
+        # Entertainer names age quickly; keep only well-known ones.
+        return None if row.weight >= 500 and len(word) <= 5 else "minor_entertainer"
     return "unsupported_source"
 
 

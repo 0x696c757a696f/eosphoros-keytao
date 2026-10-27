@@ -60,7 +60,7 @@ def row_count(path: Path) -> int:
 
 def render_profiles() -> str:
     compositions = {
-        "full": "Standard + `fjcy` + 万象药品／医学／化学／台风／动植物 + xmjd6-rere 新增扩展词",
+        "full": "Standard + `fjcy` + 万象药品／医学／化学／台风／动植物／艺人 + xmjd6-rere 新增扩展词",
         "standard": "Lite + 宗派专题 + 圣经人名地名 + ICE + 万象地名／名人／基础词 + xmjd6-rere 新增基础词",
         "lite": "用户词库 + 单字 + 基础词组 + 核心码 + `i` 英文",
     }
@@ -101,7 +101,7 @@ def render_dictionaries() -> str:
         if filename == "eosphoros.ice.dict.yaml":
             wanxiang = sum(row_count(path) for path in dictionary_dir.glob("eosphoros.wanxiang.*.dict.yaml"))
             lines.append(
-                f"| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | {wanxiang:,} | 万象八类专业与常识词，重新编码 |"
+                f"| `dicts/eosphoros/eosphoros.wanxiang.*.dict.yaml` | {wanxiang:,} | 万象九类专业与常识词，重新编码 |"
             )
     filename, purpose = DICTIONARIES[-1]
     lines.append(
